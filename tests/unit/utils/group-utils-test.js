@@ -1,7 +1,6 @@
 import { isGroup, indexOfOption, optionAtIndex, filterOptions } from '../../../utils/group-utils';
 import { module, test } from 'qunit';
 
-debugger;
 const groupedOptions = [
   { groupName: "Smalls", options: ["zero", "one", "two", "three"] },
   { groupName: "Mediums", options: ["four", "five", "six"] },

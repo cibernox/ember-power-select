@@ -61,7 +61,7 @@ export default Ember.Component.extend({
 
   didReceiveAttrs({ newAttrs: { options, multiple } }) {
     this.set('_loadingOptions', true);
-    if (!this.get('selected')) { this.set('selected', []); }
+    if (!this.get('selected')) { this.set('selected', Ember.A()); }
     if (multiple) { this.set('searchEnabled', false); }
     RSVP.Promise.resolve(options)
       .then((opts) => this.updateOptions(opts))

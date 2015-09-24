@@ -46,7 +46,7 @@ export function optionAtIndex(originalCollection, index) {
 }
 
 export function filterOptions(options, text, matcher) {
-  const opts = [];
+  const opts = Ember.A();
   for (let entry of options) {
     if (isGroup(entry)) {
       let suboptions = filterOptions(get(entry, 'options'), text, matcher);
