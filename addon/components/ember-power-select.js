@@ -49,12 +49,14 @@ export default Ember.Component.extend({
   _highlighted: null,
   _searchText: '',
   _loadingOptions: false,
+  _wormholeDestination: (Ember.testing ? 'ember-testing' : 'ember-power-select-wormhole'),
   matcher: (value, text) => text === '' || new RegExp(text, 'i').test(value),
 
   // Lifecycle hooks
   init(){
     this._super(...arguments);
-    this.appRoot = document.querySelector(this.container.lookup('application:main').rootElement);
+    const rootSelector = Ember.testing ? '#ember-testing' : this.container.lookup('application:main').rootElement;
+    this.appRoot = document.querySelector(rootSelector);
     this.handleRootClick = this.handleRootClick.bind(this);
     this.handleRepositioningEvent = this.handleRepositioningEvent.bind(this);
   },

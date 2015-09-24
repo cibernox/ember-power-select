@@ -24,7 +24,7 @@
   {{/if}}
 </div>
 {{#if _opened}}
-  {{#ember-wormhole to="ember-power-select-wormhole" renderInPlace=renderInPlace}}
+  {{#ember-wormhole to=_wormholeDestination renderInPlace=renderInPlace}}
     <div class="ember-power-select-dropdown {{_dropdownPositionClass}}" dir={{dir}}>
       {{#if searchEnabled}}
         <div class="ember-power-select-search">
