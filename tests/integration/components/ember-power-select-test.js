@@ -148,9 +148,9 @@ test('Each option of the select is the result of yielding an item', function(ass
 
 /**
 2 - Passing an empty array
-  a) A "No options" message appears by default.
-  b) That message can be customized passing an option.
-  c) That message can be customized passing an inverse block to the component.
+  a) [DONE] A "No options" message appears by default.
+  b) [DONE] That message can be customized passing an option.
+  c) [DONE] That message can be customized passing an inverse block to the component.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Empty options)', {
@@ -158,15 +158,41 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 });
 
 test('The dropdowns shows the default "no options" message', function(assert) {
-  throw new Error('not implemented');
+  this.options = [];
+  this.render(hbs`
+    {{#ember-power-select options=(readonly options) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, 1);
+  assert.equal($('.ember-power-select-option').text().trim(), 'No results found');
 });
 
 test('The default "no options" message can be customized passing `noMatchesMessage="other message"`', function(assert) {
-  throw new Error('not implemented');
+  this.options = [];
+  this.render(hbs`
+    {{#ember-power-select options=(readonly options) noResultsMessage="Nope" as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, 1);
+  assert.equal($('.ember-power-select-option').text().trim(), 'Nope');
 });
 
 test('The content of the dropdown when there is no options can be completely customized using the inverse block', function(assert) {
-  throw new Error('not implemented');
+  this.options = [];
+  this.render(hbs`
+    {{#ember-power-select options=(readonly options) noResultsMessage="Nope" as |option|}}
+      {{option}}
+    {{else}}
+      <span class="empty-option-foo">Foo bar</span>
+    {{/ember-power-select}}
+  `);
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, 0, 'No list elements, just the given alternate block');
+  assert.equal($('.empty-option-foo').length, 1);
 });
 
 /**
@@ -303,8 +329,8 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   c) [DONE] When a select option is provided that option appears in the component's trigger.
   d) [DONE] When a select option is provided that option is highlighed when opened.
   e) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
-  f) The search works when you provide a searchFileld, ignoring diacritics and capitalization
-  g) You can pass a custom matcher for customize the search.
+  f) [DONE] The search works when you provide a searchFileld, ignoring diacritics and capitalization
+  g) [DONE] You can pass a custom matcher for customize the search.
   h) You can pass a `search` function that can return an array of results.
   i) You can pass a `search` function that can return an promise that resolves to an array of results.
 */
@@ -343,7 +369,6 @@ test('When a option is provided that options is rendered in the trigger using th
   assert.equal($('.ember-power-select-trigger').text().trim(), 'ES: Spain', 'The selected country is rendered in the trigger');
 });
 
-
 test('When `selected` option is provided, it is highlighted when the dropdown opens', function(assert) {
   assert.expect(2);
 
@@ -361,7 +386,6 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   assert.equal($highlightedOption.text().trim(), 'ES: Spain', 'The second option is highlighted');
 });
 
-
 test('When `selected` option is provided, that option is marked as `.selected`', function(assert) {
   assert.expect(1);
 
@@ -376,4 +400,66 @@ test('When `selected` option is provided, that option is marked as `.selected`',
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   const $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
   assert.ok($selectedOption.hasClass('selected'), 'The second option is marked as selected');
+});
+
+test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
+  assert.expect(8);
+
+  this.people = [
+    { name: 'María',  surname: 'Murray' },
+    { name: 'Søren',  surname: 'Williams' },
+    { name: 'João',   surname: 'Jin' },
+    { name: 'Miguel', surname: 'Camba' },
+    { name: 'Marta',  surname: 'Stinson' },
+    { name: 'Lisa',   surname: 'Simpson' },
+  ];
+
+  this.render(hbs`
+    {{#ember-power-select options=(readonly people) searchField="name" as |person|}}
+      {{person.name}} {{person.surname}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('mar'));
+  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'María Murray');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta Stinson');
+  Ember.run(() => typeInSearch('mari'));
+  assert.equal($('.ember-power-select-option').length, 1, 'Only 1 results match the search');
+  assert.equal($('.ember-power-select-option').text().trim(), 'María Murray');
+  Ember.run(() => typeInSearch('o'));
+  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João Jin');
+});
+
+test('You can pass a custom marcher with `matcher=myFn` to customize the search strategi', function(assert) {
+  assert.expect(4);
+
+  this.people = [
+    { name: 'María',  surname: 'Murray' },
+    { name: 'Søren',  surname: 'Williams' },
+    { name: 'João',   surname: 'Jin' },
+    { name: 'Miguel', surname: 'Camba' },
+    { name: 'Marta',  surname: 'Stinson' },
+    { name: 'Lisa',   surname: 'Simpson' },
+  ];
+
+  this.nameOrSurnameNoDiacriticsCaseSensitive = function(value, text) {
+    return text === '' || value.name.indexOf(text) > -1 || value.surname.indexOf(text) > -1;
+  };
+
+  this.render(hbs`
+    {{#ember-power-select options=(readonly people) matcher=nameOrSurnameNoDiacriticsCaseSensitive as |person|}}
+      {{person.name}} {{person.surname}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('s'));
+  assert.equal($('.ember-power-select-option').length, 3, 'Only 3 results match the search');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta Stinson');
+  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'Lisa Simpson');
 });
