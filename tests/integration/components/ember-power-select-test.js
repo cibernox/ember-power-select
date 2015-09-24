@@ -47,7 +47,7 @@ const countries = [
 function typeInSearch(text) {
   $('.ember-power-select-search input').val(text);
   $('.ember-power-select-search input').trigger('input');
-};
+}
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true
@@ -175,8 +175,8 @@ test('The content of the dropdown when there is no options can be completely cus
   c) [DONE] When a select option is provided that option appears in the component's trigger.
   d) [DONE] When a select option is provided that option is highlighed when opened.
   e) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
-  f) The default search matches filters correctly ignoring diacritics (accents/capitals/ect...)
-  g) You can pass a custom matcher for customize the search.
+  f) [DONE] The default search matches filters correctly ignoring diacritics (accents/capitals/ect...)
+  g) [DONE] You can pass a custom matcher for customize the search.
   h) You can pass a `search` function that can return an array of results.
   i) You can pass a `search` function that can return an promise that resolves to an array of results.
 */
@@ -185,72 +185,72 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true
 });
 
-// test('When no `selected` is provided, the first item in the dropdown is highlighted', function(assert) {
-//   assert.expect(3);
+test('When no `selected` is provided, the first item in the dropdown is highlighted', function(assert) {
+  assert.expect(3);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-//   assert.equal($('.ember-power-select-option.highlighted').length, 1, 'One element is highlighted');
-//   assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first one to be precise');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.equal($('.ember-power-select-option.highlighted').length, 1, 'One element is highlighted');
+  assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first one to be precise');
+});
 
-// test('When `selected` option is provided, it appears in the trigger yielded with the same block as the options', function(assert) {
-//   assert.expect(2);
+test('When `selected` option is provided, it appears in the trigger yielded with the same block as the options', function(assert) {
+  assert.expect(2);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   assert.equal(this.$().text().trim(), 'three', 'The selected option show in the trigger');
+  assert.equal(this.$().text().trim(), 'three', 'The selected option show in the trigger');
 
-//   this.render(hbs`
-//     {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
-//       Selected: {{option}}
-//     {{/ember-power-select}}
-//   `);
-//   assert.equal(this.$().text().trim(), 'Selected: three', 'The selected option uses the same yielded block as the options');
-// });
+  this.render(hbs`
+    {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
+      Selected: {{option}}
+    {{/ember-power-select}}
+  `);
+  assert.equal(this.$().text().trim(), 'Selected: three', 'The selected option uses the same yielded block as the options');
+});
 
-// test('When `selected` option is provided, it is highlighted when the dropdown opens', function(assert) {
-//   assert.expect(2);
+test('When `selected` option is provided, it is highlighted when the dropdown opens', function(assert) {
+  assert.expect(2);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   const $highlightedOption = $('.ember-power-select-option.highlighted');
-//   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
-//   assert.equal($highlightedOption.text().trim(), 'three', 'The third option is highlighted');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  const $highlightedOption = $('.ember-power-select-option.highlighted');
+  assert.equal($highlightedOption.length, 1, 'One element is highlighted');
+  assert.equal($highlightedOption.text().trim(), 'three', 'The third option is highlighted');
+});
 
-// test('When `selected` option is provided, that option is marked as `.selected`', function(assert) {
-//   assert.expect(1);
+test('When `selected` option is provided, that option is marked as `.selected`', function(assert) {
+  assert.expect(1);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select selected="three" options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   const $selectedOption = $('.ember-power-select-option:contains("three")');
-//   assert.ok($selectedOption.hasClass('selected'), 'The third option is marked as selected');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  const $selectedOption = $('.ember-power-select-option:contains("three")');
+  assert.ok($selectedOption.hasClass('selected'), 'The third option is marked as selected');
+});
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
   assert.expect(8);
@@ -276,6 +276,26 @@ test('The default search strategy matches disregarding diacritics differences an
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João');
 });
 
+test('You can pass a custom marcher with `matcher=myFn` to customize the search strategi', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.endsWithMatcher = function(value, text) {
+    return text === '' || value.slice(text.length * -1) === text;
+  };
+
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) matcher=endsWithMatcher as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('on'));
+  assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
+  Ember.run(() => typeInSearch('teen'));
+  assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
+});
 
 /**
 4 - Passing an array of objects
