@@ -70,6 +70,11 @@ export default Ember.Component.extend({
       .finally(() => this.set('_loadingOptions', false));
   },
 
+  willDestroy() {
+    this._super(...arguments);
+    this.removeGlobalEvents();
+  },
+
   // CPs
   tabindex: computed('disabled', function() {
     return !this.get('disabled') ? "0" : "-1";
@@ -141,10 +146,7 @@ export default Ember.Component.extend({
     this.set('_opened', false);
     this.set('_searchText', '');
     this.set('_dropdownPositionClass', null);
-    this.appRoot.removeEventListener('click', this.handleRootClick);
-    window.removeEventListener('scroll', this.handleRepositioningEvent);
-    window.removeEventListener('resize', this.handleRepositioningEvent);
-    window.removeEventListener('orientationchange', this.handleRepositioningEvent);
+    this.removeGlobalEvents();
     this.element.querySelector(`.ember-power-select-trigger${this.get('multiple') ? '-multiple-input' : ''}`).focus();
   },
 
@@ -152,10 +154,7 @@ export default Ember.Component.extend({
     this.set('_opened', true);
     const pos = this.get('dropdownPosition');
     this.set('_dropdownPositionClass', pos === 'auto' ? null : pos);
-    this.appRoot.addEventListener('click', this.handleRootClick);
-    window.addEventListener('scroll', this.handleRepositioningEvent);
-    window.addEventListener('resize', this.handleRepositioningEvent);
-    window.addEventListener('orientationchange', this.handleRepositioningEvent);
+    this.addGlobalEvents();
     if (this._resultsDirty) { this.refreshResults(); }
     if (this.get('multiple')) {
       this.set('_highlighted', this.optionAtIndex(0));
@@ -168,7 +167,7 @@ export default Ember.Component.extend({
   },
 
   handleRootClick(e) {
-    if (!this.element.contains(e.target) && !document.querySelector('#ember-power-select-wormhole').contains(e.target)) {
+    if (!this.element.contains(e.target) && !document.querySelector('#'+this.get('_wormholeDestination')).contains(e.target)) {
       this.close();
     }
   },
@@ -315,5 +314,19 @@ export default Ember.Component.extend({
     } else {
       this._resultsDirty = true;
     }
+  },
+
+  addGlobalEvents() {
+    this.appRoot.addEventListener('click', this.handleRootClick);
+    window.addEventListener('scroll', this.handleRepositioningEvent);
+    window.addEventListener('resize', this.handleRepositioningEvent);
+    window.addEventListener('orientationchange', this.handleRepositioningEvent);
+  },
+
+  removeGlobalEvents() {
+    this.appRoot.removeEventListener('click', this.handleRootClick);
+    window.removeEventListener('scroll', this.handleRepositioningEvent);
+    window.removeEventListener('resize', this.handleRepositioningEvent);
+    window.removeEventListener('orientationchange', this.handleRepositioningEvent);
   }
 });
