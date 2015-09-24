@@ -1,0 +1,231 @@
+html {
+  font-family: Helvetica, Arial, sans-serif;
+}
+.icon-flag {
+  display: inline-block;
+  height: 14px;
+  width: 20px;
+  .ember-select-multiple-option & {
+    vertical-align: -10%;
+  }
+}
+.icon-flag, .country-detailed-info .country-flag {
+  background-repeat: no-repeat;
+  background-size: cover;
+  &.US { background-image: url("/flags/us.svg"); }
+  &.ES { background-image: url("/flags/es.svg"); }
+  &.PT { background-image: url("/flags/pt.svg"); }
+  &.RU { background-image: url("/flags/ru.svg"); }
+  &.LV { background-image: url("/flags/lv.svg"); }
+  &.BR { background-image: url("/flags/br.svg"); }
+  &.GB { background-image: url("/flags/gb.svg"); }
+}
+.country-detailed-info {
+  margin: 0 -8px;
+  display: flex;
+  .country-flag { width: 92px; }
+  .country-data-text {
+    padding: 6px;
+  }
+}
+// EMBER SELECT
+$border-color: #aaaaaa !default;
+$text-color: #444444 !default;
+$placeholder-color: #999999 !default;
+$border-radius: 4px !default;
+$background-color: #ffffff !default;
+$disabled-background-color: #eeeeee !default;
+$disabled-option-color: #999999 !default;
+$multiple-selection-color: #333333 !default;
+$multiple-selection-background-color: #e4e4e4 !default;
+$highlighted-color: #ffffff !default;
+$highlighted-background: #5897fb !default;
+$selected-background: #dddddd !default;
+$line-height: 28px !default;
+$trigger-icon-color: $border-color !default;
+$clear-btn-margin: 25px !default;
+$option-padding: 8px !default;
+$number-of-visible-options: 7;
+
+.ember-select {
+  position: relative;
+}
+.ember-select, .ember-select *, .ember-select-dropdown, .ember-select-dropdown * {
+  box-sizing: border-box;
+}
+
+// Trigger
+.ember-select-trigger {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  background-size: 7px 7px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#{$trigger-icon-color};'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-color: $background-color;
+  line-height: $line-height;
+  text-overflow: ellipsis;
+  height: $line-height;
+  user-select: none;
+  -webkit-user-select: none;
+  .ember-select.multiple & { height: auto; }
+  .ember-select:not(.multiple) & { white-space: nowrap; }
+  .ember-select.opened & {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#{$trigger-icon-color};'/%3E%3C/svg%3E");
+  }
+  .ember-select.opened.below & {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .ember-select.opened.above & {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+.ember-select-placeholder {
+  color: $placeholder-color;
+}
+.ember-select-clear-btn {
+  position: absolute;
+  cursor: pointer;
+}
+
+// Multiple select
+.ember-select-trigger-multiple-input {
+  font-family: inherit;
+  font-size: inherit;
+  width: 25px;
+  border: none;
+  display: inline-block;
+  line-height: inherit;
+  -webkit-appearance: none;
+  outline: none;
+}
+.ember-select-multiple-option {
+  border: 1px solid gray;
+  border-radius: 4px;
+  color: $multiple-selection-color;
+  background-color: $multiple-selection-background-color;
+  padding: 0 4px;
+  display: inline-block;
+  line-height: 1.5;
+  margin: 2px 0;
+}
+.ember-select-multiple-remove-btn {
+  cursor: pointer;
+  &:not(:hover) { opacity: 0.5; }
+}
+// Search bar
+.ember-select-search {
+  padding: 4px;
+  input {
+    border: 1px solid $border-color;
+    width: 100%;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 0 5px;
+  }
+}
+
+// Dropdown
+.ember-select-dropdown {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  background-color: $background-color;
+  line-height: $line-height;
+  &.above {
+    border-top: 1px solid $border-color;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+  &.below {
+    border-bottom: 1px solid $border-color;
+    border-bottom-left-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+}
+.ember-select-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  &:not(.nested) {
+    overflow-y: scroll;
+    max-height: $number-of-visible-options * $line-height;
+  }
+}
+
+.ember-select-option {
+  cursor: pointer;
+  padding: 0 $option-padding;
+  &.disabled {
+    color: $disabled-option-color;
+    pointer-events: none;
+  }
+  &.selected { background-color: $selected-background; }
+  &.highlighted {
+    background-color: $highlighted-background;
+    color: $highlighted-color;
+  }
+}
+
+// Groups
+.ember-select-group-name {
+  cursor: default;
+  font-weight: bold;
+}
+
+// Disabled styles
+.ember-select.disabled {
+  pointer-events: none;
+  .ember-select-trigger {
+    background-color: $disabled-background-color;
+  }
+}
+
+// LTR styles
+.ember-select:not([dir=rtl]) {
+  .ember-select-trigger {
+    padding: 0 16px 0 8px;
+    background-position: right 5px center;
+  }
+  .ember-select-clear-btn {
+    right: $clear-btn-margin;
+  }
+
+}
+.ember-select-dropdown:not([dir=rtl]) {
+  .ember-select-group {
+    .ember-select-group {
+      .ember-select-group-name { padding-left: 3 * $option-padding; }
+      .ember-select-option { padding-left: 5 * $option-padding; }
+    }
+    .ember-select-option { padding-left: 3 * $option-padding; }
+    .ember-select-group-name { padding-left: $option-padding; }
+  }
+}
+
+// RTL styles
+.ember-select[dir=rtl] {
+  .ember-select-trigger {
+    padding: 0 8px 0 16px;
+    background-position: 5px center;
+  }
+  .ember-select-clear-btn {
+    left: $clear-btn-margin;
+  }
+}
+
+.ember-select-dropdown[dir=rtl] {
+  .ember-select-group {
+    .ember-select-group {
+      .ember-select-group-name { padding-right: 3 * $option-padding; }
+      .ember-select-option { padding-right: 5 * $option-padding; }
+    }
+    .ember-select-option { padding-right: 3 * $option-padding; }
+    .ember-select-group-name { padding-right: $option-padding; }
+  }
+}

@@ -1,0 +1,60 @@
+<div class="ember-select-trigger" tabindex="{{tabindex}}" onkeydown={{action "keypress"}} onclick={{action "toggle"}}>
+  {{#if multiple}}
+    {{#each selected as |multiOpt|}}
+      <span class="ember-select-multiple-option">
+        <span class="ember-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
+        {{yield multiOpt}}
+      </span>
+    {{/each}}
+    <input type="search" class="ember-select-trigger-multiple-input" tabindex="0" autocomplete="off"
+      autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox"
+      style={{triggerMultipleInputStyle}} value={{_searchText}}
+      oninput={{action "search" value="target.value"}}>
+  {{else if selected}}
+    {{#if selectedPartial}}
+      {{partial selectedPartial}}
+    {{else}}
+      {{yield selected}}
+    {{/if}}
+    {{#if allowClear}}
+      <span class="ember-select-clear-btn" onclick={{action "clear"}}>&times;</span>
+    {{/if}}
+  {{else if placeholder}}
+    <span class="ember-select-placeholder">{{placeholder}}</span>
+  {{/if}}
+</div>
+{{#if _opened}}
+  {{#ember-wormhole to="ember-select-wormhole" renderInPlace=renderInPlace}}
+    <div class="ember-select-dropdown {{_dropdownPositionClass}}" dir={{dir}}>
+      {{#if searchEnabled}}
+        <div class="ember-select-search">
+          <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
+          spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
+          onkeydown={{action "keypress"}} placeholder={{searchPlaceholder}}>
+        </div>
+      {{/if}}
+      {{#if results.length}}
+        <ul class="ember-select-options">
+          {{#ember-power-select/options options=results highlighted=_highlighted selected=selected
+            highlight=(action "highlight") select=(action "select") as |option|}}
+            {{yield option}}
+          {{/ember-power-select/options}}
+        </ul>
+      {{else}}
+        {{#if _loadingOptions}}
+          <ul class="ember-select-options ember-select-options-loading">
+            <li class="ember-select-option">{{loadingMessage}}</li>
+          </ul>
+        {{else if (hasBlock "inverse")}}
+          <ul class="ember-select-options ember-select-options-inverse">
+            {{yield component to="inverse"}}
+          </ul>
+        {{else}}
+          <ul class="ember-select-options ember-select-options-no-matches">
+            <li class="ember-select-option">{{noMatchesMessage}}</li>
+          </ul>
+        {{/if}}
+      {{/if}}
+    </div>
+  {{/ember-wormhole}}
+{{/if}}
