@@ -253,7 +253,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 // });
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
-  assert.expect(1);
+  assert.expect(8);
 
   this.names = names;
   this.render(hbs`

@@ -43,7 +43,17 @@ const contriesWithDisabled = [
   { name: 'United Kingdom', code: 'GB', population: 64596752 },
 ];
 
+const names = [
+  "María",
+  "Søren Larsen",
+  "João",
+  "Miguel",
+  "Marta",
+  "Lisa"
+];
+
 export default Ember.Controller.extend({
+  names: names,
   simpleOptions: numbers,
   simpleSelected: 'six',
 

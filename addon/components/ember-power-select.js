@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/ember-power-select';
-import { indexOfOption, optionAtIndex, filterOptions } from '../utils/group-utils';
+import { indexOfOption, optionAtIndex, filterOptions, stripDiacritics } from '../utils/group-utils';
 
 const { RSVP, computed, run, get } = Ember;
 
@@ -50,7 +50,7 @@ export default Ember.Component.extend({
   _searchText: '',
   _loadingOptions: false,
   _wormholeDestination: (Ember.testing ? 'ember-testing' : 'ember-power-select-wormhole'),
-  matcher: (value, text) => text === '' || new RegExp(text, 'i').test(value),
+  matcher: (value, text) => text === '' || stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase()) > -1,
 
   // Lifecycle hooks
   init(){

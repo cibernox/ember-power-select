@@ -39,6 +39,11 @@
   {{option}}
 {{/ember-power-select}}
 
+<h4>Diacritics search</h4>
+{{#ember-power-select options=(readonly names) as |option|}}
+  {{option}}
+{{/ember-power-select}}
+
 <h4>If the default filter matches doesn't work, you can pass your own. This check that results end with the given string. Try searching for "teen"</h4>
 {{#ember-power-select options=(readonly simpleOptions) matcher=endsWithMatcher as |option|}}
   {{option}}
