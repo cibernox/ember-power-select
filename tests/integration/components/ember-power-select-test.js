@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -65,7 +66,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 */
 
 
-test('Clicking in the trigger opens', function(assert) {
+test('Clicking in the trigger opens the dropdown', function(assert) {
   assert.expect(3);
 
   this.numbers = numbers;

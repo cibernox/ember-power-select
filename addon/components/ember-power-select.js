@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/ember-power-select';
 import { indexOfOption, optionAtIndex, filterOptions } from '../utils/group-utils';
 
-const { RSVP, computed, run, get, isPresent } = Ember;
+const { RSVP, computed, run, get } = Ember;
 
 // TODOs:
 //
@@ -82,7 +82,11 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     toggle(/* e */){
-      this.get('_opened') ? this.close() : this.open(); /*jshint -W030 */
+      if (this.get('_opened'))  {
+        this.close();
+      } else {
+        this.open();
+      }
     },
 
     select(option, e) {
@@ -186,7 +190,7 @@ export default Ember.Component.extend({
     }
   },
 
-  handleRepositioningEvent(e) {
+  handleRepositioningEvent(/* e */) {
     run.throttle(this, 'repositionDropdown', 60, true);
   },
 
@@ -299,7 +303,7 @@ export default Ember.Component.extend({
     } else {
       matcher = (option, text) => this.matcher(option, text);
     }
-    const results = this.set('results', filterOptions(options, searchText, matcher));
+    this.set('results', filterOptions(options, searchText, matcher));
     this._resultsDirty = false;
     run.scheduleOnce('afterRender', this, this.repositionDropdown);
   },

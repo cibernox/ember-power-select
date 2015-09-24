@@ -52,7 +52,7 @@ export default Ember.Controller.extend({
 
   complexOptionsWithDisabled: contriesWithDisabled,
 
-  multipleSelection: ['one','two','three','four','five','six',/* 'seven','eight'*/,'nine','ten','eleven'],
+  multipleSelection: ['one','two','three','four','five','six','seven','eight','nine','ten','eleven'],
 
   groupedOptions: [
     { groupName: "Smalls", options: ["one", "two", "three"] },
