@@ -300,10 +300,13 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 /**
 4 - Passing an array of objects
   b) [DONE] When NO selected option is provided the first element of the list is highlighted.
-  c) When a select option is provided that option appears in the component's trigger.
-  d) When a select option is provided that option is highlighed when opened.
-  e) When a select option is provided that element of the list is also marked with the `.selected` class.
-  f) The block provided to the component customizes both the list's items and the trigger.
+  c) [DONE] When a select option is provided that option appears in the component's trigger.
+  d) [DONE] When a select option is provided that option is highlighed when opened.
+  e) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
+  f) The search works when you provide a searchFileld, ignoring diacritics and capitalization
+  g) You can pass a custom matcher for customize the search.
+  h) You can pass a `search` function that can return an array of results.
+  i) You can pass a `search` function that can return an promise that resolves to an array of results.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Options are objects)', {
@@ -324,4 +327,53 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
   assert.equal($('.ember-power-select-option.highlighted').length, 1, 'One element is highlighted');
   assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first one to be precise');
+});
+
+test('When a option is provided that options is rendered in the trigger using the same block as the options', function(assert) {
+  assert.expect(1);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+  this.render(hbs`
+    {{#ember-power-select options=(readonly countries) selected=(readonly country) as |option|}}
+      {{option.code}}: {{option.name}}
+    {{/ember-power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'ES: Spain', 'The selected country is rendered in the trigger');
+});
+
+
+test('When `selected` option is provided, it is highlighted when the dropdown opens', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+  this.render(hbs`
+    {{#ember-power-select options=(readonly countries) selected=(readonly country) as |option|}}
+      {{option.code}}: {{option.name}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  const $highlightedOption = $('.ember-power-select-option.highlighted');
+  assert.equal($highlightedOption.length, 1, 'One element is highlighted');
+  assert.equal($highlightedOption.text().trim(), 'ES: Spain', 'The second option is highlighted');
+});
+
+
+test('When `selected` option is provided, that option is marked as `.selected`', function(assert) {
+  assert.expect(1);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+  this.render(hbs`
+    {{#ember-power-select options=(readonly countries) selected=(readonly country) as |option|}}
+      {{option.code}}: {{option.name}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  const $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
+  assert.ok($selectedOption.hasClass('selected'), 'The second option is marked as selected');
 });

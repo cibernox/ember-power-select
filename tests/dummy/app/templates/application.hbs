@@ -111,13 +111,13 @@
   {{option}}
 {{/ember-power-select}}
 
-<h4>You can customize the text being shown when there is no matches passing `noMatchesMessage="404 bro". Type "asdf"`</h4>
-{{#ember-power-select options=(readonly simpleOptions) noMatchesMessage="404 bro" as |option|}}
+<h4>You can customize the text being shown when there is no matches passing `noResultsMessage="404 bro". Type "asdf"`</h4>
+{{#ember-power-select options=(readonly simpleOptions) noResultsMessage="404 bro" as |option|}}
   {{option}}
 {{/ember-power-select}}
 
 <h4>Or you can pass any html in the `\{{else}}` block just like each</h4>
-{{#ember-power-select options=(readonly simpleOptions) noMatchesMessage="404 bro" as |option|}}
+{{#ember-power-select options=(readonly simpleOptions) noResultsMessage="404 bro" as |option|}}
   {{option}}
 {{else}}
   <img height="130" style="display: inline-block;" src="http://cliparts.co/cliparts/bpi/qdj/bpiqdjdc9.png">
