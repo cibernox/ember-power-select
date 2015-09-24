@@ -1,15 +1,15 @@
 {{#each options as |opt|}}
   {{#if opt.groupName}}
-    <li class="ember-select-group">
-      <span class="ember-select-group-name">{{opt.groupName}}</span>
-      <ul class="ember-select-options nested">
+    <li class="ember-power-select-group">
+      <span class="ember-power-select-group-name">{{opt.groupName}}</span>
+      <ul class="ember-power-select-options nested">
         {{#ember-power-select/options highlighted=highlighted selected=selected options=opt.options highlight=(action highlight) select=(action select) as |option|}}
           {{yield option}}
         {{/ember-power-select/options}}
       </ul>
     </li>
   {{else}}
-    <li class="ember-select-option {{ember-power-select-option-classes opt selected highlighted}}" onclick={{action select opt}} onmouseover={{action highlight opt}}>
+    <li class="ember-power-select-option {{ember-power-select-option-classes opt selected highlighted}}" onclick={{action select opt}} onmouseover={{action highlight opt}}>
       {{yield opt}}
     </li>
   {{/if}}

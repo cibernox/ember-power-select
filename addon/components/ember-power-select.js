@@ -44,7 +44,7 @@ export default Ember.Component.extend({
   noMatchesMessage: "No results found",
   selectedPartial: null,
   attributeBindings: ['dir'],
-  classNames: ['ember-select'],
+  classNames: ['ember-power-select'],
   classNameBindings: ['_opened:opened', 'disabled', 'attrs.multiple', '_dropdownPositionClass'],
   _highlighted: null,
   _searchText: '',
@@ -139,7 +139,7 @@ export default Ember.Component.extend({
     window.removeEventListener('scroll', this.handleRepositioningEvent);
     window.removeEventListener('resize', this.handleRepositioningEvent);
     window.removeEventListener('orientationchange', this.handleRepositioningEvent);
-    this.element.querySelector(`.ember-select-trigger${this.get('multiple') ? '-multiple-input' : ''}`).focus();
+    this.element.querySelector(`.ember-power-select-trigger${this.get('multiple') ? '-multiple-input' : ''}`).focus();
   },
 
   open() {
@@ -162,7 +162,7 @@ export default Ember.Component.extend({
   },
 
   handleRootClick(e) {
-    if (!this.element.contains(e.target) && !document.querySelector('#ember-select-wormhole').contains(e.target)) {
+    if (!this.element.contains(e.target) && !document.querySelector('#ember-power-select-wormhole').contains(e.target)) {
       this.close();
     }
   },
@@ -219,8 +219,8 @@ export default Ember.Component.extend({
   },
 
   scrollIfHighlightedIsOutOfViewport() {
-    const optionsList = document.querySelector('.ember-select-options');
-    const highlightedOption = optionsList.querySelector('.ember-select-option.highlighted');
+    const optionsList = document.querySelector('.ember-power-select-options');
+    const highlightedOption = optionsList.querySelector('.ember-power-select-option.highlighted');
     if (!highlightedOption) { return; }
     const optionTopScroll = highlightedOption.offsetTop - optionsList.offsetTop;
     const optionBottomScroll = optionTopScroll + highlightedOption.offsetHeight;
@@ -233,9 +233,9 @@ export default Ember.Component.extend({
 
   focusSearch() {
     if (this.get('searchEnabled')) {
-      this.appRoot.querySelector('.ember-select-search input').focus();
+      this.appRoot.querySelector('.ember-power-select-search input').focus();
     } else if (this.get('multiple')) {
-      this.element.querySelector('.ember-select-trigger-multiple-input').focus();
+      this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
     }
   },
 
@@ -259,7 +259,7 @@ export default Ember.Component.extend({
   repositionDropdown() {
     if (this.attrs.renderInPlace) { return; }
     const dropdownPositionStrategy = this.get('dropdownPosition');
-    const dropdown = this.appRoot.querySelector('.ember-select-dropdown');
+    const dropdown = this.appRoot.querySelector('.ember-power-select-dropdown');
     const width = this.element.offsetWidth;
     let left = this.element.offsetLeft;
     dropdown.style.width = `${width}px`;

@@ -1,12 +1,12 @@
-<div class="ember-select-trigger" tabindex="{{tabindex}}" onkeydown={{action "keypress"}} onclick={{action "toggle"}}>
+<div class="ember-power-select-trigger" tabindex="{{tabindex}}" onkeydown={{action "keypress"}} onclick={{action "toggle"}}>
   {{#if multiple}}
     {{#each selected as |multiOpt|}}
-      <span class="ember-select-multiple-option">
-        <span class="ember-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
+      <span class="ember-power-select-multiple-option">
+        <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
         {{yield multiOpt}}
       </span>
     {{/each}}
-    <input type="search" class="ember-select-trigger-multiple-input" tabindex="0" autocomplete="off"
+    <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
       autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox"
       style={{triggerMultipleInputStyle}} value={{_searchText}}
       oninput={{action "search" value="target.value"}}>
@@ -17,24 +17,24 @@
       {{yield selected}}
     {{/if}}
     {{#if allowClear}}
-      <span class="ember-select-clear-btn" onclick={{action "clear"}}>&times;</span>
+      <span class="ember-power-select-clear-btn" onclick={{action "clear"}}>&times;</span>
     {{/if}}
   {{else if placeholder}}
-    <span class="ember-select-placeholder">{{placeholder}}</span>
+    <span class="ember-power-select-placeholder">{{placeholder}}</span>
   {{/if}}
 </div>
 {{#if _opened}}
-  {{#ember-wormhole to="ember-select-wormhole" renderInPlace=renderInPlace}}
-    <div class="ember-select-dropdown {{_dropdownPositionClass}}" dir={{dir}}>
+  {{#ember-wormhole to="ember-power-select-wormhole" renderInPlace=renderInPlace}}
+    <div class="ember-power-select-dropdown {{_dropdownPositionClass}}" dir={{dir}}>
       {{#if searchEnabled}}
-        <div class="ember-select-search">
+        <div class="ember-power-select-search">
           <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
           spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
           onkeydown={{action "keypress"}} placeholder={{searchPlaceholder}}>
         </div>
       {{/if}}
       {{#if results.length}}
-        <ul class="ember-select-options">
+        <ul class="ember-power-select-options">
           {{#ember-power-select/options options=results highlighted=_highlighted selected=selected
             highlight=(action "highlight") select=(action "select") as |option|}}
             {{yield option}}
@@ -42,16 +42,16 @@
         </ul>
       {{else}}
         {{#if _loadingOptions}}
-          <ul class="ember-select-options ember-select-options-loading">
-            <li class="ember-select-option">{{loadingMessage}}</li>
+          <ul class="ember-power-select-options ember-power-select-options-loading">
+            <li class="ember-power-select-option">{{loadingMessage}}</li>
           </ul>
         {{else if (hasBlock "inverse")}}
-          <ul class="ember-select-options ember-select-options-inverse">
+          <ul class="ember-power-select-options ember-power-select-options-inverse">
             {{yield component to="inverse"}}
           </ul>
         {{else}}
-          <ul class="ember-select-options ember-select-options-no-matches">
-            <li class="ember-select-option">{{noMatchesMessage}}</li>
+          <ul class="ember-power-select-options ember-power-select-options-no-matches">
+            <li class="ember-power-select-option">{{noMatchesMessage}}</li>
           </ul>
         {{/if}}
       {{/if}}
