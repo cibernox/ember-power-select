@@ -1,18 +1,18 @@
 {
   "stats": {
-    "suites": 18,
-    "tests": 40,
-    "passes": 39,
+    "suites": 20,
+    "tests": 41,
+    "passes": 41,
     "pending": 0,
-    "failures": 1,
-    "start": "2015-09-25T00:43:18.702Z",
-    "end": "2015-09-25T00:43:21.714Z"
+    "failures": 0,
+    "start": "2015-09-25T07:39:52.875Z",
+    "end": "2015-09-25T07:39:55.973Z"
   },
   "coverage": {
     "total": {
       "statementsTotal": 294,
-      "statementsCovered": 205,
-      "percentage": 69.73
+      "statementsCovered": 204,
+      "percentage": 69.39
     },
     "files": [
       {
@@ -24,8 +24,8 @@
       {
         "name": "ember-power-select/components/ember-power-select",
         "statementsTotal": 187,
-        "statementsCovered": 110,
-        "percentage": 58.82
+        "statementsCovered": 109,
+        "percentage": 58.29
       },
       {
         "name": "dummy/components/ember-power-select/options",

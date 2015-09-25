@@ -1,5 +1,4 @@
-import Ember from 'ember';
-import { isGroup, indexOfOption, optionAtIndex, filterOptions } from 'ember-power-select/utils/group-utils';
+import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
 const groupedOptions = [
@@ -85,4 +84,8 @@ test('#filterOptions generates new options respecting groups', function(assert) 
 
   assert.deepEqual(filterOptions(groupedOptions, 'imposible', matcher), []);
   assert.deepEqual(filterOptions(groupedOptions, '', matcher), groupedOptions);
+});
+
+test('#stripDiacritics returns the given string with diacritics normalized into simple letters', function(assert) {
+  assert.equal(stripDiacritics("áãàéèíìóõøòúùñ"), "aaaeeiioooouun");
 });
