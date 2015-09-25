@@ -16,3 +16,4 @@
 npm-debug.log
 testem.log
 coverage.json
+.divshot-cache
