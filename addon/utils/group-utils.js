@@ -31,7 +31,7 @@ export function optionAtIndex(originalCollection, index) {
     let localCounter = 0;
     const length = get(collection, 'length');
     while (counter <= index && localCounter < length) {
-      let entry = collection.objectAt(localCounter);
+      let entry = get(collection, String(localCounter));
       if (isGroup(entry)) {
         let found = walk(get(entry, 'options'));
         if (found) { return found; }
@@ -47,7 +47,6 @@ export function optionAtIndex(originalCollection, index) {
 
 export function filterOptions(options, text, matcher) {
   const opts = Ember.A();
-  const sanitizedText = stripDiacritics
   for (let entry of options) {
     if (isGroup(entry)) {
       let suboptions = filterOptions(get(entry, 'options'), text, matcher);

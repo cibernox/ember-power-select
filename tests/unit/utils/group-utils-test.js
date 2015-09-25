@@ -1,4 +1,5 @@
-import { isGroup, indexOfOption, optionAtIndex, filterOptions } from '../../../utils/group-utils';
+import Ember from 'ember';
+import { isGroup, indexOfOption, optionAtIndex, filterOptions } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
 const groupedOptions = [
