@@ -82,13 +82,13 @@ export default Ember.Component.extend({
   },
 
   didReceiveAttrs({ newAttrs: { options, multiple } }) {
-    this.set('_loadingOptions', true);
     if (multiple) {
-      this.set('searchEnabled', false);
+      this.set('searchEnabled', false); // I feel that this should be a CP
       if (!this.get('selected')) { this.set('selected', Ember.A()); }
     }
+    this.set('_loadingOptions', true);
     RSVP.Promise.resolve(options)
-      .then((opts) => this.updateOptions(opts))
+      .then(opts => this.updateOptions(opts))
       .finally(() => this.set('_loadingOptions', false));
   },
 
