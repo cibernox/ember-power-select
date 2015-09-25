@@ -53,6 +53,7 @@ export default Ember.Component.extend({
   dropdownPosition: 'auto', // auto | above | below
   loadingMessage: "Loading options...",
   noResultsMessage: "No results found",
+  searchMessage: "Type to search",
   selectedPartial: null,
   attributeBindings: ['dir'],
   classNames: ['ember-power-select'],

@@ -2,6 +2,8 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const { RSVP } = Ember;
+
 const numbers = [
   'one',
   'two',
@@ -197,14 +199,12 @@ test('The content of the dropdown when there is no options can be completely cus
 
 /**
 3 - Passing an array of strings
-  b) [DONE] When NO selected option is provided the first element of the list is highlighted.
-  c) [DONE] When a select option is provided that option appears in the component's trigger.
-  d) [DONE] When a select option is provided that option is highlighed when opened.
-  e) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
-  f) [DONE] The default search matches filters correctly ignoring diacritics (accents/capitals/ect...)
-  g) [DONE] You can pass a custom matcher for customize the search.
-  h) You can pass a `search` function that can return an array of results.
-  i) You can pass a `search` function that can return an promise that resolves to an array of results.
+  a) [DONE] When NO selected option is provided the first element of the list is highlighted.
+  b) [DONE] When a select option is provided that option appears in the component's trigger.
+  c) [DONE] When a select option is provided that option is highlighed when opened.
+  d) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
+  e) [DONE] The default search matches filters correctly ignoring diacritics (accents/capitals/ect...)
+  f) [DONE] You can pass a custom matcher for customize the search.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Options are strings)', {
@@ -325,14 +325,12 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 
 /**
 4 - Passing an array of objects
-  b) [DONE] When NO selected option is provided the first element of the list is highlighted.
-  c) [DONE] When a select option is provided that option appears in the component's trigger.
-  d) [DONE] When a select option is provided that option is highlighed when opened.
-  e) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
-  f) [DONE] The search works when you provide a searchFileld, ignoring diacritics and capitalization
-  g) [DONE] You can pass a custom matcher for customize the search.
-  h) You can pass a `search` function that can return an array of results.
-  i) You can pass a `search` function that can return an promise that resolves to an array of results.
+  a) [DONE] When NO selected option is provided the first element of the list is highlighted.
+  b) [DONE] When a select option is provided that option appears in the component's trigger.
+  c) [DONE] When a select option is provided that option is highlighed when opened.
+  d) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
+  e) [DONE] The search works when you provide a searchFileld, ignoring diacritics and capitalization
+  f) [DONE] You can pass a custom matcher for customize the search.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Options are objects)', {
@@ -463,3 +461,150 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta Stinson');
   assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'Lisa Simpson');
 });
+
+/**
+5 - Custom search action
+  a) When you pass a custom search action instead of options, opening the select show a "Type to search" message in a <li>
+  b) The "type to search" message can be customized passing the custom message.
+  c) The search function can return an array and those options get rendered.
+  d) The search function can return an a promise that resolves to an array too.
+  e) While the async search is being performed the "Type to search" dissapears the "Loading..." message appears.
+  f) When the search resolves to an empty array then the "No results found" message or block appears.
+
+  ... add tests to verify that the first element is highlighted....
+*/
+
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Custom search function)', {
+  integration: true
+});
+
+test('When you pass a custom search action instead of options, opening the select show a "Type to search" message in a list element', function() {
+  assert.expect(1);
+  this.render(hbs`
+    {{#ember-power-select search=searchFn as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').text(), 'Type to search', '... with the "type to seach" message');
+});
+
+test('The "type to search" message can be customized passing `searchMessage=something`', function() {
+  assert.expect(1);
+  this.render(hbs`
+    {{#ember-power-select search=searchFn searchMessage="Type the name of the thing" as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').text(), 'Type the name of the thing');
+});
+
+test('The search function can return an array and those options get rendered', function() {
+  assert.expect(1);
+
+  this.searchFn = function(term) {
+    return number.filter(str => str.indexOf(term) > -1);
+  };
+
+  this.render(hbs`
+    {{#ember-power-select search=searchFn as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  typeInSearch("teen");
+  assert.equal($('.ember-power-select-option').length, 7);
+});
+
+test('The search function can return a promise that resolves to an array and those options get rendered', function() {
+  assert.expect(1);
+
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      Ember.run.later(function() {
+        resolve(number.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
+
+  this.render(hbs`
+    {{#ember-power-select search=searchFn as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  typeInSearch("teen");
+  assert.equal($('.ember-power-select-option').length, 7);
+});
+
+test('While the async search is being performed the "Type to search" dissapears the "Loading..." message appears', function() {
+  assert.expect(3);
+
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      Ember.run.later(function() {
+        resolve(number.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
+
+  this.render(hbs`
+    {{#ember-power-select search=searchFn as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok(/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message is displayed');
+  typeInSearch("teen");
+  assert.ok(!/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message dissapeared');
+  assert.ok(!/Loading options\.\.\./.test($('.ember-power-select-dropdown').text()), '"Loading options..." message appears');
+});
+
+test('When the search resolves to an empty array then the "No results found" message or block appears.', function() {
+  assert.expect(3);
+
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      Ember.run.later(function() { resolve([]); }, 10);
+    });
+  };
+
+  this.render(hbs`
+    {{#ember-power-select search=searchFn as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  typeInSearch("teen");
+  assert.ok(/No results found/.test($('.ember-power-select-option').text()), 'The default "No results" message renders');
+
+  this.render(hbs`
+    {{#ember-power-select search=searchFn noResultsMessage="No numbers bro" as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  typeInSearch("teen");
+  assert.ok(/No numbers bro/.test($('.ember-power-select-option').text()), 'The customized "no results" message gets rendered');
+
+  this.render(hbs`
+    {{#ember-power-select search=searchFn as |number|}}
+      {{number}}
+    {{else}}
+      <span class="foo-bar">Baz</span>
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  typeInSearch("teen");
+  assert.equal($('.ember-power-select-dropdown .foo-bar').length, 1, 'The alternate block message gets rendered');
+});
+
