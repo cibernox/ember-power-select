@@ -49,6 +49,11 @@
   {{option}}
 {{/ember-power-select}}
 
+<h4>If the content of your selector cannot be initialized, you can pass an action to find the results your way. e.g. `search=(action "findStuff")`</h4>
+{{#ember-power-select search=(action "search") as |option|}}
+  {{option}}
+{{/ember-power-select}}
+
 <h4>Select with placeholder</h4>
 {{#ember-power-select options=(readonly simpleOptions) placeholder="Please select a number" as |option|}}
   {{option}}

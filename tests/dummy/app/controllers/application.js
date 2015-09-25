@@ -80,6 +80,11 @@ export default Ember.Controller.extend({
   actions: {
     debugSelection(option) {
       console.debug("I've selected", option);
+    },
+
+    search(term) {
+      var length = term.length;
+      return numbers.filter(str => str.length === length); // returns the numbers with the same length than the current
     }
   },
 

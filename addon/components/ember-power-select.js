@@ -14,6 +14,17 @@ const { RSVP, computed, run, get } = Ember;
 //     (optional behaviour, not default)
 //
 // * Load content asynchronosy (demo with GH repos by example)
+//    The functionality works, but while there is no results the message is
+//    the same than when there is no matches.
+//
+//    I can't avoid feeling that there is 3 different situations:
+//
+//    * No options provided => A mistake or valid situation? "No results" is an acceptable copy?
+//    * No results matching the search criteria => "No results" seems ok.
+//    * No results because there is a search action that might be async:
+//      - The initial message should not be "No results" but something encouraging the user to search.
+//      - While the search promise is not resolved a "Loading..." message should appear
+//      - If the search action resolved to an empty collection then the "No results" message is correct.//
 //
 // Low priority TODOs:
 //
@@ -124,8 +135,15 @@ export default Ember.Component.extend({
 
     search(searchText /*, e */) {
       this.set('_searchText', searchText);
-      this.refreshResults();
-      this.set('_highlighted', this.optionAtIndex(0));
+      if (this.attrs.search) {
+        Ember.RSVP.Promise.resolve(this.attrs.search(searchText)).then(results => {
+          this.set('results', results);
+          this.set('_highlighted', this.optionAtIndex(0));
+        });
+      } else {
+        this.refreshResults();
+        this.set('_highlighted', this.optionAtIndex(0));
+      }
     },
 
     keypress(e) {
@@ -304,7 +322,7 @@ export default Ember.Component.extend({
     } else {
       matcher = (option, text) => this.matcher(option, text);
     }
-    this.set('results', filterOptions(options, searchText, matcher));
+    this.set('results', filterOptions(options || [], searchText, matcher));
     this._resultsDirty = false;
     run.scheduleOnce('afterRender', this, this.repositionDropdown);
   },
