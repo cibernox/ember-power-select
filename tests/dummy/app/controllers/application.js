@@ -85,6 +85,15 @@ export default Ember.Controller.extend({
     search(term) {
       var length = term.length;
       return numbers.filter(str => str.length === length); // returns the numbers with the same length than the current
+    },
+
+    asyncSearch(term) {
+      return new Ember.RSVP.Promise(function(resolve) {
+        Ember.run.later(function() {
+          var length = term.length;
+          resolve(numbers.filter(str => str.length === length)); // returns the numbers with the same length than the current
+        }, 1500);
+      });
     }
   },
 

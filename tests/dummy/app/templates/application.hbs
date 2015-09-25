@@ -54,6 +54,11 @@
   {{option}}
 {{/ember-power-select}}
 
+<h4>... and if that action needs to perform something async, just return a promise</h4>
+{{#ember-power-select search=(action "asyncSearch") as |option|}}
+  {{option}}
+{{/ember-power-select}}
+
 <h4>Select with placeholder</h4>
 {{#ember-power-select options=(readonly simpleOptions) placeholder="Please select a number" as |option|}}
   {{option}}

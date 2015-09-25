@@ -1,25 +1,8 @@
 # Ember-power-select
 
-This README outlines the details of collaborating on this Ember addon.
+I was tired of reinventing select components because other options were not easy to customized,
+so I decided to built one.
 
-## Installation
+Based in select2.js, but built from scratch, 100% in ember.
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
-
-## Running
-
-* `ember server`
-* Visit your app at http://localhost:4200.
-
-## Running Tests
-
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+It's a work in progress still, but getting closer.

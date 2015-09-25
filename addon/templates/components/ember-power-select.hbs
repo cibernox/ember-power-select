@@ -34,28 +34,25 @@
         </div>
       {{/if}}
 
-      {{#if _loadingOptions}}
-        <ul class="ember-power-select-options ember-power-select-options-loading">
+      <ul class="ember-power-select-options">
+        {{#if _loadingOptions}}
           <li class="ember-power-select-option">{{loadingMessage}}</li>
-        </ul>
-      {{else if results.length}}
-        <ul class="ember-power-select-options">
+        {{/if}}
+        {{#if results.length}}
           {{#ember-power-select/options options=results highlighted=_highlighted selected=selected
             highlight=(action "highlight") select=(action "select") as |option|}}
             {{yield option}}
           {{/ember-power-select/options}}
-        </ul>
-      {{else}}
-        {{#if (hasBlock "inverse")}}
-          <ul class="ember-power-select-options ember-power-select-options-inverse">
+        {{else if mustSearch}}
+          <li class="ember-power-select-option">{{searchMessage}}</li>
+        {{else if _notLoadingOptions}}
+          {{#if (hasBlock "inverse")}}
             {{yield component to="inverse"}}
-          </ul>
-        {{else}}
-          <ul class="ember-power-select-options ember-power-select-options-no-matches">
-            <li class="ember-power-select-option">{{noResultsMessage}}</li>
-          </ul>
+          {{else}}
+            <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+          {{/if}}
         {{/if}}
-      {{/if}}
+      </ul>
     </div>
   {{/ember-wormhole}}
 {{/if}}

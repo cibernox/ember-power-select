@@ -3,6 +3,7 @@ import layout from '../templates/components/ember-power-select';
 import { indexOfOption, optionAtIndex, filterOptions, stripDiacritics } from '../utils/group-utils';
 
 const { RSVP, computed, run, get } = Ember;
+const { htmlSafe } = Ember.String;
 
 // TODOs:
 //
@@ -23,7 +24,9 @@ const { RSVP, computed, run, get } = Ember;
 //    * No results matching the search criteria => "No results" seems ok.
 //    * No results because there is a search action that might be async:
 //      - The initial message should not be "No results" but something encouraging the user to search.
-//      - While the search promise is not resolved a "Loading..." message should appear
+//      - While the search promise is not resolved a "Loading..." message should appear, BUT THE EXISTING
+//        RESULTS DON'T DISSAPEAR YET. IMPORTANT.
+//        DURING THIS TIME IF THE USER HIGHLIGHTS
 //      - If the search action resolved to an empty collection then the "No results" message is correct.//
 //
 //
@@ -60,7 +63,7 @@ export default Ember.Component.extend({
   searchPlaceholder: null,
   dropdownPosition: 'auto', // auto | above | below
   loadingMessage: "Loading options...",
-  noResultsMessage: "No results found",
+  noMatchesMessage: "No results found",
   searchMessage: "Type to search",
   selectedPartial: null,
   attributeBindings: ['dir'],
@@ -98,12 +101,18 @@ export default Ember.Component.extend({
   },
 
   // CPs
+  _notLoadingOptions: computed.not('_loadingOptions'),
+
+  mustSearch: computed('_searchText', 'attrs.search', function(){
+    return this.get('_searchText.length') === 0 && !!this.get('attrs.search');
+  }),
+
   tabindex: computed('disabled', function() {
     return !this.get('disabled') ? "0" : "-1";
   }),
 
   triggerMultipleInputStyle: computed('_searchText', function() {
-    return `width: ${(this.get('_searchText.length') || 0) * 0.5 + 2}em`;
+    return htmlSafe(`width: ${(this.get('_searchText.length') || 0) * 0.5 + 2}em`);
   }),
 
   // Actions
@@ -142,13 +151,10 @@ export default Ember.Component.extend({
       this.set('selected', null);
     },
 
-    search(searchText /*, e */) {
-      this.set('_searchText', searchText);
+    search(term /*, e */) {
+      this.set('_searchText', term);
       if (this.attrs.search) {
-        Ember.RSVP.Promise.resolve(this.attrs.search(searchText)).then(results => {
-          this.set('results', results);
-          this.set('_highlighted', this.optionAtIndex(0));
-        });
+        this.performCustomSearch(term);
       } else {
         this.refreshResults();
         this.set('_highlighted', this.optionAtIndex(0));
@@ -343,6 +349,20 @@ export default Ember.Component.extend({
     } else {
       this._resultsDirty = true;
     }
+  },
+
+  performCustomSearch(term) {
+    this.set('_loadingOptions', true);
+    const promise = term.length > 0 ? RSVP.Promise.resolve(this.attrs.search(term)) : RSVP.resolve([]);
+    this.set('_activeSearch', promise);
+    promise.then(results => {
+      if (promise !== this.get('_activeSearch')) { return; }
+      this.set('results', results);
+      this.set('_highlighted', this.optionAtIndex(0));
+    }).finally(() => {
+      if (promise !== this.get('_activeSearch')) { return; }
+      this.set('_loadingOptions', false);
+    });
   },
 
   addGlobalEvents() {
