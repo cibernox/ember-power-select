@@ -33,7 +33,12 @@
           onkeydown={{action "keypress"}} placeholder={{searchPlaceholder}}>
         </div>
       {{/if}}
-      {{#if results.length}}
+
+      {{#if _loadingOptions}}
+        <ul class="ember-power-select-options ember-power-select-options-loading">
+          <li class="ember-power-select-option">{{loadingMessage}}</li>
+        </ul>
+      {{else if results.length}}
         <ul class="ember-power-select-options">
           {{#ember-power-select/options options=results highlighted=_highlighted selected=selected
             highlight=(action "highlight") select=(action "select") as |option|}}
@@ -41,11 +46,7 @@
           {{/ember-power-select/options}}
         </ul>
       {{else}}
-        {{#if _loadingOptions}}
-          <ul class="ember-power-select-options ember-power-select-options-loading">
-            <li class="ember-power-select-option">{{loadingMessage}}</li>
-          </ul>
-        {{else if (hasBlock "inverse")}}
+        {{#if (hasBlock "inverse")}}
           <ul class="ember-power-select-options ember-power-select-options-inverse">
             {{yield component to="inverse"}}
           </ul>

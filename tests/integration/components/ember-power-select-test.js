@@ -148,6 +148,30 @@ test('Each option of the select is the result of yielding an item', function(ass
   assert.equal($('.ember-power-select-option:eq(13)').text().trim(), 'fourteen');
 });
 
+test('If the passed options is a promise, while its not resolved the component shows a Loading message', function(assert) {
+  let done = assert.async();
+  assert.expect(4);
+
+  this.numbersPromise = new RSVP.Promise(function(resolve) {
+    Ember.run.later(function() { resolve(numbers); }, 100);
+  });
+
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbersPromise) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+
+  assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
+  Ember.run.later(() => {
+    assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
+    assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
+    done();
+  }, 250);
+});
+
 /**
 2 - Passing an empty array
   a) [DONE] A "No options" message appears by default.

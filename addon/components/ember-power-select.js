@@ -26,6 +26,14 @@ const { RSVP, computed, run, get } = Ember;
 //      - While the search promise is not resolved a "Loading..." message should appear
 //      - If the search action resolved to an empty collection then the "No results" message is correct.//
 //
+//
+//  Also, open question: Should the `search` functionality return the new results?
+//  Or should populate the options?
+//  I think the first option is simpler. Function is invoked and returns a promise
+//  that will eventually resolve to the new results.
+//  In that case, when you already got a set of results and you're waiting for the next
+//  to come, during this time should you still show the previous results or just the loading?
+//
 // Low priority TODOs:
 //
 // * Limit the number of selections in multiple mode??? Perhaps not my responsability.
