@@ -1,6 +1,6 @@
 <div class="ember-power-select-trigger" tabindex="{{tabindex}}" onkeydown={{action "keypress"}} onclick={{action "toggle"}}>
   {{#if multiple}}
-    {{#each selected as |multiOpt|}}
+    {{#each selectedOption as |multiOpt|}}
       <span class="ember-power-select-multiple-option">
         <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
         {{yield multiOpt}}
@@ -10,11 +10,11 @@
       autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox"
       style={{triggerMultipleInputStyle}} value={{_searchText}}
       oninput={{action "search" value="target.value"}}>
-  {{else if selected}}
+  {{else if selectedOption}}
     {{#if selectedPartial}}
       {{partial selectedPartial}}
     {{else}}
-      {{yield selected}}
+      {{yield selectedOption}}
     {{/if}}
     {{#if allowClear}}
       <span class="ember-power-select-clear-btn" onclick={{action "clear"}}>&times;</span>
@@ -39,7 +39,7 @@
           <li class="ember-power-select-option">{{loadingMessage}}</li>
         {{/if}}
         {{#if results.length}}
-          {{#ember-power-select/options options=results highlighted=_highlighted selected=selected
+          {{#ember-power-select/options options=results highlighted=_highlighted selectedOption=selectedOption
             highlight=(action "highlight") select=(action "select") as |option|}}
             {{yield option}}
           {{/ember-power-select/options}}

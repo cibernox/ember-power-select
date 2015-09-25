@@ -87,7 +87,6 @@ export default Ember.Component.extend({
   didReceiveAttrs({ newAttrs: { options, multiple } }) {
     if (multiple) {
       this.set('searchEnabled', false); // I feel that this should be a CP
-      if (!this.get('selected')) { this.set('selected', Ember.A()); }
     }
     this.set('_loadingOptions', true);
     RSVP.Promise.resolve(options)
@@ -102,6 +101,10 @@ export default Ember.Component.extend({
 
   // CPs
   _notLoadingOptions: computed.not('_loadingOptions'),
+
+  selectedOption: computed('selected', function() {
+    return this.get('multiple') && Ember.A(this.get('selected')) || this.get('selected');
+  }),
 
   mustSearch: computed('_searchText', 'attrs.search', function(){
     return this.get('_searchText.length') === 0 && !!this.get('attrs.search');
@@ -129,10 +132,10 @@ export default Ember.Component.extend({
       e.preventDefault();
       if (this.attrs.multiple) {
         this.addOrRemoveToSelected(option);
-      } else if (this.get('selected') !== option) {
-        this.set('selected', option);
+      } else if (this.get('selectedOption') !== option) {
+        this.set('selectedOption', option);
       }
-      if (this.attrs.onchange) { this.attrs.onchange(this.get('selected')); }
+      if (this.attrs.onchange) { this.attrs.onchange(this.get('selectedOption')); }
       this.close();
     },
 
@@ -142,13 +145,13 @@ export default Ember.Component.extend({
 
     removeOption(option, e) {
       e.stopPropagation();
-      this.get('selected').removeObject(option);
+      this.get('selectedOption').removeObject(option);
       run.scheduleOnce('afterRender', this, this.repositionDropdown);
     },
 
     clear(e) {
       e.stopPropagation();
-      this.set('selected', null);
+      this.set('selectedOption', null);
     },
 
     search(term /*, e */) {
@@ -194,7 +197,7 @@ export default Ember.Component.extend({
     if (this.get('multiple')) {
       this.set('_highlighted', this.optionAtIndex(0));
     } else {
-      this.set('_highlighted', this.get('selected') || this.optionAtIndex(0));
+      this.set('_highlighted', this.get('selectedOption') || this.optionAtIndex(0));
     }
     run.scheduleOnce('afterRender', this, this.repositionDropdown);
     run.scheduleOnce('afterRender', this, this.focusSearch);
@@ -251,10 +254,10 @@ export default Ember.Component.extend({
   },
 
   addOrRemoveToSelected(option) {
-    if (this.get('selected').contains(option)) {
-      this.get('selected').removeObject(option);
+    if (this.get('selectedOption').contains(option)) {
+      this.get('selectedOption').removeObject(option);
     } else {
-      this.get('selected').addObject(option);
+      this.get('selectedOption').addObject(option);
     }
   },
 
