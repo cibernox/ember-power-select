@@ -751,3 +751,31 @@ test('When the search resolves, the first element is highlighted like with regul
     done();
   }, 110);
 });
+
+/**
+6 - Groups
+  a) Options that have a `groupName` and `options` are considered groups, and rendered as such.
+  b) Filtering works with groups (a group title is visible as long as one of it's elements matches)
+     the search criteria)
+  c) Search criteria performs a recursive search with any depth level.
+  d) Clicking on a group name doesn't close the dropdown.
+*/
+
+/**
+7 - Mouse control
+  a) Mouseovering a list item highlights it.
+  b) Clicking an item selects it, closes the dropdown and focuses the trigger.
+  c) Clicking the trigger while the select is opened closes it and and focuses the trigger.
+  d) Clicking the clear button removes the selection.
+  e) Clicking anywhere outside the select while opened closes the component AND DOESN'T FOCUSES THE TRIGGER (FAILING NOW)
+*/
+
+/**
+8 - Keyboard control
+  a) Pressing keydown highlights the next option.
+  b) Pressing keyup highlights the previous option.
+  c) When you the last option is highlighted, pressing keydown doesn't change the highlighted.
+  d) When you the first option is highlighted, pressing keyup doesn't change the highlighted.
+  e) Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger.
+  f) Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger.
+*/
