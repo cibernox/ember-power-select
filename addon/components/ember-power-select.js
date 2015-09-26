@@ -123,6 +123,7 @@ export default Ember.Component.extend({
     toggle(/* e */){
       if (this.get('_opened'))  {
         this.close();
+        this.focusTrigger();
       } else {
         this.open();
       }
@@ -137,6 +138,7 @@ export default Ember.Component.extend({
       }
       if (this.attrs.onchange) { this.attrs.onchange(this.get('selectedOption')); }
       this.close();
+      this.focusTrigger();
     },
 
     highlight(option) {
@@ -151,7 +153,9 @@ export default Ember.Component.extend({
 
     clear(e) {
       e.stopPropagation();
+      e.preventDefault();
       this.set('selectedOption', null);
+      if (this.attrs.onchange) { this.attrs.onchange(null); }
     },
 
     search(term /*, e */) {
@@ -164,7 +168,7 @@ export default Ember.Component.extend({
       }
     },
 
-    keypress(e) {
+    keydown(e) {
       if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
         this.handleVerticalArrowKey(e);
       } else if (e.keyCode === 13) {  // Enter
@@ -173,6 +177,7 @@ export default Ember.Component.extend({
         this.handleTab(e);
       } else if (e.keyCode === 27) {  // escape
         this.close();
+        this.focusTrigger();
       } else if (e.keyCode === 8) {   // backspace
         this.handleBackspace(e);
       }
@@ -185,6 +190,9 @@ export default Ember.Component.extend({
     this.set('_searchText', '');
     this.set('_dropdownPositionClass', null);
     this.removeGlobalEvents();
+  },
+
+  focusTrigger() {
     this.element.querySelector(`.ember-power-select-trigger${this.get('multiple') ? '-multiple-input' : ''}`).focus();
   },
 
@@ -204,8 +212,12 @@ export default Ember.Component.extend({
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
+  swallowEvent(e) {
+    e.stopPropagation();
+  },
+
   handleRootClick(e) {
-    if (!this.element.contains(e.target) && !document.querySelector('#'+this.get('_wormholeDestination')).contains(e.target)) {
+    if (!this.element.contains(e.target)) {
       this.close();
     }
   },
@@ -224,6 +236,7 @@ export default Ember.Component.extend({
     if (this.get('_opened')) {
       e.preventDefault();
       this.close();
+      this.focusTrigger();
     }
   },
 

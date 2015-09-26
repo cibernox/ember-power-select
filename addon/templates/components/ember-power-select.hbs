@@ -1,4 +1,4 @@
-<div class="ember-power-select-trigger" tabindex="{{tabindex}}" onkeydown={{action "keypress"}} onclick={{action "toggle"}}>
+<div class="ember-power-select-trigger" tabindex="{{tabindex}}" onkeydown={{action "keydown"}} onclick={{action "toggle"}}>
   {{#if multiple}}
     {{#each selectedOption as |multiOpt|}}
       <span class="ember-power-select-multiple-option">
@@ -25,12 +25,12 @@
 </div>
 {{#if _opened}}
   {{#ember-wormhole to=_wormholeDestination renderInPlace=renderInPlace}}
-    <div class="ember-power-select-dropdown {{_dropdownPositionClass}}" dir={{dir}}>
+    <div class="ember-power-select-dropdown {{_dropdownPositionClass}}" dir={{dir}} onclick={{swallowEvent}}>
       {{#if searchEnabled}}
         <div class="ember-power-select-search">
           <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
           spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
-          onkeydown={{action "keypress"}} placeholder={{searchPlaceholder}}>
+          onkeydown={{action "keydown"}} placeholder={{searchPlaceholder}}>
         </div>
       {{/if}}
 

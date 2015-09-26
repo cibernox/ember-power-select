@@ -46,6 +46,19 @@ const countries = [
   { name: 'United Kingdom', code: 'GB', population: 64596752 },
 ];
 
+const groupedNumbers = [
+  { groupName: "Smalls", options: ["one", "two", "three"] },
+  { groupName: "Mediums", options: ["four", "five", "six"] },
+  { groupName: "Bigs", options: [
+      { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
+      { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+      "thirteen"
+    ]
+  },
+  "one hundred",
+  "one thousand"
+];
+
 function typeInSearch(text) {
   $('.ember-power-select-search input').val(text);
   $('.ember-power-select-search input').trigger('input');
@@ -754,28 +767,307 @@ test('When the search resolves, the first element is highlighted like with regul
 
 /**
 6 - Groups
-  a) Options that have a `groupName` and `options` are considered groups, and rendered as such.
-  b) Filtering works with groups (a group title is visible as long as one of it's elements matches)
-     the search criteria)
-  c) Search criteria performs a recursive search with any depth level.
-  d) Clicking on a group name doesn't close the dropdown.
+  a) [DONE] Options that have a `groupName` and `options` are considered groups and are rendered as such.
+  b) [DONE] Filtering works with groups (a group title is visible as long as one of it's elements matches)
+     the search criteria) with no depth limit.
 */
+
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Groups)', {
+  integration: true
+});
+
+test('Options that have a `groupName` and `options` are considered groups and are rendered as such', function(assert) {
+  assert.expect(10);
+
+  this.groupedNumbers = groupedNumbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly groupedNumbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+
+  let $rootLevelGroups = $('.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group');
+  let $rootLevelOptions = $('.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option');
+  assert.equal($rootLevelGroups.length, 3, 'There is 3 groups in the root level');
+  assert.equal($rootLevelOptions.length, 2, 'There is 2 options in the root level');
+  assert.equal($($rootLevelGroups[0]).find('.ember-power-select-group-name').text().trim(), 'Smalls');
+  assert.equal($($rootLevelGroups[1]).find('.ember-power-select-group-name').text().trim(), 'Mediums');
+  assert.equal($($rootLevelGroups[2]).find('> .ember-power-select-group-name').text().trim(), 'Bigs');
+  assert.equal($($rootLevelOptions[0]).text().trim(), 'one hundred');
+  assert.equal($($rootLevelOptions[1]).text().trim(), 'one thousand');
+
+  let $bigs = $($rootLevelGroups[2]).find('> .ember-power-select-options.nested');
+  assert.equal($bigs.find('> .ember-power-select-group').length, 2, 'There is 2 sub-groups in the "bigs" group');
+  assert.equal($bigs.find('> .ember-power-select-option').length, 1, 'There is 1 option in the "bigs" group');
+});
+
+test('When filtering, a group title is visible as long as one of it\'s elements is', function(assert) {
+  assert.expect(3);
+
+  this.groupedNumbers = groupedNumbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly groupedNumbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('ve'));
+  let groupNames = $('.ember-power-select-group-name').toArray().map(e => $(e).text().trim());
+  let optionValues = $('.ember-power-select-option').toArray().map(e => $(e).text().trim());
+  assert.deepEqual(groupNames, ["Mediums", "Bigs", "Fairly big", "Really big"], 'Only the groups with matching options are shown');
+  assert.deepEqual(optionValues, ["five", "seven", "eleven", "twelve"], 'Only the matching options are shown');
+  Ember.run(() => typeInSearch('lve'));
+  groupNames = $('.ember-power-select-group-name').toArray().map(e => $(e).text().trim());
+  assert.deepEqual(groupNames, ["Bigs", "Really big"], 'With no depth level');
+});
 
 /**
 7 - Mouse control
-  a) Mouseovering a list item highlights it.
-  b) Clicking an item selects it, closes the dropdown and focuses the trigger.
-  c) Clicking the trigger while the select is opened closes it and and focuses the trigger.
-  d) Clicking the clear button removes the selection.
-  e) Clicking anywhere outside the select while opened closes the component AND DOESN'T FOCUSES THE TRIGGER (FAILING NOW)
+  a) [DONE] Mouseovering a list item highlights it.
+  b) [DONE] Clicking an item selects it, closes the dropdown and focuses the trigger.
+  c) [DONE] Clicking the trigger while the select is opened closes it and and focuses the trigger.
+  d) [DONE] Clicking the clear button removes the selection but doesn't opens the dropdon.
+  e) [DONE] Clicking anywhere outside the select while opened closes the component AND DOESN'T FOCUSES THE TRIGGER (FAILING NOW)
+  f) [DONE] Clicking on the title of a group doesn't performs any action nor closes the dropdown.
 */
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Mouse control)', {
+  integration: true
+});
+
+test('Mouseovering a list item highlights it', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first element is highlighted');
+  Ember.run(() => $('.ember-power-select-option:eq(3)').trigger('mouseover'));
+  assert.ok($('.ember-power-select-option:eq(3)').hasClass('highlighted'), 'The 4th element is highlighted');
+  assert.equal($('.ember-power-select-option:eq(3)').text().trim(), 'four');
+});
+
+test('Clicking an item selects it, closes the dropdown and focuses the trigger', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:eq(3)').click());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select was closed');
+  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigger is focused');
+});
+
+test('Clicking the trigger while the select is opened closes it and and focuses the trigger', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigger is focused');
+});
+
+test('Clicking the clear button removes the selection', function(assert) {
+  assert.expect(5);
+
+  this.numbers = numbers;
+  this.onChange = function(selected) {
+    assert.equal(selected, null, 'The onchange action was called with the new selection (null)');
+  };
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected="three" allowClear=true onchange=(readonly onChange) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  assert.ok(/three/.test($('.ember-power-select-trigger').text().trim()), 'A element is selected');
+  Ember.run(() => $('.ember-power-select-clear-btn').click());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
+  assert.ok(!/three/.test($('.ember-power-select-trigger').text().trim()), 'That element is not selected now');
+});
+
+test('Clicking anywhere outside the select while opened closes the component and doesn\'t focuses the trigger', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    <div id="other-thing">Foo</div>
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  Ember.run(() => this.$('#other-thing').click());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  assert.ok(!$('.ember-power-select-trigger').is(':focus'), 'The select is not focused');
+});
+
+test('Clicking on the title of a group doesn\'t performs any action nor closes the dropdown', function(assert) {
+  assert.expect(1);
+
+  this.groupedNumbers = groupedNumbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly groupedNumbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-group-name:eq(1)').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
+});
 
 /**
 8 - Keyboard control
-  a) Pressing keydown highlights the next option.
-  b) Pressing keyup highlights the previous option.
-  c) When you the last option is highlighted, pressing keydown doesn't change the highlighted.
-  d) When you the first option is highlighted, pressing keyup doesn't change the highlighted.
-  e) Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger.
-  f) Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger.
+  a) [DONE] Pressing keydown highlights the next option.
+  b) [DONE] Pressing keyup highlights the previous option.
+  c) [FAILING] When you the last option is highlighted, pressing keydown doesn't change the highlighted.
+  d) [DONE] When you the first option is highlighted, pressing keyup doesn't change the highlighted.
+  e) [DONE] Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger.
+  f) [DONE] Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger.
+
+  ... add cases for navigation between
 */
+
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
+  integration: true
+});
+
+test('Pressing keydown highlights the next option', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one');
+  let downArrow = $.Event("keydown", { keyCode: 40 });
+  Ember.run(() => $('.ember-power-select-search input').trigger(downArrow));
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'two', 'The next options is highlighted now');
+});
+
+test('Pressing keyup highlights the previous option', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected="three" as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'three');
+  let upArrow = $.Event("keydown", { keyCode: 38 });
+  Ember.run(() => $('.ember-power-select-search input').trigger(upArrow));
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'two', 'The previous options is highlighted now');
+});
+
+test('When you the last option is highlighted, pressing keydown doesn\'t change the highlighted', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.lastNumber = numbers[numbers.length - 1];
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly lastNumber) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'twenty');
+  let downArrow = $.Event("keydown", { keyCode: 40 });
+  Ember.run(() => $('.ember-power-select-search input').trigger(downArrow));
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'twenty', 'The last option is still the highlighted one');
+});
+
+test('When you the first option is highlighted, pressing keyup doesn\'t change the highlighted', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.firstNumber = numbers[0];
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly firstNumber) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one');
+  let upArrow = $.Event("keydown", { keyCode: 38 });
+  Ember.run(() => $('.ember-power-select-search input').trigger(upArrow));
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one', 'The first option is still the highlighted one');
+});
+
+test('Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.changed = function(val) {
+    assert.equal(val, 'two', 'The onchange action is triggered with the selected value');
+  };
+
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) onchange=(readonly changed) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  let downArrow = $.Event("keydown", { keyCode: 40 });
+  let enter = $.Event("keydown", { keyCode: 13 });
+  Ember.run(() => $('.ember-power-select-search input').trigger(downArrow));
+  Ember.run(() => $('.ember-power-select-search input').trigger(enter));
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'two', 'The highlighted element was selected');
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
+  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigges is focused');
+});
+
+test('Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  let downArrow = $.Event("keydown", { keyCode: 40 });
+  let tab = $.Event("keydown", { keyCode: 9 });
+  Ember.run(() => $('.ember-power-select-search input').trigger(downArrow));
+  Ember.run(() => $('.ember-power-select-search input').trigger(tab));
+  assert.equal($('.ember-power-select-trigger').text().trim(), '', 'The highlighted element wasn\'t selected');
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
+  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigges is focused');
+});
+
