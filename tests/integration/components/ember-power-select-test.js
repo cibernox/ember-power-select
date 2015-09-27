@@ -945,7 +945,7 @@ test('Clicking on the title of a group doesn\'t performs any action nor closes t
 8 - Keyboard control
   a) [DONE] Pressing keydown highlights the next option.
   b) [DONE] Pressing keyup highlights the previous option.
-  c) [FAILING] When you the last option is highlighted, pressing keydown doesn't change the highlighted.
+  c) [DONE] When you the last option is highlighted, pressing keydown doesn't change the highlighted.
   d) [DONE] When you the first option is highlighted, pressing keyup doesn't change the highlighted.
   e) [DONE] Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger.
   f) [DONE] Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger.

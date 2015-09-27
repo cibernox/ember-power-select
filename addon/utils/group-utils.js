@@ -6,6 +6,21 @@ export function isGroup(entry) {
   return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');
 }
 
+export function countOptions(collection) {
+  let counter = 0;
+  (function walk(collection) {
+    if (!collection) { return null; }
+    for (let entry of collection) {
+      if (isGroup(entry)) {
+        walk(get(entry, 'options'));
+      } else {
+        counter++;
+      }
+    }
+  })(collection);
+  return counter;
+}
+
 export function indexOfOption(collection, option) {
   let index = 0;
   return (function walk(collection) {

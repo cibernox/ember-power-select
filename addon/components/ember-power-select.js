@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/ember-power-select';
-import { indexOfOption, optionAtIndex, filterOptions, stripDiacritics } from '../utils/group-utils';
+import { indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions } from '../utils/group-utils';
 
 const { RSVP, computed, run, get } = Ember;
 const { htmlSafe } = Ember.String;
@@ -116,6 +116,10 @@ export default Ember.Component.extend({
 
   triggerMultipleInputStyle: computed('_searchText', function() {
     return htmlSafe(`width: ${(this.get('_searchText.length') || 0) * 0.5 + 2}em`);
+  }),
+
+  resultsLength: computed('results', function() {
+    return countOptions(this.get('results'));
   }),
 
   // Actions
@@ -304,7 +308,8 @@ export default Ember.Component.extend({
   },
 
   advanceSelectableOption(currentHighlight, step) {
-    let startIndex = Math.max(this.indexOfOption(currentHighlight) + step % 1000, 0); //opts.get('length');
+    let resultsLength = this.get('resultsLength');
+    let startIndex = Math.min(Math.max(this.indexOfOption(currentHighlight) + step, 0), resultsLength - 1);
     let nextOption = this.optionAtIndex(startIndex);
     while (nextOption && get(nextOption, 'disabled')) {
       nextOption = this.optionAtIndex(startIndex += step);

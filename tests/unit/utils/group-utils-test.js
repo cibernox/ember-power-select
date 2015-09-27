@@ -1,4 +1,4 @@
-import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics } from 'ember-power-select/utils/group-utils';
+import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
 const groupedOptions = [
@@ -88,4 +88,8 @@ test('#filterOptions generates new options respecting groups', function(assert) 
 
 test('#stripDiacritics returns the given string with diacritics normalized into simple letters', function(assert) {
   assert.equal(stripDiacritics("áãàéèíìóõøòúùñ"), "aaaeeiioooouun");
+});
+
+test('#countOptions returns the number of options, transversing the groups with no depth level', function(assert) {
+  assert.equal(countOptions(groupedOptions), 16);
 });
