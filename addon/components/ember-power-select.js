@@ -146,6 +146,7 @@ export default Ember.Component.extend({
     },
 
     highlight(option) {
+      if (get(option, 'disabled')) { return; }
       this.set('_highlighted', option);
     },
 
@@ -201,6 +202,7 @@ export default Ember.Component.extend({
   },
 
   open() {
+    if (this.get('disabled')) { return; }
     this.set('_opened', true);
     const pos = this.get('dropdownPosition');
     this.set('_dropdownPositionClass', pos === 'auto' ? null : pos);
@@ -227,10 +229,10 @@ export default Ember.Component.extend({
   },
 
   handleEnter(e) {
-    if (this.get('disabled')) {
-      return;
-    } else if (this.get('_opened')) {
-      this.send('select', this.get('_highlighted'), e);
+    if (this.get('disabled')) { return; }
+    if (this.get('_opened')) {
+      const highlighted = this.get('_highlighted');
+      this.send('select', highlighted, e);
     } else {
       this.send('toggle', e);
     }
