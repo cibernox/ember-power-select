@@ -996,6 +996,7 @@ test('Clicking on the title of a group doesn\'t performs any action nor closes t
   f) [DONE] Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger.
   g) [DONE] The component is focusable using the TAB key as any other kind of input.
   i) [DONE] If the component is focused, pressing ENTER opens it.
+  j) [DONE] Pressing ESC while the component is opened closes it and focuses the trigger
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
@@ -1145,6 +1146,24 @@ test('If the component is focused, pressing ENTER opens it', function(assert) {
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
 });
 
+test('Pressing ESC while the component is opened closes it and focuses the trigger', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => $('.ember-power-select-trigger').click());
+  let escape = $.Event("keydown", { keyCode: 27 });
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  Ember.run(() => $('.ember-power-select-trigger').trigger(escape));
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The select is focused');
+});
+
 /**
 9 - Disabled select/options
   a) [DONE] A disabled dropdown doesn't responds to mouse/keyboard events
@@ -1251,260 +1270,257 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   j) [DONE] The filtering specifying a searchkey works in multiple model.
   k) [DONE] The filtering specifying a custom matcher works in multiple model.
   l) [DONE] The search using a custom action works int multiple mode.
+  m) [DONE] Pressing ENTER over a highlighted element selects it.
+  n) [DONE] Pressing ENTER over a highlighted element what is already selected unselects it????
+  o) [DONE] Pressing BACKSPACE on the search input when there is text on it does nothing special.
+  p) [DONE] Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediatly.
 
-  m) Pressing ENTER over a highlighted element selects it.
-  n) Pressing ENTER over a highlighted element what is already selected unselects it????
-  o) Pressing BACKSPACE on the search input when there is text on it does nothing special.
-  p) Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediatly.
-
-
-  ¿¿Is it possible to remove this searchbox from multiple selects??
-  ... many more I imagine
+  Is it possible to remove this searchbox from multiple selects??
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Multiple)', {
   integration: true
 });
 
-// test('Multiple selects don\'t have a search box', function(assert) {
-//   assert.expect(1);
+test('Multiple selects don\'t have a search box', function(assert) {
+  assert.expect(1);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   assert.equal($('.ember-power-select-search').length, 0, 'There is no search box');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-search').length, 0, 'There is no search box');
+});
 
-// test('When the select opens, the search input in the trigger gets the focus', function(assert) {
-//   assert.expect(1);
+test('When the select opens, the search input in the trigger gets the focus', function(assert) {
+  assert.expect(1);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   assert.ok($('.ember-power-select-trigger-multiple-input').is(':focus'), 'The search input is focused');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok($('.ember-power-select-trigger-multiple-input').is(':focus'), 'The search input is focused');
+});
 
-// test('Click on an element selects it and closes the dropdown and focuses the trigger\'s input', function(assert) {
-//   assert.expect(5);
+test('Click on an element selects it and closes the dropdown and focuses the trigger\'s input', function(assert) {
+  assert.expect(5);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   assert.ok(this.$('.ember-power-select-trigger-multiple-input').is(':focus'), 'The input of the trigger is focused');
-//   Ember.run(() => $('.ember-power-select-option:eq(1)').click());
-//   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
-//   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
-//   assert.ok(/two/.test($('.ember-power-select-multiple-option').text()), 'The clicked element has been selected');
-//   assert.ok(this.$('.ember-power-select-trigger-multiple-input').is(':focus'), 'The input of the trigger is focused again');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok(this.$('.ember-power-select-trigger-multiple-input').is(':focus'), 'The input of the trigger is focused');
+  Ember.run(() => $('.ember-power-select-option:eq(1)').click());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
+  assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
+  assert.ok(/two/.test($('.ember-power-select-multiple-option').text()), 'The clicked element has been selected');
+  assert.ok(this.$('.ember-power-select-trigger-multiple-input').is(':focus'), 'The input of the trigger is focused again');
+});
 
-// test('Selecting an element triggers the onchange action with the list of selected options', function(assert) {
-//   assert.expect(1);
+test('Selecting an element triggers the onchange action with the list of selected options', function(assert) {
+  assert.expect(1);
 
-//   this.numbers = numbers;
-//   this.change = function(values) {
-//     assert.deepEqual(values, ['two'], 'The onchange action is fired with the list of values');
-//   };
+  this.numbers = numbers;
+  this.change = function(values) {
+    assert.deepEqual(values, ['two'], 'The onchange action is fired with the list of values');
+  };
 
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) onchange=(readonly change) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) onchange=(readonly change) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   Ember.run(() => $('.ember-power-select-option:eq(1)').click());
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:eq(1)').click());
+});
 
-// test('Click an option when there is already another selects both, and triggers the onchange action with them', function(assert) {
-//   assert.expect(5);
+test('Click an option when there is already another selects both, and triggers the onchange action with them', function(assert) {
+  assert.expect(5);
 
-//   this.numbers = numbers;
-//   this.selectedNumbers = ['four'];
-//   this.change = function(values) {
-//     assert.deepEqual(values, ['four', 'two'], 'The onchange action is fired with the list of values');
-//   };
+  this.numbers = numbers;
+  this.selectedNumbers = ['four'];
+  this.change = function(values) {
+    assert.deepEqual(values, ['four', 'two'], 'The onchange action is fired with the list of values');
+  };
 
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) onchange=(readonly change) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) onchange=(readonly change) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   Ember.run(() => $('.ember-power-select-option:eq(1)').click());
-//   assert.equal($('.ember-power-select-multiple-option').length, 2, 'There is 2 options selected');
-//   assert.ok(/four/.test($('.ember-power-select-multiple-option:eq(0)').text()), 'The first option is the provided one');
-//   assert.ok(/two/.test($('.ember-power-select-multiple-option:eq(1)').text()), 'The second option is the one just selected');
-// });
+  assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:eq(1)').click());
+  assert.equal($('.ember-power-select-multiple-option').length, 2, 'There is 2 options selected');
+  assert.ok(/four/.test($('.ember-power-select-multiple-option:eq(0)').text()), 'The first option is the provided one');
+  assert.ok(/two/.test($('.ember-power-select-multiple-option:eq(1)').text()), 'The second option is the one just selected');
+});
 
-// test('If there is many selections, all those options are styled as `selected`', function(assert) {
-//   assert.expect(2);
+test('If there is many selections, all those options are styled as `selected`', function(assert) {
+  assert.expect(2);
 
-//   this.numbers = numbers;
-//   this.selectedNumbers = ['four', 'two'];
+  this.numbers = numbers;
+  this.selectedNumbers = ['four', 'two'];
 
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   assert.ok($('.ember-power-select-option:eq(1)').hasClass('selected'), 'The second option is styled as selected');
-//   assert.ok($('.ember-power-select-option:eq(3)').hasClass('selected'), 'The 4th option is styled as selected');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok($('.ember-power-select-option:eq(1)').hasClass('selected'), 'The second option is styled as selected');
+  assert.ok($('.ember-power-select-option:eq(3)').hasClass('selected'), 'The 4th option is styled as selected');
+});
 
-// test('When the popup opens, the first items is highlighed, even if there is only one selection', function(assert) {
-//   assert.expect(4);
+test('When the popup opens, the first items is highlighed, even if there is only one selection', function(assert) {
+  assert.expect(4);
 
-//   this.numbers = numbers;
-//   this.selectedNumbers = ['four'];
+  this.numbers = numbers;
+  this.selectedNumbers = ['four'];
 
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   assert.equal($('.ember-power-select-option.highlighted').length, 1, 'There is one element highlighted');
-//   assert.equal($('.ember-power-select-option.selected').length, 1, 'There is one element selected');
-//   assert.equal($('.ember-power-select-option.highlighted.selected').length, 0, 'They are not the same');
-//   assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one', 'The highlighted element is the first one');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option.highlighted').length, 1, 'There is one element highlighted');
+  assert.equal($('.ember-power-select-option.selected').length, 1, 'There is one element selected');
+  assert.equal($('.ember-power-select-option.highlighted.selected').length, 0, 'They are not the same');
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one', 'The highlighted element is the first one');
+});
 
-// test('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', function(assert) {
-//   assert.expect(3);
+test('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', function(assert) {
+  assert.expect(3);
 
-//   this.numbers = numbers;
-//   this.selectedNumbers = ['four'];
-//   this.change = function(selected) {
-//     assert.ok(Ember.isEmpty(selected), 'No elements are selected');
-//   };
+  this.numbers = numbers;
+  this.selectedNumbers = ['four'];
+  this.change = function(selected) {
+    assert.ok(Ember.isEmpty(selected), 'No elements are selected');
+  };
 
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) onchange=(readonly change) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly selectedNumbers) onchange=(readonly change) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   Ember.run(() => $('.ember-power-select-option.selected').click());
-//   assert.equal($('.ember-power-select-multiple-option').length, 0, 'There is no options selected');
-// });
+  assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option.selected').click());
+  assert.equal($('.ember-power-select-multiple-option').length, 0, 'There is no options selected');
+});
 
-// test('The default filtering works in multiple mode', function(assert) {
-//   assert.expect(1);
+test('The default filtering works in multiple mode', function(assert) {
+  assert.expect(1);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   Ember.run(() => typeInSearch('four'));
-//   assert.equal($('.ember-power-select-option').length, 2, 'Only two items matched the criteria');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('four'));
+  assert.equal($('.ember-power-select-option').length, 2, 'Only two items matched the criteria');
+});
 
-// test('The filtering specifying a searchkey works in multiple model', function(assert) {
-//   assert.expect(8);
+test('The filtering specifying a searchkey works in multiple model', function(assert) {
+  assert.expect(8);
 
-//   this.people = [
-//     { name: 'María',  surname: 'Murray' },
-//     { name: 'Søren',  surname: 'Williams' },
-//     { name: 'João',   surname: 'Jin' },
-//     { name: 'Miguel', surname: 'Camba' },
-//     { name: 'Marta',  surname: 'Stinson' },
-//     { name: 'Lisa',   surname: 'Simpson' },
-//   ];
+  this.people = [
+    { name: 'María',  surname: 'Murray' },
+    { name: 'Søren',  surname: 'Williams' },
+    { name: 'João',   surname: 'Jin' },
+    { name: 'Miguel', surname: 'Camba' },
+    { name: 'Marta',  surname: 'Stinson' },
+    { name: 'Lisa',   surname: 'Simpson' },
+  ];
 
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly people) searchField="name" multiple=true as |person|}}
-//       {{person.name}} {{person.surname}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select options=(readonly people) searchField="name" multiple=true as |person|}}
+      {{person.name}} {{person.surname}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   Ember.run(() => typeInSearch('mar'));
-//   assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
-//   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'María Murray');
-//   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta Stinson');
-//   Ember.run(() => typeInSearch('mari'));
-//   assert.equal($('.ember-power-select-option').length, 1, 'Only 1 results match the search');
-//   assert.equal($('.ember-power-select-option').text().trim(), 'María Murray');
-//   Ember.run(() => typeInSearch('o'));
-//   assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
-//   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');
-//   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João Jin');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('mar'));
+  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'María Murray');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta Stinson');
+  Ember.run(() => typeInSearch('mari'));
+  assert.equal($('.ember-power-select-option').length, 1, 'Only 1 results match the search');
+  assert.equal($('.ember-power-select-option').text().trim(), 'María Murray');
+  Ember.run(() => typeInSearch('o'));
+  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João Jin');
+});
 
-// test('The filtering specifying a custom matcher works in multiple model', function(assert) {
-//   assert.expect(2);
+test('The filtering specifying a custom matcher works in multiple model', function(assert) {
+  assert.expect(2);
 
-//   this.numbers = numbers;
-//   this.endsWithMatcher = function(value, text) {
-//     return text === '' || value.slice(text.length * -1) === text;
-//   };
+  this.numbers = numbers;
+  this.endsWithMatcher = function(value, text) {
+    return text === '' || value.slice(text.length * -1) === text;
+  };
 
-//   this.render(hbs`
-//     {{#ember-power-select options=(readonly numbers) matcher=endsWithMatcher multiple=true as |option|}}
-//       {{option}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) matcher=endsWithMatcher multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   Ember.run(() => typeInSearch('on'));
-//   assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
-//   Ember.run(() => typeInSearch('teen'));
-//   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
-// });
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('on'));
+  assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
+  Ember.run(() => typeInSearch('teen'));
+  assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
+});
 
-// test('The search using a custom action works int multiple mode', function(assert) {
-//   let done = assert.async();
-//   assert.expect(1);
+test('The search using a custom action works int multiple mode', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
 
-//   this.searchFn = function(term) {
-//     return new RSVP.Promise(function(resolve) {
-//       Ember.run.later(function() {
-//         resolve(numbers.filter(str => str.indexOf(term) > -1));
-//       }, 100);
-//     });
-//   };
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      Ember.run.later(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
 
-//   this.render(hbs`
-//     {{#ember-power-select search=(readonly searchFn) as |number|}}
-//       {{number}}
-//     {{/ember-power-select}}
-//   `);
+  this.render(hbs`
+    {{#ember-power-select search=(readonly searchFn) as |number|}}
+      {{number}}
+    {{/ember-power-select}}
+  `);
 
-//   Ember.run(() => this.$('.ember-power-select-trigger').click());
-//   Ember.run(() => typeInSearch("teen"));
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch("teen"));
 
-//   setTimeout(function() {
-//     assert.equal($('.ember-power-select-option').length, 7);
-//     done();
-//   }, 150);
-// });
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, 7);
+    done();
+  }, 150);
+});
 
 test('Pressing ENTER over a highlighted element selects it', function(assert) {
   assert.expect(2);
@@ -1512,7 +1528,7 @@ test('Pressing ENTER over a highlighted element selects it', function(assert) {
   this.numbers = numbers;
   this.change = function(selected) {
     assert.deepEqual(selected, ['two']);
-  }
+  };
   this.render(hbs`
     {{#ember-power-select options=(readonly numbers) onchange=(readonly change) multiple=true as |option|}}
       {{option}}
@@ -1525,16 +1541,16 @@ test('Pressing ENTER over a highlighted element selects it', function(assert) {
   assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element was selected');
 });
 
-test('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything', function(assert) {
-  assert.expect(2);
+test('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', function(assert) {
+  assert.expect(3);
 
   this.numbers = numbers;
   this.selected = ['two'];
-  this.change = function(selected) {
-    assert.ok(false, 'This should never ve invoked');
-  }
+  this.didChange = function() {
+    assert.ok(false, 'This should never be invoked');
+  };
   this.render(hbs`
-    {{#ember-power-select options=(readonly numbers) selected=selected onchange=(readonly change) multiple=true as |option|}}
+    {{#ember-power-select options=(readonly numbers) selected=selected onchange=(readonly didChange) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1544,13 +1560,99 @@ test('Pressing ENTER over a highlighted element what is already selected closes 
   Ember.run(() => this.$('.ember-power-select-trigger-multiple-input').trigger($.Event('keydown', { keyCode: 13 })));
   assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element is still selected');
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  assert.ok($('.ember-power-select-trigger-multiple-input').is(':focus'), 'The trigger is focused');
 });
 
-// test('Pressing BACKSPACE on the search input when there is text on it does nothing special', function(assert) {
+test('Pressing BACKSPACE on the search input when there is text on it does nothing special', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.selected = ['two'];
+  this.didChange = function() {
+    assert.ok(false, 'This should not be called');
+  };
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly selected) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('four'));
+  Ember.run(() => this.$('.ember-power-select-trigger-multiple-input').trigger($.Event('keydown', { keyCode: 8 })));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
+});
+
+test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly', function(assert) {
+  assert.expect(6);
+
+  this.numbers = numbers;
+  this.selected = ['two'];
+  this.didChange = function(select) {
+    assert.deepEqual(select, [], 'The selected item was unselected');
+  };
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) onchange=(readonly didChange) selected=(readonly selected) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
+  Ember.run(() => this.$('.ember-power-select-trigger-multiple-input').trigger($.Event('keydown', { keyCode: 8 })));
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'two', 'The text of the seach input is two now');
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
+  assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
+});
+
+
+/**
+10 - Dropdown positioning
+  a) [DONE] By default the dropdown is placed automatically depending on the available space around the select.
+  b) [DONE] Passing `dropdownPosition=above` positions the dropdown on top of the trigger.
+
+  c) [UNTESTABLE??] When the dropdown in auto is opened and the user scrolls until there is not enough space below, the dropdown changes to be on top.
+  d) [UNTESTABLE??] Once the dropdown has changes to be on top, it won't go back to the bottom until there is no enough space on top.
+*/
+
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Dropdown positioning)', {
+  integration: true
+});
+
+test('By default the dropdown is placed automatically depending on the available space around the select', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+
+  assert.ok($('.ember-power-select-dropdown').offset().top > $('.ember-power-select-trigger').offset().top, 'Dropdown placed below the trigger');
+});
+
+test('Passing `dropdownPosition=above` positions the dropdown on top of the trigger', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) dropdownPosition="above" as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok($('.ember-power-select-dropdown').offset().top < $('.ember-power-select-trigger').offset().top, 'Dropdown placed below the trigger');
+});
+
+// test('When the dropdown in auto is opened and the user scrolls until there is not enough space below, the dropdown changes to be on top', function(assert) {
 //   throw new Error('not implemented');
 // });
 
-// test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly', function(assert) {
+// test('Once the dropdown has changes to be on top, it won\'t go back to the bottom until there is no enough space on top', function(assert) {
 //   throw new Error('not implemented');
 // });
-

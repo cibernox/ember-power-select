@@ -153,6 +153,8 @@ export default Ember.Component.extend({
     removeOption(option, e) {
       e.stopPropagation();
       this.get('selectedOption').removeObject(option);
+      this._resultsDirty = true;
+      if (this.attrs.onchange) { this.attrs.onchange(this.get('selectedOption')); }
       run.scheduleOnce('afterRender', this, this.repositionDropdown);
     },
 
@@ -232,7 +234,15 @@ export default Ember.Component.extend({
     if (this.get('disabled')) { return; }
     if (this.get('_opened')) {
       const highlighted = this.get('_highlighted');
-      this.send('select', highlighted, e);
+      if (this.get('multiple')) {
+        if ((this.get('selected') || []).indexOf(highlighted) === -1) {
+          this.send('select', highlighted, e);
+        } else {
+          this.close();
+        }
+      } else {
+        this.send('select', highlighted, e);
+      }
     } else {
       this.send('toggle', e);
     }
