@@ -1,0 +1,9 @@
+body  > .ember-view {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1; // Expand to fix all available vertical space
+}

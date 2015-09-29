@@ -1,0 +1,47 @@
+// Headline
+.main-page-headline {
+  background-color: $orange;
+  height: 300px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-page-headline-content {
+  text-align: center;
+  color: inherit;
+  max-width: 530px;
+  font-weight: 200;
+  font-size: 42px;
+}
+// Selling points
+.selling-points {
+  @extend %wrapper;
+  display: flex;
+}
+.selling-point {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0.5rem;
+  flex: 1;
+}
+.selling-point-text {
+  color: $gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h2 {
+    font-weight: 400;
+    font-size: 1.5em;
+  }
+}
+
+// get-started-button
+.get-started-button {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid $orange;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  display: inline-block;
+}

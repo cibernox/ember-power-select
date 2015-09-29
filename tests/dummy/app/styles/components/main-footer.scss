@@ -1,0 +1,10 @@
+// Main footer
+.main-footer {
+  color: $gray;
+  background-color: $light-gray;
+  border-top: 1px solid #bbb;
+}
+.main-footer-content {
+  @extend %wrapper;
+  padding: 1rem 0;
+}

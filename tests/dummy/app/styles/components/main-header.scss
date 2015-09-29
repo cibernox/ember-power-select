@@ -1,0 +1,24 @@
+// main header
+.main-header {
+  background-color: $orange;
+  line-height: 66px;
+  color: white;
+}
+.main-header-nav {
+  @extend %wrapper;
+  display: flex;
+  justify-content: space-between;
+}
+.main-header-logo {
+  color: white;
+  font-size: 30px;
+}
+.main-header-nav-links {
+  display: flex;
+}
+.main-header-nav-link {
+  color: inherit;
+  font-weight: 500;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
