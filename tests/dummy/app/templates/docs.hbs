@@ -1,3 +1,27 @@
 <section class="docs">
-  <h1>This are the docs</h1>
+  <nav class="docs-nav">
+    <header class="docs-nav-header">Getting started</header>
+    {{#link-to 'docs.index' class="docs-nav-link"}}Overview{{/link-to}}
+    {{#link-to 'docs.installation' class="docs-nav-link"}}Installation{{/link-to}}
+    {{#link-to 'docs.how-to-use-it' class="docs-nav-link"}}How to use it{{/link-to}}
+    {{#link-to 'docs.action-handling' class="docs-nav-link"}}Action handling{{/link-to}}
+    {{#link-to 'docs.groups' class="docs-nav-link"}}Groups{{/link-to}}
+    {{#link-to 'docs.multiple-selection' class="docs-nav-link"}}Multiple selection{{/link-to}}
+
+    <header class="docs-nav-header">Basic customization</header>
+    <a href="" class="docs-nav-link">List items</a>
+    <a href="" class="docs-nav-link">Empty list</a>
+    <a href="" class="docs-nav-link">Selected element</a>
+    <a href="" class="docs-nav-link">Messages</a>
+    <a href="" class="docs-nav-link">Filtering</a>
+    <a href="" class="docs-nav-link">Styles</a>
+
+    <header class="docs-nav-header">Advanced customization</header>
+    <a href="" class="docs-nav-link">Partials</a>
+    <a href="" class="docs-nav-link">Asynchronous search</a>
+    <a href="" class="docs-nav-link">Roll your own template</a>
+  </nav>
+  <section class="doc-detail">
+    {{outlet}}
+  </section>
 </section>

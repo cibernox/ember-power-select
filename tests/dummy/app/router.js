@@ -6,8 +6,16 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('docs');
+  this.route('docs', function() {
+    // index.hbs is "Overview"
+    this.route('installation');
+    this.route('how-to-use-it');
+    this.route('action-handling');
+    this.route('groups');
+    this.route('multiple-selection');
+  });
   this.route('cookbook');
+  this.route('legacy-demo');
 });
 
 export default Router;
