@@ -1656,3 +1656,23 @@ test('Passing `dropdownPosition=above` positions the dropdown on top of the trig
 // test('Once the dropdown has changes to be on top, it won\'t go back to the bottom until there is no enough space on top', function(assert) {
 //   throw new Error('not implemented');
 // });
+
+
+/**
+10 - Ember data integration
+  a) Passing as options of a `store.findAll` works.
+  b) Passing as options the result of `store.query` works.
+*/
+
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Dropdown positioning)', {
+  integration: true
+});
+
+
+test('Passing as options of a `store.findAll` works', function() {
+  throw new Error('not implemented');
+});
+
+test('Passing as options the result of `store.query` works', function() {
+  throw new Error('not implemented');
+});

@@ -1,36 +1,350 @@
-// Import the styles from the addon.
-// Define any variable used by the styles in the addon before.
+$text-color: #333;
+$headings-text-color: #313131;
+$code-text-color: $text-color;
+$orange: #D8563A;
+$light-gray: #ddd;
+$gray: #888;
+$link-color: $orange;
 
-@import 'addon/styles/addon.scss';
+// Base styles
+* {
+  box-sizing: border-box;
+}
 
-// Add your own app styles
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 html {
-  font-family: Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  line-height: 1.6;
+  font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.icon-flag {
-  display: inline-block;
-  height: 14px;
-  width: 20px;
-  .ember-power-select-multiple-option & {
-    vertical-align: -10%;
-  }
-}
-.icon-flag, .country-detailed-info .country-flag {
-  background-repeat: no-repeat;
-  background-size: cover;
-  &.US { background-image: url("/flags/us.svg"); }
-  &.ES { background-image: url("/flags/es.svg"); }
-  &.PT { background-image: url("/flags/pt.svg"); }
-  &.RU { background-image: url("/flags/ru.svg"); }
-  &.LV { background-image: url("/flags/lv.svg"); }
-  &.BR { background-image: url("/flags/br.svg"); }
-  &.GB { background-image: url("/flags/gb.svg"); }
-}
-.country-detailed-info {
-  margin: 0 -8px;
+
+body {
+  color: $text-color;
   display: flex;
-  .country-flag { width: 92px; }
-  .country-data-text {
-    padding: 6px;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: $link-color;
+
+  // I don't want this styles yet
+
+  // border-bottom: 1px solid rgba($link-color, 0.3);
+
+  // &:hover {
+  //   text-decoration: none;
+  //   border-bottom-color: $link-color;
+  // }
+}
+
+img, iframe {
+  max-width: 100%;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: .5rem;
+  font-weight: bold;
+  line-height: 1.25;
+  color: $headings-text-color;
+  text-rendering: optimizeLegibility;
+}
+h1 {
+  font-size: 2rem;
+}
+h2 {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+h3 {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+}
+h4, h5, h6 {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+/* Body text */
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Lists */
+ul, ol, dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+dt {
+  font-weight: bold;
+}
+dd {
+  margin-bottom: .5rem;
+}
+
+/* Misc */
+hr {
+  position: relative;
+  margin: 1.5rem 0;
+  border: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #fff;
+}
+
+abbr {
+  font-size: 85%;
+  font-weight: bold;
+  color: #555;
+  text-transform: uppercase;
+}
+abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted #e5e5e5;
+}
+
+/* Code */
+code,
+pre {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+}
+code {
+  color: $code-text-color;
+  padding: 0.2em 0;
+  margin: 0;
+  font-size: 75%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+
+  &::before,
+  &::after {
+    letter-spacing: -0.2em;
+    content: "\00a0";
   }
 }
+pre {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  font-size: .8rem;
+  line-height: 1.4;
+  white-space: pre;
+  word-break: break-all;
+  word-wrap: normal;
+  background-color: #f9f9f9;
+  overflow-x: auto;
+}
+pre code {
+  padding: 0;
+  font-size: 100%;
+  color: inherit;
+  background-color: transparent;
+
+  &::before,
+  &::after {
+    content: '';
+  }
+}
+
+/* Tables */
+table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+td,
+th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+
+/* Pygments via Jekyll */
+.highlight {
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+.highlight pre {
+  margin-bottom: 0;
+}
+
+// My own placeholders
+%wrapper {
+  max-width: 960px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Utility classes
+.text-center {
+  text-align: center;
+}
+
+// App header
+$app-header-height: 66px;
+.app-header {
+  background-color: $orange;
+  height: $app-header-height;
+  line-height: $app-header-height;
+  color: white;
+}
+.app-header-nav {
+  @extend %wrapper;
+  display: flex;
+  justify-content: space-between;
+}
+.app-header-logo {
+  color: white;
+  font-size: 30px;
+}
+.app-header-nav-links {
+  display: flex;
+}
+.app-header-nav-link {
+  color: inherit;
+  font-weight: 500;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+// Main content
+
+// Headline
+.main-page-headline {
+  background-color: $orange;
+  height: 300px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-page-headline-content {
+  text-align: center;
+  color: inherit;
+  max-width: 530px;
+  font-weight: 200;
+  font-size: 42px;
+}
+// Selling points
+.selling-points {
+  @extend %wrapper;
+}
+.selling-point {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  padding: 2rem;
+  &:nth-child(2) {
+    flex-direction: row-reverse;
+  }
+}
+.selling-point-text {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  color: $gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h2 {
+    font-weight: 400;
+    font-size: 1.5em;
+  }
+}
+
+// get-started-button
+.get-started-button {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid $orange;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  display: inline-block;
+}
+
+
+// Footer
+.main-footer {
+  color: $gray;
+  background-color: $light-gray;
+  height: 150px;
+}
+.main-footer-content {
+  @extend %wrapper;
+}
+
+
+
+// @import 'variables';
+
+// @import 'mixins/flexbox';
+// @import 'mixins/animations';
+// @import 'mixins/others';
+
+// @import 'animations/shimmer';
+
+// @import 'base';
+// @import 'utilities';
+
+// @import 'layout/grid';
+// @import 'layout/header';
+// @import 'layout/wrapper';
+// @import 'layout/content';
+// @import 'layout/side-panel';
+// @import 'layout/center-panel';
+// @import 'layout/container';
+// @import 'layout/footer';
+
+// @import 'components/home-page';
+// @import 'components/page';
+// @import 'components/table';
+// @import 'components/browser';
+// @import 'components/docs-page';
+// @import 'components/docs-page-nav';
+// @import 'components/github-stars';
+// @import 'components/desktop-nav';
+// @import 'components/mobile-nav';
+// @import 'components/subtle-hr';
+// @import 'components/about';
+// @import 'components/anchor-link';
+
+// // Import the styles from the addon.
+// // Define any variable used by the styles in the addon before.
+
+// @import 'addon/styles/addon.scss';
+
+// .icon-flag {
+//   display: inline-block;
+//   height: 14px;
+//   width: 20px;
+//   .ember-power-select-multiple-option & {
+//     vertical-align: -10%;
+//   }
+// }
+// .icon-flag, .country-detailed-info .country-flag {
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   &.US { background-image: url("/flags/us.svg"); }
+//   &.ES { background-image: url("/flags/es.svg"); }
+//   &.PT { background-image: url("/flags/pt.svg"); }
+//   &.RU { background-image: url("/flags/ru.svg"); }
+//   &.LV { background-image: url("/flags/lv.svg"); }
+//   &.BR { background-image: url("/flags/br.svg"); }
+//   &.GB { background-image: url("/flags/gb.svg"); }
+// }
+// .country-detailed-info {
+//   margin: 0 -8px;
+//   display: flex;
+//   .country-flag { width: 92px; }
+//   .country-data-text {
+//     padding: 6px;
+//   }
+// }
