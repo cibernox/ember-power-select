@@ -178,7 +178,7 @@ th {
 
 // My own placeholders
 %wrapper {
-  max-width: 960px;
+  max-width: 1024px; // not 960px because it's 2015
   padding-left: 1rem;
   padding-right: 1rem;
   margin-left: auto;
@@ -238,18 +238,15 @@ $app-header-height: 66px;
 // Selling points
 .selling-points {
   @extend %wrapper;
+  display: flex;
 }
 .selling-point {
-  border-bottom: 1px solid lightgray;
   display: flex;
-  padding: 2rem;
-  &:nth-child(2) {
-    flex-direction: row-reverse;
-  }
+  flex-direction: column;
+  padding: 2rem 0.5rem;
+  flex: 1;
 }
 .selling-point-text {
-  padding-left: 2rem;
-  padding-right: 2rem;
   color: $gray;
   display: flex;
   flex-direction: column;
@@ -275,10 +272,11 @@ $app-header-height: 66px;
 .main-footer {
   color: $gray;
   background-color: $light-gray;
-  height: 150px;
+  border-top: 1px solid #bbb;
 }
 .main-footer-content {
   @extend %wrapper;
+  padding: 1rem 0;
 }
 
 

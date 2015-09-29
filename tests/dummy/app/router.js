@@ -6,6 +6,8 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('docs');
+  this.route('cookbook');
 });
 
 export default Router;

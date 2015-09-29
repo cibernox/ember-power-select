@@ -1,192 +1,26 @@
 <header class="app-header">
   <nav class="app-header-nav">
-    <a href="/" class="app-header-logo">
+    {{#link-to 'application' class="app-header-logo"}}
       Ember <strong>Power</strong> Select
-    </a>
+    {{/link-to}}
     <div class="app-header-nav-links">
-      <a href="/docs" class="app-header-nav-link">Docs</a>
-      <a href="/cookbook" class="app-header-nav-link">Cookbook</a>
-      <a href="/github" class="app-header-nav-link">Github</a>
+      {{#link-to 'docs' class="app-header-nav-link"}}Docs{{/link-to}}
+      {{#link-to 'cookbook' class="app-header-nav-link"}}Cookbook{{/link-to}}
+      <a href="https://github.com/cibernox/ember-power-select" class="app-header-nav-link">Github</a>
     </div>
   </nav>
 </header>
-
 <div class="main-content">
-  <section class="main-page-headline">
-    <h1 class="main-page-headline-content">
-      Powerful and customizable select component for Ember
-    </h1>
-  </section>
-  <section class="selling-points">
-    <article class="selling-point">
-      <img src="http://placehold.it/386x300">
-      <div class="selling-point-text">
-        <h2>Feature rich</h2>
-        Inspired by Select2.js it supports groups, filtering,
-        promises and multiple selections right away.
-      </div>
-    </article>
-
-    <article class="selling-point">
-      <img src="http://placehold.it/386x300">
-      <div class="selling-point-text">
-        <h2>Built with Ember for Ember</h2>
-        Built using ember practices, it feels natural to use
-        and plays nicely with ember-data.
-      </div>
-    </article>
-
-    <article class="selling-point">
-      <img src="http://placehold.it/386x300">
-      <div class="selling-point-text">
-        <h2>Customizable</h2>
-        Want html in your select? Pass a block. Want to customize filtering? Use an action.
-        Something entirely different? Extend it and write your oun HTMLBar template.
-      </div>
-    </article>
-  </section>
-  <div class="text-center">
-    <a href="#" class="get-started-button">
-      Get started
-    </a>
-  </div>
+  {{outlet}}
 </div>
 
 <footer class="main-footer">
   <div class="main-footer-content">
-    foo bar baz
+    Deployed with love by <a href="http://github.com/cibernox">Miguel Camba</a>
   </div>
 </footer>
 
-{{!-- <header class="Header">
-  <div class="Header__container">
-    <nav class="Header__nav">
-      <ul class="Header__nav-list">
-        <li class="Header__nav-item">
-          <a href="/docs/v0.4.x" class="Header__nav-item-link">Docs</a>
-        </li>
-        <li class="Header__nav-item">
-          <a href="/plugins" class="Header__nav-item-link">Plugins</a>
-        </li>
-        <li class="Header__nav-item">
-          <a href="/resources" class="Header__nav-item-link">Resources</a>
-        </li>
-        <li class="Header__nav-item">
-          <a href="https://github.com/ember-cli/ember-cli-deploy" class="Header__nav-item-link" target="_blank">GitHub</a>
-        </li>
-      </ul>
-    </nav>
-    <a class="Header__logo" href="/">
-      <span class="Header__logo-minor">Ember CLI</span>
-      <span class="Header__logo-major">Deploy</span>
-    </a>
-  </div>
-</header>
-
-<div class="Wrapper">
-  <div class="Content">
-    <div class="Home-page">
-      <div class="Home-page__tagline-container">
-        <h1 class="Home-page__tagline">Simple, flexible deployment for your <img class="Home-page__tagline-logo" src="/public/images/ember_logo.png" alt=""> app</h1>
-      </div>
-
-      <section class="Home-page__section">
-        <div class="Home-page__section-copy">
-          <div class="Home-page__section-copy-wrapper">
-            <h1 class="Home-page__section-title">A Deployment Pipeline</h1>
-            <p class="Home-page__section-content">
-              Build, upload, activate. A simple pipeline that keeps your deploy logic maintainable and reusable.
-            </p>
-          </div>
-        </div>
-        <div class="Home-page__section-graphic">
-          <div class="Home-page__section-graphic-wrapper">
-            <img class="Home-page__section-image" src="/public/images/deploy.png" alt="">
-          </div>
-        </div>
-      </section>
-
-      <hr class="Home-page__divider">
-
-      <section class="Home-page__section Home-page__section--flipped">
-        <div class="Home-page__section-copy">
-          <div class="Home-page__section-copy-wrapper">
-            <h1 class="Home-page__section-title">Plugins for Every Task</h1>
-            <p class="Home-page__section-content">
-              11 deploy hooks lay the base for a vibrant plugin ecosystem. You'll find plugins that upload to S3, notify Slack and more.
-            </p>
-            <p class="Home-page__section-content">
-              Assemble them to create the perfect deployment strategy for your app.
-            </p>
-          </div>
-        </div>
-        <div class="Home-page__section-graphic">
-          <div class="Home-page__section-graphic-wrapper">
-            <img class="Home-page__section-image" src="/public/images/plugins.png" alt="">
-          </div>
-        </div>
-      </section>
-
-      <hr class="Home-page__divider">
-
-      <section class="Home-page__section">
-        <div class="Home-page__section-copy">
-          <div class="Home-page__section-copy-wrapper">
-            <h1 class="Home-page__section-title">One-Line Deploys</h1>
-            <p class="Home-page__section-content">
-              A configured pipeline lets you deploy your app with a single command.
-            </p>
-            <p class="Home-page__section-content">
-              The magic of conventions, for the last piece of your development process.
-            </p>
-          </div>
-        </div>
-        <div class="Home-page__section-graphic">
-          <div class="Home-page__terminal">
-            <div class="Browser">
-              <div class="Browser__window">
-                <pre class="Browser__body"><code class="Browser__code"><span class="prompt">$ </span>ember deploy production</code>
-                </pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <hr class="Home-page__divider">
-
-      <div class="u-text-center u-margin-top-lg">
-        <a href="/docs/v0.4.x" class="Home-page__button">
-          Get started
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer class="Footer">
-  <div class="Container Grid Grid--gutters Grid--full small-Grid--fit">
-    <div class="Grid-cell">
-      <p class="u-padding-bottom">We &lt;3 our <a href="https://github.com/ember-cli/ember-cli-deploy/graphs/contributors">contributors</a>.</p>
-      <p>
-        <small>
-          Icons made by <a href="http://www.flaticon.com/authors/picol" title="Picol">Picol</a> and <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>.
-        </small>
-      </p>
-      <p>
-        <small>
-          Licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>
-        </small>
-      </p>
-    </div>
-    <div class="Grid-cell">
-      <div class="Github-stars">
-        <iframe src="https://ghbtns.com/github-btn.html?user=ember-cli&amp;repo=ember-cli-deploy&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
-      </div>
-    </div>
-  </div>
-</footer>
-
+{{!--
 <input type="text" value="sample input">
 <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 <p>
