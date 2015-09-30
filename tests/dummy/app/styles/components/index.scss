@@ -1,6 +1,6 @@
 // Headline
 .main-page-headline {
-  background: $orange linear-gradient($orange, $bright-orange);
+  background: $brand-color linear-gradient($brand-color, $brand-color-brighter);
   height: 300px;
   color: white;
   display: flex;
@@ -44,7 +44,7 @@
 .get-started-button {
   margin-top: 2rem;
   margin-bottom: 2rem;
-  border: 1px solid $orange;
+  border: 1px solid $brand-color;
   border-radius: 10px;
   padding: 0.5rem 2rem;
   display: inline-block;
