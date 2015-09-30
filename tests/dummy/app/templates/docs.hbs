@@ -22,7 +22,8 @@
     {{#link-to 'docs.roll-your-own-template' class="side-nav-link"}}Roll your own template{{/link-to}}
   </nav>
   <section class="doc-page">
-    {{#ember-power-select options=(readonly sections) onchange=(action 'visit') searchField="text" class="section-selector" as |option|}}
+    {{#ember-power-select selected=(readonly currentSection) options=(readonly groupedSections)
+      onchange=(action 'visit') searchField="text" searchEnabled=false class="section-selector" as |option|}}
       {{option.text}}
     {{/ember-power-select}}
     {{outlet}}
