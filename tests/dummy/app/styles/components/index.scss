@@ -12,22 +12,29 @@
   color: inherit;
   max-width: 530px;
   font-weight: 200;
-  font-size: 42px;
-  img {
-    height: 48px;
-    vertical-align: top;
+  img { vertical-align: top; }
+  @media only screen and (max-width: $small-breakpoint) {
+    font-size: 34px;
+    img { height: 40px; }
+  }
+  @media only screen and (min-width: $small-breakpoint) {
+    font-size: 42px;
+    img { height: 48px; }
   }
 }
 // Selling points
 .selling-points {
   @extend %wrapper;
   display: flex;
+  @media only screen and (max-width: $small-breakpoint) {
+    flex-direction: column;
+  }
 }
 .selling-point {
   display: flex;
-  flex-direction: column;
   padding: 2rem 0.5rem;
   flex: 1;
+  flex-direction: column;
 }
 .selling-point-text {
   color: $gray;

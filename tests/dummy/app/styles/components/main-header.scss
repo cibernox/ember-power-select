@@ -1,17 +1,16 @@
 // main header
 .main-header {
   background-color: $brand-color;
-  line-height: 66px;
   color: white;
 }
 .main-header-nav {
   @extend %wrapper;
-  display: flex;
-  justify-content: space-between;
 }
 .main-header-logo {
   color: white;
   font-size: 30px;
+  display: block;
+  text-align: center;
   img {
     height: 36px;
     vertical-align: -5%;
@@ -25,4 +24,33 @@
   font-weight: 500;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+@media only screen and (max-width: $small-breakpoint) {
+  .main-header {
+    line-height: 44px;
+  }
+  .main-header-nav {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .main-header-logo {
+    display: block;
+    text-align: center;
+  }
+  .main-header-nav-links {
+    justify-content: space-between;
+    background-color: rgba(black, 0.2);
+    margin-bottom: 1rem;
+  }
+}
+@media only screen and (min-width: $small-breakpoint) {
+  .main-header {
+    line-height: 66px;
+  }
+  .main-header-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
 }

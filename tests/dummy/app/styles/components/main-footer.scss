@@ -3,6 +3,8 @@
   color: $gray;
   background-color: $light-gray;
   border-top: 1px solid #bbb;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .main-footer-content {
   @extend %wrapper;
