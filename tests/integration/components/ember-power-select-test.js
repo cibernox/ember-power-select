@@ -1550,7 +1550,7 @@ test('Pressing ENTER over a highlighted element what is already selected closes 
     assert.ok(false, 'This should never be invoked');
   };
   this.render(hbs`
-    {{#ember-power-select options=(readonly numbers) selected=selected onchange=(readonly didChange) multiple=true as |option|}}
+    {{#ember-power-select options=(readonly numbers) selected=(readonly selected) onchange=(readonly didChange) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);

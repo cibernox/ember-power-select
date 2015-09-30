@@ -102,8 +102,8 @@ export default Ember.Component.extend({
   // CPs
   _notLoadingOptions: computed.not('_loadingOptions'),
 
-  selectedOption: computed('selected', function() {
-    return this.get('multiple') && Ember.A(this.get('selected')) || this.get('selected');
+  selectedOption: computed('attrs.selected', function() {
+    return this.get('multiple') && Ember.A(this.get('attrs.selected')) || this.get('attrs.selected');
   }),
 
   mustSearch: computed('_searchText', 'attrs.search', function(){
@@ -235,7 +235,7 @@ export default Ember.Component.extend({
     if (this.get('_opened')) {
       const highlighted = this.get('_highlighted');
       if (this.get('multiple')) {
-        if ((this.get('selected') || []).indexOf(highlighted) === -1) {
+        if ((this.get('attrs.selected') || []).indexOf(highlighted) === -1) {
           this.send('select', highlighted, e);
         } else {
           this.close();
