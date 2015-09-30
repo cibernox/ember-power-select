@@ -78,10 +78,15 @@ export default Ember.Component.extend({
   // Lifecycle hooks
   init(){
     this._super(...arguments);
+    const self = this;
     const rootSelector = Ember.testing ? '#ember-testing' : this.container.lookup('application:main').rootElement;
     this.appRoot = document.querySelector(rootSelector);
-    this.handleRootClick = this.handleRootClick.bind(this);
-    this.handleRepositioningEvent = this.handleRepositioningEvent.bind(this);
+    this.handleRootClick = function handleRootClick(e) {
+      if (!self.element.contains(e.target)) { self.close(); }
+    };
+    this.handleRepositioningEvent = function handleRepositioningEvent(/* e */) {
+      run.throttle(self, 'repositionDropdown', 60, true);
+    };
   },
 
   didReceiveAttrs({ newAttrs: { options, multiple } }) {
@@ -224,12 +229,6 @@ export default Ember.Component.extend({
     e.stopPropagation();
   },
 
-  handleRootClick(e) {
-    if (!this.element.contains(e.target)) {
-      this.close();
-    }
-  },
-
   handleEnter(e) {
     if (this.get('disabled')) { return; }
     if (this.get('_opened')) {
@@ -256,9 +255,6 @@ export default Ember.Component.extend({
     }
   },
 
-  handleRepositioningEvent(/* e */) {
-    run.throttle(this, 'repositionDropdown', 60, true);
-  },
 
   handleVerticalArrowKey(e) {
     e.preventDefault();
