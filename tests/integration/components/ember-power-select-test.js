@@ -1668,11 +1668,10 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true
 });
 
+// test('Passing as options of a `store.findAll` works', function() {
+//   throw new Error('not implemented');
+// });
 
-test('Passing as options of a `store.findAll` works', function() {
-  throw new Error('not implemented');
-});
-
-test('Passing as options the result of `store.query` works', function() {
-  throw new Error('not implemented');
-});
+// test('Passing as options the result of `store.query` works', function() {
+//   throw new Error('not implemented');
+// });
