@@ -164,7 +164,7 @@ test('The search box gain focus automatically when opened', function(assert) {
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.ok($('.ember-power-select-search input').is(':focus'), 'The search box is focused after opening select');
+  assert.ok($('.ember-power-select-search input').get(0) === document.activeElement, 'The search box is focused after opening select');
 });
 
 test('Each option of the select is the result of yielding an item', function(assert) {
@@ -913,7 +913,7 @@ test('Clicking an item selects it, closes the dropdown and focuses the trigger',
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => $('.ember-power-select-option:eq(3)').click());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select was closed');
-  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigger is focused');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
 
 test('Clicking the trigger while the select is opened closes it and and focuses the trigger', function(assert) {
@@ -930,7 +930,7 @@ test('Clicking the trigger while the select is opened closes it and and focuses 
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
-  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigger is focused');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
 
 test('Clicking the clear button removes the selection', function(assert) {
@@ -968,7 +968,7 @@ test('Clicking anywhere outside the select while opened closes the component and
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => this.$('#other-thing').click());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
-  assert.ok(!$('.ember-power-select-trigger').is(':focus'), 'The select is not focused');
+  assert.ok($('.ember-power-select-trigger').get(0) !== document.activeElement, 'The select is not focused');
 });
 
 test('Clicking on the title of a group doesn\'t performs any action nor closes the dropdown', function(assert) {
@@ -1094,7 +1094,7 @@ test('Pressing ENTER selects the highlighted element, closes the dropdown and fo
   Ember.run(() => $('.ember-power-select-search input').trigger(enter));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'two', 'The highlighted element was selected');
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
-  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigger is focused');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
 
 test('Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger', function(assert) {
@@ -1114,7 +1114,7 @@ test('Pressing TAB closes the select WITHOUT selecting the highlighed element an
   Ember.run(() => $('.ember-power-select-search input').trigger(tab));
   assert.equal($('.ember-power-select-trigger').text().trim(), '', 'The highlighted element wasn\'t selected');
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
-  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The trigges is focused');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigges is focused');
 });
 
 test('The component is focusable using the TAB key as any other kind of input', function(assert) {
@@ -1161,7 +1161,7 @@ test('Pressing ESC while the component is opened closes it and focuses the trigg
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => $('.ember-power-select-trigger').trigger(escape));
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
-  assert.ok($('.ember-power-select-trigger').is(':focus'), 'The select is focused');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The select is focused');
 });
 
 /**
@@ -1307,7 +1307,7 @@ test('When the select opens, the search input in the trigger gets the focus', fu
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.ok($('.ember-power-select-trigger-multiple-input').is(':focus'), 'The search input is focused');
+  assert.ok($('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The search input is focused');
 });
 
 test('Click on an element selects it and closes the dropdown and focuses the trigger\'s input', function(assert) {
@@ -1321,12 +1321,12 @@ test('Click on an element selects it and closes the dropdown and focuses the tri
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.ok(this.$('.ember-power-select-trigger-multiple-input').is(':focus'), 'The input of the trigger is focused');
+  assert.ok(this.$('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The input of the trigger is focused');
   Ember.run(() => $('.ember-power-select-option:eq(1)').click());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
   assert.ok(/two/.test($('.ember-power-select-multiple-option').text()), 'The clicked element has been selected');
-  assert.ok(this.$('.ember-power-select-trigger-multiple-input').is(':focus'), 'The input of the trigger is focused again');
+  assert.ok(this.$('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The input of the trigger is focused again');
 });
 
 test('Selecting an element triggers the onchange action with the list of selected options', function(assert) {
@@ -1560,7 +1560,7 @@ test('Pressing ENTER over a highlighted element what is already selected closes 
   Ember.run(() => this.$('.ember-power-select-trigger-multiple-input').trigger($.Event('keydown', { keyCode: 13 })));
   assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element is still selected');
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
-  assert.ok($('.ember-power-select-trigger-multiple-input').is(':focus'), 'The trigger is focused');
+  assert.ok($('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The trigger is focused');
 });
 
 test('Pressing BACKSPACE on the search input when there is text on it does nothing special', function(assert) {
