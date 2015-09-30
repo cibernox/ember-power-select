@@ -1,6 +1,4 @@
 // Cookbook
 .cookbook {
-  h1 {
-    color: green;
-  }
+  @extend %wrapper;
 }
