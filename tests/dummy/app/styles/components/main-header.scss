@@ -12,6 +12,10 @@
 .main-header-logo {
   color: white;
   font-size: 30px;
+  img {
+    height: 36px;
+    vertical-align: -5%;
+  }
 }
 .main-header-nav-links {
   display: flex;

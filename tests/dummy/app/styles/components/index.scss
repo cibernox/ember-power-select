@@ -1,6 +1,6 @@
 // Headline
 .main-page-headline {
-  background-color: $orange;
+  background: $orange linear-gradient($orange, $bright-orange);
   height: 300px;
   color: white;
   display: flex;
@@ -13,6 +13,10 @@
   max-width: 530px;
   font-weight: 200;
   font-size: 42px;
+  img {
+    height: 48px;
+    vertical-align: top;
+  }
 }
 // Selling points
 .selling-points {

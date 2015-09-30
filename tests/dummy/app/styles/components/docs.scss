@@ -31,7 +31,23 @@ $docs-nav-color: #777;
     padding-left: 16px - 3px;
   }
 }
-// Detail
-.doc-detail {
+// Doc page
+.doc-page {
   padding-left: 2rem;
 }
+.doc-page-title {
+  margin-top: 0;
+}
+.doc-page-nav-link-next, .doc-page-nav-link-prev {
+  border: 1px solid $orange;
+  padding: 0.2rem 0.5rem;
+  font-weight: 600;
+  border-radius: 4px;
+}
+.doc-page-nav-link-next {
+  float: right;
+}
+.doc-page-nav-link-prev {
+  float: left;
+}
+
