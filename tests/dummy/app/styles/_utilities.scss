@@ -4,6 +4,17 @@
 }
 
 // My own placeholders
+%clearfix {
+  &::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+  display: block;
+}
 %wrapper {
   max-width: 1024px; // not 960px because it's 2015
   padding-left: 0.5rem;

@@ -3,6 +3,10 @@ $side-nav-color: #777;
   width: 200px;
   color: $side-nav-color;
   flex: 0 0 25%;
+  margin-right: 2rem;
+  @media only screen and (max-width: $medium-breakpoint) {
+    display: none;
+  }
 }
 .side-nav-header {
   font-size: 18px;

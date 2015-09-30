@@ -2,14 +2,15 @@
 .docs {
   @extend %wrapper;
   display: flex;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 // Doc page
-.doc-page {
-  padding-left: 2rem;
-}
 .doc-page-title {
   margin-top: 0;
+}
+.doc-page-nav {
+  @extend %clearfix;
+  margin-bottom: 1rem;
 }
 .doc-page-nav-link-next, .doc-page-nav-link-prev {
   border: 1px solid $brand-color;
@@ -23,4 +24,9 @@
 .doc-page-nav-link-prev {
   float: left;
 }
-
+.section-selector {
+  margin-bottom: 1rem;
+  @media only screen and (min-width: $medium-breakpoint) {
+    display: none;
+  }
+}

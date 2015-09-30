@@ -17,11 +17,14 @@
     {{#link-to 'docs.styles' class="side-nav-link"}}Styles{{/link-to}}
 
     <header class="side-nav-header">Advanced customization</header>
-    <a href="" class="side-nav-link">Partials</a>
-    <a href="" class="side-nav-link">Asynchronous search</a>
-    <a href="" class="side-nav-link">Roll your own template</a>
+    {{#link-to 'docs.partials' class="side-nav-link"}}Partials{{/link-to}}
+    {{#link-to 'docs.asynchronous-search' class="side-nav-link"}}Asynchronous search{{/link-to}}
+    {{#link-to 'docs.roll-your-own-template' class="side-nav-link"}}Roll your own template{{/link-to}}
   </nav>
   <section class="doc-page">
+    {{#ember-power-select options=(readonly sections) onchange=(action 'visit') searchField="text" class="section-selector" as |option|}}
+      {{option.text}}
+    {{/ember-power-select}}
     {{outlet}}
   </section>
 </section>

@@ -11,6 +11,7 @@
   font-size: 30px;
   display: block;
   text-align: center;
+  line-height: 66px;
   img {
     height: 36px;
     vertical-align: -5%;
@@ -41,7 +42,6 @@
   .main-header-nav-links {
     justify-content: space-between;
     background-color: rgba(black, 0.2);
-    margin-bottom: 1rem;
   }
 }
 @media only screen and (min-width: $small-breakpoint) {
