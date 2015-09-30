@@ -26,6 +26,16 @@
   padding-left: 1rem;
   padding-right: 1rem;
 }
+.header-fake-select {
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 0.2rem 2rem 0.2rem 0.5rem;
+  background-size: 9px 9px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#FFFFFF;'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  // box-shadow: 0px 0px 10px rgba(255,255,255, 0.6);
+}
 
 @media only screen and (max-width: $small-breakpoint) {
   .main-header {
