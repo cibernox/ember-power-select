@@ -107,8 +107,13 @@ export default Ember.Component.extend({
   // CPs
   _notLoadingOptions: computed.not('_loadingOptions'),
 
-  selectedOption: computed('attrs.selected', function() {
-    return this.get('multiple') && Ember.A(this.get('attrs.selected')) || this.get('attrs.selected');
+  selectedOption: computed('attrs.selected', {
+    get() {
+      return this.get('multiple') && Ember.A(this.get('attrs.selected')) || this.get('attrs.selected');
+    },
+    set(_, value) {
+      return value;
+    }
   }),
 
   mustSearch: computed('_searchText', 'attrs.search', function(){
