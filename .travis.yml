@@ -22,6 +22,8 @@ matrix:
 
 before_install:
   - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+  - ls /usr/local/phantomjs-2.0.0/bin
+  - which phantomjs
   - "npm config set spin false"
   - "npm install -g npm@^2"
 
