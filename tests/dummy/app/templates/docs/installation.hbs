@@ -1,0 +1,43 @@
+<h1 class="doc-page-title">Installation</h1>
+
+<p>
+  Ember-power-select is distributed as an <a href="http://www.ember-cli.com/">Ember-cli</a> addon,
+  so the only thing you need to do to install it is run
+</p>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      $ ember install ember-power-select
+    </code>
+  </pre>
+</div>
+
+<p>
+  If you use just vanilla css, you're good to go. Ember-power-select will add the default styles
+  to your vendor.css file.
+</p>
+
+<p>
+  However if you are using Sass the addon won't do that. Instead you need to import the addon styles
+  yourself.
+</p>
+
+<div class="highlight">
+  <pre>
+    <code class="language-sass" data-lang="sass">
+      @import "ember-power-select";
+    </code>
+  </pre>
+</div>
+
+<p>
+  This is because using sass allows you to customize the appearance of your selects using
+  variables. More in this in {{#link-to 'docs.styles'}}Basic customization: Styles{{/link-to}}
+</p>
+
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.index' class="doc-page-nav-link-prev"}}&lt; Installation{{/link-to}}
+  {{#link-to 'docs.how-to-use-it' class="doc-page-nav-link-next"}}How to use it &gt;{{/link-to}}
+</div>

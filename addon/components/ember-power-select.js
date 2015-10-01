@@ -78,10 +78,15 @@ export default Ember.Component.extend({
   // Lifecycle hooks
   init(){
     this._super(...arguments);
+    const self = this;
     const rootSelector = Ember.testing ? '#ember-testing' : this.container.lookup('application:main').rootElement;
     this.appRoot = document.querySelector(rootSelector);
-    this.handleRootClick = this.handleRootClick.bind(this);
-    this.handleRepositioningEvent = this.handleRepositioningEvent.bind(this);
+    this.handleRootClick = function handleRootClick(e) {
+      if (!self.element.contains(e.target)) { self.close(); }
+    };
+    this.handleRepositioningEvent = function handleRepositioningEvent(/* e */) {
+      run.throttle(self, 'repositionDropdown', 60, true);
+    };
   },
 
   didReceiveAttrs({ newAttrs: { options, multiple } }) {
@@ -102,8 +107,8 @@ export default Ember.Component.extend({
   // CPs
   _notLoadingOptions: computed.not('_loadingOptions'),
 
-  selectedOption: computed('selected', function() {
-    return this.get('multiple') && Ember.A(this.get('selected')) || this.get('selected');
+  selectedOption: computed('attrs.selected', function() {
+    return this.get('multiple') && Ember.A(this.get('attrs.selected')) || this.get('attrs.selected');
   }),
 
   mustSearch: computed('_searchText', 'attrs.search', function(){
@@ -224,18 +229,12 @@ export default Ember.Component.extend({
     e.stopPropagation();
   },
 
-  handleRootClick(e) {
-    if (!this.element.contains(e.target)) {
-      this.close();
-    }
-  },
-
   handleEnter(e) {
     if (this.get('disabled')) { return; }
     if (this.get('_opened')) {
       const highlighted = this.get('_highlighted');
       if (this.get('multiple')) {
-        if ((this.get('selected') || []).indexOf(highlighted) === -1) {
+        if ((this.get('attrs.selected') || []).indexOf(highlighted) === -1) {
           this.send('select', highlighted, e);
         } else {
           this.close();
@@ -256,9 +255,6 @@ export default Ember.Component.extend({
     }
   },
 
-  handleRepositioningEvent(/* e */) {
-    run.throttle(this, 'repositionDropdown', 60, true);
-  },
 
   handleVerticalArrowKey(e) {
     e.preventDefault();

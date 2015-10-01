@@ -1,0 +1,31 @@
+<section class="docs">
+  <nav class="side-nav">
+    <header class="side-nav-header">Getting started</header>
+    {{#link-to 'docs.index' class="side-nav-link"}}Overview{{/link-to}}
+    {{#link-to 'docs.installation' class="side-nav-link"}}Installation{{/link-to}}
+    {{#link-to 'docs.how-to-use-it' class="side-nav-link"}}How to use it{{/link-to}}
+    {{#link-to 'docs.action-handling' class="side-nav-link"}}Action handling{{/link-to}}
+    {{#link-to 'docs.groups' class="side-nav-link"}}Groups{{/link-to}}
+    {{#link-to 'docs.multiple-selection' class="side-nav-link"}}Multiple selection{{/link-to}}
+
+    <header class="side-nav-header">Basic customization</header>
+    {{#link-to 'docs.list-items' class="side-nav-link"}}List items{{/link-to}}
+    {{#link-to 'docs.empty-list' class="side-nav-link"}}Empty list{{/link-to}}
+    {{#link-to 'docs.selected-element' class="side-nav-link"}}Selected element{{/link-to}}
+    {{#link-to 'docs.messages' class="side-nav-link"}}Messages{{/link-to}}
+    {{#link-to 'docs.filtering' class="side-nav-link"}}Filtering{{/link-to}}
+    {{#link-to 'docs.styles' class="side-nav-link"}}Styles{{/link-to}}
+
+    <header class="side-nav-header">Advanced customization</header>
+    {{#link-to 'docs.partials' class="side-nav-link"}}Partials{{/link-to}}
+    {{#link-to 'docs.asynchronous-search' class="side-nav-link"}}Asynchronous search{{/link-to}}
+    {{#link-to 'docs.roll-your-own-template' class="side-nav-link"}}Roll your own template{{/link-to}}
+  </nav>
+  <section class="doc-page">
+    {{#ember-power-select selected=(readonly currentSection) options=(readonly groupedSections)
+      onchange=(action 'visit') searchField="text" searchEnabled=false class="section-selector" as |option|}}
+      {{option.text}}
+    {{/ember-power-select}}
+    {{outlet}}
+  </section>
+</section>
