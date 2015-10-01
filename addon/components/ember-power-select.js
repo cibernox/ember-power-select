@@ -7,35 +7,9 @@ const { htmlSafe } = Ember.String;
 
 // TODOs:
 //
-// * Multiple options:
-//   - However, pressing enter on a selected items in the list doesn't unselects it. That
-//     makes me thing that PROBABLY the previous point should not be implemented. I find
-//     that dicotomy confusing. [This bit was not implemented. I find it confusing]
-//   - Typing a word that doesn't match any options and pressing enter creates a new entry
-//     (optional behaviour, not default)
-//
-// * Load content asynchronosy (demo with GH repos by example)
-//    The functionality works, but while there is no results the message is
-//    the same than when there is no matches.
-//
-//    I can't avoid feeling that there is 3 different situations:
-//
-//    * No options provided => A mistake or valid situation? "No results" is an acceptable copy?
-//    * No results matching the search criteria => "No results" seems ok.
-//    * No results because there is a search action that might be async:
-//      - The initial message should not be "No results" but something encouraging the user to search.
-//      - While the search promise is not resolved a "Loading..." message should appear, BUT THE EXISTING
-//        RESULTS DON'T DISSAPEAR YET. IMPORTANT.
-//        DURING THIS TIME IF THE USER HIGHLIGHTS
-//      - If the search action resolved to an empty collection then the "No results" message is correct.//
-//
-//
-//  Also, open question: Should the `search` functionality return the new results?
-//  Or should populate the options?
-//  I think the first option is simpler. Function is invoked and returns a promise
-//  that will eventually resolve to the new results.
-//  In that case, when you already got a set of results and you're waiting for the next
-//  to come, during this time should you still show the previous results or just the loading?
+// - Fallback to native select in mobile (optional and only where possible)
+// - Make the autofocus functionality configurable: "always", "never" or "desktop-only" (default?)
+// - Test behavior with ember-data relationships.
 //
 // Low priority TODOs:
 //
