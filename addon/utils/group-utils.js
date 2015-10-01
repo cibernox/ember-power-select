@@ -63,12 +63,14 @@ export function optionAtIndex(originalCollection, index) {
 }
 
 export function filterOptions(options, text, matcher) {
+  const sanitizedOptions =  options.objectAt ? options : Ember.A(options);
   const opts = Ember.A();
-  for (let i = 0; i < get(options, 'length'); i++) {
-    let entry = get(options, '' + i);
+  const length = get(options, 'length');
+  for (let i = 0; i < length; i++) {
+    let entry = sanitizedOptions.objectAt(i);
     if (isGroup(entry)) {
       let suboptions = filterOptions(get(entry, 'options'), text, matcher);
-      if (suboptions.length > 0) {
+      if (get(suboptions, 'length') > 0) {
         opts.push({ groupName: entry.groupName, options: suboptions });
       }
     } else if (matcher(entry, text)) {
