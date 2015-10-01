@@ -247,6 +247,25 @@ test('If the `selected` value changes the select gets updated, but the `onchange
   assert.equal($('.ember-power-select-option.selected').text().trim(), 'three', 'The proper option gets selected');
 });
 
+test('If the user selects a value and later on the selected value changes from the outside, the components updates too', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.selected = null;
+  this.render(hbs`
+    {{#ember-power-select options=(readonly numbers) selected=(readonly selected) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:eq(3)').click());
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
+  Ember.run(() => this.set('selected', 'three'));
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'three', '"three" has been selected because a change came from the outside');
+});
+
 /**
 2 - Passing an empty array
   a) [DONE] A "No options" message appears by default.
