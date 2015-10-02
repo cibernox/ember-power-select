@@ -1680,8 +1680,8 @@ test('Passing `dropdownPosition=above` positions the dropdown on top of the trig
 
 /**
 10 - Ember data integration
-  a) Passing as options of a `store.findAll` works.
-  b) Passing as options the result of `store.query` works.
+  a) [DONE] Passing as options of a `store.findAll` works.
+  b) [DONE] Passing as options the result of `store.query` works.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Ember-data integration)', {

@@ -9,26 +9,24 @@ const { htmlSafe } = Ember.String;
 //
 // - Fallback to native select in mobile (optional and only where possible)
 // - Make the autofocus functionality configurable: "always", "never" or "desktop-only" (default?)
-// - Test behavior with ember-data relationships.
 //
-// Low priority TODOs:
+// Refactor plan for extensibility
 //
-// * Limit the number of selections in multiple mode??? Perhaps not my responsability.
-//   Perhaps just allowing an error/warning msg is enough (and a way of generalize the "Loding state too")
-// * Add option by typing and pressing enter?? (comma breaks the tag)
-// * When you resize the window and the flow of the elements makes the dropdown move the absolute
-//   box has to be repositioned if openend.
-// * Fire onclose and onopen action??
+// List of actions => consecuences all selects can receive:
+// - Click trigger          => Open/Close select
+// - Hover option           => Highlight option
+// - Arrows navigation      => Highlight option
+// - Click option           => Select/Unselect option
+// - Press enter            => Select/Unselect option or Create option
+// - Receive text (input)   => Refresh results (search or filter)
+// - Click remove button    => Remove selection
 //
-// TODOs for when this is an addon:
-// * Place the wormhole destination in the `{{content-for 'body-footer'}}` automatically
+// List of possible actions to fire
+// - change (onchange)
+// - highlight (onhighlight)
+// - search (onsearch??)
 //
-// Things that are not going to be implemented
-// * i18n, because it's not responsability of the component
-// * Themes. It's just CSS, style it however you want.
-// * Firing custom events. In the ember world you use actions.
-// * Programatic access. No need. Pass bound values to change options/selection. Trigger clicks to open/close.
-
+//
 export default Ember.Component.extend({
   layout: layout,
   opened: false,
