@@ -12,9 +12,7 @@ module.exports = {
   // format: 'YYYY-MM-DD',
   // timezone: 'America/Los_Angeles',
   //
-  // beforeCommit: function(project, versions) {
-  //   return new RSVP.Promise(function(resolve, reject) {
-  //     // Do custom things here...
-  //   });
-  // }
+  beforeCommit: function(project, versions) {
+    require('../compile-css.js'); // Requiring the file compiles
+  }
 };
