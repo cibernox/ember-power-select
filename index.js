@@ -12,19 +12,10 @@ module.exports = {
   },
 
   included: function(app) {
-    this._super.included(app);
-    // this.app.registry.availablePlugins['ember-cli-sass'] --->' 4.2.1',
-    // I can use this to determine if the consumer app is using sass
-    // and if so take a different approch.
+    // Don't include the precompiled css file if the user uses ember-cli-sass
+    if (!app.registry.availablePlugins['ember-cli-sass']) {
+      app.import('vendor/ember-power-select.css');
+    }
   },
-
-  // treeForStyles: function(){
-  //   debugger;
-  //   var tree = new Funnel(this.treePaths['addon-styles'], {
-  //     srcDir: '/',
-  //     destDir: '/app/styles'
-  //   });
-  //   return tree;
-  // }
 };
  
