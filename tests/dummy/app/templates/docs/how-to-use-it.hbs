@@ -1,2 +1,35 @@
-<h3>How to use it</h3>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dolores vero saepe non, obcaecati consequuntur sint ipsum similique nam debitis nobis illo officiis quod aspernatur aliquid, totam quo blanditiis reiciendis.
+<h1 class="doc-page-title">How to use it</h1>
+
+<p>
+  The basic usage the component is very simple. The only mandatory option you have to
+  pass to it is <pre>options</pre>, which has to be a collection, and the component will
+  yield each individual option so customize the elements of the list.
+</p>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      \{{#ember-power-select options=(readonly names) as |name|}}
+        \{{name}}
+      \{{/ember-power-select}}
+    </code>
+  </pre>
+</div>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      export default Ember.Controller.extend({
+        names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+      });
+    </code>
+  </pre>
+</div>
+{{#ember-power-select options=(readonly names) as |name|}}
+  {{name}}
+{{/ember-power-select}}
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.installation' class="doc-page-nav-link-prev"}}&lt; Installation{{/link-to}}
+  {{#link-to 'docs.action-handling' class="doc-page-nav-link-next"}}Action handling &gt;{{/link-to}}
+</div>
