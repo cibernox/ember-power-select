@@ -40,7 +40,7 @@ export default Ember.Component.extend({
   selectedPartial: null,
   attributeBindings: ['dir'],
   classNames: ['ember-power-select'],
-  classNameBindings: ['_opened:opened', 'disabled', 'attrs.multiple', '_dropdownPositionClass'],
+  classNameBindings: ['_opened:opened', 'disabled', 'multiple', '_dropdownPositionClass'],
   _highlighted: null,
   _searchText: '',
   _loadingOptions: false,
@@ -66,7 +66,7 @@ export default Ember.Component.extend({
       this.set('searchEnabled', false); // I feel that this should be a CP
     }
     this.set('_loadingOptions', true);
-    RSVP.Promise.resolve(options)
+    RSVP.Promise.resolve(options && options.value || options)
       .then(opts => this.updateOptions(opts))
       .finally(() => this.set('_loadingOptions', false));
   },
@@ -79,17 +79,17 @@ export default Ember.Component.extend({
   // CPs
   _notLoadingOptions: computed.not('_loadingOptions'),
 
-  selectedOption: computed('attrs.selected', {
+  selectedOption: computed('selected', {
     get() {
-      return this.get('multiple') && Ember.A(this.get('attrs.selected')) || this.get('attrs.selected');
+      return this.get('multiple') && Ember.A(this.get('selected')) || this.get('selected');
     },
     set(_, value) {
       return value;
     }
   }),
 
-  mustSearch: computed('_searchText', 'attrs.search', function(){
-    return this.get('_searchText.length') === 0 && !!this.get('attrs.search');
+  mustSearch: computed('_searchText', 'search', function(){
+    return this.get('_searchText.length') === 0 && !!this.get('search');
   }),
 
   tabindex: computed('disabled', function() {
@@ -117,12 +117,12 @@ export default Ember.Component.extend({
 
     select(option, e) {
       e.preventDefault();
-      if (this.attrs.multiple) {
+      if (this.get('multiple')) {
         this.addOrRemoveToSelected(option);
       } else if (this.get('selectedOption') !== option) {
         this.set('selectedOption', option);
       }
-      if (this.attrs.onchange) { this.attrs.onchange(this.get('selectedOption')); }
+      if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
       this.close();
       this.focusTrigger();
     },
@@ -136,7 +136,7 @@ export default Ember.Component.extend({
       e.stopPropagation();
       this.get('selectedOption').removeObject(option);
       this._resultsDirty = true;
-      if (this.attrs.onchange) { this.attrs.onchange(this.get('selectedOption')); }
+      if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
       run.scheduleOnce('afterRender', this, this.repositionDropdown);
     },
 
@@ -144,12 +144,12 @@ export default Ember.Component.extend({
       e.stopPropagation();
       e.preventDefault();
       this.set('selectedOption', null);
-      if (this.attrs.onchange) { this.attrs.onchange(null); }
+      if (this.get('onchange')) { this.get('onchange')(null); }
     },
 
     search(term /*, e */) {
       this.set('_searchText', term);
-      if (this.attrs.search) {
+      if (this.get('search')) {
         this.performCustomSearch(term);
       } else {
         this.refreshResults();
@@ -211,7 +211,7 @@ export default Ember.Component.extend({
     if (this.get('_opened')) {
       const highlighted = this.get('_highlighted');
       if (this.get('multiple')) {
-        if ((this.get('attrs.selected') || []).indexOf(highlighted) === -1) {
+        if ((this.get('selected') || []).indexOf(highlighted) === -1) {
           this.send('select', highlighted, e);
         } else {
           this.close();
@@ -249,8 +249,8 @@ export default Ember.Component.extend({
     if (typeof lastSelection === 'string') {
       this.set('_searchText', lastSelection); // TODO: Convert last selection to text
     } else {
-      if (!this.attrs.searchField) { throw new Error('Need to provide `searchField` when options are not strings'); }
-      this.set('_searchText', get(lastSelection, this.attrs.searchField)); // TODO: Convert last selection to text
+      if (!this.get('searchField')) { throw new Error('Need to provide `searchField` when options are not strings'); }
+      this.set('_searchText', get(lastSelection, this.get('searchField'))); // TODO: Convert last selection to text
     }
     this.open();
   },
@@ -303,7 +303,7 @@ export default Ember.Component.extend({
   },
 
   repositionDropdown() {
-    if (this.attrs.renderInPlace) { return; }
+    if (this.get('renderInPlace')) { return; }
     const dropdownPositionStrategy = this.get('dropdownPosition');
     const dropdown = this.appRoot.querySelector('.ember-power-select-dropdown');
     const width = this.element.offsetWidth;
@@ -338,8 +338,8 @@ export default Ember.Component.extend({
   refreshResults() {
     const { _options: options, _searchText: searchText } = this.getProperties('_options', '_searchText');
     let matcher;
-    if (this.attrs.searchField) {
-      matcher = (option, text) => this.matcher(get(option, this.attrs.searchField), text);
+    if (this.get('searchField')) {
+      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
     } else {
       matcher = (option, text) => this.matcher(option, text);
     }
@@ -359,7 +359,7 @@ export default Ember.Component.extend({
 
   performCustomSearch(term) {
     this.set('_loadingOptions', true);
-    const promise = term.length > 0 ? RSVP.Promise.resolve(this.attrs.search(term)) : RSVP.resolve([]);
+    const promise = term.length > 0 ? RSVP.Promise.resolve(this.get('search')(term)) : RSVP.resolve([]);
     this.set('_activeSearch', promise);
     promise.then(results => {
       if (promise !== this.get('_activeSearch')) { return; }
