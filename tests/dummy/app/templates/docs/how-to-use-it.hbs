@@ -7,12 +7,12 @@
 </p>
 
 {{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
     \{{#ember-power-select options=(readonly names) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
       names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
     });
@@ -33,7 +33,7 @@
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
     \{{#ember-power-select options=(readonly countries) as |country|}}
-      &lt;img src="{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
+      &lt;img src="\{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
     \{{/ember-power-select}}
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
