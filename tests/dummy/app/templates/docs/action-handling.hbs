@@ -26,7 +26,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
+    \{{#ember-power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -45,7 +45,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
+    {{#ember-power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -59,7 +59,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
+    \{{#ember-power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -70,7 +70,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
+    {{#ember-power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>

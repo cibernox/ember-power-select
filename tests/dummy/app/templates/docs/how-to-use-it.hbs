@@ -8,7 +8,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=(readonly names) as |name|}}
+    \{{#ember-power-select options=names as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -18,7 +18,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=(readonly names) as |name|}}
+    {{#ember-power-select options=names as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -32,7 +32,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=(readonly countries) as |country|}}
+    \{{#ember-power-select options=countries as |country|}}
       &lt;img src="\{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
     \{{/ember-power-select}}
   </pre>
@@ -50,7 +50,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=(readonly countries) as |country|}}
+    {{#ember-power-select options=countries as |country|}}
       <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
     {{/ember-power-select}}
   </div>

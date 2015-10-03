@@ -9,6 +9,7 @@
 .code-sample-tab {
   padding: 0.2rem 0.5rem;
   background-color: white;
+  text-transform: capitalize;
   &:not(.active) {
     color: #999;
     cursor: pointer;
