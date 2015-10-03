@@ -1,1 +1,6 @@
-I'm a code sample!
+<nav class="code-sample-tabs">
+  {{#each tabs as |tab|}}
+    <div class="code-sample-tab {{if (eq activeTab tab) 'active'}}" onclick={{action (mut activeTab) tab}}>Template</div>
+  {{/each}}
+</nav>
+{{yield this}}

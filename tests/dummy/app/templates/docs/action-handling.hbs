@@ -23,38 +23,33 @@
   context is expressed this way:
 </p>
 
-<div class="highlight">
-  <pre>
-    <code class="language-text" data-lang="text">
-      \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
-        \{{name}}
-      \{{/ember-power-select}}
-    </code>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
   </pre>
-</div>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      cities: ['Barcelona', 'London', 'New York', 'Porto'],
+      destination: 'London',
 
-<div class="highlight">
-  <pre>
-    <code class="language-text" data-lang="text">
-      export default Ember.Controller.extend({
-        cities: ['Barcelona', 'London', 'New York', 'Porto'],
-        destination: 'London',
-
-        actions: {
-          chooseDestination(city) {
-            this.set('destination', city);
-            // this.calculateRoute();
-            // this.updatePrice();
-          }
+      actions: {
+        chooseDestination(city) {
+          this.set('destination', city);
+          // this.calculateRoute();
+          // this.updatePrice();
         }
-      });
-    </code>
+      }
+    });
   </pre>
-</div>
-{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
-  {{name}}
-{{/ember-power-select}}
-
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
 
 <p>
   That gives you the freedom of doing whatever suits your need when the user selects a value. <br>
@@ -62,29 +57,24 @@
   <code>mut</code> helper.
 </p>
 
-<div class="highlight">
-  <pre>
-    <code class="language-text" data-lang="text">
-      \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
-        \{{name}}
-      \{{/ember-power-select}}
-    </code>
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
   </pre>
-</div>
-
-<div class="highlight">
-  <pre>
-    <code class="language-text" data-lang="text">
-      export default Ember.Controller.extend({
-        cities: ['Barcelona', 'London', 'New York', 'Porto'],
-        destination: 'London'
-      });
-    </code>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      cities: ['Barcelona', 'London', 'New York', 'Porto'],
+      destination: 'London'
+    });
   </pre>
-</div>
-{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
-  {{name}}
-{{/ember-power-select}}
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
 
 <p>
   It might seem a bit more verbose at first for this, the simplest use case possible, but
