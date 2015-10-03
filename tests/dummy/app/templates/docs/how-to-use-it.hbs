@@ -6,7 +6,48 @@
   yield each individual option so customize the elements of the list.
 </p>
 
-<div class="highlight">
+{{!-- {{#code-sample as |sample|}}
+  {{#code-sample/snippet sample=sample type="template"}}
+    \{{#ember-power-select options=(readonly names) as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  {{/code-sample/snippet}}
+  {{#code-sample/snippet sample=sample type="javascript"}}
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+    });
+  {{/code-sample/snippet}}
+{{else}}
+  {{#ember-power-select options=(readonly names) as |name|}}
+    {{name}}
+  {{/ember-power-select}}
+{{/code-sample}} --}}
+
+<div class="code-sample">
+  <nav class="code-sample-tabs">
+    <div class="code-sample-tab {{if (eq activeTab 'template') 'active'}}" onclick={{action (mut activeTab) "template"}}>Template</div>
+    <div class="code-sample-tab {{if (eq activeTab 'javascript') 'active'}}" onclick={{action (mut activeTab) "javascript"}}>Javascript</div>
+    <div class="code-sample-tab {{if (eq activeTab 'result') 'active'}}" onclick={{action (mut activeTab) "result"}}>Result</div>
+  </nav>
+  <pre class="code-sample-snippet template {{if (eq activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=(readonly names) as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq activeTab 'result') 'active'}}">
+    {{#ember-power-select options=(readonly names) as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+</div>
+
+
+{{!-- <div class="highlight">
   <pre>
     <code class="language-text" data-lang="text">
       \{{#ember-power-select options=(readonly names) as |name|}}
@@ -27,7 +68,7 @@
 </div>
 {{#ember-power-select options=(readonly names) as |name|}}
   {{name}}
-{{/ember-power-select}}
+{{/ember-power-select}} --}}
 
 <p>
   The block of the component becames the content of each option of the select and also the content

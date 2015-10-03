@@ -1,0 +1,32 @@
+// Docs
+.code-sample {
+  margin-bottom: 1rem;
+}
+
+.code-sample-tabs {
+  display: flex;
+}
+.code-sample-tab {
+  // display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background-color: white;
+  &:not(.active) {
+    color: #999;
+    cursor: pointer;
+  }
+  &.active {
+    border-bottom: 2px solid $brand-color;
+    color: $brand-color;
+    cursor: normal;
+  }
+}
+.code-sample-snippet {
+  margin-bottom: 0;
+  background-color: #f9f9f9;
+  &:not(.active) {
+    display: none;
+  }
+  &.result {
+    padding: 1rem;
+  }
+}

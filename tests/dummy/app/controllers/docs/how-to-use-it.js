@@ -10,5 +10,7 @@ export default Ember.Controller.extend({
     { name: 'Latvia',         flagUrl: '/flags/lv.svg' },
     { name: 'Brazil',         flagUrl: '/flags/br.svg' },
     { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
-  ]
+  ],
+
+  activeTab: 'template'
 });
