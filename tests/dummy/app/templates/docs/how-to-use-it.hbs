@@ -2,7 +2,7 @@
 
 <p>
   The basic usage the component is very simple. The only mandatory option you have to
-  pass to it is <pre>options</pre>, which has to be a collection, and the component will
+  pass to it is <code>options</code>, which has to be a collection, and the component will
   yield each individual option so customize the elements of the list.
 </p>
 
@@ -28,6 +28,44 @@
 {{#ember-power-select options=(readonly names) as |name|}}
   {{name}}
 {{/ember-power-select}}
+
+<p>
+  The block of the component becames the content of each option of the select and also the content
+  of the trigger by default. Blocks are a powerful ember primitive and you can use them to build
+  selects with complex HTML inside very naturally.
+</p>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      \{{#ember-power-select options=(readonly countries) as |country|}}
+        &lt;img src="{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
+      \{{/ember-power-select}}
+    </code>
+  </pre>
+</div>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      export default Ember.Controller.extend({
+        flags: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+      });
+    </code>
+  </pre>
+</div>
+{{#ember-power-select options=(readonly countries) as |country|}}
+  <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+{{/ember-power-select}}
+
+<p>
+  However this components don't have much value so far. You can display a list
+  of options but selecting one doesn't do anything.
+</p>
+
+<p>
+  That's what actions are for.
+</p>
 
 <div class="doc-page-nav">
   {{#link-to 'docs.installation' class="doc-page-nav-link-prev"}}&lt; Installation{{/link-to}}

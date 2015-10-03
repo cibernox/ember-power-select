@@ -2,32 +2,32 @@
 
 .legacy-demo {
   @extend %wrapper;
+}
 
-  .icon-flag {
-    display: inline-block;
-    height: 14px;
-    width: 20px;
-    .ember-power-select-multiple-option & {
-      vertical-align: -10%;
-    }
+.icon-flag {
+  display: inline-block;
+  height: 14px;
+  width: 20px;
+  .ember-power-select-multiple-option & {
+    vertical-align: -10%;
   }
-  .icon-flag, .country-detailed-info .country-flag {
-    background-repeat: no-repeat;
-    background-size: cover;
-    &.US { background-image: url("/flags/us.svg"); }
-    &.ES { background-image: url("/flags/es.svg"); }
-    &.PT { background-image: url("/flags/pt.svg"); }
-    &.RU { background-image: url("/flags/ru.svg"); }
-    &.LV { background-image: url("/flags/lv.svg"); }
-    &.BR { background-image: url("/flags/br.svg"); }
-    &.GB { background-image: url("/flags/gb.svg"); }
-  }
-  .country-detailed-info {
-    margin: 0 -8px;
-    display: flex;
-    .country-flag { width: 92px; }
-    .country-data-text {
-      padding: 6px;
-    }
+}
+.icon-flag, .country-detailed-info .country-flag {
+  background-repeat: no-repeat;
+  background-size: cover;
+  &.US { background-image: url("/flags/us.svg"); }
+  &.ES { background-image: url("/flags/es.svg"); }
+  &.PT { background-image: url("/flags/pt.svg"); }
+  &.RU { background-image: url("/flags/ru.svg"); }
+  &.LV { background-image: url("/flags/lv.svg"); }
+  &.BR { background-image: url("/flags/br.svg"); }
+  &.GB { background-image: url("/flags/gb.svg"); }
+}
+.country-detailed-info {
+  margin: 0 -8px;
+  display: flex;
+  .country-flag { width: 92px; }
+  .country-data-text {
+    padding: 6px;
   }
 }

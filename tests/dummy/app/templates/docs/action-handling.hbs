@@ -1,2 +1,102 @@
-<h3>Action handling</h3>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dolores vero saepe non, obcaecati consequuntur sint ipsum similique nam debitis nobis illo officiis quod aspernatur aliquid, totam quo blanditiis reiciendis.
+<h1 class="doc-page-title">Action handling</h1>
+
+<p>
+  Ember power select aims to be maximally flexible and because of that it doesn't try to make strong
+  assumptions about how you want to use it. Instead it embraces DDAU *(Data Down Actions Up)* philosofy
+  of Ember 2.0 so data flow is unidirectional and explicit.
+</p>
+
+<p>
+  Like in the native <code>&lt;select&gt;</code> tag you can tell the component what is the
+  selected option with the *(you guessed right)* <code>selected</code> option.
+</p>
+
+<p>
+  Data changes that occur in the component are not propagated to the outside using double bindings,
+  but rather they are communicated via actions. The main action you're going to use is the <code>onchange</code>
+  action. This action will fire whenever the selected value of the component changes because of user's
+  interaction.
+</p>
+
+<p>
+  The very common use case when you want changes inside a component to be update a value in its
+  context is expressed this way:
+</p>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
+        \{{name}}
+      \{{/ember-power-select}}
+    </code>
+  </pre>
+</div>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      export default Ember.Controller.extend({
+        cities: ['Barcelona', 'London', 'New York', 'Porto'],
+        destination: 'London',
+
+        actions: {
+          chooseDestination(city) {
+            this.set('destination', city);
+            // this.calculateRoute();
+            // this.updatePrice();
+          }
+        }
+      });
+    </code>
+  </pre>
+</div>
+{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action "chooseDestination") as |name|}}
+  {{name}}
+{{/ember-power-select}}
+
+
+<p>
+  That gives you the freedom of doing whatever suits your need when the user selects a value. <br>
+  If the only thing you want to do is updating the value, you can make it more concise using the
+  <code>mut</code> helper.
+</p>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      \{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
+        \{{name}}
+      \{{/ember-power-select}}
+    </code>
+  </pre>
+</div>
+
+<div class="highlight">
+  <pre>
+    <code class="language-text" data-lang="text">
+      export default Ember.Controller.extend({
+        cities: ['Barcelona', 'London', 'New York', 'Porto'],
+        destination: 'London'
+      });
+    </code>
+  </pre>
+</div>
+{{#ember-power-select selected=(readonly destination) options=(readonly cities) onchange=(action (mut destination)) as |name|}}
+  {{name}}
+{{/ember-power-select}}
+
+<p>
+  It might seem a bit more verbose at first for this, the simplest use case possible, but
+  it simplifies a lot the mental model and enables some advanced usages that would otherwise be
+  very tricky to implement.
+</p>
+
+<p>
+  Have I mentioned that your can also render groups?
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.how-to-use-it' class="doc-page-nav-link-prev"}}&lt; How to use it{{/link-to}}
+  {{#link-to 'docs.groups' class="doc-page-nav-link-next"}}Groups &gt;{{/link-to}}
+</div>
