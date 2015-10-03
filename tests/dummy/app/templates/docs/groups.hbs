@@ -1,10 +1,49 @@
 <h3>Groups</h3>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dolores vero saepe non, obcaecati consequuntur sint ipsum similique nam debitis nobis illo officiis quod aspernatur aliquid, totam quo blanditiis reiciendis.
+
+<p>
+  Any component that aims to replace the native select has to hadle groups and so does this.
+  When the component iterates over the collection of options it checks if the option has an
+  attribute named `groupName` and nother named `options` that is also a collection.
+</p>
+<p>
+  You can nest groups inside groups with absolutely no depth limit, everyting else like arrow
+  navigation and filtering will just work.
+</p>
+
 {{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=groupedNumbers as |num|}}
+      \{{num}}
+    \{{/ember-power-select}}
   </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      groupedNumbers: [
+        { groupName: "Smalls", options: ["one", "two", "three"] },
+        { groupName: "Mediums", options: ["four", "five", "six"] },
+        { groupName: "Bigs", options: [
+            { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
+            { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+            "thirteen"
+          ]
+        },
+        "one hundred",
+        "one thousand"
+      ]
+    });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=groupedNumbers as |num|}}
+      {{num}}
+    {{/ember-power-select}}
   </div>
 {{/code-sample}}
+
+<p>
+  Following with the options, what happens if you want to select more than one?
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.action-handling' class="doc-page-nav-link-prev"}}&lt; Action handling{{/link-to}}
+  {{#link-to 'docs.multiple-selection' class="doc-page-nav-link-next"}}Multiple selection &gt;{{/link-to}}
+</div>
