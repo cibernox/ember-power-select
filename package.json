@@ -11,7 +11,10 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cibernox/ember-power-select.git"
+  },
   "engines": {
     "node": ">= 0.12.0"
   },
