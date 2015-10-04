@@ -47,10 +47,15 @@
 }
 .selling-point-code {
   color: #CCC;
-  font-size: 25px;
   padding: 0;
+  font-size: 25px;
   font-family: monospace;
   padding: 80px 0;
+  white-space: nowrap;
+  text-align: center;
+  @media only screen and (min-width: 520px) and (max-width: 768px) {
+    font-size: 18px;
+  }
 }
 .selling-point-text {
   color: $gray;
