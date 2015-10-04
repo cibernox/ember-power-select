@@ -18,8 +18,7 @@ const groupedSections = [
   {
     groupName: 'Basic customization',
     options: [
-      { route: 'docs.list-items',       text: 'List items' },
-      { route: 'docs.empty-list',       text: 'Empty list' },
+      { route: 'docs.the-list',         text: 'The list' },
       { route: 'docs.selected-element', text: 'Selected element' },
       { route: 'docs.messages',         text: 'Messages' },
       { route: 'docs.filtering',        text: 'Filtering' },

@@ -16,8 +16,7 @@ Router.map(function() {
     this.route('multiple-selection');
 
     // BASIC CUSTOMIZATION
-    this.route('list-items');
-    this.route('empty-list');
+    this.route('the-list');
     this.route('selected-element');
     this.route('messages');
     this.route('filtering');

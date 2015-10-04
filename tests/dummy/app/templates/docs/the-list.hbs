@@ -1,0 +1,236 @@
+<h1 class="doc-page-title">The list</h1>
+
+<p>
+  If there is a key area of the component that must be absolutely customizable, that
+  is the dropdown with the list. This is probably the most dense chapter so far so read it cover
+  to cover.
+</p>
+
+<h3>Position</h3>
+
+<p>
+  The dropdown in Ember power select is pretty smart. By default this component inserts the dropdown
+  not next the the trigger but in the root of your app (tipically the <code>&lt;body&gt;</code>) using
+  the awesome <a href="https://github.com/yapplabs/ember-wormhole">ember-wormhole</a> addon and the
+  absolutely positions it.
+</p>
+<p>
+  This is a safe default because by default it won't be affected by the overflow constraints of
+  the element where the component lives in. However there is a few situations where this is not
+  practical, so you can opt-out to this behavior passing <code>renderInPlace=true</code>.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names renderInPlace=true as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=names renderInPlace=true as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+    (Looks the same but inspect the DOM to see the difference)
+  </div>
+{{/code-sample}}
+
+<p>
+  When the component it's not rendered in place the dropdown can be configured to be added below
+  or above the trigger using the <code>dropdownPosition</code> option. The possible values
+  are <code>below</code>, <code>above</code> and <code>auto</code> (the default).
+</p>
+<p>
+  The <code>auto</code>
+  mode will detect the best strategy based on the available space around the component and also
+  will take care of reposition it when you scroll or change the orientation of the device so you
+  will rarely need to worry about this option.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names dropdownPosition='above' as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=names dropdownPosition='above' as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+    (This dropdpwn will always be on top regardless of how much available space there is around)
+  </div>
+{{/code-sample}}
+
+<h3>The search box</h3>
+
+<p>
+  Easy enough, you can disable the searchbox by passing <code>searchEnabled=false</code>.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names searchEnabled=false as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=names searchEnabled=false as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<h3>The empty state</h3>
+
+<p>
+  What happens when the collection you pass to the component is empty?
+  By default the component will render a helpful message. This message is the same
+  that will appear after performing a search there is no matching results.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=emptyList as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      emptyList: []
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=emptyList as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<p>
+  You can pass a different message using <code>noMatchesMessage="My message"</code>
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=emptyList noMatchesMessage="404 bro" as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      emptyList: []
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=emptyList noMatchesMessage="404 bro" as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<p>
+  Or you can just use the <code>\{{else}}</code> block to just customize a totally
+  different HTML content just like the <code>\{{each}}</code> helper.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=emptyList as |name|}}
+      \{{name}}
+    \{{else}}
+      &lt;div class="text-center"&gt;
+        &lt;img width="150" src="/grumpy-cat.png"&gt;
+      &lt;/div&gt;
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      emptyList: []
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=emptyList as |name|}}
+      {{name}}
+    {{else}}
+      <div class="text-center">
+        <img width="150" src="/grumpy-cat.png">
+      </div>
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<h3>The loading state</h3>
+
+<p>
+  In the first chapter we mentioned that the options of this component can be a any collection,
+  including Ember-data's collection resulting from <code>store.find</code>, <code>store.query</code>,
+  asyncronous relationships and just plaing old promises that resolve to a collection of
+  some sort.
+</p>
+<p>
+  That means that while the promise doesn't resolves you are in some kind of <em>loading</em>
+  state where you don't have options yet but you will so you don't want to show the "No results" messages.
+</p>
+
+<p>
+  The component will show a default message but you can also customize passing <code>loadingMessage="Some text"</code>
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    &lt;button onclick=\{{action "refreshCollection"}}&gt;Refresh collection&lt;/button&gt;
+
+    Default loading message
+    \{{#ember-power-select options=promise as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+
+    Custom loading message
+    \{{#ember-power-select options=promise loadingMessage="Waiting for the server" as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    function generatePromise() {
+      return new Ember.RSVP.Promise((resolve) => {
+        setTimeout(() => resolve(['one', 'two', 'three']), 5000);
+      });
+    }
+
+    export default Ember.Controller.extend({
+      promise: null,
+      actions: {
+        refreshCollection() {
+          this.set('promise', generatePromise());
+        }
+      }
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    <button onclick={{action "refreshCollection"}}>Refresh collection</button>
+    <br>
+    Default loading message
+    {{#ember-power-select options=promise as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+    <br>
+    Custom loading message
+    {{#ember-power-select options=promise loadingMessage="Waiting for the server...." as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
