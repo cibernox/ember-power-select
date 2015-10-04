@@ -267,6 +267,21 @@ test('If the user selects a value and later on the selected value changes from t
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', '"three" has been selected because a change came from the outside');
 });
 
+test('If the user pases `renderInPlace=true` the dropdown is added below the trigger instead of in the root', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=numbers renderInPlace=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal(this.$('.ember-power-select-dropdown').length, 1, 'The dropdown is inside the component');
+  assert.ok(this.$('.ember-power-select-dropdown').hasClass('below'), 'The dropdown positioned below the trigger');
+});
+
 /**
 2 - Passing an empty array
   a) [DONE] A "No options" message appears by default.

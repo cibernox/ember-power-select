@@ -40,7 +40,7 @@ export default Ember.Component.extend({
   selectedPartial: null,
   attributeBindings: ['dir'],
   classNames: ['ember-power-select'],
-  classNameBindings: ['_opened:opened', 'disabled', 'multiple', '_dropdownPositionClass'],
+  classNameBindings: ['_opened:opened', 'disabled', 'multiple', 'renderInPlace', '_dropdownPositionClass'],
   _highlighted: null,
   _searchText: '',
   _loadingOptions: false,
@@ -189,7 +189,8 @@ export default Ember.Component.extend({
     if (this.get('disabled')) { return; }
     this.set('_opened', true);
     const pos = this.get('dropdownPosition');
-    this.set('_dropdownPositionClass', pos === 'auto' ? null : pos);
+    const renderInPlace = this.get('renderInPlace');
+    this.set('_dropdownPositionClass', renderInPlace ? 'below' : (pos === 'auto' ? null : pos));
     this.addGlobalEvents();
     if (this._resultsDirty) { this.refreshResults(); }
     if (this.get('multiple')) {
