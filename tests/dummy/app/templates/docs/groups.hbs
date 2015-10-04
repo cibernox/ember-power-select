@@ -1,13 +1,9 @@
-<h3>Groups</h3>
+<h1 class="doc-page-title">Groups</h1>
 
 <p>
   Any component that aims to replace the native select has to hadle groups and so does this.
   When the component iterates over the collection of options it checks if the option has an
-  attribute named `groupName` and nother named `options` that is also a collection.
-</p>
-<p>
-  You can nest groups inside groups with absolutely no depth limit, everyting else like arrow
-  navigation and filtering will just work.
+  attribute named <code>groupName</code> and nother named <code>options</code> that is also a collection.
 </p>
 
 {{#code-sample as |component|}}
@@ -40,7 +36,13 @@
 {{/code-sample}}
 
 <p>
-  Following with the options, what happens if you want to select more than one?
+  You can nest groups inside groups with absolutely no depth limit, everyting else like arrow
+  navigation and filtering will just work.
+</p>
+
+<p>
+  This is all you need to know about passing grouos of options, but what about when you want to
+  select more than one option?
 </p>
 
 <div class="doc-page-nav">

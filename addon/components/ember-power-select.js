@@ -243,7 +243,7 @@ export default Ember.Component.extend({
   handleBackspace(e) {
     if (!this.get('multiple')) { return; }
     if (this.get('_searchText.length') !== 0) { return; }
-    const lastSelection = this.get('selected.lastObject');
+    const lastSelection = this.get('selectedOption.lastObject');
     if (!lastSelection) { return; }
     this.send('removeOption', lastSelection, e);
     if (typeof lastSelection === 'string') {

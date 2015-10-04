@@ -1,9 +1,10 @@
 <h1 class="doc-page-title">How to use it</h1>
 
 <p>
-  The basic usage the component is very simple. The only mandatory option you have to
-  pass to it is <code>options</code>, which has to be a collection, and the component will
-  yield each individual option so customize the elements of the list.
+  The basic usage the component is very simple. The only mandatory argument you have to
+  pass to it is <code>options</code> which has to be a <em>collection</em> of any kind, including
+  the result of ember-data operations like <code>.find</code> or <code>.query</code>, and the
+  component will yield each individual item in the collection to the block.
 </p>
 
 {{#code-sample as |component|}}
@@ -14,7 +15,8 @@
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
-      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+      selectedUser: 'Tomster',
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
@@ -26,39 +28,62 @@
 
 <p>
   The block of the component becames the content of each option of the select and also the content
-  of the trigger by default. Blocks are a powerful ember primitive and you can use them to build
+  of the trigger by default. Blocks are a powerful Ember primitive and you can use them to build
   selects with complex HTML inside very naturally.
 </p>
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries as |country|}}
+    \{{#ember-power-select options=countries selected=destination as |country|}}
       &lt;img src="\{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
     \{{/ember-power-select}}
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    const countries = [
+      { name: 'United States',  flagUrl: '/flags/us.svg' },
+      { name: 'Spain',          flagUrl: '/flags/es.svg' },
+      { name: 'Portugal',       flagUrl: '/flags/pt.svg' },
+      { name: 'Russia',         flagUrl: '/flags/ru.svg' },
+      { name: 'Latvia',         flagUrl: '/flags/lv.svg' },
+      { name: 'Brazil',         flagUrl: '/flags/br.svg' },
+      { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
+    ];
+
     export default Ember.Controller.extend({
-      countries: [
-        { name: 'United States',  flagUrl: '/flags/us.svg' },
-        { name: 'Spain',          flagUrl: '/flags/es.svg' },
-        { name: 'Portugal',       flagUrl: '/flags/pt.svg' },
-        { name: 'Russia',         flagUrl: '/flags/ru.svg' },
-        { name: 'Latvia',         flagUrl: '/flags/lv.svg' },
-        { name: 'Brazil',         flagUrl: '/flags/br.svg' },
-        { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
-      ]
+      countries: countries,
+      destination: countries[2]
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries as |country|}}
+    {{#ember-power-select options=countries selected=destination as |country|}}
       <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
     {{/ember-power-select}}
   </div>
 {{/code-sample}}
 
 <p>
-  However this components don't have much value so far. You can display a list
-  of options but selecting one doesn't do anything.
+  Also you've seen the usage of the <code>selected</code> option. Unsurprisingly it tells the
+  component the <strong>initial</strong> selection. But it's important to note a a few things
+  about it:
+</p>
+
+<ul>
+  <li>
+    The component compares the selected option with the options in the collection by equalty, to
+    have in mind that when working with POJOs that <code>{ foo: 'bar' } === { foo: 'bar' }</code> is false.
+  </li>
+  <li>
+    Updates in the selected element will update the selected value in the component as expected.
+  </li>
+  <li>
+    <code>selected</code> (and all other options options actually) is readonly. This means that selecting a
+    different element in the component won't propagate this change up to the context.
+  </li>
+</ul>
+
+<p>
+  This is the very basic usage of this component, but so far is pretty useless. Since there is no
+  double bindings nothing happens when you select something on it.
 </p>
 
 <p>

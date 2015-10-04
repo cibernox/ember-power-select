@@ -1627,6 +1627,27 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
 });
 
 
+test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection ALSO when that option didn\'t come from the outside', function(assert) {
+  assert.expect(5);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=numbers onchange=didChange multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:eq(2)').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
+  Ember.run(() => this.$('.ember-power-select-trigger-multiple-input').trigger($.Event('keydown', { keyCode: 8 })));
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'three', 'The text of the seach input is three now');
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
+  assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
+});
+
 /**
 10 - Dropdown positioning
   a) [DONE] By default the dropdown is placed automatically depending on the available space around the select.
