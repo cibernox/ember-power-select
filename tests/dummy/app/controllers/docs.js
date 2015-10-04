@@ -19,7 +19,7 @@ const groupedSections = [
     groupName: 'Basic customization',
     options: [
       { route: 'docs.the-list',         text: 'The list' },
-      { route: 'docs.selected-element', text: 'Selected element' },
+      { route: 'docs.the-trigger',      text: 'The trigger' },
       { route: 'docs.messages',         text: 'Messages' },
       { route: 'docs.filtering',        text: 'Filtering' },
       { route: 'docs.styles',           text: 'Styles' },

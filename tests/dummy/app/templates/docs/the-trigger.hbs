@@ -1,0 +1,66 @@
+<h1 class="doc-page-title">The trigger</h1>
+
+<p>
+  The second are you're more likely to customize is the trigger area of the component.
+</p>
+
+<h3>The selected option</h3>
+
+<p>
+  As we saw in the {{#link-to 'docs.how-to-use-it'}}How to use it{{/link-to}} section, Ember Power Select
+  will reuse the same block used for each element of the list for the content of the trigger, both
+  in normal and multiple mode, but this is something you can also customize if you need to.
+</p>
+
+<p>
+  Since we have runned out of block to pass the the component we need to use partials if we want to
+  go any further. Pass <code>selectedPartial="absolute/path/to/the/partial"</code> to the component.
+</p>
+
+<p>
+  Within that partial the context is the component itself so you have access to all its attributes.
+  Chances are the one you care about is <code>selectedOption</code>.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+  \{{#ember-power-select options=countries selectedPartial="selected-country" searchField="name" as |country|}}
+    &lt;div class="country-detailed-info"&gt;
+      &lt;img src="\{{country.flagUrl}}" class="country-flag"&gt;
+      &lt;div class="country-data-text"&gt;
+        &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
+        &lt;br&gt;
+        &lt;small&gt;Population in 2014: &lt;i&gt;\{{country.population}}&lt;/i&gt;&lt;/small&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    const countries = [
+      { name: 'United States',  flagUrl: '/flags/us.svg', population: 321853000 },
+      { name: 'Spain',          flagUrl: '/flags/es.svg', population: 46439864 },
+      { name: 'Portugal',       flagUrl: '/flags/pt.svg', population: 10374822 },
+      { name: 'Russia',         flagUrl: '/flags/ru.svg', population: 146588880 },
+      { name: 'Latvia',         flagUrl: '/flags/lv.svg', population: 1978300 },
+      { name: 'Brazil',         flagUrl: '/flags/br.svg', population: 204921000 },
+      { name: 'United Kingdom', flagUrl: '/flags/gb.svg', population: 64596752 },
+    ];
+
+    export default Ember.Controller.extend({
+      countries: countries,
+      destination: countries[2]
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+  {{#ember-power-select options=countries selectedPartial="selected-country" searchField="name" as |country|}}
+    <div class="country-detailed-info">
+      <img src="{{country.flagUrl}}" class="country-flag">
+      <div class="country-data-text">
+        <strong>{{country.name}}</strong>
+        <br>
+        <small>Population in 2014: <i>{{country.population}}</i></small>
+      </div>
+    </div>
+  {{/ember-power-select}}
+  </div>
+{{/code-sample}}

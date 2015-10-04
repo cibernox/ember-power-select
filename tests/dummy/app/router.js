@@ -17,7 +17,7 @@ Router.map(function() {
 
     // BASIC CUSTOMIZATION
     this.route('the-list');
-    this.route('selected-element');
+    this.route('the-trigger');
     this.route('messages');
     this.route('filtering');
     this.route('styles');
