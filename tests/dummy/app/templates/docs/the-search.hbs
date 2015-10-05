@@ -1,0 +1,121 @@
+<h1 class="doc-page-title">The search</h1>
+
+<h3>The default behavior</h3>
+
+<p>
+  The default search box is by itself surprisingly smart. As you type it will filter the results
+</p>
+<p>
+  That contain the given string ignoring diacritic differences and capitalization. That means that
+  the string <code>maria</code> will match against <code>María</code>, <code>oren</code> against
+  <code>Søren</code> and sos on.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: [ "María", "Søren Larsen", "João", "Saša Jurić", "Íñigo" ]
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=diacritics as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<h3>Customize the search field</h3>
+
+<p>
+  The default search works great when your options are just strings but when your options are
+  objects you need to tell the component what field it should match against using the <code>searchField</code> option.
+</p>
+
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTaxb 'template') 'active'}}">
+    \{{#ember-power-select options=countries searchField="name" as |country|}}
+      \{{country.name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      countries: [
+        { name: 'United States' },
+        { name: 'Spain', },
+        { name: 'Portugal' },
+        { name: 'Russia' },
+        { name: 'Latvia' },
+        { name: 'Brazil' },
+        { name: 'United Kingdom' },
+      ]
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=countries searchField="name" as |country|}}
+      {{country.name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<h3>Pass a custom matcher</h3>
+
+<p>
+  TODO
+</p>
+
+<h3>Search box placeholder</h3>
+
+<p>Pass <code>searchPlaceholder="Type your name"</code> to show a placeholder in the search box</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names searchPlaceholder="Type to filter..." as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: [ "María", "Søren Larsen", "João", "Saša Jurić", "Íñigo" ]
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=diacritics searchPlaceholder="Type to filter..." as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<h3>Disable the search box</h3>
+
+<p>
+  Last but not least you can disable and hide the search box from the list by passing <code>disable=true</code> to the component.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names searchEnabled=false as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=names searchEnabled=false as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.the-list' class="doc-page-nav-link-prev"}}&lt; The list{{/link-to}}
+  {{#link-to 'docs.styles' class="doc-page-nav-link-next"}}Styles &gt;{{/link-to}}
+</div>

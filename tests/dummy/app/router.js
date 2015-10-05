@@ -14,13 +14,11 @@ Router.map(function() {
     this.route('action-handling');
     this.route('groups');
     this.route('multiple-selection');
-    this.route('disable-things');
 
     // BASIC CUSTOMIZATION
-    this.route('the-list');
     this.route('the-trigger');
-    this.route('messages');
-    this.route('filtering');
+    this.route('the-list');
+    this.route('the-search');
     this.route('styles');
 
     // ADVANCED CUSTOMIZATION

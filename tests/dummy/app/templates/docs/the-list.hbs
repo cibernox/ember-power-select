@@ -6,17 +6,15 @@
   to cover.
 </p>
 
-<h3>The options</h3>
-TODO: Document the disabled options?
-
 <h3>Position</h3>
 
 <p>
-  The dropdown in Ember power select is pretty smart. By default this component inserts the dropdown
+  The dropdown in Ember Power Select is pretty smart. By default this component inserts the dropdown
   not next the the trigger but in the root of your app (tipically the <code>&lt;body&gt;</code>) using
   the awesome <a href="https://github.com/yapplabs/ember-wormhole">ember-wormhole</a> addon and the
   absolutely positions it.
 </p>
+
 <p>
   This is a safe default because by default it won't be affected by the overflow constraints of
   the element where the component lives in. However there is a few situations where this is not
@@ -215,10 +213,11 @@ TODO: Document the disabled options?
 {{/code-sample}}
 
 <p>
-  That is all for now the list of options, let's see how to customize the trigger now.
+  You might have noticed that there is a par of the dropdown that wasn't mentioned in this chapter: The search.
+  This is because it deserves an entire chaper just for it.
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to 'docs.multiple-selection' class="doc-page-nav-link-prev"}}&lt; Multiple selection{{/link-to}}
-  {{#link-to 'docs.the-trigger' class="doc-page-nav-link-next"}}The trigger &gt;{{/link-to}}
+  {{#link-to 'docs.the-trigger' class="doc-page-nav-link-prev"}}&lt; The trigger{{/link-to}}
+  {{#link-to 'docs.the-search' class="doc-page-nav-link-next"}}The search &gt;{{/link-to}}
 </div>

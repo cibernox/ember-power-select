@@ -12,5 +12,6 @@ const countries = [
 
 export default Ember.Controller.extend({
   countries: countries,
-  destination: countries[2]
+  destination: countries[2],
+  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
 });
