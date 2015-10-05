@@ -1,2 +1,43 @@
-<h3>Styles</h3>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dolores vero saepe non, obcaecati consequuntur sint ipsum similique nam debitis nobis illo officiis quod aspernatur aliquid, totam quo blanditiis reiciendis.
+<h1 class="doc-page-title">Styles</h1>
+
+<p>
+  This component <strong>does not</strong> provide any option for customize its visual
+  appearance.
+</p>
+
+<p>
+  You can do it using just plain old CSS. There is not rocket science on it, just override the default
+  styles with your owns.
+</p>
+
+<p>
+  However if you are a Sass user there is a more advanced method you can use
+  to customize the styles without overriding them.
+</p>
+
+<p>
+  Ember Power Select exposes Sass 17 variables you can set before importing
+  the styles. By example:
+</p>
+
+<pre>
+  // In your app.scss
+  $ember-power-select-border-color: #64A5ED;
+  $ember-power-select-border-radius: 0;
+
+  @import 'ember-power-select';
+</pre>
+
+<p>
+  Will make your selects to have pale blue borders with no rounded corners.
+</p>
+
+<p>
+  You can find the entire list of available variables in
+  <a href="https://github.com/cibernox/ember-power-select/blob/master/app/styles/ember-power-select.scss#L1-L18">the soure code</a>.
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.the-search' class="doc-page-nav-link-prev"}}&lt; The search{{/link-to}}
+  {{#link-to 'docs.asynchronous-search' class="doc-page-nav-link-next"}}Advanced customization &gt;{{/link-to}}
+</div>

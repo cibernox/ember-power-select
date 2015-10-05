@@ -22,7 +22,6 @@ Router.map(function() {
     this.route('styles');
 
     // ADVANCED CUSTOMIZATION
-    this.route('partials');
     this.route('asynchronous-search');
     this.route('roll-your-own-template');
 

@@ -1,20 +1,20 @@
-$border-color: #aaaaaa !default;
-$text-color: #444444 !default;
-$placeholder-color: #999999 !default;
-$border-radius: 4px !default;
-$background-color: #ffffff !default;
-$disabled-background-color: #eeeeee !default;
-$disabled-option-color: #999999 !default;
-$multiple-selection-color: #333333 !default;
-$multiple-selection-background-color: #e4e4e4 !default;
-$highlighted-color: #ffffff !default;
-$highlighted-background: #5897fb !default;
-$selected-background: #dddddd !default;
-$line-height: 28px !default;
-$trigger-icon-color: $border-color !default;
-$clear-btn-margin: 25px !default;
-$option-padding: 8px !default;
-$number-of-visible-options: 7;
+$ember-power-select-border-color: #aaaaaa !default;
+$ember-power-select-text-color: #444444 !default;
+$ember-power-select-placeholder-color: #999999 !default;
+$ember-power-select-border-radius: 4px !default;
+$ember-power-select-background-color: #ffffff !default;
+$ember-power-select-disabled-background-color: #eeeeee !default;
+$ember-power-select-disabled-option-color: #999999 !default;
+$ember-power-select-multiple-selection-color: #333333 !default;
+$ember-power-select-multiple-selection-background-color: #e4e4e4 !default;
+$ember-power-select-highlighted-color: #ffffff !default;
+$ember-power-select-highlighted-background: #5897fb !default;
+$ember-power-select-selected-background: #dddddd !default;
+$ember-power-select-line-height: 28px !default;
+$ember-power-select-trigger-icon-color: $ember-power-select-border-color !default;
+$ember-power-select-clear-btn-margin: 25px !default;
+$ember-power-select-option-padding: 8px !default;
+$ember-power-select-number-of-visible-options: 7;
 
 .ember-power-select {
   position: relative;
@@ -25,21 +25,21 @@ $number-of-visible-options: 7;
 
 // Trigger
 .ember-power-select-trigger {
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
+  border: 1px solid $ember-power-select-border-color;
+  border-radius: $ember-power-select-border-radius;
   background-size: 7px 7px;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#{$trigger-icon-color};'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#{$ember-power-select-trigger-icon-color};'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-color: $background-color;
-  line-height: $line-height;
+  background-color: $ember-power-select-background-color;
+  line-height: $ember-power-select-line-height;
   text-overflow: ellipsis;
-  height: $line-height;
+  height: $ember-power-select-line-height;
   user-select: none;
   -webkit-user-select: none;
   .ember-power-select.multiple & { height: auto; }
   .ember-power-select:not(.multiple) & { white-space: nowrap; }
   .ember-power-select.opened & {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#{$trigger-icon-color};'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#{$ember-power-select-trigger-icon-color};'/%3E%3C/svg%3E");
   }
   .ember-power-select.opened.below & {
     border-bottom-left-radius: 0;
@@ -51,7 +51,7 @@ $number-of-visible-options: 7;
   }
 }
 .ember-power-select-placeholder {
-  color: $placeholder-color;
+  color: $ember-power-select-placeholder-color;
 }
 .ember-power-select-clear-btn {
   position: absolute;
@@ -72,8 +72,8 @@ $number-of-visible-options: 7;
 .ember-power-select-multiple-option {
   border: 1px solid gray;
   border-radius: 4px;
-  color: $multiple-selection-color;
-  background-color: $multiple-selection-background-color;
+  color: $ember-power-select-multiple-selection-color;
+  background-color: $ember-power-select-multiple-selection-background-color;
   padding: 0 4px;
   display: inline-block;
   line-height: 1.5;
@@ -87,7 +87,7 @@ $number-of-visible-options: 7;
 .ember-power-select-search {
   padding: 4px;
   input {
-    border: 1px solid $border-color;
+    border: 1px solid $ember-power-select-border-color;
     width: 100%;
     font-size: inherit;
     line-height: inherit;
@@ -100,19 +100,19 @@ $number-of-visible-options: 7;
   position: absolute;
   width: 100%;
   z-index: 2;
-  border-left: 1px solid $border-color;
-  border-right: 1px solid $border-color;
-  background-color: $background-color;
-  line-height: $line-height;
+  border-left: 1px solid $ember-power-select-border-color;
+  border-right: 1px solid $ember-power-select-border-color;
+  background-color: $ember-power-select-background-color;
+  line-height: $ember-power-select-line-height;
   &.above {
-    border-top: 1px solid $border-color;
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
+    border-top: 1px solid $ember-power-select-border-color;
+    border-top-left-radius: $ember-power-select-border-radius;
+    border-top-right-radius: $ember-power-select-border-radius;
   }
   &.below {
-    border-bottom: 1px solid $border-color;
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    border-bottom: 1px solid $ember-power-select-border-color;
+    border-bottom-left-radius: $ember-power-select-border-radius;
+    border-bottom-right-radius: $ember-power-select-border-radius;
   }
 }
 .ember-power-select-options {
@@ -123,21 +123,21 @@ $number-of-visible-options: 7;
   -webkit-user-select: none;
   &:not(.nested) {
     overflow-y: scroll;
-    max-height: $number-of-visible-options * $line-height;
+    max-height: $ember-power-select-number-of-visible-options * $ember-power-select-line-height;
   }
 }
 
 .ember-power-select-option {
   cursor: pointer;
-  padding: 0 $option-padding;
+  padding: 0 $ember-power-select-option-padding;
   &.disabled {
-    color: $disabled-option-color;
+    color: $ember-power-select-disabled-option-color;
     pointer-events: none;
   }
-  &.selected { background-color: $selected-background; }
+  &.selected { background-color: $ember-power-select-selected-background; }
   &.highlighted {
-    background-color: $highlighted-background;
-    color: $highlighted-color;
+    background-color: $ember-power-select-highlighted-background;
+    color: $ember-power-select-highlighted-color;
   }
 }
 
@@ -151,7 +151,7 @@ $number-of-visible-options: 7;
 .ember-power-select.disabled {
   pointer-events: none;
   .ember-power-select-trigger {
-    background-color: $disabled-background-color;
+    background-color: $ember-power-select-disabled-background-color;
   }
 }
 
@@ -162,18 +162,18 @@ $number-of-visible-options: 7;
     background-position: right 5px center;
   }
   .ember-power-select-clear-btn {
-    right: $clear-btn-margin;
+    right: $ember-power-select-clear-btn-margin;
   }
 
 }
 .ember-power-select-dropdown:not([dir=rtl]) {
   .ember-power-select-group {
     .ember-power-select-group {
-      .ember-power-select-group-name { padding-left: 3 * $option-padding; }
-      .ember-power-select-option { padding-left: 5 * $option-padding; }
+      .ember-power-select-group-name { padding-left: 3 * $ember-power-select-option-padding; }
+      .ember-power-select-option { padding-left: 5 * $ember-power-select-option-padding; }
     }
-    .ember-power-select-option { padding-left: 3 * $option-padding; }
-    .ember-power-select-group-name { padding-left: $option-padding; }
+    .ember-power-select-option { padding-left: 3 * $ember-power-select-option-padding; }
+    .ember-power-select-group-name { padding-left: $ember-power-select-option-padding; }
   }
 }
 
@@ -184,17 +184,17 @@ $number-of-visible-options: 7;
     background-position: 5px center;
   }
   .ember-power-select-clear-btn {
-    left: $clear-btn-margin;
+    left: $ember-power-select-clear-btn-margin;
   }
 }
 
 .ember-power-select-dropdown[dir=rtl] {
   .ember-power-select-group {
     .ember-power-select-group {
-      .ember-power-select-group-name { padding-right: 3 * $option-padding; }
-      .ember-power-select-option { padding-right: 5 * $option-padding; }
+      .ember-power-select-group-name { padding-right: 3 * $ember-power-select-option-padding; }
+      .ember-power-select-option { padding-right: 5 * $ember-power-select-option-padding; }
     }
-    .ember-power-select-option { padding-right: 3 * $option-padding; }
-    .ember-power-select-group-name { padding-right: $option-padding; }
+    .ember-power-select-option { padding-right: 3 * $ember-power-select-option-padding; }
+    .ember-power-select-group-name { padding-right: $ember-power-select-option-padding; }
   }
 }

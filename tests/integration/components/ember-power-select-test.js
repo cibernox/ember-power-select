@@ -436,12 +436,12 @@ test('The default search strategy matches disregarding diacritics differences an
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João');
 });
 
-test('You can pass a custom marcher with `matcher=myFn` to customize the search strategi', function(assert) {
+test('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
-  this.endsWithMatcher = function(value, text) {
-    return text === '' || value.slice(text.length * -1) === text;
+  this.endsWithMatcher = function(option, text) {
+    return text === '' || option.slice(text.length * -1) === text;
   };
 
   this.render(hbs`
@@ -566,7 +566,7 @@ test('The default search strategy matches disregarding diacritics differences an
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João Jin');
 });
 
-test('You can pass a custom marcher with `matcher=myFn` to customize the search strategi', function(assert) {
+test('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', function(assert) {
   assert.expect(4);
 
   this.people = [

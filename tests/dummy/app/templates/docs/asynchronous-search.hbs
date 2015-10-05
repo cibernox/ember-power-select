@@ -1,2 +1,43 @@
-<h3>asynchronous search</h3>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi dolores vero saepe non, obcaecati consequuntur sint ipsum similique nam debitis nobis illo officiis quod aspernatur aliquid, totam quo blanditiis reiciendis.
+<h1 class="doc-page-title">Asynchronous search</h1>
+
+<p>
+  In {{#link-to 'docs.the-search'}}The search{{/link-to}} chapter we saw all the possible ways of
+  personalize the way the component can filter but they all had something in commom. You had all the
+  options availables on initialization and you were just filtering that collection.
+</p>
+
+<p>
+  There is ocasions when having all the options availables upfront in the client side is not
+  convenient or is downright impossible.
+</p>
+
+<p>
+  When that is the case you can provide a <code>search</code> action instead on <code>options</code>
+  (is the only situation where the <code>options</code> are not mandatory) that will be called with
+  the search term whenever the user types on the search box.
+</p>
+
+<p>
+  Using this solution your action must return a collection or a promise that will resolve to a
+  collection. Is up to you to decide your search stategy, debouncing times and what not.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select search=(action "searchRepo") as |repo|}}
+      \{{repo.full_name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+      selectedUser: 'Tomster',
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select search=(action "searchRepo") as |repo|}}
+      {{repo.full_name}}
+    {{/ember-power-select}}
+    (It might fail if the API limit is exceeded)
+  </div>
+{{/code-sample}}
