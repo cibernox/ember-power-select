@@ -22,7 +22,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self'",
       'font-src': "'self'",
-      'connect-src': "'self'",
+      'connect-src': "'self' http://api.github.com https://api.github.com",
       'img-src': "'self' data:",
       'style-src': "'self' 'unsafe-inline'",
       'media-src': "'self'"

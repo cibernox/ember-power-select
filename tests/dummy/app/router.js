@@ -27,7 +27,6 @@ Router.map(function() {
 
   });
   this.route('cookbook', function() {
-    this.route('recipe1');
     this.route('recipe2');
     this.route('recipe3');
   });

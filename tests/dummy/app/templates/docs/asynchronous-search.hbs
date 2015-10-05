@@ -41,3 +41,14 @@
     (It might fail if the API limit is exceeded)
   </div>
 {{/code-sample}}
+
+<p>
+  It worth also mention that Ember Power Select is smart enough to always priorize the last request made,
+  so in the best scenario avoids expensive repaitings, and in the worst case when the second request
+  resolves before the first, when the first resolves it doesn't override the most recent request.
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.styles' class="doc-page-nav-link-prev"}}&lt; Styles{{/link-to}}
+  {{!-- {{#link-to 'docs.roll-your-own-template' class="doc-page-nav-link-next"}}Roll your own template &gt;{{/link-to}} --}}
+</div>
