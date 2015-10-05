@@ -5,4 +5,7 @@ so I decided to built one.
 
 Based in select2.js, but built from scratch, 100% in ember.
 
-It's a work in progress still, but getting closer.
+Still in its early life
+
+You can check the full documentation in [www.ember-power-select.com](http://www.ember-power-select.com)
+
