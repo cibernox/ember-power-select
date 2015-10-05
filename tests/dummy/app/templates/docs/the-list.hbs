@@ -73,30 +73,6 @@ TODO: Document the disabled options?
   </div>
 {{/code-sample}}
 
-<h3>The search box</h3>
-
-<p>
-  Easy enough, you can disable the searchbox by passing <code>searchEnabled=false</code>.
-</p>
-
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names searchEnabled=false as |name|}}
-      \{{name}}
-    \{{/ember-power-select}}
-  </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names searchEnabled=false as |name|}}
-      {{name}}
-    {{/ember-power-select}}
-  </div>
-{{/code-sample}}
-
 <h3>The empty state</h3>
 
 <p>

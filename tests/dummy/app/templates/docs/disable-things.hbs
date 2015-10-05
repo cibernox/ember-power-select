@@ -1,0 +1,99 @@
+<h1 class="doc-page-title">Disable things</h1>
+
+<h3>Disable the component</h3>
+
+<p>
+  You completely disable the component by passing <code>disabled=true</code> to it.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names disabled=true as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=names disabled=true as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<p>
+  When the component is disabled it can't be intaracted with mouse or keyboard, and won't
+  get focus when navigating through a form's fields using the TAB key.
+</p>
+
+<h3>Disable individual elements</h3>
+
+<p>
+  Sometimes you want some options but not allow the user to select them. When iterating though
+  the options Ember Power Select will check if the object has a <code>disabled</code> property
+  whose value is <code>true</code>
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=countries as |country|}}
+      \{{country.name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      countries: [
+        { name: 'United States'           },
+        { name: 'Spain',  disabled: true  },
+        { name: 'Portugal'                },
+        { name: 'Russia'                  },
+        { name: 'Latvia', disabled: true  },
+        { name: 'Brazil'                  },
+        { name: 'United Kingdom'          },
+      ]
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=countries as |country|}}
+      {{country.name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<p>
+  Disabled options can't be seleted and navigating using the arrow keys will skip
+  those options as if they werent on the list.
+</p>
+
+<h3>Disable the search box</h3>
+
+<p>
+  By default all selects will have the search box enabled to allow quick filtering of the options
+  but you can opt out to this by passing <code>disable=true</code> to the component.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#ember-power-select options=names searchEnabled=false as |name|}}
+      \{{name}}
+    \{{/ember-power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#ember-power-select options=names searchEnabled=false as |name|}}
+      {{name}}
+    {{/ember-power-select}}
+  </div>
+{{/code-sample}}
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.multiple-selection' class="doc-page-nav-link-prev"}}&lt; Multiple selection{{/link-to}}
+  {{#link-to 'docs.the-list' class="doc-page-nav-link-next"}}Basic customization &gt;{{/link-to}}
+</div>

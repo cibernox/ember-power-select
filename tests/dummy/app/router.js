@@ -14,6 +14,7 @@ Router.map(function() {
     this.route('action-handling');
     this.route('groups');
     this.route('multiple-selection');
+    this.route('disable-things');
 
     // BASIC CUSTOMIZATION
     this.route('the-list');
