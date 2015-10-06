@@ -28,6 +28,7 @@ const { htmlSafe } = Ember.String;
 //
 //
 export default Ember.Component.extend({
+  tagName: '',
   layout: layout,
   opened: false,
   disabled: false,
@@ -39,12 +40,12 @@ export default Ember.Component.extend({
   searchMessage: "Type to search",
   selectedPartial: null,
   attributeBindings: ['dir'],
-  classNames: ['ember-power-select'],
-  classNameBindings: ['_opened:opened', 'disabled', 'multiple', 'renderInPlace', '_dropdownPositionClass'],
+  // classNames: ['ember-power-select'],
+  // classNameBindings: ['_opened:opened', 'disabled', 'multiple', 'renderInPlace', '_dropdownPositionClass'],
   _highlighted: null,
   _searchText: '',
   _loadingOptions: false,
-  _wormholeDestination: (Ember.testing ? 'ember-testing' : 'ember-power-select-wormhole'),
+  // _wormholeDestination: (Ember.testing ? 'ember-testing' : 'ember-power-select-wormhole'),
   matcher: (value, text) => text === '' || stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase()) > -1,
 
   // Lifecycle hooks

@@ -28,7 +28,15 @@
     Still things to polish, but soon will be usable.
   </p>
   <p>At the moment, all the funcionality you see took <strong>500 LOC</strong> (including CSS and templates)</p>
-  {{ember-dropdown}}
+  {{#ember-basic-dropdown matchTriggerWidth=true}}
+    trigger!
+  {{else}}
+    <h3>Hey yo!</h3>
+  {{/ember-basic-dropdown}}
+
+  {{#ember-power-select options=simpleOptions selected=simpleSelected onchange=(action "debugSelection") as |option|}}
+    {{option}}
+  {{/ember-power-select}}
 
   {{!--
 
