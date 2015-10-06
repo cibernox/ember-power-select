@@ -58,8 +58,10 @@
 {{/if}} --}}
 
 {{#ember-basic-dropdown class="ember-power-select" renderInPlace=renderInPlace matchTriggerWidth=true
-  triggerClass="ember-power-select-trigger" dropdownClass="ember-power-select-dropdown"}}
-
+  disabled=disabled triggerClass="ember-power-select-trigger" dropdownClass="ember-power-select-dropdown"
+  onReady=(action storeDropdownComponent) onOpen=(action open) onClose=(action close) as |component|}}
+  {{log "default"}}
+  {{log component}}
   {{#if multiple}}
     {{#each selectedOption as |multiOpt|}}
       <span class="ember-power-select-multiple-option">
@@ -84,6 +86,8 @@
     <span class="ember-power-select-placeholder">{{placeholder}}</span>
   {{/if}}
 {{else}}
+  {{log "inverse"}}
+  {{log component}}
   {{#if searchEnabled}}
     <div class="ember-power-select-search">
       <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
@@ -96,9 +100,9 @@
     {{#if _loadingOptions}}
       <li class="ember-power-select-option">{{loadingMessage}}</li>
     {{/if}}
-    {{#if results.length}}
+    {{#if resultsLength}}
       {{#ember-power-select/options options=results highlighted=_highlighted selectedOption=selectedOption
-        highlight=(action "highlight") select=(action "select") as |option|}}
+        highlight=(action "highlight") select=(action "select" component) as |option|}}
         {{yield option}}
       {{/ember-power-select/options}}
     {{else if mustSearch}}
