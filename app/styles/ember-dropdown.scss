@@ -1,0 +1,17 @@
+$ember-dropdown-content-background-color: #FFF !default;
+$ember-dropdown-border-color: #aaaaaa !default;
+
+.ember-dropdown {
+  position: relative;
+}
+.ember-dropdown, .ember-dropdown *, .ember-dropdown-content, .ember-dropdown-content * {
+  box-sizing: border-box;
+}
+
+.ember-dropdown-content {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  background-color: $ember-dropdown-content-background-color;
+  border: 1px solid $ember-dropdown-border-color;
+}

@@ -1,9 +1,9 @@
-<div class="ember-power-select-trigger" tabindex="{{tabindex}}" onkeydown={{action "keydown"}} onclick={{action "toggle"}}>
+<div class="ember-dropdown-trigger" tabindex="{{tabindex}}" onkeydown={{action "keydown"}} onclick={{action "toggle"}}>
   Trigger
 </div>
 {{#if _opened}}
   {{#ember-wormhole to=_wormholeDestination renderInPlace=renderInPlace}}
-    <div class="ember-power-select-dropdown {{_dropdownPositionClass}}" dir={{dir}}>
+    <div class="ember-dropdown-content {{_dropdownPositionClass}}" dir={{dir}}>
       <p>This is the content of a dropdown</p>
       <h1>It can contain anything</h1>
       <img src="/grumpy-cat.png">

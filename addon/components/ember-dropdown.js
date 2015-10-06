@@ -67,7 +67,7 @@ export default Component.extend({
     // debugger;
     if (this.get('renderInPlace')) { return; }
     const dropdownPositionStrategy = this.get('dropdownPosition');
-    const dropdown = this.appRoot.querySelector('.ember-power-select-dropdown');
+    const dropdown = this.appRoot.querySelector('.ember-dropdown-content');
     const width = this.element.offsetWidth;
     let left = this.element.offsetLeft;
     dropdown.style.width = `${width}px`;
@@ -98,7 +98,7 @@ export default Component.extend({
   },
 
   handleRootClick(e) {
-    if (!this.element.contains(e.target) && !this.appRoot.querySelector('.ember-power-select-dropdown').contains(e.target)) {
+    if (!this.element.contains(e.target) && !this.appRoot.querySelector('.ember-dropdown-content').contains(e.target)) {
       this.close();
     }
   },
