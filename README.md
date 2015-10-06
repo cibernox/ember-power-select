@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/cibernox/ember-power-select.svg?branch=master)](https://travis-ci.org/cibernox/ember-power-select)
+
 # Ember-power-select
 
 I was tired of reinventing select components because other options were not easy to customized,
