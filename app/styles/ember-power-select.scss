@@ -40,6 +40,7 @@ $ember-power-select-number-of-visible-options: 7;
   .ember-power-select:not(.multiple) & { white-space: nowrap; }
   .ember-power-select.opened & {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#{$ember-power-select-trigger-icon-color};'/%3E%3C/svg%3E");
+    outline: 0;
   }
   .ember-power-select.opened.below & {
     border-bottom-left-radius: 0;
