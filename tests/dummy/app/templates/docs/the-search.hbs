@@ -38,7 +38,7 @@
 
 
 {{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTaxb 'template') 'active'}}">
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
     \{{#ember-power-select options=countries searchField="name" as |country|}}
       \{{country.name}}
     \{{/ember-power-select}}
