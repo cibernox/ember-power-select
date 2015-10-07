@@ -1,35 +1,11 @@
 {{#ember-basic-dropdown class=dropdownClasses renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass="ember-power-select-dropdown"
-  onReady=(action storeDropdownComponent) onOpen=(action onOpen) onClose=(action onClose)}}
-  {{#if multiple}}
-    {{#each selectedOption as |multiOpt|}}
-      <span class="ember-power-select-multiple-option">
-        <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
-        {{yield multiOpt}}
-      </span>
-    {{/each}}
-    <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
-      autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox"
-      style={{triggerMultipleInputStyle}} value={{_searchText}}
-      oninput={{action "search" value="target.value"}} onkeydown={{action "searchKeydown"}}>
-  {{else if selectedOption}}
-    {{#if selectedPartial}}
-      {{partial selectedPartial}}
-    {{else}}
-      {{yield selectedOption}}
-    {{/if}}
-    {{#if allowClear}}
-      <span class="ember-power-select-clear-btn" onclick={{action "clear"}}>&times;</span>
-    {{/if}}
-  {{else if placeholder}}
-    <span class="ember-power-select-placeholder">{{placeholder}}</span>
-  {{/if}}
-{{else}}
+  onOpen=(action onOpen) onClose=(action onClose) onFocus=(action onFocus) as |toggleDropdown|}}
   {{#if searchEnabled}}
     <div class="ember-power-select-search">
       <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
       spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
-      onkeydown={{action "searchKeydown"}} placeholder={{searchPlaceholder}}>
+      onkeydown={{action "searchKeydown" toggleDropdown}} placeholder={{searchPlaceholder}}>
     </div>
   {{/if}}
 
@@ -39,7 +15,7 @@
     {{/if}}
     {{#if resultsLength}}
       {{#ember-power-select/options options=results highlighted=_highlighted selectedOption=selectedOption
-        highlight=(action "highlight") select=(action "select") as |option|}}
+        highlight=(action "highlight") select=(action "select") toggleDropdown=toggleDropdown as |option|}}
         {{yield option}}
       {{/ember-power-select/options}}
     {{else if mustSearch}}
@@ -52,4 +28,28 @@
       {{/if}}
     {{/if}}
   </ul>
+{{else}}
+  {{#if multiple}}
+    {{#each selectedOption as |multiOpt|}}
+      <span class="ember-power-select-multiple-option">
+        <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
+        {{yield multiOpt}}
+      </span>
+    {{/each}}
+    <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
+      autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox"
+      style={{triggerMultipleInputStyle}} value={{_searchText}}
+      oninput={{action "search" value="target.value"}} onkeydown={{action "multipleModeInputKeydown"}}>
+  {{else if selectedOption}}
+    {{#if selectedPartial}}
+      {{partial selectedPartial}}
+    {{else}}
+      {{yield selectedOption}}
+    {{/if}}
+    {{#if allowClear}}
+      <span class="ember-power-select-clear-btn" onclick={{action "clear"}}>&times;</span>
+    {{/if}}
+  {{else if placeholder}}
+    <span class="ember-power-select-placeholder">{{placeholder}}</span>
+  {{/if}}
 {{/ember-basic-dropdown}}

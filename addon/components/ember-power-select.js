@@ -28,11 +28,11 @@ const { htmlSafe } = Ember.String;
 //
 //
 export default Ember.Component.extend({
-  tagName: '',
   layout: layout,
   disabled: false,
   searchEnabled: true,
   searchPlaceholder: null,
+  classNames: ['ember-power-select-wrapper'],
   loadingMessage: "Loading options...",
   noMatchesMessage: "No results found",
   searchMessage: "Type to search",
@@ -84,16 +84,10 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    select(option, e) {
+    select(option, toggleDropdown, e) {
       e.preventDefault();
-      if (this.get('multiple')) {
-        this.addOrRemoveToSelected(option);
-      } else if (this.get('selectedOption') !== option) {
-        this.set('selectedOption', option);
-      }
-      if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
-      this.dropdownComponent.close(e);
-      this.focusTrigger();
+      this.select(option);
+      toggleDropdown(e);
     },
 
     highlight(option) {
@@ -123,32 +117,47 @@ export default Ember.Component.extend({
       }
     },
 
-    searchKeydown(e) {
+    searchKeydown(toggleDropdown, e) {
       if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
         this.handleVerticalArrowKey(e);
       } else if (e.keyCode === 13) {  // Enter
         this.pressedEnterOnSeach(e);
+        toggleDropdown(e);
       } else if (e.keyCode === 9) {   // Tab
-        this.handleTabInSearch(e);
+        toggleDropdown();
       } else if (e.keyCode === 27) {  // escape
         e.preventDefault();
-        this.dropdownComponent.close(e);
-        this.focusTrigger();
+        toggleDropdown(e);
       } else if (e.keyCode === 8) {   // backspace
         this.handleBackspace(e);
       }
+    },
+
+    multipleModeInputKeydown(e) {
+      if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
+        return this.handleVerticalArrowKey(e);
+      }
+      let event = document.createEvent('Event');
+      if (e.keyCode === 8) {   // backspace
+        this.removeLastOptionIfSearchIsEmpty();
+        event.initEvent('dropdown:open', true, true);
+      } else if (e.keyCode === 13) {  // Enter
+        e.stopPropagation();
+        this.pressedEnterOnMultipleSelect();
+        event.initEvent('dropdown:toggle', true, true);
+      } else if (e.keyCode === 9) {   // Tab
+        event.initEvent('dropdown:close', true, true);
+      } else if (e.keyCode === 27) {  // escape
+        e.preventDefault();
+        event.initEvent('dropdown:close', true, true);
+      } else {
+        event.initEvent('dropdown:open', true, true);
+      }
+      this.element.querySelector('.ember-power-select').dispatchEvent(event);
     }
   },
 
   // Methods
-  storeDropdownComponent(dropdownComponent) {
-    this.dropdownComponent = dropdownComponent; // I don't like this hack
-  },
-
-  focusTrigger() {
-    this.dropdownComponent.element.querySelector(`.ember-power-select-trigger${this.get('multiple') ? '-multiple-input' : ''}`).focus();
-  },
-
   onOpen() {
     if (this._resultsDirty) { this.refreshResults(); }
     if (this.get('multiple')) {
@@ -160,32 +169,34 @@ export default Ember.Component.extend({
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
-  onClose(e) {
+  onClose() {
     this.set('_searchText', '');
+    this.set('_highlighted', null);
     this._resultsDirty = true;
-    if (e.target.classList.contains('ember-power-select-trigger')) {
-      this.focusTrigger();
-    }
   },
 
-  pressedEnterOnSeach(e) {
+  onFocus() {
+    if (this.get('multiple')) { this.focusSearch(); }
+  },
+
+  select(option) {
+    if (this.get('multiple')) {
+      this.addOrRemoveToSelected(option);
+    } else if (this.get('selectedOption') !== option) {
+      this.set('selectedOption', option);
+    }
+    if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
+  },
+
+  pressedEnterOnSeach() {
     const highlighted = this.get('_highlighted');
-    if (this.get('multiple')) {
-      if ((this.get('selected') || []).indexOf(highlighted) === -1) {
-        this.send('select', highlighted, e);
-      }
-    } else {
-      this.send('select', highlighted, e);
-    }
+    this.select(highlighted);
   },
 
-  handleTabInSearch(e) {
-    if (this.get('multiple')) {
-      this.dropdownComponent.close(e);
-    } else {
-      e.preventDefault();
-      this.dropdownComponent.close(e);
-      this.focusTrigger();
+  pressedEnterOnMultipleSelect() {
+    const highlighted = this.get('_highlighted');
+    if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
+      this.select(highlighted);
     }
   },
 
@@ -196,7 +207,7 @@ export default Ember.Component.extend({
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
-  handleBackspace(e) {
+  removeLastOptionIfSearchIsEmpty() {
     if (!this.get('multiple')) { return; }
     if (this.get('_searchText.length') !== 0) { return; }
     const lastSelection = this.get('selectedOption.lastObject');
@@ -208,7 +219,6 @@ export default Ember.Component.extend({
       if (!this.get('searchField')) { throw new Error('Need to provide `searchField` when options are not strings'); }
       this.set('_searchText', get(lastSelection, this.get('searchField'))); // TODO: Convert last selection to text
     }
-    this.dropdownComponent.open(e);
   },
 
   removeOption(option) {
@@ -239,11 +249,9 @@ export default Ember.Component.extend({
   },
 
   focusSearch() {
-    if (this.get('searchEnabled')) {
-      document.querySelector('.ember-power-select-search input').focus();
-    } else if (this.get('multiple')) {
-      this.dropdownComponent.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
-    }
+    const searchInput = document.querySelector('.ember-power-select-search input') ||
+      this.element.querySelector('.ember-power-select-trigger-multiple-input');
+    if (searchInput) { searchInput.focus(); }
   },
 
   indexOfOption(option) {
