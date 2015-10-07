@@ -19,9 +19,6 @@
     Not to mention that Select2.js alone is ~150KB, because it's bloated with things that doesn't
     belongs to the component itself, like i18n.
   </p>
-  {{#ember-power-select options=(readonly simpleOptions) selected=simpleSelected onchange=(action "debugSelection") as |option|}}
-    {{option}}
-  {{/ember-power-select}}
   <p>
     I wanted to prove that using ember's primitives you can replicate 95% of the funcionality
     of the original library with a 5% of the code, and the resulting code is straightforward,
@@ -31,14 +28,6 @@
     Still things to polish, but soon will be usable.
   </p>
   <p>At the moment, all the funcionality you see took <strong>500 LOC</strong> (including CSS and templates)</p>
-  {{#ember-basic-dropdown matchTriggerWidth=true}}
-    trigger!
-  {{else}}
-    <h3>Hey yo!</h3>
-  {{/ember-basic-dropdown}}
-
-
-  {{!--
 
   <h4>Select of strings without value tracking. You can filter right away.</h4>
   <p>simpleSelected is: {{simpleSelected}}</p>
@@ -210,5 +199,4 @@
   <br>
   <br>
   <br>
- --}}
 </section>
