@@ -1,15 +1,12 @@
 [![Build Status](https://travis-ci.org/cibernox/ember-power-select.svg?branch=master)](https://travis-ci.org/cibernox/ember-power-select)
 
-# Ember-power-select
+# Ember-Power-Select
 
-I was tired of reinventing select components because other options were not easy to customized,
-so I decided to built one.
+Ember Power Select is an Ember-first select component modeled after [Select2](https://select2.github.io/).
 
-Based in select2.js, but built from scratch, 100% in ember.
-
-**Disclaimer**: This component is in its first days of life. Although I don't expect the public API
-to suffer significant changes be aware creating your own component that extends from this is not adviced
+**Disclaimer**: This component is in a very early alpha stage. Although the public API is not expected
+to suffer significant changes, be aware that creating your own component that extends from this is not advised
 yet.
 
-You can check the full documentation in [www.ember-power-select.com](http://www.ember-power-select.com)
+You can check the full documentation at [www.ember-power-select.com](http://www.ember-power-select.com)
 
