@@ -57,11 +57,9 @@
   {{/ember-wormhole}}
 {{/if}} --}}
 
-{{#ember-basic-dropdown class="ember-power-select" renderInPlace=renderInPlace matchTriggerWidth=true
+{{#ember-basic-dropdown class=dropdownClasses renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled triggerClass="ember-power-select-trigger" dropdownClass="ember-power-select-dropdown"
-  onReady=(action storeDropdownComponent) onOpen=(action open) onClose=(action close) as |component|}}
-  {{log "default"}}
-  {{log component}}
+  onReady=(action storeDropdownComponent) onOpen=(action onOpen) onClose=(action onClose)}}
   {{#if multiple}}
     {{#each selectedOption as |multiOpt|}}
       <span class="ember-power-select-multiple-option">
@@ -86,13 +84,11 @@
     <span class="ember-power-select-placeholder">{{placeholder}}</span>
   {{/if}}
 {{else}}
-  {{log "inverse"}}
-  {{log component}}
   {{#if searchEnabled}}
     <div class="ember-power-select-search">
       <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
       spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
-      onkeydown={{action "keydown"}} placeholder={{searchPlaceholder}}>
+      onkeydown={{action "searchKeydown"}} placeholder={{searchPlaceholder}}>
     </div>
   {{/if}}
 
@@ -102,7 +98,7 @@
     {{/if}}
     {{#if resultsLength}}
       {{#ember-power-select/options options=results highlighted=_highlighted selectedOption=selectedOption
-        highlight=(action "highlight") select=(action "select" component) as |option|}}
+        highlight=(action "highlight") select=(action "select") as |option|}}
         {{yield option}}
       {{/ember-power-select/options}}
     {{else if mustSearch}}
