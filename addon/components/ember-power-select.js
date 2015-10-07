@@ -29,38 +29,21 @@ const { htmlSafe } = Ember.String;
 //
 export default Ember.Component.extend({
   layout: layout,
-  opened: false,
   disabled: false,
   searchEnabled: true,
   searchPlaceholder: null,
-  dropdownPosition: 'auto', // auto | above | below
+  classNames: ['ember-power-select-wrapper'],
   loadingMessage: "Loading options...",
   noMatchesMessage: "No results found",
   searchMessage: "Type to search",
   selectedPartial: null,
   attributeBindings: ['dir'],
-  classNames: ['ember-power-select'],
-  classNameBindings: ['_opened:opened', 'disabled', 'multiple', 'renderInPlace', '_dropdownPositionClass'],
   _highlighted: null,
   _searchText: '',
   _loadingOptions: false,
-  _wormholeDestination: (Ember.testing ? 'ember-testing' : 'ember-power-select-wormhole'),
   matcher: (value, text) => text === '' || stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase()) > -1,
 
   // Lifecycle hooks
-  init(){
-    this._super(...arguments);
-    const self = this;
-    const rootSelector = Ember.testing ? '#ember-testing' : this.container.lookup('application:main').rootElement;
-    this.appRoot = document.querySelector(rootSelector);
-    this.handleRootClick = function handleRootClick(e) {
-      if (!self.element.contains(e.target)) { self.close(); }
-    };
-    this.handleRepositioningEvent = function handleRepositioningEvent(/* e */) {
-      run.throttle(self, 'repositionDropdown', 60, true);
-    };
-  },
-
   didReceiveAttrs({ newAttrs: { options, multiple } }) {
     if (multiple) {
       this.set('searchEnabled', false); // I feel that this should be a CP
@@ -71,13 +54,12 @@ export default Ember.Component.extend({
       .finally(() => this.set('_loadingOptions', false));
   },
 
-  willDestroy() {
-    this._super(...arguments);
-    this.removeGlobalEvents();
-  },
-
   // CPs
   _notLoadingOptions: computed.not('_loadingOptions'),
+
+  dropdownClasses: computed('multiple', function() {
+    return `ember-power-select ${this.get('multiple') && 'multiple'}`;
+  }),
 
   selectedOption: computed('selected', {
     get() {
@@ -92,10 +74,6 @@ export default Ember.Component.extend({
     return this.get('_searchText.length') === 0 && !!this.get('search');
   }),
 
-  tabindex: computed('disabled', function() {
-    return !this.get('disabled') ? "0" : "-1";
-  }),
-
   triggerMultipleInputStyle: computed('_searchText', function() {
     return htmlSafe(`width: ${(this.get('_searchText.length') || 0) * 0.5 + 2}em`);
   }),
@@ -106,25 +84,10 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    toggle(/* e */){
-      if (this.get('_opened'))  {
-        this.close();
-        this.focusTrigger();
-      } else {
-        this.open();
-      }
-    },
-
-    select(option, e) {
+    select(option, toggleDropdown, e) {
       e.preventDefault();
-      if (this.get('multiple')) {
-        this.addOrRemoveToSelected(option);
-      } else if (this.get('selectedOption') !== option) {
-        this.set('selectedOption', option);
-      }
-      if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
-      this.close();
-      this.focusTrigger();
+      this.select(option);
+      toggleDropdown(e);
     },
 
     highlight(option) {
@@ -134,10 +97,7 @@ export default Ember.Component.extend({
 
     removeOption(option, e) {
       e.stopPropagation();
-      this.get('selectedOption').removeObject(option);
-      this._resultsDirty = true;
-      if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
-      run.scheduleOnce('afterRender', this, this.repositionDropdown);
+      this.removeOption(option);
     },
 
     clear(e) {
@@ -157,82 +117,88 @@ export default Ember.Component.extend({
       }
     },
 
-    keydown(e) {
+    searchKeydown(toggleDropdown, e) {
       if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
         this.handleVerticalArrowKey(e);
       } else if (e.keyCode === 13) {  // Enter
-        this.handleEnter(e);
+        this.pressedEnterOnSeach(e);
+        toggleDropdown(e);
       } else if (e.keyCode === 9) {   // Tab
-        this.handleTab(e);
+        toggleDropdown();
       } else if (e.keyCode === 27) {  // escape
-        this.close();
-        this.focusTrigger();
+        e.preventDefault();
+        toggleDropdown(e);
       } else if (e.keyCode === 8) {   // backspace
         this.handleBackspace(e);
       }
+    },
+
+    multipleModeInputKeydown(e) {
+      if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
+        return this.handleVerticalArrowKey(e);
+      }
+      let event = document.createEvent('Event');
+      if (e.keyCode === 8) {   // backspace
+        this.removeLastOptionIfSearchIsEmpty();
+        event.initEvent('dropdown:open', true, true);
+      } else if (e.keyCode === 13) {  // Enter
+        e.stopPropagation();
+        this.pressedEnterOnMultipleSelect();
+        event.initEvent('dropdown:toggle', true, true);
+      } else if (e.keyCode === 9) {   // Tab
+        event.initEvent('dropdown:close', true, true);
+      } else if (e.keyCode === 27) {  // escape
+        e.preventDefault();
+        event.initEvent('dropdown:close', true, true);
+      } else {
+        event.initEvent('dropdown:open', true, true);
+      }
+      this.element.querySelector('.ember-power-select').dispatchEvent(event);
     }
   },
 
   // Methods
-  close() {
-    this.set('_opened', false);
-    this.set('_searchText', '');
-    this.set('_dropdownPositionClass', null);
-    this.removeGlobalEvents();
-  },
-
-  focusTrigger() {
-    this.element.querySelector(`.ember-power-select-trigger${this.get('multiple') ? '-multiple-input' : ''}`).focus();
-  },
-
-  open() {
-    if (this.get('disabled')) { return; }
-    this.set('_opened', true);
-    const pos = this.get('dropdownPosition');
-    const renderInPlace = this.get('renderInPlace');
-    this.set('_dropdownPositionClass', renderInPlace ? 'below' : (pos === 'auto' ? null : pos));
-    this.addGlobalEvents();
+  onOpen() {
     if (this._resultsDirty) { this.refreshResults(); }
     if (this.get('multiple')) {
       this.set('_highlighted', this.optionAtIndex(0));
     } else {
       this.set('_highlighted', this.get('selectedOption') || this.optionAtIndex(0));
     }
-    run.scheduleOnce('afterRender', this, this.repositionDropdown);
     run.scheduleOnce('afterRender', this, this.focusSearch);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
-  swallowEvent(e) {
-    e.stopPropagation();
+  onClose() {
+    this.set('_searchText', '');
+    this.set('_highlighted', null);
+    this._resultsDirty = true;
   },
 
-  handleEnter(e) {
-    if (this.get('disabled')) { return; }
-    if (this.get('_opened')) {
-      const highlighted = this.get('_highlighted');
-      if (this.get('multiple')) {
-        if ((this.get('selected') || []).indexOf(highlighted) === -1) {
-          this.send('select', highlighted, e);
-        } else {
-          this.close();
-        }
-      } else {
-        this.send('select', highlighted, e);
-      }
-    } else {
-      this.send('toggle', e);
+  onFocus() {
+    if (this.get('multiple')) { this.focusSearch(); }
+  },
+
+  select(option) {
+    if (this.get('multiple')) {
+      this.addOrRemoveToSelected(option);
+    } else if (this.get('selectedOption') !== option) {
+      this.set('selectedOption', option);
+    }
+    if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
+  },
+
+  pressedEnterOnSeach() {
+    const highlighted = this.get('_highlighted');
+    this.select(highlighted);
+  },
+
+  pressedEnterOnMultipleSelect() {
+    const highlighted = this.get('_highlighted');
+    if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
+      this.select(highlighted);
     }
   },
-
-  handleTab(e) {
-    if (this.get('_opened')) {
-      e.preventDefault();
-      this.close();
-      this.focusTrigger();
-    }
-  },
-
 
   handleVerticalArrowKey(e) {
     e.preventDefault();
@@ -241,19 +207,24 @@ export default Ember.Component.extend({
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
-  handleBackspace(e) {
+  removeLastOptionIfSearchIsEmpty() {
     if (!this.get('multiple')) { return; }
     if (this.get('_searchText.length') !== 0) { return; }
     const lastSelection = this.get('selectedOption.lastObject');
     if (!lastSelection) { return; }
-    this.send('removeOption', lastSelection, e);
+    this.removeOption(lastSelection);
     if (typeof lastSelection === 'string') {
       this.set('_searchText', lastSelection); // TODO: Convert last selection to text
     } else {
       if (!this.get('searchField')) { throw new Error('Need to provide `searchField` when options are not strings'); }
       this.set('_searchText', get(lastSelection, this.get('searchField'))); // TODO: Convert last selection to text
     }
-    this.open();
+  },
+
+  removeOption(option) {
+    this.get('selectedOption').removeObject(option);
+    this._resultsDirty = true;
+    if (this.get('onchange')) { this.get('onchange')(this.get('selectedOption')); }
   },
 
   addOrRemoveToSelected(option) {
@@ -278,11 +249,9 @@ export default Ember.Component.extend({
   },
 
   focusSearch() {
-    if (this.get('searchEnabled')) {
-      this.appRoot.querySelector('.ember-power-select-search input').focus();
-    } else if (this.get('multiple')) {
-      this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
-    }
+    const searchInput = document.querySelector('.ember-power-select-search input') ||
+      this.element.querySelector('.ember-power-select-trigger-multiple-input');
+    if (searchInput) { searchInput.focus(); }
   },
 
   indexOfOption(option) {
@@ -303,39 +272,6 @@ export default Ember.Component.extend({
     return nextOption;
   },
 
-  repositionDropdown() {
-    if (this.get('renderInPlace')) { return; }
-    const dropdownPositionStrategy = this.get('dropdownPosition');
-    const dropdown = this.appRoot.querySelector('.ember-power-select-dropdown');
-    const width = this.element.offsetWidth;
-    let left = this.element.offsetLeft;
-    dropdown.style.width = `${width}px`;
-    let top;
-    if (dropdownPositionStrategy === 'above') {
-      top = this.element.offsetTop - dropdown.offsetHeight;
-    } else if (dropdownPositionStrategy === 'below') {
-      top = this.element.offsetTop + this.element.offsetHeight;
-    } else { // auto
-      const viewportTop = document.body.scrollTop;
-      const viewportBottom = window.scrollY + window.innerHeight;
-      const dropdownHeight = dropdown.offsetHeight;
-      const selectTop = this.element.offsetTop;
-      const enoughRoomBelow = selectTop + this.element.offsetHeight + dropdownHeight < viewportBottom;
-      const enoughRoomAbove = selectTop - viewportTop > dropdownHeight;
-      let positionClass = this.get('_dropdownPositionClass');
-      if (positionClass === 'below' && !enoughRoomBelow && enoughRoomAbove) {
-        positionClass = this.set('_dropdownPositionClass', 'above');
-      } else if (positionClass === 'above' && !enoughRoomAbove && enoughRoomBelow) {
-        positionClass = this.set('_dropdownPositionClass', 'below');
-      } else if (!positionClass) {
-        positionClass = this.set('_dropdownPositionClass', enoughRoomBelow ? 'below' : 'above');
-      }
-      top = selectTop + (positionClass === 'below' ? this.element.offsetHeight : -dropdownHeight);
-    }
-    dropdown.style.top = `${top}px`;
-    dropdown.style.left = `${left}px`;
-  },
-
   refreshResults() {
     const { _options: options, _searchText: searchText } = this.getProperties('_options', '_searchText');
     let matcher;
@@ -346,16 +282,11 @@ export default Ember.Component.extend({
     }
     this.set('results', filterOptions(options || [], searchText, matcher));
     this._resultsDirty = false;
-    run.scheduleOnce('afterRender', this, this.repositionDropdown);
   },
 
   updateOptions(options) {
     this.set('_options', options);
-    if (this.get('_opened')) {
-      this.refreshResults();
-    } else {
-      this._resultsDirty = true;
-    }
+    this.refreshResults();
   },
 
   performCustomSearch(term) {
@@ -370,19 +301,5 @@ export default Ember.Component.extend({
       if (promise !== this.get('_activeSearch')) { return; }
       this.set('_loadingOptions', false);
     });
-  },
-
-  addGlobalEvents() {
-    this.appRoot.addEventListener('click', this.handleRootClick);
-    window.addEventListener('scroll', this.handleRepositioningEvent);
-    window.addEventListener('resize', this.handleRepositioningEvent);
-    window.addEventListener('orientationchange', this.handleRepositioningEvent);
-  },
-
-  removeGlobalEvents() {
-    this.appRoot.removeEventListener('click', this.handleRootClick);
-    window.removeEventListener('scroll', this.handleRepositioningEvent);
-    window.removeEventListener('resize', this.handleRepositioningEvent);
-    window.removeEventListener('orientationchange', this.handleRepositioningEvent);
   }
 });

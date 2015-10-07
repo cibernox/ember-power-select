@@ -9,7 +9,7 @@
       </ul>
     </li>
   {{else}}
-    <li class="ember-power-select-option {{ember-power-select-option-classes opt selectedOption highlighted}}" onclick={{action select opt}} onmouseover={{action highlight opt}}>
+    <li class="ember-power-select-option {{ember-power-select-option-classes opt selectedOption highlighted}}" onclick={{action select opt toggleDropdown}} onmouseover={{action highlight opt}}>
       {{yield opt}}
     </li>
   {{/if}}

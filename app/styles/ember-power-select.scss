@@ -16,6 +16,8 @@ $ember-power-select-clear-btn-margin: 25px !default;
 $ember-power-select-option-padding: 8px !default;
 $ember-power-select-number-of-visible-options: 7;
 
+@import 'ember-basic-dropdown';
+
 .ember-power-select {
   position: relative;
 }

@@ -268,7 +268,7 @@ test('If the user selects a value and later on the selected value changes from t
 });
 
 test('If the user pases `renderInPlace=true` the dropdown is added below the trigger instead of in the root', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -279,7 +279,6 @@ test('If the user pases `renderInPlace=true` the dropdown is added below the tri
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal(this.$('.ember-power-select-dropdown').length, 1, 'The dropdown is inside the component');
-  assert.ok(this.$('.ember-power-select-dropdown').hasClass('below'), 'The dropdown positioned below the trigger');
 });
 
 /**
