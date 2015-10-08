@@ -904,6 +904,21 @@ test('When filtering, a group title is visible as long as one of it\'s elements 
   assert.deepEqual(groupNames, ["Bigs", "Really big"], 'With no depth level');
 });
 
+test('Click on an option of a group select selects the option and closes the dropdown', function(assert) {
+  assert.expect(2);
+
+  this.groupedNumbers = groupedNumbers;
+  this.render(hbs`
+    {{#ember-power-select options=groupedNumbers as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:contains("four")').click());
+  assert.equal($('.ember-power-select-trigger').text().trim(), "four", 'The clicked option was selected');
+  assert.equal($('.ember-power-select-options').length, 0, 'The dropdown has dissapeared');
+});
+
 /**
 7 - Mouse control
   a) [DONE] Mouseovering a list item highlights it.

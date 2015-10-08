@@ -3,7 +3,7 @@
     <li class="ember-power-select-group">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       <ul class="ember-power-select-options nested">
-        {{#ember-power-select/options highlighted=highlighted selectedOption=selectedOption options=opt.options highlight=(action highlight) select=(action select) as |option|}}
+        {{#ember-power-select/options highlighted=highlighted selectedOption=selectedOption options=opt.options highlight=(action highlight) select=(action select) toggleDropdown=toggleDropdown as |option|}}
           {{yield option}}
         {{/ember-power-select/options}}
       </ul>
