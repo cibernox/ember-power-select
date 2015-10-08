@@ -1,0 +1,33 @@
+{{#ember-basic-dropdown class="ember-power-select multiple" renderInPlace=renderInPlace matchTriggerWidth=true
+  disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass="ember-power-select-dropdown"
+  onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) as |toggleDropdown|}}
+  <ul class="ember-power-select-options">
+    {{#if _loadingOptions}}
+      <li class="ember-power-select-option">{{loadingMessage}}</li>
+    {{/if}}
+    {{#if resultsLength}}
+      {{#ember-power-select/options options=results highlighted=_highlighted selection=selection
+        highlight=(action "highlight") select=(action "select") toggleDropdown=toggleDropdown as |option|}}
+        {{yield option}}
+      {{/ember-power-select/options}}
+    {{else if mustSearch}}
+      <li class="ember-power-select-option">{{searchMessage}}</li>
+    {{else if _notLoadingOptions}}
+      {{#if hasInverseBlock}}
+        {{yield to="inverse"}}
+      {{else}}
+        <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+      {{/if}}
+    {{/if}}
+  </ul>
+{{else}}
+  {{#each selection as |multiOpt|}}
+    <span class="ember-power-select-multiple-option">
+      <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
+      {{yield multiOpt}}
+    </span>
+  {{/each}}
+  <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
+    autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" style={{triggerMultipleInputStyle}}
+    value={{_searchText}} oninput={{action "search" value="target.value"}} onkeydown={{action "multipleModeInputKeydown"}}>
+{{/ember-basic-dropdown}}
