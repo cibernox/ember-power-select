@@ -40,18 +40,17 @@
 </p>
 
 <p>
-  Since we have runned out of block to pass the the component we need to use partials if we want to
-  go any further. Pass <code>selectedPartial="absolute/path/to/the/partial"</code> to the component.
+  Since we have runned out of block to pass the the component we need to use other components if we want to
+  go any further. Pass <code>selectedComponent="component-name"</code> to the component.
 </p>
 
 <p>
-  Within that partial the context is the component itself so you have access to all its attributes.
-  Chances are the one you care about is <code>selectedOption</code>.
+  Within that component you have access to <code>selection</code>.
 </p>
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-  \{{#ember-power-select options=countries selectedPartial="selected-country" searchField="name" as |country|}}
+  \{{#ember-power-select options=countries selectedComponent="selected-country" searchField="name" as |country|}}
     &lt;div class="country-detailed-info"&gt;
       &lt;img src="\{{country.flagUrl}}" class="country-flag"&gt;
       &lt;div class="country-data-text"&gt;
@@ -79,7 +78,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-  {{#ember-power-select options=countries selectedPartial="selected-country" searchField="name" as |country|}}
+  {{#ember-power-select options=countries selectedComponent="selected-country" searchField="name" as |country|}}
     <div class="country-detailed-info">
       <img src="{{country.flagUrl}}" class="country-flag">
       <div class="country-data-text">

@@ -90,7 +90,7 @@
   {{/ember-power-select}}
 
   <h4>You can even use a different markup for the selected option and the ones in the list.</h4>
-  {{#ember-power-select options=(readonly complexOptions) searchField="name" selected=(readonly complexSelected) selectedPartial="selected-country" as |option|}}
+  {{#ember-power-select options=(readonly complexOptions) searchField="name" selected=(readonly complexSelected) selectedComponent="selected-country" as |option|}}
     <div class="country-detailed-info">
       <div class="country-flag {{option.code}}">
       </div>

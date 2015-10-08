@@ -29,8 +29,8 @@
   </ul>
 {{else}}
   {{#if selection}}
-    {{#if selectedPartial}}
-      {{partial selectedPartial}}
+    {{#if selectedComponent}}
+      {{component selectedComponent selection=selection}}
     {{else}}
       {{yield selection}}
     {{/if}}
