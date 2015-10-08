@@ -1,0 +1,43 @@
+{{#ember-basic-dropdown class="ember-power-select" renderInPlace=renderInPlace matchTriggerWidth=true
+  disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass="ember-power-select-dropdown"
+  onOpen=(action onOpen) onClose=(action onClose) as |toggleDropdown|}}
+  {{#if searchEnabled}}
+    <div class="ember-power-select-search">
+      <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
+      spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
+      onkeydown={{action "searchKeydown" toggleDropdown}} placeholder={{searchPlaceholder}}>
+    </div>
+  {{/if}}
+  <ul class="ember-power-select-options">
+    {{#if _loadingOptions}}
+      <li class="ember-power-select-option">{{loadingMessage}}</li>
+    {{/if}}
+    {{#if resultsLength}}
+      {{#ember-power-select/options options=results highlighted=_highlighted selection=selection
+        highlight=(action "highlight") select=(action "select") toggleDropdown=toggleDropdown as |option|}}
+        {{yield option}}
+      {{/ember-power-select/options}}
+    {{else if mustSearch}}
+      <li class="ember-power-select-option">{{searchMessage}}</li>
+    {{else if _notLoadingOptions}}
+      {{#if hasInverseBlock}}
+        {{yield to="inverse"}}
+      {{else}}
+        <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+      {{/if}}
+    {{/if}}
+  </ul>
+{{else}}
+  {{#if selection}}
+    {{#if selectedPartial}}
+      {{partial selectedPartial}}
+    {{else}}
+      {{yield selection}}
+    {{/if}}
+    {{#if allowClear}}
+      <span class="ember-power-select-clear-btn" onclick={{action "clear"}}>&times;</span>
+    {{/if}}
+  {{else if placeholder}}
+    <span class="ember-power-select-placeholder">{{placeholder}}</span>
+  {{/if}}
+{{/ember-basic-dropdown}}

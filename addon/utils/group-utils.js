@@ -922,7 +922,6 @@ const DIACRITICS = {
   '\u03C2': '\u03C3'
 };
 
-
 // Copied from Select2
 export function stripDiacritics(text) {
   // Used 'uni range + named function' from http://jsperf.com/diacritics/18
@@ -931,4 +930,8 @@ export function stripDiacritics(text) {
   }
 
   return text.replace(/[^\u0000-\u007E]/g, match);
+}
+
+export function defaultMatcher(value, text) {
+  return text === '' || stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase()) > -1;
 }
