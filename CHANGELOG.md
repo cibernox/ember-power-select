@@ -1,6 +1,10 @@
 # Master
 
+# 0.2.1
+- [REFACTOR] Divide component internally into ember-power-select/simple and ember-power-select/multiple
 - [BUGFIX] Fix bug where dropdown didn't close when selection an option inside a group.
+- [BUGFIX] Fix ember-wormhole destination not being added to the body footer. Solved by calling contentFor of dependencies.
+- [ENHALCEMENT] Update to ember-basic-dropdown 2.0. That yields a hash with public API on it
 
 # 0.2.0
 
