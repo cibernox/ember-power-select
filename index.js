@@ -11,5 +11,9 @@ module.exports = {
       app.import('vendor/ember-power-select.css');
     }
   },
+
+  contentFor: function(type, config) {
+    this.eachAddonInvoke('contentFor', [this, type, config]);
+  }
 };
  
