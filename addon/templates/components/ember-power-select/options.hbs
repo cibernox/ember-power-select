@@ -3,13 +3,13 @@
     <li class="ember-power-select-group">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       <ul class="ember-power-select-options nested">
-        {{#ember-power-select/options highlighted=highlighted selection=selection options=opt.options highlight=(action highlight) select=(action select) toggleDropdown=toggleDropdown as |option|}}
+        {{#ember-power-select/options highlighted=highlighted selection=selection options=opt.options highlight=(action highlight) select=(action select) dropdown=dropdown as |option|}}
           {{yield option}}
         {{/ember-power-select/options}}
       </ul>
     </li>
   {{else}}
-    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}" onclick={{action select opt toggleDropdown}} onmouseover={{action highlight opt}}>
+    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}" onclick={{action select opt dropdown.toggle}} onmouseover={{action highlight opt}}>
       {{yield opt}}
     </li>
   {{/if}}

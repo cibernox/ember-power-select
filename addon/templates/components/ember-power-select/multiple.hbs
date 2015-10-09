@@ -1,13 +1,13 @@
 {{#ember-basic-dropdown class="ember-power-select multiple" renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass="ember-power-select-dropdown"
-  onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) as |toggleDropdown|}}
+  onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) as |dropdown|}}
   <ul class="ember-power-select-options">
     {{#if _loadingOptions}}
       <li class="ember-power-select-option">{{loadingMessage}}</li>
     {{/if}}
     {{#if resultsLength}}
       {{#ember-power-select/options options=results highlighted=_highlighted selection=selection
-        highlight=(action "highlight") select=(action "select") toggleDropdown=toggleDropdown as |option|}}
+        highlight=(action "highlight") select=(action "select") dropdown=dropdown as |option|}}
         {{yield option}}
       {{/ember-power-select/options}}
     {{else if mustSearch}}
