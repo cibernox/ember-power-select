@@ -30,10 +30,10 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    select(option, toggleDropdown, e) {
+    select(option, closeDropdown, e) {
       e.preventDefault();
       this.select(option);
-      toggleDropdown(e);
+      closeDropdown(e);
     },
 
     highlight(option) {
