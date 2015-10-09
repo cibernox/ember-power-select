@@ -316,7 +316,7 @@ test('The default "no options" message can be customized passing `noMatchesMessa
   assert.equal($('.ember-power-select-option').text().trim(), 'Nope');
 });
 
-test('The content of the dropdown when there is no options can be completely customized using the inverse block', function(assert) {
+test('The content of the dropdown when there are no options can be completely customized using the inverse block', function(assert) {
   this.options = [];
   this.render(hbs`
     {{#ember-power-select options=options noMatchesMessage="Nope" as |option|}}
@@ -1785,4 +1785,24 @@ test('Passing as options the result of `store.query` works', function(assert) {
     assert.equal($('.ember-power-select-option').length, 1, 'Filtering works');
     done();
   }, 10);
+});
+
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
+  integration: true
+});
+
+test('selected option can be customized using selectedComponent', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#ember-power-select options=countries selected=country selectedComponent="selected-country" as |country|}}
+      {{country.name}}
+    {{/ember-power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-trigger .icon-flag').length, 1, 'The custom flag appears.');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'Spain', 'With the country name as the text.');
 });

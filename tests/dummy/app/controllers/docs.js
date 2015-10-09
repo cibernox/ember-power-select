@@ -28,7 +28,7 @@ const groupedSections = [
   {
     groupName: 'Advanced customization',
     options: [
-      { route: 'docs.partials',               text: 'Partials' },
+      { route: 'docs.custom-components',      text: 'Custom components' },
       { route: 'docs.asynchronous-search',    text: 'Asynchronous search' },
       { route: 'docs.roll-your-own-template', text: 'Roll your own template' },
     ]

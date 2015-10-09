@@ -10,7 +10,7 @@ export default Ember.Component.extend({
   placeholder: null,
   loadingMessage: "Loading options...",
   noMatchesMessage: "No results found",
-  selectedPartial: null,
+  selectedComponent: null,
   dropdownPosition: 'auto',
   matcher: defaultMatcher,
   searchField: null,
