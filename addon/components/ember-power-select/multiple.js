@@ -86,7 +86,6 @@ export default PowerSelectBaseComponent.extend({
   },
 
   focusSearch() {
-    // debugger;
     this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
   }
 });

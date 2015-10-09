@@ -22,18 +22,18 @@ export default PowerSelectBaseComponent.extend({
       if (this.get('onchange')) { this.get('onchange')(null); }
     },
 
-    searchKeydown(toggleDropdown, e) {
+    searchKeydown(closeDropdown, e) {
       if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
         this.handleVerticalArrowKey(e);
       } else if (e.keyCode === 13) {  // Enter
         const highlighted = this.get('_highlighted');
         this.select(highlighted);
-        toggleDropdown(e);
+        closeDropdown(e);
       } else if (e.keyCode === 9) {   // Tab
-        toggleDropdown();
+        closeDropdown();
       } else if (e.keyCode === 27) {  // escape
         e.preventDefault();
-        toggleDropdown(e);
+        closeDropdown(e);
       } else if (e.keyCode === 8) {   // backspace
         this.handleBackspace(e);
       }
