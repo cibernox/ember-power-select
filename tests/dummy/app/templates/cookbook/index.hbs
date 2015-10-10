@@ -1,15 +1,49 @@
-{{!-- <h1 class="doc-page-title">Debounce searches</h1>
+<h1 class="doc-page-title">System-wide configuration</h1>
 
 <p>
-  One very common pattern when performing asynchronous searches is to debounce
-  the requests to not stress the servers with potentially expensive requests and to
-  avoid hitting API rate limits.
+  So far we've seen that Ember Power Select can take a fair amount of configuration options on
+  invocations to alter its default behavior.
 </p>
 
 <p>
-  This is how it can be implemented in a few lines.
+  But what happens when you want all your selects to behave on a certain way that is not the default one?
+  Repeating the same options over and over on your templates is not pleasant and error prone.
 </p>
 
-{{#ember-power-select search=(action "searchRepo") as |repo|}}
-  {{repo.full_name}}
-{{/ember-power-select}} --}}
+<p>
+  If you want to apply a configuration option to all your selects there is no special way
+  or key in the <code>/config/environment.js</code> you need to learn.
+  Just use The Ember Way™.
+</p>
+
+<p>
+  Inside your app's <code>/app/components</code> folder create a <code>ember-power-select.js</code>
+  file:
+</p>
+
+<pre>
+  import EmberPowerSelect from 'ember-power-select/components/ember-power-select';
+
+  export default EmberPowerSelect.extend({
+    // Place here your system-wide preferences
+    searchEnabled: false,
+    allowClear: true,
+
+    // You can even use computed properties to do other stuff, like apply i18n, that wouldn't be
+    // posible with static configuration.
+    i18n: Ember.inject.service(),
+    loadingMessage: Ember.computed('i18n.locale', function() {
+      return this.get('i18n').t('selects.loading');
+    })
+  });
+</pre>
+
+<p>
+  That's all. No new concepts to learn, just your usual ember-cli workflow.
+</p>
+
+<p>
+  In this example the component is also named <code>\{{ember-power-select}}</code> but using this approach
+  you can create many components with different names that extend and customize Ember Power Select
+  in different ways. Pick and choose.
+</p>
