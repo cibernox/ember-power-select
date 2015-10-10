@@ -1,7 +1,7 @@
 {
   "name": "ember-power-select",
   "version": "0.2.3",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "The extensible select component built for ember",
   "homepage": "http://www.ember-power-select.com",
   "directories": {
     "doc": "doc",
@@ -19,7 +19,10 @@
   "engines": {
     "node": ">= 0.12.0"
   },
-  "author": "",
+  "author": {
+    "name" : "Miguel Camba",
+    "email" : "miguel.camba@gmail.com",
+  },
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.1.2",
@@ -53,7 +56,8 @@
     "ember-addon",
     "select",
     "select2",
-    "selectize"
+    "selectize",
+    "dropdown"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.3",
