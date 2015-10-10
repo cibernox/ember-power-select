@@ -33,15 +33,15 @@ battle tested and can be wrapped?
 
 > — Your brain, now.
 
-Belive me, I tried. And it worked for a while. Two good ember examples of addons doing that are
+Believe me, I tried. And it worked for a while. Two good ember examples of addons doing that are
 [ember-cli-selectize](https://github.com/miguelcobain/ember-cli-selectize) and [https://github.com/iStefo/ember-select-2](ember-select-2).
 
 However this approach has inherent downsides.
 
-By accepting to use a framework agnosic library one needs to renounce to take advantege the more higher
+By accepting to use a framework agnostic library one needs to renounce to take advantage the more higher
 level primitives that Ember and HTMLBars provide.
 
-Let's say that by example you need to build a mildly complex select which, as you type in a searchbox,
+Let's say that by example you need to build a mildly complex select which, as you type in a search-box,
 shows you a list of users that match that search with their avatars, names, and other information,
 and if there is no matcher it shows some message. When you select one user you navigate to his profile.
 
@@ -58,7 +58,7 @@ Using components and blocks this can be expressed very naturally.
 {{/my-select}}
 ```
 
-This is the kind of expresiveness I wanted to find but is actually not possible to achieve translating between
+This is the kind of expressiveness I wanted to find but is actually not possible to achieve translating between
 the "Ember world" where we solve problems in terms of actions and templates and the lower level world
 of those libraries where things are expressed in terms of events and DOM nodes.
 
@@ -66,7 +66,7 @@ Even for things that are not impossible to do, translating between the bindings 
 ember and those in the libraries requires a surprising amount of glue code and is very tricky task.
 
 Also those libraries tend to be quite complex and bloated with functionality not directly related with
-the task they have to solve, like internacionalization for example. We don't need that code making this
+the task they have to solve, like internationalization for example. We don't need that code making this
 libraries weight ~100KB when we already have better and more natural ways to do it already.
 
 I thought that we deserved a select component for ember projects built with from scratch with ember mind.
