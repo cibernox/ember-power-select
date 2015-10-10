@@ -21,7 +21,7 @@
   },
   "author": {
     "name" : "Miguel Camba",
-    "email" : "miguel.camba@gmail.com",
+    "email" : "miguel.camba@gmail.com"
   },
   "license": "MIT",
   "devDependencies": {
