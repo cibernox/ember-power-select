@@ -71,3 +71,4 @@ the task they have to solve, like internationalization for example. We don't nee
 libraries weight ~100KB when we already have better and more natural ways to do it already.
 
 I thought that we deserved a select component for ember projects built with from scratch with ember mind.
+That also allowed this library to weight <10KB (JS + CSS + images) when gzipped.
