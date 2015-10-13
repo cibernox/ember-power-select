@@ -13,7 +13,10 @@ module.exports = {
   },
 
   contentFor: function(type, config) {
-    this.eachAddonInvoke('contentFor', [this, type, config]);
+    var emberBasicDropdown = this.addons.filter(function(addon) {
+      return addon.name === 'ember-basic-dropdown';
+    })[0]
+    return emberBasicDropdown.contentFor.apply(this, [type, config]);
   }
 };
  
