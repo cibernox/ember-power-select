@@ -1679,45 +1679,44 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
 
 /**
 10 - Dropdown positioning
-  a) [DONE] By default the dropdown is placed automatically depending on the available space around the select.
-  b) [DONE] Passing `dropdownPosition=above` positions the dropdown on top of the trigger.
-
+  a) [UNTESTABLE??] By default the dropdown is placed automatically depending on the available space around the select.
+  b) [UNTESTABLE??] Passing `dropdownPosition=above` positions the dropdown on top of the trigger.
   c) [UNTESTABLE??] When the dropdown in auto is opened and the user scrolls until there is not enough space below, the dropdown changes to be on top.
   d) [UNTESTABLE??] Once the dropdown has changes to be on top, it won't go back to the bottom until there is no enough space on top.
 */
 
-moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Dropdown positioning)', {
-  integration: true
-});
+// moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Dropdown positioning)', {
+//   integration: true
+// });
 
-test('By default the dropdown is placed automatically depending on the available space around the select', function(assert) {
-  assert.expect(1);
+// test('By default the dropdown is placed automatically depending on the available space around the select', function(assert) {
+//   assert.expect(1);
 
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
-      {{option}}
-    {{/ember-power-select}}
-  `);
+//   this.numbers = numbers;
+//   this.render(hbs`
+//     {{#ember-power-select options=numbers as |option|}}
+//       {{option}}
+//     {{/ember-power-select}}
+//   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+//   Ember.run(() => this.$('.ember-power-select-trigger').click());
 
-  assert.ok($('.ember-power-select-dropdown').offset().top > $('.ember-power-select-trigger').offset().top, 'Dropdown placed below the trigger');
-});
+//   assert.ok($('.ember-power-select-dropdown').offset().top > $('.ember-power-select-trigger').offset().top, 'Dropdown placed below the trigger');
+// });
 
-test('Passing `dropdownPosition=above` positions the dropdown on top of the trigger', function(assert) {
-  assert.expect(1);
+// test('Passing `dropdownPosition=above` positions the dropdown on top of the trigger', function(assert) {
+//   assert.expect(1);
 
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#ember-power-select options=numbers dropdownPosition="above" as |option|}}
-      {{option}}
-    {{/ember-power-select}}
-  `);
+//   this.numbers = numbers;
+//   this.render(hbs`
+//     {{#ember-power-select options=numbers dropdownPosition="above" as |option|}}
+//       {{option}}
+//     {{/ember-power-select}}
+//   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.ok($('.ember-power-select-dropdown').offset().top < $('.ember-power-select-trigger').offset().top, 'Dropdown placed below the trigger');
-});
+//   Ember.run(() => this.$('.ember-power-select-trigger').click());
+//   assert.ok($('.ember-power-select-dropdown').offset().top < $('.ember-power-select-trigger').offset().top, 'Dropdown placed below the trigger');
+// });
 
 // test('When the dropdown in auto is opened and the user scrolls until there is not enough space below, the dropdown changes to be on top', function(assert) {
 //   throw new Error('not implemented');
