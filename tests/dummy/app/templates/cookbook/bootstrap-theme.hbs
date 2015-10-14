@@ -1,0 +1,45 @@
+<h1 class="doc-page-title">Bootstrap theme</h1>
+
+<p>
+  In the {{#link-to 'docs.styles'}}chapter about styles{{/link-to}} of the docs you've seen how, if you are a Sass user,
+  you can customize the styles of the dropdown by defining some variables before importing the styles
+  of the addon.
+</p>
+
+<p>
+  This approach can allow a great amount of customization with only a few lines of code. By example this
+  is all that takes to create a Bootstrap 3 theme:
+</p>
+
+<pre>
+  $ember-power-select-line-height: 2;
+  $ember-power-select-border-color: #ccc;
+  $ember-power-select-trigger-icon-color: #999;
+  $ember-power-select-focus-outline: 0;
+  $ember-power-select-opened-border-radius: 4px;
+  $ember-power-select-dropdown-margin: 3px;
+  $ember-power-select-dropdown-box-shadow: rgba(black, 0.172549) 0px 6px 12px 0px;
+  $ember-power-select-highlighted-color: inherit;
+  $ember-power-select-highlighted-background: #f5f5f5;
+  $ember-power-select-selected-background: #f5f5f5;
+  $ember-power-select-focus-border-color: #66afe9;
+  $ember-power-select-focus-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  $ember-power-select-contiguous-border: 1px solid $ember-power-select-border-color !default;
+
+  @import 'ember-power-select';
+</pre>
+
+<p>
+  Since bootstrap is so popular this theme comes already bundled in Ember Power Select, so the only
+  thing you have to do is to import the theme file before the main one:
+</p>
+
+<pre>
+  @import 'ember-power-select/themes/bootstrap';
+  @import 'ember-power-select';
+</pre>
+
+
+<div class="doc-page-nav">
+  {{#link-to 'cookbook.index' class="doc-page-nav-link-prev"}}&lt; System-wide configuration{{/link-to}}
+</div>

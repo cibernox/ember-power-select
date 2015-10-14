@@ -18,34 +18,35 @@
   box-sizing: border-box; }
 
 .ember-power-select-trigger {
-  border: 1px solid #aaaaaa;
+  border: 1px solid #ccc;
   border-radius: 4px;
   background-size: 7px 7px;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#aaaaaa;'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#999;'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-color: #ffffff;
-  line-height: 1.75;
+  line-height: 2;
   text-overflow: ellipsis;
-  min-height: 1.75em;
+  min-height: 2em;
   user-select: none;
   -webkit-user-select: none; }
   .ember-power-select-trigger:focus {
-    border: 1px solid #aaaaaa;
-    box-shadow: none; }
+    border: 1px solid #66afe9;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: 0; }
   .ember-power-select.multiple .ember-power-select-trigger {
     height: auto; }
   .ember-power-select:not(.multiple) .ember-power-select-trigger {
     white-space: nowrap; }
   .ember-power-select.opened .ember-power-select-trigger {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#aaaaaa;'/%3E%3C/svg%3E"); }
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#999;'/%3E%3C/svg%3E"); }
   .ember-power-select.opened.below .ember-power-select-trigger {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: none; }
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom: 1px solid #ccc; }
   .ember-power-select.opened.above .ember-power-select-trigger {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-top: none; }
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top: 1px solid #ccc; }
 
 .ember-power-select-placeholder {
   color: #999999; }
@@ -82,31 +83,34 @@
 .ember-power-select-search {
   padding: 4px; }
   .ember-power-select-search input {
-    border: 1px solid #aaaaaa;
+    border: 1px solid #ccc;
     width: 100%;
     font-size: inherit;
     line-height: inherit;
     padding: 0 5px; }
     .ember-power-select-search input:focus {
-      border: 1px solid #aaaaaa;
-      box-shadow: none; }
+      border: 1px solid #66afe9;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+      outline: 0; }
 
 .ember-power-select-dropdown {
   position: absolute;
   width: 100%;
   z-index: 2;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #ccc;
   background-color: #ffffff;
-  line-height: 1.75;
+  line-height: 2;
   border-radius: 4px;
-  box-shadow: none;
+  box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px 0px;
   overflow: hidden; }
   .ember-power-select-dropdown.above {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0; }
+    transform: translateY(-3px);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px; }
   .ember-power-select-dropdown.below {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0; }
+    transform: translateY(3px);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px; }
 
 .ember-power-select-options {
   list-style: none;
@@ -116,7 +120,7 @@
   -webkit-user-select: none; }
   .ember-power-select-options:not(.nested) {
     overflow-y: scroll;
-    max-height: 12.25em; }
+    max-height: 14em; }
 
 .ember-power-select-option {
   cursor: pointer;
@@ -125,10 +129,10 @@
     color: #999999;
     pointer-events: none; }
   .ember-power-select-option.selected {
-    background-color: #dddddd; }
+    background-color: #f5f5f5; }
   .ember-power-select-option.highlighted {
-    background-color: #5897fb;
-    color: #ffffff; }
+    background-color: #f5f5f5;
+    color: inherit; }
 
 .ember-power-select-group-name {
   cursor: default;
