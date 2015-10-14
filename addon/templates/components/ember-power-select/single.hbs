@@ -15,7 +15,11 @@
     {{#if resultsLength}}
       {{#ember-power-select/options options=results highlighted=_highlighted selection=selection
         highlight=(action "highlight") select=(action "select") dropdown=dropdown as |option|}}
-        {{yield option}}
+        {{#if baseHasBlock}}
+          {{yield option}}
+        {{else}}
+          {{if optionLabelPath (get option optionLabelPath) option}}
+        {{/if}}
       {{/ember-power-select/options}}
     {{else if mustSearch}}
       <li class="ember-power-select-option">{{searchMessage}}</li>
@@ -31,8 +35,10 @@
   {{#if selection}}
     {{#if selectedComponent}}
       {{component selectedComponent selection=selection disabled=disabled}}
-    {{else}}
+    {{else if baseHasBlock}}
       {{yield selection}}
+    {{else}}
+      {{if optionLabelPath (get selection optionLabelPath) selection}}
     {{/if}}
     {{#if allowClear}}
       <span class="ember-power-select-clear-btn" onclick={{action "clear"}}>&times;</span>

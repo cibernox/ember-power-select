@@ -185,6 +185,36 @@ test('Each option of the select is the result of yielding an item', function(ass
   assert.equal($('.ember-power-select-option:eq(13)').text().trim(), 'fourteen');
 });
 
+test('Each option of the select is rendered in the blockless form', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{ember-power-select options=numbers}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, numbers.length, 'There are as many options in the markup as in the supplied array');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
+  assert.equal($('.ember-power-select-option:eq(9)').text().trim(), 'ten');
+  assert.equal($('.ember-power-select-option:eq(13)').text().trim(), 'fourteen');
+});
+
+test('Each option of the select is rendered in the blockless form if optionLabelPath is used', function(assert) {
+  assert.expect(4);
+
+  this.countries = countries;
+  this.render(hbs`
+    {{ember-power-select options=countries optionLabelPath="name"}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, countries.length, 'There are as many options in the markup as in the supplied array');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'United States');
+  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'Portugal');
+  assert.equal($('.ember-power-select-option:eq(6)').text().trim(), 'United Kingdom');
+});
+
 test('If the passed options is a promise, while its not resolved the component shows a Loading message', function(assert) {
   let done = assert.async();
   assert.expect(3);
@@ -563,6 +593,28 @@ test('The default search strategy matches disregarding diacritics differences an
   assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João Jin');
+});
+
+test('Search works in blockless form without specifying searchField', function(assert) {
+  assert.expect(8);
+
+  this.countries = countries;
+  this.render(hbs`
+    {{ember-power-select options=countries optionLabelPath="name"}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('un'));
+  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'United States');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'United Kingdom');
+  Ember.run(() => typeInSearch('vi'));
+  assert.equal($('.ember-power-select-option').length, 1, 'Only 1 result matches the search');
+  assert.equal($('.ember-power-select-option').text().trim(), 'Latvia');
+  Ember.run(() => typeInSearch('o'));
+  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Portugal');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'United Kingdom');
 });
 
 test('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', function(assert) {
@@ -1491,7 +1543,7 @@ test('The default filtering works in multiple mode', function(assert) {
   assert.equal($('.ember-power-select-option').length, 2, 'Only two items matched the criteria');
 });
 
-test('The filtering specifying a searchkey works in multiple model', function(assert) {
+test('The filtering specifying a searchkey works in multiple mode', function(assert) {
   assert.expect(8);
 
   this.people = [

@@ -8,7 +8,11 @@
     {{#if resultsLength}}
       {{#ember-power-select/options options=results highlighted=_highlighted selection=selection
         highlight=(action "highlight") select=(action "select") dropdown=dropdown as |option|}}
-        {{yield option}}
+        {{#if baseHasBlock}}
+          {{yield option}}
+        {{else}}
+          {{if optionLabelPath (get option optionLabelPath) option}}
+        {{/if}}
       {{/ember-power-select/options}}
     {{else if mustSearch}}
       <li class="ember-power-select-option">{{searchMessage}}</li>
@@ -24,7 +28,11 @@
   {{#each selection as |multiOpt|}}
     <span class="ember-power-select-multiple-option">
       <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
-      {{yield multiOpt}}
+      {{#if hasBaseBlock}}
+        {{yield multiOpt}}
+      {{else}}
+        {{if optionLabelPath (get multiOpt optionLabelPath) multiOpt}}
+      {{/if}}
     </span>
   {{/each}}
   <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
