@@ -8,6 +8,7 @@ $ember-power-select-text-color: #444444 !default;
 $ember-power-select-placeholder-color: #999999 !default;
 $ember-power-select-border-radius: 4px !default; // General border radius
 $ember-power-select-opened-border-radius: 0 !default; // Border radious of the side of the dropdown and the trigger where they touch
+$ember-power-select-search-input-border-radius: 0 !default;
 $ember-power-select-dropdown-margin: 0 !default; // Margin between the dropdown and the trigger
 $ember-power-select-dropdown-box-shadow: none !default;
 $ember-power-select-background-color: #ffffff !default;
@@ -109,6 +110,7 @@ $ember-power-select-focus-outline: null !default;
   padding: 4px;
   input {
     border: $ember-power-select-border;
+    border-radius: $ember-power-select-search-input-border-radius;
     width: 100%;
     font-size: inherit;
     line-height: inherit;

@@ -39,6 +39,23 @@
   @import 'ember-power-select';
 </pre>
 
+<p>
+  If your project is not using sass, you can still use the precompiled bootstrap theme instead of
+  the default one with just a couple lines of configuration when creating your app on the
+  <code>ember-cli-build.js</code> file.
+</p>
+
+<pre>
+  var app = new EmberApp(defaults, {
+    'ember-power-select': {
+      theme: 'bootstrap'
+    }
+  });
+</pre>
+
+<p>
+  Remember to restart ember-cli to pick up the changes.
+</p>
 
 <div class="doc-page-nav">
   {{#link-to 'cookbook.index' class="doc-page-nav-link-prev"}}&lt; System-wide configuration{{/link-to}}

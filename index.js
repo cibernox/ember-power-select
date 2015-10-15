@@ -5,10 +5,17 @@
 
 module.exports = {
   name: 'ember-power-select',
+
   included: function(app) {
     // Don't include the precompiled css file if the user uses ember-cli-sass
     if (!app.registry.availablePlugins['ember-cli-sass']) {
-      app.import('vendor/ember-power-select.css');
+      var addonConfig = app.options['ember-power-select'];
+
+      if (!addonConfig || !addonConfig.theme) {
+        app.import('vendor/ember-power-select.css');
+      } else {
+        app.import('vendor/ember-power-select-'+addonConfig.theme+'.css');
+      }
     }
   },
 
