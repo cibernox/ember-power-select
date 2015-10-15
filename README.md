@@ -24,12 +24,12 @@ Good docs are important :)
 
 ## Browser support
 
-About browers compatibility I just tested it in modern browsers but I there is no technical reason it
+About browers compatibility I just tested it in modern browsers but there is no technical reason it
 wouldn't work in IE9+. If you find any problem please file an issue.
 
 ## Motivation
 
-> Why reinvent the wheel when there is already good framework-agnostic libraries out there that are
+> Why reinvent the wheel when there are already good framework-agnostic libraries out there that are
 battle tested and can be wrapped?
 
 > — Your brain, now.
@@ -39,12 +39,12 @@ Believe me, I tried. And it worked for a while. Two good ember examples of addon
 
 However this approach has inherent downsides.
 
-By accepting to use a framework agnostic library one needs to renounce to take advantage the more higher
+By accepting to use a framework agnostic library one needs to renounce to take advantage of the more higher
 level primitives that Ember and HTMLBars provide.
 
-Let's say that by example you need to build a mildly complex select which, as you type in a search-box,
+Let's say that you need to build a mildly complex select which, as you type in a search-box,
 shows you a list of users that match that search with their avatars, names, and other information,
-and if there is no matcher it shows some message. When you select one user you navigate to his profile.
+and if there is no match it shows some message. When you select one user you navigate to the user profile.
 
 Using components and blocks this can be expressed very naturally.
 
@@ -64,11 +64,11 @@ the "Ember world" where we solve problems in terms of actions and templates and 
 of those libraries where things are expressed in terms of events and DOM nodes.
 
 Even for things that are not impossible to do, translating between the bindings and data structures we use in
-ember and those in the libraries requires a surprising amount of glue code and is very tricky task.
+ember and those in the libraries requires a surprising amount of glue code and is a very tricky task.
 
 Also those libraries tend to be quite complex and bloated with functionality not directly related with
 the task they have to solve, like internationalization for example. We don't need that code making this
 libraries weight ~100KB when we already have better and more natural ways to do it already.
 
-I thought that we deserved a select component for ember projects built with from scratch with ember mind.
+I thought that we deserved a select component for ember projects built with from scratch with ember in mind.
 That also allowed this library to weight <10KB (JS + CSS + images) when gzipped.
