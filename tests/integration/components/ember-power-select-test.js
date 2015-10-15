@@ -1737,7 +1737,6 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true,
   beforeEach() {
     mirageInitializer.initialize(this.container);
-    server.logging = true;
     this.store = this.container.lookup('service:store');
   }
 });
