@@ -3,7 +3,7 @@ import Ember from 'ember';
 const options = [
   ['I\'m', 'just', 'a logo'],
   ['I', 'don\'t', 'work'],
-  ['Are', 'you', 'serius?'],
+  ['Are', 'you', 'serious?'],
   ['La la', 'la la', 'I don\'t hear you!'],
   ['No,', 'really.', 'STOP'],
   ['Enough.', 'I\'m done', 'with you']
