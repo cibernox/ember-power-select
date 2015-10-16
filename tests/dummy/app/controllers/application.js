@@ -4,7 +4,7 @@ const options = [
   ['I\'m', 'just', 'a logo'],
   ['I', 'don\'t', 'work'],
   ['Are', 'you', 'serious?'],
-  ['La la', 'la la', 'I don\'t hear you!'],
+  ['La la', 'la la', 'I can\'t hear you!'],
   ['No,', 'really.', 'STOP'],
   ['Enough.', 'I\'m done', 'with you']
 ];
