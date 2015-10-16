@@ -27,13 +27,14 @@
   padding-right: 1rem;
 }
 // Easter egg
+$almost-white: #fff2f2;
 .main-header-select {
   display: inline-block;
-  a { color: #ffeeee; }
+  a { color: $almost-white; }
   .ember-power-select {
     .ember-basic-dropdown-trigger.ember-power-select-trigger {
       background-color: transparent;
-      border: 2px solid #ffeeee !important;
+      border: 2px solid $almost-white !important;
       border-radius: 4px;
       padding: 0rem 2rem 0rem 0.5rem;
       background-size: 9px 9px;
@@ -49,10 +50,10 @@
   }
 }
 .ember-power-select-dropdown.main-header-select-dropdown {
-  color: #ffeeee;
+  color: $almost-white;
   line-height: 3rem;
   font-size: 24px;
-  border: 2px solid #ffeeee;
+  border: 2px solid $almost-white;
   border-top: none;
   background: $brand-color linear-gradient(#E61A1A, #EB3E3E);
   .ember-power-select-option {
@@ -61,7 +62,7 @@
       background-color: transparent;
     }
     &.highlighted {
-      background-color: #ffeeee;
+      background-color: $almost-white;
       color: $brand-color;
     }
   }
