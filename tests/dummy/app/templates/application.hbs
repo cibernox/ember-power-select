@@ -5,9 +5,14 @@
       {{#link-to 'cookbook' class="main-header-nav-link"}}Cookbook{{/link-to}}
       <a href="https://github.com/cibernox/ember-power-select" class="main-header-nav-link">Github</a>
     </div>
-    {{#link-to 'application' class="main-header-logo"}}
-      <img src="/ember_logo.png" alt="ember"> <span class="header-fake-select"><strong>Power</strong> Select</span>
-    {{/link-to}}
+    <div class="main-header-logo">
+      {{#link-to 'application'}}
+        <img src="/ember_logo.png" alt="ember">
+      {{/link-to}}
+      {{#ember-power-select options=mainSelectOptions selected=mainSelected disabled=disabled searchEnabled=false selectedComponent='main-header-select-trigger' onchange=(action "changeOptions") class="main-header-select" as |opt|}}
+        {{opt}}
+      {{/ember-power-select}}
+    </div>
   </nav>
 </header>
 <div class="main-content">
