@@ -3,6 +3,7 @@ import layout from '../templates/components/ember-power-select';
 import { defaultMatcher } from '../utils/group-utils';
 
 export default Ember.Component.extend({
+  tagName: '',
   layout: layout,
 
   // Universal config

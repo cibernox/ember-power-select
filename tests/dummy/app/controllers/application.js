@@ -4,14 +4,17 @@ const options = [
   ['I\'m', 'just', 'a logo'],
   ['I', 'don\'t', 'work'],
   ['Are', 'you', 'serius?'],
-  ['No', 'really.', 'Stop'],
   ['La la', 'la la', 'I don\'t hear you!'],
-  ['Ok', 'I\'m done', 'with you']
+  ['No,', 'really.', 'STOP'],
+  ['Enough.', 'I\'m done', 'with you']
 ];
 
 export default Ember.Controller.extend({
   mainSelectOptions: options[0],
   mainSelected: 'foo',
+  disabled: Ember.computed('currentPath', function() {
+    return this.get('currentPath') !== 'index';
+  }),
 
   actions: {
     changeOptions() {

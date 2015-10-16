@@ -29,12 +29,13 @@
 // Easter egg
 .main-header-select {
   display: inline-block;
+  a { color: #ffeeee; }
   .ember-power-select {
     .ember-basic-dropdown-trigger.ember-power-select-trigger {
       background-color: transparent;
-      border: 1px solid white;
+      border: 2px solid #ffeeee !important;
       border-radius: 4px;
-      padding: 0.2rem 2rem 0.2rem 0.5rem;
+      padding: 0rem 2rem 0rem 0.5rem;
       background-size: 9px 9px;
       background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#FFFFFF;'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
@@ -42,14 +43,16 @@
       white-space: nowrap;
       outline: none;
     }
+    &.opened .ember-basic-dropdown-trigger.ember-power-select-trigger {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,5 2.5,0 5,5' style='fill:#FFFFFF;'/%3E%3C/svg%3E");
+    }
   }
 }
 .ember-power-select-dropdown.main-header-select-dropdown {
-  // background-color: transparent;
-  color: white;
+  color: #ffeeee;
   line-height: 3rem;
   font-size: 24px;
-  border: 1px solid white;
+  border: 2px solid #ffeeee;
   border-top: none;
   background: $brand-color linear-gradient(#E61A1A, #EB3E3E);
   .ember-power-select-option {
@@ -58,7 +61,7 @@
       background-color: transparent;
     }
     &.highlighted {
-      background-color: white;
+      background-color: #ffeeee;
       color: $brand-color;
     }
   }
