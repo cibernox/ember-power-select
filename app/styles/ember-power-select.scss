@@ -185,7 +185,6 @@ $ember-power-select-focus-outline: null !default;
 
 // Disabled styles
 .ember-power-select.disabled {
-  pointer-events: none;
   .ember-power-select-trigger {
     background-color: $ember-power-select-disabled-background-color;
   }

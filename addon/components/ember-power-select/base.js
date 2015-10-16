@@ -20,6 +20,14 @@ export default Ember.Component.extend({
   // CPs
   _notLoadingOptions: computed.not('_loadingOptions'),
 
+  dropdownClass: computed('class', function() {
+    if (this.get('class')) {
+      return `ember-power-select-dropdown ${this.get('class')}-dropdown`;
+    } else {
+      return 'ember-power-select-dropdown';
+    }
+  }),
+
   mustSearch: computed('_searchText', 'search', function(){
     return this.get('_searchText.length') === 0 && !!this.get('search');
   }),
