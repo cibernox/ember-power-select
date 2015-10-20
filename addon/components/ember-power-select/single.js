@@ -34,8 +34,6 @@ export default PowerSelectBaseComponent.extend({
       } else if (e.keyCode === 27) {  // escape
         e.preventDefault();
         closeDropdown(e);
-      } else if (e.keyCode === 8) {   // backspace
-        this.handleBackspace(e);
       }
     },
   },
