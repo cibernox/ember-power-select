@@ -84,6 +84,7 @@
   padding: 4px; }
   .ember-power-select-search input {
     border: 1px solid #ccc;
+    border-radius: 3px;
     width: 100%;
     font-size: inherit;
     line-height: inherit;
@@ -138,10 +139,8 @@
   cursor: default;
   font-weight: bold; }
 
-.ember-power-select.disabled {
-  pointer-events: none; }
-  .ember-power-select.disabled .ember-power-select-trigger {
-    background-color: #eeeeee; }
+.ember-power-select.disabled .ember-power-select-trigger {
+  background-color: #eeeeee; }
 
 .ember-power-select:not([dir=rtl]) .ember-power-select-trigger {
   padding: 0 16px 0 8px;

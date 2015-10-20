@@ -41,11 +41,11 @@
   .ember-power-select.opened.below .ember-power-select-trigger {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-bottom: none; }
+    border-bottom: 1px solid #fff; }
   .ember-power-select.opened.above .ember-power-select-trigger {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-top: none; }
+    border-top: 1px solid #fff; }
 
 .ember-power-select-placeholder {
   color: #999999; }
@@ -83,6 +83,7 @@
   padding: 4px; }
   .ember-power-select-search input {
     border: 1px solid #aaaaaa;
+    border-radius: 0;
     width: 100%;
     font-size: inherit;
     line-height: inherit;
@@ -134,10 +135,8 @@
   cursor: default;
   font-weight: bold; }
 
-.ember-power-select.disabled {
-  pointer-events: none; }
-  .ember-power-select.disabled .ember-power-select-trigger {
-    background-color: #eeeeee; }
+.ember-power-select.disabled .ember-power-select-trigger {
+  background-color: #eeeeee; }
 
 .ember-power-select:not([dir=rtl]) .ember-power-select-trigger {
   padding: 0 16px 0 8px;
