@@ -9,6 +9,25 @@ export default Ember.Component.extend({
   _loadingOptions: false,
   attributeBindings: ['dir'],
 
+  // Universal config
+  disabled: null,
+  placeholder: null,
+  loadingMessage: null,
+  noMatchesMessage: null,
+  selectedComponent: null,
+  dropdownPosition: null,
+  matcher: null,
+  searchField: null,
+  search: null,
+
+  // Select single config
+  searchEnabled: null,
+  searchMessage: null,
+  searchPlaceholder: null,
+  allowClear: null,
+
+  // Select multiple config
+
   // Lifecycle hooks
   didReceiveAttrs({ newAttrs: { options } }) {
     this._super(...arguments);
@@ -117,9 +136,9 @@ export default Ember.Component.extend({
     const { _options: options, _searchText: searchText } = this.getProperties('_options', '_searchText');
     let matcher;
     if (this.get('searchField')) {
-      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
+      matcher = (option, text) => this.get('matcher')(get(option, this.get('searchField')), text);
     } else {
-      matcher = (option, text) => this.matcher(option, text);
+      matcher = (option, text) => this.get('matcher')(option, text);
     }
     this.set('results', filterOptions(options || [], searchText, matcher));
     this._resultsDirty = false;
