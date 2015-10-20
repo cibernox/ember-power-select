@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Workaround bug in ember <= 1.13.8
+- [ENHANCEMENT] Added basic bootstrap styles.
+
 # 0.2.1
 - [REFACTOR] Divide component internally into ember-power-select/simple and ember-power-select/multiple
 - [BUGFIX] Fix bug where dropdown didn't close when selecting an option inside a group.
