@@ -11,6 +11,7 @@ export default Ember.Component.extend({
 
   // Lifecycle hooks
   didReceiveAttrs({ newAttrs: { options } }) {
+    this._super(...arguments);
     this.set('_loadingOptions', true);
     RSVP.Promise.resolve(options && options.value || options)
       .then(opts => this.updateOptions(opts))
