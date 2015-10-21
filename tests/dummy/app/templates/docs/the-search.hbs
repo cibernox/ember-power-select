@@ -4,10 +4,8 @@
 
 <p>
   The default search box is by itself surprisingly smart. As you type it will filter the results
-</p>
-<p>
-  That contain the given string ignoring diacritic differences and capitalization. That means that
-  the string <code>maria</code> will match against <code>María</code>, <code>oren</code> against
+  that contain the given string ignoring diacritic differences and capitalization. That means that
+  the string <code>maria</code> will match <code>María</code>, <code>oren</code> will match
   <code>Søren</code> and so on.
 </p>
 
@@ -62,6 +60,12 @@
     {{/ember-power-select}}
   </div>
 {{/code-sample}}
+
+<p>
+  Note that when you use the blockless version of the component, described in the
+  {{#link-to 'docs.how-to-use-it'}}How to use it{{/link-to}} section, the <code>searchField</code>
+  argument defaults to <code>optionLabelPath</code> as expected.
+</p>
 
 <h3>Pass a custom matcher</h3>
 
