@@ -45,7 +45,7 @@ export default Ember.Component.extend({
     },
 
     highlight(option) {
-      if (get(option, 'disabled')) { return; }
+      if (option && get(option, 'disabled')) { return; }
       this.set('_highlighted', option);
     },
 

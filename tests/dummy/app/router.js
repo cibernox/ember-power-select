@@ -28,7 +28,7 @@ Router.map(function() {
   });
   this.route('cookbook', function() {
     this.route('bootstrap-theme');
-    this.route('recipe3');
+    this.route('multilevel-select');
   });
   this.route('legacy-demo');
 });
