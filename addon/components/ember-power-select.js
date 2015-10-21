@@ -16,6 +16,7 @@ export default Ember.Component.extend({
   matcher: defaultMatcher,
   searchField: null,
   search: null,
+  optionsComponent: 'ember-power-select/options',
 
   // Select single config
   searchEnabled: true,
@@ -24,4 +25,9 @@ export default Ember.Component.extend({
   allowClear: false,
 
   // Select multiple config
+
+  // CPs
+  concreteComponentName: Ember.computed('multiple', function() {
+    return `ember-power-select/${this.get('multiple') ? 'multiple' : 'single'}`;
+  })
 });

@@ -1804,3 +1804,21 @@ test('selected option can be customized using selectedComponent', function(asser
   assert.equal($('.ember-power-select-trigger .icon-flag').length, 1, 'The custom flag appears.');
   assert.equal($('.ember-power-select-trigger').text().trim(), 'Spain', 'With the country name as the text.');
 });
+
+test('the list of options can be customized using optionsComponent', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#ember-power-select options=countries selected=country optionsComponent="list-of-countries" as |country|}}
+      {{country.name}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  let text = $('.ember-power-select-options').text().trim();
+  assert.ok(/Countries:/.test(text), 'The given component is rendered');
+  assert.ok(/3\. Russia/.test(text), 'The component has access to the options');
+});

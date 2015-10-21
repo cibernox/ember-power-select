@@ -1,26 +1,4 @@
-{{#if multiple}}
-  {{#ember-power-select/multiple
-    options=options
-    selected=selected
-    onchange=onchange
-    disabled=disabled
-    loadingMessage=loadingMessage
-    noMatchesMessage=noMatchesMessage
-    selectedComponent=selectedComponent
-    matcher=matcher
-    renderInPlace=renderInPlace
-    search=search
-    searchField=searchField
-    dropdownPosition=dropdownPosition
-    hasInverseBlock=(hasBlock "inverse")
-    class=class
-    as |option|}}
-    {{yield option}}
-  {{else}}
-    {{yield to="inverse"}}
-  {{/ember-power-select/multiple}}
-{{else}}
-  {{#ember-power-select/single
+{{#component concreteComponentName
     options=options
     selected=selected
     onchange=onchange
@@ -32,6 +10,7 @@
     noMatchesMessage=noMatchesMessage
     searchMessage=searchMessage
     selectedComponent=selectedComponent
+    optionsComponent=optionsComponent
     matcher=matcher
     searchField=searchField
     renderInPlace=renderInPlace
@@ -44,5 +23,4 @@
     {{yield option}}
   {{else}}
     {{yield to="inverse"}}
-  {{/ember-power-select/single}}
-{{/if}}
+{{/component}}

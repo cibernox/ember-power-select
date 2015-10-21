@@ -6,10 +6,11 @@
       <li class="ember-power-select-option">{{loadingMessage}}</li>
     {{/if}}
     {{#if resultsLength}}
-      {{#ember-power-select/options options=results highlighted=_highlighted selection=selection
-        highlight=(action "highlight") select=(action "select") dropdown=dropdown as |option|}}
+      {{#component optionsComponent options=results highlighted=_highlighted selection=selection
+        optionsComponent=optionsComponent highlight=(action "highlight") select=(action "select")
+        dropdown=dropdown as |option|}}
         {{yield option}}
-      {{/ember-power-select/options}}
+      {{/component}}
     {{else if mustSearch}}
       <li class="ember-power-select-option">{{searchMessage}}</li>
     {{else if _notLoadingOptions}}
