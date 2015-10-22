@@ -58,12 +58,14 @@ export default PowerSelectBaseComponent.extend({
   },
 
   select(option) {
-    if (this.get('selection').indexOf(option) > -1) {
-      this.get('selection').removeObject(option);
+    let newSelection = (this.get('selection') || []).slice(0);
+    newSelection = Ember.A(newSelection);
+    if (newSelection.indexOf(option) > -1) {
+      newSelection.removeObject(option);
     } else {
-      this.get('selection').addObject(option);
+      newSelection.addObject(option);
     }
-    if (this.get('onchange')) { this.get('onchange')(this.get('selection')); }
+    if (this.get('onchange')) { this.get('onchange')(newSelection); }
   },
 
   removeLastOptionIfSearchIsEmpty() {

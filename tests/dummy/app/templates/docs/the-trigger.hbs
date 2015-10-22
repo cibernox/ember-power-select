@@ -15,7 +15,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names disabled=true as |name|}}
+    \{{#ember-power-select options=names disabled=true selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -25,7 +25,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names disabled=true as |name|}}
+    {{#ember-power-select options=names disabled=true selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -50,7 +50,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-  \{{#ember-power-select options=countries selectedComponent="selected-country" searchField="name" as |country|}}
+  \{{#ember-power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
     &lt;div class="country-detailed-info"&gt;
       &lt;img src="\{{country.flagUrl}}" class="country-flag"&gt;
       &lt;div class="country-data-text"&gt;
@@ -78,7 +78,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-  {{#ember-power-select options=countries selectedComponent="selected-country" searchField="name" as |country|}}
+  {{#ember-power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
     <div class="country-detailed-info">
       <img src="{{country.flagUrl}}" class="country-flag">
       <div class="country-data-text">
@@ -100,7 +100,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries placeholder="Please, select one destination" as |country|}}
+    \{{#ember-power-select options=countries placeholder="Please, select one destination" selected=selected onchange=(action (mut selected)) as |country|}}
       \{{country.name}}
     \{{/ember-power-select}}
   </pre>
@@ -118,7 +118,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries placeholder="Please, select one destination" as |country|}}
+    {{#ember-power-select options=countries placeholder="Please, select one destination" selected=selected onchange=(action (mut selected)) as |country|}}
       {{country.name}}
     {{/ember-power-select}}
   </div>
@@ -133,7 +133,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names selected="Pluto" allowClear=true as |name|}}
+    \{{#ember-power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -143,7 +143,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names selected="Pluto" allowClear=true as |name|}}
+    {{#ember-power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>

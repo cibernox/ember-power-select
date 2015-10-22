@@ -97,7 +97,7 @@ test('Click in the trigger of a closed select opens the dropdown', function(asse
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -113,7 +113,7 @@ test('Click in the trigger of an opened select closes the dropdown', function(as
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -130,7 +130,7 @@ test('Search functionality is enabled by default', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers  onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -144,7 +144,7 @@ test('The search functionality can be disabled by passing `searchEnabled=false`'
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers searchEnabled=false as |option|}}
+    {{#ember-power-select options=numbers searchEnabled=false onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -159,7 +159,7 @@ test('The search box gain focus automatically when opened', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -173,7 +173,7 @@ test('Each option of the select is the result of yielding an item', function(ass
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -194,7 +194,7 @@ test('If the passed options is a promise, while its not resolved the component s
   });
 
   this.render(hbs`
-    {{#ember-power-select options=numbersPromise as |option|}}
+    {{#ember-power-select options=numbersPromise onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -214,7 +214,7 @@ test('If a placeholder is provided, it shows while no element is selected', func
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers placeholder="abracadabra" as |option|}}
+    {{#ember-power-select options=numbers selected=foo placeholder="abracadabra" onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -236,7 +236,7 @@ test('If the `selected` value changes the select gets updated, but the `onchange
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=foo selected=selected as |option|}}
+    {{#ember-power-select options=numbers onchange=(action foo) selected=selected as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -254,7 +254,7 @@ test('If the user selects a value and later on the selected value changes from t
   this.numbers = numbers;
   this.selected = null;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selected as |option|}}
+    {{#ember-power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -272,7 +272,7 @@ test('If the user pases `renderInPlace=true` the dropdown is added below the tri
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers renderInPlace=true as |option|}}
+    {{#ember-power-select options=numbers renderInPlace=true onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -295,7 +295,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 test('The dropdowns shows the default "no options" message', function(assert) {
   this.options = [];
   this.render(hbs`
-    {{#ember-power-select options=options as |option|}}
+    {{#ember-power-select options=options onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -307,7 +307,7 @@ test('The dropdowns shows the default "no options" message', function(assert) {
 test('The default "no options" message can be customized passing `noMatchesMessage="other message"`', function(assert) {
   this.options = [];
   this.render(hbs`
-    {{#ember-power-select options=options noMatchesMessage="Nope" as |option|}}
+    {{#ember-power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -319,7 +319,7 @@ test('The default "no options" message can be customized passing `noMatchesMessa
 test('The content of the dropdown when there are no options can be completely customized using the inverse block', function(assert) {
   this.options = [];
   this.render(hbs`
-    {{#ember-power-select options=options noMatchesMessage="Nope" as |option|}}
+    {{#ember-power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{else}}
       <span class="empty-option-foo">Foo bar</span>
@@ -349,7 +349,7 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -365,7 +365,7 @@ test('When `selected` option is provided, it appears in the trigger yielded with
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers as |option|}}
+    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -373,7 +373,7 @@ test('When `selected` option is provided, it appears in the trigger yielded with
   assert.equal(this.$().text().trim(), 'three', 'The selected option show in the trigger');
 
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers as |option|}}
+    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       Selected: {{option}}
     {{/ember-power-select}}
   `);
@@ -385,7 +385,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers as |option|}}
+    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -401,7 +401,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers as |option|}}
+    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -416,7 +416,7 @@ test('The default search strategy matches disregarding diacritics differences an
 
   this.names = names;
   this.render(hbs`
-    {{#ember-power-select options=names as |option|}}
+    {{#ember-power-select options=names onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -444,7 +444,7 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers matcher=endsWithMatcher as |option|}}
+    {{#ember-power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -475,7 +475,7 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   this.countries = countries;
   this.render(hbs`
-    {{#ember-power-select options=countries as |option|}}
+    {{#ember-power-select options=countries onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/ember-power-select}}
   `);
@@ -492,7 +492,7 @@ test('When a option is provided that options is rendered in the trigger using th
   this.countries = countries;
   this.country = countries[1]; // Spain
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country as |option|}}
+    {{#ember-power-select options=countries selected=country onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/ember-power-select}}
   `);
@@ -506,7 +506,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   this.countries = countries;
   this.country = countries[1]; // Spain
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country as |option|}}
+    {{#ember-power-select options=countries selected=country onchange=(action (mut country)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/ember-power-select}}
   `);
@@ -523,7 +523,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
   this.countries = countries;
   this.country = countries[1]; // Spain
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country as |option|}}
+    {{#ember-power-select options=countries selected=country onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/ember-power-select}}
   `);
@@ -546,7 +546,7 @@ test('The default search strategy matches disregarding diacritics differences an
   ];
 
   this.render(hbs`
-    {{#ember-power-select options=people searchField="name" as |person|}}
+    {{#ember-power-select options=people searchField="name" onchange=(action (mut foo)) as |person|}}
       {{person.name}} {{person.surname}}
     {{/ember-power-select}}
   `);
@@ -582,7 +582,7 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   };
 
   this.render(hbs`
-    {{#ember-power-select options=people matcher=nameOrSurnameNoDiacriticsCaseSensitive as |person|}}
+    {{#ember-power-select options=people matcher=nameOrSurnameNoDiacriticsCaseSensitive onchange=(action (mut foo)) as |person|}}
       {{person.name}} {{person.surname}}
     {{/ember-power-select}}
   `);
@@ -619,7 +619,7 @@ test('When you pass a custom search action instead of options, opening the selec
   this.searchFn = function() {};
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -633,7 +633,7 @@ test('The "type to search" message can be customized passing `searchMessage=some
 
   this.searchFn = function() {};
   this.render(hbs`
-    {{#ember-power-select search=searchFn searchMessage="Type the name of the thing" as |number|}}
+    {{#ember-power-select search=searchFn searchMessage="Type the name of the thing" onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -650,7 +650,7 @@ test('The search function can return an array and those options get rendered', f
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -673,7 +673,7 @@ test('The search function can return a promise that resolves to an array and tho
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -700,7 +700,7 @@ test('While the async search is being performed the "Type to search" dissapears 
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -724,7 +724,7 @@ test('When the search resolves to an empty array then the "No results found" mes
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -748,7 +748,7 @@ test('When the search resolves to an empty array then the custom "No results" me
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn noMatchesMessage="Meec. Try again" as |number|}}
+    {{#ember-power-select search=searchFn noMatchesMessage="Meec. Try again" onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -772,7 +772,7 @@ test('When the search resolves to an empty array then the custom alternate block
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{else}}
       <span class="foo-bar">Baz</span>
@@ -798,7 +798,7 @@ test('When one search is fired before the previous one resolved, the "Loading" c
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -830,7 +830,7 @@ test('When the search resolves, the first element is highlighted like with regul
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -860,7 +860,7 @@ test('Options that have a `groupName` and `options` are considered groups and ar
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers as |option|}}
+    {{#ember-power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -889,7 +889,7 @@ test('When filtering, a group title is visible as long as one of it\'s elements 
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers as |option|}}
+    {{#ember-power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -909,7 +909,7 @@ test('Click on an option of a group select selects the option and closes the dro
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers as |option|}}
+    {{#ember-power-select options=groupedNumbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -937,7 +937,7 @@ test('Mouseovering a list item highlights it', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -954,7 +954,7 @@ test('Clicking an item selects it, closes the dropdown and focuses the trigger',
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -970,7 +970,7 @@ test('Clicking the trigger while the select is opened closes it and and focuses 
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1008,7 +1008,7 @@ test('Clicking anywhere outside the select while opened closes the component and
   this.numbers = numbers;
   this.render(hbs`
     <div id="other-thing">Foo</div>
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1025,7 +1025,7 @@ test('Clicking on the title of a group doesn\'t performs any action nor closes t
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers as |option|}}
+    {{#ember-power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1057,7 +1057,7 @@ test('Pressing keydown highlights the next option', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1074,7 +1074,7 @@ test('Pressing keyup highlights the previous option', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected="three" as |option|}}
+    {{#ember-power-select options=numbers selected="three" onchange=(action (mut selected)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1092,7 +1092,7 @@ test('When you the last option is highlighted, pressing keydown doesn\'t change 
   this.numbers = numbers;
   this.lastNumber = numbers[numbers.length - 1];
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=lastNumber as |option|}}
+    {{#ember-power-select options=numbers selected=lastNumber onchange=(action (mut lastNumber)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1110,7 +1110,7 @@ test('When you the first option is highlighted, pressing keyup doesn\'t change t
   this.numbers = numbers;
   this.firstNumber = numbers[0];
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=firstNumber as |option|}}
+    {{#ember-power-select options=numbers selected=firstNumber onchange=(action (mut firstNumber)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1126,12 +1126,13 @@ test('Pressing ENTER selects the highlighted element, closes the dropdown and fo
   assert.expect(4);
 
   this.numbers = numbers;
-  this.changed = function(val) {
+  this.changed = (val) => {
     assert.equal(val, 'two', 'The onchange action is triggered with the selected value');
+    this.set('selected', val);
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=changed as |option|}}
+    {{#ember-power-select options=numbers selected=selected onchange=(action changed) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1151,7 +1152,7 @@ test('Pressing TAB closes the select WITHOUT selecting the highlighed element an
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1171,7 +1172,7 @@ test('The component is focusable using the TAB key as any other kind of input', 
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1183,7 +1184,7 @@ test('If the component is focused, pressing ENTER opens it', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1200,7 +1201,7 @@ test('Pressing ESC while the component is opened closes it and focuses the trigg
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1231,7 +1232,7 @@ test('A disabled dropdown doesn\'t responds to mouse/keyboard events', function(
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers disabled=true as |option|}}
+    {{#ember-power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1249,7 +1250,7 @@ test('A disabled dropdown is not focusable', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers disabled=true as |option|}}
+    {{#ember-power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1262,7 +1263,7 @@ test('Options with a disabled field set to true are styled as disabled', functio
 
   this.contriesWithDisabled = contriesWithDisabled;
   this.render(hbs`
-    {{#ember-power-select options=contriesWithDisabled as |option|}}
+    {{#ember-power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/ember-power-select}}
   `);
@@ -1277,7 +1278,7 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
 
   this.contriesWithDisabled = contriesWithDisabled;
   this.render(hbs`
-    {{#ember-power-select options=contriesWithDisabled as |option|}}
+    {{#ember-power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/ember-power-select}}
   `);
@@ -1292,7 +1293,7 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
 
   this.contriesWithDisabled = contriesWithDisabled;
   this.render(hbs`
-    {{#ember-power-select options=contriesWithDisabled as |option|}}
+    {{#ember-power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/ember-power-select}}
   `);
@@ -1336,7 +1337,7 @@ test('Multiple selects don\'t have a search box', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers multiple=true as |option|}}
+    {{#ember-power-select options=numbers multiple=true selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1350,7 +1351,7 @@ test('When the select opens, the search input in the trigger gets the focus', fu
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers multiple=true as |option|}}
+    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1364,7 +1365,7 @@ test('Click on an element selects it and closes the dropdown and focuses the tri
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers multiple=true as |option|}}
+    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1382,7 +1383,7 @@ test('Selecting an element triggers the onchange action with the list of selecte
   assert.expect(1);
 
   this.numbers = numbers;
-  this.change = function(values) {
+  this.change = (values) => {
     assert.deepEqual(values, ['two'], 'The onchange action is fired with the list of values');
   };
 
@@ -1401,8 +1402,9 @@ test('Click an option when there is already another selects both, and triggers t
 
   this.numbers = numbers;
   this.selectedNumbers = ['four'];
-  this.change = function(values) {
+  this.change = (values) => {
     assert.deepEqual(values, ['four', 'two'], 'The onchange action is fired with the list of values');
+    this.set('selectedNumbers', values);
   };
 
   this.render(hbs`
@@ -1426,7 +1428,7 @@ test('If there is many selections, all those options are styled as `selected`', 
   this.selectedNumbers = ['four', 'two'];
 
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selectedNumbers multiple=true as |option|}}
+    {{#ember-power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1443,7 +1445,7 @@ test('When the popup opens, the first items is highlighed, even if there is only
   this.selectedNumbers = ['four'];
 
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selectedNumbers multiple=true as |option|}}
+    {{#ember-power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1460,8 +1462,9 @@ test('Clicking on an option that is already selected unselects it, closes the se
 
   this.numbers = numbers;
   this.selectedNumbers = ['four'];
-  this.change = function(selected) {
+  this.change = (selected) => {
     assert.ok(Ember.isEmpty(selected), 'No elements are selected');
+    this.set('selectedNumbers', selected);
   };
 
   this.render(hbs`
@@ -1481,7 +1484,7 @@ test('The default filtering works in multiple mode', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers multiple=true as |option|}}
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1504,7 +1507,7 @@ test('The filtering specifying a searchkey works in multiple model', function(as
   ];
 
   this.render(hbs`
-    {{#ember-power-select options=people searchField="name" multiple=true as |person|}}
+    {{#ember-power-select options=people searchField="name" onchange=(action (mut foo)) multiple=true as |person|}}
       {{person.name}} {{person.surname}}
     {{/ember-power-select}}
   `);
@@ -1532,7 +1535,7 @@ test('The filtering specifying a custom matcher works in multiple model', functi
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers matcher=endsWithMatcher multiple=true as |option|}}
+    {{#ember-power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1557,7 +1560,7 @@ test('The search using a custom action works int multiple mode', function(assert
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn as |number|}}
+    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{/ember-power-select}}
   `);
@@ -1575,11 +1578,12 @@ test('Pressing ENTER over a highlighted element selects it', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
-  this.change = function(selected) {
+  this.change = (selected) => {
     assert.deepEqual(selected, ['two']);
+    this.set('foo', selected);
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=change multiple=true as |option|}}
+    {{#ember-power-select options=numbers selected=foo onchange=change multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1595,8 +1599,9 @@ test('Pressing ENTER over a highlighted element what is already selected closes 
 
   this.numbers = numbers;
   this.selected = ['two'];
-  this.didChange = function() {
+  this.didChange = (val) => {
     assert.ok(false, 'This should never be invoked');
+    this.set('selected', val);
   };
   this.render(hbs`
     {{#ember-power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
@@ -1617,11 +1622,12 @@ test('Pressing BACKSPACE on the search input when there is text on it does nothi
 
   this.numbers = numbers;
   this.selected = ['two'];
-  this.didChange = function() {
+  this.didChange = (val) => {
     assert.ok(false, 'This should not be called');
+    this.set('selected', val);
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selected multiple=true as |option|}}
+    {{#ember-power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1637,8 +1643,9 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
 
   this.numbers = numbers;
   this.selected = ['two'];
-  this.didChange = function(select) {
-    assert.deepEqual(select, [], 'The selected item was unselected');
+  this.didChange = (val) => {
+    assert.deepEqual(val, [], 'The selected item was unselected');
+    this.set('selected', val);
   };
   this.render(hbs`
     {{#ember-power-select options=numbers onchange=didChange selected=selected multiple=true as |option|}}
@@ -1661,7 +1668,7 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=didChange multiple=true as |option|}}
+    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -1747,7 +1754,7 @@ test('Passing as options of a `store.findAll` works', function(assert) {
 
   this.users = this.store.findAll('user');
   this.render(hbs`
-    {{#ember-power-select options=users searchField="name" as |option|}}
+    {{#ember-power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
       {{option.name}}
     {{/ember-power-select}}
   `);
@@ -1769,7 +1776,7 @@ test('Passing as options the result of `store.query` works', function(assert) {
 
   this.users = this.store.query('user', { foo: 'bar' });
   this.render(hbs`
-    {{#ember-power-select options=users searchField="name" as |option|}}
+    {{#ember-power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
       {{option.name}}
     {{/ember-power-select}}
   `);
@@ -1785,6 +1792,13 @@ test('Passing as options the result of `store.query` works', function(assert) {
   }, 10);
 });
 
+/**
+11 - Customization using components
+  a) [DONE] selected option can be customized using selectedComponent.
+  b) [DONE] the list of options can be customized using optionsComponent.
+*/
+
+
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
   integration: true
 });
@@ -1796,7 +1810,7 @@ test('selected option can be customized using selectedComponent', function(asser
   this.country = countries[1]; // Spain
 
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country selectedComponent="selected-country" as |country|}}
+    {{#ember-power-select options=countries selected=country selectedComponent="selected-country" onchange=(action (mut foo)) as |country|}}
       {{country.name}}
     {{/ember-power-select}}
   `);
@@ -1812,7 +1826,7 @@ test('the list of options can be customized using optionsComponent', function(as
   this.country = countries[1]; // Spain
 
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country optionsComponent="list-of-countries" as |country|}}
+    {{#ember-power-select options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) as |country|}}
       {{country.name}}
     {{/ember-power-select}}
   `);
@@ -1821,4 +1835,30 @@ test('the list of options can be customized using optionsComponent', function(as
   let text = $('.ember-power-select-options').text().trim();
   assert.ok(/Countries:/.test(text), 'The given component is rendered');
   assert.ok(/3\. Russia/.test(text), 'The component has access to the options');
+});
+
+
+/**
+11 - Development assertions
+  a) the `onchange` function is mandatory.
+*/
+
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Assertions)', {
+  integration: true
+});
+
+test('the `onchange` function is mandatory', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+
+  try {
+    this.render(hbs`
+      {{#ember-power-select options=countries selected=selected as |opt|}}
+        {{opt}}
+      {{/ember-power-select}}
+    `);
+  } catch(e) {
+    assert.ok(/requires an `onchange` function/.test(e.message));
+  }
 });

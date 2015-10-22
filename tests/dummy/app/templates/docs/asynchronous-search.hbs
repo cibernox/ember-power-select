@@ -24,7 +24,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select search=(action "searchRepo") as |repo|}}
+    \{{#ember-power-select search=(action "searchRepo") selected=selected onchange=(action (mut selected)) as |repo|}}
       \{{repo.full_name}}
     \{{/ember-power-select}}
   </pre>
@@ -35,7 +35,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select search=(action "searchRepo") as |repo|}}
+    {{#ember-power-select search=(action "searchRepo") selected=selected onchange=(action (mut selected)) as |repo|}}
       {{repo.full_name}}
     {{/ember-power-select}}
     (It might fail if the API limit is exceeded)

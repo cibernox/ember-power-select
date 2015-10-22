@@ -45,8 +45,7 @@ export default PowerSelectBaseComponent.extend({
 
   select(option) {
     if (this.get('selection') !== option) {
-      this.set('selection', option);
-      if (this.get('onchange')) { this.get('onchange')(this.get('selection')); }
+      if (this.get('onchange')) { this.get('onchange')(option); }
     }
   },
 

@@ -31,6 +31,7 @@
 
   <h4>Select of strings without value tracking. You can filter right away.</h4>
   <p>simpleSelected is: {{simpleSelected}}</p>
+
   {{#ember-power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action "debugSelection") as |option|}}
     {{option}}
   {{/ember-power-select}}

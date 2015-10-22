@@ -26,6 +26,12 @@ export default Ember.Component.extend({
 
   // Select multiple config
 
+  // Lifecycle hooks
+  didInitAttrs() {
+    this._super(...arguments);
+    Ember.assert('{{ember-power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
+  },
+
   // CPs
   concreteComponentName: Ember.computed('multiple', function() {
     return `ember-power-select/${this.get('multiple') ? 'multiple' : 'single'}`;

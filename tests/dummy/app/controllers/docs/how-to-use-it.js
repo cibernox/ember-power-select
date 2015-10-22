@@ -13,5 +13,10 @@ const countries = [
 export default Ember.Controller.extend({
   names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
   countries: countries,
-  destination: countries[2]
+  destination: countries[2],
+
+  // Actions
+  actions: {
+    foo() {  }
+  }
 });
