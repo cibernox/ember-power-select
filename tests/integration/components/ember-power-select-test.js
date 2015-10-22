@@ -267,7 +267,7 @@ test('If the user selects a value and later on the selected value changes from t
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', '"three" has been selected because a change came from the outside');
 });
 
-test('If the user pases `renderInPlace=true` the dropdown is added below the trigger instead of in the root', function(assert) {
+test('If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
@@ -279,6 +279,24 @@ test('If the user pases `renderInPlace=true` the dropdown is added below the tri
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal(this.$('.ember-power-select-dropdown').length, 1, 'The dropdown is inside the component');
+});
+
+test('If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  Ember.run(() => $('.ember-power-select-option:eq(3)').click());
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
 /**
@@ -950,11 +968,15 @@ test('Mouseovering a list item highlights it', function(assert) {
 });
 
 test('Clicking an item selects it, closes the dropdown and focuses the trigger', function(assert) {
-  assert.expect(2);
+  assert.expect(4);
 
   this.numbers = numbers;
+  this.foo = (val, dropdown) => {
+    assert.equal(val, 'four', 'The action is invoked with the selected value as first parameter');
+    assert.ok(dropdown.close, 'The action is invoked with the the dropdown object as second parameter');
+  };
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#ember-power-select options=numbers onchange=foo as |option|}}
       {{option}}
     {{/ember-power-select}}
   `);
@@ -983,11 +1005,12 @@ test('Clicking the trigger while the select is opened closes it and and focuses 
 });
 
 test('Clicking the clear button removes the selection', function(assert) {
-  assert.expect(5);
+  assert.expect(6);
 
   this.numbers = numbers;
-  this.onChange = function(selected) {
+  this.onChange = function(selected, dropdown) {
     assert.equal(selected, null, 'The onchange action was called with the new selection (null)');
+    assert.ok(dropdown.close, 'The onchange action was called with the dropdown object as second argument');
   };
   this.render(hbs`
     {{#ember-power-select options=numbers selected="three" allowClear=true onchange=onChange as |option|}}
@@ -1123,12 +1146,13 @@ test('When you the first option is highlighted, pressing keyup doesn\'t change t
 });
 
 test('Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   this.numbers = numbers;
-  this.changed = (val) => {
+  this.changed = (val, dropdown) => {
     assert.equal(val, 'two', 'The onchange action is triggered with the selected value');
     this.set('selected', val);
+    assert.ok(dropdown.close, 'The action receives the dropdown as second argument');
   };
 
   this.render(hbs`
@@ -1639,13 +1663,14 @@ test('Pressing BACKSPACE on the search input when there is text on it does nothi
 });
 
 test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   this.numbers = numbers;
   this.selected = ['two'];
-  this.didChange = (val) => {
+  this.didChange = (val, dropdown) => {
     assert.deepEqual(val, [], 'The selected item was unselected');
     this.set('selected', val);
+    assert.ok(dropdown.close, 'The dropdown API is received as second argument');
   };
   this.render(hbs`
     {{#ember-power-select options=numbers onchange=didChange selected=selected multiple=true as |option|}}

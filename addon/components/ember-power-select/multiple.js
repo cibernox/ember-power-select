@@ -20,33 +20,16 @@ export default PowerSelectBaseComponent.extend({
 
   // Actions
   actions: {
-    // It is not evident what is going on here, so I'll explain why.
-    //
-    // As of this writting, Ember doesn allow to yield data to the "inverse" block.
-    // Because of that, elements of this component rendered in the trigger can't receive the
-    // yielded object contaning the public API of the ember-basic-dropdown, with actions for open,
-    // close and toggle.
-    //
-    // The only possible workaround for this is to on initialization inject a similar object
-    // to the one yielded and store it to make it available in the entire component.
-    //
-    // This this limitation on ember should be fixed soon, this is temporary. Because of that this
-    // object will be passed to the action from the inverse block like if it was yielded.
-    //
-    registerDropdown(dropdown) {
-      this.set('registeredDropdown', dropdown);
-    },
-
-    removeOption(option, e) {
+    removeOption(option, dropdown, e) {
       e.stopPropagation();
-      this.removeOption(option);
+      this.removeOption(option, dropdown);
     },
 
     multipleModeInputKeydown(dropdown, e) {
       if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
         this.handleVerticalArrowKey(e);
       } else if (e.keyCode === 8) {   // backspace
-        this.removeLastOptionIfSearchIsEmpty();
+        this.removeLastOptionIfSearchIsEmpty(dropdown);
         dropdown.open(e);
       } else if (e.keyCode === 13) {  // Enter
         e.stopPropagation();
@@ -73,37 +56,43 @@ export default PowerSelectBaseComponent.extend({
   },
 
   select(option, dropdown, e) {
-    let newSelection = (this.get('selection') || []).slice(0);
-    newSelection = Ember.A(newSelection);
+    const newSelection = this.cloneSelection();
     if (newSelection.indexOf(option) > -1) {
       newSelection.removeObject(option);
     } else {
       newSelection.addObject(option);
     }
-    this.get('onchange')(newSelection);
-    dropdown.close(e);
+    if (this.get('closeOnSelect')) {
+      dropdown.close(e);
+    }
+    this.get('onchange')(newSelection, dropdown);
   },
 
-  removeLastOptionIfSearchIsEmpty() {
+  removeLastOptionIfSearchIsEmpty(dropdown) {
     if (this.get('_searchText.length') !== 0) { return; }
     const lastSelection = this.get('selection.lastObject');
     if (!lastSelection) { return; }
-    this.removeOption(lastSelection);
+    this.removeOption(lastSelection, dropdown);
     if (typeof lastSelection === 'string') {
-      this.set('_searchText', lastSelection); // TODO: Convert last selection to text
+      this.performSearch(lastSelection);
     } else {
       if (!this.get('searchField')) { throw new Error('Need to provide `searchField` when options are not strings'); }
-      this.set('_searchText', get(lastSelection, this.get('searchField'))); // TODO: Convert last selection to text
+      this.performSearch(get(lastSelection, this.get('searchField')));
     }
   },
 
-  removeOption(option) {
-    this.get('selection').removeObject(option);
+  removeOption(option, dropdown) {
+    const newSelection = this.cloneSelection();
+    newSelection.removeObject(option);
     this._resultsDirty = true;
-    this.get('onchange')(this.get('selection'));
+    this.get('onchange')(newSelection, dropdown);
   },
 
   focusSearch() {
     this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
+  },
+
+  cloneSelection() {
+    return Ember.A((this.get('selection') || []).slice(0));
   }
 });

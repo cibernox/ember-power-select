@@ -50,13 +50,24 @@ export default Ember.Component.extend({
     },
 
     search(term /*, e */) {
-      this.set('_searchText', term);
-      if (this.get('search')) {
-        this.performCustomSearch(term);
-      } else {
-        this.refreshResults();
-        this.set('_highlighted', this.optionAtIndex(0));
-      }
+      this.performSearch(term);
+    },
+
+    // It is not evident what is going on here, so I'll explain why.
+    //
+    // As of this writting, Ember doesn allow to yield data to the "inverse" block.
+    // Because of that, elements of this component rendered in the trigger can't receive the
+    // yielded object contaning the public API of the ember-basic-dropdown, with actions for open,
+    // close and toggle.
+    //
+    // The only possible workaround for this is to on initialization inject a similar object
+    // to the one yielded and store it to make it available in the entire component.
+    //
+    // This this limitation on ember should be fixed soon, this is temporary. Because of that this
+    // object will be passed to the action from the inverse block like if it was yielded.
+    //
+    registerDropdown(dropdown) {
+      this.set('registeredDropdown', dropdown);
     },
   },
 
@@ -141,5 +152,15 @@ export default Ember.Component.extend({
       if (promise !== this.get('_activeSearch')) { return; }
       this.set('_loadingOptions', false);
     });
+  },
+
+  performSearch(term) {
+    this.set('_searchText', term);
+    if (this.get('search')) {
+      this.performCustomSearch(term);
+    } else {
+      this.refreshResults();
+      this.set('_highlighted', this.optionAtIndex(0));
+    }
   }
 });
