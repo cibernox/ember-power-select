@@ -1,10 +1,11 @@
 <h1 class="doc-page-title">How to use it</h1>
 
 <p>
-  The basic usage the component is very simple. The only mandatory argument you have to
-  pass to it is <code>options</code> which has to be a <em>collection</em> of any kind, including
+  The basic usage the component is very simple. The only mandatory arguments you have to
+  pass to it are <code>options</code> which has to be a <em>collection</em> of any kind, including
   the result of ember-data operations like <code>.find</code> or <code>.query</code>, and the
-  component will yield each individual item in the collection to the block.
+  <code>onchange</code> action.
+  The component will yield each individual item in the collection to the block to generate the list.
 </p>
 
 {{#code-sample as |component|}}
@@ -83,17 +84,18 @@
   </li>
   <li>
     <code>selected</code> (and all other options options actually) is read only. This means that selecting a
-    different element in the component won't propagate this change up to the context.
+    an element in the component won't do anything. That is a design decission and the reason by the
+    <code>onchange</code> action is mandatory.
   </li>
 </ul>
 
 <p>
   This is the very basic usage of this component, but so far is pretty useless. Since there is no
-  double bindings nothing happens when you select something on it.
+  double bindings and the <code>onchange</code> action is empty nothing happens when you select something on it.
 </p>
 
 <p>
-  That's what actions are for.
+  Let's see how to take advantage of the <code>onchange</code> property.
 </p>
 
 <div class="doc-page-nav">
