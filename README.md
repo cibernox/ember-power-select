@@ -8,7 +8,8 @@ Ember Power Select is an Ember-first select component modeled after [Select2](ht
 
 ## Installation
 
-Ember Power Select works in Ember 1.13 or 2.0+.
+Ember Power Select works in Ember 1.13.9+ or 2.0+, including beta and canary, with no deprecations
+whatsoever.
 
 As any other ember-cli addon, run:
 ```
