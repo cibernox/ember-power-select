@@ -60,6 +60,8 @@ export default Ember.Controller.extend({
   complexOptions: countries,
   complexSelected: countries[1],
 
+  prefilledSelection: 'seven',
+
   complexOptionsWithDisabled: contriesWithDisabled,
 
   multipleSelection: ['one','two','three','four','five','six','seven','eight','nine','ten','eleven'],
