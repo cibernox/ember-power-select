@@ -19,7 +19,7 @@ export default PowerSelectBaseComponent.extend({
       e.stopPropagation();
       e.preventDefault();
       this.set('selection', null);
-      if (this.get('onchange')) { this.get('onchange')(null); }
+      this.get('onchange')(null);
     },
 
     searchKeydown(closeDropdown, e) {
@@ -45,7 +45,7 @@ export default PowerSelectBaseComponent.extend({
 
   select(option) {
     if (this.get('selection') !== option) {
-      if (this.get('onchange')) { this.get('onchange')(option); }
+      this.get('onchange')(option);
     }
   },
 

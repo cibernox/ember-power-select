@@ -65,7 +65,7 @@ export default PowerSelectBaseComponent.extend({
     } else {
       newSelection.addObject(option);
     }
-    if (this.get('onchange')) { this.get('onchange')(newSelection); }
+    this.get('onchange')(newSelection);
   },
 
   removeLastOptionIfSearchIsEmpty() {
@@ -84,7 +84,7 @@ export default PowerSelectBaseComponent.extend({
   removeOption(option) {
     this.get('selection').removeObject(option);
     this._resultsDirty = true;
-    if (this.get('onchange')) { this.get('onchange')(this.get('selection')); }
+    this.get('onchange')(this.get('selection'));
   },
 
   focusSearch() {
