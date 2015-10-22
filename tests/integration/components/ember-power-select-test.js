@@ -1852,13 +1852,9 @@ test('the `onchange` function is mandatory', function(assert) {
 
   this.numbers = numbers;
 
-  try {
+  assert.throws(() => {
     this.render(hbs`
-      {{#ember-power-select options=countries selected=selected as |opt|}}
-        {{opt}}
-      {{/ember-power-select}}
+      {{#ember-power-select options=countries selected=selected as |opt|}}{{opt}}{{/ember-power-select}}
     `);
-  } catch(e) {
-    assert.ok(/requires an `onchange` function/.test(e.message));
-  }
+  }, /requires an `onchange` function/);
 });
