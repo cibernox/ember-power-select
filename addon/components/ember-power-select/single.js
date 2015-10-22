@@ -15,11 +15,11 @@ export default PowerSelectBaseComponent.extend({
 
   // Actions
   actions: {
-    clear(e) {
+    clear(dropdown, e) {
       e.stopPropagation();
       e.preventDefault();
       this.set('selection', null);
-      this.get('onchange')(null);
+      this.get('onchange')(null, dropdown);
     },
 
     searchKeydown(dropdown, e) {
@@ -47,7 +47,7 @@ export default PowerSelectBaseComponent.extend({
       dropdown.close(e);
     }
     if (this.get('selection') !== option) {
-      this.get('onchange')(option);
+      this.get('onchange')(option, dropdown);
     }
   },
 

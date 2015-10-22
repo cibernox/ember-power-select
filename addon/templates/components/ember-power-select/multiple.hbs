@@ -24,7 +24,7 @@
 {{else}}
   {{#each selection as |multiOpt|}}
     <span class="ember-power-select-multiple-option">
-      <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt}}>&times;</span>
+      <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt registeredDropdown}}>&times;</span>
       {{yield multiOpt}}
     </span>
   {{/each}}
