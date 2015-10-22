@@ -62,7 +62,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.3",
     "ember-cli-htmlbars": "0.7.9",
-    "ember-basic-dropdown": "0.2.2"
+    "ember-basic-dropdown": "0.2.3"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
