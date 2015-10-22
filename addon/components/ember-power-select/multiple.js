@@ -34,7 +34,7 @@ export default PowerSelectBaseComponent.extend({
     // object will be passed to the action from the inverse block like if it was yielded.
     //
     registerDropdown(dropdown) {
-      Ember.run.schedule('afterRender', this, 'set', 'registeredDropdown', dropdown);
+      this.set('registeredDropdown', dropdown);
     },
 
     removeOption(option, e) {
