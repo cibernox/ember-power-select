@@ -20,35 +20,50 @@ export default PowerSelectBaseComponent.extend({
 
   // Actions
   actions: {
+    // It is not evident what is going on here, so I'll explain why.
+    //
+    // As of this writting, Ember doesn allow to yield data to the "inverse" block.
+    // Because of that, elements of this component rendered in the trigger can't receive the
+    // yielded object contaning the public API of the ember-basic-dropdown, with actions for open,
+    // close and toggle.
+    //
+    // The only possible workaround for this is to on initialization inject a similar object
+    // to the one yielded and store it to make it available in the entire component.
+    //
+    // This this limitation on ember should be fixed soon, this is temporary. Because of that this
+    // object will be passed to the action from the inverse block like if it was yielded.
+    //
+    registerDropdown(dropdown) {
+      this.set('registeredDropdown', dropdown);
+    },
+
     removeOption(option, e) {
       e.stopPropagation();
       this.removeOption(option);
     },
 
-    multipleModeInputKeydown(e) {
+    multipleModeInputKeydown(dropdown, e) {
       if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
-        return this.handleVerticalArrowKey(e);
-      }
-      let event = document.createEvent('Event');
-      if (e.keyCode === 8) {   // backspace
+        this.handleVerticalArrowKey(e);
+      } else if (e.keyCode === 8) {   // backspace
         this.removeLastOptionIfSearchIsEmpty();
-        event.initEvent('dropdown:open', true, true);
+        dropdown.open(e);
       } else if (e.keyCode === 13) {  // Enter
         e.stopPropagation();
         const highlighted = this.get('_highlighted');
         if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
-          this.select(highlighted);
+          this.select(highlighted, dropdown, e);
+        } else {
+          dropdown.close(e);
         }
-        event.initEvent('dropdown:toggle', true, true);
       } else if (e.keyCode === 9) {   // Tab
-        event.initEvent('dropdown:close', true, true);
+        dropdown.close(e);
       } else if (e.keyCode === 27) {  // escape
         e.preventDefault();
-        event.initEvent('dropdown:close', true, true);
+        dropdown.close(e);
       } else {
-        event.initEvent('dropdown:open', true, true);
+        dropdown.open(e);
       }
-      this.element.querySelector('.ember-power-select').dispatchEvent(event);
     }
   },
 
@@ -57,7 +72,7 @@ export default PowerSelectBaseComponent.extend({
     return this.optionAtIndex(0);
   },
 
-  select(option) {
+  select(option, dropdown, e) {
     let newSelection = (this.get('selection') || []).slice(0);
     newSelection = Ember.A(newSelection);
     if (newSelection.indexOf(option) > -1) {
@@ -66,6 +81,7 @@ export default PowerSelectBaseComponent.extend({
       newSelection.addObject(option);
     }
     this.get('onchange')(newSelection);
+    dropdown.close(e);
   },
 
   removeLastOptionIfSearchIsEmpty() {

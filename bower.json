@@ -1,7 +1,7 @@
 {
   "name": "ember-power-select",
   "dependencies": {
-    "ember": "2.0.2",
+    "ember": "1.13.10",
     "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.6",
     "ember-cli-test-loader": "ember-cli-test-loader#0.2.1",
     "ember-data": "2.0.0",
@@ -17,7 +17,7 @@
     "Faker": "~3.0.0"
   },
   "resolutions": {
-    "ember": "2.0.2"
+    "ember": "1.13.10"
   },
   "devDependencies": {
     "blanket": "~1.1.5"

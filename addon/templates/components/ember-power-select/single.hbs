@@ -5,7 +5,7 @@
     <div class="ember-power-select-search">
       <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
       spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
-      onkeydown={{action "searchKeydown" dropdown.close}} placeholder={{searchPlaceholder}}>
+      onkeydown={{action "searchKeydown" dropdown}} placeholder={{searchPlaceholder}}>
     </div>
   {{/if}}
   <ul class="ember-power-select-options">
