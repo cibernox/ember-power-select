@@ -9,7 +9,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names as |name|}}
+    \{{#ember-power-select options=names onchange=(action "foo") as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -17,10 +17,13 @@
     export default Ember.Controller.extend({
       names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
       selectedUser: 'Tomster',
+      actions: {
+        foo() { }
+      }
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names as |name|}}
+    {{#ember-power-select options=names onchange=(action "foo") as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -34,7 +37,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries selected=destination as |country|}}
+    \{{#ember-power-select options=countries selected=destination onchange=(action "foo") as |country|}}
       &lt;img src="\{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
     \{{/ember-power-select}}
   </pre>
@@ -51,11 +54,14 @@
 
     export default Ember.Controller.extend({
       countries: countries,
-      destination: countries[2]
+      destination: countries[2],
+      actions: {
+        foo() { }
+      }
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries selected=destination as |country|}}
+    {{#ember-power-select options=countries selected=destination onchange=(action "foo") as |country|}}
       <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
     {{/ember-power-select}}
   </div>

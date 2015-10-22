@@ -13,7 +13,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names as |name|}}
+    \{{#ember-power-select options=names selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -23,7 +23,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=diacritics as |name|}}
+    {{#ember-power-select options=diacritics selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -39,7 +39,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries searchField="name" as |country|}}
+    \{{#ember-power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
       \{{country.name}}
     \{{/ember-power-select}}
   </pre>
@@ -57,7 +57,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries searchField="name" as |country|}}
+    {{#ember-power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
       {{country.name}}
     {{/ember-power-select}}
   </div>
@@ -74,7 +74,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=people matcher=myMatcher as |person|}}
+    \{{#ember-power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
       \{{person.name}} {{person.surname}}
     \{{/ember-power-select}}
   </pre>
@@ -95,7 +95,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=people matcher=myMatcher as |person|}}
+    {{#ember-power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
       {{person.name}} {{person.surname}}
     {{/ember-power-select}}
   </div>
@@ -107,7 +107,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names searchPlaceholder="Type to filter..." as |name|}}
+    \{{#ember-power-select options=names searchPlaceholder="Type to filter..." selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -117,7 +117,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=diacritics searchPlaceholder="Type to filter..." as |name|}}
+    {{#ember-power-select options=diacritics searchPlaceholder="Type to filter..." selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -131,7 +131,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names searchEnabled=false as |name|}}
+    \{{#ember-power-select options=names searchEnabled=false selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -141,7 +141,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names searchEnabled=false as |name|}}
+    {{#ember-power-select options=names searchEnabled=false selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>

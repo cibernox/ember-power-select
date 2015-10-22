@@ -23,7 +23,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names renderInPlace=true as |name|}}
+    \{{#ember-power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -33,7 +33,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names renderInPlace=true as |name|}}
+    {{#ember-power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
     {{/ember-power-select}}
     (Looks the same but inspect the DOM to see the difference)
@@ -54,7 +54,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names dropdownPosition='above' as |name|}}
+    \{{#ember-power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -64,7 +64,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names dropdownPosition='above' as |name|}}
+    {{#ember-power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
     {{/ember-power-select}}
     (This dropdpwn will always be on top regardless of how much available space there is around)
@@ -81,7 +81,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=emptyList as |name|}}
+    \{{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -91,7 +91,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=emptyList as |name|}}
+    {{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -103,7 +103,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=emptyList noMatchesMessage="404 bro" as |name|}}
+    \{{#ember-power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -113,7 +113,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=emptyList noMatchesMessage="404 bro" as |name|}}
+    {{#ember-power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
@@ -126,7 +126,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=emptyList as |name|}}
+    \{{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{else}}
       &lt;div class="text-center"&gt;
@@ -140,7 +140,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=emptyList as |name|}}
+    {{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{else}}
       <div class="text-center">
@@ -172,12 +172,12 @@
     &lt;button onclick=\{{action "refreshCollection"}}&gt;Refresh collection&lt;/button&gt;
 
     Default loading message
-    \{{#ember-power-select options=promise as |name|}}
+    \{{#ember-power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
 
     Custom loading message
-    \{{#ember-power-select options=promise loadingMessage="Waiting for the server" as |name|}}
+    \{{#ember-power-select options=promise loadingMessage="Waiting for the server" selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{/ember-power-select}}
   </pre>
@@ -201,12 +201,12 @@
     <button onclick={{action "refreshCollection"}}>Refresh collection</button>
     <br>
     Default loading message
-    {{#ember-power-select options=promise as |name|}}
+    {{#ember-power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/ember-power-select}}
     <br>
     Custom loading message
-    {{#ember-power-select options=promise loadingMessage="Waiting for the server...." as |name|}}
+    {{#ember-power-select options=promise loadingMessage="Waiting for the server...." selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/ember-power-select}}
   </div>
