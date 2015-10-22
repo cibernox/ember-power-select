@@ -42,32 +42,32 @@
   {{/ember-power-select}}
 
   <h4>Diacritics search</h4>
-  {{#ember-power-select options=(readonly names) as |option|}}
+  {{#ember-power-select options=(readonly names) selected=diacriticName onchange=(action (mut diacriticName)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>If the default filter matches doesn't work, you can pass your own. This check that results end with the given string. Try searching for "teen"</h4>
-  {{#ember-power-select options=(readonly simpleOptions) matcher=endsWithMatcher as |option|}}
+  {{#ember-power-select options=(readonly simpleOptions) matcher=endsWithMatcher selected=simpleOpt onchange=(action (mut simpleOpt)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>If the content of your selector cannot be initialized, you can pass an action to find the results your way. e.g. `search=(action "findStuff")`</h4>
-  {{#ember-power-select search=(action "search") as |option|}}
+  {{#ember-power-select search=(action "search") selected=abracadabra onchange=(action (mut abracadabra)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>... and if that action needs to perform something async, just return a promise</h4>
-  {{#ember-power-select search=(action "asyncSearch") as |option|}}
+  {{#ember-power-select search=(action "asyncSearch") selected=foo onchange=(action (mut foo)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>Select with placeholder</h4>
-  {{#ember-power-select options=(readonly simpleOptions) placeholder="Please select a number" as |option|}}
+  {{#ember-power-select options=(readonly simpleOptions) placeholder="Please select a number" selected=bar onchange=(action (mut bar)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>Select clearable</h4>
-  {{#ember-power-select options=(readonly complexOptions) searchField="name" allowClear=true as |option|}}
+  {{#ember-power-select options=(readonly complexOptions) searchField="name" allowClear=true selected=name2 onchange=(action (mut name2)) as |option|}}
     {{option.code}}: {{option.name}}
   {{/ember-power-select}}
 
@@ -78,20 +78,20 @@
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
 
   <h4>Select multiple </h4>
-  {{#ember-power-select options=(readonly complexOptions) multiple=true searchField="name" as |option|}}
+  {{#ember-power-select options=(readonly complexOptions) multiple=true searchField="name" selected=baz onchange=(action (mut baz)) as |option|}}
     <i class="icon-flag {{option.code}}"></i> {{option.name}}
   {{/ember-power-select}}
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
 
   <h4>Custom block. When your options are not strings, just customize the html of each option with a block</h4>
-  {{#ember-power-select options=(readonly complexOptions) searchField="name" selected=(readonly complexSelected) as |option|}}
+  {{#ember-power-select options=(readonly complexOptions) searchField="name" selected=(readonly complexSelected) onchange=(action (mut complexSelection)) as |option|}}
     <i class="icon-flag {{option.code}}"></i>
     {{option.name}}
     <i>Population: {{option.population}}</i>
   {{/ember-power-select}}
 
   <h4>You can even use a different markup for the selected option and the ones in the list.</h4>
-  {{#ember-power-select options=(readonly complexOptions) searchField="name" selected=(readonly complexSelected) selectedComponent="selected-country" as |option|}}
+  {{#ember-power-select options=(readonly complexOptions) searchField="name" selected=(readonly complexSelected) selectedComponent="selected-country" onchange=(action (mut complexSelected)) as |option|}}
     <div class="country-detailed-info">
       <div class="country-flag {{option.code}}">
       </div>
@@ -104,32 +104,32 @@
   {{/ember-power-select}}
 
   <h4>Select disabled</h4>
-  {{#ember-power-select options=(readonly complexOptions) searchField="name" disabled=true as |option|}}
+  {{#ember-power-select options=(readonly complexOptions) searchField="name" disabled=true selected=complexSelected onchange=(action (mut complexSelected)) as |option|}}
     {{option.code}}: {{option.name}}
   {{/ember-power-select}}
 
   <h4>Select with disabled options</h4>
-  {{#ember-power-select options=(readonly complexOptionsWithDisabled) searchField="name" as |option|}}
+  {{#ember-power-select options=(readonly complexOptionsWithDisabled) searchField="name" selected=complexSelected onchange=(action (mut complexSelected)) as |option|}}
     {{option.code}}: {{option.name}}
   {{/ember-power-select}}
 
   <h4>Select that receives a promise as options</h4>
-  {{#ember-power-select options=(readonly promiseOptions) as |option|}}
+  {{#ember-power-select options=(readonly promiseOptions) selected=optionOfPromise onchange=(action (mut optionOfPromise)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>You can customize the message shown while promise is not resolved with `loadingMessage="This promise takes 5 seconds to resolve"`</h4>
-  {{#ember-power-select options=(readonly promiseOptions) loadingMessage="This promise takes 5 seconds to resolve" as |option|}}
+  {{#ember-power-select options=(readonly promiseOptions) loadingMessage="This promise takes 5 seconds to resolve" selected=foobar onchange=(action (mut foobar)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>You can customize the text being shown when there is no matches passing `noResultsMessage="404 bro". Type "asdf"`</h4>
-  {{#ember-power-select options=(readonly simpleOptions) noResultsMessage="404 bro" as |option|}}
+  {{#ember-power-select options=(readonly simpleOptions) noResultsMessage="404 bro" selected=qux onchange=(action (mut qux)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>Or you can pass any html in the `\{{else}}` block just like each</h4>
-  {{#ember-power-select options=(readonly simpleOptions) noResultsMessage="404 bro" as |option|}}
+  {{#ember-power-select options=(readonly simpleOptions) noResultsMessage="404 bro" selected=bar2 onchange=(action (mut bar2)) as |option|}}
     {{option}}
   {{else}}
     <img height="130" style="display: inline-block;" src="http://cliparts.co/cliparts/bpi/qdj/bpiqdjdc9.png">
@@ -139,26 +139,26 @@
   {{/ember-power-select}}
 
   <h4>Select with groups</h4>
-  {{#ember-power-select options=(readonly groupedOptions) as |option|}}
+  {{#ember-power-select options=(readonly groupedOptions) selected=optionOfGroup onchange=(action (mut optionOfGroup)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>Options are appended to the body, unless you pass `renderInPlace=true`</h4>
-  {{#ember-power-select options=(readonly simpleOptions) renderInPlace=true as |option|}}
+  {{#ember-power-select options=(readonly simpleOptions) renderInPlace=true selected=simpleSelected2 onchange=(action (mut simpleSelected2)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>The search box can be disabled passing `searchEnabled=false`</h4>
-  {{#ember-power-select options=(readonly simpleOptions) searchEnabled=false as |option|}}
+  {{#ember-power-select options=(readonly simpleOptions) searchEnabled=false selected=simpleSelected3 onchange=(action (mut simpleSelected3)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
   <h4>Right to left styles</h4>
-  {{#ember-power-select options=(readonly complexOptions) dir="rtl" selected=(readonly complexSelected) allowClear=true as |option|}}
+  {{#ember-power-select options=(readonly complexOptions) dir="rtl" selected=(readonly complexSelected) allowClear=true onchange=(action (mut complexSelected)) as |option|}}
     {{option.code}}: {{option.name}}
   {{/ember-power-select}}
   <br>
-  {{#ember-power-select options=(readonly groupedOptions) dir="rtl" selected="seven" allowClear=true as |option|}}
+  {{#ember-power-select options=(readonly groupedOptions) dir="rtl" selected=prefilledSelection onchange=(action (mut prefilledSelection)) allowClear=true as |option|}}
     {{option}}
   {{/ember-power-select}}
   <br>
