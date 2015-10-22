@@ -80,8 +80,10 @@ export default PowerSelectBaseComponent.extend({
     } else {
       newSelection.addObject(option);
     }
+    if (this.get('closeOnSelect')) {
+      dropdown.close(e);
+    }
     this.get('onchange')(newSelection);
-    dropdown.close(e);
   },
 
   removeLastOptionIfSearchIsEmpty() {

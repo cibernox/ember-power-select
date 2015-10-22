@@ -43,10 +43,12 @@ export default PowerSelectBaseComponent.extend({
   },
 
   select(option, dropdown, e) {
+    if (this.get('closeOnSelect')) {
+      dropdown.close(e);
+    }
     if (this.get('selection') !== option) {
       this.get('onchange')(option);
     }
-    dropdown.close(e);
   },
 
   focusSearch() {

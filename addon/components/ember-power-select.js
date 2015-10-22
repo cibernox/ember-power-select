@@ -12,11 +12,12 @@ export default Ember.Component.extend({
   loadingMessage: "Loading options...",
   noMatchesMessage: "No results found",
   selectedComponent: null,
+  optionsComponent: 'ember-power-select/options',
   dropdownPosition: 'auto',
   matcher: defaultMatcher,
   searchField: null,
   search: null,
-  optionsComponent: 'ember-power-select/options',
+  closeOnSelect: true,
 
   // Select single config
   searchEnabled: true,
