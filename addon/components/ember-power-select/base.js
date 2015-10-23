@@ -146,7 +146,7 @@ export default Ember.Component.extend({
 
   performCustomSearch(term) {
     this.set('_loadingOptions', true);
-    const promise = term.length > 0 ? RSVP.Promise.resolve(this.get('search')(term)) : RSVP.resolve([]);
+    const promise = RSVP.Promise.resolve(this.get('search')(term));
     this.set('_activeSearch', promise);
     promise.then(results => {
       if (promise !== this.get('_activeSearch')) { return; }
