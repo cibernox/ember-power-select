@@ -6,9 +6,9 @@
       <li class="ember-power-select-option">{{loadingMessage}}</li>
     {{/if}}
     {{#if resultsLength}}
-      {{#component optionsComponent options=results highlighted=_highlighted selection=selection
-        optionsComponent=optionsComponent highlight=(action "highlight") select=(action "select")
-        dropdown=dropdown as |option|}}
+      {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted) selection=(readonly selection)
+        optionsComponent=(readonly optionsComponent) highlight=(action "highlight") select=(action "select")
+        dropdown=(readonly dropdown) as |option|}}
         {{yield option}}
       {{/component}}
     {{else if mustSearch}}
