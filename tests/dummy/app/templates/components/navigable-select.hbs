@@ -1,0 +1,9 @@
+{{#ember-power-select options=currentOptions selected=selected closeOnSelect=false onchange=(action "onchange") optionsComponent='animated-options' search=(action "search") as |levelOrOption|}}
+  {{#if levelOrOption.parentLevel}}
+    <strong>&lt; Back</strong>
+  {{else if levelOrOption.levelName}}
+    <strong>{{levelOrOption.levelName}} &gt;</strong>
+  {{else}}
+    {{levelOrOption}}
+  {{/if}}
+{{/ember-power-select}}
