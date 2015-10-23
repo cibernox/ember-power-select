@@ -1,5 +1,14 @@
 # Master
 
+# 0.3.1
+- [ENHANCEMENT] Added `closeOnSelect` option (defaults to true) to customize that behavior.
+- [ENHANCEMENT] The `onchange` action is not invoked with the `dropdown` as second argument. That
+  object contains methods like `open`, `close` and `toggle` that give control over the
+  dropdown to the user.
+- [BUGFIX] Select that specify a `search` action can also receive `options` now, and that collection
+  is displayed until the user performs the first search.
+- [BUGFIX] The `search` action now is also triggered when the search term is an empty string.
+
 # 0.3.0
 - [BREAKING CHANGE] The component is truly immutable now. The value inside the trigger (the selected value) won't update unless
   the user explicitly does so inside the `onchange` action. Since selection never were propagated upstream this shouldn't
