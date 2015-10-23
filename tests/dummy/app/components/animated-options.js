@@ -11,7 +11,7 @@ export default Ember.Component.extend({
       this.set('enableGrowth', false);
     } else {
       this.set('enableGrowth', true);
-      const parentLevel = oldAttrs.options[0] && oldAttrs.options[0].parentLevel
+      const parentLevel = oldAttrs.options[0] && oldAttrs.options[0].parentLevel;
       const goingBack = !!parentLevel && parentLevel.options === newAttrs.options;
       if (goingBack) {
         this.set('animation', 'toRight');
