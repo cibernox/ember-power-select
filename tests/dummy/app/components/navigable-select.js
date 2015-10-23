@@ -14,7 +14,7 @@ export default Ember.Component.extend({
         let groupName = get(opt, 'groupName');
         if (groupName) {
           let level = { levelName: groupName };
-          let optionsWithBack = Ember.A([{ parentLevel: parentLevel }]).concat(get(opt, 'options'));
+          let optionsWithBack = Ember.A([{ parentLevel }]).concat(get(opt, 'options'));
           level.options = walker(optionsWithBack, level);
           results.push(level);
         } else {
@@ -34,16 +34,11 @@ export default Ember.Component.extend({
       if (get(levelOrOption, 'levelName')) {
         this.set('currentOptions', get(levelOrOption, 'options'));
       } else if (levelOrOption.parentLevel) {
-        if (levelOrOption.parentLevel.root) {
-          this.set('currentOptions', this.get('transformedOptions'));
-        } else {
-          this.set('currentOptions', levelOrOption.parentLevel.options);
-        }
+        this.set('currentOptions', levelOrOption.parentLevel.options);
       } else {
         this.get('onchange')(levelOrOption);
         dropdown.close();
         this.set('currentOptions', this.get('transformedOptions'));
-        this.set('breadcumbs', Ember.A());
       }
     },
 
