@@ -137,6 +137,7 @@ export default Ember.Component.extend({
       this.set('results', filterOptions(options || [], searchText, matcher));
     }
     this._resultsDirty = false;
+    this.set('_highlighted', this.optionAtIndex(0));
   },
 
   updateOptions(options) {
@@ -164,7 +165,6 @@ export default Ember.Component.extend({
       this.performCustomSearch(term);
     } else {
       this.refreshResults();
-      this.set('_highlighted', this.optionAtIndex(0));
     }
   }
 });
