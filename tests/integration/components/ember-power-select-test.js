@@ -86,6 +86,9 @@ function typeInSearch(text) {
   g) [DONE] If the passed options is a promise, while its not resolved the component shows a Loading message'
   h) [DONE] If a placeholder is provided, it shows while no element is selected'
   i) [DONE] If the `selected` value changes the select gets updated, but the `onchange` action doesn't fire.
+  j) [DONE] If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root
+  k) [DONE] If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option
+  l) If the content of the selected is refreshed while opened the first element of the list gets highlighted
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (General behavior)', {
@@ -297,6 +300,23 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   Ember.run(() => $('.ember-power-select-option:eq(3)').click());
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+});
+
+test('If the content of the selected is refreshed while opened the first element of the list gets highlighted', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  let downArrow = $.Event("keydown", { keyCode: 40 });
+  Ember.run(() => $('.ember-power-select-search input').trigger(downArrow));
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'two', 'The second options is highlighted');
+  Ember.run(() => this.set('numbers', ['foo', 'bar', 'baz']));
+  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'foo', 'The first element is highlighted');
 });
 
 /**
