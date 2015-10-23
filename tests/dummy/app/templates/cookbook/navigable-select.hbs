@@ -78,9 +78,9 @@
 </p>
 
 <p>
-  The first evident difference is that the list of options is completely different, and has to use liquid-fire,
-  so we need to use the `optionsComponent` configuration option to let the component that it should render
-  our own custom component in the dropdown.
+  The first evident difference is that the list of options is completely different. It uses liquid-fire for animations
+  so we need to use the `optionsComponent` option to let Ember Power Select know that it should render our own custom
+  component in the dropdown instead of the default one.
 </p>
 
 <ul>
@@ -270,23 +270,26 @@
           return o.toLowerCase().indexOf(normalizedTerm) > -1;
         }
       });
-      results.fromSearch = true;
+      results.fromSearch = true;d
       return results;
     }
   }
 </pre>
 
 <p>
-  That's is it. A fully customized select in ~100LOC.
+  Check the full picture in github:
+  <ul>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/animated-options.js" target="_blank">app/components/animated-options.js</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/animated-options.hbs" target="_blank">app/templates/components/animated-options.hbs</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/navigable-select.js" target="_blank">app/components/navigable-select.js</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/navigable-select.hbs" target="_blank">app/templates/components/navigable-select.hbs</a></li>
+  </ul>
 </p>
 
 <p>
-
-  For the sake of completition, take a look at the entire picture in github:
-  <ul>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
+  That's is it. A fully customized select in ~100LOC.
 </p>
+
+<div class="doc-page-nav">
+  {{#link-to 'cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
+</div>
