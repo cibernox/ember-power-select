@@ -30,8 +30,13 @@
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
-      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-      selectedUser: 'Tomster',
+      actions: {
+        searchRepo(term) {
+          if (Ember.isBlank(term)) { return []; }
+          const url = `//api.github.com/search/repositories?q=${term}`;
+          return ajax({ url }).then(json => json.items);
+        }
+      }
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
@@ -50,5 +55,4 @@
 
 <div class="doc-page-nav">
   {{#link-to 'docs.styles' class="doc-page-nav-link-prev"}}&lt; Styles{{/link-to}}
-  {{!-- {{#link-to 'docs.roll-your-own-template' class="doc-page-nav-link-next"}}Roll your own template &gt;{{/link-to}} --}}
 </div>
