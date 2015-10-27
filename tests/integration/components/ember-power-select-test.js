@@ -1230,6 +1230,38 @@ test('If the component is focused, pressing ENTER opens it', function(assert) {
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
 });
 
+test('If the single component is focused, pressing KEYDOWN opens it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => $('.ember-power-select-trigger').focus());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  Ember.run(() => triggerKeydown($('.ember-power-select-trigger')[0], 40));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+});
+
+test('If the single component is focused, pressing KEYUP opens it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => $('.ember-power-select-trigger').focus());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  Ember.run(() => triggerKeydown($('.ember-power-select-trigger')[0], 38));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+});
+
 test('Pressing ESC while the component is opened closes it and focuses the trigger', function(assert) {
   assert.expect(3);
 
@@ -1694,7 +1726,6 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
 });
 
-
 test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection ALSO when that option didn\'t come from the outside', function(assert) {
   assert.expect(5);
 
@@ -1830,7 +1861,6 @@ test('Passing as options the result of `store.query` works', function(assert) {
   b) [DONE] the list of options can be customized using optionsComponent.
 */
 
-
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
   integration: true
 });
@@ -1868,7 +1898,6 @@ test('the list of options can be customized using optionsComponent', function(as
   assert.ok(/Countries:/.test(text), 'The given component is rendered');
   assert.ok(/3\. Russia/.test(text), 'The component has access to the options');
 });
-
 
 /**
 11 - Development assertions
