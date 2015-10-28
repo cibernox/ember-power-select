@@ -1,11 +1,11 @@
 {{#ember-basic-dropdown class="ember-power-select" renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass=dropdownClass
-  onOpen=(action onOpen) onClose=(action onClose) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+  onOpen=(action onOpen) onClose=(action onClose) onKeydown=(action onKeydown) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
   {{#if searchEnabled}}
     <div class="ember-power-select-search">
       <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
       spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
-      onkeydown={{action "searchKeydown" dropdown}} placeholder={{searchPlaceholder}}>
+      onkeydown={{action onKeydown dropdown}} placeholder={{searchPlaceholder}}>
     </div>
   {{/if}}
   <ul class="ember-power-select-options">
@@ -14,7 +14,7 @@
     {{/if}}
     {{#if resultsLength}}
       {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted) selection=(readonly selection) optionsComponent=(readonly optionsComponent)
-        searchText=(readonly _searchText) highlight=(action "highlight") select=(action "select") dropdown=(readonly dropdown) as |option|}}
+        searchText=(readonly _searchText) highlight=(action "highlight") select=(action select) dropdown=(readonly dropdown) as |option|}}
         {{yield option}}
       {{/component}}
     {{else if mustSearch}}

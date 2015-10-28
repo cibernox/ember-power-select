@@ -24,38 +24,38 @@ export default PowerSelectBaseComponent.extend({
       e.stopPropagation();
       this.removeOption(option, dropdown);
     },
+  },
 
-    multipleModeInputKeydown(dropdown, e) {
-      if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
-        this.handleVerticalArrowKey(e);
-      } else if (e.keyCode === 8) {   // backspace
-        this.removeLastOptionIfSearchIsEmpty(dropdown);
-        dropdown.open(e);
-      } else if (e.keyCode === 13) {  // Enter
-        e.stopPropagation();
+
+  // Methods
+  onKeydown(dropdown, e) {
+    if (e.defaultPrevented) { return; }
+    if (e.keyCode === 8) {  // BACKSPACE
+      this.removeLastOptionIfSearchIsEmpty(dropdown);
+      dropdown.open(e);
+    } else if (e.keyCode === 13) {
+      e.stopPropagation();
+      if (dropdown.isOpen) {
         const highlighted = this.get('_highlighted');
         if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
           this.select(highlighted, dropdown, e);
         } else {
           dropdown.close(e);
         }
-      } else if (e.keyCode === 9) {   // Tab
-        dropdown.close(e);
-      } else if (e.keyCode === 27) {  // escape
-        e.preventDefault();
-        dropdown.close(e);
       } else {
         dropdown.open(e);
       }
+    } else {
+      this._super(...arguments);
     }
   },
 
-  // Methods
   defaultHighlighted() {
     return this.optionAtIndex(0);
   },
 
   select(option, dropdown, e) {
+    e.preventDefault();
     const newSelection = this.cloneSelection();
     if (newSelection.indexOf(option) > -1) {
       newSelection.removeObject(option);
