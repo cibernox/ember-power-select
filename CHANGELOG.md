@@ -1,5 +1,9 @@
 # Master
 
+# 0.3.2
+- [BUGFIX] Pressing enter on a closed multiple select should open it.
+- [ENHANCEMENT] Pressing UP/DOWN arrows on a closed select (single or multiple) opens it
+
 # 0.3.1
 - [ENHANCEMENT] Added `closeOnSelect` option (defaults to true) to customize that behavior.
 - [ENHANCEMENT] The `onchange` action is not invoked with the `dropdown` as second argument. That
