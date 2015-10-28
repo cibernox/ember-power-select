@@ -33,7 +33,7 @@
   <h4>Select of strings without value tracking. You can filter right away.</h4>
   <p>simpleSelected is: {{simpleSelected}}</p>
 
-{{!--   {{#ember-power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+  {{#ember-power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 
@@ -70,7 +70,7 @@
   <h4>Select clearable</h4>
   {{#ember-power-select options=(readonly complexOptions) searchField="name" allowClear=true selected=name2 onchange=(action (mut name2)) as |option|}}
     {{option.code}}: {{option.name}}
-  {{/ember-power-select}} --}}
+  {{/ember-power-select}}
 
   <h4>Select multiple [WORK IN PROGRESS]</h4>
   {{#ember-power-select options=(readonly simpleOptions) selected=multipleSelection multiple=true onchange=(action (mut multipleSelection)) as |option|}}
