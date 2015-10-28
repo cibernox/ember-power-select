@@ -22,20 +22,6 @@ export default PowerSelectBaseComponent.extend({
       this.get('onchange')(null, dropdown);
     },
 
-    searchKeydown(dropdown, e) {
-      if (e.keyCode === 40 || e.keyCode === 38) { // Arrow up/down
-        this.handleVerticalArrowKey(e);
-      } else if (e.keyCode === 13) {  // Enter
-        const highlighted = this.get('_highlighted');
-        this.select(highlighted, dropdown, e);
-      } else if (e.keyCode === 9) {   // Tab
-        dropdown.close();
-      } else if (e.keyCode === 27) {  // escape
-        e.preventDefault();
-        dropdown.close(e);
-      }
-    },
-
     triggerKeydown(dropdown, e) {
       if (e.keyCode === 40 || e.keyCode === 38) {
         dropdown.open(e);
@@ -45,11 +31,21 @@ export default PowerSelectBaseComponent.extend({
   },
 
   // Methods
+  onKeydown(dropdown, e) {
+    if (e.defaultPrevented) { return; }
+    if (e.keyCode === 13 && dropdown.isOpen) { // Enter
+      this.select(this.get('_highlighted'), dropdown, e);
+    } else {
+      this._super(...arguments);
+    }
+  },
+
   defaultHighlighted() {
     return this.get('selection') || this.optionAtIndex(0);
   },
 
   select(option, dropdown, e) {
+    e.preventDefault();
     if (this.get('closeOnSelect')) {
       dropdown.close(e);
     }

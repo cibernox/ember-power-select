@@ -39,11 +39,6 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    select(option, dropdown, e) {
-      e.preventDefault();
-      this.select(option, dropdown, e);
-    },
-
     highlight(option) {
       if (option && get(option, 'disabled')) { return; }
       this.set('_highlighted', option);
@@ -83,6 +78,21 @@ export default Ember.Component.extend({
     this.set('_searchText', '');
     this.set('_highlighted', null);
     this._resultsDirty = true;
+  },
+
+  onKeydown(dropdown, e) {
+    if (e.defaultPrevented) { return; }
+    if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+      if (dropdown.isOpen) {
+        this.handleVerticalArrowKey(e);
+      } else {
+        dropdown.open(e);
+      }
+    } else if (e.keyCode === 9) {  // Tab
+      dropdown.close(e);
+    } else if (e.keyCode === 27) { // ESC
+      dropdown.close(e);
+    }
   },
 
   handleVerticalArrowKey(e) {
