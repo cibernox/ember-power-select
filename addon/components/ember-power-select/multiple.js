@@ -35,11 +35,15 @@ export default PowerSelectBaseComponent.extend({
       dropdown.open(e);
     } else if (e.keyCode === 13) {
       e.stopPropagation();
-      const highlighted = this.get('_highlighted');
-      if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
-        this.select(highlighted, dropdown, e);
+      if (dropdown.isOpen) {
+        const highlighted = this.get('_highlighted');
+        if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
+          this.select(highlighted, dropdown, e);
+        } else {
+          dropdown.close(e);
+        }
       } else {
-        dropdown.close(e);
+        dropdown.open(e);
       }
     } else {
       this._super(...arguments);

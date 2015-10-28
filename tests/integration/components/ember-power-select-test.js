@@ -1387,7 +1387,9 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   n) [DONE] Pressing ENTER over a highlighted element what is already selected unselects it????
   o) [DONE] Pressing BACKSPACE on the search input when there is text on it does nothing special.
   p) [DONE] Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediatly.
-
+  q) [DONE] Pressing ENTER when the select is closed opens and nothing is written on the box opens it.
+  r) [DONE] If the multiple component is focused, pressing KEYDOWN opens it
+  s) [DONE] If the multiple component is focused, pressing KEYUP opens it
   Is it possible to remove this searchbox from multiple selects??
 */
 
@@ -1637,6 +1639,24 @@ test('The search using a custom action works int multiple mode', function(assert
   }, 150);
 });
 
+test('Pressing ENTER when the select is closed opens and nothing is written on the box opens it', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 27));
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  assert.ok($('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The trigger is focused');
+  Ember.run(() => triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 13));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+});
+
 test('Pressing ENTER over a highlighted element selects it', function(assert) {
   assert.expect(2);
 
@@ -1746,6 +1766,41 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
 });
+
+test('If the multiple component is focused, pressing KEYDOWN opens it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 27));
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  Ember.run(() => triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 40));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+});
+
+test('If the multiple component is focused, pressing KEYUP opens it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 27));
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  Ember.run(() => triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 38));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+});
+
 
 /**
 10 - Dropdown positioning
