@@ -11,7 +11,6 @@ export default Ember.Component.extend({
   placeholder: null,
   loadingMessage: "Loading options...",
   noMatchesMessage: "No results found",
-  selectedComponent: null,
   optionsComponent: 'ember-power-select/options',
   dropdownPosition: 'auto',
   matcher: defaultMatcher,
@@ -36,5 +35,9 @@ export default Ember.Component.extend({
   // CPs
   concreteComponentName: Ember.computed('multiple', function() {
     return `ember-power-select/${this.get('multiple') ? 'multiple' : 'single'}`;
+  }),
+
+  selectedComponent: Ember.computed('multiple', function() {
+    return `ember-power-select/${this.get('multiple') ? 'multiple' : 'single'}/selected`;
   })
 });

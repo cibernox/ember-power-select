@@ -22,13 +22,9 @@
     {{/if}}
   </ul>
 {{else}}
-  {{#each selection as |multiOpt|}}
-    <span class="ember-power-select-multiple-option">
-      <span class="ember-power-select-multiple-remove-btn" onclick={{action "removeOption" multiOpt registeredDropdown}}>&times;</span>
-      {{yield multiOpt}}
-    </span>
-  {{/each}}
-  <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
-    autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" style={{triggerMultipleInputStyle}}
-    value={{_searchText}} oninput={{action "search" value="target.value"}} onkeydown={{action onKeydown registeredDropdown}}>
-{{/basic-dropdown}}
+  {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
+    searchText=(readonly _searchText) removeOption=(action "removeOption") search=(action "search")
+    onKeydown=(action onKeydown registeredDropdown) as |opt|}}
+    {{yield opt}}
+  {{/component}}
+ {{/basic-dropdown}}

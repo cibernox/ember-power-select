@@ -28,16 +28,8 @@
     {{/if}}
   </ul>
 {{else}}
-  {{#if selection}}
-    {{#if selectedComponent}}
-      {{component selectedComponent selection=selection disabled=disabled}}
-    {{else}}
-      {{yield selection}}
-    {{/if}}
-    {{#if allowClear}}
-      <span class="ember-power-select-clear-btn" onclick={{action "clear" registeredDropdown}}>&times;</span>
-    {{/if}}
-  {{else if placeholder}}
-    <span class="ember-power-select-placeholder">{{placeholder}}</span>
-  {{/if}}
+  {{#component selectedComponent selection=(readonly selection) allowClear=(readonly allowClear) disabled=(readonly disabled)
+    placeholder=(readonly placeholder) dropdown=(readonly registeredDropdown) clearSelection=(action "clear") as |opt|}}
+    {{yield opt}}
+  {{/component}}
 {{/basic-dropdown}}
