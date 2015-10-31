@@ -1,4 +1,4 @@
-{{#ember-basic-dropdown class="ember-power-select" renderInPlace=renderInPlace matchTriggerWidth=true
+{{#basic-dropdown class="ember-power-select" renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass=dropdownClass
   onOpen=(action onOpen) onClose=(action onClose) onKeydown=(action onKeydown) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
   {{#if searchEnabled}}
@@ -40,4 +40,4 @@
   {{else if placeholder}}
     <span class="ember-power-select-placeholder">{{placeholder}}</span>
   {{/if}}
-{{/ember-basic-dropdown}}
+{{/basic-dropdown}}
