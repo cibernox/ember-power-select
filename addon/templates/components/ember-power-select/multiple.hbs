@@ -1,4 +1,4 @@
-{{#ember-basic-dropdown class="ember-power-select multiple" renderInPlace=renderInPlace matchTriggerWidth=true
+{{#basic-dropdown class="ember-power-select multiple" renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass=dropdownClass
   onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) onKeydown=(action onKeydown) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
   <ul class="ember-power-select-options">
@@ -31,4 +31,4 @@
   <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
     autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" style={{triggerMultipleInputStyle}}
     value={{_searchText}} oninput={{action "search" value="target.value"}} onkeydown={{action onKeydown registeredDropdown}}>
-{{/ember-basic-dropdown}}
+{{/basic-dropdown}}
