@@ -80,7 +80,7 @@
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
 
   <h4>Select multiple with placeholder</h4>
-  {{#ember-power-select options=simpleOptions selected=multipleSelection multiple=true placeholder="foo bar hey!" onchange=(action (mut multipleSelection)) as |option|}}
+  {{#ember-power-select options=simpleOptions selected=multipleFoo multiple=true placeholder="foo bar hey!" onchange=(action (mut multipleFoo)) as |option|}}
     {{option}}
   {{/ember-power-select}}
 

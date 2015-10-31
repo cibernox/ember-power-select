@@ -23,8 +23,8 @@
   </ul>
 {{else}}
   {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
-    searchText=(readonly _searchText) removeOption=(action "removeOption") search=(action "search")
-    onKeydown=(action onKeydown registeredDropdown) as |opt|}}
+    searchText=(readonly _searchText) placeholder=(readonly placeholder) removeOption=(action "removeOption")
+    search=(action "search") onKeydown=(action onKeydown registeredDropdown) as |opt|}}
     {{yield opt}}
   {{/component}}
  {{/basic-dropdown}}

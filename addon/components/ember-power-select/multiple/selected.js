@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from '../../../templates/components/ember-power-select/multiple/selected';
 
+const { computed } = Ember;
 const { htmlSafe } = Ember.String;
 
 export default Ember.Component.extend({
@@ -8,7 +9,15 @@ export default Ember.Component.extend({
   tagName: '',
 
   // CPs
-  triggerMultipleInputStyle: Ember.computed('searchText.length', function() {
-    return htmlSafe(`width: ${(this.get('searchText.length') || 0) * 0.5 + 2}em`);
+  triggerMultipleInputStyle: computed('searchText.length', function() {
+    if (this.get('selection.length') === 0) {
+      return 'width: 100%;';
+    } else {
+      return htmlSafe(`width: ${(this.get('searchText.length') || 0) * 0.5 + 2}em`);
+    }
   }),
+
+  maybePlaceholder: computed('placeholder', 'selection.length', function() {
+    return this.get('selection.length') === 0 ? this.get('placeholder') : "";
+  })
 });
