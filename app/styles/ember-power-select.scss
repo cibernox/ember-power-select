@@ -27,6 +27,9 @@ $ember-power-select-option-padding: 8px !default;
 $ember-power-select-number-of-visible-options: 7;
 $ember-power-select-focus-outline: null !default;
 
+// Configure ember-basic-dropdown
+$ember-basic-dropdown-content-background-color: $ember-power-select-background-color;
+
 @import 'ember-basic-dropdown';
 
 .ember-power-select {
@@ -127,11 +130,7 @@ $ember-power-select-focus-outline: null !default;
 
 // Dropdown
 .ember-power-select-dropdown {
-  position: absolute;
-  width: 100%;
-  z-index: 2;
   border: $ember-power-select-border;
-  background-color: $ember-power-select-background-color;
   line-height: $ember-power-select-line-height;
   border-radius: $ember-power-select-border-radius;
   box-shadow: $ember-power-select-dropdown-box-shadow;
