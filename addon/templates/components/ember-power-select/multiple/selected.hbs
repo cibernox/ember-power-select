@@ -1,0 +1,9 @@
+{{#each selection as |opt|}}
+  <span class="ember-power-select-multiple-option">
+    <span class="ember-power-select-multiple-remove-btn" onclick={{action removeOption opt dropdown}}>&times;</span>
+    {{yield opt}}
+  </span>
+{{/each}}
+<input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
+  autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" style={{triggerMultipleInputStyle}}
+  value={{searchText}} oninput={{action search value="target.value"}} onkeydown={{onKeydown}}>

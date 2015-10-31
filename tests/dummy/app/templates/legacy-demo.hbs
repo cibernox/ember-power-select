@@ -76,7 +76,13 @@
   {{#ember-power-select options=(readonly simpleOptions) selected=multipleSelection multiple=true onchange=(action (mut multipleSelection)) as |option|}}
     {{option}}
   {{/ember-power-select}}
+
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
+
+  <h4>Select multiple with placeholder</h4>
+  {{#ember-power-select options=simpleOptions selected=multipleSelection multiple=true placeholder="foo bar hey!" onchange=(action (mut multipleSelection)) as |option|}}
+    {{option}}
+  {{/ember-power-select}}
 
   <h4>Select multiple </h4>
   {{#ember-power-select options=(readonly complexOptions) multiple=true searchField="name" selected=baz onchange=(action (mut baz)) as |option|}}

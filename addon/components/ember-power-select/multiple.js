@@ -3,7 +3,6 @@ import PowerSelectBaseComponent from './base';
 import layout from '../../templates/components/ember-power-select/multiple';
 
 const { computed, get } = Ember;
-const { htmlSafe } = Ember.String;
 
 export default PowerSelectBaseComponent.extend({
   layout: layout,
@@ -14,10 +13,6 @@ export default PowerSelectBaseComponent.extend({
     set(_, v) { return v; }
   }),
 
-  triggerMultipleInputStyle: computed('_searchText', function() {
-    return htmlSafe(`width: ${(this.get('_searchText.length') || 0) * 0.5 + 2}em`);
-  }),
-
   // Actions
   actions: {
     removeOption(option, dropdown, e) {
@@ -25,7 +20,6 @@ export default PowerSelectBaseComponent.extend({
       this.removeOption(option, dropdown);
     },
   },
-
 
   // Methods
   onKeydown(dropdown, e) {
