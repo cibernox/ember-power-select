@@ -6,4 +6,4 @@
 {{/each}}
 <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
   autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" style={{triggerMultipleInputStyle}}
-  value={{searchText}} oninput={{action search value="target.value"}} onkeydown={{onKeydown}}>
+  placeholder={{maybePlaceholder}} value={{searchText}} oninput={{action search value="target.value"}} onkeydown={{onKeydown}}>

@@ -1801,6 +1801,21 @@ test('If the multiple component is focused, pressing KEYUP opens it', function(a
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
 });
 
+test('The placeholder is only visible when no options are selected', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#ember-power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) placeholder="Select stuff here" as |option|}}
+      {{option}}
+    {{/ember-power-select}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), 'Select stuff here', 'The placeholder is visible');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:eq(1)').click());
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'The placeholder not visible');
+});
 
 /**
 10 - Dropdown positioning
@@ -1955,7 +1970,7 @@ test('the list of options can be customized using optionsComponent', function(as
 });
 
 /**
-11 - Development assertions
+12 - Development assertions
   a) the `onchange` function is mandatory.
 */
 
