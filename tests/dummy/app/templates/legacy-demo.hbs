@@ -162,6 +162,15 @@
   {{#ember-power-select options=(readonly groupedOptions) dir="rtl" selected=prefilledSelection onchange=(action (mut prefilledSelection)) allowClear=true as |option|}}
     {{option}}
   {{/ember-power-select}}
+
+  <br>
+  <div style="align-items: center; display: flex; flex-direction: row">
+    <span>Search By:</span>
+    {{#ember-power-select onchange=(action (mut searchKey)) options=searchTypes selected=searchKey as |type|}}
+      {{type.label}}
+    {{/ember-power-select}}
+  </div>
+
   <br>
   <br>
   <br>
@@ -201,4 +210,4 @@
   <br>
   <br>
   <br>
- </section>
+</section>

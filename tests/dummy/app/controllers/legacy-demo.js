@@ -354,6 +354,18 @@ const names = [
   "Lisa"
 ];
 
+const searchTypes = [
+  { label: 'Title/Artist' },
+  { label: 'Title' },
+  { label: 'Artist' },
+  { label: 'Foo' },
+  { label: 'Bar' },
+  { label: 'FooBar' },
+  { label: 'Tomster' },
+  { label: 'Aretha' },
+  { label: 'Franklin' },
+];
+
 export default Ember.Controller.extend({
   names: names,
   simpleOptions: numbers,
@@ -413,5 +425,9 @@ export default Ember.Controller.extend({
 
   endsWithMatcher(value, text) {
     return text === '' || value.slice(text.length * -1) === text;
-  }
+  },
+
+  // Flexbox issue
+  searchTypes: searchTypes,
+  searchKey: searchTypes[0]
 });
