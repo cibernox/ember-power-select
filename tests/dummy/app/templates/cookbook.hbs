@@ -1,12 +1,15 @@
 <section class="docs">
   <nav class="side-nav">
     <header class="side-nav-header">Basic recipes</header>
-    {{#link-to 'cookbook.index' class="side-nav-link"}}System-wide configuration{{/link-to}}
+    {{#link-to 'cookbook.index' class="side-nav-link"}}System-wide config{{/link-to}}
     {{#link-to 'cookbook.bootstrap-theme' class="side-nav-link"}}Bootstrap theme{{/link-to}}
     <header class="side-nav-header">Advanced recipies</header>
     {{#link-to 'cookbook.navigable-select' class="side-nav-link"}}Navigable select{{/link-to}}
   </nav>
   <section class="doc-page">
+    {{#ember-power-select selected=currentSection options=groupedSections onchange=(action 'visit') searchField="text" searchEnabled=false class="section-selector" as |option|}}
+      {{option.text}}
+    {{/ember-power-select}}
     {{outlet}}
   </section>
 </section>
