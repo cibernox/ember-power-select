@@ -15,9 +15,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names disabled=true selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select options=names disabled=true selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -25,9 +25,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names disabled=true selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select options=names disabled=true selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -50,7 +50,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-  \{{#ember-power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
+  \{{#power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
     &lt;div class="country-detailed-info"&gt;
       &lt;img src="\{{country.flagUrl}}" class="country-flag"&gt;
       &lt;div class="country-data-text"&gt;
@@ -59,7 +59,7 @@
         &lt;small&gt;Population in 2014: &lt;i&gt;\{{country.population}}&lt;/i&gt;&lt;/small&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-  \{{/ember-power-select}}
+  \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     const countries = [
@@ -78,7 +78,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-  {{#ember-power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
+  {{#power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
     <div class="country-detailed-info">
       <img src="{{country.flagUrl}}" class="country-flag">
       <div class="country-data-text">
@@ -87,7 +87,7 @@
         <small>Population in 2014: <i>{{country.population}}</i></small>
       </div>
     </div>
-  {{/ember-power-select}}
+  {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -100,9 +100,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries placeholder="Please, select one destination" selected=selected onchange=(action (mut selected)) as |country|}}
+    \{{#power-select options=countries placeholder="Please, select one destination" selected=selected onchange=(action (mut selected)) as |country|}}
       \{{country.name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -118,9 +118,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries placeholder="Please, select one destination" selected=selected onchange=(action (mut selected)) as |country|}}
+    {{#power-select options=countries placeholder="Please, select one destination" selected=selected onchange=(action (mut selected)) as |country|}}
       {{country.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -133,9 +133,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -143,9 +143,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 

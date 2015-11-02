@@ -91,7 +91,7 @@ function typeInSearch(text) {
   l) If the content of the selected is refreshed while opened the first element of the list gets highlighted
 */
 
-moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (General behavior)', {
+moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true
 });
 
@@ -100,9 +100,9 @@ test('Click in the trigger of a closed select opens the dropdown', function(asse
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
@@ -116,9 +116,9 @@ test('Click in the trigger of an opened select closes the dropdown', function(as
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -133,9 +133,9 @@ test('Search functionality is enabled by default', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers  onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers  onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -147,9 +147,9 @@ test('The search functionality can be disabled by passing `searchEnabled=false`'
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers searchEnabled=false onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers searchEnabled=false onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -162,9 +162,9 @@ test('The search box gain focus automatically when opened', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -176,9 +176,9 @@ test('Each option of the select is the result of yielding an item', function(ass
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -197,9 +197,9 @@ test('If the passed options is a promise, while its not resolved the component s
   });
 
   this.render(hbs`
-    {{#ember-power-select options=numbersPromise onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbersPromise onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -217,9 +217,9 @@ test('If a placeholder is provided, it shows while no element is selected', func
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo placeholder="abracadabra" onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers selected=foo placeholder="abracadabra" onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').text().trim(), 'abracadabra', 'The placeholder is rendered when there is no element');
@@ -239,9 +239,9 @@ test('If the `selected` value changes the select gets updated, but the `onchange
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action foo) selected=selected as |option|}}
+    {{#power-select options=numbers onchange=(action foo) selected=selected as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.set('selected', 'three'));
@@ -257,9 +257,9 @@ test('If the user selects a value and later on the selected value changes from t
   this.numbers = numbers;
   this.selected = null;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected');
@@ -275,9 +275,9 @@ test('If the user passes `renderInPlace=true` the dropdown is added below the tr
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers renderInPlace=true onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers renderInPlace=true onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -289,9 +289,9 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
@@ -307,9 +307,9 @@ test('If the content of the selected is refreshed while opened the first element
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
@@ -332,9 +332,9 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 test('The dropdowns shows the default "no options" message', function(assert) {
   this.options = [];
   this.render(hbs`
-    {{#ember-power-select options=options onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=options onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-option').length, 1);
@@ -344,9 +344,9 @@ test('The dropdowns shows the default "no options" message', function(assert) {
 test('The default "no options" message can be customized passing `noMatchesMessage="other message"`', function(assert) {
   this.options = [];
   this.render(hbs`
-    {{#ember-power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-option').length, 1);
@@ -356,11 +356,11 @@ test('The default "no options" message can be customized passing `noMatchesMessa
 test('The content of the dropdown when there are no options can be completely customized using the inverse block', function(assert) {
   this.options = [];
   this.render(hbs`
-    {{#ember-power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{else}}
       <span class="empty-option-foo">Foo bar</span>
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-option').length, 0, 'No list elements, just the given alternate block');
@@ -386,9 +386,9 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -402,17 +402,17 @@ test('When `selected` option is provided, it appears in the trigger yielded with
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal(this.$().text().trim(), 'three', 'The selected option show in the trigger');
 
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       Selected: {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   assert.equal(this.$().text().trim(), 'Selected: three', 'The selected option uses the same yielded block as the options');
 });
@@ -422,9 +422,9 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -438,9 +438,9 @@ test('When `selected` option is provided, that option is marked as `.selected`',
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -453,9 +453,9 @@ test('The default search strategy matches disregarding diacritics differences an
 
   this.names = names;
   this.render(hbs`
-    {{#ember-power-select options=names onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=names onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -481,9 +481,9 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -512,9 +512,9 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   this.countries = countries;
   this.render(hbs`
-    {{#ember-power-select options=countries onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=countries onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -529,9 +529,9 @@ test('When a option is provided that options is rendered in the trigger using th
   this.countries = countries;
   this.country = countries[1]; // Spain
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=countries selected=country onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-trigger').text().trim(), 'ES: Spain', 'The selected country is rendered in the trigger');
@@ -543,9 +543,9 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   this.countries = countries;
   this.country = countries[1]; // Spain
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country onchange=(action (mut country)) as |option|}}
+    {{#power-select options=countries selected=country onchange=(action (mut country)) as |option|}}
       {{option.code}}: {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -560,9 +560,9 @@ test('When `selected` option is provided, that option is marked as `.selected`',
   this.countries = countries;
   this.country = countries[1]; // Spain
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=countries selected=country onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -583,9 +583,9 @@ test('The default search strategy matches disregarding diacritics differences an
   ];
 
   this.render(hbs`
-    {{#ember-power-select options=people searchField="name" onchange=(action (mut foo)) as |person|}}
+    {{#power-select options=people searchField="name" onchange=(action (mut foo)) as |person|}}
       {{person.name}} {{person.surname}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -619,9 +619,9 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   };
 
   this.render(hbs`
-    {{#ember-power-select options=people matcher=nameOrSurnameNoDiacriticsCaseSensitive onchange=(action (mut foo)) as |person|}}
+    {{#power-select options=people matcher=nameOrSurnameNoDiacriticsCaseSensitive onchange=(action (mut foo)) as |person|}}
       {{person.name}} {{person.surname}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -656,9 +656,9 @@ test('When you pass a custom search action instead of options, opening the selec
   this.searchFn = function() {};
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -670,9 +670,9 @@ test('The "type to search" message can be customized passing `searchMessage=some
 
   this.searchFn = function() {};
   this.render(hbs`
-    {{#ember-power-select search=searchFn searchMessage="Type the name of the thing" onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn searchMessage="Type the name of the thing" onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -687,9 +687,9 @@ test('The search function can return an array and those options get rendered', f
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -710,9 +710,9 @@ test('The search function can return a promise that resolves to an array and tho
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -737,9 +737,9 @@ test('While the async search is being performed the "Type to search" dissapears 
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -761,9 +761,9 @@ test('When the search resolves to an empty array then the "No results found" mes
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -785,9 +785,9 @@ test('When the search resolves to an empty array then the custom "No results" me
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn noMatchesMessage="Meec. Try again" onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn noMatchesMessage="Meec. Try again" onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -809,11 +809,11 @@ test('When the search resolves to an empty array then the custom alternate block
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
     {{else}}
       <span class="foo-bar">Baz</span>
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -835,9 +835,9 @@ test('When one search is fired before the previous one resolved, the "Loading" c
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => typeInSearch("teen"));
@@ -867,9 +867,9 @@ test('When the search resolves, the first element is highlighted like with regul
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -897,9 +897,9 @@ test('Options that have a `groupName` and `options` are considered groups and ar
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
@@ -926,9 +926,9 @@ test('When filtering, a group title is visible as long as one of it\'s elements 
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => typeInSearch('ve'));
@@ -946,9 +946,9 @@ test('Click on an option of a group select selects the option and closes the dro
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers selected=foo onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=groupedNumbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => $('.ember-power-select-option:contains("four")').click());
@@ -974,9 +974,9 @@ test('Mouseovering a list item highlights it', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -995,9 +995,9 @@ test('Clicking an item selects it, closes the dropdown and focuses the trigger',
     assert.ok(dropdown.close, 'The action is invoked with the the dropdown object as second parameter');
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=foo as |option|}}
+    {{#power-select options=numbers onchange=foo as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1011,9 +1011,9 @@ test('Clicking the trigger while the select is opened closes it and and focuses 
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1032,9 +1032,9 @@ test('Clicking the clear button removes the selection', function(assert) {
     assert.ok(dropdown.close, 'The onchange action was called with the dropdown object as second argument');
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers selected="three" allowClear=true onchange=onChange as |option|}}
+    {{#power-select options=numbers selected="three" allowClear=true onchange=onChange as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
@@ -1050,9 +1050,9 @@ test('Clicking anywhere outside the select while opened closes the component and
   this.numbers = numbers;
   this.render(hbs`
     <div id="other-thing">Foo</div>
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1067,9 +1067,9 @@ test('Clicking on the title of a group doesn\'t performs any action nor closes t
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#ember-power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1099,9 +1099,9 @@ test('Pressing keydown highlights the next option', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1115,9 +1115,9 @@ test('Pressing keyup highlights the previous option', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected="three" onchange=(action (mut selected)) as |option|}}
+    {{#power-select options=numbers selected="three" onchange=(action (mut selected)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1132,9 +1132,9 @@ test('When you the last option is highlighted, pressing keydown doesn\'t change 
   this.numbers = numbers;
   this.lastNumber = numbers[numbers.length - 1];
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=lastNumber onchange=(action (mut lastNumber)) as |option|}}
+    {{#power-select options=numbers selected=lastNumber onchange=(action (mut lastNumber)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1149,9 +1149,9 @@ test('When you the first option is highlighted, pressing keyup doesn\'t change t
   this.numbers = numbers;
   this.firstNumber = numbers[0];
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=firstNumber onchange=(action (mut firstNumber)) as |option|}}
+    {{#power-select options=numbers selected=firstNumber onchange=(action (mut firstNumber)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1171,9 +1171,9 @@ test('Pressing ENTER selects the highlighted element, closes the dropdown and fo
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selected onchange=(action changed) as |option|}}
+    {{#power-select options=numbers selected=selected onchange=(action changed) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1189,9 +1189,9 @@ test('Pressing TAB closes the select WITHOUT selecting the highlighed element an
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1207,9 +1207,9 @@ test('The component is focusable using the TAB key as any other kind of input', 
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
   assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), "0", 'The trigger is reachable with TAB');
 });
@@ -1219,9 +1219,9 @@ test('If the component is focused, pressing ENTER opens it', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => $('.ember-power-select-trigger').focus());
@@ -1235,9 +1235,9 @@ test('If the single component is focused, pressing KEYDOWN opens it', function(a
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => $('.ember-power-select-trigger').focus());
@@ -1251,9 +1251,9 @@ test('If the single component is focused, pressing KEYUP opens it', function(ass
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => $('.ember-power-select-trigger').focus());
@@ -1267,9 +1267,9 @@ test('Pressing ESC while the component is opened closes it and focuses the trigg
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => $('.ember-power-select-trigger').click());
@@ -1297,9 +1297,9 @@ test('A disabled dropdown doesn\'t responds to mouse/keyboard events', function(
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   let $select = this.$('.ember-power-select');
@@ -1315,9 +1315,9 @@ test('A disabled dropdown is not focusable', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), "-1", 'The trigger is not reachable with TAB');
@@ -1328,9 +1328,9 @@ test('Options with a disabled field set to true are styled as disabled', functio
 
   this.contriesWithDisabled = contriesWithDisabled;
   this.render(hbs`
-    {{#ember-power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1343,9 +1343,9 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
 
   this.contriesWithDisabled = contriesWithDisabled;
   this.render(hbs`
-    {{#ember-power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1358,9 +1358,9 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
 
   this.contriesWithDisabled = contriesWithDisabled;
   this.render(hbs`
-    {{#ember-power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1402,9 +1402,9 @@ test('Multiple selects don\'t have a search box', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers multiple=true selected=foo onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers multiple=true selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1416,9 +1416,9 @@ test('When the select opens, the search input in the trigger gets the focus', fu
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1430,9 +1430,9 @@ test('Click on an element selects it and closes the dropdown and focuses the tri
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1453,9 +1453,9 @@ test('Selecting an element triggers the onchange action with the list of selecte
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=change multiple=true as |option|}}
+    {{#power-select options=numbers onchange=change multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1473,9 +1473,9 @@ test('Click an option when there is already another selects both, and triggers t
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selectedNumbers onchange=change multiple=true as |option|}}
+    {{#power-select options=numbers selected=selectedNumbers onchange=change multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
@@ -1493,9 +1493,9 @@ test('If there is many selections, all those options are styled as `selected`', 
   this.selectedNumbers = ['four', 'two'];
 
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
+    {{#power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1510,9 +1510,9 @@ test('When the popup opens, the first items is highlighed, even if there is only
   this.selectedNumbers = ['four'];
 
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
+    {{#power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1533,9 +1533,9 @@ test('Clicking on an option that is already selected unselects it, closes the se
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selectedNumbers onchange=change multiple=true as |option|}}
+    {{#power-select options=numbers selected=selectedNumbers onchange=change multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
@@ -1549,9 +1549,9 @@ test('The default filtering works in multiple mode', function(assert) {
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1572,9 +1572,9 @@ test('The filtering specifying a searchkey works in multiple model', function(as
   ];
 
   this.render(hbs`
-    {{#ember-power-select options=people searchField="name" onchange=(action (mut foo)) multiple=true as |person|}}
+    {{#power-select options=people searchField="name" onchange=(action (mut foo)) multiple=true as |person|}}
       {{person.name}} {{person.surname}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1600,9 +1600,9 @@ test('The filtering specifying a custom matcher works in multiple model', functi
   };
 
   this.render(hbs`
-    {{#ember-power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1625,9 +1625,9 @@ test('The search using a custom action works int multiple mode', function(assert
   };
 
   this.render(hbs`
-    {{#ember-power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1644,9 +1644,9 @@ test('Pressing ENTER when the select is closed opens and nothing is written on t
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1666,9 +1666,9 @@ test('Pressing ENTER over a highlighted element selects it', function(assert) {
     this.set('foo', selected);
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo onchange=change multiple=true as |option|}}
+    {{#power-select options=numbers selected=foo onchange=change multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1687,9 +1687,9 @@ test('Pressing ENTER over a highlighted element what is already selected closes 
     this.set('selected', val);
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
+    {{#power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1710,9 +1710,9 @@ test('Pressing BACKSPACE on the search input when there is text on it does nothi
     this.set('selected', val);
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
+    {{#power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1732,9 +1732,9 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
     assert.ok(dropdown.close, 'The dropdown API is received as second argument');
   };
   this.render(hbs`
-    {{#ember-power-select options=numbers onchange=didChange selected=selected multiple=true as |option|}}
+    {{#power-select options=numbers onchange=didChange selected=selected multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1751,9 +1751,9 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1772,9 +1772,9 @@ test('If the multiple component is focused, pressing KEYDOWN opens it', function
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1789,9 +1789,9 @@ test('If the multiple component is focused, pressing KEYUP opens it', function(a
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1806,9 +1806,9 @@ test('The placeholder is only visible when no options are selected', function(as
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#ember-power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) placeholder="Select stuff here" as |option|}}
+    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) placeholder="Select stuff here" as |option|}}
       {{option}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), 'Select stuff here', 'The placeholder is visible');
@@ -1834,9 +1834,9 @@ test('The placeholder is only visible when no options are selected', function(as
 
 //   this.numbers = numbers;
 //   this.render(hbs`
-//     {{#ember-power-select options=numbers as |option|}}
+//     {{#power-select options=numbers as |option|}}
 //       {{option}}
-//     {{/ember-power-select}}
+//     {{/power-select}}
 //   `);
 
 //   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1849,9 +1849,9 @@ test('The placeholder is only visible when no options are selected', function(as
 
 //   this.numbers = numbers;
 //   this.render(hbs`
-//     {{#ember-power-select options=numbers dropdownPosition="above" as |option|}}
+//     {{#power-select options=numbers dropdownPosition="above" as |option|}}
 //       {{option}}
-//     {{/ember-power-select}}
+//     {{/power-select}}
 //   `);
 
 //   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1887,9 +1887,9 @@ test('Passing as options of a `store.findAll` works', function(assert) {
 
   this.users = this.store.findAll('user');
   this.render(hbs`
-    {{#ember-power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
       {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1909,9 +1909,9 @@ test('Passing as options the result of `store.query` works', function(assert) {
 
   this.users = this.store.query('user', { foo: 'bar' });
   this.render(hbs`
-    {{#ember-power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
       {{option.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1942,9 +1942,9 @@ test('selected option can be customized using selectedComponent', function(asser
   this.country = countries[1]; // Spain
 
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country selectedComponent="selected-country" onchange=(action (mut foo)) as |country|}}
+    {{#power-select options=countries selected=country selectedComponent="selected-country" onchange=(action (mut foo)) as |country|}}
       {{country.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   assert.equal($('.ember-power-select-trigger .icon-flag').length, 1, 'The custom flag appears.');
@@ -1958,9 +1958,9 @@ test('the list of options can be customized using optionsComponent', function(as
   this.country = countries[1]; // Spain
 
   this.render(hbs`
-    {{#ember-power-select options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) as |country|}}
+    {{#power-select options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) as |country|}}
       {{country.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
@@ -1985,7 +1985,7 @@ test('the `onchange` function is mandatory', function(assert) {
 
   assert.throws(() => {
     this.render(hbs`
-      {{#ember-power-select options=countries selected=selected as |opt|}}{{opt}}{{/ember-power-select}}
+      {{#power-select options=countries selected=selected as |opt|}}{{opt}}{{/power-select}}
     `);
   }, /requires an `onchange` function/);
 });

@@ -20,9 +20,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
+    \{{#power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -39,9 +39,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
+    {{#power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -53,9 +53,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
+    \{{#power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -64,9 +64,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
+    {{#power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 

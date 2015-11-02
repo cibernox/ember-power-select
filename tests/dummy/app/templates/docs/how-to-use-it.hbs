@@ -10,9 +10,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names onchange=(action "foo") as |name|}}
+    \{{#power-select options=names onchange=(action "foo") as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -24,9 +24,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names onchange=(action "foo") as |name|}}
+    {{#power-select options=names onchange=(action "foo") as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -38,9 +38,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries selected=destination onchange=(action "foo") as |country|}}
+    \{{#power-select options=countries selected=destination onchange=(action "foo") as |country|}}
       &lt;img src="\{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
     const countries = [
@@ -62,9 +62,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries selected=destination onchange=(action "foo") as |country|}}
+    {{#power-select options=countries selected=destination onchange=(action "foo") as |country|}}
       <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 

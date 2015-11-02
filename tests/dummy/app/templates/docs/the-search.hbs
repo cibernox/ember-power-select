@@ -13,9 +13,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=names selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -23,9 +23,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=diacritics selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=diacritics selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -39,9 +39,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
+    \{{#power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
       \{{country.name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -57,9 +57,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
+    {{#power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
       {{country.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -74,9 +74,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
+    \{{#power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
       \{{person.name}} {{person.surname}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -95,9 +95,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
+    {{#power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
       {{person.name}} {{person.surname}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -107,9 +107,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names searchPlaceholder="Type to filter..." selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=names searchPlaceholder="Type to filter..." selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -117,9 +117,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=diacritics searchPlaceholder="Type to filter..." selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=diacritics searchPlaceholder="Type to filter..." selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -131,9 +131,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names searchEnabled=false selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=names searchEnabled=false selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -141,9 +141,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names searchEnabled=false selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=names searchEnabled=false selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 

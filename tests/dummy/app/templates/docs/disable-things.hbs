@@ -15,9 +15,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=countries as |country|}}
+    \{{#power-select options=countries as |country|}}
       \{{country.name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -33,9 +33,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=countries as |country|}}
+    {{#power-select options=countries as |country|}}
       {{country.name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
