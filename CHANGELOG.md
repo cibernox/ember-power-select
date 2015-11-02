@@ -1,5 +1,11 @@
 # Master
 
+# 0.3.3
+- [DEPRECATION] Renamed component from {{ember-power-select}} to just {{power-select}} and deprecate the long name.
+- [BUGFIX] Increate z-index to 1000 (same that bootstrap uses for dropdowns)
+- [BUGFIX] Add support for placeholder in multiple mode
+- ... some internal refactors to make the selected item easier to customize
+
 # 0.3.2
 - [BUGFIX] Pressing enter on a closed multiple select should open it.
 - [ENHANCEMENT] Pressing UP/DOWN arrows on a closed select (single or multiple) opens it
