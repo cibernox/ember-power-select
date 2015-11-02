@@ -23,9 +23,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -33,9 +33,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
     (Looks the same but inspect the DOM to see the difference)
   </div>
 {{/code-sample}}
@@ -54,9 +54,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -64,9 +64,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
     (This dropdpwn will always be on top regardless of how much available space there is around)
   </div>
 {{/code-sample}}
@@ -81,9 +81,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -91,9 +91,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -103,9 +103,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -113,9 +113,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -126,13 +126,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
     \{{else}}
       &lt;div class="text-center"&gt;
         &lt;img width="150" src="/grumpy-cat.png"&gt;
       &lt;/div&gt;
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -140,13 +140,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{else}}
       <div class="text-center">
         <img width="150" src="/grumpy-cat.png">
       </div>
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
@@ -172,14 +172,14 @@
     &lt;button onclick=\{{action "refreshCollection"}}&gt;Refresh collection&lt;/button&gt;
 
     Default loading message
-    \{{#ember-power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
 
     Custom loading message
-    \{{#ember-power-select options=promise loadingMessage="Waiting for the server" selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select options=promise loadingMessage="Waiting for the server" selected=selected onchange=(action (mut selected)) as |name|}}
       \{{name}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     function generatePromise() {
@@ -201,14 +201,14 @@
     <button onclick={{action "refreshCollection"}}>Refresh collection</button>
     <br>
     Default loading message
-    {{#ember-power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
     <br>
     Custom loading message
-    {{#ember-power-select options=promise loadingMessage="Waiting for the server...." selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select options=promise loadingMessage="Waiting for the server...." selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 

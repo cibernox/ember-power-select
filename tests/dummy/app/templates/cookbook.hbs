@@ -7,9 +7,9 @@
     {{#link-to 'cookbook.navigable-select' class="side-nav-link"}}Navigable select{{/link-to}}
   </nav>
   <section class="doc-page">
-    {{#ember-power-select selected=currentSection options=groupedSections onchange=(action 'visit') searchField="text" searchEnabled=false class="section-selector" as |option|}}
+    {{#power-select selected=currentSection options=groupedSections onchange=(action 'visit') searchField="text" searchEnabled=false class="section-selector" as |option|}}
       {{option.text}}
-    {{/ember-power-select}}
+    {{/power-select}}
     {{outlet}}
   </section>
 </section>

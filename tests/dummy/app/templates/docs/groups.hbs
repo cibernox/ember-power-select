@@ -8,9 +8,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#ember-power-select options=groupedNumbers selected=number onchange=(action (mut number)) as |num|}}
+    \{{#power-select options=groupedNumbers selected=number onchange=(action (mut number)) as |num|}}
       \{{num}}
-    \{{/ember-power-select}}
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -29,9 +29,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#ember-power-select options=groupedNumbers selected=number onchange=(action (mut number)) as |num|}}
+    {{#power-select options=groupedNumbers selected=number onchange=(action (mut number)) as |num|}}
       {{num}}
-    {{/ember-power-select}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 

@@ -67,9 +67,9 @@
   The task consists basically in create a grouped select like this:
 </p>
 <div style="margin: 0 auto; max-width: 250px;">
-  {{#ember-power-select options=groupedNumbers selected=selectedNumber onchange=(action (mut selectedNumber)) as |option|}}
+  {{#power-select options=groupedNumbers selected=selectedNumber onchange=(action (mut selectedNumber)) as |option|}}
     {{option}}
-  {{/ember-power-select}}
+  {{/power-select}}
 </div>
 <br>
 <p>
@@ -117,7 +117,7 @@
 </p>
 
 <pre>
-  \{{#ember-power-select options=currentOptions selected=selected closeOnSelect=false onchange=(action "onchange") optionsComponent='animated-options' search=(action "search") as |levelOrOption|}}
+  \{{#power-select options=currentOptions selected=selected closeOnSelect=false onchange=(action "onchange") optionsComponent='animated-options' search=(action "search") as |levelOrOption|}}
     \{{#if levelOrOption.parentLevel}}
       &lt;strong&gt;&lt; Back&lt;/strong&gt;
     \{{else if levelOrOption.levelName}}
@@ -125,7 +125,7 @@
     \{{else}}
       \{{levelOrOption}}
     \{{/if}}
-  \{{/ember-power-select}}
+  \{{/power-select}}
 </pre>
 
 <p>

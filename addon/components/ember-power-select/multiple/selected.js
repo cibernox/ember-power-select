@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   // CPs
   triggerMultipleInputStyle: computed('searchText.length', function() {
     if (this.get('selection.length') === 0) {
-      return 'width: 100%;';
+      return htmlSafe('width: 100%;');
     } else {
       return htmlSafe(`width: ${(this.get('searchText.length') || 0) * 0.5 + 2}em`);
     }

@@ -9,9 +9,9 @@
       {{#link-to 'application'}}
         <img src="/ember_logo.png" alt="ember">
       {{/link-to}}
-      {{#ember-power-select options=mainSelectOptions selected=mainSelected disabled=disabled searchEnabled=false selectedComponent='main-header-select-trigger' onchange=(action "changeOptions") class="main-header-select" as |opt|}}
+      {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled searchEnabled=false selectedComponent='main-header-select-trigger' onchange=(action "changeOptions") class="main-header-select" as |opt|}}
         {{opt}}
-      {{/ember-power-select}}
+      {{/power-select}}
     </div>
   </nav>
 </header>
