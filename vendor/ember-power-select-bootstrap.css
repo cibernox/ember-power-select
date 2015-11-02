@@ -6,10 +6,9 @@
 
 .ember-basic-dropdown-content {
   position: absolute;
-  width: 100%;
-  z-index: 2;
-  background-color: #FFF;
-  width: auto; }
+  width: auto;
+  z-index: 1000;
+  background-color: #ffffff; }
 
 .ember-power-select {
   position: relative; }
@@ -95,11 +94,7 @@
       outline: 0; }
 
 .ember-power-select-dropdown {
-  position: absolute;
-  width: 100%;
-  z-index: 2;
   border: 1px solid #ccc;
-  background-color: #ffffff;
   line-height: 2;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px 0px;
