@@ -4,7 +4,7 @@ $ember-power-select-border: 1px solid $ember-power-select-border-color !default;
 $ember-power-select-focus-border-color: $ember-power-select-border-color !default;
 $ember-power-select-contiguous-border: 1px solid #fff !default;
 $ember-power-select-focus-box-shadow: none !default;
-$ember-power-select-text-color: #444444 !default;
+$ember-power-select-text-color: inherit !default;
 $ember-power-select-placeholder-color: #999999 !default;
 $ember-power-select-border-radius: 4px !default; // General border radius
 $ember-power-select-opened-border-radius: 0 !default; // Border radious of the side of the dropdown and the trigger where they touch
@@ -52,6 +52,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   min-height: #{$ember-power-select-line-height}em;
   user-select: none;
   -webkit-user-select: none;
+  color: $ember-power-select-text-color;
   &:focus {
     border: 1px solid $ember-power-select-focus-border-color;
     box-shadow: $ember-power-select-focus-box-shadow;
@@ -135,6 +136,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   border-radius: $ember-power-select-border-radius;
   box-shadow: $ember-power-select-dropdown-box-shadow;
   overflow: hidden;
+  color: $ember-power-select-text-color;
   &.above {
     @if ($ember-power-select-dropdown-margin > 0) {
       transform: translateY(-#{$ember-power-select-dropdown-margin});
