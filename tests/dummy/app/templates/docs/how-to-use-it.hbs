@@ -8,6 +8,8 @@
   The component will yield each individual item in the collection to the block to generate the list.
 </p>
 
+<p><strong>Selects in this page seem to not work. This is intended.</strong> See last paragraph.</p>
+
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
     \{{#power-select options=names onchange=(action "foo") as |name|}}
@@ -91,7 +93,7 @@
 
 <p>
   This is the very basic usage of this component, but so far is pretty useless. Since there is no
-  double bindings and the <code>onchange</code> action is empty nothing happens when you select something on it.
+  double bindings and the <code>onchange</code> action is empty <strong>nothing happens when you select something on it.</strong>
 </p>
 
 <p>
