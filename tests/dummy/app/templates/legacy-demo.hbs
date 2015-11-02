@@ -2,33 +2,11 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
-  <p>
-    Ok, this is a demo of an enriched select-like component that when finished will become a 1:1
-    clone of the popular jQuery addon Select2.js
-  </p>
-  <p>
-    "Why reinvent the wheel once more?", you may thing (and for good reason).
-  </p>
-  <p>
-    For ember projects i've used the nice ember-select2 component, which is a ember addon that wraps
-    the jquery library, giving it a nicer ember-ish interface.
-    <br>
-    The issue is that I've found the experience not entirely seamlessly when dealing with
-    collection of records from ember data and other promises, and mainly, it was very hard
-    to customize your component.
-    <br>
-    Not to mention that Select2.js alone is ~150KB, because it's bloated with things that doesn't
-    belongs to the component itself, like i18n.
-  </p>
-  <p>
-    I wanted to prove that using ember's primitives you can replicate 95% of the funcionality
-    of the original library with a 5% of the code, and the resulting code is straightforward,
-    the component nicer to use and can be customized much easier.
-  </p>
-  <p>
-    Still things to polish, but soon will be usable.
-  </p>
-  <p>At the moment, all the funcionality you see took <strong>500 LOC</strong> (including CSS and templates)</p>
+  <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
+
+  {{#power-select options=model selected=selectedUser onchange=(action (mut selectedUser)) as |user|}}
+    {{user.name}}
+  {{/power-select}}
 
   <h4>Select of strings without value tracking. You can filter right away.</h4>
   <p>simpleSelected is: {{simpleSelected}}</p>
