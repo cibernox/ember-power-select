@@ -6,4 +6,6 @@ export default function() {
       data: db.users.map(attrs => ({type: 'users', id: attrs.id, attributes: attrs }))
     };
   });
+
+  this.pretender.get('/*passthrough', this.pretender.passthrough);
 }
