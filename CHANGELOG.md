@@ -1,5 +1,10 @@
 # Master
 
+# 0.3.4
+- [BUGFIX] Fix placeholder bug in multiple selects (show "null" as placeholder)
+- [BUGFIX] Fix unused scss variable ($ember-power-select-text-color) and make it `inherit` by default instead of `#444`.
+- [DOCS] Clarify that in "How to use" section selects are broken intentionally to explain why explicitness is good.
+
 # 0.3.3
 - [DEPRECATION] Renamed component from {{ember-power-select}} to just {{power-select}} and deprecate the long name.
 - [BUGFIX] Increate z-index to 1000 (same that bootstrap uses for dropdowns)

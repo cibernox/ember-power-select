@@ -27,7 +27,8 @@
   text-overflow: ellipsis;
   min-height: 1.75em;
   user-select: none;
-  -webkit-user-select: none; }
+  -webkit-user-select: none;
+  color: inherit; }
   .ember-power-select-trigger:focus {
     border: 1px solid #aaaaaa;
     box-shadow: none; }
@@ -96,7 +97,8 @@
   line-height: 1.75;
   border-radius: 4px;
   box-shadow: none;
-  overflow: hidden; }
+  overflow: hidden;
+  color: inherit; }
   .ember-power-select-dropdown.above {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0; }
