@@ -8,7 +8,7 @@ export default Ember.Component.extend({
 
   // Universal config
   disabled: false,
-  placeholder: null,
+  placeholder: undefined,
   loadingMessage: "Loading options...",
   noMatchesMessage: "No results found",
   optionsComponent: 'ember-power-select/options',

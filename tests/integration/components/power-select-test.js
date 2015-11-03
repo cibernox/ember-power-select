@@ -1811,10 +1811,27 @@ test('The placeholder is only visible when no options are selected', function(as
     {{/power-select}}
   `);
 
-  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), 'Select stuff here', 'The placeholder is visible');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), 'Select stuff here', 'There is a placeholder');
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => $('.ember-power-select-option:eq(1)').click());
-  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'The placeholder not visible');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), undefined, 'The placeholder is gone');
+});
+
+test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), undefined, 'Input does not have a placeholder');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => $('.ember-power-select-option:eq(1)').click());
+  Ember.run(() => this.$('.ember-power-select-multiple-remove-btn').click());
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), undefined, 'Input still does not have a placeholder');
 });
 
 /**
