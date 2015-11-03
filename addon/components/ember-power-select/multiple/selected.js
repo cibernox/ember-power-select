@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   tagName: '',
 
   // CPs
-  triggerMultipleInputStyle: computed('searchText.length', function() {
+  triggerMultipleInputStyle: computed('searchText.length', 'selection.length', function() {
     if (this.get('selection.length') === 0) {
       return htmlSafe('width: 100%;');
     } else {
@@ -18,6 +18,6 @@ export default Ember.Component.extend({
   }),
 
   maybePlaceholder: computed('placeholder', 'selection.length', function() {
-    return this.get('selection.length') === 0 ? this.get('placeholder') : "";
+    return this.get('selection.length') === 0 ? (this.get('placeholder') || undefined) : undefined;
   })
 });
