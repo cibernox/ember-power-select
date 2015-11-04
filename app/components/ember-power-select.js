@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import EmberPowerSelectComponent from 'ember-power-select/components/ember-power-select';
+import EmberPowerSelectComponent from 'ember-power-select/components/power-select';
 
 export default EmberPowerSelectComponent.extend({
   init() {

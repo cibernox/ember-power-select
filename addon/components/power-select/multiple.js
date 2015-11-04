@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import PowerSelectBaseComponent from './base';
-import layout from '../../templates/components/ember-power-select/multiple';
+import layout from '../../templates/components/power-select/multiple';
 
 const { computed, get } = Ember;
 

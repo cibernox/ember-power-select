@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../../../templates/components/ember-power-select/multiple/selected';
+import layout from '../../../templates/components/power-select/multiple/selected';
 
 const { computed } = Ember;
 const { htmlSafe } = Ember.String;

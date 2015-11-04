@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import layout from '../templates/components/ember-power-select';
+import layout from '../templates/components/power-select';
 import { defaultMatcher } from '../utils/group-utils';
 
-export default Ember.Component.extend({
+export const defaultOptions = {
   tagName: '',
   layout: layout,
 
@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   placeholder: undefined,
   loadingMessage: "Loading options...",
   noMatchesMessage: "No results found",
-  optionsComponent: 'ember-power-select/options',
+  optionsComponent: 'power-select/options',
   dropdownPosition: 'auto',
   matcher: defaultMatcher,
   searchField: null,
@@ -34,10 +34,12 @@ export default Ember.Component.extend({
 
   // CPs
   concreteComponentName: Ember.computed('multiple', function() {
-    return `ember-power-select/${this.get('multiple') ? 'multiple' : 'single'}`;
+    return `power-select/${this.get('multiple') ? 'multiple' : 'single'}`;
   }),
 
   selectedComponent: Ember.computed('multiple', function() {
-    return `ember-power-select/${this.get('multiple') ? 'multiple' : 'single'}/selected`;
+    return `power-select/${this.get('multiple') ? 'multiple' : 'single'}/selected`;
   })
-});
+};
+
+export default Ember.Component.extend(defaultOptions);
