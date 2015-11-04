@@ -15,7 +15,6 @@
 // Legacy demo
 @import 'ember-power-select';
 
-
 .icon-flag {
   display: inline-block;
   height: 14px;
@@ -45,4 +44,10 @@
   .country-data-text {
     padding: 6px;
   }
+}
+
+
+.legacy-demo {
+  max-width: 1000px;
+  margin: 0 auto;
 }
