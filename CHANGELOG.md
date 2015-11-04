@@ -1,5 +1,10 @@
 # Master
 
+# 0.3.5
+- [BUGFIX] Update ember-basic-dropdown to fix deprecation warning coming from accessing `_actions`.
+- [INTERNAL] For consistency, since the component's name was shortened to {{power-select}}, all internal
+  components have been renamed too. No public API changes.
+
 # 0.3.4
 - [BUGFIX] Fix placeholder bug in multiple selects (show "null" as placeholder)
 - [BUGFIX] Fix unused scss variable ($ember-power-select-text-color) and make it `inherit` by default instead of `#444`.
