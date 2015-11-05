@@ -2,18 +2,18 @@
 
 <p>
   In {{#link-to 'docs.the-search'}}The search{{/link-to}} chapter we saw all the possible ways of
-  personalizing the way the component can filter but they all had something in commom. You had all the
-  options available on initialization and you were just filtering that collection.
+  personalizing the way the component can filter but they all had something in common. You had all the
+  options available upon initialization and you were just filtering that collection.
 </p>
 
 <p>
-  There are occasions when having all the options available upfront in the client side is not
+  There are occasions when having all the options available upfront on the client side is not
   convenient or is downright impossible.
 </p>
 
 <p>
-  When that is the case you can provide a <code>search</code> action instead on <code>options</code>
-  (is the only situation where the <code>options</code> are not mandatory) that will be called with
+  When that's the case you can provide a <code>search</code> action instead of <code>options</code>
+  (it's the only situation where the <code>options</code> are not mandatory) that will be invoked with
   the search term whenever the user types on the search box.
 </p>
 
@@ -48,9 +48,9 @@
 {{/code-sample}}
 
 <p>
-  It worth also mention that Ember Power Select is smart enough to always prioritize the last request made,
-  so in the best scenario avoids expensive repaintings, and in the worst case when the second request
-  resolves before the first, when the first resolves it doesn't override the most recent request.
+  It's also worth mentioning that Ember Power Select is smart enough to always prioritize the last request made,
+  so in the best scenario avoids expensive repaintings, and in the worst case (when the second request
+  resolves before the first), when the first resolves it doesn't override the most recent request.
 </p>
 
 <div class="doc-page-nav">

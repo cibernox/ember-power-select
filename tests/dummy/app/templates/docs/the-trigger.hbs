@@ -9,7 +9,7 @@
 <h3>Disable the component</h3>
 
 <p>
-  You completely disable the trigger (and therefore the entire component) by passing
+  You can completely disable the trigger (and therefore the entire component) by passing
   <code>disabled=true</code>.
 </p>
 
@@ -128,12 +128,12 @@
 
 <p>
   Sometimes you want to allow the users to clear the selection they just made. Regular selects
-  don't allow that, but here is very simple, just pass <code>allowClear=true</code>.
+  don't allow that, but here is very simple, just pass <code>allowClear=true</code>. <strong>Please note that this option does not work when </strong><code>multiple=true</code>
 </p>
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select options=names selected="Pluto" allowClear=true onchange=(action (mut name)) as |name|}}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -143,14 +143,14 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names selected="Pluto" allowClear=true selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select options=names selected="Pluto" allowClear=true onchange=(action (mut name)) as |name|}}
       {{name}}
     {{/power-select}}
   </div>
 {{/code-sample}}
 
 <p>
-  When the user click in the trigger the dropdown with the options appears. It's the most complex
+  When the user clicks in the trigger the dropdown with the options appears. It's the most complex
   part of the component and the subject of the next chapter.
 </p>
 
