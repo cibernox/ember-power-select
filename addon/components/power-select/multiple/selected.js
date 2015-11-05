@@ -19,5 +19,12 @@ export default Ember.Component.extend({
 
   maybePlaceholder: computed('placeholder', 'selection.length', function() {
     return this.get('selection.length') === 0 ? (this.get('placeholder') || undefined) : undefined;
-  })
+  }),
+
+  actions: {
+    search(term, e) {
+      this.get('dropdown').open(e);
+      this.get('search')(term, e)
+    }
+  }
 });
