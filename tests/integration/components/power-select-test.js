@@ -1857,7 +1857,7 @@ test('Typing in the input opens the component and filters the options also with 
         resolve(numbers.filter(str => str.indexOf(term) > -1));
       }, 100);
     });
-  }
+  };
 
   this.render(hbs`
     {{#power-select multiple=true selected=foo onchange=(action (mut foo)) search=(action search) as |option|}}
