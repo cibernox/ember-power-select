@@ -22,7 +22,7 @@ themes.forEach(function(theme) {
   var parts = theme.split('.');
   var out = sass.renderSync({
     data: "@import 'app/styles/ember-power-select/themes/" + parts[0] + "';" + buf,
-    includePaths: ['node_modules/ember-basic-dropdown/app/styles/']
+    includePaths: ['app/styles', 'node_modules/ember-basic-dropdown/app/styles/']
   });
   var destinationFile = path.join(__dirname, 'vendor', 'ember-power-select-' + parts[0] + '.css');
   fs.writeFileSync(destinationFile, out.css);

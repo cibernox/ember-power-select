@@ -40,12 +40,10 @@
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#aaaaaa;'/%3E%3C/svg%3E"); }
   .ember-power-select.opened.below .ember-power-select-trigger {
     border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: 1px solid #fff; }
+    border-bottom-right-radius: 0; }
   .ember-power-select.opened.above .ember-power-select-trigger {
     border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-top: 1px solid #fff; }
+    border-top-right-radius: 0; }
 
 .ember-power-select-placeholder {
   color: #999999; }
@@ -93,16 +91,21 @@
       box-shadow: none; }
 
 .ember-power-select-dropdown {
-  border: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
   line-height: 1.75;
   border-radius: 4px;
   box-shadow: none;
   overflow: hidden;
   color: inherit; }
   .ember-power-select-dropdown.above {
+    border-top: 1px solid #aaaaaa;
+    border-bottom: none;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0; }
   .ember-power-select-dropdown.below {
+    border-top: none;
+    border-bottom: 1px solid #aaaaaa;
     border-top-left-radius: 0;
     border-top-right-radius: 0; }
 
