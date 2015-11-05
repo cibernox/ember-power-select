@@ -1834,6 +1834,47 @@ test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #9
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), undefined, 'Input still does not have a placeholder');
 });
 
+test('Typing in the input opens the component and filters the options', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => typeInSearch('fo'));
+  assert.equal($('.ember-power-select-option').length, 2, 'The dropdown is opened and results filtered');
+});
+
+test('Typing in the input opens the component and filters the options also with async searches', function(assert) {
+  assert.expect(1);
+
+  this.search = (term) => {
+    return new RSVP.Promise(function(resolve) {
+      Ember.run.later(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
+
+  this.render(hbs`
+    {{#power-select multiple=true selected=foo onchange=(action (mut foo)) search=(action search) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => typeInSearch('fo'));
+  let done = assert.async();
+
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, 2, 'The dropdown is opened and results filtered');
+    done();
+  }, 150);
+});
+
+
 /**
 10 - Dropdown positioning
   a) [UNTESTABLE??] By default the dropdown is placed automatically depending on the available space around the select.
