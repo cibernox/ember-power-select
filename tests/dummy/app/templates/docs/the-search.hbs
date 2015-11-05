@@ -4,9 +4,7 @@
 
 <p>
   The default search box is by itself surprisingly smart. As you type it will filter the results
-</p>
-<p>
-  That contain the given string ignoring diacritic differences and capitalization. That means that
+ that contain the given string ignoring diacritic differences and capitalization. That means that
   the string <code>maria</code> will match against <code>María</code>, <code>oren</code> against
   <code>Søren</code> and so on.
 </p>
@@ -66,7 +64,7 @@
 <h3>Pass a custom matcher</h3>
 
 <p>
-  Sometimes the default matcher is not enough for you, by example if you need to match against several
+  Sometimes the default matcher is not enough for you, for example if you need to match against several
   fields or you need to perform fuzzy matching. If that is the case just pass your own matcher
   function. It will receive the option and the search term and you can do whatever you feel like
   inside as long as it returns <code>true</code> or <code>false</code>.
@@ -126,7 +124,7 @@
 <h3>Disable the search box</h3>
 
 <p>
-  Last but not least you can disable and hide the search box from the list by passing <code>disable=true</code> to the component.
+  Last but not least you can disable and hide the search box from the list by passing <code>searchEnabled=false</code> to the component.
 </p>
 
 {{#code-sample as |component|}}

@@ -7,14 +7,14 @@
 </p>
 
 <p>
-  Data changes that occur in the component are not propagated to the outside using double bindings,
+  Data changes that occur in the component are not propagated to the outside using two-way bindings,
   but rather they are communicated via actions. The main action you're going to use is the <code>onchange</code>
-  action. This action will fire whenever an option of the component's list if selected.
+  action. This action will fire whenever an option of the component's list is selected.
 </p>
 
 <p>
   The most common use case when you want changes inside a component to do something on its context
-  an expressed this way:
+  is expressed this way:
 </p>
 
 
@@ -47,7 +47,7 @@
 
 <p>
   That gives you the freedom of doing whatever suits your need when the user selects a value. <br>
-  If the only thing you want to do is updating the value, you can make it more concise using the
+  If the only thing you want to do is update the value, you can make it more concise by using the
   <code>mut</code> helper.
 </p>
 

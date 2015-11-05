@@ -1,9 +1,7 @@
 <h1 class="doc-page-title">The list</h1>
 
 <p>
-  If there is a key area of the component that must be absolutely customizable, that
-  is the dropdown with the list. This is probably the most dense chapter so far so read it cover
-  to cover.
+  If there's a key area of the component that must be absolutely customizable, it's the dropdown with the list. This is probably the most dense chapter so far so we recommend that you read it cover to cover.
 </p>
 
 <h3>Position</h3>
@@ -11,14 +9,14 @@
 <p>
   The dropdown in Ember Power Select is pretty smart. By default this component inserts the dropdown
   not next the the trigger but in the root of your app (typically the <code>&lt;body&gt;</code>) using
-  the awesome <a href="https://github.com/yapplabs/ember-wormhole">ember-wormhole</a> addon and the
+  the awesome <a href="https://github.com/yapplabs/ember-wormhole">ember-wormhole</a> addon and then
   absolutely positions it.
 </p>
 
 <p>
   This is a safe default because by default it won't be affected by the overflow constraints of
-  the element where the component lives in. However there is a few situations where this is not
-  practical, so you can opt-out to this behavior passing <code>renderInPlace=true</code>.
+  the element where the component lives in. However, there are a few situations where this is not
+  practical, so you can opt-out of this behavior by passing <code>renderInPlace=true</code>.
 </p>
 
 {{#code-sample as |component|}}
@@ -41,14 +39,14 @@
 {{/code-sample}}
 
 <p>
-  When the component it's not rendered in place the dropdown can be configured to be added below
+  When the component is not rendered in place the dropdown can be configured to be added below
   or above the trigger using the <code>dropdownPosition</code> option. The possible values
   are <code>below</code>, <code>above</code> and <code>auto</code> (the default).
 </p>
 <p>
   The <code>auto</code>
   mode will detect the best strategy based on the available space around the component and also
-  will take care of reposition it when you scroll or change the orientation of the device so you
+  will take care of repositioning it when you scroll or change the orientation of the device so you
   will rarely need to worry about this option.
 </p>
 
@@ -76,7 +74,7 @@
 <p>
   What happens when the collection you pass to the component is empty?
   By default the component will render a helpful message. This message is the same
-  that will appear after performing a search there is no matching results.
+  that will appear after performing a search when there are no matching results.
 </p>
 
 {{#code-sample as |component|}}
@@ -153,14 +151,14 @@
 <h3>The loading state</h3>
 
 <p>
-  In the first chapter we mentioned that the options of this component can be a any collection,
-  including Ember-data's collection resulting from <code>store.find</code>, <code>store.query</code>,
+  In the first chapter we mentioned that the options of this component can be any collection,
+  including Ember-data collections resulting from <code>store.find</code>, <code>store.query</code>,
   asynchronous relationships and just plain old promises that resolve to a collection of
   some sort.
 </p>
 <p>
-  That means that while the promise doesn't resolves you are in some kind of <em>loading</em>
-  state where you don't have options yet but you will so you don't want to show the "No results" messages.
+  That means that while the promise doesn't resolve you are in some kind of <em>loading</em>
+  state where you don't have options yet (but you will have results) so you don't want to show the "No results" messages.
 </p>
 
 <p>
@@ -205,7 +203,7 @@
       {{name}}
     {{/power-select}}
     <br>
-    Custom loading message
+    Custom loading message (press the <code>Refresh Collection</code> button and open this select)
     {{#power-select options=promise loadingMessage="Waiting for the server...." selected=selected onchange=(action (mut selected)) as |name|}}
       {{name}}
     {{/power-select}}
@@ -213,8 +211,8 @@
 {{/code-sample}}
 
 <p>
-  You might have noticed that there is a par of the dropdown that wasn't mentioned in this chapter: The search.
-  This is because it deserves an entire chapter for it alone.
+  You might have noticed that there is a part of the dropdown that wasn't mentioned in this chapter: The search.
+  This is because it deserves an entire chapter of its own.
 </p>
 
 <div class="doc-page-nav">

@@ -1,11 +1,15 @@
 <h1 class="doc-page-title">How to use it</h1>
 
 <p>
-  The basic usage the component is very simple. The only mandatory arguments you have to
-  pass to it are <code>options</code> which has to be a <em>collection</em> of any kind, including
+  The basic component usage is very simple. The only mandatory arguments you have to
+  pass to it are <code>options</code>(*) which has to be a <em>collection</em> of any kind, including
   the result of ember-data operations like <code>.find</code> or <code>.query</code>, and the
   <code>onchange</code> action.
   The component will yield each individual item in the collection to the block to generate the list.
+</p>
+
+<p>
+  * There's one exception: When you use the <code>search</code> property you don't need to pass the options. Read more about {{#link-to 'docs.the-search'}} the search{{/link-to}}
 </p>
 
 <p><strong>Selects in this page seem to not work. This is intended.</strong> See last paragraph.</p>
@@ -19,7 +23,6 @@
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
       names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-      selectedUser: 'Tomster',
       actions: {
         foo() { }
       }
@@ -71,9 +74,9 @@
 {{/code-sample}}
 
 <p>
-  <strong>Filtering in this select also seems broken, but is also intended.</strong>
-  See {{#link-to 'docs.the-search'}}The search{{/link-to}} section (Customize the search field) to
-  see how to make it work.
+  <strong>Filtering in the above select also seems broken, but is also intended.</strong>
+  See {{#link-to 'docs.the-search'}}the search{{/link-to}} section (Customize the search field) for
+  instructions on how to make it work.
 </p>
 
 <p>
@@ -84,22 +87,22 @@
 
 <ul>
   <li>
-    The component compares the selected option with the options in the collection by equalty, to
+    The component compares the selected option with the options in the collection by equality, to
     have in mind that when working with POJOs that <code>{ foo: 'bar' } === { foo: 'bar' }</code> is false.
   </li>
   <li>
     Updates in the selected element will update the selected value in the component as expected.
   </li>
   <li>
-    <code>selected</code> (and all other options options actually) is read only. This means that selecting a
-    an element in the component won't do anything. That is a design decission and the reason by the
-    <code>onchange</code> action is mandatory.
+    <code>selected</code> (and all other options options actually) is read only. This means that selecting
+    an element in the component won't do anything. That is a design decision and the reason why the
+    <code>onchange</code> action is mandatory. This is aligned with Ember's Data Down Actions Up (DDAU) philosophy.
   </li>
 </ul>
 
 <p>
-  This is the very basic usage of this component, but so far is pretty useless. Since there is no
-  double bindings and the <code>onchange</code> action is empty <strong>nothing happens when you select something on it.</strong>
+  This is the very basic usage of this component, but so far is pretty useless. Since there are no
+  two way bindings and the <code>onchange</code> action is empty <strong>nothing happens when you select something.</strong>
 </p>
 
 <p>
