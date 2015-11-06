@@ -1,5 +1,16 @@
 # Master
 
+# 0.3.8
+- [BUGFIX] Disable the input of multiple selects when the entire component is disabled
+- [BUGFIX] Don't show the cross to remove items when the entire component is disabled
+- [ACCESIBILITY] Add aria-label to cross to remove items in multiple mode
+
+# 0.3.7
+- [BUGFIX] Open multiple select when the user types on the input of the trigger
+
+# 0.3.6
+- [REFACTOR] Variables in it's own file for encapsulations and allow more fine-grained customizations
+
 # 0.3.5
 - [BUGFIX] Update ember-basic-dropdown to fix deprecation warning coming from accessing `_actions`.
 - [INTERNAL] For consistency, since the component's name was shortened to {{power-select}}, all internal

@@ -61,6 +61,8 @@
   line-height: inherit;
   -webkit-appearance: none;
   outline: none; }
+  .ember-power-select-trigger-multiple-input:disabled {
+    background-color: #eeeeee; }
 
 .ember-power-select-multiple-option {
   border: 1px solid gray;
