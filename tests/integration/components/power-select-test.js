@@ -1390,7 +1390,10 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   q) [DONE] Pressing ENTER when the select is closed opens and nothing is written on the box opens it.
   r) [DONE] If the multiple component is focused, pressing KEYDOWN opens it
   s) [DONE] If the multiple component is focused, pressing KEYUP opens it
-  Is it possible to remove this searchbox from multiple selects??
+  t) [DONE] Typing in the input opens the component and filters the options
+  u) [DONE] Typing in the input opens the component and filters the options also with async searches
+  v) [DONE] When passed `disabled=true`, the input inside the trigger is also disabled
+  w) [DONE] When passed `disabled=true`, the selected elements can't be removed
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Multiple)', {
@@ -1874,6 +1877,33 @@ test('Typing in the input opens the component and filters the options also with 
   }, 150);
 });
 
+test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) disabled=true as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.ok(this.$('.ember-power-select-trigger-multiple-input').prop('disabled'), 'The input is disabled');
+});
+
+test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.selectedNumbers = [numbers[2], numbers[4]];
+
+  this.render(hbs`
+    {{#power-select multiple=true selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=true as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
+});
 
 /**
 10 - Dropdown positioning
