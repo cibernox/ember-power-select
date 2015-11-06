@@ -65,6 +65,9 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   line-height: inherit;
   -webkit-appearance: none;
   outline: none;
+  &:disabled {
+    background-color: $ember-power-select-disabled-background-color;
+  }
 }
 .ember-power-select-multiple-option {
   border: 1px solid gray;
