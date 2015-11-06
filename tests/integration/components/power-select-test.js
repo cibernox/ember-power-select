@@ -1880,8 +1880,9 @@ test('Typing in the input opens the component and filters the options also with 
 test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
   assert.expect(1);
 
+  this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true selected=foo onchange=(action (mut foo)) search=(action search) disabled=true as |option|}}
+    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) disabled=true as |option|}}
       {{option}}
     {{/power-select}}
   `);
