@@ -30,6 +30,10 @@ Router.map(function() {
     this.route('bootstrap-theme');
     this.route('navigable-select');
   });
+
+  this.route('addons', function() {
+  });
+
   this.route('legacy-demo');
 });
 
