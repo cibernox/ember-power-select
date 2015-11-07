@@ -31,9 +31,9 @@ Router.map(function() {
     this.route('navigable-select');
   });
 
-  this.route('plugins', function() {
-
+  this.route('addons', function() {
   });
+
   this.route('legacy-demo');
 });
 
