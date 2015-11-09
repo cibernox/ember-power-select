@@ -29,6 +29,7 @@ Router.map(function() {
   this.route('cookbook', function() {
     this.route('bootstrap-theme');
     this.route('navigable-select');
+    this.route('debounce-searches');
   });
 
   this.route('addons', function() {

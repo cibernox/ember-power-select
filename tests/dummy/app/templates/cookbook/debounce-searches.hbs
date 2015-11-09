@@ -1,0 +1,63 @@
+<h1 class="doc-page-title">Debounce searches</h1>
+
+<p>
+  By default this component will fire the search event with each change on the search term
+  but very often you want to debouce searches to not overload the server, hit API rate limits
+  or make the UI smoother.
+</p>
+
+<p>
+  You can do that yourself with a few lines of code:
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select search=(action "searchRepo") selected=selected onchange=(action (mut selected)) as |repo|}}
+      \{{repo.full_name}}
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    import Ember from 'ember';
+    import ajax from 'ic-ajax';
+
+    const { run, isBlank } = Ember;
+
+    export default Ember.Controller.extend({
+      actions: {
+        searchRepo(term) {
+          return new Ember.RSVP.Promise((resolve, reject) => {
+            run.debounce(this, this._performSearch, term, resolve, reject, 600);
+          });
+        }
+      },
+
+      _performSearch(term, resolve, reject) {
+        if (isBlank(term)) { return resolve([]); }
+        ajax({ url: `//api.github.com/search/repositories?q=${term}` })
+          .then(json => resolve(json.items), err => reject(err));
+      }
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    <div style="margin: 0 auto; max-width: 250px;">
+      {{#power-select search=(action "searchRepo") selected=selected onchange=(action (mut selected)) as |repo|}}
+        {{repo.full_name}}
+      {{/power-select}}
+    </div>
+  </div>
+{{/code-sample}}
+
+<p>
+  That way you are in control and you can vary the debounce intervals depending on any custom
+  logic like the device (people type slower in small screens), make it bigger if the API tells
+  that you're approaching the API rate limit.
+</p>
+
+<p>
+  It makes you code a litte more but in exchange you always have the ultimate decission.
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
+  {{#link-to 'cookbook.navigable-select' class="doc-page-nav-link-next"}}Navigable select &gt;{{/link-to}}
+</div>
