@@ -26,7 +26,7 @@ export default Ember.Component.extend({
     if (this.get('class')) {
       return cssClass + ` ${this.get('class')}-dropdown`;
     }
-    return cssClass
+    return cssClass;
   }),
 
   mustSearch: computed('_searchText', 'search', function(){
