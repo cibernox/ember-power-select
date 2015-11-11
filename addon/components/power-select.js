@@ -17,6 +17,7 @@ export const defaultOptions = {
   searchField: null,
   search: null,
   closeOnSelect: true,
+  dropdownClass: null,
 
   // Select single config
   searchEnabled: true,
