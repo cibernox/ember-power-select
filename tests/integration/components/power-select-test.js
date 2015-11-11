@@ -318,6 +318,17 @@ test('If the content of the selected is refreshed while opened the first element
   assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'foo', 'The first element is highlighted');
 });
 
+test('If the user passes `dropdownClass` the dropdown content should have that class', function(assert) {
+  this.options = [];
+  this.render(hbs`
+    {{#power-select options=options selected=foo onchange=(action (mut foo)) dropdownClass="this-is-a-test-class" as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), true, 'dropdownClass can be customized');
+});
+
 /**
 2 - Passing an empty array
   a) [DONE] A "No options" message appears by default.
