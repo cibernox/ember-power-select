@@ -3,7 +3,7 @@ import { indexOfOption, optionAtIndex, filterOptions, countOptions } from '../..
 const { RSVP, computed, run, get } = Ember;
 
 export default Ember.Component.extend({
-  classNames: ['ember-power-select-wrapper'],
+  tagName: '',
   _highlighted: null,
   _searchText: '',
   _loadingOptions: false,
@@ -67,10 +67,10 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  onOpen() {
+  onOpen(e) {
     if (this._resultsDirty) { this.refreshResults(); }
     this.set('_highlighted', this.defaultHighlighted());
-    run.scheduleOnce('afterRender', this, this.focusSearch);
+    run.scheduleOnce('afterRender', this, this.focusSearch, e);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
