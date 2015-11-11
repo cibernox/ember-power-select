@@ -13,6 +13,14 @@ export default PowerSelectBaseComponent.extend({
     set(_, v) { return v; }
   }),
 
+  triggerUniqueClass: computed('elementId', function() {
+    return `ember-power-select-trigger-${this.elementId}`;
+  }),
+
+  triggerClass: computed('triggerUniqueClass', function() {
+    return `ember-power-select-trigger ${this.get('triggerUniqueClass')}`;
+  }),
+
   // Actions
   actions: {
     removeOption(option, dropdown, e) {
@@ -83,7 +91,10 @@ export default PowerSelectBaseComponent.extend({
   },
 
   focusSearch() {
-    this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
+    let el = Ember.$('.' + this.get('triggerUniqueClass'))[0];
+    if (el) {
+      el.querySelector('.ember-power-select-trigger-multiple-input').focus();
+    }
   },
 
   cloneSelection() {
