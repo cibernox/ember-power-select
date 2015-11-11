@@ -28,6 +28,8 @@ Good docs are important :)
 About browers compatibility I just tested it in modern browsers but there is no technical reason it
 wouldn't work in IE9+. If you find any problem please file an issue.
 
+In testing it requires phantomjs 2.0+.
+
 ## Motivation
 
 > Why reinvent the wheel when there are already good framework-agnostic libraries out there that are
