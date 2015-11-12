@@ -21,6 +21,12 @@ export default PowerSelectBaseComponent.extend({
     return `ember-power-select-trigger ${this.get('triggerUniqueClass')}`;
   }),
 
+  concatenatedClasses: computed('class', function() {
+    const classes = ['ember-power-select', 'multiple'];
+    if (this.get('class')) { classes.push(this.get('class')); }
+    return classes.join(' ');
+  }),
+
   // Actions
   actions: {
     removeOption(option, dropdown, e) {
