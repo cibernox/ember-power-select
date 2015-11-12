@@ -1,5 +1,15 @@
 # Master
 
+# 0.4.0
+- [BREAKING] Remove {{ember-power-select}} deprecated alias for {{power-select}}
+- [BREAKING] Remove `ember-power-select-wrapper` wrapped div that was not customizable and made styling harder.
+             Now the topmost element is the `ember-power-select` itself.
+- [BUGFIX] Update ember-basic-dropdown to fix rounding error that caused list of options have 1px mismatch in HD screens
+- [TOOLING] Update to ember-cli 1.13.10
+
+# 0.3.9
+- [BUGFIX] Apply `dropdownClass` to the dropdown
+
 # 0.3.8
 - [BUGFIX] Disable the input of multiple selects when the entire component is disabled
 - [BUGFIX] Don't show the cross to remove items when the entire component is disabled
