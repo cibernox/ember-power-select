@@ -88,7 +88,9 @@ function typeInSearch(text) {
   i) [DONE] If the `selected` value changes the select gets updated, but the `onchange` action doesn't fire.
   j) [DONE] If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root
   k) [DONE] If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option
-  l) If the content of the selected is refreshed while opened the first element of the list gets highlighted
+  l) [DONE] If the content of the selected is refreshed while opened the first element of the list gets highlighted
+  m) [DONE] If the user passes `dropdownClass` the dropdown content should have that class
+  n) [DONE] If the user passes `class` the classes of the dropdown are customized using that
 */
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
@@ -326,7 +328,19 @@ test('If the user passes `dropdownClass` the dropdown content should have that c
     {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.equal($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), true, 'dropdownClass can be customized');
+  assert.ok($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), 'dropdownClass can be customized');
+});
+
+test('If the user passes `class` the classes of the dropdown are customized using that', function(assert) {
+  this.options = [];
+  this.render(hbs`
+    {{#power-select options=options selected=foo onchange=(action (mut foo)) class="my-foo" as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+  assert.ok($('.ember-power-select').hasClass('my-foo'), 'the entire select inherits that class');
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok($('.ember-power-select-dropdown').hasClass('my-foo-dropdown'), 'the dropdown derives its class from the given one too');
 });
 
 /**
