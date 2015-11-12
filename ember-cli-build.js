@@ -1,11 +1,10 @@
+/*jshint node:true*/
 /* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-addon');
+var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
-    sassOptions: {
-      extension: 'scss' // Required due to a bug in ember-cli: https://github.com/ember-cli/ember-cli/issues/4084
-    }
+  var app = new EmberAddon(defaults, {
+    // Add options here
   });
 
   /*
