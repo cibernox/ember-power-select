@@ -1,4 +1,4 @@
-{{#basic-dropdown class="ember-power-select multiple" renderInPlace=renderInPlace matchTriggerWidth=true
+{{#basic-dropdown class=(readonly concatenatedClasses) renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled dropdownPosition=dropdownPosition triggerClass=(readonly triggerClass) dropdownClass=_dropdownClass
   onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) onKeydown=(action onKeydown) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
   <ul class="ember-power-select-options">

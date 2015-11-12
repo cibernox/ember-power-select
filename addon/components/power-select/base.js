@@ -22,11 +22,14 @@ export default Ember.Component.extend({
   _notLoadingOptions: computed.not('_loadingOptions'),
 
   _dropdownClass: computed('class', function() {
-    let cssClass = `ember-power-select-dropdown ${this.get('dropdownClass')}`;
-    if (this.get('class')) {
-      return cssClass + ` ${this.get('class')}-dropdown`;
+    let classes = Ember.A(['ember-power-select-dropdown']);
+    if (this.get('dropdownClass')) {
+      classes.push(this.get('dropdownClass'));
     }
-    return cssClass;
+    if (this.get('class')) {
+      classes.push(`${this.get('class')}-dropdown`);
+    }
+    return classes.join(' ');
   }),
 
   mustSearch: computed('_searchText', 'search', function(){

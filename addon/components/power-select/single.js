@@ -13,6 +13,12 @@ export default PowerSelectBaseComponent.extend({
     set(_, v) { return v; }
   }),
 
+  concatenatedClasses: computed('class', function() {
+    const classes = ['ember-power-select'];
+    if (this.get('class')) { classes.push(this.get('class')); }
+    return classes.join(' ');
+  }),
+
   // Actions
   actions: {
     clear(dropdown, e) {
