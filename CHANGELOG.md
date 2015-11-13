@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Fix placeholder of multiple select showing "null".
+
 # 0.4.2
 - [BUGFIX] Stop propagation of the events that trigger the `select` action. This was preventing
   to use this component within another component that closes when clicking on the body, like
