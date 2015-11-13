@@ -18,7 +18,7 @@ export default Ember.Component.extend({
   }),
 
   maybePlaceholder: computed('placeholder', 'selection.length', function() {
-    return this.get('selection.length') === 0 ? (this.get('placeholder') || undefined) : undefined;
+    return this.get('selection.length') === 0 ? (this.get('placeholder') || '') : '';
   }),
 
   actions: {
