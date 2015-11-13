@@ -1,5 +1,8 @@
 # Master
 
+# 0.4.1
+- [BUGFIX] Get subpixed precission on Y coordinates too by updating to ember-basic-dropdown 0.4.7
+
 # 0.4.0
 - [BREAKING] Remove {{ember-power-select}} deprecated alias for {{power-select}}
 - [BREAKING] Remove `ember-power-select-wrapper` wrapped div that was not customizable and made styling harder.
