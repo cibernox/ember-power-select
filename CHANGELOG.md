@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Pass `search` action to the selected component also for single component.
+  This enables ember-power-select to to be the base for typeahead-like components.
 - [BUGFIX] Fix placeholder of multiple select showing "null".
 
 # 0.4.2

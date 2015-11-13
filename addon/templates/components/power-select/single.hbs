@@ -28,8 +28,9 @@
     {{/if}}
   </ul>
 {{else}}
-  {{#component selectedComponent selection=(readonly selection) allowClear=(readonly allowClear) disabled=(readonly disabled)
-    placeholder=(readonly placeholder) dropdown=(readonly registeredDropdown) clearSelection=(action "clear") as |opt|}}
+  {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
+    searchText=(readonly _searchText) placeholder=(readonly placeholder) disabled=(readonly disabled)
+    allowClear=(readonly allowClear) search=(action "search") clearSelection=(action "clear") as |opt|}}
     {{yield opt}}
   {{/component}}
 {{/basic-dropdown}}
