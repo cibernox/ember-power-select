@@ -52,6 +52,7 @@ export default PowerSelectBaseComponent.extend({
 
   select(option, dropdown, e) {
     e.preventDefault();
+    e.stopPropagation();
     if (this.get('closeOnSelect')) {
       dropdown.close(e);
     }
