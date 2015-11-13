@@ -64,6 +64,7 @@ export default PowerSelectBaseComponent.extend({
 
   select(option, dropdown, e) {
     e.preventDefault();
+    e.stopPropagation();
     const newSelection = this.cloneSelection();
     if (newSelection.indexOf(option) > -1) {
       newSelection.removeObject(option);
