@@ -26,13 +26,6 @@ export default PowerSelectBaseComponent.extend({
       e.preventDefault();
       this.set('selection', null);
       this.get('onchange')(null, dropdown);
-    },
-
-    triggerKeydown(dropdown, e) {
-      if (e.keyCode === 40 || e.keyCode === 38) {
-        dropdown.open(e);
-        e.preventDefault();
-      }
     }
   },
 
