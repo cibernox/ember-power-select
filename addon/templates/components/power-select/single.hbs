@@ -9,7 +9,7 @@
     </div>
   {{/if}}
   <ul class="ember-power-select-options">
-    {{#if _loadingOptions}}
+    {{#if showLoadingMessage}}
       <li class="ember-power-select-option">{{loadingMessage}}</li>
     {{/if}}
     {{#if resultsLength}}
@@ -19,7 +19,7 @@
       {{/component}}
     {{else if mustSearch}}
       <li class="ember-power-select-option">{{searchMessage}}</li>
-    {{else if _notLoadingOptions}}
+    {{else if noPendingPromises}}
       {{#if hasInverseBlock}}
         {{yield to="inverse"}}
       {{else}}
@@ -30,7 +30,7 @@
 {{else}}
   {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
     searchText=(readonly _searchText) placeholder=(readonly placeholder) disabled=(readonly disabled)
-    highlighted=(readonly _highlighted) allowClear=(readonly allowClear)
+    highlighted=(readonly _highlighted) allowClear=(readonly allowClear) hasPendingPromises=(readonly hasPendingPromises)
     search=(action "search") select=(action select) clearSelection=(action "clear") as |opt|}}
     {{yield opt}}
   {{/component}}

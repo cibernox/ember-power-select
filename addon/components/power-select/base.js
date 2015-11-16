@@ -6,20 +6,21 @@ export default Ember.Component.extend({
   tagName: '',
   _highlighted: null,
   _searchText: '',
-  _loadingOptions: false,
+  hasPendingPromises: false,
   attributeBindings: ['dir'],
 
   // Lifecycle hooks
   didReceiveAttrs({ newAttrs: { options } }) {
     this._super(...arguments);
-    this.set('_loadingOptions', true);
+    this.set('hasPendingPromises', true);
     RSVP.Promise.resolve(options && options.value || options)
       .then(opts => this.updateOptions(opts))
-      .finally(() => this.set('_loadingOptions', false));
+      .finally(() => this.set('hasPendingPromises', false));
   },
 
   // CPs
-  _notLoadingOptions: computed.not('_loadingOptions'),
+  noPendingPromises: computed.not('hasPendingPromises'),
+  showLoadingMessage: computed.and('loadingMessage', 'hasPendingPromises'),
 
   _dropdownClass: computed('class', function() {
     let classes = Ember.A(['ember-power-select-dropdown']);
@@ -159,7 +160,7 @@ export default Ember.Component.extend({
   },
 
   performCustomSearch(term) {
-    this.set('_loadingOptions', true);
+    this.set('hasPendingPromises', true);
     const promise = RSVP.Promise.resolve(this.get('search')(term));
     this.set('_activeSearch', promise);
     promise.then(results => {
@@ -168,7 +169,7 @@ export default Ember.Component.extend({
       this.set('_highlighted', this.optionAtIndex(0));
     }).finally(() => {
       if (promise !== this.get('_activeSearch')) { return; }
-      this.set('_loadingOptions', false);
+      this.set('hasPendingPromises', false);
     });
   },
 
