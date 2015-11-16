@@ -11,12 +11,12 @@
         searchText=(readonly _searchText) dropdown=(readonly dropdown) as |option|}}
         {{yield option}}
       {{/component}}
-    {{else if mustSearch}}
+    {{else if mustShowSearchMessage}}
       <li class="ember-power-select-option">{{searchMessage}}</li>
     {{else if noPendingPromises}}
       {{#if hasInverseBlock}}
         {{yield to="inverse"}}
-      {{else}}
+      {{else if noMatchesMessage}}
         <li class="ember-power-select-option">{{noMatchesMessage}}</li>
       {{/if}}
     {{/if}}

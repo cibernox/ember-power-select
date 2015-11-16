@@ -33,13 +33,18 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }),
 
-  mustSearch: computed('_searchText', 'search', function(){
-    return this.get('_searchText.length') === 0 && !!this.get('search');
+  mustShowSearchMessage: computed('_searchText', 'search', 'searchMessage', function(){
+    return this.get('_searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage');
   }),
 
   resultsLength: computed('results', function() {
     return countOptions(this.get('results'));
   }),
+
+  // hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
+  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 || this.get('showLoadingMessage') ||
+  //     this.get('mustShowSearchMessage') || this.get('hasInverseBlock') || this.get('noMatchesMessage');
+  // }),
 
   // Actions
   actions: {

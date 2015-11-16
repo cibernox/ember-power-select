@@ -23,8 +23,8 @@ export default Ember.Component.extend({
 
   actions: {
     search(term, e) {
-      this.get('dropdown').open(e);
       this.get('search')(term, e);
+      this.get('dropdown').open(e);
     }
   }
 });
