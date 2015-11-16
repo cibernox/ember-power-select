@@ -2,7 +2,7 @@
   {{#if opt.groupName}}
     <li class="ember-power-select-group">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
-      <ul class="ember-power-select-options nested">
+      <ul class="ember-power-select-options ember-power-select-options--nested">
         {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection) options=(readonly opt.options)
           highlight=(readonly highlight) select=(readonly select) optionsComponent=(readonly optionsComponent) dropdown=(readonly dropdown) as |option|}}
           {{yield option}}

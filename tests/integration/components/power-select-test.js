@@ -254,8 +254,8 @@ test('If the `selected` value changes the select gets updated, but the `onchange
   Ember.run(() => this.set('selected', 'three'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', 'The `three` element is selected');
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'three', 'The proper option gets highlighed');
-  assert.equal($('.ember-power-select-option.selected').text().trim(), 'three', 'The proper option gets selected');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The proper option gets highlighed');
+  assert.equal($('.ember-power-select-option--selected').text().trim(), 'three', 'The proper option gets selected');
 });
 
 test('If the user selects a value and later on the selected value changes from the outside, the components updates too', function(assert) {
@@ -320,9 +320,9 @@ test('If the content of the selected is refreshed while opened the first element
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'two', 'The second options is highlighted');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The second options is highlighted');
   Ember.run(() => this.set('numbers', ['foo', 'bar', 'baz']));
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'foo', 'The first element is highlighted');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'foo', 'The first element is highlighted');
 });
 
 test('If the user passes `dropdownClass` the dropdown content should have that class', function(assert) {
@@ -444,8 +444,8 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option.highlighted').length, 1, 'One element is highlighted');
-  assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first one to be precise');
+  assert.equal($('.ember-power-select-option--highlighted').length, 1, 'One element is highlighted');
+  assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first one to be precise');
 });
 
 test('When `selected` option is provided, it appears in the trigger yielded with the same block as the options', function(assert) {
@@ -479,7 +479,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  const $highlightedOption = $('.ember-power-select-option.highlighted');
+  const $highlightedOption = $('.ember-power-select-option--highlighted');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'three', 'The third option is highlighted');
 });
@@ -496,7 +496,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   const $selectedOption = $('.ember-power-select-option:contains("three")');
-  assert.ok($selectedOption.hasClass('selected'), 'The third option is marked as selected');
+  assert.ok($selectedOption.hasClass('ember-power-select-option--selected'), 'The third option is marked as selected');
 });
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
@@ -570,8 +570,8 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option.highlighted').length, 1, 'One element is highlighted');
-  assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first one to be precise');
+  assert.equal($('.ember-power-select-option--highlighted').length, 1, 'One element is highlighted');
+  assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first one to be precise');
 });
 
 test('When a option is provided that options is rendered in the trigger using the same block as the options', function(assert) {
@@ -600,7 +600,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  const $highlightedOption = $('.ember-power-select-option.highlighted');
+  const $highlightedOption = $('.ember-power-select-option--highlighted');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'ES: Spain', 'The second option is highlighted');
 });
@@ -618,7 +618,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   const $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
-  assert.ok($selectedOption.hasClass('selected'), 'The second option is marked as selected');
+  assert.ok($selectedOption.hasClass('ember-power-select-option--selected'), 'The second option is marked as selected');
 });
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
@@ -927,7 +927,7 @@ test('When the search resolves, the first element is highlighted like with regul
   Ember.run(() => typeInSearch("teen"));
 
   setTimeout(function() {
-    assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first result is highlighted');
+    assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first result is highlighted');
     done();
   }, 110);
 });
@@ -967,7 +967,7 @@ test('Options that have a `groupName` and `options` are considered groups and ar
   assert.equal($($rootLevelOptions[0]).text().trim(), 'one hundred');
   assert.equal($($rootLevelOptions[1]).text().trim(), 'one thousand');
 
-  let $bigs = $($rootLevelGroups[2]).find('> .ember-power-select-options.nested');
+  let $bigs = $($rootLevelGroups[2]).find('> .ember-power-select-options--nested');
   assert.equal($bigs.find('> .ember-power-select-group').length, 2, 'There is 2 sub-groups in the "bigs" group');
   assert.equal($bigs.find('> .ember-power-select-option').length, 1, 'There is 1 option in the "bigs" group');
 });
@@ -1031,9 +1031,9 @@ test('Mouseovering a list item highlights it', function(assert) {
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.ok($('.ember-power-select-option:eq(0)').hasClass('highlighted'), 'The first element is highlighted');
+  assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first element is highlighted');
   Ember.run(() => $('.ember-power-select-option:eq(3)').trigger('mouseover'));
-  assert.ok($('.ember-power-select-option:eq(3)').hasClass('highlighted'), 'The 4th element is highlighted');
+  assert.ok($('.ember-power-select-option:eq(3)').hasClass('ember-power-select-option--highlighted'), 'The 4th element is highlighted');
   assert.equal($('.ember-power-select-option:eq(3)').text().trim(), 'four');
 });
 
@@ -1156,9 +1156,9 @@ test('Pressing keydown highlights the next option', function(assert) {
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'two', 'The next options is highlighted now');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The next options is highlighted now');
 });
 
 test('Pressing keyup highlights the previous option', function(assert) {
@@ -1172,9 +1172,9 @@ test('Pressing keyup highlights the previous option', function(assert) {
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'three');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 38));
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'two', 'The previous options is highlighted now');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The previous options is highlighted now');
 });
 
 test('When you the last option is highlighted, pressing keydown doesn\'t change the highlighted', function(assert) {
@@ -1189,9 +1189,9 @@ test('When you the last option is highlighted, pressing keydown doesn\'t change 
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'twenty');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'twenty');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'twenty', 'The last option is still the highlighted one');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'twenty', 'The last option is still the highlighted one');
 });
 
 test('When you the first option is highlighted, pressing keyup doesn\'t change the highlighted', function(assert) {
@@ -1206,9 +1206,9 @@ test('When you the first option is highlighted, pressing keyup doesn\'t change t
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 38));
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one', 'The first option is still the highlighted one');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The first option is still the highlighted one');
 });
 
 test('Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {
@@ -1354,7 +1354,7 @@ test('A disabled dropdown doesn\'t responds to mouse/keyboard events', function(
   `);
 
   let $select = this.$('.ember-power-select');
-  assert.ok($select.hasClass('disabled'), 'The select has class disabled');
+  assert.ok($select.hasClass('ember-basic-dropdown--disabled'), 'The select has the disabled class');
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
   Ember.run(() => triggerKeydown($('.ember-power-select-trigger')[0], 13));
@@ -1386,7 +1386,7 @@ test('Options with a disabled field set to true are styled as disabled', functio
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 options');
-  assert.equal($('.ember-power-select-option.disabled').length, 3, 'Three of them are disabled');
+  assert.equal($('.ember-power-select-option--disabled').length, 3, 'Three of them are disabled');
 });
 
 test('Disabled options are not highlighted when hovered with the mouse', function(assert) {
@@ -1400,8 +1400,8 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  Ember.run(() => $('.ember-power-select-option.disabled:eq(0)').trigger('mouseover'));
-  assert.ok(!$('.ember-power-select-option.disabled:eq(0)').hasClass('highlighted'), 'The hovered option was not highligted because it\'s disabled');
+  Ember.run(() => $('.ember-power-select-option--disabled:eq(0)').trigger('mouseover'));
+  assert.ok(!$('.ember-power-select-option--disabled:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The hovered option was not highligted because it\'s disabled');
 });
 
 test('Disabled options are skipped when highlighting items with the keyboard', function(assert) {
@@ -1417,7 +1417,7 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
-  assert.ok($('.ember-power-select-option.highlighted').text().trim(), 'LV: Latvia' ,'The hovered option was not highligted because it\'s disabled');
+  assert.ok($('.ember-power-select-option--highlighted').text().trim(), 'LV: Latvia' ,'The hovered option was not highligted because it\'s disabled');
 });
 
 /**
@@ -1553,8 +1553,8 @@ test('If there is many selections, all those options are styled as `selected`', 
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.ok($('.ember-power-select-option:eq(1)').hasClass('selected'), 'The second option is styled as selected');
-  assert.ok($('.ember-power-select-option:eq(3)').hasClass('selected'), 'The 4th option is styled as selected');
+  assert.ok($('.ember-power-select-option:eq(1)').hasClass('ember-power-select-option--selected'), 'The second option is styled as selected');
+  assert.ok($('.ember-power-select-option:eq(3)').hasClass('ember-power-select-option--selected'), 'The 4th option is styled as selected');
 });
 
 test('When the popup opens, the first items is highlighed, even if there is only one selection', function(assert) {
@@ -1570,10 +1570,10 @@ test('When the popup opens, the first items is highlighed, even if there is only
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  assert.equal($('.ember-power-select-option.highlighted').length, 1, 'There is one element highlighted');
-  assert.equal($('.ember-power-select-option.selected').length, 1, 'There is one element selected');
-  assert.equal($('.ember-power-select-option.highlighted.selected').length, 0, 'They are not the same');
-  assert.equal($('.ember-power-select-option.highlighted').text().trim(), 'one', 'The highlighted element is the first one');
+  assert.equal($('.ember-power-select-option--highlighted').length, 1, 'There is one element highlighted');
+  assert.equal($('.ember-power-select-option--selected').length, 1, 'There is one element selected');
+  assert.equal($('.ember-power-select-option--highlighted.ember-power-select-option--selected').length, 0, 'They are not the same');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The highlighted element is the first one');
 });
 
 test('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', function(assert) {
@@ -1594,7 +1594,7 @@ test('Clicking on an option that is already selected unselects it, closes the se
 
   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  Ember.run(() => $('.ember-power-select-option.selected').click());
+  Ember.run(() => $('.ember-power-select-option--selected').click());
   assert.equal($('.ember-power-select-multiple-option').length, 0, 'There is no options selected');
 });
 
