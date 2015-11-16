@@ -47,7 +47,7 @@ const countries = [
   { name: 'United Kingdom', code: 'GB', population: 64596752 },
 ];
 
-const contriesWithDisabled = [
+const countriesWithDisabled = [
   { name: 'United States',  code: 'US', population: 321853000 },
   { name: 'Spain',          code: 'ES', population: 46439864 },
   { name: 'Portugal',       code: 'PT', population: 10374822, disabled: true },
@@ -1377,9 +1377,9 @@ test('A disabled dropdown is not focusable', function(assert) {
 test('Options with a disabled field set to true are styled as disabled', function(assert) {
   assert.expect(2);
 
-  this.contriesWithDisabled = contriesWithDisabled;
+  this.countriesWithDisabled = countriesWithDisabled;
   this.render(hbs`
-    {{#power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/power-select}}
   `);
@@ -1392,9 +1392,9 @@ test('Options with a disabled field set to true are styled as disabled', functio
 test('Disabled options are not highlighted when hovered with the mouse', function(assert) {
   assert.expect(1);
 
-  this.contriesWithDisabled = contriesWithDisabled;
+  this.countriesWithDisabled = countriesWithDisabled;
   this.render(hbs`
-    {{#power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/power-select}}
   `);
@@ -1407,9 +1407,9 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
 test('Disabled options are skipped when highlighting items with the keyboard', function(assert) {
   assert.expect(1);
 
-  this.contriesWithDisabled = contriesWithDisabled;
+  this.countriesWithDisabled = countriesWithDisabled;
   this.render(hbs`
-    {{#power-select options=contriesWithDisabled onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
       {{option.code}}: {{option.name}}
     {{/power-select}}
   `);

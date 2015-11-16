@@ -30,7 +30,8 @@
 {{else}}
   {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
     searchText=(readonly _searchText) placeholder=(readonly placeholder) disabled=(readonly disabled)
-    allowClear=(readonly allowClear) search=(action "search") clearSelection=(action "clear") as |opt|}}
+    highlighted=(readonly _highlighted) allowClear=(readonly allowClear)
+    search=(action "search") select=(action select) clearSelection=(action "clear") as |opt|}}
     {{yield opt}}
   {{/component}}
 {{/basic-dropdown}}
