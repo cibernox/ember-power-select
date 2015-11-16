@@ -2,7 +2,7 @@
   disabled=disabled dropdownPosition=dropdownPosition triggerClass=(readonly triggerClass) dropdownClass=_dropdownClass
   onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) onKeydown=(action onKeydown) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
   <ul class="ember-power-select-options">
-    {{#if _loadingOptions}}
+    {{#if showLoadingMessage}}
       <li class="ember-power-select-option">{{loadingMessage}}</li>
     {{/if}}
     {{#if resultsLength}}
@@ -13,7 +13,7 @@
       {{/component}}
     {{else if mustSearch}}
       <li class="ember-power-select-option">{{searchMessage}}</li>
-    {{else if _notLoadingOptions}}
+    {{else if noPendingPromises}}
       {{#if hasInverseBlock}}
         {{yield to="inverse"}}
       {{else}}
@@ -23,7 +23,7 @@
   </ul>
 {{else}}
   {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
-    searchText=(readonly _searchText) placeholder=(readonly placeholder) disabled=(readonly disabled)
+    searchText=(readonly _searchText) placeholder=(readonly placeholder) disabled=(readonly disabled) hasPendingPromises=(readonly hasPendingPromises)
     removeOption=(action "removeOption") search=(action "search") onKeydown=(action onKeydown registeredDropdown) as |opt|}}
     {{yield opt}}
   {{/component}}

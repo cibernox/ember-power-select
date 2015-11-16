@@ -195,7 +195,7 @@ test('Each option of the select is the result of yielding an item', function(ass
   assert.equal($('.ember-power-select-option:eq(13)').text().trim(), 'fourteen');
 });
 
-test('If the passed options is a promise, while its not resolved the component shows a Loading message', function(assert) {
+test('If the passed options is a promise and it\'s not resolved the component shows a Loading message', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
@@ -218,6 +218,30 @@ test('If the passed options is a promise, while its not resolved the component s
     done();
   }, 150);
 });
+
+test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is falsey, no loading message is shown', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+
+  this.numbersPromise = new RSVP.Promise(function(resolve) {
+    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
+  });
+
+  this.render(hbs`
+    {{#power-select options=numbersPromise onchange=(action (mut foo)) loadingMessage=nonexistent as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+
+  assert.equal($('.ember-power-select-option').length, 0, 'No loading options message is displayed');
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
+    done();
+  }, 120);
+});
+
 
 test('If a placeholder is provided, it shows while no element is selected', function(assert) {
   assert.expect(3);
