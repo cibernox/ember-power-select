@@ -1,5 +1,13 @@
 # Master
 
+# 0.5.0
+- [BREAKING CHANGE] Some classes have changed to be more BEMy and avoid class collisions. You can expect
+  things like `.nested`, `.selected`, `.highlighted`, etc.. to be not copies of the default class of that
+  element but with `--nested`, `--selected`, etc... modifiers.
+- [BREAKING CHANGE] The arrow of the dropdown is not longer a background image, but an `<span class="ember-power-select-status-icon">`,
+  that you can style in more complex ways. By default is still a triangle (but done with css borders instead)
+- [BUGFIX] Fixed `rtl`/`ltr` styles.
+
 # 0.4.4
 - [ENHANCEMENT] Allow to customize tabindex of the trigger
 - [ENHANCEMENT] Pass `select` action and `highlighted` option to the selectedComponent to allow better
