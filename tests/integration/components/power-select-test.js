@@ -95,6 +95,7 @@ function typeInSearch(text) {
   l) [DONE] If the content of the selected is refreshed while opened the first element of the list gets highlighted
   m) [DONE] If the user passes `dropdownClass` the dropdown content should have that class
   n) [DONE] If the user passes `class` the classes of the dropdown are customized using that
+  o) [DONE] The filtering is reverted after closing the dropdpown
 */
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
@@ -325,6 +326,8 @@ test('If the content of the selected is refreshed while opened the first element
 });
 
 test('If the user passes `dropdownClass` the dropdown content should have that class', function(assert) {
+  assert.expect(1);
+
   this.options = [];
   this.render(hbs`
     {{#power-select options=options selected=foo onchange=(action (mut foo)) dropdownClass="this-is-a-test-class" as |option|}}
@@ -336,6 +339,7 @@ test('If the user passes `dropdownClass` the dropdown content should have that c
 });
 
 test('If the user passes `class` the classes of the dropdown are customized using that', function(assert) {
+  assert.expect(2);
   this.options = [];
   this.render(hbs`
     {{#power-select options=options selected=foo onchange=(action (mut foo)) class="my-foo" as |option|}}
@@ -345,6 +349,24 @@ test('If the user passes `class` the classes of the dropdown are customized usin
   assert.ok($('.ember-power-select').hasClass('my-foo'), 'the entire select inherits that class');
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.ok($('.ember-power-select-dropdown').hasClass('my-foo-dropdown'), 'the dropdown derives its class from the given one too');
+});
+
+test('The filtering is reverted after closing the select', function(assert) {
+  assert.expect(2);
+  this.numbers = numbers;
+  this.render(hbs`
+    <div id="outside-div"></div>
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('th'));
+  assert.equal($('.ember-power-select-option').length, 2, 'the dropdown has filtered the results');
+  Ember.run(() => this.$('#outside-div').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
 });
 
 /**

@@ -79,7 +79,6 @@ export default Ember.Component.extend({
 
   onClose() {
     this.set('_searchText', '');
-    this.set('_highlighted', null);
     this._resultsDirty = true;
   },
 
