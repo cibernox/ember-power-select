@@ -1,5 +1,8 @@
 # Master
 
+# 0.5.1
+- [BUGFIX] Fix automatic scroll when navigating using arrows.
+
 # 0.5.0
 - [BREAKING CHANGE] Some classes have changed to be more BEMy and avoid class collisions. You can expect
   things like `.nested`, `.selected`, `.highlighted`, etc.. to be not copies of the default class of that
