@@ -1,6 +1,9 @@
 # Master
 
+# 0.4.4
 - [ENHANCEMENT] Allow to customize tabindex of the trigger
+- [ENHANCEMENT] Pass `select` action and `highlighted` option to the selectedComponent to allow better
+  customization
 
 # 0.4.3
 - [ENHANCEMENT] Pass `search` action to the selected component also for single component.
