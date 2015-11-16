@@ -1,5 +1,8 @@
 # Master
 
+# 0.5.2
+- [BUGFIX] Don't render one option for the Loading message if this is falsey
+
 # 0.5.1
 - [BUGFIX] Fix automatic scroll when navigating using arrows.
 

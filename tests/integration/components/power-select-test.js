@@ -88,14 +88,15 @@ function typeInSearch(text) {
   e) [DONE] The search box gain focus automatically when opened'
   f) [DONE] Each option of the select is the result of yielding an item'
   g) [DONE] If the passed options is a promise, while its not resolved the component shows a Loading message'
-  h) [DONE] If a placeholder is provided, it shows while no element is selected'
-  i) [DONE] If the `selected` value changes the select gets updated, but the `onchange` action doesn't fire.
-  j) [DONE] If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root
-  k) [DONE] If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option
-  l) [DONE] If the content of the selected is refreshed while opened the first element of the list gets highlighted
-  m) [DONE] If the user passes `dropdownClass` the dropdown content should have that class
-  n) [DONE] If the user passes `class` the classes of the dropdown are customized using that
-  o) [DONE] The filtering is reverted after closing the dropdpown
+  h) [DONE] If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is falsey, no loading message is shown
+  i) [DONE] If a placeholder is provided, it shows while no element is selected'
+  j) [DONE] If the `selected` value changes the select gets updated, but the `onchange` action doesn't fire.
+  k) [DONE] If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root
+  l) [DONE] If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option
+  m) [DONE] If the content of the selected is refreshed while opened the first element of the list gets highlighted
+  n) [DONE] If the user passes `dropdownClass` the dropdown content should have that class
+  o) [DONE] If the user passes `class` the classes of the dropdown are customized using that
+  p) [DONE] The filtering is reverted after closing the dropdpown
 */
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
