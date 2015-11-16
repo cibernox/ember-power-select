@@ -171,7 +171,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 }
 
 // LTR styles
-.ember-power-select {
+.ember-power-select[dir=ltr] {
   .ember-power-select-trigger {
     padding: 0 16px 0 8px;
     background-position: right 5px center;
@@ -181,7 +181,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   }
 
 }
-.ember-power-select-dropdown {
+.ember-power-select-dropdown[dir=ltr] {
   .ember-power-select-group {
     .ember-power-select-group {
       .ember-power-select-group-name { padding-left: 3 * $ember-power-select-option-padding; }
