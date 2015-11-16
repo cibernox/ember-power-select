@@ -107,6 +107,7 @@ export default Ember.Component.extend({
 
   scrollIfHighlightedIsOutOfViewport() {
     const optionsList = document.querySelector('.ember-power-select-options');
+    if (!optionsList) { return; }
     const highlightedOption = optionsList.querySelector('.ember-power-select-option.highlighted');
     if (!highlightedOption) { return; }
     const optionTopScroll = highlightedOption.offsetTop - optionsList.offsetTop;
