@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Allow to customize tabindex of the trigger
+
 # 0.4.3
 - [ENHANCEMENT] Pass `search` action to the selected component also for single component.
   This enables ember-power-select to to be the base for typeahead-like components.
