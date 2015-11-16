@@ -19,9 +19,6 @@
 .ember-power-select-trigger {
   border: 1px solid #aaaaaa;
   border-radius: 4px;
-  background-size: 7px 7px;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='0,0 5,0 2.5,5' style='fill:#aaaaaa;'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
   background-color: #ffffff;
   line-height: 1.75;
   text-overflow: ellipsis;
@@ -36,17 +33,29 @@
     height: auto; }
   .ember-power-select:not(.multiple) .ember-power-select-trigger {
     white-space: nowrap; }
-  .ember-power-select.opened .ember-power-select-trigger {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 5'%3E%3Cpolygon points='2.5,0 0,5 5,5' style='fill:#aaaaaa;'/%3E%3C/svg%3E"); }
-  .ember-power-select.opened.below .ember-power-select-trigger {
+  .ember-power-select.ember-basic-dropdown--opened.ember-basic-dropdown--below .ember-power-select-trigger {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0; }
-  .ember-power-select.opened.above .ember-power-select-trigger {
+  .ember-power-select.ember-basic-dropdown--opened.ember-basic-dropdown--above .ember-power-select-trigger {
     border-top-left-radius: 0;
     border-top-right-radius: 0; }
 
 .ember-power-select-placeholder {
   color: #999999; }
+
+.ember-power-select-status-icon {
+  position: absolute;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-style: solid;
+  border-width: 8px 5px 0 5px;
+  border-color: #aaaaaa transparent transparent transparent; }
+  .ember-basic-dropdown--opened .ember-power-select-status-icon {
+    transform: rotate(180deg); }
 
 .ember-power-select-clear-btn {
   position: absolute;
@@ -60,7 +69,8 @@
   display: inline-block;
   line-height: inherit;
   -webkit-appearance: none;
-  outline: none; }
+  outline: none;
+  padding: 0; }
   .ember-power-select-trigger-multiple-input:disabled {
     background-color: #eeeeee; }
 
@@ -100,12 +110,12 @@
   box-shadow: none;
   overflow: hidden;
   color: inherit; }
-  .ember-power-select-dropdown.above {
+  .ember-power-select-dropdown.ember-basic-dropdown--above {
     border-top: 1px solid #aaaaaa;
     border-bottom: none;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0; }
-  .ember-power-select-dropdown.below {
+  .ember-power-select-dropdown.ember-basic-dropdown--below {
     border-top: none;
     border-bottom: 1px solid #aaaaaa;
     border-top-left-radius: 0;
@@ -117,32 +127,37 @@
   padding: 0;
   user-select: none;
   -webkit-user-select: none; }
-  .ember-power-select-options:not(.nested) {
+  .ember-power-select-options:not(.ember-power-select-options--nested) {
     overflow-y: scroll;
     max-height: 12.25em; }
 
 .ember-power-select-option {
   cursor: pointer;
   padding: 0 8px; }
-  .ember-power-select-option.disabled {
-    color: #999999;
-    pointer-events: none; }
-  .ember-power-select-option.selected {
-    background-color: #dddddd; }
-  .ember-power-select-option.highlighted {
-    background-color: #5897fb;
-    color: #ffffff; }
+
+.ember-power-select-option--disabled {
+  color: #999999;
+  pointer-events: none; }
+
+.ember-power-select-option--selected {
+  background-color: #dddddd; }
+
+.ember-power-select-option--highlighted {
+  background-color: #5897fb;
+  color: #ffffff; }
 
 .ember-power-select-group-name {
   cursor: default;
   font-weight: bold; }
 
-.ember-power-select.disabled .ember-power-select-trigger {
+.ember-power-select.ember-basic-dropdown--disabled .ember-power-select-trigger {
   background-color: #eeeeee; }
 
 .ember-power-select .ember-power-select-trigger {
-  padding: 0 16px 0 8px;
-  background-position: right 5px center; }
+  padding: 0 16px 0 8px; }
+
+.ember-power-select .ember-power-select-status-icon {
+  right: 5px; }
 
 .ember-power-select .ember-power-select-clear-btn {
   right: 25px; }
@@ -160,11 +175,15 @@
   padding-left: 8px; }
 
 .ember-power-select[dir=rtl] .ember-power-select-trigger {
-  padding: 0 8px 0 16px;
-  background-position: 5px center; }
+  padding: 0 8px 0 16px; }
+
+.ember-power-select[dir=rtl] .ember-power-select-status-icon {
+  left: 5px;
+  right: initial; }
 
 .ember-power-select[dir=rtl] .ember-power-select-clear-btn {
-  left: 25px; }
+  left: 25px;
+  right: initial; }
 
 .ember-power-select-dropdown[dir=rtl] .ember-power-select-group .ember-power-select-group .ember-power-select-group-name {
   padding-right: 24px; }
