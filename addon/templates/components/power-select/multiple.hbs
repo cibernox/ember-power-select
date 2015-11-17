@@ -1,30 +1,55 @@
 {{#basic-dropdown class=(readonly concatenatedClasses) dir=dir tabindex=(readonly tabindex) renderInPlace=renderInPlace matchTriggerWidth=true
-  disabled=disabled dropdownPosition=dropdownPosition triggerClass=(readonly triggerClass) dropdownClass=_dropdownClass
-  onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) onKeydown=(action onKeydown) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
-  <ul class="ember-power-select-options">
-    {{#if showLoadingMessage}}
-      <li class="ember-power-select-option">{{loadingMessage}}</li>
-    {{/if}}
-    {{#if resultsLength}}
-      {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted) selection=(readonly selection)
-        optionsComponent=(readonly optionsComponent) highlight=(action "highlight") select=(action select)
-        searchText=(readonly _searchText) dropdown=(readonly dropdown) as |option|}}
-        {{yield option}}
-      {{/component}}
-    {{else if mustShowSearchMessage}}
-      <li class="ember-power-select-option">{{searchMessage}}</li>
-    {{else if noPendingPromises}}
-      {{#if hasInverseBlock}}
-        {{yield to="inverse"}}
-      {{else if noMatchesMessage}}
-        <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+  disabled=disabled dropdownPosition=dropdownPosition triggerClass=(readonly triggerClass) dropdownClass=concatenatedDropdownClasses
+  onOpen=(action onOpen) onClose=(action onClose) onFocus=(action focusSearch) onKeydown=(action "handleKeydown") registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+  {{#with (hash
+    isOpen=dropdown.isOpen
+    actions=(hash
+      open=(action "open" dropdown)
+      close=(action "close" dropdown)
+      select=(action "select" dropdown)
+      highlight=(action "highlight" dropdown)
+      search=(action "search" dropdown)
+      removeOption=(action "removeOption" dropdown)
+      handleKeydown=(action "handleKeydown" dropdown)
+    )) as |select|}}
+
+    <ul class="ember-power-select-options">
+      {{#if showLoadingMessage}}
+        <li class="ember-power-select-option">{{loadingMessage}}</li>
       {{/if}}
-    {{/if}}
-  </ul>
+      {{#if resultsLength}}
+        {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted)
+          selection=(readonly selection) optionsComponent=(readonly optionsComponent)
+          searchText=(readonly _searchText) select=(readonly select) as |option|}}
+          {{yield option}}
+        {{/component}}
+      {{else if mustShowSearchMessage}}
+        <li class="ember-power-select-option">{{searchMessage}}</li>
+      {{else if noPendingPromises}}
+        {{#if hasInverseBlock}}
+          {{yield to="inverse"}}
+        {{else if noMatchesMessage}}
+          <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+        {{/if}}
+      {{/if}}
+    </ul>
+  {{/with}}
 {{else}}
-  {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
-    searchText=(readonly _searchText) placeholder=(readonly placeholder) disabled=(readonly disabled) hasPendingPromises=(readonly hasPendingPromises)
-    removeOption=(action "removeOption") search=(action "search") onKeydown=(action onKeydown registeredDropdown) as |opt|}}
-    {{yield opt}}
-  {{/component}}
+  {{#with (hash
+    isOpen=registeredDropdown.isOpen
+    actions=(hash
+      open=(action "open" registeredDropdown)
+      close=(action "close" registeredDropdown)
+      select=(action "select" registeredDropdown)
+      highlight=(action "highlight" registeredDropdown)
+      search=(action "search" registeredDropdown)
+      removeOption=(action "removeOption" registeredDropdown)
+      handleKeydown=(action "handleKeydown" registeredDropdown)
+    )) as |select|}}
+    {{#component selectedComponent selection=(readonly selection) searchText=(readonly _searchText)
+      placeholder=(readonly placeholder) disabled=(readonly disabled) hasPendingPromises=(readonly hasPendingPromises)
+      select=(readonly select) as |opt|}}
+      {{yield opt}}
+    {{/component}}
+  {{/with}}
  {{/basic-dropdown}}

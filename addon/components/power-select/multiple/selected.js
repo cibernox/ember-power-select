@@ -23,8 +23,9 @@ export default Ember.Component.extend({
 
   actions: {
     search(term, e) {
-      this.get('search')(term, e);
-      this.get('dropdown.actions.open')(e);
+      let { search, open } = this.get('select.actions');
+      search(term, e);
+      open(e);
     }
   }
 });

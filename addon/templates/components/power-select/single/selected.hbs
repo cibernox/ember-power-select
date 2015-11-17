@@ -1,7 +1,7 @@
 {{#if selection}}
   {{yield selection}}
-  {{#if allowClear}}
-    <span class="ember-power-select-clear-btn" onclick={{action clearSelection dropdown}}>&times;</span>
+  {{#if select.actions.clear}}
+    <span class="ember-power-select-clear-btn" onclick={{select.actions.clear}}>&times;</span>
   {{/if}}
 {{else if placeholder}}
   <span class="ember-power-select-placeholder">{{placeholder}}</span>

@@ -21,38 +21,33 @@ export default PowerSelectBaseComponent.extend({
 
   // Actions
   actions: {
-    clear(dropdown, e) {
-      e.stopPropagation();
+    select(dropdown, option, e) {
       e.preventDefault();
-      this.set('selection', null);
-      this.get('onchange')(null, dropdown);
-    }
+      e.stopPropagation();
+      if (this.get('closeOnSelect')) {
+        dropdown.actions.close(e);
+      }
+      if (this.get('selection') !== option) {
+        this.get('onchange')(option, dropdown);
+      }
+    },
+
+    handleKeydown(dropdown, e) {
+      if (e.defaultPrevented) { return; }
+      if (e.keyCode === 13 && dropdown.isOpen) { // Enter
+        this.send('select', dropdown, this.get('_highlighted'), e);
+      } else {
+        this._super(...arguments);
+      }
+    },
   },
 
   // Methods
-  onKeydown(dropdown, e) {
-    if (e.defaultPrevented) { return; }
-    if (e.keyCode === 13 && dropdown.isOpen) { // Enter
-      this.select(this.get('_highlighted'), dropdown, e);
-    } else {
-      this._super(...arguments);
-    }
-  },
 
   defaultHighlighted() {
     return this.get('selection') || this.optionAtIndex(0);
   },
 
-  select(option, dropdown, e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (this.get('closeOnSelect')) {
-      dropdown.actions.close(e);
-    }
-    if (this.get('selection') !== option) {
-      this.get('onchange')(option, dropdown);
-    }
-  },
 
   focusSearch() {
     Ember.$('.ember-power-select-search input').focus();

@@ -3,14 +3,15 @@
     <li class="ember-power-select-group">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       <ul class="ember-power-select-options ember-power-select-options--nested">
-        {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection) options=(readonly opt.options)
-          highlight=(readonly highlight) select=(readonly select) optionsComponent=(readonly optionsComponent) dropdown=(readonly dropdown) as |option|}}
+        {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
+          options=(readonly opt.options) optionsComponent=(readonly optionsComponent) select=(readonly select) as |option|}}
           {{yield option}}
         {{/component}}
       </ul>
     </li>
   {{else}}
-    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}" onclick={{action select opt dropdown}} onmouseover={{action highlight opt}}>
+    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"
+      onclick={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}}>
       {{yield opt}}
     </li>
   {{/if}}

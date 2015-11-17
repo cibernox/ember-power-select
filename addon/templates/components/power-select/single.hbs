@@ -1,37 +1,61 @@
 {{#basic-dropdown class=(readonly concatenatedClasses) dir=dir tabindex=(readonly tabindex) renderInPlace=renderInPlace matchTriggerWidth=true
-  disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass=_dropdownClass
-  onOpen=(action onOpen) onClose=(action onClose) onKeydown=(action onKeydown) registerActionsInParent=(action "registerDropdown") as |dropdown|}}
-  {{#if searchEnabled}}
-    <div class="ember-power-select-search">
-      <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
-      spellcheck="false" role="textbox" oninput={{action "search" value="target.value"}}
-      onkeydown={{action onKeydown dropdown}} placeholder={{searchPlaceholder}}>
-    </div>
-  {{/if}}
-  <ul class="ember-power-select-options">
-    {{#if showLoadingMessage}}
-      <li class="ember-power-select-option">{{loadingMessage}}</li>
+  disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass=concatenatedDropdownClasses
+  onOpen=(action onOpen) onClose=(action onClose) onKeydown=(action "handleKeydown") registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+  {{#with (hash
+    isOpen=dropdown.isOpen
+    actions=(hash
+      open=(action "open" dropdown)
+      close=(action "close" dropdown)
+      select=(action "select" dropdown)
+      highlight=(action "highlight" dropdown)
+      search=(action "search" dropdown)
+      clear=(if allowClear (action "select" dropdown null))
+      handleKeydown=(action "handleKeydown" dropdown)
+    )) as |select|}}
+    {{#if searchEnabled}}
+      <div class="ember-power-select-search">
+        <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
+        spellcheck="false" role="textbox" oninput={{action select.actions.search value="target.value"}}
+        onkeydown={{select.actions.handleKeydown}} placeholder={{searchPlaceholder}}>
+      </div>
     {{/if}}
-    {{#if resultsLength}}
-      {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted) selection=(readonly selection) optionsComponent=(readonly optionsComponent)
-        searchText=(readonly _searchText) highlight=(action "highlight") select=(action select) dropdown=(readonly dropdown) as |option|}}
-        {{yield option}}
-      {{/component}}
-    {{else if mustShowSearchMessage}}
-      <li class="ember-power-select-option">{{searchMessage}}</li>
-    {{else if noPendingPromises}}
-      {{#if hasInverseBlock}}
-        {{yield to="inverse"}}
-      {{else if noMatchesMessage}}
-        <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+    <ul class="ember-power-select-options">
+      {{#if showLoadingMessage}}
+        <li class="ember-power-select-option">{{loadingMessage}}</li>
       {{/if}}
-    {{/if}}
-  </ul>
+      {{#if resultsLength}}
+        {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted)
+          selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly _searchText)
+          select=select as |option|}}
+          {{yield option}}
+        {{/component}}
+      {{else if mustShowSearchMessage}}
+        <li class="ember-power-select-option">{{searchMessage}}</li>
+      {{else if noPendingPromises}}
+        {{#if hasInverseBlock}}
+          {{yield to="inverse"}}
+        {{else if noMatchesMessage}}
+          <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+        {{/if}}
+      {{/if}}
+    </ul>
+  {{/with}}
 {{else}}
-  {{#component selectedComponent selection=(readonly selection) dropdown=(readonly registeredDropdown)
-    searchText=(readonly _searchText) placeholder=(readonly placeholder) disabled=(readonly disabled)
-    highlighted=(readonly _highlighted) allowClear=(readonly allowClear) hasPendingPromises=(readonly hasPendingPromises)
-    search=(action "search") select=(action select) clearSelection=(action "clear") as |opt|}}
-    {{yield opt}}
-  {{/component}}
+  {{#with (hash
+    isOpen=registeredDropdown.isOpen
+    actions=(hash
+      open=(action "open" registeredDropdown)
+      close=(action "close" registeredDropdown)
+      select=(action "select" registeredDropdown)
+      highlight=(action "highlight" registeredDropdown)
+      search=(action "search" registeredDropdown)
+      clear=(if allowClear (action "select" registeredDropdown null))
+      handleKeydown=(action "handleKeydown" registeredDropdown)
+    )) as |select|}}
+    {{#component selectedComponent selection=(readonly selection) searchText=(readonly _searchText)
+      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly _highlighted)
+      hasPendingPromises=(readonly hasPendingPromises) select=select as |opt|}}
+      {{yield opt}}
+    {{/component}}
+  {{/with}}
 {{/basic-dropdown}}

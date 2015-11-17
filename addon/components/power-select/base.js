@@ -22,7 +22,7 @@ export default Ember.Component.extend({
   noPendingPromises: computed.not('hasPendingPromises'),
   showLoadingMessage: computed.and('loadingMessage', 'hasPendingPromises'),
 
-  _dropdownClass: computed('class', function() {
+  concatenatedDropdownClasses: computed('class', function() {
     let classes = Ember.A(['ember-power-select-dropdown']);
     if (this.get('dropdownClass')) {
       classes.push(this.get('dropdownClass'));
@@ -42,19 +42,46 @@ export default Ember.Component.extend({
   }),
 
   // hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
-  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 || this.get('showLoadingMessage') ||
-  //     this.get('mustShowSearchMessage') || this.get('hasInverseBlock') || this.get('noMatchesMessage');
+  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 ||
+  //     (this.get('hasPendingPromises') && !!this.get('showLoadingMessage')) ||
+  //     this.get('mustShowSearchMessage') ||
+  //     (!this.get('hasPendingPromises') && (this.get('hasInverseBlock') || this.get('noMatchesMessage')));
   // }),
 
   // Actions
   actions: {
-    highlight(option) {
+    open(dropdown, e) {
+      dropdown.actions.open(e);
+      this.onOpen(e);
+    },
+
+    close(dropdown, e) {
+      dropdown.actions.close(e);
+      this.onClose(e);
+    },
+
+    highlight(dropdown, option) {
       if (option && get(option, 'disabled')) { return; }
       this.set('_highlighted', option);
     },
 
-    search(term /*, e */) {
+    search(dropdown, term /*, e */) {
       this.performSearch(term);
+    },
+
+    handleKeydown(dropdown, e) {
+      if (e.defaultPrevented) { return; }
+      if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+        if (dropdown.isOpen) {
+          this.handleVerticalArrowKey(e);
+        } else {
+          dropdown.actions.open(e);
+        }
+      } else if (e.keyCode === 9) {  // Tab
+        dropdown.actions.close(e);
+      } else if (e.keyCode === 27) { // ESC
+        dropdown.actions.close(e);
+      }
     },
 
     // It is not evident what is going on here, so I'll explain why.
@@ -86,21 +113,7 @@ export default Ember.Component.extend({
   onClose() {
     this.set('_searchText', '');
     this._resultsDirty = true;
-  },
-
-  onKeydown(dropdown, e) {
-    if (e.defaultPrevented) { return; }
-    if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
-      if (dropdown.isOpen) {
-        this.handleVerticalArrowKey(e);
-      } else {
-        dropdown.actions.open(e);
-      }
-    } else if (e.keyCode === 9) {  // Tab
-      dropdown.actions.close(e);
-    } else if (e.keyCode === 27) { // ESC
-      dropdown.actions.close(e);
-    }
+    this.set('_activeSearch', null);
   },
 
   handleVerticalArrowKey(e) {
