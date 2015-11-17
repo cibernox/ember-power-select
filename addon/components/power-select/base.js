@@ -22,7 +22,7 @@ export default Ember.Component.extend({
   noPendingPromises: computed.not('hasPendingPromises'),
   showLoadingMessage: computed.and('loadingMessage', 'hasPendingPromises'),
 
-  _dropdownClass: computed('class', function() {
+  concatenatedDropdownClasses: computed('class', function() {
     let classes = Ember.A(['ember-power-select-dropdown']);
     if (this.get('dropdownClass')) {
       classes.push(this.get('dropdownClass'));
@@ -42,8 +42,10 @@ export default Ember.Component.extend({
   }),
 
   // hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
-  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 || this.get('showLoadingMessage') ||
-  //     this.get('mustShowSearchMessage') || this.get('hasInverseBlock') || this.get('noMatchesMessage');
+  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 ||
+  //     (this.get('hasPendingPromises') && !!this.get('showLoadingMessage')) ||
+  //     this.get('mustShowSearchMessage') ||
+  //     (!this.get('hasPendingPromises') && (this.get('hasInverseBlock') || this.get('noMatchesMessage')));
   // }),
 
   // Actions
@@ -111,6 +113,7 @@ export default Ember.Component.extend({
   onClose() {
     this.set('_searchText', '');
     this._resultsDirty = true;
+    this.set('_activeSearch', null);
   },
 
   handleVerticalArrowKey(e) {
