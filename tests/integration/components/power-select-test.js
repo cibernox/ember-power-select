@@ -1068,7 +1068,7 @@ test('Clicking an item selects it, closes the dropdown and focuses the trigger',
   this.numbers = numbers;
   this.foo = (val, dropdown) => {
     assert.equal(val, 'four', 'The action is invoked with the selected value as first parameter');
-    assert.ok(dropdown.close, 'The action is invoked with the the dropdown object as second parameter');
+    assert.ok(dropdown.actions.close, 'The action is invoked with the the dropdown object as second parameter');
   };
   this.render(hbs`
     {{#power-select options=numbers onchange=foo as |option|}}
@@ -1105,7 +1105,7 @@ test('Clicking the clear button removes the selection', function(assert) {
   this.numbers = numbers;
   this.onChange = function(selected, dropdown) {
     assert.equal(selected, null, 'The onchange action was called with the new selection (null)');
-    assert.ok(dropdown.close, 'The onchange action was called with the dropdown object as second argument');
+    assert.ok(dropdown.actions.close, 'The onchange action was called with the dropdown object as second argument');
   };
   this.render(hbs`
     {{#power-select options=numbers selected="three" allowClear=true onchange=onChange as |option|}}
@@ -1243,7 +1243,7 @@ test('Pressing ENTER selects the highlighted element, closes the dropdown and fo
   this.changed = (val, dropdown) => {
     assert.equal(val, 'two', 'The onchange action is triggered with the selected value');
     this.set('selected', val);
-    assert.ok(dropdown.close, 'The action receives the dropdown as second argument');
+    assert.ok(dropdown.actions.close, 'The action receives the dropdown as second argument');
   };
 
   this.render(hbs`
@@ -1808,7 +1808,7 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   this.didChange = (val, dropdown) => {
     assert.deepEqual(val, [], 'The selected item was unselected');
     this.set('selected', val);
-    assert.ok(dropdown.close, 'The dropdown API is received as second argument');
+    assert.ok(dropdown.actions.close, 'The dropdown API is received as second argument');
   };
   this.render(hbs`
     {{#power-select options=numbers onchange=didChange selected=selected multiple=true as |option|}}

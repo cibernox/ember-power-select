@@ -37,7 +37,7 @@ export default Ember.Component.extend({
         this.set('currentOptions', levelOrOption.parentLevel.options);
       } else {
         this.get('onchange')(levelOrOption);
-        dropdown.close();
+        dropdown.actions.close();
         this.set('currentOptions', this.get('transformedOptions'));
       }
     },

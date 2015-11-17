@@ -40,7 +40,7 @@ export default PowerSelectBaseComponent.extend({
     if (e.defaultPrevented) { return; }
     if (e.keyCode === 8) {  // BACKSPACE
       this.removeLastOptionIfSearchIsEmpty(dropdown);
-      dropdown.open(e);
+      dropdown.actions.open(e);
     } else if (e.keyCode === 13) {
       e.stopPropagation();
       if (dropdown.isOpen) {
@@ -48,10 +48,10 @@ export default PowerSelectBaseComponent.extend({
         if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
           this.select(highlighted, dropdown, e);
         } else {
-          dropdown.close(e);
+          dropdown.actions.close(e);
         }
       } else {
-        dropdown.open(e);
+        dropdown.actions.open(e);
       }
     } else {
       this._super(...arguments);
@@ -72,7 +72,7 @@ export default PowerSelectBaseComponent.extend({
       newSelection.addObject(option);
     }
     if (this.get('closeOnSelect')) {
-      dropdown.close(e);
+      dropdown.actions.close(e);
     }
     this.get('onchange')(newSelection, dropdown);
   },
