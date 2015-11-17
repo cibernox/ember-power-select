@@ -1,7 +1,7 @@
 {{#each selection as |opt|}}
   <span class="ember-power-select-multiple-option">
     {{#unless disabled}}
-      <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onclick={{action removeOption opt dropdown}}>&times;</span>
+      <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onclick={{action select.actions.removeOption opt}}>&times;</span>
     {{/unless}}
     {{yield opt}}
   </span>
@@ -9,5 +9,5 @@
 <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
   autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" style={{triggerMultipleInputStyle}}
   placeholder={{maybePlaceholder}} value={{searchText}} disabled={{disabled}}
-  oninput={{action "search" value="target.value"}} onkeydown={{onKeydown}}>
+  oninput={{action "search" value="target.value"}} onkeydown={{select.actions.handleKeydown}}>
 <span class="ember-power-select-status-icon"></span>

@@ -48,13 +48,38 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    highlight(option) {
+    open(dropdown, e) {
+      dropdown.actions.open(e);
+      this.onOpen(e);
+    },
+
+    close(dropdown, e) {
+      dropdown.actions.close(e);
+      this.onClose(e);
+    },
+
+    highlight(dropdown, option) {
       if (option && get(option, 'disabled')) { return; }
       this.set('_highlighted', option);
     },
 
-    search(term /*, e */) {
+    search(dropdown, term /*, e */) {
       this.performSearch(term);
+    },
+
+    handleKeydown(dropdown, e) {
+      if (e.defaultPrevented) { return; }
+      if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+        if (dropdown.isOpen) {
+          this.handleVerticalArrowKey(e);
+        } else {
+          dropdown.actions.open(e);
+        }
+      } else if (e.keyCode === 9) {  // Tab
+        dropdown.actions.close(e);
+      } else if (e.keyCode === 27) { // ESC
+        dropdown.actions.close(e);
+      }
     },
 
     // It is not evident what is going on here, so I'll explain why.
@@ -86,21 +111,6 @@ export default Ember.Component.extend({
   onClose() {
     this.set('_searchText', '');
     this._resultsDirty = true;
-  },
-
-  onKeydown(dropdown, e) {
-    if (e.defaultPrevented) { return; }
-    if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
-      if (dropdown.isOpen) {
-        this.handleVerticalArrowKey(e);
-      } else {
-        dropdown.actions.open(e);
-      }
-    } else if (e.keyCode === 9) {  // Tab
-      dropdown.actions.close(e);
-    } else if (e.keyCode === 27) { // ESC
-      dropdown.actions.close(e);
-    }
   },
 
   handleVerticalArrowKey(e) {

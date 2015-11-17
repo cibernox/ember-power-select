@@ -29,59 +29,59 @@ export default PowerSelectBaseComponent.extend({
 
   // Actions
   actions: {
-    removeOption(option, dropdown, e) {
+    select(dropdown, option, e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const newSelection = this.cloneSelection();
+      if (newSelection.indexOf(option) > -1) {
+        newSelection.removeObject(option);
+      } else {
+        newSelection.addObject(option);
+      }
+      if (this.get('closeOnSelect')) {
+        dropdown.actions.close(e);
+      }
+      this.get('onchange')(newSelection, dropdown);
+    },
+
+    removeOption(dropdown, option, e) {
       e.stopPropagation();
       this.removeOption(option, dropdown);
+    },
+
+    handleKeydown(dropdown, e) {
+      if (e.defaultPrevented) { return; }
+      if (e.keyCode === 8) {  // BACKSPACE
+        this.removeLastOptionIfSearchIsEmpty(dropdown);
+        dropdown.actions.open(e);
+      } else if (e.keyCode === 13) {
+        e.stopPropagation();
+        if (dropdown.isOpen) {
+          const highlighted = this.get('_highlighted');
+          if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
+            this.send('select', dropdown, highlighted, e);
+          } else {
+            dropdown.actions.close(e);
+          }
+        } else {
+          dropdown.actions.open(e);
+        }
+      } else {
+        this._super(...arguments);
+      }
     },
   },
 
   // Methods
-  onKeydown(dropdown, e) {
-    if (e.defaultPrevented) { return; }
-    if (e.keyCode === 8) {  // BACKSPACE
-      this.removeLastOptionIfSearchIsEmpty(dropdown);
-      dropdown.actions.open(e);
-    } else if (e.keyCode === 13) {
-      e.stopPropagation();
-      if (dropdown.isOpen) {
-        const highlighted = this.get('_highlighted');
-        if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
-          this.select(highlighted, dropdown, e);
-        } else {
-          dropdown.actions.close(e);
-        }
-      } else {
-        dropdown.actions.open(e);
-      }
-    } else {
-      this._super(...arguments);
-    }
-  },
-
   defaultHighlighted() {
     return this.optionAtIndex(0);
-  },
-
-  select(option, dropdown, e) {
-    e.preventDefault();
-    e.stopPropagation();
-    const newSelection = this.cloneSelection();
-    if (newSelection.indexOf(option) > -1) {
-      newSelection.removeObject(option);
-    } else {
-      newSelection.addObject(option);
-    }
-    if (this.get('closeOnSelect')) {
-      dropdown.actions.close(e);
-    }
-    this.get('onchange')(newSelection, dropdown);
   },
 
   removeLastOptionIfSearchIsEmpty(dropdown) {
     if (this.get('_searchText.length') !== 0) { return; }
     const lastSelection = this.get('selection.lastObject');
     if (!lastSelection) { return; }
-    this.removeOption(lastSelection, dropdown);
+    this.removeOption(dropdown, lastSelection);
     if (typeof lastSelection === 'string') {
       this.performSearch(lastSelection);
     } else {
@@ -90,7 +90,7 @@ export default PowerSelectBaseComponent.extend({
     }
   },
 
-  removeOption(option, dropdown) {
+  removeOption(dropdown, option) {
     const newSelection = this.cloneSelection();
     newSelection.removeObject(option);
     this._resultsDirty = true;

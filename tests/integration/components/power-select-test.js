@@ -1103,12 +1103,14 @@ test('Clicking the clear button removes the selection', function(assert) {
   assert.expect(6);
 
   this.numbers = numbers;
-  this.onChange = function(selected, dropdown) {
+  this.onChange = (selected, dropdown) => {
     assert.equal(selected, null, 'The onchange action was called with the new selection (null)');
     assert.ok(dropdown.actions.close, 'The onchange action was called with the dropdown object as second argument');
+    this.set('selected', selected);
   };
+  this.selected = "three";
   this.render(hbs`
-    {{#power-select options=numbers selected="three" allowClear=true onchange=onChange as |option|}}
+    {{#power-select options=numbers selected=selected allowClear=true onchange=onChange as |option|}}
       {{option}}
     {{/power-select}}
   `);
@@ -2094,7 +2096,7 @@ test('Passing as options the result of `store.query` works', function(assert) {
 11 - Customization using components
   a) [DONE] selected option can be customized using selectedComponent.
   b) [DONE] the list of options can be customized using optionsComponent.
-  c) [NOT DONE] The selected component receives the search action and can make use of it
+  c) [NOT DONE] The selected component receives the select's public API and can make use of it
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
@@ -2133,23 +2135,6 @@ test('the list of options can be customized using optionsComponent', function(as
   let text = $('.ember-power-select-options').text().trim();
   assert.ok(/Countries:/.test(text), 'The given component is rendered');
   assert.ok(/3\. Russia/.test(text), 'The component has access to the options');
-});
-
-test('The selected component receives the search action', function(assert) {
-  assert.expect(1);
-
-  this.search = (term) => {
-    assert.equal(term, 'foobar', 'The search action received the text typed in the trigger component');
-    return [];
-  };
-
-  this.render(hbs`
-    {{#power-select search=(action search) selected=foo selectedComponent="typeahead-for-test" onchange=(action (mut foo)) as |country|}}
-      {{country.name}}
-    {{/power-select}}
-  `);
-
-  Ember.run(() => typeText('.typeahead-for-test-input', 'foobar'));
 });
 
 /**
