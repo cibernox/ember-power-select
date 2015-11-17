@@ -54,7 +54,7 @@
     )) as |select|}}
     {{#component selectedComponent selection=(readonly selection) searchText=(readonly _searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly _highlighted)
-      hasPendingPromises=(readonly hasPendingPromises) select=select as |opt|}}
+      hasPendingPromises=(readonly hasPendingPromises) select=select options=(readonly results) as |opt|}}
       {{yield opt}}
     {{/component}}
   {{/with}}

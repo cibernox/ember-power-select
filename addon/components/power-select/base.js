@@ -41,23 +41,21 @@ export default Ember.Component.extend({
     return countOptions(this.get('results'));
   }),
 
-  // hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
-  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 ||
-  //     (this.get('hasPendingPromises') && !!this.get('showLoadingMessage')) ||
-  //     this.get('mustShowSearchMessage') ||
-  //     (!this.get('hasPendingPromises') && (this.get('hasInverseBlock') || this.get('noMatchesMessage')));
-  // }),
+  hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
+    return this.get('searchEnabled') || this.get('resultsLength') > 0 ||
+      (this.get('hasPendingPromises') && !!this.get('showLoadingMessage')) ||
+      this.get('mustShowSearchMessage') ||
+      (!this.get('hasPendingPromises') && (this.get('hasInverseBlock') || this.get('noMatchesMessage')));
+  }),
 
   // Actions
   actions: {
     open(dropdown, e) {
       dropdown.actions.open(e);
-      this.onOpen(e);
     },
 
     close(dropdown, e) {
       dropdown.actions.close(e);
-      this.onClose(e);
     },
 
     highlight(dropdown, option) {
@@ -66,7 +64,8 @@ export default Ember.Component.extend({
     },
 
     search(dropdown, term /*, e */) {
-      this.performSearch(term);
+      let result = this.performSearch(term);
+      return result.then ? result : RSVP.resolve(result);
     },
 
     handleKeydown(dropdown, e) {
@@ -170,6 +169,7 @@ export default Ember.Component.extend({
     }
     this._resultsDirty = false;
     this.set('_highlighted', this.optionAtIndex(0));
+    return this.get('results');
   },
 
   updateOptions(options) {
@@ -189,14 +189,15 @@ export default Ember.Component.extend({
       if (promise !== this.get('_activeSearch')) { return; }
       this.set('hasPendingPromises', false);
     });
+    return promise;
   },
 
   performSearch(term) {
     this.set('_searchText', term);
     if (this.get('search')) {
-      this.performCustomSearch(term);
+      return this.performCustomSearch(term);
     } else {
-      this.refreshResults();
+      return this.refreshResults();
     }
   }
 });
