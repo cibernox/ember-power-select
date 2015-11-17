@@ -94,12 +94,12 @@ export default Ember.Component.extend({
       if (dropdown.isOpen) {
         this.handleVerticalArrowKey(e);
       } else {
-        dropdown.open(e);
+        dropdown.actions.open(e);
       }
     } else if (e.keyCode === 9) {  // Tab
-      dropdown.close(e);
+      dropdown.actions.close(e);
     } else if (e.keyCode === 27) { // ESC
-      dropdown.close(e);
+      dropdown.actions.close(e);
     }
   },
 
