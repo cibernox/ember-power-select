@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Update to ember-cli 1.13.13 to remove `[DEPRECATED] this.Funnel ...`  message.
+
 # 0.6.0-beta.1
 - [BUGFIX] Add missing `this._super.included(app);` in the included hook so runtime dependencies are
   required.
