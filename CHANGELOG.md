@@ -1,5 +1,6 @@
 # Master
 
+# 0.6.0-beta.0
 - [BREAKING CHANGE] The arguments received by the `selectComponent` and `optionsComponent` have changed
   significantly as a result of an internal refactor. It should not affect to people that have not created
   their own customized versions of ember-power-select.
