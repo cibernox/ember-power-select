@@ -719,7 +719,8 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   g) [DONE] When the search resolves to an empty array then the custom noMatchesMessafe is displayed.
   h) [DONE] When the search resolves to an empty array then the given altertate block is rendered.
   i) [DONE] When one search is fired before the previous one resolved, the "Loading" continues until the 2nd is resolved.
-  j) [DONE] Once the promise is resolved, the first element is highlighted.
+  j) [DONE] Once the promise is resolved, the first element is highlighted like with regular filtering.
+  k) [DONE] Closing a component with a custom search cleans the search box and the results list.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Custom search function)', {
@@ -955,6 +956,30 @@ test('When the search resolves, the first element is highlighted like with regul
     assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first result is highlighted');
     done();
   }, 110);
+});
+
+test('Closing a component with a custom search cleans the search box and the results list', function(assert) {
+  assert.expect(5);
+  this.searchFn = function(term) {
+    return RSVP.resolve(numbers.filter(str => str.indexOf(term) > -1));
+  };
+
+  this.render(hbs`
+    <div id="different-node"></div>
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch("teen"));
+  assert.equal($('.ember-power-select-option').length, 7, 'Results are filtered');
+  assert.equal($('.ember-power-select-search input').val(), 'teen');
+  Ember.run(() => this.$('#different-node').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, 1, 'Results have been cleared');
+  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
+  assert.equal($('.ember-power-select-search input').val(), '', 'The searchbox was cleared');
 });
 
 /**

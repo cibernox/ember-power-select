@@ -13,7 +13,8 @@ export default Ember.Component.extend({
   didReceiveAttrs({ newAttrs: { options } }) {
     this._super(...arguments);
     this.set('hasPendingPromises', true);
-    RSVP.Promise.resolve(options && options.value || options)
+
+    RSVP.Promise.resolve(options.hasOwnProperty('value') ? options.value : options)
       .then(opts => this.updateOptions(opts))
       .finally(() => this.set('hasPendingPromises', false));
   },
@@ -41,12 +42,12 @@ export default Ember.Component.extend({
     return countOptions(this.get('results'));
   }),
 
-  hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
-    return this.get('searchEnabled') || this.get('resultsLength') > 0 ||
-      (this.get('hasPendingPromises') && !!this.get('showLoadingMessage')) ||
-      this.get('mustShowSearchMessage') ||
-      (!this.get('hasPendingPromises') && (this.get('hasInverseBlock') || this.get('noMatchesMessage')));
-  }),
+  // hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
+  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 ||
+  //     (this.get('hasPendingPromises') && !!this.get('showLoadingMessage')) ||
+  //     this.get('mustShowSearchMessage') ||
+  //     (!this.get('hasPendingPromises') && (this.get('hasInverseBlock') || this.get('noMatchesMessage')));
+  // }),
 
   // Actions
   actions: {
