@@ -1,5 +1,16 @@
 # Master
 
+- [BREAKING CHANGE] The arguments received by the `selectComponent` and `optionsComponent` have changed
+  significantly as a result of an internal refactor. It should not affect to people that have not created
+  their own customized versions of ember-power-select.
+- [BUGFIX] Ensure that open the dropdown after a search does not clear the results. Results are not
+  cleared when the component is closed, like the `searchText`.
+- [BUGFIX] Ensure `options` and `search` play nicely toguether. The given options are the initial set of
+  results until the user performs the first search. From that point on they diverge.
+- [BUGFIX] Not return from the `search` action is now legal. If you do so, you need to take care
+  of updating the `options` yourself, and unless you make options a promise, you will loose the
+  loading state.
+
 # 0.5.2
 - [BUGFIX] Don't render one option for the Loading message if this is falsey
 
