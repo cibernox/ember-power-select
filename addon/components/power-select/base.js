@@ -65,8 +65,7 @@ export default Ember.Component.extend({
     },
 
     search(dropdown, term /*, e */) {
-      let result = this.performSearch(term);
-      return result.then ? result : RSVP.resolve(result);
+      this.performSearch(term);
     },
 
     handleKeydown(dropdown, e) {
@@ -171,17 +170,22 @@ export default Ember.Component.extend({
     }
     this._resultsDirty = false;
     this.set('_highlighted', this.optionAtIndex(0));
-    return this.get('results');
   },
 
   updateOptions(options) {
     this.set('_options', options);
-    this.refreshResults();
+    if (this.get('search')) {
+      this.set('results', options);
+    } else {
+      this.refreshResults();
+    }
   },
 
   performCustomSearch(term) {
+    const returnedValue = this.get('search')(term);
+    if (returnedValue === undefined) { return; }
+    const promise = RSVP.Promise.resolve(returnedValue);
     this.set('hasPendingPromises', true);
-    const promise = RSVP.Promise.resolve(this.get('search')(term));
     this.set('_activeSearch', promise);
     promise.then(results => {
       if (promise !== this.get('_activeSearch')) { return; }
@@ -191,15 +195,14 @@ export default Ember.Component.extend({
       if (promise !== this.get('_activeSearch')) { return; }
       this.set('hasPendingPromises', false);
     });
-    return promise;
   },
 
   performSearch(term) {
     this.set('_searchText', term);
     if (this.get('search')) {
-      return this.performCustomSearch(term);
+      this.performCustomSearch(term);
     } else {
-      return this.refreshResults();
+      this.refreshResults();
     }
   }
 });
