@@ -721,7 +721,8 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   i) [DONE] When one search is fired before the previous one resolved, the "Loading" continues until the 2nd is resolved.
   j) [DONE] Once the promise is resolved, the first element is highlighted like with regular filtering.
   k) [DONE] Closing a component with a custom search cleans the search box and the results list.
-  l) [DONE] Don't return from the search action and update the options instead also works as an strategy.
+  l) [DONE] When received both options and search, those options are shown when the dropdown opens before the first search is performed
+  m) [DONE] Don't return from the search action and update the options instead also works as an strategy.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Custom search function)', {
