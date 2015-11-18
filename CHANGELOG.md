@@ -1,5 +1,6 @@
 # Master
 
+# 0.6.0-beta.1
 - [BUGFIX] Add missing `this._super.included(app);` in the included hook so runtime dependencies are
   required.
 
