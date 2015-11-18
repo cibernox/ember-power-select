@@ -26,7 +26,7 @@
       {{#if resultsLength}}
         {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted)
           selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly _searchText)
-          select=(readonly select) as |option|}}
+          select=(readonly select) extra=(readonly extra) as |option|}}
           {{yield option}}
         {{/component}}
       {{else if mustShowSearchMessage}}
@@ -54,7 +54,7 @@
     )) as |select|}}
     {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly _searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly _highlighted)
-      hasPendingPromises=(readonly hasPendingPromises) select=(readonly select) as |opt|}}
+      hasPendingPromises=(readonly hasPendingPromises) select=(readonly select) extra=(readonly extra) as |opt|}}
       {{yield opt}}
     {{/component}}
   {{/with}}

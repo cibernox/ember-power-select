@@ -19,8 +19,8 @@
       {{/if}}
       {{#if resultsLength}}
         {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted)
-          selection=(readonly selection) optionsComponent=(readonly optionsComponent)
-          searchText=(readonly _searchText) select=(readonly select) as |option|}}
+          selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly _searchText)
+          select=(readonly select) extra=(readonly extra) as |option|}}
           {{yield option}}
         {{/component}}
       {{else if mustShowSearchMessage}}
@@ -46,9 +46,9 @@
       removeOption=(action "removeOption" registeredDropdown)
       handleKeydown=(action "handleKeydown" registeredDropdown)
     )) as |select|}}
-    {{#component selectedComponent selection=(readonly selection) searchText=(readonly _searchText)
-      placeholder=(readonly placeholder) disabled=(readonly disabled) hasPendingPromises=(readonly hasPendingPromises)
-      select=(readonly select) as |opt|}}
+    {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly _searchText)
+      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly _highlighted)
+      hasPendingPromises=(readonly hasPendingPromises) select=(readonly select) extra=(readonly extra) as |opt|}}
       {{yield opt}}
     {{/component}}
   {{/with}}
