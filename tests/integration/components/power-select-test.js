@@ -721,6 +721,7 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   i) [DONE] When one search is fired before the previous one resolved, the "Loading" continues until the 2nd is resolved.
   j) [DONE] Once the promise is resolved, the first element is highlighted like with regular filtering.
   k) [DONE] Closing a component with a custom search cleans the search box and the results list.
+  l) [DONE] Don't return from the search action and update the options instead also works as an strategy.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Custom search function)', {
@@ -980,6 +981,65 @@ test('Closing a component with a custom search cleans the search box and the res
   assert.equal($('.ember-power-select-option').length, 1, 'Results have been cleared');
   assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
   assert.equal($('.ember-power-select-search input').val(), '', 'The searchbox was cleared');
+});
+
+test('When received both options and search, those options are shown when the dropdown opens before the first search is performed', function(assert) {
+  var done = assert.async();
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.searchFn = (term) => {
+    return new RSVP.Promise(function(resolve) {
+      Ember.run.later(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 50);
+    });
+  };
+
+  this.render(hbs`
+    <div id="different-node"></div>
+    {{#power-select options=numbers search=searchFn onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
+  Ember.run(() => typeInSearch("teen"));
+  assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown and also the loading message');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...');
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, 7, 'All the options are shown but no the loading message');
+    done();
+  }, 100);
+});
+
+test('Don\'t return from the search action and update the options instead also works as an strategy', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+
+  this.selectedOptions = numbers;
+  this.searchFn = (term) => {
+    Ember.run.later(() => {
+      this.set('selectedOptions', numbers.filter(str => str.indexOf(term) > -1));
+    }, 20);
+  };
+
+  this.render(hbs`
+    <div id="different-node"></div>
+    {{#power-select options=selectedOptions search=searchFn onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
+  Ember.run(() => typeInSearch("teen"));
+
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, 7);
+    done();
+  }, 100);
 });
 
 /**
