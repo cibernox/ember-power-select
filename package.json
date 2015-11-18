@@ -26,8 +26,8 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.3.0",
-    "ember-cli": "^1.13.12",
-    "ember-cli-app-version": "1.0.0",
+    "ember-cli": "^1.13.13",
+    "ember-cli-app-version": "^1.0.0",
     "ember-cli-blanket": "0.6.2",
     "ember-cli-content-security-policy": "0.4.0",
     "ember-cli-dependency-checker": "^1.1.0",
@@ -39,7 +39,7 @@
     "ember-cli-qunit": "^1.0.4",
     "ember-cli-release": "0.2.8",
     "ember-cli-sass": "5.1.0",
-    "ember-cli-sri": "^1.1.0",
+    "ember-cli-sri": "^1.2.0",
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "2.0.0",
     "ember-disable-prototype-extensions": "^1.0.0",
@@ -62,7 +62,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-basic-dropdown": "^0.6.0",
+    "ember-basic-dropdown": "^0.6.1",
     "ember-hash-helper-polyfill": "^0.1.0"
   },
   "ember-addon": {
