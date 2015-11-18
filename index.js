@@ -7,6 +7,7 @@ module.exports = {
   name: 'ember-power-select',
 
   included: function(app) {
+    this._super.included(app);
     // Don't include the precompiled css file if the user uses ember-cli-sass
     if (!app.registry.availablePlugins['ember-cli-sass']) {
       var addonConfig = app.options['ember-power-select'];
