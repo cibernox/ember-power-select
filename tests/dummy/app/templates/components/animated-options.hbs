@@ -1,6 +1,6 @@
 {{#liquid-bind options use=animation enableGrowth=enableGrowth as |currentOptions|}}
   {{#each currentOptions as |opt|}}
-    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}" onclick={{action select opt dropdown}} onmouseover={{action highlight opt}}>
+    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}" onclick={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}}>
       {{yield opt}}
     </li>
   {{/each}}
