@@ -1,6 +1,11 @@
 # Master
 
+# 0.6.0-beta.2
 - [BUGFIX] Update to ember-cli 1.13.13 to remove `[DEPRECATED] this.Funnel ...`  message.
+- [BUGFIX] Fix styles when rendering the component in place
+- [BUGFIX] Fix position calculation in firefox.
+- [BUGFIX] Using `dropdownPosition=above|below` adds the proper class names to the component.
+- [DOCS] Fixed typos and outdated links.
 
 # 0.6.0-beta.1
 - [BUGFIX] Add missing `this._super.included(app);` in the included hook so runtime dependencies are
