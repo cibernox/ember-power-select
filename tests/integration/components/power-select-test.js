@@ -243,7 +243,6 @@ test('If the passed options is a promise and it\'s not resolved but the `loading
   }, 120);
 });
 
-
 test('If a placeholder is provided, it shows while no element is selected', function(assert) {
   assert.expect(3);
 
@@ -392,6 +391,19 @@ test('The filtering is reverted after closing the select', function(assert) {
   Ember.run(() => this.$('#outside-div').click());
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.equal($('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
+});
+
+test('It has the appropriate class when it receives a specific dropdown position', function(assert) {
+  assert.expect(1);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) dropdownPosition="above" as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--above'), 'It has the class of dropdowns positioned above');
 });
 
 /**

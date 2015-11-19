@@ -20,8 +20,7 @@ const groupedSections = [
     options: [
       { route: 'docs.the-list',         text: 'The list' },
       { route: 'docs.the-trigger',      text: 'The trigger' },
-      { route: 'docs.messages',         text: 'Messages' },
-      { route: 'docs.filtering',        text: 'Filtering' },
+      { route: 'docs.the-search',       text: 'The Search' },
       { route: 'docs.styles',           text: 'Styles' },
     ]
   },

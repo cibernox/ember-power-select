@@ -8,7 +8,8 @@ const groupedSections = [
     groupName: 'Basic recipes',
     options: [
       { route: 'cookbook.index',            text: 'System-wide config' },
-      { route: 'cookbook.bootstrap-theme',  text: 'Installation' },
+      { route: 'cookbook.bootstrap-theme',  text: 'Bootstrap theme' },
+      { route: 'cookbook.debounce-searches',text: 'Debounce searches' },
     ]
   },
   {
