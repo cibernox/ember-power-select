@@ -46,7 +46,7 @@ export default PowerSelectBaseComponent.extend({
 
     removeOption(dropdown, option, e) {
       e.stopPropagation();
-      this.removeOption(option, dropdown);
+      this.removeOption(dropdown, option);
     },
 
     handleKeydown(dropdown, e) {
