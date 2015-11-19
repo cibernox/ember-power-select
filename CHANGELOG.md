@@ -1,5 +1,8 @@
 # Master
 
+# 0.6.0-beta.3
+- [BUGFIX] Remove loading state if a promise fullfils after the dropdown has been closed
+
 # 0.6.0-beta.2
 - [BUGFIX] Update to ember-cli 1.13.13 to remove `[DEPRECATED] this.Funnel ...`  message.
 - [BUGFIX] Fix styles when rendering the component in place
