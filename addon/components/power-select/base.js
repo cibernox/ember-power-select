@@ -192,7 +192,8 @@ export default Ember.Component.extend({
       this.set('results', results);
       this.set('_highlighted', this.optionAtIndex(0));
     }).finally(() => {
-      if (promise !== this.get('_activeSearch')) { return; }
+      const activePromise = this.get('_activeSearch');
+      if (activePromise && promise !== activePromise) { return; }
       this.set('hasPendingPromises', false);
     });
   },
