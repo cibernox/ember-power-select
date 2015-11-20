@@ -18,3 +18,4 @@ testem.log
 coverage.json
 .divshot-cache
 .pagefrontrc
+.thoughts.md
