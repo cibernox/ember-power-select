@@ -145,7 +145,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   user-select: none;
   -webkit-user-select: none;
   &:not(.ember-power-select-options--nested) {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: #{$ember-power-select-number-of-visible-options * $ember-power-select-line-height}em;
   }
 }
