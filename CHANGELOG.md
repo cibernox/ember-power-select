@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] The overflow-y should be auto to not show the bar until it's required by the height of the
+  option list.
+
 # 0.6.0-beta.3
 - [BUGFIX] Remove loading state if a promise fullfils after the dropdown has been closed
 
