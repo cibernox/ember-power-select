@@ -333,6 +333,65 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
+test('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+
+  let data = [];
+  this.proxy = Ember.A(data);
+  this.search = () => {
+    return new RSVP.Promise(function(resolve) {
+      resolve(data);
+      Ember.run.later(function() {
+        data.pushObject('one');
+      }, 100);
+    });
+  };
+
+  this.render(hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch("o"));
+
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown after proxy is updated');
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
+    done();
+  }, 150);
+});
+
+test('If the content of the options is updated (starting with populated array proxy) the available options should also refresh', function(assert) {
+  let done = assert.async();
+  assert.expect(5);
+
+  let data = ['one'];
+  this.proxy = Ember.A(data);
+  this.search = () => {
+    return new RSVP.Promise(function(resolve) {
+      resolve(data);
+      Ember.run.later(function() {
+        data.pushObject('owner');
+      }, 100);
+    });
+  };
+
+  this.render(hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+
+  assert.equal($('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown with initial proxy contents');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
+
+  Ember.run(() => typeInSearch("o"));
+
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, 2, 'The dropdown is opened and results shown after proxy is updated');
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
+    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'owner');
+    done();
+  }, 150);
+});
+
 test('If the content of the selected is refreshed while opened the first element of the list gets highlighted', function(assert) {
   assert.expect(2);
 
