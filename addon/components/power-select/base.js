@@ -38,7 +38,7 @@ export default Ember.Component.extend({
     return this.get('_searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage');
   }),
 
-  resultsLength: computed('results', function() {
+  resultsLength: computed('results.[]', function() {
     return countOptions(this.get('results'));
   }),
 
