@@ -1,5 +1,8 @@
 # Master
 
+# 0.6.0-beta.4
+- [BUGFIX] Component not detects aditions aditions/removals to the `options`, not just substututions
+  of the entire collection.
 - [BUGFIX] The overflow-y should be auto to not show the bar until it's required by the height of the
   option list.
 
