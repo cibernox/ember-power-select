@@ -1,6 +1,7 @@
 # Master
 
 - [DOCS] Document how to disable specific option
+- [DOCS] Add troubleshooting section with most common pitfalls.
 
 # 0.6.0-beta.4
 - [BUGFIX] Component not detects aditions aditions/removals to the `options`, not just substututions
