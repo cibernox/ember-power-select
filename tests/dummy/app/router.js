@@ -23,7 +23,9 @@ Router.map(function() {
 
     // ADVANCED CUSTOMIZATION
     this.route('asynchronous-search');
-    this.route('roll-your-own-template');
+
+    // OTHER
+    this.route('troubleshooting');
 
   });
   this.route('cookbook', function() {

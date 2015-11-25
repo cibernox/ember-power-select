@@ -1,0 +1,49 @@
+<h1 class="doc-page-title">Troubleshooting</h1>
+
+<h3>The options are not visible in modals</h3>
+
+<p>
+  The list of options in ember-power-select has by default <code>z-index: 1000</code>. This apparently
+  magical number is the same that some popular css frameworks like bootstrap use by default for
+  dropdowns.
+  Modals usually have higher z-indexes (bootstrap itself uses 1050) because if a modal opens
+  unexpectedly while ember-power-select is open, you don't want the list of options to be placed on top.
+</p>
+
+<p>
+  However if you want to render a select inside a model, that is a situation you can predict and
+  design for. There is two possible solutions:
+</p>
+
+<ol>
+  <li>
+    Add a specific class to the select (p.e. <code>class="in-modal"</code>) will make the dropdown
+    to have the class <code>"in-modal-dropdown"</code>. You can increase the z-index of this kind
+    of selects.
+  </li>
+  <br>
+  <li>
+    Pass <code>renderInPlace=true</code>. This will make the list of options be placed next to the trigger
+    instead of being attached to the body, and therefore it won't be afected by this z-index issue. Keep
+    in mind that when rendered in place the list of options will loose its ability to intelligently
+    position itself above the component if the space below is too small to fit it.
+  </li>
+</ol>
+
+<h3>Nothing is rendered when I click the select</h3>
+
+<p>
+  This addon uses the <code>contentFor</code> hook to add an empty div in the <code>\{{content-for "body-footer"}}</code>
+  placeholder defined in the <code>index.html</code> of most ember-cli applications.
+</p>
+
+<p>
+  If your application is deviating from the standard approach (by example if you're attaching your
+  app to a specific node) this approach might not work for your and you'll need to add a
+  <code>&lt;div id="ember-basic-dropdown-wormhole"&gt;&lt;/div&gt;</code> manually in your
+  <code>application.hbs</code>.
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.asynchronous-search' class="doc-page-nav-link-prev"}}&lt; Asynchronous search{{/link-to}}
+</div>

@@ -16,7 +16,9 @@
 
     <header class="side-nav-header">Advanced customization</header>
     {{#link-to 'docs.asynchronous-search' class="side-nav-link"}}Asynchronous search{{/link-to}}
-    {{!-- {{#link-to 'docs.roll-your-own-template' class="side-nav-link"}}Roll your own template{{/link-to}} --}}
+
+    <header class="side-nav-header">Other</header>
+    {{#link-to 'docs.troubleshooting' class="side-nav-link"}}Troubleshooting{{/link-to}}
   </nav>
   <section class="doc-page">
     {{#power-select selected=currentSection options=groupedSections onchange=(action 'visit') searchField="text" searchEnabled=false class="section-selector" as |option|}}

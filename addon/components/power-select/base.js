@@ -42,13 +42,6 @@ export default Ember.Component.extend({
     return countOptions(this.get('results'));
   }),
 
-  // hasContent: computed('searchEnabled', 'resultsLength', 'showLoadingMessage', 'mustShowSearchMessage', 'hasInverseBlock', 'noMatchesMessage', function() {
-  //   return this.get('searchEnabled') || this.get('resultsLength') > 0 ||
-  //     (this.get('hasPendingPromises') && !!this.get('showLoadingMessage')) ||
-  //     this.get('mustShowSearchMessage') ||
-  //     (!this.get('hasPendingPromises') && (this.get('hasInverseBlock') || this.get('noMatchesMessage')));
-  // }),
-
   // Actions
   actions: {
     open(dropdown, e) {
