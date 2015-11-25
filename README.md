@@ -30,7 +30,7 @@ wouldn't work in IE9+. If you find any problem please file an issue.
 
 In testing it requires phantomjs 2.0+.
 
-## Troubleshotting
+## Troubleshooting
 
 If something doesn't work visit the [Troubleshooting](http://www.ember-power-select.com/docs/troubleshooting) section of the docs first, and if your problem
 persist open an issue.
