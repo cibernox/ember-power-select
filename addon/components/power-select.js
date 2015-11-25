@@ -31,7 +31,7 @@ export const defaultOptions = {
   // Lifecycle hooks
   didInitAttrs() {
     this._super(...arguments);
-    Ember.assert('{{ember-power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
+    Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
 
   // CPs
