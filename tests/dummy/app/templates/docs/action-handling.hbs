@@ -9,7 +9,13 @@
 <p>
   Data changes that occur in the component are not propagated to the outside using two-way bindings,
   but rather they are communicated via actions. The main action you're going to use is the <code>onchange</code>
-  action. This action will fire whenever an option of the component's list is selected.
+  action.
+</p>
+
+<h3><code>onchange</code> Action</h3>
+
+<p>
+  This action will fire whenever an option of the component is selected or unselected.
 </p>
 
 <p>
@@ -75,6 +81,55 @@
   it simplifies a lot the mental model and enables some advanced usages that would otherwise be
   very tricky to implement.
 </p>
+
+<h3><code>onkeydown</code> Action</h3>
+
+<p>
+  The second option you can provide to the component to customize it's behavior is <code>onkeypress</code>.
+  This options will be fired whenever the user presses a key while the component or the search input inside
+  have the focus.
+</p>
+
+<p>
+  This action receives two arguments, <code>dropdown</code> and <code>event</code>. The first one is
+  an object that you can use to control the component through it's actions (open, close, toggle...).
+  The event is the raw <code>keypress</code> event you can use to decide what to do next. If you
+  prevent default on this component you will also prevent the default behavior in the component
+  when that key is pressed (p.e. open/close the select or navigate through the options using the arrow keys)
+</p>
+
+<p>
+  One particular common use case for this action is to add new options in multiple selects when the
+  user introduced free text.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select multiple=true selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
+      \{{name}}
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      cities: ['Barcelona', 'London', 'New York', 'Porto'],
+      selectedCities: [],
+      actions: {
+        handleKeydown(dropdown, e) {
+          if (e.keyCode !== 13) { return; }
+          let text = e.target.value;
+          if (text.length > 0 && this.get('cities').indexOf(text) === -1) {
+            this.get('selectedCities').pushObject(text);
+          }
+        }
+      }
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select multiple=true selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
+      {{name}}
+    {{/power-select}}
+  </div>
+{{/code-sample}}
 
 <p>
   Have I mentioned that your can also render groups?

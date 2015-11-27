@@ -1514,6 +1514,99 @@ test('Pressing ESC while the component is opened closes it and focuses the trigg
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The select is focused');
 });
 
+test('In single-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', function(assert) {
+  assert.expect(7);
+
+  this.numbers = numbers;
+  this.selected = null;
+  this.handleKeydown = (select, e) => {
+    assert.ok(select.isOpen, 'The yieded object has the `isOpen` key');
+    assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
+    assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
+    assert.ok(select.actions.toggle, 'The yieded object has an `actions.toggle` key');
+    assert.equal(e.keyCode, 13, 'The event is received as second argument');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 13));
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+});
+
+test('in single-mode if the users calls preventDefault on the event received in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.selected = null;
+  this.handleKeydown = (select, e) => {
+    e.preventDefault();
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 13));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
+});
+
+test('In multiple-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', function(assert) {
+  assert.expect(7);
+
+  this.numbers = numbers;
+  this.selectedNumbers = [];
+  this.handleKeydown = (select, e) => {
+    assert.ok(select.isOpen, 'The yieded object has the `isOpen` key');
+    assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
+    assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
+    assert.ok(select.actions.toggle, 'The yieded object has an `actions.toggle` key');
+    assert.equal(e.keyCode, 13, 'The event is received as second argument');
+  };
+
+  this.render(hbs`
+    {{#power-select multiple=true options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  Ember.run(() => triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13));
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+});
+
+test('in multiple-mode if the users calls preventDefault on the event received in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.selectedNumbers = [];
+  this.handleKeydown = (select, e) => {
+    e.preventDefault();
+  };
+
+  this.render(hbs`
+    {{#power-select multiple=true options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  Ember.run(() => triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13));
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
+});
+
+
 /**
 9 - Disabled select/options
   a) [DONE] A disabled dropdown doesn't responds to mouse/keyboard events
