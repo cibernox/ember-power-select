@@ -1,11 +1,15 @@
 # Master
 
+# 0.6.0-beta.6
 - [DOCS] Document how to disable specific option
 - [DOCS] Add troubleshooting section with most common pitfalls.
 - [FEATURE] The user can provide a `onkeydown` action that will be invoked whenever the user
   presses a key being the component (of the searchbox inside) focused. This enables to create
   selects components that can create options on the fly (tags).
   This action received the dropdown as first argument and the event as second argument
+
+# 0.6.0-beta.5
+- [BUGFIX] Update ember-basic-dropdown to be sure dropdown reposition is runloop aware.
 
 # 0.6.0-beta.4
 - [BUGFIX] Component not detects aditions aditions/removals to the `options`, not just substututions
