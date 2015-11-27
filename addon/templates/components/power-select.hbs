@@ -24,8 +24,10 @@
     class=class
     dropdownClass=dropdownClass
     extra=extra
-    as |option|}}
-    {{yield option}}
+    as |option footer|}}
+  {{#if (or (not-eq option 'noop') hasFooter)}}
+    {{yield option footer}}
+  {{/if}}
   {{else}}
-    {{yield to="inverse"}}
+      {{yield to="inverse"}}
 {{/component}}

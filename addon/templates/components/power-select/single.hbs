@@ -39,6 +39,9 @@
         {{/if}}
       {{/if}}
     </ul>
+        <div class="ember-power-select-footer">
+          {{yield 'noop' true}}
+        </div>
   {{/with}}
 {{else}}
   {{#with (hash
