@@ -50,6 +50,8 @@ export default PowerSelectBaseComponent.extend({
     },
 
     handleKeydown(dropdown, e) {
+      const onkeydown = this.get('onkeydown');
+      if (onkeydown) { onkeydown(dropdown, e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 8) {  // BACKSPACE
         this.removeLastOptionIfSearchIsEmpty(dropdown);
