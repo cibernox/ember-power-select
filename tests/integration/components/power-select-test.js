@@ -86,17 +86,18 @@ function typeInSearch(text) {
   c) [DONE] Search functionality is enabled by default'
   d) [DONE] The search functionality can be disabled by passing `searchEnabled=false`'
   e) [DONE] The search box gain focus automatically when opened'
-  f) [DONE] Each option of the select is the result of yielding an item'
-  g) [DONE] If the passed options is a promise, while its not resolved the component shows a Loading message'
-  h) [DONE] If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is falsey, no loading message is shown
-  i) [DONE] If a placeholder is provided, it shows while no element is selected'
-  j) [DONE] If the `selected` value changes the select gets updated, but the `onchange` action doesn't fire.
-  k) [DONE] If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root
-  l) [DONE] If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option
-  m) [DONE] If the content of the selected is refreshed while opened the first element of the list gets highlighted
-  n) [DONE] If the user passes `dropdownClass` the dropdown content should have that class
-  o) [DONE] If the user passes `class` the classes of the dropdown are customized using that
-  p) [DONE] The filtering is reverted after closing the dropdpown
+  f) [DONE] The footer section is rendered when specified
+  g) [DONE] Each option of the select is the result of yielding an item'
+  h) [DONE] If the passed options is a promise, while its not resolved the component shows a Loading message'
+  i)  [DONE] If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is falsey, no loading message is shown
+  j) [DONE] If a placeholder is provided, it shows while no element is selected'
+  k) [DONE] If the `selected` value changes the select gets updated, but the `onchange` action doesn't fire.
+  l) [DONE] If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root
+  m) [DONE] If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option
+  n) [DONE] If the content of the selected is refreshed while opened the first element of the list gets highlighted
+  o) [DONE] If the user passes `dropdownClass` the dropdown content should have that class
+  p) [DONE] If the user passes `class` the classes of the dropdown are customized using that
+  q) [DONE] The filtering is reverted after closing the dropdpown
 */
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
@@ -177,6 +178,24 @@ test('The search box gain focus automatically when opened', function(assert) {
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   assert.ok($('.ember-power-select-search input').get(0) === document.activeElement, 'The search box is focused after opening select');
+});
+
+test('The footer is enabled when specified', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers  hasFooter= true onchange=(action (mut foo)) as |option footer|}}
+      {{#if footer}}
+          <div class="ember-power-select-footer-content">Custom footer</div>
+      {{else}}
+        {{option}}
+      {{/if}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  assert.equal($('.ember-power-select-footer-content').length, 1, 'The footer is rendered');
 });
 
 test('Each option of the select is the result of yielding an item', function(assert) {
