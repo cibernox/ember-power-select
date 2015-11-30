@@ -48,7 +48,7 @@
     "ember-pagefront": "0.5.0",
     "ember-truth-helpers": "1.2.0",
     "ember-try": "0.0.8",
-    "liquid-fire": "0.21.3",
+    "liquid-fire": "0.22.0",
     "node-sass": "^3.4.2",
     "simple-git": "^1.10.0"
   },
