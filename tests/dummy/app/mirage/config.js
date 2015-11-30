@@ -7,7 +7,7 @@ export default function() {
     };
   });
 
-  
   this.passthrough('http://api.github.com/search/repositories');
   
+  this.pretender.get('/*passthrough', this.pretender.passthrough);
 }
