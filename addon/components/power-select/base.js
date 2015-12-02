@@ -4,8 +4,8 @@ const { RSVP, computed, run, get } = Ember;
 
 export default Ember.Component.extend({
   tagName: '',
-  _highlighted: null,
-  _searchText: '',
+  highlighted: null,
+  searchText: '',
   hasPendingPromises: false,
   attributeBindings: ['dir'],
 
@@ -34,8 +34,8 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }),
 
-  mustShowSearchMessage: computed('_searchText', 'search', 'searchMessage', function(){
-    return this.get('_searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage');
+  mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', function(){
+    return this.get('searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage');
   }),
 
   resultsLength: computed('results.[]', function() {
@@ -54,7 +54,7 @@ export default Ember.Component.extend({
 
     highlight(dropdown, option) {
       if (option && get(option, 'disabled')) { return; }
-      this.set('_highlighted', option);
+      this.set('highlighted', option);
     },
 
     search(dropdown, term /*, e */) {
@@ -97,13 +97,13 @@ export default Ember.Component.extend({
   // Methods
   onOpen(e) {
     if (this._resultsDirty) { this.refreshResults(); }
-    this.set('_highlighted', this.defaultHighlighted());
+    this.set('highlighted', this.defaultHighlighted());
     run.scheduleOnce('afterRender', this, this.focusSearch, e);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
   onClose() {
-    this.set('_searchText', '');
+    this.set('searchText', '');
     if (this.get('search')) {
       this.set('results', this.get('_options'));
     }
@@ -113,8 +113,8 @@ export default Ember.Component.extend({
 
   handleVerticalArrowKey(e) {
     e.preventDefault();
-    const newHighlighted = this.advanceSelectableOption(this.get('_highlighted'), e.keyCode === 40 ? 1 : -1);
-    this.set('_highlighted', newHighlighted);
+    const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
+    this.set('highlighted', newHighlighted);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
@@ -151,7 +151,7 @@ export default Ember.Component.extend({
   },
 
   refreshResults() {
-    const { _options: options, _searchText: searchText } = this.getProperties('_options', '_searchText');
+    const { _options: options, searchText } = this.getProperties('_options', 'searchText');
     if (!this.get('search')) {
       let matcher;
       if (this.get('searchField')) {
@@ -162,7 +162,7 @@ export default Ember.Component.extend({
       this.set('results', filterOptions(options || [], searchText, matcher));
     }
     this._resultsDirty = false;
-    this.set('_highlighted', this.optionAtIndex(0));
+    this.set('highlighted', this.optionAtIndex(0));
   },
 
   updateOptions(options) {
@@ -183,7 +183,7 @@ export default Ember.Component.extend({
     promise.then(results => {
       if (promise !== this.get('_activeSearch')) { return; }
       this.set('results', results);
-      this.set('_highlighted', this.optionAtIndex(0));
+      this.set('highlighted', this.optionAtIndex(0));
     }).finally(() => {
       const activePromise = this.get('_activeSearch');
       if (activePromise && promise !== activePromise) { return; }
@@ -192,7 +192,7 @@ export default Ember.Component.extend({
   },
 
   performSearch(term) {
-    this.set('_searchText', term);
+    this.set('searchText', term);
     if (this.get('search')) {
       this.performCustomSearch(term);
     } else {

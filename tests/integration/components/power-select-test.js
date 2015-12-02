@@ -1629,7 +1629,7 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => $('.ember-power-select-option--disabled:eq(0)').trigger('mouseover'));
-  assert.ok(!$('.ember-power-select-option--disabled:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The hovered option was not highligted because it\'s disabled');
+  assert.ok(!$('.ember-power-select-option--disabled:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The hovered option was not highlighted because it\'s disabled');
 });
 
 test('Disabled options are skipped when highlighting items with the keyboard', function(assert) {
@@ -1645,7 +1645,7 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   Ember.run(() => this.$('.ember-power-select-trigger').click());
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
-  assert.ok($('.ember-power-select-option--highlighted').text().trim(), 'LV: Latvia' ,'The hovered option was not highligted because it\'s disabled');
+  assert.ok($('.ember-power-select-option--highlighted').text().trim(), 'LV: Latvia' ,'The hovered option was not highlighted because it\'s disabled');
 });
 
 /**

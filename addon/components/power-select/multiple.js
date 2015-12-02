@@ -59,7 +59,7 @@ export default PowerSelectBaseComponent.extend({
       } else if (e.keyCode === 13) {
         e.stopPropagation();
         if (dropdown.isOpen) {
-          const highlighted = this.get('_highlighted');
+          const highlighted = this.get('highlighted');
           if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
             this.send('select', dropdown, highlighted, e);
           } else {
@@ -80,7 +80,7 @@ export default PowerSelectBaseComponent.extend({
   },
 
   removeLastOptionIfSearchIsEmpty(dropdown) {
-    if (this.get('_searchText.length') !== 0) { return; }
+    if (this.get('searchText.length') !== 0) { return; }
     const lastSelection = this.get('selection.lastObject');
     if (!lastSelection) { return; }
     this.removeOption(dropdown, lastSelection);
