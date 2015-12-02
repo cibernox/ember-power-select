@@ -37,7 +37,7 @@ export default PowerSelectBaseComponent.extend({
       if (onkeydown) { onkeydown(dropdown, e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 13 && dropdown.isOpen) { // Enter
-        this.send('select', dropdown, this.get('_highlighted'), e);
+        this.send('select', dropdown, this.get('highlighted'), e);
       } else {
         this._super(...arguments);
       }

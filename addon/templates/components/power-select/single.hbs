@@ -24,8 +24,8 @@
         <li class="ember-power-select-option">{{loadingMessage}}</li>
       {{/if}}
       {{#if resultsLength}}
-        {{#component optionsComponent options=(readonly results) highlighted=(readonly _highlighted)
-          selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly _searchText)
+        {{#component optionsComponent options=(readonly results) highlighted=(readonly highlighted)
+          selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
           select=(readonly select) extra=(readonly extra) as |option term|}}
           {{yield option term}}
         {{/component}}
@@ -52,8 +52,8 @@
       clear=(if allowClear (action "select" registeredDropdown null))
       handleKeydown=(action "handleKeydown" registeredDropdown)
     )) as |select|}}
-    {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly _searchText)
-      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly _highlighted)
+    {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly searchText)
+      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted)
       hasPendingPromises=(readonly hasPendingPromises) select=(readonly select) extra=(readonly extra) as |opt term|}}
       {{yield opt term}}
     {{/component}}
