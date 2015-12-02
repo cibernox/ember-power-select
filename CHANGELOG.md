@@ -1,7 +1,9 @@
 # Master
 
+# 0.6.1
 - [DOCS] Add API reference table to the docs
 - [FEATURE] Yielded block receives the search term as a second argument
+- [BUGFIX] Use getOwner polyfill to avoid deprecations in ember 2.3
 
 # 0.6.0
 - [DOCS] Fix async search using github API example
