@@ -1,5 +1,8 @@
 # Master
 
+# 0.6.0
+- [DOCS] Fix async search using github API example
+
 # 0.6.0-beta.6
 - [DOCS] Document how to disable specific option
 - [DOCS] Add troubleshooting section with most common pitfalls.
