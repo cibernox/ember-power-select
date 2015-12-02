@@ -195,7 +195,6 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-
   assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
   setTimeout(function() {
     assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
@@ -964,14 +963,14 @@ test('When one search is fired before the previous one resolved, the "Loading" c
     {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').click());
-  Ember.run(() => typeInSearch("teen"));
+  Ember.run(() => typeInSearch("tee"));
 
   setTimeout(function() {
     Ember.run(() => typeInSearch("teen"));
   }, 50);
 
   setTimeout(function() {
-    assert.ok(/Loading options/.test($('.ember-power-select-option').text()));
+    assert.ok(/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is visible');
     assert.equal($('.ember-power-select-option').length, 1, 'No results are shown');
   }, 120);
 

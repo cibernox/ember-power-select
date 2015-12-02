@@ -50,7 +50,6 @@ export default PowerSelectBaseComponent.extend({
     return this.get('selection') || this.optionAtIndex(0);
   },
 
-
   focusSearch() {
     Ember.$('.ember-power-select-search input').focus();
   }

@@ -10,8 +10,11 @@ export function countOptions(collection) {
   let counter = 0;
   (function walk(collection) {
     if (!collection) { return null; }
+    if (!collection.objectAt) {
+      collection = Ember.A(collection);
+    }
     for (let i = 0; i < get(collection, 'length'); i++) {
-      let entry = get(collection, '' + i);
+      let entry = collection.objectAt(i);
       if (isGroup(entry)) {
         walk(get(entry, 'options'));
       } else {
@@ -26,8 +29,11 @@ export function indexOfOption(collection, option) {
   let index = 0;
   return (function walk(collection) {
     if (!collection) { return null; }
+    if (!collection.objectAt) {
+      collection = Ember.A(collection);
+    }
     for (let i = 0; i < get(collection, 'length'); i++) {
-      let entry = get(collection, '' + i);
+      let entry = collection.objectAt(i);
       if (isGroup(entry)) {
         let result = walk(get(entry, 'options'));
         if (result > -1) { return result; }
@@ -45,10 +51,13 @@ export function optionAtIndex(originalCollection, index) {
   let counter = 0;
   return (function walk(collection) {
     if (!collection) { return null; }
+    if (!collection.objectAt) {
+      collection = Ember.A(collection);
+    }
     let localCounter = 0;
     const length = get(collection, 'length');
     while (counter <= index && localCounter < length) {
-      let entry = get(collection, String(localCounter));
+      let entry = collection.objectAt(localCounter);
       if (isGroup(entry)) {
         let found = walk(get(entry, 'options'));
         if (found) { return found; }

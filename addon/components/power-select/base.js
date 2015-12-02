@@ -1,27 +1,18 @@
 import Ember from 'ember';
 import { indexOfOption, optionAtIndex, filterOptions, countOptions } from '../../utils/group-utils';
-const { RSVP, computed, run, get } = Ember;
+const { RSVP, computed, run, get, isBlank } = Ember;
+const Promise = RSVP.Promise;
+const PromiseArray = Ember.ArrayProxy.extend(Ember.PromiseProxyMixin);
 
 export default Ember.Component.extend({
   tagName: '',
-  highlighted: null,
   searchText: '',
-  hasPendingPromises: false,
+  searchReturnedUndefined: false,
+  activeSearch: null,
   attributeBindings: ['dir'],
 
-  // Lifecycle hooks
-  didReceiveAttrs({ newAttrs: { options } }) {
-    this._super(...arguments);
-    this.set('hasPendingPromises', true);
-
-    RSVP.Promise.resolve(options.hasOwnProperty('value') ? options.value : options)
-      .then(opts => this.updateOptions(opts))
-      .finally(() => this.set('hasPendingPromises', false));
-  },
-
   // CPs
-  noPendingPromises: computed.not('hasPendingPromises'),
-  showLoadingMessage: computed.and('loadingMessage', 'hasPendingPromises'),
+  showLoadingMessage: computed.and('loadingMessage', 'results.isPending'),
 
   concatenatedDropdownClasses: computed('class', function() {
     let classes = Ember.A(['ember-power-select-dropdown']);
@@ -36,6 +27,33 @@ export default Ember.Component.extend({
 
   mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', function(){
     return this.get('searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage');
+  }),
+
+  results: computed('options.[]', 'searchText', function() {
+    const { options, searchText, previousResults = Ember.A() } = this.getProperties('options', 'searchText', 'previousResults'); // jshint ignore:line
+    let promise;
+    if (isBlank(searchText) || this.searchReturnedUndefined) {
+      promise = Promise.resolve(options).then(opts => Ember.A(opts));
+    } else if (this.get('search')) {
+      let result = this.get('search')(searchText);
+      if (!result) {
+        promise = Promise.resolve(previousResults);
+        this.searchReturnedUndefined = true;
+      } else {
+        this.searchReturnedValue = false;
+        let search = this.activeSearch = Promise.resolve(result);
+        promise = search.then(opts => search !== this.activeSearch ? previousResults : Ember.A(opts));
+      }
+    } else {
+      promise = Promise.resolve(options).then(opts => this.filter(Ember.A(opts), this.get('searchText')));
+    }
+    promise.then(opts => this.set('previousResults', opts));
+    return PromiseArray.create({ promise, content: previousResults });
+  }),
+
+  highlighted: computed('results.[]', 'selected', {
+    get() { return this.defaultHighlighted(); },
+    set(_, v) { return v; }
   }),
 
   resultsLength: computed('results.[]', function() {
@@ -58,7 +76,7 @@ export default Ember.Component.extend({
     },
 
     search(dropdown, term /*, e */) {
-      this.performSearch(term);
+      this.set('searchText', term);
     },
 
     handleKeydown(dropdown, e) {
@@ -96,19 +114,12 @@ export default Ember.Component.extend({
 
   // Methods
   onOpen(e) {
-    if (this._resultsDirty) { this.refreshResults(); }
-    this.set('highlighted', this.defaultHighlighted());
     run.scheduleOnce('afterRender', this, this.focusSearch, e);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
   onClose() {
     this.set('searchText', '');
-    if (this.get('search')) {
-      this.set('results', this.get('_options'));
-    }
-    this._resultsDirty = true;
-    this.set('_activeSearch', null);
   },
 
   handleVerticalArrowKey(e) {
@@ -150,53 +161,13 @@ export default Ember.Component.extend({
     return nextOption;
   },
 
-  refreshResults() {
-    const { _options: options, searchText } = this.getProperties('_options', 'searchText');
-    if (!this.get('search')) {
-      let matcher;
-      if (this.get('searchField')) {
-        matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
-      } else {
-        matcher = (option, text) => this.matcher(option, text);
-      }
-      this.set('results', filterOptions(options || [], searchText, matcher));
-    }
-    this._resultsDirty = false;
-    this.set('highlighted', this.optionAtIndex(0));
-  },
-
-  updateOptions(options) {
-    this.set('_options', options);
-    if (this.get('search')) {
-      this.set('results', options);
+  filter(options, searchText) {
+    let matcher;
+    if (this.get('searchField')) {
+      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
     } else {
-      this.refreshResults();
+      matcher = (option, text) => this.matcher(option, text);
     }
+    return filterOptions(options || [], searchText, matcher);
   },
-
-  performCustomSearch(term) {
-    const returnedValue = this.get('search')(term);
-    if (returnedValue === undefined) { return; }
-    const promise = RSVP.Promise.resolve(returnedValue);
-    this.set('hasPendingPromises', true);
-    this.set('_activeSearch', promise);
-    promise.then(results => {
-      if (promise !== this.get('_activeSearch')) { return; }
-      this.set('results', results);
-      this.set('highlighted', this.optionAtIndex(0));
-    }).finally(() => {
-      const activePromise = this.get('_activeSearch');
-      if (activePromise && promise !== activePromise) { return; }
-      this.set('hasPendingPromises', false);
-    });
-  },
-
-  performSearch(term) {
-    this.set('searchText', term);
-    if (this.get('search')) {
-      this.performCustomSearch(term);
-    } else {
-      this.refreshResults();
-    }
-  }
 });
