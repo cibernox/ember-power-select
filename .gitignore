@@ -19,3 +19,4 @@ coverage.json
 .divshot-cache
 .pagefrontrc
 .thoughts.md
+.env.deploy.*
