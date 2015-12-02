@@ -1,5 +1,5 @@
 {{#if selection}}
-  {{yield selection}}
+  {{yield selection searchText}}
   {{#if select.actions.clear}}
     <span class="ember-power-select-clear-btn" onclick={{select.actions.clear}}>&times;</span>
   {{/if}}
