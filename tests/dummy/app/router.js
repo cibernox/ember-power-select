@@ -26,6 +26,7 @@ Router.map(function() {
 
     // OTHER
     this.route('troubleshooting');
+    this.route('api-reference');
 
   });
   this.route('cookbook', function() {

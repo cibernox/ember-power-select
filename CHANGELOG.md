@@ -1,5 +1,7 @@
 # Master
 
+- [DOCS] Add API reference table to the docs
+
 # 0.6.0
 - [DOCS] Fix async search using github API example
 

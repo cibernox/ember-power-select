@@ -1,0 +1,131 @@
+<h1 class="doc-page-title">API reference</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>options</td>
+      <td><code>collection</code></td>
+      <td>Colletion of options to display in the component</td>
+    </tr>
+    <tr>
+      <td>selected</td>
+      <td><code>any or array</code></td>
+      <td>The selected option</td>
+    </tr>
+    <tr>
+      <td>onchange</td>
+      <td><code>function</code></td>
+      <td>The function to be invoked when the user selects or unselects an option</td>
+    </tr>
+    <tr>
+      <td>onkeydown</td>
+      <td><code>function</code></td>
+      <td>The function to be invoked when the user presses a key being the component or the inputs inside it focused</td>    </tr>
+    <tr>
+      <td>search</td>
+      <td><code>function</code></td>
+      <td>The <code>function(searchTerm)</code> to invoke when the user uses the search input.</td>
+    </tr>
+    <tr>
+      <td>disabled</td>
+      <td><code>boolean</code></td>
+      <td>When truthy the component cannot be interacted</td>
+    </tr>
+    <tr>
+      <td>placeholder</td>
+      <td><code>string</code></td>
+      <td>Text to display in the trigger of the component while no option is selected</td>
+    </tr>
+    <tr>
+      <td>searchEnabled</td>
+      <td><code>boolean</code></td>
+      <td>When falsey, hides the search in single selects</td>
+    </tr>
+    <tr>
+      <td>searchPlaceholder</td>
+      <td><code>string</code></td>
+      <td>Placeholder of the search box</td>
+    </tr>
+    <tr>
+      <td>searchField</td>
+      <td><code>string</code></td>
+      <td>When the options are objects and no custom matches function is provided, this option tells the component what property of the options should the default matches use to filter</td>
+    </tr>
+    <tr>
+      <td>matcher</td>
+      <td><code>function</code></td>
+      <td>The <code>function(option, searchTerm)</code> used to filter results. The default one will compare ignoring diacritics</td>
+    </tr>
+    <tr>
+      <td>loadingMessage</td>
+      <td><code>string</code></td>
+      <td>
+        Message shown in the list of options while the options are still not resolved,
+        tipically after a search but also when <code>options</code> is a promise.
+      </td>
+    </tr>
+    <tr>
+      <td>noMatchesMessage</td>
+      <td><code>string</code></td>
+      <td>Message shown when a search doesn't find any matching result.</td>
+    </tr>
+    <tr>
+      <td>selectedComponent</td>
+      <td><code>string</code></td>
+      <td>The component to render instead of the default one inside the trigger</td>
+    </tr>
+    <tr>
+      <td>optionsComponent</td>
+      <td><code>string</code></td>
+      <td>The component to render instead of the default one inside the list of options</td>
+    </tr>
+    <tr>
+      <td>renderInPlace</td>
+      <td><code>boolean</code></td>
+      <td>When truthy, the list of options will be rendered in place instead of being attaches to the root of the body and positioned with javascript</td>
+    </tr>
+    <tr>
+      <td>allowClear</td>
+      <td><code>boolean</code></td>
+      <td>When truthy, single selects allow to nullify the selection</td>
+    </tr>
+    <tr>
+      <td>dropdownPosition</td>
+      <td><code>string</code></td>
+      <td>
+        The strategy to position the list of options. By default is <code>"auto"</code>, meaning that will
+        position the list depending on the space available around the trigger. The other possible values are
+        <code>"above"</code> and <code>"below"</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>class</td>
+      <td><code>string</code></td>
+      <td>
+        The css class if the component. When provided the dropdown attached to the root of the body
+        will have also get the redived class <code>${class}-dropdown</code> to allow custom styles.
+      </td>
+    </tr>
+    <tr>
+      <td>dropdownClass</td>
+      <td><code>string</code></td>
+      <td>Class to be applied to the dropdown only</td>
+    </tr>
+    <tr>
+      <td>extra</td>
+      <td><code>object</code></td>
+      <td>Object to store any arbitrary configuration meant to be used by custom components</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.asynchronous-search' class="doc-page-nav-link-prev"}}&lt; Asynchronous search{{/link-to}}
+</div>
