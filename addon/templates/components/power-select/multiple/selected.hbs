@@ -3,7 +3,7 @@
     {{#unless disabled}}
       <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onclick={{action select.actions.removeOption opt}}>&times;</span>
     {{/unless}}
-    {{yield opt}}
+    {{yield opt searchText}}
   </span>
 {{/each}}
 <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"

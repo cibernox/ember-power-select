@@ -81,22 +81,6 @@ function typeInSearch(text) {
 
 /**
 1 - General behavior
-  a) [DONE] Click in the trigger of a closed select opens the dropdown'
-  b) [DONE] Click in the trigger of an opened select closes the dropdown'
-  c) [DONE] Search functionality is enabled by default'
-  d) [DONE] The search functionality can be disabled by passing `searchEnabled=false`'
-  e) [DONE] The search box gain focus automatically when opened'
-  f) [DONE] Each option of the select is the result of yielding an item'
-  g) [DONE] If the passed options is a promise, while its not resolved the component shows a Loading message'
-  h) [DONE] If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is falsey, no loading message is shown
-  i) [DONE] If a placeholder is provided, it shows while no element is selected'
-  j) [DONE] If the `selected` value changes the select gets updated, but the `onchange` action doesn't fire.
-  k) [DONE] If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root
-  l) [DONE] If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option
-  m) [DONE] If the content of the selected is refreshed while opened the first element of the list gets highlighted
-  n) [DONE] If the user passes `dropdownClass` the dropdown content should have that class
-  o) [DONE] If the user passes `class` the classes of the dropdown are customized using that
-  p) [DONE] The filtering is reverted after closing the dropdpown
 */
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
@@ -465,11 +449,26 @@ test('It has the appropriate class when it receives a specific dropdown position
   assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--above'), 'It has the class of dropdowns positioned above');
 });
 
+test('The search term is yielded as second argument in single selects', function(assert) {
+  assert.expect(2);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
+      {{term}}:{{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('tw'));
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the search term');
+  Ember.run(() => $('.ember-power-select-option:eq(0)').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('thr'));
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the search term');
+});
+
 /**
 2 - Passing an empty array
-  a) [DONE] A "No options" message appears by default.
-  b) [DONE] That message can be customized passing an option.
-  c) [DONE] That message can be customized passing an inverse block to the component.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Empty options)', {
@@ -516,12 +515,6 @@ test('The content of the dropdown when there are no options can be completely cu
 
 /**
 3 - Passing an array of strings
-  a) [DONE] When NO selected option is provided the first element of the list is highlighted.
-  b) [DONE] When a select option is provided that option appears in the component's trigger.
-  c) [DONE] When a select option is provided that option is highlighed when opened.
-  d) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
-  e) [DONE] The default search matches filters correctly ignoring diacritics (accents/capitals/ect...)
-  f) [DONE] You can pass a custom matcher for customize the search.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Options are strings)', {
@@ -642,12 +635,6 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 
 /**
 4 - Passing an array of objects
-  a) [DONE] When NO selected option is provided the first element of the list is highlighted.
-  b) [DONE] When a select option is provided that option appears in the component's trigger.
-  c) [DONE] When a select option is provided that option is highlighed when opened.
-  d) [DONE] When a select option is provided that element of the list is also marked with the `.selected` class.
-  e) [DONE] The search works when you provide a searchFileld, ignoring diacritics and capitalization
-  f) [DONE] You can pass a custom matcher for customize the search.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Options are objects)', {
@@ -781,19 +768,6 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 
 /**
 5 - Custom search action
-  a) [DONE] When you pass a custom search action instead of options, opening the select show a "Type to search" message in a <li>
-  b) [DONE] The "type to search" message can be customized passing the custom message.
-  c) [DONE] The search function can return an array and those options get rendered.
-  d) [DONE] The search function can return an a promise that resolves to an array too.
-  e) [DONE] While the async search is being performed the "Type to search" dissapears the "Loading..." message appears.
-  f) [DONE] When the search resolves to an empty array then the "No results found"
-  g) [DONE] When the search resolves to an empty array then the custom noMatchesMessafe is displayed.
-  h) [DONE] When the search resolves to an empty array then the given altertate block is rendered.
-  i) [DONE] When one search is fired before the previous one resolved, the "Loading" continues until the 2nd is resolved.
-  j) [DONE] Once the promise is resolved, the first element is highlighted like with regular filtering.
-  k) [DONE] Closing a component with a custom search cleans the search box and the results list.
-  l) [DONE] When received both options and search, those options are shown when the dropdown opens before the first search is performed
-  m) [DONE] Don't return from the search action and update the options instead also works as an strategy.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Custom search function)', {
@@ -1116,9 +1090,6 @@ test('Don\'t return from the search action and update the options instead also w
 
 /**
 6 - Groups
-  a) [DONE] Options that have a `groupName` and `options` are considered groups and are rendered as such.
-  b) [DONE] Filtering works with groups (a group title is visible as long as one of it's elements matches)
-     the search criteria) with no depth limit.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Groups)', {
@@ -1191,12 +1162,6 @@ test('Click on an option of a group select selects the option and closes the dro
 
 /**
 7 - Mouse control
-  a) [DONE] Mouseovering a list item highlights it.
-  b) [DONE] Clicking an item selects it, closes the dropdown and focuses the trigger.
-  c) [DONE] Clicking the trigger while the select is opened closes it and and focuses the trigger.
-  d) [DONE] Clicking the clear button removes the selection but doesn't opens the dropdon.
-  e) [DONE] Clicking anywhere outside the select while opened closes the component AND DOESN'T FOCUSES THE TRIGGER (FAILING NOW)
-  f) [DONE] Clicking on the title of a group doesn't performs any action nor closes the dropdown.
 */
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Mouse control)', {
   integration: true
@@ -1314,15 +1279,6 @@ test('Clicking on the title of a group doesn\'t performs any action nor closes t
 
 /**
 8 - Keyboard control
-  a) [DONE] Pressing keydown highlights the next option.
-  b) [DONE] Pressing keyup highlights the previous option.
-  c) [DONE] When you the last option is highlighted, pressing keydown doesn't change the highlighted.
-  d) [DONE] When you the first option is highlighted, pressing keyup doesn't change the highlighted.
-  e) [DONE] Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger.
-  f) [DONE] Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger.
-  g) [DONE] The component is focusable using the TAB key as any other kind of input.
-  i) [DONE] If the component is focused, pressing ENTER opens it.
-  j) [DONE] Pressing ESC while the component is opened closes it and focuses the trigger
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
@@ -1609,11 +1565,6 @@ test('in multiple-mode if the users calls preventDefault on the event received i
 
 /**
 9 - Disabled select/options
-  a) [DONE] A disabled dropdown doesn't responds to mouse/keyboard events
-  b) [DONE] A disabled dropdown is not focusable.
-  c) [DONE] Options with a disabled field set to true are styled as disabled.
-  d) [DONE] Disabled options are not highlighted when hovered with the mouse.
-  e) [DONE] Disabled options are skipped when highlighting items with the keyboard.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Disabled)', {
@@ -1699,29 +1650,6 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
 
 /**
 10 - Multiple select
-  a) [DONE] Multiple selects don't have a search box.
-  b) [DONE] When the select opens, the search input in the trigger gets the focus.
-  c) [DONE] Click on an element selects it and closes the dropdown and focuses the trigger's input.
-  d) [DONE] Selecting an element triggers the onchange action with the list of selected options.
-  e) [DONE] Click an option when there is already another selects both, and triggers the onchange action with them.
-  f) [DONE] If there is many selections, all those options are styled as `selected`.
-  g) [DONE] When the popup opens, the first items is highlighed, even if there is only one selection.
-  h) [DONE] Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action.
-  i) [DONE] The default filtering works in multiple mode.
-  j) [DONE] The filtering specifying a searchkey works in multiple model.
-  k) [DONE] The filtering specifying a custom matcher works in multiple model.
-  l) [DONE] The search using a custom action works int multiple mode.
-  m) [DONE] Pressing ENTER over a highlighted element selects it.
-  n) [DONE] Pressing ENTER over a highlighted element what is already selected unselects it????
-  o) [DONE] Pressing BACKSPACE on the search input when there is text on it does nothing special.
-  p) [DONE] Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediatly.
-  q) [DONE] Pressing ENTER when the select is closed opens and nothing is written on the box opens it.
-  r) [DONE] If the multiple component is focused, pressing KEYDOWN opens it
-  s) [DONE] If the multiple component is focused, pressing KEYUP opens it
-  t) [DONE] Typing in the input opens the component and filters the options
-  u) [DONE] Typing in the input opens the component and filters the options also with async searches
-  v) [DONE] When passed `disabled=true`, the input inside the trigger is also disabled
-  w) [DONE] When passed `disabled=true`, the selected elements can't be removed
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Multiple)', {
@@ -2250,6 +2178,24 @@ test('When passed `disabled=true`, the input inside the trigger is also disabled
   assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
 });
 
+test('The search term is yielded as second argument in single selects', function(assert) {
+  assert.expect(2);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
+      {{term}}:{{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('tw'));
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two');
+  Ember.run(() => $('.ember-power-select-option:eq(0)').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => typeInSearch('thr'));
+  assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the search term');
+});
+
 /**
 10 - Dropdown positioning
   a) [UNTESTABLE??] By default the dropdown is placed automatically depending on the available space around the select.
@@ -2360,8 +2306,6 @@ test('Passing as options the result of `store.query` works', function(assert) {
 
 /**
 11 - Customization using components
-  a) [DONE] selected option can be customized using selectedComponent.
-  b) [DONE] the list of options can be customized using optionsComponent.
   c) [NOT DONE] The selected component receives the select's public API and can make use of it
 */
 
@@ -2405,7 +2349,6 @@ test('the list of options can be customized using optionsComponent', function(as
 
 /**
 12 - Development assertions
-  a) the `onchange` function is mandatory.
 */
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Assertions)', {

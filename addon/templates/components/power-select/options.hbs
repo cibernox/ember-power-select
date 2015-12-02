@@ -5,14 +5,14 @@
       <ul class="ember-power-select-options ember-power-select-options--nested">
         {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
           options=(readonly opt.options) optionsComponent=(readonly optionsComponent) select=(readonly select) as |option|}}
-          {{yield option}}
+          {{yield option searchText}}
         {{/component}}
       </ul>
     </li>
   {{else}}
     <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"
       onclick={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}}>
-      {{yield opt}}
+      {{yield opt searchText}}
     </li>
   {{/if}}
 {{/each}}

@@ -1,6 +1,7 @@
 # Master
 
 - [DOCS] Add API reference table to the docs
+- [FEATURE] Yielded block receives the search term as a second argument
 
 # 0.6.0
 - [DOCS] Fix async search using github API example
