@@ -83,13 +83,9 @@ export default PowerSelectBaseComponent.extend({
     if (this.get('searchText.length') !== 0) { return; }
     const lastSelection = this.get('selection.lastObject');
     if (!lastSelection) { return; }
+    const lastText = typeof lastSelection === 'string' ? lastSelection : get(lastSelection, this.get('searchField'));
     this.removeOption(dropdown, lastSelection);
-    if (typeof lastSelection === 'string') {
-      this.performSearch(lastSelection);
-    } else {
-      if (!this.get('searchField')) { throw new Error('Need to provide `searchField` when options are not strings'); }
-      this.performSearch(get(lastSelection, this.get('searchField')));
-    }
+    this.set('searchText', lastText);
   },
 
   removeOption(dropdown, option) {

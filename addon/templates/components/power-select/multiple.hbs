@@ -25,7 +25,7 @@
         {{/component}}
       {{else if mustShowSearchMessage}}
         <li class="ember-power-select-option">{{searchMessage}}</li>
-      {{else if noPendingPromises}}
+      {{else if results.isFulfilled}}
         {{#if hasInverseBlock}}
           {{yield to="inverse"}}
         {{else if noMatchesMessage}}
@@ -48,7 +48,7 @@
     )) as |select|}}
     {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted)
-      hasPendingPromises=(readonly hasPendingPromises) select=(readonly select) extra=(readonly extra) as |opt term|}}
+      select=(readonly select) extra=(readonly extra) as |opt term|}}
       {{yield opt term}}
     {{/component}}
   {{/with}}
