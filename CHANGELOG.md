@@ -1,5 +1,7 @@
 # Master
 
+- [REFACTOR] The list of results and the highlighted element are not computed properties, so they are lazy.
+
 # 0.6.2
 - [BUGFIX] Use getOwner polyfill to avoid deprecations in ember 2.3
 
