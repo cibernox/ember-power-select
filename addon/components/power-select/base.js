@@ -40,7 +40,7 @@ export default Ember.Component.extend({
         promise = Promise.resolve(previousResults);
         this.searchReturnedUndefined = true;
       } else {
-        this.searchReturnedValue = false;
+        this.searchReturnedUndefined = false;
         let search = this.activeSearch = Promise.resolve(result);
         promise = search.then(opts => search !== this.activeSearch ? previousResults : Ember.A(opts));
       }
