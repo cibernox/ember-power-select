@@ -1,5 +1,7 @@
 # Master
 
+# 0.6.3
+- [BUGFIX] Fix rendenring issue triggered somehow by Ember 2.2. Fixed in ember-basic-dropdown.
 - [REFACTOR] The list of results and the highlighted element are not computed properties, so they are lazy.
 
 # 0.6.2
