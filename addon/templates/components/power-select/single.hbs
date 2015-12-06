@@ -1,6 +1,6 @@
 {{#basic-dropdown class=(readonly concatenatedClasses) dir=dir tabindex=(readonly tabindex) renderInPlace=renderInPlace matchTriggerWidth=true
   disabled=disabled dropdownPosition=dropdownPosition triggerClass="ember-power-select-trigger" dropdownClass=concatenatedDropdownClasses
-  onOpen=(action onOpen) onClose=(action onClose) onKeydown=(action "handleKeydown") registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+  opened=opened onOpen=(action onOpen) onClose=(action onClose) onKeydown=(action "handleKeydown") registerActionsInParent=(action "registerDropdown") as |dropdown|}}
   {{#with (hash
     isOpen=dropdown.isOpen
     actions=(hash
