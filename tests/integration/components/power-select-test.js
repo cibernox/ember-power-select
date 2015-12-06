@@ -1475,7 +1475,7 @@ test('In single-mode, when the user presses a key being the search input focused
   this.numbers = numbers;
   this.selected = null;
   this.handleKeydown = (select, e) => {
-    assert.ok(select.isOpen, 'The yieded object has the `isOpen` key');
+    assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
     assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
     assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
     assert.ok(select.actions.toggle, 'The yieded object has an `actions.toggle` key');
@@ -1521,7 +1521,7 @@ test('In multiple-mode, when the user presses a key being the search input focus
   this.numbers = numbers;
   this.selectedNumbers = [];
   this.handleKeydown = (select, e) => {
-    assert.ok(select.isOpen, 'The yieded object has the `isOpen` key');
+    assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
     assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
     assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
     assert.ok(select.actions.toggle, 'The yieded object has an `actions.toggle` key');
