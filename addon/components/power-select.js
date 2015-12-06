@@ -19,6 +19,7 @@ export const defaultOptions = {
   closeOnSelect: true,
   dropdownClass: null,
   dir: null,
+  opened: false,
 
   // Select single config
   searchEnabled: true,
