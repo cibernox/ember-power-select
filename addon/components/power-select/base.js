@@ -113,12 +113,12 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  onOpen(e) {
+  onOpen(dropdown, e) {
     run.scheduleOnce('afterRender', this, this.focusSearch, e);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
-  onClose() {
+  onClose(/* dropdown, e */) {
     this.set('searchText', '');
   },
 
