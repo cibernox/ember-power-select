@@ -413,8 +413,12 @@ export default Ember.Controller.extend({
       });
     },
 
-    didFocus(/* select, e */) {
-      console.log('custom did focus');
+    didFocus(select, e) {
+      Ember.run.next(null, function() {
+        if (!select.isOpen) {
+          select.actions.open();
+        }
+      });
     }
   },
 
