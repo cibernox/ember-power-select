@@ -411,6 +411,10 @@ export default Ember.Controller.extend({
           resolve(numbers.filter(str => str.length === length)); // returns the numbers with the same length than the current
         }, 1500);
       });
+    },
+
+    didFocus(/* select, e */) {
+      console.log('custom did focus');
     }
   },
 

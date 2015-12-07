@@ -42,6 +42,14 @@ export default PowerSelectBaseComponent.extend({
         this._super(...arguments);
       }
     },
+
+    handleFocus() {
+      debugger;
+      const action = this.get('onfocus');
+      if (action) {
+        action();
+      }
+    }
   },
 
   // Methods
