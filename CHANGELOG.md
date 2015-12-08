@@ -1,5 +1,6 @@
 # Master
 
+# 0.7.0-beta.1
 - [BREAKING] Update to ember-basic-dropdown 0.7.0-beta.1. This means that the component is opened/
   closed using mousedown instead of click. This makes the component feel more snappy. It is unlikeliy
   that this breaks real world usage but might break integration tests of people where people rely
