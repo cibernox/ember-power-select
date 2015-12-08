@@ -25,7 +25,7 @@ test('When you pass a custom search action instead of options, opening the selec
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').text(), 'Type to search', 'The dropdown shows the "type to seach" message');
 });
 
@@ -39,7 +39,7 @@ test('The "type to search" message can be customized passing `searchMessage=some
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').text(), 'Type the name of the thing');
 });
 
@@ -56,7 +56,7 @@ test('The search function can return an array and those options get rendered', f
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("teen"));
   assert.equal($('.ember-power-select-option').length, 7);
 });
@@ -79,7 +79,7 @@ test('The search function can return a promise that resolves to an array and tho
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("teen"));
 
   setTimeout(function() {
@@ -106,7 +106,7 @@ test('While the async search is being performed the "Type to search" dissapears 
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.ok(/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message is displayed');
   Ember.run(() => typeInSearch("teen"));
   assert.ok(!/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message dissapeared');
@@ -130,7 +130,7 @@ test('When the search resolves to an empty array then the "No results found" mes
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("teen"));
   setTimeout(() => {
     assert.ok(/No results found/.test($('.ember-power-select-option').text()), 'The default "No results" message renders');
@@ -154,7 +154,7 @@ test('When the search resolves to an empty array then the custom "No results" me
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("teen"));
   setTimeout(() => {
     assert.ok(/Meec\. Try again/.test($('.ember-power-select-option').text()), 'The customized "No results" message renders');
@@ -180,7 +180,7 @@ test('When the search resolves to an empty array then the custom alternate block
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("teen"));
   setTimeout(() => {
     assert.equal($('.ember-power-select-dropdown .foo-bar').length, 1, 'The alternate block message gets rendered');
@@ -203,7 +203,7 @@ test('When one search is fired before the previous one resolved, the "Loading" c
       {{number}}
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("tee"));
 
   setTimeout(function() {
@@ -236,7 +236,7 @@ test('When the search resolves, the first element is highlighted like with regul
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("teen"));
 
   setTimeout(function() {
@@ -258,12 +258,15 @@ test('Closing a component with a custom search cleans the search box and the res
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("teen"));
   assert.equal($('.ember-power-select-option').length, 7, 'Results are filtered');
   assert.equal($('.ember-power-select-search input').val(), 'teen');
-  Ember.run(() => this.$('#different-node').click());
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => {
+    let event = new window.Event('mousedown');
+    this.$('#different-node')[0].dispatchEvent(event);
+  });
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, 1, 'Results have been cleared');
   assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
   assert.equal($('.ember-power-select-search input').val(), '', 'The searchbox was cleared');
@@ -289,7 +292,7 @@ test('When received both options and search, those options are shown when the dr
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
   Ember.run(() => typeInSearch("teen"));
   assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown and also the loading message');
@@ -318,7 +321,7 @@ test('Don\'t return from the search action and update the options instead also w
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
   Ember.run(() => typeInSearch("teen"));
 

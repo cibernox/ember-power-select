@@ -3,20 +3,20 @@
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
   <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
-{{!--
+
   {{#power-select options=model selected=selectedUser onchange=(action (mut selectedUser)) as |user|}}
     {{user.name}}
   {{/power-select}}
 
   <h4>Select of strings without value tracking. You can filter right away.</h4>
-  <p>simpleSelected is: {{simpleSelected}}</p> --}}
+  <p>simpleSelected is: {{simpleSelected}}</p>
 
   {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected)
     onchange=(action (mut simpleSelected))
     onfocus=(action "didFocus") as |option|}}
     {{option}}
   {{/power-select}}
-{{!--
+
   <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
@@ -196,5 +196,5 @@
   <br>
   <br>
   <br>
- --}}
+
 </section>
