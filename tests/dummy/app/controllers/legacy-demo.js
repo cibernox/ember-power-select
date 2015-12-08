@@ -414,11 +414,15 @@ export default Ember.Controller.extend({
     },
 
     didFocus(select, e) {
-      Ember.run.next(null, function() {
-        if (!select.isOpen) {
-          select.actions.open();
-        }
-      });
+      if (!select.isOpen) {
+        debugger;
+        select.actions.open();
+      }
+
+      // Ember.run.next(null, function() {
+      //   if (!select.isOpen) {
+      //   }
+      // });
     }
   },
 

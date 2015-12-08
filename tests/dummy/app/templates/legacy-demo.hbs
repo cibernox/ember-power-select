@@ -11,7 +11,7 @@
   <h4>Select of strings without value tracking. You can filter right away.</h4>
   <p>simpleSelected is: {{simpleSelected}}</p> --}}
 
-  {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected)
+  {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected)
     onchange=(action (mut simpleSelected))
     onfocus=(action "didFocus") as |option|}}
     {{option}}
