@@ -131,6 +131,45 @@
   </div>
 {{/code-sample}}
 
+
+<h3><code>onfocus</code> Action</h3>
+
+<p>
+  The third action you can use is <code>onfocus</code>. No need to explaing what it does. This action receives <code>(select, event)</code>
+</p>
+
+<p>
+  You can use this action for many things (fire a request to prefect data, show a tooltop, trigger some animation ...) but
+  perhaps the most straightfoward use case is to automatically open the select when it gains the focus.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    &lt;input type="text" placeholder="Focus me and press TAB to focus the select"&gt;
+    \{{#power-select selected=selected options=cities onchange=(action (mut selected)) onfocus=(action "handleFocus") as |name|}}
+      \{{name}}
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      cities: ['Barcelona', 'London', 'New York', 'Porto'],
+      actions: {
+        handleFocus(select, e) {
+          select.actions.open();
+        }
+      }
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    <input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
+    <br>
+    <br>
+    {{#power-select selected=selected options=cities onchange=(action (mut selected)) onfocus=(action "handleFocus") as |name|}}
+      {{name}}
+    {{/power-select}}
+  </div>
+{{/code-sample}}
+
 <p>
   Have I mentioned that your can also render groups?
 </p>

@@ -16,6 +16,10 @@ export default Ember.Controller.extend({
       if (text.length > 0 && this.get('cities').indexOf(text) === -1) {
         this.get('selectedCities').pushObject(text);
       }
+    },
+
+    handleFocus(select) {
+      select.actions.open();
     }
   }
 });
