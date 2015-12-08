@@ -20,7 +20,7 @@ test('Mouseovering a list item highlights it', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first element is highlighted');
   Ember.run(() => $('.ember-power-select-option:eq(3)').trigger('mouseover'));
   assert.ok($('.ember-power-select-option:eq(3)').hasClass('ember-power-select-option--highlighted'), 'The 4th element is highlighted');
@@ -41,7 +41,7 @@ test('Clicking an item selects it, closes the dropdown and focuses the trigger',
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => $('.ember-power-select-option:eq(3)').click());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select was closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
@@ -57,9 +57,9 @@ test('Clicking the trigger while the select is opened closes it and and focuses 
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
@@ -98,9 +98,12 @@ test('Clicking anywhere outside the select while opened closes the component and
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
-  Ember.run(() => this.$('#other-thing').click());
+  Ember.run(() => {
+    let event = new window.Event('mousedown');
+    this.$('#other-thing')[0].dispatchEvent(event);
+  });
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
   assert.ok($('.ember-power-select-trigger').get(0) !== document.activeElement, 'The select is not focused');
 });

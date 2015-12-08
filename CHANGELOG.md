@@ -1,5 +1,11 @@
 # Master
 
+- [BREAKING] Update to ember-basic-dropdown 0.7.0-beta.1. This means that the component is opened/
+  closed using mousedown instead of click. This makes the component feel more snappy. It is unlikeliy
+  that this breaks real world usage but might break integration tests of people where people rely
+  on `$('.ember-power-select-trigger').click()`.
+- [FEATURE] New action: `onfocus`. Unsurprisingly it is invoked when the component gains focus.
+  It receives `(dropdown, event)` and can be used, by example, to open the component on focus.
 - [FEATURE] EPS now accepts a `opened` boolean property used to open/close the component
   without triggering events on it. Useful to render the component already opened.
 

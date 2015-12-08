@@ -50,6 +50,6 @@ test('when it is opened/closed and the `opened` property is multable, it gets up
   `);
 
   assert.ok(!this.get('opened'), 'The opened property is false');
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.ok(this.get('opened'), 'The opened property is true now');
 });

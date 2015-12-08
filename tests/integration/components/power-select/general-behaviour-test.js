@@ -31,7 +31,7 @@ test('Click in the trigger of a closed select opens the dropdown', function(asse
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
@@ -45,10 +45,10 @@ test('Click in the trigger of an opened select closes the dropdown', function(as
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
 });
 
@@ -62,7 +62,7 @@ test('Search functionality is enabled by default', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-search').length, 1, 'The search box is rendered');
 });
 
@@ -76,7 +76,7 @@ test('The search functionality can be disabled by passing `searchEnabled=false`'
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
   assert.equal($('.ember-power-select-search').length, 0, 'The search box NOT rendered');
 });
@@ -91,7 +91,7 @@ test('The search box gain focus automatically when opened', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.ok($('.ember-power-select-search input').get(0) === document.activeElement, 'The search box is focused after opening select');
 });
 
@@ -105,7 +105,7 @@ test('Each option of the select is the result of yielding an item', function(ass
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, numbers.length, 'There is as many options in the markup as in the supplied array');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
   assert.equal($('.ember-power-select-option:eq(9)').text().trim(), 'ten');
@@ -126,7 +126,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
   setTimeout(function() {
     assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
@@ -149,7 +149,7 @@ test('If the passed options is a promise and it\'s not resolved but the `loading
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
 
   assert.equal($('.ember-power-select-option').length, 0, 'No loading options message is displayed');
   setTimeout(function() {
@@ -169,7 +169,7 @@ test('If a placeholder is provided, it shows while no element is selected', func
   `);
 
   assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').text().trim(), 'abracadabra', 'The placeholder is rendered when there is no element');
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => $('.ember-power-select-option:eq(3)').click());
   assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').length, 0, 'The placeholder is gone');
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', 'The selected item replaced it');
@@ -192,7 +192,7 @@ test('If the `selected` value changes the select gets updated, but the `onchange
 
   Ember.run(() => this.set('selected', 'three'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', 'The `three` element is selected');
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The proper option gets highlighed');
   assert.equal($('.ember-power-select-option--selected').text().trim(), 'three', 'The proper option gets selected');
 });
@@ -209,7 +209,7 @@ test('If the user selects a value and later on the selected value changes from t
   `);
 
   assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected');
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => $('.ember-power-select-option:eq(3)').click());
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
   Ember.run(() => this.set('selected', 'three'));
@@ -226,7 +226,7 @@ test('If the user passes `renderInPlace=true` the dropdown is added below the tr
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal(this.$('.ember-power-select-dropdown').length, 1, 'The dropdown is inside the component');
 });
 
@@ -241,7 +241,7 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   `);
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
   Ember.run(() => $('.ember-power-select-option:eq(3)').click());
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
@@ -265,7 +265,7 @@ test('If the content of the options is refreshed (starting with empty array prox
 
   this.render(hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch("o"));
 
   setTimeout(function() {
@@ -292,7 +292,7 @@ test('If the content of the options is updated (starting with populated array pr
 
   this.render(hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
 
   assert.equal($('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown with initial proxy contents');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
@@ -316,7 +316,7 @@ test('If the content of the selected is refreshed while opened the first element
       {{option}}
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The second options is highlighted');
   Ember.run(() => this.set('numbers', ['foo', 'bar', 'baz']));
@@ -332,7 +332,7 @@ test('If the user passes `dropdownClass` the dropdown content should have that c
       {{option}}
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.ok($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), 'dropdownClass can be customized');
 });
 
@@ -345,7 +345,7 @@ test('If the user passes `class` the classes of the dropdown are customized usin
     {{/power-select}}
   `);
   assert.ok($('.ember-power-select').hasClass('my-foo'), 'the entire select inherits that class');
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.ok($('.ember-power-select-dropdown').hasClass('my-foo-dropdown'), 'the dropdown derives its class from the given one too');
 });
 
@@ -359,11 +359,14 @@ test('The filtering is reverted after closing the select', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('th'));
   assert.equal($('.ember-power-select-option').length, 2, 'the dropdown has filtered the results');
-  Ember.run(() => this.$('#outside-div').click());
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => {
+    let event = new window.Event('mousedown');
+    this.$('#outside-div')[0].dispatchEvent(event);
+  });
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
 });
 
@@ -376,7 +379,7 @@ test('It has the appropriate class when it receives a specific dropdown position
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--above'), 'It has the class of dropdowns positioned above');
 });
 
@@ -389,11 +392,11 @@ test('The search term is yielded as second argument in single selects', function
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('tw'));
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the search term');
   Ember.run(() => $('.ember-power-select-option:eq(0)').click());
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('thr'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the search term');
 });
@@ -405,7 +408,7 @@ test('The dropdowns shows the default "no options" message', function(assert) {
       {{option}}
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, 1);
   assert.equal($('.ember-power-select-option').text().trim(), 'No results found');
 });
@@ -417,7 +420,7 @@ test('The default "no options" message can be customized passing `noMatchesMessa
       {{option}}
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, 1);
   assert.equal($('.ember-power-select-option').text().trim(), 'Nope');
 });
@@ -431,7 +434,7 @@ test('The content of the dropdown when there are no options can be completely cu
       <span class="empty-option-foo">Foo bar</span>
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option').length, 0, 'No list elements, just the given alternate block');
   assert.equal($('.empty-option-foo').length, 1);
 });
@@ -446,7 +449,7 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
   assert.equal($('.ember-power-select-option--highlighted').length, 1, 'One element is highlighted');
   assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first one to be precise');
@@ -482,7 +485,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   const $highlightedOption = $('.ember-power-select-option--highlighted');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'three', 'The third option is highlighted');
@@ -498,7 +501,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   const $selectedOption = $('.ember-power-select-option:contains("three")');
   assert.ok($selectedOption.hasClass('ember-power-select-option--selected'), 'The third option is marked as selected');
 });
@@ -513,7 +516,7 @@ test('The default search strategy matches disregarding diacritics differences an
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('mar'));
   assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'María');
@@ -541,7 +544,7 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('on'));
   assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
   Ember.run(() => typeInSearch('teen'));
@@ -558,7 +561,7 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
   assert.equal($('.ember-power-select-option--highlighted').length, 1, 'One element is highlighted');
   assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first one to be precise');
@@ -589,7 +592,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   const $highlightedOption = $('.ember-power-select-option--highlighted');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'ES: Spain', 'The second option is highlighted');
@@ -606,7 +609,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   const $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
   assert.ok($selectedOption.hasClass('ember-power-select-option--selected'), 'The second option is marked as selected');
 });
@@ -629,7 +632,7 @@ test('The default search strategy matches disregarding diacritics differences an
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('mar'));
   assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'María Murray');
@@ -665,7 +668,7 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('s'));
   assert.equal($('.ember-power-select-option').length, 3, 'Only 3 results match the search');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');

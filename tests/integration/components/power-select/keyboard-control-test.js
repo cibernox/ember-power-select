@@ -22,7 +22,7 @@ test('Pressing keydown highlights the next option', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The next options is highlighted now');
@@ -38,7 +38,7 @@ test('Pressing keyup highlights the previous option', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 38));
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The previous options is highlighted now');
@@ -55,7 +55,7 @@ test('When you the last option is highlighted, pressing keydown doesn\'t change 
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'twenty');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'twenty', 'The last option is still the highlighted one');
@@ -72,7 +72,7 @@ test('When you the first option is highlighted, pressing keyup doesn\'t change t
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 38));
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The first option is still the highlighted one');
@@ -94,7 +94,7 @@ test('Pressing ENTER selects the highlighted element, closes the dropdown and fo
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 13));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'two', 'The highlighted element was selected');
@@ -112,7 +112,7 @@ test('Pressing TAB closes the select WITHOUT selecting the highlighed element an
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 9));
   assert.equal($('.ember-power-select-trigger').text().trim(), '', 'The highlighted element wasn\'t selected');
@@ -190,7 +190,7 @@ test('Pressing ESC while the component is opened closes it and focuses the trigg
     {{/power-select}}
   `);
 
-  Ember.run(() => $('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => triggerKeydown($('.ember-power-select-trigger')[0], 27));
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
@@ -216,7 +216,7 @@ test('In single-mode, when the user presses a key being the search input focused
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 13));
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
@@ -237,7 +237,7 @@ test('in single-mode if the users calls preventDefault on the event received in 
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 13));
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
@@ -262,7 +262,7 @@ test('In multiple-mode, when the user presses a key being the search input focus
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13));
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
@@ -283,7 +283,7 @@ test('in multiple-mode if the users calls preventDefault on the event received i
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13));
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');

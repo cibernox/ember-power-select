@@ -24,7 +24,7 @@ test('Options that have a `groupName` and `options` are considered groups and ar
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
 
   let $rootLevelGroups = $('.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group');
   let $rootLevelOptions = $('.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option');
@@ -50,7 +50,7 @@ test('When filtering, a group title is visible as long as one of it\'s elements 
       {{option}}
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('ve'));
   let groupNames = $('.ember-power-select-group-name').toArray().map(e => $(e).text().trim());
   let optionValues = $('.ember-power-select-option').toArray().map(e => $(e).text().trim());
@@ -70,7 +70,7 @@ test('Click on an option of a group select selects the option and closes the dro
       {{option}}
     {{/power-select}}
   `);
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => $('.ember-power-select-option:contains("four")').click());
   assert.equal($('.ember-power-select-trigger').text().trim(), "four", 'The clicked option was selected');
   assert.equal($('.ember-power-select-options').length, 0, 'The dropdown has dissapeared');
@@ -86,7 +86,7 @@ test('Clicking on the title of a group doesn\'t performs any action nor closes t
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').click());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => this.$('.ember-power-select-group-name:eq(1)').click());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
 });
