@@ -2,12 +2,11 @@
   {{#if opt.groupName}}
     <li class="ember-power-select-group">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
-      <ul class="ember-power-select-options ember-power-select-options--nested">
-        {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
-          options=(readonly opt.options) optionsComponent=(readonly optionsComponent) select=(readonly select) as |option|}}
-          {{yield option searchText}}
-        {{/component}}
-      </ul>
+      {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
+        options=(readonly opt.options) optionsComponent=(readonly optionsComponent) select=(readonly select)
+        class="ember-power-select-options ember-power-select-options--nested" as |option|}}
+        {{yield option searchText}}
+      {{/component}}
     </li>
   {{else}}
     <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"

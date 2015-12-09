@@ -3,6 +3,9 @@
 - [FEATURE] All actions (onchange, onkeydown and onfocus) now receive a richer public API object
   that is identical in shape to the one they received before but also contains `highlight(option)`
   and `search(term)` actions
+- [BREAKING] Delegate the rendering of the list's topmost element to `optionsComponent`. This
+  allows a better customization of the list. If you use `optionsComponent` make sure you make it render
+  the topmost element, e.g an `<ul>`.
 
 # 0.7.0-beta.1
 - [BREAKING] Update to ember-basic-dropdown 0.7.0-beta.1. This means that the component is opened/
