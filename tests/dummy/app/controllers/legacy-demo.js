@@ -395,26 +395,46 @@ export default Ember.Controller.extend({
   ],
 
   actions: {
-    debugSelection(option) {
-      console.debug("I've selected", option);
+    // debugSelection(option) {
+    //   console.debug("I've selected", option);
+    // },
+
+    // search(term) {
+    //   var length = term.length;
+    //   return numbers.filter(str => str.length === length); // returns the numbers with the same length than the current
+    // },
+
+    // asyncSearch(term) {
+    //   return new Ember.RSVP.Promise(function(resolve) {
+    //     Ember.run.later(function() {
+    //       var length = term.length;
+    //       resolve(numbers.filter(str => str.length === length)); // returns the numbers with the same length than the current
+    //     }, 1500);
+    //   });
+    // },
+
+    // didFocus(select) {
+    //   select.actions.open();
+    // }
+
+    searchAndSuggest(term) {
+      let newOptions;
+      if (term.length > 0) {
+        newOptions = this.get('complexOptions').filter(e => e.name.indexOf(term) > -1);
+        newOptions.unshift({ __id__: '__suggestion__', __value__: term, name: `Add "${term}"...` });
+      } else {
+        newOptions = this.get('complexOptions');
+      }
+      return newOptions;
     },
 
-    search(term) {
-      var length = term.length;
-      return numbers.filter(str => str.length === length); // returns the numbers with the same length than the current
-    },
-
-    asyncSearch(term) {
-      return new Ember.RSVP.Promise(function(resolve) {
-        Ember.run.later(function() {
-          var length = term.length;
-          resolve(numbers.filter(str => str.length === length)); // returns the numbers with the same length than the current
-        }, 1500);
-      });
-    },
-
-    didFocus(select) {
-      select.actions.open();
+    selectOrCreate(option) {
+      if (option && option.__id__ === '__suggestion__') {
+        let newCountry = { name: option.__value__, code: 'XX', population: 'unknown' };
+        this.set('complexSelected', newCountry);
+      } else {
+        this.set('complexSelected', 'option');
+      }
     }
   },
 

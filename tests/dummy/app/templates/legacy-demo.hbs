@@ -1,7 +1,12 @@
 <section class="legacy-demo">
   <input type="text" value="sample input">
-  <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
+  {{#power-select options=complexOptions selected=complexSelected onchange=(action "selectOrCreate") search=(action "searchAndSuggest") as |option|}}
+    {{option.name}}
+  {{/power-select}}
+
+{{!--
+  <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
   <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
 
   {{#power-select options=model selected=selectedUser onchange=(action (mut selectedUser)) as |user|}}
@@ -196,5 +201,6 @@
   <br>
   <br>
   <br>
+--}}
 
 </section>
