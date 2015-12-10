@@ -18,27 +18,28 @@
         spellcheck="false" role="textbox" oninput={{action select.actions.search value="target.value"}}
         onkeydown={{select.actions.handleKeydown}} placeholder={{searchPlaceholder}}>
       </div>
+
     {{/if}}
-    <ul class="ember-power-select-options">
       {{#if showLoadingMessage}}
-        <li class="ember-power-select-option">{{loadingMessage}}</li>
+        <ul class="ember-power-select-options"><li class="ember-power-select-option">{{loadingMessage}}</li></ul>
       {{/if}}
       {{#if resultsLength}}
         {{#component optionsComponent options=(readonly results) highlighted=(readonly highlighted)
           selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
-          select=(readonly select) extra=(readonly extra) as |option term|}}
+          select=(readonly select) extra=(readonly extra)
+          class="ember-power-select-options" as |option term|}}
           {{yield option term}}
         {{/component}}
       {{else if mustShowSearchMessage}}
-        <li class="ember-power-select-option">{{searchMessage}}</li>
+        <ul class="ember-power-select-options"><li class="ember-power-select-option">{{searchMessage}}</li></ul>
       {{else if results.isFulfilled}}
         {{#if hasInverseBlock}}
           {{yield to="inverse"}}
         {{else if noMatchesMessage}}
-          <li class="ember-power-select-option">{{noMatchesMessage}}</li>
+          <ul class="ember-power-select-options"><li class="ember-power-select-option">{{noMatchesMessage}}</li></ul>
         {{/if}}
       {{/if}}
-    </ul>
+
   {{/with}}
 {{else}}
   {{#with (hash
