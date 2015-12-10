@@ -18,6 +18,7 @@ export const defaultOptions = {
   search: null,
   closeOnSelect: true,
   dropdownClass: null,
+  triggerClass: null,
   dir: null,
   opened: false,
 
@@ -43,6 +44,7 @@ export const defaultOptions = {
   selectedComponent: Ember.computed('multiple', function() {
     return `power-select/${this.get('multiple') ? 'multiple' : 'single'}/selected`;
   })
+
 };
 
 export default Ember.Component.extend(defaultOptions);
