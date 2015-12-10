@@ -30,7 +30,7 @@ test('The onchange of single selects action receives the selection and the publi
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:eq(0)').click());
+  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
 });
 
 test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
@@ -54,7 +54,7 @@ test('The onchange of multiple selects action receives the selection and the pub
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:eq(0)').click());
+  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {

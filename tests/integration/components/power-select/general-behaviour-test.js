@@ -170,7 +170,7 @@ test('If a placeholder is provided, it shows while no element is selected', func
 
   assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').text().trim(), 'abracadabra', 'The placeholder is rendered when there is no element');
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:eq(3)').click());
+  Ember.run(() => $('.ember-power-select-option:eq(3)').mouseup());
   assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').length, 0, 'The placeholder is gone');
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', 'The selected item replaced it');
 });
@@ -210,7 +210,7 @@ test('If the user selects a value and later on the selected value changes from t
 
   assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected');
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:eq(3)').click());
+  Ember.run(() => $('.ember-power-select-option:eq(3)').mouseup());
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
   Ember.run(() => this.set('selected', 'three'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', '"three" has been selected because a change came from the outside');
@@ -243,7 +243,7 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  Ember.run(() => $('.ember-power-select-option:eq(3)').click());
+  Ember.run(() => $('.ember-power-select-option:eq(3)').mouseup());
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
@@ -395,7 +395,7 @@ test('The search term is yielded as second argument in single selects', function
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('tw'));
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the search term');
-  Ember.run(() => $('.ember-power-select-option:eq(0)').click());
+  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('thr'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the search term');

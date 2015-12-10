@@ -10,7 +10,7 @@
     </li>
   {{else}}
     <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"
-      onclick={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}}>
+      onmouseup={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}}>
       {{yield opt searchText}}
     </li>
   {{/if}}
