@@ -1,5 +1,6 @@
 # Master
 
+# 0.7.0-beta.2
 - [FEATURE] All actions (onchange, onkeydown and onfocus) now receive a richer public API object
   that is identical in shape to the one they received before but also contains `highlight(option)`
   and `search(term)` actions
