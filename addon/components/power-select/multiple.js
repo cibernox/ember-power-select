@@ -41,7 +41,7 @@ export default PowerSelectBaseComponent.extend({
       if (this.get('closeOnSelect')) {
         dropdown.actions.close(e);
       }
-      this.get('onchange')(newSelection, dropdown);
+      this.get('onchange')(newSelection, this.buildPublicAPI(dropdown));
     },
 
     removeOption(dropdown, option, e) {
@@ -51,7 +51,7 @@ export default PowerSelectBaseComponent.extend({
 
     handleKeydown(dropdown, e) {
       const onkeydown = this.get('onkeydown');
-      if (onkeydown) { onkeydown(dropdown, e); }
+      if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 8) {  // BACKSPACE
         this.removeLastOptionIfSearchIsEmpty(dropdown);
@@ -73,10 +73,10 @@ export default PowerSelectBaseComponent.extend({
       }
     },
 
-    handleFocus() {
+    handleFocus(dropdown, evt) {
       const action = this.get('onfocus');
       if (action) {
-        action();
+        action(this.buildPublicAPI(dropdown), evt);
       }
       this.focusSearch();
     }
@@ -99,8 +99,7 @@ export default PowerSelectBaseComponent.extend({
   removeOption(dropdown, option) {
     const newSelection = this.cloneSelection();
     newSelection.removeObject(option);
-    this._resultsDirty = true;
-    this.get('onchange')(newSelection, dropdown);
+    this.get('onchange')(newSelection, this.buildPublicAPI(dropdown));
   },
 
   focusSearch() {

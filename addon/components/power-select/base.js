@@ -71,12 +71,11 @@ export default Ember.Component.extend({
     },
 
     highlight(dropdown, option) {
-      if (option && get(option, 'disabled')) { return; }
-      this.set('highlighted', option);
+      this._doHighlight(option);
     },
 
     search(dropdown, term /*, e */) {
-      this.set('searchText', term);
+      this._doSearch(term);
     },
 
     handleKeydown(dropdown, e) {
@@ -119,7 +118,7 @@ export default Ember.Component.extend({
   },
 
   onClose(/* dropdown, e */) {
-    this.set('searchText', '');
+    this._doSearch('');
   },
 
   handleVerticalArrowKey(e) {
@@ -170,4 +169,21 @@ export default Ember.Component.extend({
     }
     return filterOptions(options || [], searchText, matcher);
   },
+
+  _doSearch(term) {
+    this.set('searchText', term);
+  },
+
+  _doHighlight(option) {
+    if (option && get(option, 'disabled')) { return; }
+    this.set('highlighted', option);
+  },
+
+  buildPublicAPI(dropdown) {
+    const ownActions = { search: this._doSearch.bind(this), highlight: this._doHighlight.bind(this) };
+    return {
+      isOpen: dropdown.isOpen,
+      actions: Ember.merge(ownActions, dropdown.actions)
+    };
+  }
 });
