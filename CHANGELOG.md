@@ -1,5 +1,12 @@
 # Master
 
+- [BREAKING] The event the triggers the selection of an item is mouseup, not click, meaning that the only
+  thing that matters is where the finger is lifted. This is how real selects work in chrome/safari/firefox,
+  and so should this. Given that the component opens on mousedown, this allows the user to open and select
+  with only one movement.
+  Real usage shouldn't break, not acceptance tests, but integration tests using `$().click()` will. Replace
+  this `$().mouseup()`.
+
 # 0.7.0-beta.2
 - [FEATURE] All actions (onchange, onkeydown and onfocus) now receive a richer public API object
   that is identical in shape to the one they received before but also contains `highlight(option)`
