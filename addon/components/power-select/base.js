@@ -14,6 +14,21 @@ export default Ember.Component.extend({
   // CPs
   showLoadingMessage: computed.and('loadingMessage', 'results.isPending'),
 
+  triggerUniqueClass: computed('elementId', function() {
+    return `ember-power-select-trigger-${this.elementId}`;
+  }),
+
+  concatenatedTriggerClasses: computed('class', 'triggerUniqueClass', function() {
+    let classes = Ember.A(['ember-power-select-trigger', this.get('triggerUniqueClass')]);
+    if (this.get('triggerClass')) {
+      classes.push(this.get('triggerClass'));
+    }
+    if (this.get('class')) {
+      classes.push(`${this.get('class')}-trigger`);
+    }
+    return classes.join(' ');
+  }),
+
   concatenatedDropdownClasses: computed('class', function() {
     let classes = Ember.A(['ember-power-select-dropdown']);
     if (this.get('dropdownClass')) {

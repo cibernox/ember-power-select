@@ -6,6 +6,7 @@
   with only one movement.
   Real usage shouldn't break, not acceptance tests, but integration tests using `$().click()` will. Replace
   this `$().mouseup()`.
+- [FEATURE] EPS now accepts a `triggerClass` which is applied to the trigger.
 
 # 0.7.0-beta.2
 - [FEATURE] All actions (onchange, onkeydown and onfocus) now receive a richer public API object

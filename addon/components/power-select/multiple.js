@@ -13,14 +13,6 @@ export default PowerSelectBaseComponent.extend({
     set(_, v) { return v; }
   }),
 
-  triggerUniqueClass: computed('elementId', function() {
-    return `ember-power-select-trigger-${this.elementId}`;
-  }),
-
-  triggerClass: computed('triggerUniqueClass', function() {
-    return `ember-power-select-trigger ${this.get('triggerUniqueClass')}`;
-  }),
-
   concatenatedClasses: computed('class', function() {
     const classes = ['ember-power-select', 'multiple'];
     if (this.get('class')) { classes.push(this.get('class')); }
