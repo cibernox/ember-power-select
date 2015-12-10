@@ -23,6 +23,7 @@ Router.map(function() {
 
     // ADVANCED CUSTOMIZATION
     this.route('asynchronous-search');
+    this.route('create-item');
 
     // OTHER
     this.route('troubleshooting');

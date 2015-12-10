@@ -1,0 +1,18 @@
+<h1 class="doc-page-title">Create Item functionality</h1>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select multiple=false options=names oncreate=(action "createItem") selected=selected onchange=(action (mut selected)) as |name|}}
+      {{name}}
+    {{/power-select}}
+  </div>
+{{/code-sample}}
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.styles' class="doc-page-nav-link-prev"}}&lt; Styles{{/link-to}}
+  {{#link-to 'docs.troubleshooting' class="doc-page-nav-link-next"}}Troubleshooting &gt;{{/link-to}}
+</div>

@@ -12,7 +12,9 @@
       removeOption=(action "removeOption" dropdown)
       handleKeydown=(action "handleKeydown" dropdown)
     )) as |select|}}
-
+      {{#if createEnabled}}
+        <ul class="ember-power-select-options "><li {{action "create" dropdown searchText}} class="ember-power-select-option">Add {{searchText}}...</li></ul>
+      {{/if}}
       {{#if showLoadingMessage}}
         <ul class="ember-power-select-options"><li class="ember-power-select-option">{{loadingMessage}}</li></ul>
       {{/if}}
