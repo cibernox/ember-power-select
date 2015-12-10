@@ -71,7 +71,7 @@ test('Click on an option of a group select selects the option and closes the dro
     {{/power-select}}
   `);
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:contains("four")').click());
+  Ember.run(() => $('.ember-power-select-option:contains("four")').mouseup());
   assert.equal($('.ember-power-select-trigger').text().trim(), "four", 'The clicked option was selected');
   assert.equal($('.ember-power-select-options').length, 0, 'The dropdown has dissapeared');
 });

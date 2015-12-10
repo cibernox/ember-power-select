@@ -42,7 +42,7 @@ test('Clicking an item selects it, closes the dropdown and focuses the trigger',
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => $('.ember-power-select-option:eq(3)').click());
+  Ember.run(() => $('.ember-power-select-option:eq(3)').mouseup());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select was closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
