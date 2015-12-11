@@ -1,6 +1,6 @@
 {{#each options as |opt|}}
   {{#if opt.groupName}}
-    <li class="ember-power-select-group">
+    <li class="ember-power-select-group" role="option">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
         options=(readonly opt.options) optionsComponent=(readonly optionsComponent) select=(readonly select)
@@ -10,7 +10,7 @@
     </li>
   {{else}}
     <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"
-      onmouseup={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}}>
+      onmouseup={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}} role="option">
       {{yield opt searchText}}
     </li>
   {{/if}}

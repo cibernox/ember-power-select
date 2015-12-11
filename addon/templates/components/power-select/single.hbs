@@ -15,13 +15,13 @@
     {{#if searchEnabled}}
       <div class="ember-power-select-search">
         <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
-        spellcheck="false" role="textbox" oninput={{action select.actions.search value="target.value"}}
+        spellcheck="false" role="combobox" oninput={{action select.actions.search value="target.value"}}
         onkeydown={{select.actions.handleKeydown}} placeholder={{searchPlaceholder}}>
       </div>
 
     {{/if}}
       {{#if showLoadingMessage}}
-        <ul class="ember-power-select-options"><li class="ember-power-select-option">{{loadingMessage}}</li></ul>
+        <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{loadingMessage}}</li></ul>
       {{/if}}
       {{#if resultsLength}}
         {{#component optionsComponent options=(readonly results) highlighted=(readonly highlighted)
@@ -31,12 +31,12 @@
           {{yield option term}}
         {{/component}}
       {{else if mustShowSearchMessage}}
-        <ul class="ember-power-select-options"><li class="ember-power-select-option">{{searchMessage}}</li></ul>
+        <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
       {{else if results.isFulfilled}}
         {{#if hasInverseBlock}}
           {{yield to="inverse"}}
         {{else if noMatchesMessage}}
-          <ul class="ember-power-select-options"><li class="ember-power-select-option">{{noMatchesMessage}}</li></ul>
+          <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{noMatchesMessage}}</li></ul>
         {{/if}}
       {{/if}}
 
