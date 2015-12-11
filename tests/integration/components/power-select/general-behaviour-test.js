@@ -401,34 +401,10 @@ test('The search term is yielded as second argument in single selects', function
   assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the search term');
 });
 
-test('The dropdowns shows the default "no options" message', function(assert) {
-  this.options = [];
-  this.render(hbs`
-    {{#power-select options=options onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  assert.equal($('.ember-power-select-option').length, 1);
-  assert.equal($('.ember-power-select-option').text().trim(), 'No results found');
-});
-
-test('The default "no options" message can be customized passing `noMatchesMessage="other message"`', function(assert) {
-  this.options = [];
-  this.render(hbs`
-    {{#power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  assert.equal($('.ember-power-select-option').length, 1);
-  assert.equal($('.ember-power-select-option').text().trim(), 'Nope');
-});
-
 test('The content of the dropdown when there are no options can be completely customized using the inverse block', function(assert) {
   this.options = [];
   this.render(hbs`
-    {{#power-select options=options noMatchesMessage="Nope" onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=options onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{else}}
       <span class="empty-option-foo">Foo bar</span>
@@ -541,12 +517,14 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   this.render(hbs`
     {{#power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) as |option|}}
       {{option}}
+    {{else}}
+      Nothing, bro
     {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('on'));
-  assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
+  assert.equal($('.ember-power-select-dropdown').text().trim(), "Nothing, bro", 'No number ends in "on"');
   Ember.run(() => typeInSearch('teen'));
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
 });

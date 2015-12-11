@@ -220,12 +220,14 @@ test('The filtering specifying a custom matcher works in multiple model', functi
   this.render(hbs`
     {{#power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) multiple=true as |option|}}
       {{option}}
+    {{else}}
+      Nothing, bro
     {{/power-select}}
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => typeInSearch('on'));
-  assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
+  assert.equal($('.ember-power-select-dropdown').text().trim(), "Nothing, bro", 'No number ends in "on"');
   Ember.run(() => typeInSearch('teen'));
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
 });

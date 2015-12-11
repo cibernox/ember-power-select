@@ -10,7 +10,6 @@ export const defaultOptions = {
   disabled: false,
   placeholder: undefined,
   loadingMessage: "Loading options...",
-  noMatchesMessage: "No results found",
   optionsComponent: 'power-select/options',
   dropdownPosition: 'auto',
   matcher: defaultMatcher,

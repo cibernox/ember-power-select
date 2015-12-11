@@ -114,54 +114,6 @@ test('While the async search is being performed the "Type to search" dissapears 
   setTimeout(done, 150);
 });
 
-test('When the search resolves to an empty array then the "No results found" message or block appears.', function(assert) {
-  var done = assert.async();
-  assert.expect(1);
-
-  this.searchFn = function() {
-    return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() { resolve([]); }, 10);
-    });
-  };
-
-  this.render(hbs`
-    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
-      {{number}}
-    {{/power-select}}
-  `);
-
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => typeInSearch("teen"));
-  setTimeout(() => {
-    assert.ok(/No results found/.test($('.ember-power-select-option').text()), 'The default "No results" message renders');
-    done();
-  }, 20);
-});
-
-test('When the search resolves to an empty array then the custom "No results" message appears', function(assert) {
-  var done = assert.async();
-  assert.expect(1);
-
-  this.searchFn = function() {
-    return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() { resolve([]); }, 10);
-    });
-  };
-
-  this.render(hbs`
-    {{#power-select search=searchFn noMatchesMessage="Meec. Try again" onchange=(action (mut foo)) as |number|}}
-      {{number}}
-    {{/power-select}}
-  `);
-
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => typeInSearch("teen"));
-  setTimeout(() => {
-    assert.ok(/Meec\. Try again/.test($('.ember-power-select-option').text()), 'The customized "No results" message renders');
-    done();
-  }, 20);
-});
-
 test('When the search resolves to an empty array then the custom alternate block renders', function(assert) {
   var done = assert.async();
   assert.expect(1);

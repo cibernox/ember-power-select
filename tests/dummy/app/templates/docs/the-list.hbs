@@ -73,53 +73,11 @@
 
 <p>
   What happens when the collection you pass to the component is empty?
-  By default the component will render a helpful message. This message is the same
-  that will appear after performing a search when there are no matching results.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
-      \{{name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      emptyList: []
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
-      {{name}}
-    {{/power-select}}
-  </div>
-{{/code-sample}}
-
 <p>
-  You can pass a different message using <code>noMatchesMessage="My message"</code>
-</p>
-
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
-      \{{name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      emptyList: []
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
-      {{name}}
-    {{/power-select}}
-  </div>
-{{/code-sample}}
-
-<p>
-  Or you can just use the <code>\{{else}}</code> block to just customize a totally
-  different HTML content just like the <code>\{{each}}</code> helper.
+  Like with Ember's <code>\{{each}}</code>helper the component will render the inverse block if
+  provided.
 </p>
 
 {{#code-sample as |component|}}
@@ -158,7 +116,7 @@
 </p>
 <p>
   That means that while the promise doesn't resolve you are in some kind of <em>loading</em>
-  state where you don't have options yet (but you will have results) so you don't want to show the "No results" messages.
+  state where you don't have options yet (but you will have results) so you don't want to render the inverse block.
 </p>
 
 <p>
