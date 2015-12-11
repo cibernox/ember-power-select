@@ -1,5 +1,6 @@
 # Master
 
+# 0.7.0-beta.5
 - [BUGFIX] Use `onmousedown` also in clear button (single and multiple modes) to ensure list is not opened.
 - [BREAKING] EPS no longer exports the `defaultConfig` because it's not needed anymore.
   Passing an undefined values for default values does not overrides the default values (null/false do).
