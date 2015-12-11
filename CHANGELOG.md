@@ -1,5 +1,6 @@
 # Master
 
+# 0.7.0-beta.4
 - [BUGFIX] On a select with a selected value, if the selected value is not among the results, the
   first results becomes the highlighted one. Before this fix none was highlighted.
 
