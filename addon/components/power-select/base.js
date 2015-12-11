@@ -75,6 +75,10 @@ export default Ember.Component.extend({
     return countOptions(this.get('results'));
   }),
 
+  createEnabled: computed('oncreate', 'searchText', function() {
+    return this.get('oncreate') && ! Ember.isEmpty(this.get('searchText'));
+  }),
+
   // Actions
   actions: {
     open(dropdown, e) {
@@ -91,6 +95,10 @@ export default Ember.Component.extend({
 
     search(dropdown, term /*, e */) {
       this._doSearch(term);
+    },
+
+    create(dropdown, term) {
+      this.get('oncreate')(term, this.buildPublicAPI(dropdown));
     },
 
     handleKeydown(dropdown, e) {
