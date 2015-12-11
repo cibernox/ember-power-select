@@ -64,7 +64,7 @@ test('Clicking the trigger while the select is opened closes it and and focuses 
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
 
-test('Clicking the clear button removes the selection', function(assert) {
+test('Doing mousedown the clear button removes the selection but does not open the select', function(assert) {
   assert.expect(6);
 
   this.numbers = numbers;
@@ -82,7 +82,7 @@ test('Clicking the clear button removes the selection', function(assert) {
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
   assert.ok(/three/.test($('.ember-power-select-trigger').text().trim()), 'A element is selected');
-  Ember.run(() => $('.ember-power-select-clear-btn').click());
+  Ember.run(() => $('.ember-power-select-clear-btn').mousedown());
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
   assert.ok(!/three/.test($('.ember-power-select-trigger').text().trim()), 'That element is not selected now');
 });

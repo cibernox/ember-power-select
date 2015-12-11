@@ -449,7 +449,7 @@ test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #9
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
-  Ember.run(() => this.$('.ember-power-select-multiple-remove-btn').click());
+  Ember.run(() => this.$('.ember-power-select-multiple-remove-btn').mousedown());
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
 });
 
@@ -464,7 +464,7 @@ test('Selecting and removing should result in desired behavior', function(assert
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
   Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
   assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'Should add selected option');
-  Ember.run(() => this.$('.ember-power-select-multiple-remove-btn').click());
+  Ember.run(() => this.$('.ember-power-select-multiple-remove-btn').mousedown());
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
 });
