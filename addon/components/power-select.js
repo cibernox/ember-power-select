@@ -2,33 +2,40 @@ import Ember from 'ember';
 import layout from '../templates/components/power-select';
 import { defaultMatcher } from '../utils/group-utils';
 
-export const defaultOptions = {
-  tagName: '',
+const { computed } = Ember;
+
+function fallbackIfUndefined(fallback) {
+  return computed({
+    get() { return fallback; },
+    set(_, v) { return v === undefined ? fallback : v; }
+  });
+}
+
+export default Ember.Component.extend({
   layout: layout,
 
   // Universal config
-  disabled: false,
-  placeholder: undefined,
-  loadingMessage: "Loading options...",
-  noMatchesMessage: "No results found",
-  optionsComponent: 'power-select/options',
-  dropdownPosition: 'auto',
-  matcher: defaultMatcher,
-  searchField: null,
-  search: null,
-  closeOnSelect: true,
-  dropdownClass: null,
-  triggerClass: null,
-  dir: null,
-  opened: false,
+  tagName: fallbackIfUndefined(''),
+  disabled: fallbackIfUndefined(false),
+  placeholder: fallbackIfUndefined(null),
+  loadingMessage: fallbackIfUndefined('Loading options...'),
+  noMatchesMessage: fallbackIfUndefined('No results found'),
+  optionsComponent: fallbackIfUndefined('power-select/options'),
+  dropdownPosition: fallbackIfUndefined('auto'),
+  matcher: fallbackIfUndefined(defaultMatcher),
+  searchField: fallbackIfUndefined(null),
+  search: fallbackIfUndefined(null),
+  closeOnSelect: fallbackIfUndefined(true),
+  dropdownClass: fallbackIfUndefined(null),
+  triggerClass: fallbackIfUndefined(null),
+  dir: fallbackIfUndefined(null),
+  opened: fallbackIfUndefined(false),
 
   // Select single config
-  searchEnabled: true,
-  searchMessage: "Type to search",
-  searchPlaceholder: null,
-  allowClear: false,
-
-  // Select multiple config
+  searchEnabled: fallbackIfUndefined(true),
+  searchMessage: fallbackIfUndefined("Type to search"),
+  searchPlaceholder: fallbackIfUndefined(null),
+  allowClear: fallbackIfUndefined(false),
 
   // Lifecycle hooks
   didInitAttrs() {
@@ -41,10 +48,9 @@ export const defaultOptions = {
     return `power-select/${this.get('multiple') ? 'multiple' : 'single'}`;
   }),
 
-  selectedComponent: Ember.computed('multiple', function() {
+  selectedComponentOrDefault: Ember.computed('multiple', 'selectedComponent', function() {
+    let givenComponent = this.get('selectedComponent');
+    if (givenComponent) { return givenComponent; }
     return `power-select/${this.get('multiple') ? 'multiple' : 'single'}/selected`;
   })
-
-};
-
-export default Ember.Component.extend(defaultOptions);
+});

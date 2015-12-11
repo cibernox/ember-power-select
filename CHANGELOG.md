@@ -1,5 +1,11 @@
 # Master
 
+- [BREAKING] EPS no longer exports the `defaultConfig` because it's not needed anymore.
+  Passing an undefined values for default values does not overrides the default values (null/false do).
+  This makes composability easy because creating a wrapper around the component can just forward
+  all properties `{{#power-select searchEnabled=searchEnabled selectedComponent=selectedComponent}}`
+  without worrying about if this values is defined or not.
+
 # 0.7.0-beta.4
 - [BUGFIX] On a select with a selected value, if the selected value is not among the results, the
   first results becomes the highlighted one. Before this fix none was highlighted.
