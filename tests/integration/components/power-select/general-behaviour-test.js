@@ -135,7 +135,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   }, 150);
 });
 
-test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is falsey, no loading message is shown', function(assert) {
+test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is false, no loading message is shown', function(assert) {
   let done = assert.async();
   assert.expect(2);
 
@@ -144,7 +144,7 @@ test('If the passed options is a promise and it\'s not resolved but the `loading
   });
 
   this.render(hbs`
-    {{#power-select options=numbersPromise onchange=(action (mut foo)) loadingMessage=nonexistent as |option|}}
+    {{#power-select options=numbersPromise onchange=(action (mut foo)) loadingMessage=false as |option|}}
       {{option}}
     {{/power-select}}
   `);
