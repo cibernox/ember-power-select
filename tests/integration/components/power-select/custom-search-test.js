@@ -218,7 +218,7 @@ test('When one search is fired before the previous one resolved, the "Loading" c
   setTimeout(done, 180);
 });
 
-test('When the search resolves, the first element is highlighted like with regular filtering', function(assert) {
+test('On an empty select, when the search resolves, the first element is highlighted like with regular filtering', function(assert) {
   var done = assert.async();
   assert.expect(1);
 
@@ -237,6 +237,36 @@ test('When the search resolves, the first element is highlighted like with regul
   `);
 
   Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => typeInSearch("teen"));
+
+  setTimeout(function() {
+    assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first result is highlighted');
+    done();
+  }, 110);
+});
+
+test('On an select with a selected value, if after a search this value is not among the options the first element is highlighted', function(assert) {
+  var done = assert.async();
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.selected = numbers[2];
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      Ember.run.later(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
+
+  this.render(hbs`
+    {{#power-select search=searchFn options=numbers selected=selected onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  assert.ok($('.ember-power-select-option:eq(2)').hasClass('ember-power-select-option--highlighted'), 'The 3rd result is highlighted');
   Ember.run(() => typeInSearch("teen"));
 
   setTimeout(function() {

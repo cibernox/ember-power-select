@@ -54,7 +54,13 @@ export default PowerSelectBaseComponent.extend({
   // Methods
 
   defaultHighlighted() {
-    return this.get('selection') || this.optionAtIndex(0);
+    const selection = this.get('selection');
+
+    if (!selection || this.indexOfOption(selection) === -1) {
+      return this.optionAtIndex(0);
+    }
+
+    return selection;
   },
 
   focusSearch() {

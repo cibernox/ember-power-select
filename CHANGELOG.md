@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] On a select with a selected value, if the selected value is not among the results, the
+  first results becomes the highlighted one. Before this fix none was highlighted.
+
 # 0.7.0-beta.3
 - [BREAKING] The event the triggers the selection of an item is mouseup, not click, meaning that the only
   thing that matters is where the finger is lifted. This is how real selects work in chrome/safari/firefox,
