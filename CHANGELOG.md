@@ -1,6 +1,7 @@
 # Master
 
-- [ENHANCEMENT] Expose test helpers to the consumer app to make integration tests nicer.
+- [FEATURE] Add ARIA roles for basic accesibility. Still more work on this area.
+- [FEATURE] Expose test helpers to the consumer app to make integration tests nicer.
 
 # 0.7.0-beta.5
 - [BUGFIX] Use `onmousedown` also in clear button (single and multiple modes) to ensure list is not opened.
