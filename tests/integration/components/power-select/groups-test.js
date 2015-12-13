@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import typeInSearch from '../../../helpers/type-in-search';
+import { typeInSearch } from '../../../helpers/ember-power-select';
 import { groupedNumbers } from '../constants';
 
 /**
