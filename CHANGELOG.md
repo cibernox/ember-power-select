@@ -1,5 +1,7 @@
 # Master
 
+- [FEATURE] Add initial implementation of `selectChoose` acceptance helper to make
+  interaction with the component nicer.
 - [FEATURE] Add ARIA roles for basic accesibility. Still more work on this area.
 - [FEATURE] Expose test helpers to the consumer app to make integration tests nicer.
 
