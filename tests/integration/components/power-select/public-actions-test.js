@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import triggerKeydown from '../../../helpers/trigger-keydown';
+import { triggerKeydown } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
 
