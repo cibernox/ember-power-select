@@ -1,5 +1,6 @@
 # Master
 
+# 0.7.0-beta.6
 - [FEATURE] Add initial implementation of `selectChoose` acceptance helper to make
   interaction with the component nicer.
 - [FEATURE] Add ARIA roles for basic accesibility. Still more work on this area.
