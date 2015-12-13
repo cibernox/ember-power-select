@@ -39,6 +39,9 @@ Router.map(function() {
   });
 
   this.route('legacy-demo');
+
+  // Routers for tests
+  this.route('helpers-testing');
 });
 
 export default Router;
