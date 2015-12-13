@@ -1,0 +1,12 @@
+<h3>Helpers testing</h3>
+{{#power-select class="select-choose" options=numbers selected=selected onchange=(action (mut selected)) as |num|}}
+  {{num}}
+{{/power-select}}
+
+{{#if selected}}
+  <span class="select-choose-target">You've selected: {{selected}}</span>
+{{/if}}
+
+{{#power-select class="select-async" selected=selected onchange=(action (mut selected)) search=(action "searchAsync") as |num|}}
+  {{num}}
+{{/power-select}}
