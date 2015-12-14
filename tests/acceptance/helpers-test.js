@@ -66,6 +66,29 @@ test('selectSearch helper searches in the given single select, opening it if nee
   });
 });
 
-// skip('selectSearch helper searches in the given multiple select closed');
+test('selectSearch helper searches in the given multiple select opened', function(assert) {
+  visit('/helpers-testing');
 
-// skip('selectSearch helper searches in the given multiple select when opened');
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    click('.select-multiple .ember-power-select-trigger');
+    selectSearch('.select-multiple', 'three');
+  });
+
+  andThen(function() {
+    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
+
+test('selectSearch helper searches in the given multiple select closed', function(assert) {
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectSearch('.select-multiple', 'three');
+  });
+
+  andThen(function() {
+    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
