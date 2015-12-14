@@ -11,15 +11,18 @@ export default Ember.Component.extend({
   activeSearch: null,
   attributeBindings: ['dir'],
 
+  init() {
+    this._super(...arguments);
+    const randomUUID = Math.random().toString().slice(-10);
+    this.triggerUniqueClass = `ember-power-select-trigger-${randomUUID}`;
+    this.dropdownUniqueClass = `ember-power-select-dropdown-${randomUUID}`;
+  },
+
   // CPs
   showLoadingMessage: computed.and('loadingMessage', 'results.isPending'),
 
-  triggerUniqueClass: computed('elementId', function() {
-    return `ember-power-select-trigger-${this.elementId}`;
-  }),
-
-  concatenatedTriggerClasses: computed('class', 'triggerUniqueClass', function() {
-    let classes = Ember.A(['ember-power-select-trigger', this.get('triggerUniqueClass')]);
+  concatenatedTriggerClasses: computed('class', function() {
+    let classes = ['ember-power-select-trigger', this.triggerUniqueClass];
     if (this.get('triggerClass')) {
       classes.push(this.get('triggerClass'));
     }
@@ -30,7 +33,7 @@ export default Ember.Component.extend({
   }),
 
   concatenatedDropdownClasses: computed('class', function() {
-    let classes = Ember.A(['ember-power-select-dropdown']);
+    let classes = ['ember-power-select-dropdown', this.dropdownUniqueClass];
     if (this.get('dropdownClass')) {
       classes.push(this.get('dropdownClass'));
     }

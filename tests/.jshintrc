@@ -23,7 +23,8 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "selectChoose"
+    "selectChoose",
+    "selectSearch"
   ],
   "node": false,
   "browser": false,
