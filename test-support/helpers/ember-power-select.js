@@ -47,7 +47,7 @@ export default function() {
   Ember.Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
     const uuid = find(cssPath).find('.ember-power-select-trigger').attr('class').match(/ember-power-select-trigger-(\d+)/)[1]
     const isMultipleSelect = Ember.$(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
-
+    debugger;
     if (isMultipleSelect) {
       fillIn(`${cssPath} .ember-power-select-trigger-multiple-input`, value);
     } else {

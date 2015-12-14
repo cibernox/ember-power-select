@@ -25,7 +25,7 @@ const numbers = [
 
 export default Ember.Controller.extend({
   numbers,
-
+  selectedList: [],
   // Actions
   actions: {
     searchAsync(term) {
