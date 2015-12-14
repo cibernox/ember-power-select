@@ -1,23 +1,21 @@
 {
   "name": "ember-power-select",
   "dependencies": {
-    "ember": "1.13.10",
+    "ember": "2.2.0",
     "ember-cli-shims": "0.0.6",
     "ember-cli-test-loader": "0.2.1",
-    "ember-data": "2.0.0",
+    "ember-data": "^2.2.1",
     "ember-load-initializers": "0.1.7",
-    "ember-qunit": "0.4.16",
     "ember-qunit-notifications": "0.1.0",
-    "ember-resolver": "~0.1.20",
     "jquery": "^2.1.4",
-    "loader.js": "ember-cli/loader.js#3.4.0",
+    "loader.js": "^3.5.0",
     "qunit": "~1.20.0",
     "pretender": "~0.10.1",
     "lodash": "~3.7.0",
     "Faker": "~3.0.0"
   },
   "resolutions": {
-    "ember": "1.13.10"
+    "ember": "2.2.0"
   },
   "devDependencies": {
     "blanket": "~1.1.5"

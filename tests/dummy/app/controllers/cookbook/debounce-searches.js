@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import ajax from 'ic-ajax';
 
-const { run, isBlank } = Ember;
+const { run, isBlank, inject } = Ember;
 
 export default Ember.Controller.extend({
+  ajax: inject.service(),
   actions: {
     searchRepo(term) {
       return new Ember.RSVP.Promise((resolve, reject) => {
@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 
   _performSearch(term, resolve, reject) {
     if (isBlank(term)) { return resolve([]); }
-    ajax({ url: `//api.github.com/search/repositories?q=${term}` })
+    this.get('ajax').request(`//api.github.com/search/repositories?q=${term}`)
       .then(json => resolve(json.items), err => reject(err));
   }
 });
