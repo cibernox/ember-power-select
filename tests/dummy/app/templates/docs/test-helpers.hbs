@@ -1,0 +1,68 @@
+<h1 class="doc-page-title">Test helpers</h1>
+
+<p>
+  Since 0.7.0 ember-power-select bundles some handy test helpers (<code>selectChoose</code> and <code>selectSearch</code>)
+  that make nicer to interact with the component in acceptance tests tests.
+</p>
+
+<p>
+  To use those helpers in acceptance tests you need to register them in the <code>/tests/helpers/start-app.js</code>
+  file.
+</p>
+
+<p>
+  For that import the registration function and invoke it immedialty.
+</p>
+
+<pre>
+  import Ember from 'ember';
+  import Application from '../../app';
+  import config from '../../config/environment';
+  import registerPowerSelectHelpers from '../../tests/helpers/ember-power-select';
+
+  registerPowerSelectHelpers();
+
+  export default function startApp(attrs) {
+    //...
+  }
+</pre>
+
+<h3><code>selectChoose(cssPath, optionText)</code></h3>
+
+<p>
+  This async helper allows you to select an option of a select by it's text, without worrying about
+  if the select is single or multiple or if it is opened or closed.
+</p>
+
+<pre>
+  fillIn('.username', 'Tomster');
+  selectChoose('.city-selector', 'Rome');
+  // ...
+  click('.submit-btn');
+</pre>
+
+
+<h3><code>selectSearch(cssPath, searchText)</code></h3>
+
+<p>
+  Use this helper to perform a search on a  single/multiple select. You probably will use it in
+  conjunction when the search perform some asynchronous operation
+</p>
+
+<pre>
+  selectSearch('.city-selector', 'new');
+
+  andThen(function() {
+    selectChoose('.city-selector', 'New Orleans');
+  });
+</pre>
+
+<p>
+  <strong>Note:</strong> Remember to whitelist <code>selectChoose</code> and <code>selectSearch</code> in the list of allowed
+  globals in your <code>tests/.jshintrc</code> manifest.
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'docs.asynchronous-search' class="doc-page-nav-link-prev"}}&lt; Asynchronous search{{/link-to}}
+  {{#link-to 'docs.troubleshooting' class="doc-page-nav-link-next"}}Troubleshooting &gt;{{/link-to}}
+</div>

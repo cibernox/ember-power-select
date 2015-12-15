@@ -25,6 +25,7 @@ Router.map(function() {
     this.route('asynchronous-search');
 
     // OTHER
+    this.route('test-helpers');
     this.route('troubleshooting');
     this.route('api-reference');
 
