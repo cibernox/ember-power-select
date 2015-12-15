@@ -38,7 +38,10 @@ one that you want to open source open a PR to include it in the list.
 This component was just tested it in modern browsers but there is no technical reason it
 wouldn't work in IE9+. If you find any problem please file an issue.
 
-In testing it requires phantomjs 2.0+.
+## Testing
+
+In testing it requires phantomjs 2.0+. This component also provides some convenient [test helpers](www.ember-power-select.com/docs/test-helpers)
+to interact with the component in acceptance tests.
 
 ## Troubleshooting
 

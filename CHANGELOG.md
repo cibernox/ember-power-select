@@ -1,5 +1,8 @@
 # Master
 
+- [FEATURE] Finalize implementation of `selectChoose` and `selectSearch` that work in all supported
+  versions of ember. Added docs for them.
+
 # 0.7.0-beta.6
 - [FEATURE] Add initial implementation of `selectChoose` acceptance helper to make
   interaction with the component nicer.

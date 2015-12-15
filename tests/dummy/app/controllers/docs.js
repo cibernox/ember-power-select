@@ -33,6 +33,7 @@ const groupedSections = [
   {
     groupName: 'Other',
     options: [
+      { route: 'docs.test-helpers', text: 'Test helpers' },
       { route: 'docs.troubleshooting', text: 'Troubleshooting' },
       { route: 'docs.api-reference', text: 'API reference' }
     ]
