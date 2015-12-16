@@ -65,13 +65,12 @@ export default Ember.Component.extend({
     } else {
       promise = Promise.resolve(options).then(opts => this.filter(Ember.A(opts), this.get('searchText')));
     }
-    promise.then(opts => this.set('previousResults', opts));
+    promise.then(opts => this.setProperties({ currentlyHighlighted: undefined, previousResults: opts }));
     return PromiseArray.create({ promise, content: previousResults });
   }),
 
-  highlighted: computed('results.[]', 'selected', {
-    get() { return this.defaultHighlighted(); },
-    set(_, v) { return v; }
+  highlighted: computed('results.[]', 'currentlyHighlighted', 'selected', function() {
+    return this.get('currentlyHighlighted') || this.defaultHighlighted();
   }),
 
   resultsLength: computed('results.[]', function() {
@@ -137,12 +136,13 @@ export default Ember.Component.extend({
 
   onClose(/* dropdown, e */) {
     this._doSearch('');
+    this.set('currentlyHighlighted', null);
   },
 
   handleVerticalArrowKey(e) {
     e.preventDefault();
     const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
-    this.set('highlighted', newHighlighted);
+    this.set('currentlyHighlighted', newHighlighted);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
