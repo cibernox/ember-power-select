@@ -10,10 +10,6 @@ import {
 
 const { RSVP } = Ember;
 
-/**
-1 - General behavior
-*/
-
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true
 });
@@ -675,3 +671,41 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
   assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'Lisa Simpson');
 });
 
+test('BUGFIX: The highlighted element is reset when single selects are closed', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.foo = 'three';
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The third element is highlighted');
+  Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'four', 'The forth element is highlighted');
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The third element is highlighted again');
+});
+
+test('BUGFIX: The highlighted element is reset when multiple selects are closed', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The first element is highlighted');
+  Ember.run(() => triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 40));
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The second element is highlighted');
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The first element is highlighted again');
+});

@@ -1,5 +1,6 @@
 # Master
 
+- [BUGFIX] The highliged element is reseted to default when the component is closed.
 - [BUGFIX] Update ember-basic-dropdown to defaultPrevent the behavior if the mousedown that opens the
   component, so the user does not select text if moves the finger before releasing the mouse.
 
