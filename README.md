@@ -40,7 +40,7 @@ wouldn't work in IE9+. If you find any problem please file an issue.
 
 ## Testing
 
-In testing it requires phantomjs 2.0+. This component also provides some convenient [test helpers](www.ember-power-select.com/docs/test-helpers)
+In testing it requires phantomjs 2.0+. This component also provides some convenient [test helpers](http://www.ember-power-select.com/docs/test-helpers)
 to interact with the component in acceptance tests.
 
 ## Troubleshooting

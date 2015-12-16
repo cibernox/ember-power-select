@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Update ember-basic-dropdown to defaultPrevent the behavior if the mousedown that opens the
+  component, so the user does not select text if moves the finger before releasing the mouse.
+
 # 0.7.0
 - [FEATURE] Finalize implementation of `selectChoose` and `selectSearch` that work in all supported
   versions of ember. Added docs for them.
