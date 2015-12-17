@@ -170,6 +170,59 @@
   </div>
 {{/code-sample}}
 
+<h3><code>onopen/onclose</code> Actions</h3>
+
+<p>
+  As their names suggest, this actions are fired when the component is opened or closed respectively,
+  and they both have the same signature <code>(select, event)</code> (the event will be undefined if
+  the component is not opened as result of user interaction).
+</p>
+
+<p>
+  You can use this action for many useful purposes, but since the troll-force is strong in me, I
+  want to show a useless example: The select components for spies!
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#if destroyed}}
+      The bomb has exploded! Reload to try again :)
+    \{{else}}
+      \{{#power-select selected=number options=numbers onchange=(action (mut number)) onopen=(action "startSelfDestroyCountdown") placeholder="Once opened this component will destroy itself in 8 seconds" as |number|}}
+        \{{number}}
+      \{{/power-select}}
+      \{{#if countdown}}&lt;p&gt;This component will be destroyed in \{{counter}} seconds&lt;/p&gt;\{{/if}}
+    \{{/if}}
+    &lt;p&gt;Selected number: \{{number}}&lt;/p&gt;
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+    export default Ember.Controller.extend({
+      numbers,
+      counter: 8,
+      destroyed: Ember.computed.lte('counter', 0),
+      startSelfDestroyCountdown() {
+        let tick = () => {
+          this.decrementProperty('counter');
+          if (!this.get('destroyed')) { Ember.run.later(tick, 1000); }
+        };
+        this.set('countdown', Ember.run.later(tick, 1000));
+      }
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#if destroyed}}
+      The bomb has exploded! Reload to try again :)
+    {{else}}
+      {{#power-select selected=number options=numbers onchange=(action (mut number)) onopen=(action "startSelfDestroyCountdown") placeholder="Once opened this component will destroy itself in 8 seconds" as |number|}}
+        {{number}}
+      {{/power-select}}
+      {{#if countdown}}<p>This component will be destroyed in {{counter}} seconds</p>{{/if}}
+    {{/if}}
+    <p>Selected number: {{number}}</p>
+  </div>
+{{/code-sample}}
+
 <p>
   Have I mentioned that your can also render groups?
 </p>
