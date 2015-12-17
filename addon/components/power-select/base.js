@@ -129,12 +129,17 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  onOpen(dropdown, e) {
+
+  handleOpen(dropdown, e) {
+    const action = this.get('onopen');
+    if (action) { action(this.buildPublicAPI(dropdown), e); }
     run.scheduleOnce('afterRender', this, this.focusSearch, e);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
-  onClose(/* dropdown, e */) {
+  handleClose(dropdown, e) {
+    const action = this.get('onclose');
+    if (action) { action(this.buildPublicAPI(dropdown), e); }
     this._doSearch('');
     this._doHighlight(null);
   },
