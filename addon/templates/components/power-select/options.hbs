@@ -1,17 +1,23 @@
-{{#each options as |opt|}}
-  {{#if opt.groupName}}
-    <li class="ember-power-select-group" role="option">
-      <span class="ember-power-select-group-name">{{opt.groupName}}</span>
-      {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
-        options=(readonly opt.options) optionsComponent=(readonly optionsComponent) select=(readonly select)
-        class="ember-power-select-options ember-power-select-options--nested" as |option|}}
-        {{yield option searchText}}
-      {{/component}}
-    </li>
-  {{else}}
-    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"
-      onmouseup={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}} role="option">
-      {{yield opt searchText}}
-    </li>
+{{#if results.isPending}}
+  {{#if loadingMessage}}
+    <li class="ember-power-select-option" role="option">{{loadingMessage}}</li>
   {{/if}}
-{{/each}}
+{{else}}
+  {{#each options as |opt|}}
+    {{#if opt.groupName}}
+      <li class="ember-power-select-group" role="option">
+        <span class="ember-power-select-group-name">{{opt.groupName}}</span>
+        {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
+          options=(readonly opt.options) optionsComponent=(readonly optionsComponent) select=(readonly select)
+          class="ember-power-select-options ember-power-select-options--nested" as |option|}}
+          {{yield option searchText}}
+        {{/component}}
+      </li>
+    {{else}}
+      <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"
+        onmouseup={{action select.actions.select opt}} onmouseover={{action select.actions.highlight opt}} role="option">
+        {{yield opt searchText}}
+      </li>
+    {{/if}}
+  {{/each}}
+{{/if}}

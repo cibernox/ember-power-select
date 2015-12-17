@@ -19,7 +19,7 @@ export default Ember.Component.extend({
   },
 
   // CPs
-  showLoadingMessage: computed.and('loadingMessage', 'results.isPending'),
+  // showLoadingMessage: computed.and('loadingMessage', 'results.isPending'),
 
   concatenatedTriggerClasses: computed('class', function() {
     let classes = ['ember-power-select-trigger', this.triggerUniqueClass];
@@ -45,6 +45,10 @@ export default Ember.Component.extend({
 
   mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', function(){
     return this.get('searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage');
+  }),
+
+  mustShowNoMessages: computed('results.{isFulfilled,length}', function() {
+    return this.get('results.isFulfilled') && this.get('results.length') === 0;
   }),
 
   results: computed('options.[]', 'searchText', function() {
