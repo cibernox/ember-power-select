@@ -130,8 +130,6 @@ export default Ember.Component.extend({
 
   // Methods
 
-  // TODO: Rename
-
   handleOpen(dropdown, e) {
     const action = this.get('onopen');
     if (action) { action(this.buildPublicAPI(dropdown), e); }
@@ -139,7 +137,9 @@ export default Ember.Component.extend({
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
-  handleClose(/* dropdown, e */) {
+  handleClose(dropdown, e) {
+    const action = this.get('onclose');
+    if (action) { action(this.buildPublicAPI(dropdown), e); }
     this._doSearch('');
     this._doHighlight(null);
   },
