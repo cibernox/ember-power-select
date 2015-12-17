@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown } from '../../../helpers/ember-power-select';
+import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
 
 /**
@@ -24,9 +24,9 @@ test('A disabled dropdown doesn\'t responds to mouse/keyboard events', function(
 
   let $select = this.$('.ember-power-select');
   assert.ok($select.hasClass('ember-basic-dropdown--disabled'), 'The select has the disabled class');
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
-  Ember.run(() => triggerKeydown($('.ember-power-select-trigger')[0], 13));
+  triggerKeydown($('.ember-power-select-trigger')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
 });
 
@@ -53,7 +53,7 @@ test('Options with a disabled field set to true are styled as disabled', functio
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 options');
   assert.equal($('.ember-power-select-option--disabled').length, 3, 'Three of them are disabled');
 });
@@ -68,7 +68,7 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => $('.ember-power-select-option--disabled:eq(0)').trigger('mouseover'));
   assert.ok(!$('.ember-power-select-option--disabled:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The hovered option was not highlighted because it\'s disabled');
 });
@@ -83,8 +83,8 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
-  Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 40));
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-search input')[0], 40);
+  triggerKeydown($('.ember-power-select-search input')[0], 40);
   assert.ok($('.ember-power-select-option--highlighted').text().trim(), 'LV: Latvia' ,'The hovered option was not highlighted because it\'s disabled');
 });

@@ -1,7 +1,7 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
+import { clickTrigger } from '../../../helpers/ember-power-select';
 
 /**
 11 - Customization using components
@@ -40,7 +40,7 @@ test('the list of options can be customized using optionsComponent', function(as
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   let text = $('.ember-power-select-options').text().trim();
   assert.ok(/Countries:/.test(text), 'The given component is rendered');
   assert.ok(/3\. Russia/.test(text), 'The component has access to the options');

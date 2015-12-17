@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown } from '../../../helpers/ember-power-select';
+import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
 
@@ -29,7 +29,7 @@ test('The onchange of single selects action receives the selection and the publi
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
 });
 
@@ -53,7 +53,7 @@ test('The onchange of multiple selects action receives the selection and the pub
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
 });
 
@@ -77,8 +77,8 @@ test('The onkeydown of single selects action receives the public API and the key
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => triggerKeydown($('.ember-power-select-search input')[0], 13));
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-search input')[0], 13);
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
@@ -101,8 +101,8 @@ test('The onkeydown of multiple selects action receives the public API and the k
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
-  Ember.run(() => triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13));
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13);
 });
 
 test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
