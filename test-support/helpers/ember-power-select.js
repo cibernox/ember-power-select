@@ -19,12 +19,24 @@ export function triggerKeydown(domElement, k) {
     keyCode: k,
     charCode: k
   });
-
-  domElement.dispatchEvent(oEvent);
+  Ember.run(() => {
+    domElement.dispatchEvent(oEvent);
+  });
 }
 
 export function typeInSearch(text) {
-  typeText('.ember-power-select-search input, .ember-power-select-trigger-multiple-input', text);
+  Ember.run(() => {
+    typeText('.ember-power-select-search input, .ember-power-select-trigger-multiple-input', text);
+  });
+}
+
+export function clickTrigger(scope) {
+  let selector = '.ember-power-select-trigger';
+  if (scope) {
+    selector = scope + ' ' + selector;
+  }
+  let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
+  Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
 }
 
 // Helpers for acceptance tests

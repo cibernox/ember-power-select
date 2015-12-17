@@ -1,7 +1,6 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch } from '../../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import mirageInitializer from '../../../../initializers/ember-cli-mirage';
 
 /**
@@ -29,12 +28,12 @@ test('Passing as options of a `store.findAll` works', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
-    Ember.run(() => typeInSearch('2'));
+    typeInSearch('2');
     assert.equal($('.ember-power-select-option').length, 1, 'Filtering works');
     done();
   }, 10);
@@ -51,12 +50,12 @@ test('Passing as options the result of `store.query` works', function(assert) {
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').mousedown());
+  clickTrigger();
   assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
-    Ember.run(() => typeInSearch('2'));
+    typeInSearch('2');
     assert.equal($('.ember-power-select-option').length, 1, 'Filtering works');
     done();
   }, 10);
