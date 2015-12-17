@@ -45,3 +45,20 @@ test('the list of options can be customized using optionsComponent', function(as
   assert.ok(/Countries:/.test(text), 'The given component is rendered');
   assert.ok(/3\. Russia/.test(text), 'The component has access to the options');
 });
+
+test('the content before the list can be customized passing `beforeOptionsComponent`', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#power-select options=countries selected=country beforeOptionsComponent="custom-before-options" onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown #custom-before-options-p-tag').length, 1, 'The custom component is rendered instead of the usual search bar');
+  assert.equal($('.ember-power-select-search input').length, 0, 'The search input is not visible');
+});
