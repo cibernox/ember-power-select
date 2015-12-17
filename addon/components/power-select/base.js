@@ -136,13 +136,13 @@ export default Ember.Component.extend({
 
   onClose(/* dropdown, e */) {
     this._doSearch('');
-    this.set('currentlyHighlighted', null);
+    this._doHighlight(null);
   },
 
   handleVerticalArrowKey(e) {
     e.preventDefault();
     const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
-    this.set('currentlyHighlighted', newHighlighted);
+    this._doHighlight(newHighlighted);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
@@ -168,9 +168,9 @@ export default Ember.Component.extend({
     return optionAtIndex(this.get('results'), index);
   },
 
-  advanceSelectableOption(currentHighlight, step) {
+  advanceSelectableOption(activeHighlighted, step) {
     let resultsLength = this.get('resultsLength');
-    let startIndex = Math.min(Math.max(this.indexOfOption(currentHighlight) + step, 0), resultsLength - 1);
+    let startIndex = Math.min(Math.max(this.indexOfOption(activeHighlighted) + step, 0), resultsLength - 1);
     let nextOption = this.optionAtIndex(startIndex);
     while (nextOption && get(nextOption, 'disabled')) {
       nextOption = this.optionAtIndex(startIndex += step);
@@ -194,7 +194,7 @@ export default Ember.Component.extend({
 
   _doHighlight(option) {
     if (option && get(option, 'disabled')) { return; }
-    this.set('highlighted', option);
+    this.set('currentlyHighlighted', option);
   },
 
   buildPublicAPI(dropdown) {
