@@ -44,7 +44,7 @@
     )) as |select|}}
     {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted)
-      select=(readonly select) extra=(readonly extra) closeOnSelect=(readonly closeOnSelect) as |opt term|}}
+      select=(readonly select) extra=(readonly extra) closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown) as |opt term|}}
       {{yield opt term}}
     {{/component}}
   {{/with}}

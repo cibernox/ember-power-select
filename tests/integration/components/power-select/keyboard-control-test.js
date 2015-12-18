@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
-import { skip } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
@@ -242,7 +241,7 @@ test('in single-mode if the users calls preventDefault on the event received in 
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
 });
 
-skip('In multiple-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', function(assert) {
+test('In multiple-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', function(assert) {
   assert.expect(9);
 
   this.numbers = numbers;
@@ -269,7 +268,7 @@ skip('In multiple-mode, when the user presses a key being the search input focus
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
 });
 
-skip('in multiple-mode if the users calls preventDefault on the event received in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
+test('in multiple-mode if the users calls preventDefault on the event received in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;

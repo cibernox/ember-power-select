@@ -9,12 +9,15 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    handleOpen() {
-      // TODO: call provided onfocus
+    handleOpen(select, e) {
+      let action = this.get('onopen');
+      if (action) { action(select, e); }
       this.focusInput();
     },
 
-    handleFocus() {
+    handleFocus(select, e) {
+      let action = this.get('onfocus');
+      if (action) { action(select, e); }
       this.focusInput();
     }
   },
