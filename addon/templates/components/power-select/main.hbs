@@ -7,9 +7,9 @@
       open=(action "open" dropdown)
       close=(action "close" dropdown)
       select=(action "select" dropdown)
+      choose=(action "choose" dropdown)
       highlight=(action "highlight" dropdown)
       search=(action "search" dropdown)
-      removeOption=(action "removeOption" dropdown)
       handleKeydown=(action "handleKeydown" dropdown)
     )) as |select|}}
       {{component beforeOptionsComponent select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled)}}
@@ -38,9 +38,9 @@
       open=(action "open" registeredDropdown)
       close=(action "close" registeredDropdown)
       select=(action "select" registeredDropdown)
+      choose=(action "choose" registeredDropdown)
       highlight=(action "highlight" registeredDropdown)
       search=(action "search" registeredDropdown)
-      removeOption=(action "removeOption" registeredDropdown)
       clear=(if allowClear (action "select" registeredDropdown null))
       handleKeydown=(action "handleKeydown" registeredDropdown)
     )) as |select|}}

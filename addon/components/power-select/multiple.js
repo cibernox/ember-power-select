@@ -21,19 +21,11 @@ export default PowerSelectBaseComponent.extend({
 
   // Actions
   actions: {
-    select(dropdown, option, e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const newSelection = this.cloneSelection();
-      if (newSelection.indexOf(option) > -1) {
-        newSelection.removeObject(option);
-      } else {
-        newSelection.addObject(option);
-      }
+    choose(dropdown, option, e) {
+      this.send('select', dropdown, this.buildNewSelection(option), e);
       if (this.get('closeOnSelect')) {
         dropdown.actions.close(e);
       }
-      this.get('onchange')(newSelection, this.buildPublicAPI(dropdown));
     },
 
     handleKeydown(dropdown, e) {
@@ -48,7 +40,7 @@ export default PowerSelectBaseComponent.extend({
         if (dropdown.isOpen) {
           const highlighted = this.get('highlighted');
           if (highlighted && (this.get('selected') || []).indexOf(highlighted) === -1) {
-            this.send('select', dropdown, highlighted, e);
+            this.send('choose', dropdown, highlighted, e);
           } else {
             dropdown.actions.close(e);
           }
@@ -79,14 +71,8 @@ export default PowerSelectBaseComponent.extend({
     const lastSelection = this.get('selection.lastObject');
     if (!lastSelection) { return; }
     const lastText = typeof lastSelection === 'string' ? lastSelection : get(lastSelection, this.get('searchField'));
-    this.removeOption(dropdown, lastSelection, e);
+    this.send('select', dropdown, this.buildNewSelection(lastSelection), e);
     this.set('searchText', lastText);
-  },
-
-  removeOption(dropdown, option, e) {
-    const newSelection = this.cloneSelection();
-    newSelection.removeObject(option);
-    this.get('onchange')(newSelection, this.buildPublicAPI(dropdown), e);
   },
 
   focusSearch() {
@@ -98,5 +84,15 @@ export default PowerSelectBaseComponent.extend({
 
   cloneSelection() {
     return Ember.A((this.get('selection') || []).slice(0));
+  },
+
+  buildNewSelection(option) {
+    const newSelection = this.cloneSelection();
+    if (newSelection.indexOf(option) > -1) {
+      newSelection.removeObject(option);
+    } else {
+      newSelection.addObject(option);
+    }
+    return newSelection;
   }
 });

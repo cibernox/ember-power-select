@@ -1,7 +1,7 @@
 {{#each selection as |opt|}}
   <span class="ember-power-select-multiple-option">
     {{#unless disabled}}
-      <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action select.actions.removeOption opt}}>&times;</span>
+      <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action select.actions.choose opt}}>&times;</span>
     {{/unless}}
     {{yield opt searchText}}
   </span>

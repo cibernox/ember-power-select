@@ -21,14 +21,10 @@ export default PowerSelectBaseComponent.extend({
 
   // Actions
   actions: {
-    select(dropdown, option, e) {
-      e.preventDefault();
-      e.stopPropagation();
+    choose(dropdown, option, e) {
+      this.send('select', dropdown, option, e);
       if (this.get('closeOnSelect')) {
         dropdown.actions.close(e);
-      }
-      if (this.get('selection') !== option) {
-        this.get('onchange')(option, this.buildPublicAPI(dropdown));
       }
     },
 
@@ -37,7 +33,7 @@ export default PowerSelectBaseComponent.extend({
       if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 13 && dropdown.isOpen) { // Enter
-        this.send('select', dropdown, this.get('highlighted'), e);
+        this.send('choose', dropdown, this.get('highlighted'), e);
       } else {
         this._super(...arguments);
       }
@@ -52,10 +48,6 @@ export default PowerSelectBaseComponent.extend({
   },
 
   // Methods
-  removeOption(dropdown, option, e) {
-    this.get('onchange')(null, this.buildPublicAPI(dropdown), e);
-  },
-
   defaultHighlighted() {
     const selection = this.get('selection');
 

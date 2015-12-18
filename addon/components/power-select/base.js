@@ -97,9 +97,12 @@ export default Ember.Component.extend({
       this._doSearch(term);
     },
 
-    removeOption(dropdown, option, e) {
+    select(dropdown, selection, e) {
+      e.preventDefault();
       e.stopPropagation();
-      this.removeOption(dropdown, option, e);
+      if (this.get('selection') !== selection) {
+        this.get('onchange')(selection, this.buildPublicAPI(dropdown));
+      }
     },
 
     handleKeydown(dropdown, e) {
@@ -136,7 +139,6 @@ export default Ember.Component.extend({
   },
 
   // Methods
-
   handleOpen(dropdown, e) {
     const action = this.get('onopen');
     if (action) { action(this.buildPublicAPI(dropdown), e); }
