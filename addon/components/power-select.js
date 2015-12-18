@@ -162,11 +162,7 @@ export default Ember.Component.extend({
       const onkeydown = this.get('onkeydown');
       if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
       if (e.defaultPrevented) { return; }
-      if (e.keyCode === 13 && dropdown.isOpen) { // Enter
-        this.send('choose', dropdown, this.get('highlighted'), e);
-      } else if (e.defaultPrevented) {
-        return;
-      } else if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+      if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
         if (dropdown.isOpen) {
           this.handleVerticalArrowKey(e);
         } else {
@@ -261,9 +257,9 @@ export default Ember.Component.extend({
   filter(options, searchText) {
     let matcher;
     if (this.get('searchField')) {
-      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
+      matcher = (option, text) => this.get('matcher')(get(option, this.get('searchField')), text);
     } else {
-      matcher = (option, text) => this.matcher(option, text);
+      matcher = (option, text) => this.get('matcher')(option, text);
     }
     return filterOptions(options || [], searchText, matcher);
   },

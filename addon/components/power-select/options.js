@@ -11,19 +11,10 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     choose(dropdown, option, e) {
-      this.get('select.actions.select')(dropdown, this.buildNewSelection(option), e);
+      this.get('select.actions.select')(dropdown, option, e);
+      if (this.get('closeOnSelect')) {
+        this.get('select.actions.close')(e);
+      }
     }
-  },
-
-  // Methods
-  buildNewSelection(option) {
-    if (!this.get('multiple')) { return option; }
-    const newSelection = Ember.A((this.get('selection')).slice(0));
-    if (newSelection.indexOf(option) > -1) {
-      newSelection.removeObject(option);
-    } else {
-      newSelection.addObject(option);
-    }
-    return newSelection;
   }
 });

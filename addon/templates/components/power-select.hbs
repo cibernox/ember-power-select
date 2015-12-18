@@ -11,11 +11,11 @@
       search=(action "search" dropdown)
       handleKeydown=(action "handleKeydown" dropdown)
     )) as |select|}}
-      {{component beforeOptionsComponent select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled)}}
+      {{component beforeOptionsComponent closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown) select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled) highlighted=(readonly highlighted)}}
       {{#if mustShowSearchMessage}}
         <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
       {{else if mustShowNoMessages}}
-        {{#if hasInverseBlock}}
+        {{#if (hasBlock "inverse")}}
           {{yield to="inverse"}}
         {{else if noMatchesMessage}}
           <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{noMatchesMessage}}</li></ul>
@@ -24,7 +24,7 @@
         {{#component optionsComponent options=(readonly results) allOptions=(readonly results) highlighted=(readonly highlighted)
           selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
           select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage) multiple=multiple
-          class="ember-power-select-options" as |option term|}}
+          class="ember-power-select-options" closeOnSelect=(readonly closeOnSelect) as |option term|}}
           {{yield option term}}
         {{/component}}
       {{/if}}

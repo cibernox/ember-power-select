@@ -9,7 +9,7 @@
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
         options=(readonly opt.options) allOptions=(readonly allOptions) optionsComponent=(readonly optionsComponent) select=(readonly select)
-        class="ember-power-select-options ember-power-select-options--nested" as |option|}}
+        class="ember-power-select-options ember-power-select-options--nested" closeOnSelect=(readonly closeOnSelect) as |option|}}
         {{yield option searchText}}
       {{/component}}
     </li>

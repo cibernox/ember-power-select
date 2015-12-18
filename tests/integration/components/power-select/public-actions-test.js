@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent } from 'ember-qunit';
+import { skip } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
@@ -9,7 +10,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true
 });
 
-test('The onchange of single selects action receives the selection and the public API', function(assert) {
+skip('The onchange of single selects action receives the selection and the public API', function(assert) {
   assert.expect(7);
 
   this.numbers = numbers;
@@ -33,7 +34,7 @@ test('The onchange of single selects action receives the selection and the publi
   Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
 });
 
-test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
+skip('The onchange of multiple selects action receives the selection and the public API', function(assert) {
   assert.expect(7);
 
   this.numbers = numbers;
@@ -57,7 +58,7 @@ test('The onchange of multiple selects action receives the selection and the pub
   Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
 });
 
-test('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {
+skip('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {
   assert.expect(7);
 
   this.numbers = numbers;
@@ -81,7 +82,7 @@ test('The onkeydown of single selects action receives the public API and the key
   triggerKeydown($('.ember-power-select-search input')[0], 13);
 });
 
-test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
+skip('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
   assert.expect(7);
 
   this.numbers = numbers;
@@ -105,7 +106,7 @@ test('The onkeydown of multiple selects action receives the public API and the k
   triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13);
 });
 
-test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
+skip('The onfocus of single selects action receives the public API and the focus event', function(assert) {
   assert.expect(7);
 
   this.numbers = numbers;
@@ -128,7 +129,7 @@ test('The onfocus of single selects action receives the public API and the focus
   Ember.run(() => this.$('.ember-power-select-trigger').focus());
 });
 
-test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
+skip('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
   assert.expect(7);
 
   this.numbers = numbers;
@@ -151,7 +152,7 @@ test('The onfocus of multiple selects action receives the public API and the foc
   Ember.run(() => this.$('.ember-power-select-trigger').focus());
 });
 
-test('the `onopen` action is invoked when the dropdown opens', function(assert) {
+skip('the `onopen` action is invoked when the dropdown opens', function(assert) {
   assert.expect(8);
 
   this.numbers = numbers;
@@ -175,7 +176,7 @@ test('the `onopen` action is invoked when the dropdown opens', function(assert) 
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is opened');
 });
 
-test('the `onclose` action is invoked when the dropdown closes', function(assert) {
+skip('the `onclose` action is invoked when the dropdown closes', function(assert) {
   assert.expect(8);
 
   this.numbers = numbers;

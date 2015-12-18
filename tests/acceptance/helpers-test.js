@@ -1,4 +1,4 @@
-import { test } from 'qunit';
+import { test, skip } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | helpers | selectChoose');
@@ -66,7 +66,7 @@ test('selectSearch helper searches in the given single select, opening it if nee
   });
 });
 
-test('selectSearch helper searches in the given multiple select opened', function(assert) {
+skip('selectSearch helper searches in the given multiple select opened', function(assert) {
   visit('/helpers-testing');
 
   andThen(function() {
@@ -80,7 +80,7 @@ test('selectSearch helper searches in the given multiple select opened', functio
   });
 });
 
-test('selectSearch helper searches in the given multiple select closed', function(assert) {
+skip('selectSearch helper searches in the given multiple select closed', function(assert) {
   visit('/helpers-testing');
 
   andThen(function() {

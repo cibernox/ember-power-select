@@ -6,10 +6,6 @@ import { numbers } from '../constants';
 
 const { RSVP } = Ember;
 
-/**
-5 - Custom search action
-*/
-
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Custom search function)', {
   integration: true
 });

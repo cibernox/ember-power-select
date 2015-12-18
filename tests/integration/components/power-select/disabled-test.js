@@ -4,10 +4,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
 
-/**
-9 - Disabled select/options
-*/
-
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Disabled)', {
   integration: true
 });

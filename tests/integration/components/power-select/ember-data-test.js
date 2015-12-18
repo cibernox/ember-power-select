@@ -3,12 +3,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import mirageInitializer from '../../../../initializers/ember-cli-mirage';
 
-/**
-10 - Ember data integration
-  a) [DONE] Passing as options of a `store.findAll` works.
-  b) [DONE] Passing as options the result of `store.query` works.
-*/
-
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Ember-data integration)', {
   integration: true,
   beforeEach() {
