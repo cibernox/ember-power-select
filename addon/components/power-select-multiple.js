@@ -5,10 +5,11 @@ export default Ember.Component.extend({
   layout,
   selectedComponent: 'power-select-multiple/selected',
   beforeOptionsComponent: null,
+  optionsComponent: 'power-select-multiple/options',
 
   // Actions
   actions: {
-    handleOpen(e) {
+    handleOpen() {
       // TODO: focus input
       this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
     }
