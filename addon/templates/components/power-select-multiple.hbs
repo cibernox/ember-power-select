@@ -1,0 +1,78 @@
+{{#if (hasBlock "inverse")}}
+  {{#power-select
+      options=options
+      selected=selected
+      onchange=onchange
+      onkeydown=onkeydown
+      onfocus=onfocus
+      onopen=onopen
+      onclose=onclose
+      disabled=disabled
+      placeholder=placeholder
+      searchEnabled=searchEnabled
+      searchPlaceholder=searchPlaceholder
+      loadingMessage=loadingMessage
+      noMatchesMessage=noMatchesMessage
+      searchMessage=searchMessage
+      selectedComponent=selectedComponent
+      beforeOptionsComponent=beforeOptionsComponent
+      optionsComponent=optionsComponent
+      afterOptionsComponent=afterOptionsComponent
+      matcher=matcher
+      searchField=searchField
+      renderInPlace=renderInPlace
+      search=search
+      allowClear=allowClear
+      dropdownPosition=dropdownPosition
+      closeOnSelect=closeOnSelect
+      opened=opened
+      tabindex=tabindex
+      dir=dir
+      class=class
+      triggerClass=triggerClass
+      dropdownClass=dropdownClass
+      extra=extra
+      as |option term|}}
+      {{yield option term}}
+    {{else}}
+      {{yield to="inverse"}}
+  {{/power-select}}
+{{else}}
+  {{#power-select
+      options=options
+      selected=selected
+      onchange=onchange
+      onkeydown=onkeydown
+      onfocus=onfocus
+      onopen=onopen
+      onclose=onclose
+      disabled=disabled
+      placeholder=placeholder
+      searchEnabled=searchEnabled
+      searchPlaceholder=searchPlaceholder
+      loadingMessage=loadingMessage
+      noMatchesMessage=noMatchesMessage
+      searchMessage=searchMessage
+      selectedComponent=selectedComponent
+      beforeOptionsComponent=beforeOptionsComponent
+      optionsComponent=optionsComponent
+      afterOptionsComponent=afterOptionsComponent
+      matcher=matcher
+      searchField=searchField
+      renderInPlace=renderInPlace
+      search=search
+      allowClear=allowClear
+      dropdownPosition=dropdownPosition
+      closeOnSelect=closeOnSelect
+      opened=opened
+      tabindex=tabindex
+      dir=dir
+      class=class
+      triggerClass=triggerClass
+      dropdownClass=dropdownClass
+      extra=extra
+      as |option term|}}
+      {{yield option term}}
+  {{/power-select}}
+{{/if}}
+
