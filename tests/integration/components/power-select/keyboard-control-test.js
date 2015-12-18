@@ -257,9 +257,9 @@ test('In multiple-mode, when the user presses a key being the search input focus
   };
 
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -278,9 +278,9 @@ test('in multiple-mode if the users calls preventDefault on the event received i
   };
 
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();

@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
-import { skip } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import {
@@ -712,14 +711,14 @@ test('BUGFIX: The highlighted element is reset when single selects are closed', 
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The third element is highlighted again');
 });
 
-skip('BUGFIX: The highlighted element is reset when multiple selects are closed', function(assert) {
+test('BUGFIX: The highlighted element is reset when multiple selects are closed', function(assert) {
   assert.expect(3);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
