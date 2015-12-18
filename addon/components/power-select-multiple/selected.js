@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select-multiple/selected';
 
-const { computed } = Ember;
+const { computed, get, isBlank } = Ember;
 const { htmlSafe } = Ember.String;
 
 export default Ember.Component.extend({
@@ -30,27 +30,37 @@ export default Ember.Component.extend({
     },
 
     handleKeydown(e) {
+      if (e.keyCode !== 13 && e.keyCode !== 8) {
+        return this.get('select.actions.handleKeydown')(e);
+      }
+      const { highlighted, closeOnSelect, onkeydown, select, selection, searchText } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'selection', 'searchText');
+      if (onkeydown) { onkeydown(select, e); }
+      if (e.defaultPrevented) { return; }
       if (e.keyCode === 13) {
-        const { highlighted, closeOnSelect, onkeydown, select } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'select');
-        if (onkeydown) { onkeydown(select, e); }
-        if (e.defaultPrevented) { return; }
-        const newSelection = Ember.A((this.get('selection') || []).slice(0));
-        if (newSelection.indexOf(highlighted) > -1) {
-          newSelection.removeObject(highlighted);
-        } else {
-          newSelection.addObject(highlighted);
+        this.get('select.actions.select')(this.buildNewSelection(highlighted), e);
+        if (closeOnSelect) { this.get('select.actions.close')(e); }
+      } else if (e.keyCode === 8 && isBlank(searchText)) {
+        const lastSelection = get(selection, 'lastObject');
+        if (lastSelection) {
+          this.get('select.actions.select')(this.buildNewSelection(lastSelection), e);
+          this.get('select.actions.search')(lastSelection);
         }
-        this.get('select.actions.select')(newSelection, e);
-        if (closeOnSelect) {
-          this.get('select.actions.close')(e);
-        }
-      } else {
-        this.get('select.actions.handleKeydown')(e);
       }
     },
 
-    removeOption(/*option, e*/) {
-      console.debug('Not implemented');
+    removeOption(option, e) {
+      this.get('select.actions.select')(this.buildNewSelection(option), e);
     }
+  },
+
+  // Methods
+  buildNewSelection(option) {
+    const newSelection = Ember.A((this.get('selection') || []).slice(0));
+    if (newSelection.indexOf(option) > -1) {
+      newSelection.removeObject(option);
+    } else {
+      newSelection.addObject(option);
+    }
+    return newSelection;
   }
 });
