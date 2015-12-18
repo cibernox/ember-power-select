@@ -39,11 +39,10 @@
       select=(action "select" registeredDropdown)
       highlight=(action "highlight" registeredDropdown)
       search=(action "search" registeredDropdown)
-      clear=(if allowClear (action "select" registeredDropdown null))
       handleKeydown=(action "handleKeydown" registeredDropdown)
     )) as |select|}}
     {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly searchText)
-      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted)
+      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted) allowClear=(readonly allowClear)
       select=(readonly select) extra=(readonly extra) closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown) as |opt term|}}
       {{yield opt term}}
     {{/component}}
