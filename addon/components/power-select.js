@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select';
-import { defaultMatcher } from '../utils/group-utils';
+import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 
-const { computed } = Ember;
+const { RSVP, computed, run, get, isBlank } = Ember;
+const Promise = RSVP.Promise;
+const PromiseArray = Ember.ArrayProxy.extend(Ember.PromiseProxyMixin);
 
 function fallbackIfUndefined(fallback) {
   return computed({
@@ -12,16 +14,16 @@ function fallbackIfUndefined(fallback) {
 }
 
 export default Ember.Component.extend({
+  // HTML
   layout: layout,
-
-  // Universal config
+  attributeBindings: ['dir'],
   tagName: fallbackIfUndefined(''),
+
+  // Config
   disabled: fallbackIfUndefined(false),
   placeholder: fallbackIfUndefined(null),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
-  optionsComponent: fallbackIfUndefined('power-select/options'),
-  afterOptionsComponent: fallbackIfUndefined(null),
   dropdownPosition: fallbackIfUndefined('auto'),
   matcher: fallbackIfUndefined(defaultMatcher),
   searchField: fallbackIfUndefined(null),
@@ -31,33 +33,267 @@ export default Ember.Component.extend({
   triggerClass: fallbackIfUndefined(null),
   dir: fallbackIfUndefined(null),
   opened: fallbackIfUndefined(false),
-
-  // Select single config
+  selectedComponent: fallbackIfUndefined('power-select/selected'),
+  optionsComponent: fallbackIfUndefined('power-select/options'),
+  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
+  afterOptionsComponent: fallbackIfUndefined(null),
   searchEnabled: fallbackIfUndefined(true),
   searchMessage: fallbackIfUndefined("Type to search"),
   searchPlaceholder: fallbackIfUndefined(null),
   allowClear: fallbackIfUndefined(false),
 
+  // Attrs
+  searchText: '',
+  searchReturnedUndefined: false,
+  activeSearch: null,
+
   // Lifecycle hooks
+  init() {
+    this._super(...arguments);
+    const randomUUID = Math.random().toString().slice(-10);
+    this.triggerUniqueClass = `ember-power-select-trigger-${randomUUID}`;
+    this.dropdownUniqueClass = `ember-power-select-dropdown-${randomUUID}`;
+  },
+
   didInitAttrs() {
     this._super(...arguments);
     Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
 
   // CPs
-  concreteComponentName: Ember.computed('multiple', function() {
-    return `power-select/${this.get('multiple') ? 'multiple' : 'single'}`;
+  selection: computed('selected', {
+    get() { return this.get('selected'); },
+    set(_, v) { return v; }
   }),
 
-  selectedComponentOrDefault: Ember.computed('multiple', 'selectedComponent', function() {
-    let givenComponent = this.get('selectedComponent');
-    if (givenComponent) { return givenComponent; }
-    return `power-select/${this.get('multiple') ? 'multiple' : 'single'}/selected`;
+  concatenatedClasses: computed('class', function() {
+    const classes = ['ember-power-select'];
+    if (this.get('class')) { classes.push(this.get('class')); }
+    return classes.join(' ');
   }),
 
-  beforeOptionsComponentOrDefault: Ember.computed('multiple', 'beforeOptionsComponent', function() {
-    let givenComponent = this.get('beforeOptionsComponent');
-    if (givenComponent) { return givenComponent; }
-    return this.get('multiple') ? null : `power-select/before-options`;
-  })
+  concatenatedTriggerClasses: computed('class', function() {
+    let classes = ['ember-power-select-trigger', this.triggerUniqueClass];
+    if (this.get('triggerClass')) {
+      classes.push(this.get('triggerClass'));
+    }
+    if (this.get('class')) {
+      classes.push(`${this.get('class')}-trigger`);
+    }
+    return classes.join(' ');
+  }),
+
+  concatenatedDropdownClasses: computed('class', function() {
+    let classes = ['ember-power-select-dropdown', this.dropdownUniqueClass];
+    if (this.get('dropdownClass')) {
+      classes.push(this.get('dropdownClass'));
+    }
+    if (this.get('class')) {
+      classes.push(`${this.get('class')}-dropdown`);
+    }
+    return classes.join(' ');
+  }),
+
+  mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', 'results.length', function(){
+    return this.get('searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage') && this.get('results.length') === 0;
+  }),
+
+  mustShowNoMessages: computed('results.{isFulfilled,length}', function() {
+    return this.get('results.isFulfilled') && this.get('results.length') === 0;
+  }),
+
+  results: computed('options.[]', 'searchText', function() {
+    const { options, searchText, previousResults = Ember.A() } = this.getProperties('options', 'searchText', 'previousResults'); // jshint ignore:line
+    let promise;
+    if (isBlank(searchText) || this.searchReturnedUndefined) {
+      promise = Promise.resolve(options).then(opts => Ember.A(opts));
+    } else if (this.get('search')) {
+      let result = this.get('search')(searchText);
+      if (!result) {
+        promise = Promise.resolve(previousResults);
+        this.searchReturnedUndefined = true;
+      } else {
+        this.searchReturnedUndefined = false;
+        let search = this.activeSearch = Promise.resolve(result);
+        promise = search.then(opts => search !== this.activeSearch ? previousResults : Ember.A(opts));
+      }
+    } else {
+      promise = Promise.resolve(options).then(opts => this.filter(Ember.A(opts), this.get('searchText')));
+    }
+    promise.then(opts => this.setProperties({ currentlyHighlighted: undefined, previousResults: opts }));
+    return PromiseArray.create({ promise, content: previousResults });
+  }),
+
+  highlighted: computed('results.[]', 'currentlyHighlighted', 'selected', function() {
+    return this.get('currentlyHighlighted') || this.defaultHighlighted();
+  }),
+
+  resultsLength: computed('results.[]', function() {
+    return countOptions(this.get('results'));
+  }),
+
+  // Actions
+  actions: {
+    open(dropdown, e) {
+      dropdown.actions.open(e);
+    },
+
+    close(dropdown, e) {
+      dropdown.actions.close(e);
+    },
+
+    highlight(dropdown, option) {
+      this._doHighlight(option);
+    },
+
+    search(dropdown, term /*, e */) {
+      this._doSearch(term);
+    },
+
+    select(dropdown, selection, e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (this.get('selection') !== selection) {
+        this.get('onchange')(selection, this.buildPublicAPI(dropdown));
+      }
+    },
+
+    handleKeydown(dropdown, e) {
+      const onkeydown = this.get('onkeydown');
+      if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
+      if (e.defaultPrevented) { return; }
+      if (e.keyCode === 13 && dropdown.isOpen) { // Enter
+        this.send('choose', dropdown, this.get('highlighted'), e);
+      } else if (e.defaultPrevented) {
+        return;
+      } else if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+        if (dropdown.isOpen) {
+          this.handleVerticalArrowKey(e);
+        } else {
+          dropdown.actions.open(e);
+        }
+      } else if (e.keyCode === 9) {  // Tab
+        dropdown.actions.close(e);
+      } else if (e.keyCode === 27) { // ESC
+        dropdown.actions.close(e);
+      }
+    },
+
+    handleFocus(dropdown, event) {
+      const action = this.get('onfocus');
+      if (action) {
+        action(this.buildPublicAPI(dropdown), event);
+      }
+    },
+
+    // It is not evident what is going on here, so I'll explain why.
+    //
+    // As of this writting, Ember doesn allow to yield data to the "inverse" block.
+    // Because of that, elements of this component rendered in the trigger can't receive the
+    // yielded object contaning the public API of the ember-basic-dropdown, with actions for open,
+    // close and toggle.
+    //
+    // The only possible workaround for this is to on initialization inject a similar object
+    // to the one yielded and store it to make it available in the entire component.
+    //
+    // This this limitation on ember should be fixed soon, this is temporary. Because of that this
+    // object will be passed to the action from the inverse block like if it was yielded.
+    //
+    registerDropdown(dropdown) {
+      this.set('registeredDropdown', dropdown);
+    },
+  },
+
+  // Methods
+  handleOpen(dropdown, e) {
+    const action = this.get('onopen');
+    if (action) { action(this.buildPublicAPI(dropdown), e); }
+    run.scheduleOnce('afterRender', this, this.focusSearch, e);
+    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
+  },
+
+  handleClose(dropdown, e) {
+    const action = this.get('onclose');
+    if (action) { action(this.buildPublicAPI(dropdown), e); }
+    this._doSearch('');
+    this._doHighlight(null);
+  },
+
+  handleVerticalArrowKey(e) {
+    e.preventDefault();
+    const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
+    this._doHighlight(newHighlighted);
+    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
+  },
+
+  scrollIfHighlightedIsOutOfViewport() {
+    const optionsList = document.querySelector('.ember-power-select-options');
+    if (!optionsList) { return; }
+    const highlightedOption = optionsList.querySelector('.ember-power-select-option--highlighted');
+    if (!highlightedOption) { return; }
+    const optionTopScroll = highlightedOption.offsetTop - optionsList.offsetTop;
+    const optionBottomScroll = optionTopScroll + highlightedOption.offsetHeight;
+    if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+      optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+    } else if (optionTopScroll < optionsList.scrollTop) {
+      optionsList.scrollTop = optionTopScroll;
+    }
+  },
+
+  indexOfOption(option) {
+    return indexOfOption(this.get('results'), option);
+  },
+
+  optionAtIndex(index) {
+    return optionAtIndex(this.get('results'), index);
+  },
+
+  advanceSelectableOption(activeHighlighted, step) {
+    let resultsLength = this.get('resultsLength');
+    let startIndex = Math.min(Math.max(this.indexOfOption(activeHighlighted) + step, 0), resultsLength - 1);
+    let nextOption = this.optionAtIndex(startIndex);
+    while (nextOption && get(nextOption, 'disabled')) {
+      nextOption = this.optionAtIndex(startIndex += step);
+    }
+    return nextOption;
+  },
+
+  filter(options, searchText) {
+    let matcher;
+    if (this.get('searchField')) {
+      matcher = (option, text) => this.matcher(get(option, this.get('searchField')), text);
+    } else {
+      matcher = (option, text) => this.matcher(option, text);
+    }
+    return filterOptions(options || [], searchText, matcher);
+  },
+
+  _doSearch(term) {
+    this.set('searchText', term);
+  },
+
+  _doHighlight(option) {
+    if (option && get(option, 'disabled')) { return; }
+    this.set('currentlyHighlighted', option);
+  },
+
+  buildPublicAPI(dropdown) {
+    const ownActions = { search: this._doSearch.bind(this), highlight: this._doHighlight.bind(this) };
+    return {
+      isOpen: dropdown.isOpen,
+      actions: Ember.merge(ownActions, dropdown.actions)
+    };
+  },
+
+  focusSearch() {
+    Ember.$('.ember-power-select-search input').focus();
+  },
+
+  defaultHighlighted() {
+    const selection = this.get('selection');
+    if (!selection || this.indexOfOption(selection) === -1) {
+      return this.optionAtIndex(0);
+    }
+    return selection;
+  }
 });

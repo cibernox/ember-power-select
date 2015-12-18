@@ -18,7 +18,7 @@
   {{/power-select}}
 
   <h4>Select of strings with value tracking</h4>
-  {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+  {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
 
@@ -51,7 +51,7 @@
   {{#power-select options=(readonly complexOptions) searchField="name" allowClear=true selected=name2 onchange=(action (mut name2)) as |option|}}
     {{option.code}}: {{option.name}}
   {{/power-select}}
-
+{{!--
   <h4>Select multiple [WORK IN PROGRESS]</h4>
   {{#power-select options=(readonly simpleOptions) selected=multipleSelection multiple=true onchange=(action (mut multipleSelection)) as |option|}}
     {{option}}
@@ -69,7 +69,7 @@
     <i class="icon-flag {{option.code}}"></i> {{option.name}}
   {{/power-select}}
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
-
+ --}}
   <h4>Custom block. When your options are not strings, just customize the html of each option with a block</h4>
   {{#power-select options=(readonly complexOptions) searchField="name" selected=(readonly complexSelected) onchange=(action (mut complexSelection)) as |option|}}
     <i class="icon-flag {{option.code}}"></i>
