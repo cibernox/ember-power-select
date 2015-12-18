@@ -1,5 +1,6 @@
 # Master
 
+# 0.7.2
 - [FEATURE] Allow to pass a component name under in `afterOptionsComponent` to customize the content after the options list.
 - [FEATURE] Allow to pass a component name under in `beforeOptionsComponent` to customize the content before the options list.
   of the dropdown before the list of option. In single mode the default is the search input. In multiple mode the default is empty.
