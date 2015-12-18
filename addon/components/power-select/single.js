@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import PowerSelectBaseComponent from './base';
-import layout from '../../templates/components/power-select/single';
+import layout from '../../templates/components/power-select/main';
 
 const { computed } = Ember;
 
@@ -52,6 +52,9 @@ export default PowerSelectBaseComponent.extend({
   },
 
   // Methods
+  removeOption(dropdown, option, e) {
+    this.get('onchange')(null, this.buildPublicAPI(dropdown), e);
+  },
 
   defaultHighlighted() {
     const selection = this.get('selection');

@@ -83,7 +83,10 @@ test('Doing mousedown the clear button removes the selection but does not open t
 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
   assert.ok(/three/.test($('.ember-power-select-trigger').text().trim()), 'A element is selected');
-  Ember.run(() => $('.ember-power-select-clear-btn').mousedown());
+  Ember.run(() => {
+    let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
+    $('.ember-power-select-clear-btn')[0].dispatchEvent(event);
+  });
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
   assert.ok(!/three/.test($('.ember-power-select-trigger').text().trim()), 'That element is not selected now');
 });
