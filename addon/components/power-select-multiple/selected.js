@@ -31,14 +31,25 @@ export default Ember.Component.extend({
 
     handleKeydown(e) {
       if (e.keyCode === 13) {
-        // selection
-        this.get('select.actions.select')(dropdown, newSelection, e);
+        const { highlighted, closeOnSelect, onkeydown, select } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'select');
+        if (onkeydown) { onkeydown(select, e); }
+        if (e.defaultPrevented) { return; }
+        const newSelection = Ember.A((this.get('selection') || []).slice(0));
+        if (newSelection.indexOf(highlighted) > -1) {
+          newSelection.removeObject(highlighted);
+        } else {
+          newSelection.addObject(highlighted);
+        }
+        this.get('select.actions.select')(newSelection, e);
+        if (closeOnSelect) {
+          this.get('select.actions.close')(e);
+        }
       } else {
         this.get('select.actions.handleKeydown')(e);
       }
     },
 
-    removeOption(option, e) {
+    removeOption(/*option, e*/) {
       console.debug('Not implemented');
     }
   }
