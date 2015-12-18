@@ -1,3 +1,8 @@
+{{#if options.isPending}}
+  {{#if loadingMessage}}
+    <li class="ember-power-select-option" role="option">{{loadingMessage}}</li>
+  {{/if}}
+{{/if}}
 {{#each options as |opt|}}
   {{#if opt.groupName}}
     <li class="ember-power-select-group" role="option">

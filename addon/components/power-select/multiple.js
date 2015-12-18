@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import PowerSelectBaseComponent from './base';
-import layout from '../../templates/components/power-select/multiple';
+import layout from '../../templates/components/power-select/main';
 
 const { computed, get } = Ember;
 
@@ -36,17 +36,12 @@ export default PowerSelectBaseComponent.extend({
       this.get('onchange')(newSelection, this.buildPublicAPI(dropdown));
     },
 
-    removeOption(dropdown, option, e) {
-      e.stopPropagation();
-      this.removeOption(dropdown, option);
-    },
-
     handleKeydown(dropdown, e) {
       const onkeydown = this.get('onkeydown');
       if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 8) {  // BACKSPACE
-        this.removeLastOptionIfSearchIsEmpty(dropdown);
+        this.removeLastOptionIfSearchIsEmpty(dropdown, e);
         dropdown.actions.open(e);
       } else if (e.keyCode === 13) {
         e.stopPropagation();
@@ -79,19 +74,19 @@ export default PowerSelectBaseComponent.extend({
     return this.optionAtIndex(0);
   },
 
-  removeLastOptionIfSearchIsEmpty(dropdown) {
+  removeLastOptionIfSearchIsEmpty(dropdown, e) {
     if (this.get('searchText.length') !== 0) { return; }
     const lastSelection = this.get('selection.lastObject');
     if (!lastSelection) { return; }
     const lastText = typeof lastSelection === 'string' ? lastSelection : get(lastSelection, this.get('searchField'));
-    this.removeOption(dropdown, lastSelection);
+    this.removeOption(dropdown, lastSelection, e);
     this.set('searchText', lastText);
   },
 
-  removeOption(dropdown, option) {
+  removeOption(dropdown, option, e) {
     const newSelection = this.cloneSelection();
     newSelection.removeObject(option);
-    this.get('onchange')(newSelection, this.buildPublicAPI(dropdown));
+    this.get('onchange')(newSelection, this.buildPublicAPI(dropdown), e);
   },
 
   focusSearch() {

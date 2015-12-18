@@ -12,27 +12,23 @@
       removeOption=(action "removeOption" dropdown)
       handleKeydown=(action "handleKeydown" dropdown)
     )) as |select|}}
-
-      {{#if showLoadingMessage}}
-        <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{loadingMessage}}</li></ul>
-      {{/if}}
-      {{#if resultsLength}}
-        {{#component optionsComponent options=(readonly results) highlighted=(readonly highlighted)
-          selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
-          select=(readonly select) extra=(readonly extra)
-          class="ember-power-select-options" as |option term|}}
-          {{yield option term}}
-        {{/component}}
-      {{else if mustShowSearchMessage}}
+      {{component beforeOptionsComponent select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled)}}
+      {{#if mustShowSearchMessage}}
         <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
-      {{else if results.isFulfilled}}
+      {{else if mustShowNoMessages}}
         {{#if hasInverseBlock}}
           {{yield to="inverse"}}
         {{else if noMatchesMessage}}
           <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{noMatchesMessage}}</li></ul>
         {{/if}}
+      {{else}}
+        {{#component optionsComponent options=(readonly results) highlighted=(readonly highlighted)
+          selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
+          select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage)
+          class="ember-power-select-options" as |option term|}}
+          {{yield option term}}
+        {{/component}}
       {{/if}}
-
   {{/with}}
 {{else}}
   {{#with (hash
@@ -44,6 +40,7 @@
       highlight=(action "highlight" registeredDropdown)
       search=(action "search" registeredDropdown)
       removeOption=(action "removeOption" registeredDropdown)
+      clear=(if allowClear (action "select" registeredDropdown null))
       handleKeydown=(action "handleKeydown" registeredDropdown)
     )) as |select|}}
     {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly searchText)

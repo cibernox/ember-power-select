@@ -52,5 +52,11 @@ export default Ember.Component.extend({
     let givenComponent = this.get('selectedComponent');
     if (givenComponent) { return givenComponent; }
     return `power-select/${this.get('multiple') ? 'multiple' : 'single'}/selected`;
+  }),
+
+  beforeOptionsComponentOrDefault: Ember.computed('multiple', 'beforeOptionsComponent', function() {
+    let givenComponent = this.get('beforeOptionsComponent');
+    if (givenComponent) { return givenComponent; }
+    return this.get('multiple') ? null : `power-select/before-options`;
   })
 });
