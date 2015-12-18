@@ -1,5 +1,9 @@
 # Master
 
+- [INTERNAL] Remove the need of different templates between multiple and single mode, by having a
+  new `beforeOptions` component that can be customized, and by moving the `loadingMessage` logic
+  to the `optionsComponent`.
+
 # 0.7.1
 
 - [INTERNAL] Make integration test helpers runloop aware to dry tests.
