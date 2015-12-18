@@ -10,8 +10,17 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     handleOpen() {
-      // TODO: focus input
-      this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
+      // TODO: call provided onfocus
+      this.focusInput();
+    },
+
+    handleFocus() {
+      this.focusInput();
     }
+  },
+
+  // Methods
+  focusInput() {
+    this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
   }
 });

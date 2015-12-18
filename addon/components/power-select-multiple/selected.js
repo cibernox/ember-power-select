@@ -30,13 +30,17 @@ export default Ember.Component.extend({
     },
 
     handleKeydown(e) {
-      if (e.keyCode !== 13 && e.keyCode !== 8) {
-        return this.get('select.actions.handleKeydown')(e);
-      }
-      const { highlighted, closeOnSelect, onkeydown, select, selection, searchText } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'selection', 'searchText');
+      const {
+        highlighted,
+        closeOnSelect,
+        onkeydown,
+        select,
+        selection,
+        searchText
+      } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'select', 'selection', 'searchText');
       if (onkeydown) { onkeydown(select, e); }
       if (e.defaultPrevented) { return; }
-      if (e.keyCode === 13) {
+      if (e.keyCode === 13 && select.isOpen) {
         this.get('select.actions.select')(this.buildNewSelection(highlighted), e);
         if (closeOnSelect) { this.get('select.actions.close')(e); }
       } else if (e.keyCode === 8 && isBlank(searchText)) {
@@ -45,6 +49,8 @@ export default Ember.Component.extend({
           this.get('select.actions.select')(this.buildNewSelection(lastSelection), e);
           this.get('select.actions.search')(lastSelection);
         }
+      } else {
+        this.get('select.actions.handleKeydown')(e);
       }
     },
 
