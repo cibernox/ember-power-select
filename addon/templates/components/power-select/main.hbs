@@ -29,6 +29,7 @@
           {{yield option term}}
         {{/component}}
       {{/if}}
+      {{component afterOptionsComponent select=(readonly select) options=(readonly results) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled)}}
   {{/with}}
 {{else}}
   {{#with (hash
