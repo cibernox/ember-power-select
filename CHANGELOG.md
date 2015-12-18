@@ -1,6 +1,7 @@
 # Master
 
-- [FEATURE] Allow to pass a component name under in `beforeOptionsComponent` to customize the content
+- [FEATURE] Allow to pass a component name under in `afterOptionsComponent` to customize the content after the options list.
+- [FEATURE] Allow to pass a component name under in `beforeOptionsComponent` to customize the content before the options list.
   of the dropdown before the list of option. In single mode the default is the search input. In multiple mode the default is empty.
 - [BREAKING] Remove the need of different templates between multiple and single mode, by having a
   new `beforeOptions` component that can be customized, and by moving the `loadingMessage` logic

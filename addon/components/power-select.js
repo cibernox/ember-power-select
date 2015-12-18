@@ -21,6 +21,7 @@ export default Ember.Component.extend({
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
   optionsComponent: fallbackIfUndefined('power-select/options'),
+  afterOptionsComponent: fallbackIfUndefined(null),
   dropdownPosition: fallbackIfUndefined('auto'),
   matcher: fallbackIfUndefined(defaultMatcher),
   searchField: fallbackIfUndefined(null),
