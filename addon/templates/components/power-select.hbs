@@ -23,7 +23,7 @@
       {{else}}
         {{#component optionsComponent options=(readonly results) allOptions=(readonly results) highlighted=(readonly highlighted)
           selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
-          select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage) multiple=multiple
+          select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage)
           class="ember-power-select-options" closeOnSelect=(readonly closeOnSelect) as |option term|}}
           {{yield option term}}
         {{/component}}

@@ -1,9 +1,10 @@
 <h1 class="doc-page-title">Multiple selection</h1>
 
 <p>
-  Ember Power Select allows to select multiple options by just passing <code>multiple=true</code>
-  to the component.
+  Ember Power Select has a component for multiple selection named <code>\{{power-select-multiple}}</code>.
 </p>
+
+<p>Appart from the different name, the options are identical</p>
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
@@ -24,10 +25,10 @@
 {{/code-sample}}
 
 <p>
-  When the multiple mode is enabled you will notice that there is no search box but instead
-  you can type directly in the trigger to search. This is because you can use backspace to remove
-  options and also there is optional support for adding more options with free text (think about a
-  component to add tags) but we will dive into that in another chapter.
+  The ergonomics of this component are slightly different. You will notice that there is no search box
+  in the dropdown box. Instead you can type directly in the trigger to search. This is because you can
+  use backspace to remove options and also there is optional support for adding more options with free
+  text (think about a component to add tags) but we will dive into that in another chapter.
 </p>
 
 <p>
