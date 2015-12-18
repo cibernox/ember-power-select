@@ -1,6 +1,5 @@
 import Ember from 'ember';
-import { moduleForComponent /*, test */ } from 'ember-qunit';
-import { skip } from 'qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
@@ -11,42 +10,42 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true
 });
 
-skip('Multiple selects don\'t have a search box', function(assert) {
+test('Multiple selects don\'t have a search box', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers multiple=true selected=foo onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
   assert.equal($('.ember-power-select-search').length, 0, 'There is no search box');
 });
 
-skip('When the select opens, the search input in the trigger gets the focus', function(assert) {
+test('When the select opens, the search input in the trigger gets the focus', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
   assert.ok($('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The search input is focused');
 });
 
-skip('Click on an element selects it and closes the dropdown and focuses the trigger\'s input', function(assert) {
+test('Click on an element selects it and closes the dropdown and focuses the trigger\'s input', function(assert) {
   assert.expect(5);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -58,7 +57,7 @@ skip('Click on an element selects it and closes the dropdown and focuses the tri
   assert.ok(this.$('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The input of the trigger is focused again');
 });
 
-skip('Selecting an element triggers the onchange action with the list of selected options', function(assert) {
+test('Selecting an element triggers the onchange action with the list of selected options', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
@@ -67,16 +66,16 @@ skip('Selecting an element triggers the onchange action with the list of selecte
   };
 
   this.render(hbs`
-    {{#power-select options=numbers onchange=change multiple=true as |option|}}
+    {{#power-select-multiple options=numbers onchange=change as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
   Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
 });
 
-skip('Click an option when there is already another selects both, and triggers the onchange action with them', function(assert) {
+test('Click an option when there is already another selects both, and triggers the onchange action with them', function(assert) {
   assert.expect(5);
 
   this.numbers = numbers;
@@ -87,9 +86,9 @@ skip('Click an option when there is already another selects both, and triggers t
   };
 
   this.render(hbs`
-    {{#power-select options=numbers selected=selectedNumbers onchange=change multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=change as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
@@ -100,16 +99,16 @@ skip('Click an option when there is already another selects both, and triggers t
   assert.ok(/two/.test($('.ember-power-select-multiple-option:eq(1)').text()), 'The second option is the one just selected');
 });
 
-skip('If there is many selections, all those options are styled as `selected`', function(assert) {
+test('If there is many selections, all those options are styled as `selected`', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
   this.selectedNumbers = ['four', 'two'];
 
   this.render(hbs`
-    {{#power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -117,16 +116,16 @@ skip('If there is many selections, all those options are styled as `selected`', 
   assert.ok($('.ember-power-select-option:eq(3)').hasClass('ember-power-select-option--selected'), 'The 4th option is styled as selected');
 });
 
-skip('When the popup opens, the first items is highlighed, even if there is only one selection', function(assert) {
+test('When the popup opens, the first items is highlighed, even if there is only one selection', function(assert) {
   assert.expect(4);
 
   this.numbers = numbers;
   this.selectedNumbers = ['four'];
 
   this.render(hbs`
-    {{#power-select options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut selectedNumbers)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -136,7 +135,7 @@ skip('When the popup opens, the first items is highlighed, even if there is only
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The highlighted element is the first one');
 });
 
-skip('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', function(assert) {
+test('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', function(assert) {
   assert.expect(3);
 
   this.numbers = numbers;
@@ -147,9 +146,9 @@ skip('Clicking on an option that is already selected unselects it, closes the se
   };
 
   this.render(hbs`
-    {{#power-select options=numbers selected=selectedNumbers onchange=change multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=change as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
@@ -158,14 +157,14 @@ skip('Clicking on an option that is already selected unselects it, closes the se
   assert.equal($('.ember-power-select-multiple-option').length, 0, 'There is no options selected');
 });
 
-skip('The default filtering works in multiple mode', function(assert) {
+test('The default filtering works in multiple mode', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -173,7 +172,7 @@ skip('The default filtering works in multiple mode', function(assert) {
   assert.equal($('.ember-power-select-option').length, 2, 'Only two items matched the criteria');
 });
 
-skip('The filtering specifying a searchkey works in multiple model', function(assert) {
+test('The filtering specifying a searchkey works in multiple model', function(assert) {
   assert.expect(8);
 
   this.people = [
@@ -186,9 +185,9 @@ skip('The filtering specifying a searchkey works in multiple model', function(as
   ];
 
   this.render(hbs`
-    {{#power-select options=people searchField="name" onchange=(action (mut foo)) multiple=true as |person|}}
+    {{#power-select-multiple options=people searchField="name" onchange=(action (mut foo)) as |person|}}
       {{person.name}} {{person.surname}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -205,7 +204,7 @@ skip('The filtering specifying a searchkey works in multiple model', function(as
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João Jin');
 });
 
-skip('The filtering specifying a custom matcher works in multiple model', function(assert) {
+test('The filtering specifying a custom matcher works in multiple model', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -214,9 +213,9 @@ skip('The filtering specifying a custom matcher works in multiple model', functi
   };
 
   this.render(hbs`
-    {{#power-select options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers matcher=endsWithMatcher onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -226,7 +225,7 @@ skip('The filtering specifying a custom matcher works in multiple model', functi
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
 });
 
-skip('The search using a custom action works int multiple mode', function(assert) {
+test('The search using a custom action works int multiple mode', function(assert) {
   let done = assert.async();
   assert.expect(1);
 
@@ -239,9 +238,9 @@ skip('The search using a custom action works int multiple mode', function(assert
   };
 
   this.render(hbs`
-    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+    {{#power-select-multiple search=searchFn onchange=(action (mut foo)) as |number|}}
       {{number}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -253,14 +252,14 @@ skip('The search using a custom action works int multiple mode', function(assert
   }, 150);
 });
 
-skip('Pressing ENTER when the select is closed opens and nothing is written on the box opens it', function(assert) {
+test('Pressing ENTER when the select is closed opens and nothing is written on the box opens it', function(assert) {
   assert.expect(3);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -271,7 +270,7 @@ skip('Pressing ENTER when the select is closed opens and nothing is written on t
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
-skip('Pressing ENTER over a highlighted element selects it', function(assert) {
+test('Pressing ENTER over a highlighted element selects it', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -280,9 +279,9 @@ skip('Pressing ENTER over a highlighted element selects it', function(assert) {
     this.set('foo', selected);
   };
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=change multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=change as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -291,7 +290,7 @@ skip('Pressing ENTER over a highlighted element selects it', function(assert) {
   assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element was selected');
 });
 
-skip('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', function(assert) {
+test('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', function(assert) {
   assert.expect(3);
 
   this.numbers = numbers;
@@ -301,9 +300,9 @@ skip('Pressing ENTER over a highlighted element what is already selected closes 
     this.set('selected', val);
   };
   this.render(hbs`
-    {{#power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=selected onchange=didChange as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -314,7 +313,7 @@ skip('Pressing ENTER over a highlighted element what is already selected closes 
   assert.ok($('.ember-power-select-trigger-multiple-input').get(0) === document.activeElement, 'The trigger is focused');
 });
 
-skip('Pressing BACKSPACE on the search input when there is text on it does nothing special', function(assert) {
+test('Pressing BACKSPACE on the search input when there is text on it does nothing special', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
@@ -324,9 +323,9 @@ skip('Pressing BACKSPACE on the search input when there is text on it does nothi
     this.set('selected', val);
   };
   this.render(hbs`
-    {{#power-select options=numbers selected=selected onchange=didChange multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=selected onchange=didChange as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -335,7 +334,7 @@ skip('Pressing BACKSPACE on the search input when there is text on it does nothi
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
 });
 
-skip('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly', function(assert) {
+test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly', function(assert) {
   assert.expect(7);
 
   this.numbers = numbers;
@@ -346,9 +345,9 @@ skip('Pressing BACKSPACE on the search input when it\'s empty removes the last s
     assert.ok(dropdown.actions.close, 'The dropdown API is received as second argument');
   };
   this.render(hbs`
-    {{#power-select options=numbers onchange=didChange selected=selected multiple=true as |option|}}
+    {{#power-select-multiple options=numbers onchange=didChange selected=selected as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -360,14 +359,14 @@ skip('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
 });
 
-skip('Pressing BACKSPACE on the search input when it\'s empty removes the last selection ALSO when that option didn\'t come from the outside', function(assert) {
+test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection ALSO when that option didn\'t come from the outside', function(assert) {
   assert.expect(5);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) multiple=true as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -381,14 +380,14 @@ skip('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
 });
 
-skip('If the multiple component is focused, pressing KEYDOWN opens it', function(assert) {
+test('If the multiple component is focused, pressing KEYDOWN opens it', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -398,14 +397,14 @@ skip('If the multiple component is focused, pressing KEYDOWN opens it', function
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
 });
 
-skip('If the multiple component is focused, pressing KEYUP opens it', function(assert) {
+test('If the multiple component is focused, pressing KEYUP opens it', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -415,14 +414,14 @@ skip('If the multiple component is focused, pressing KEYUP opens it', function(a
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
 });
 
-skip('The placeholder is only visible when no options are selected', function(assert) {
+test('The placeholder is only visible when no options are selected', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) placeholder="Select stuff here" as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) placeholder="Select stuff here" as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), 'Select stuff here', 'There is a placeholder');
@@ -431,14 +430,14 @@ skip('The placeholder is only visible when no options are selected', function(as
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'The placeholder is gone');
 });
 
-skip('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', function(assert) {
+test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', function(assert) {
   assert.expect(3);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input does not have a placeholder');
@@ -449,13 +448,13 @@ skip('If the placeholder is null the placeholders shouldn\'t be "null" (issue #9
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
 });
 
-skip('Selecting and removing should result in desired behavior', function(assert) {
+test('Selecting and removing should result in desired behavior', function(assert) {
   assert.expect(3);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
   clickTrigger();
   Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
@@ -465,21 +464,21 @@ skip('Selecting and removing should result in desired behavior', function(assert
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
 });
 
-skip('Typing in the input opens the component and filters the options', function(assert) {
+test('Typing in the input opens the component and filters the options', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   typeInSearch('fo');
   assert.equal($('.ember-power-select-option').length, 2, 'The dropdown is opened and results filtered');
 });
 
-skip('Typing in the input opens the component and filters the options also with async searches', function(assert) {
+test('Typing in the input opens the component and filters the options also with async searches', function(assert) {
   assert.expect(1);
 
   this.search = (term) => {
@@ -491,9 +490,9 @@ skip('Typing in the input opens the component and filters the options also with 
   };
 
   this.render(hbs`
-    {{#power-select multiple=true selected=foo onchange=(action (mut foo)) search=(action search) as |option|}}
+    {{#power-select-multiple selected=foo onchange=(action (mut foo)) search=(action search) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   typeInSearch('fo');
@@ -505,41 +504,41 @@ skip('Typing in the input opens the component and filters the options also with 
   }, 150);
 });
 
-skip('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
+test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) disabled=true as |option|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) disabled=true as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   assert.ok(this.$('.ember-power-select-trigger-multiple-input').prop('disabled'), 'The input is disabled');
 });
 
-skip('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
+test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
   this.selectedNumbers = [numbers[2], numbers[4]];
 
   this.render(hbs`
-    {{#power-select multiple=true selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=true as |option|}}
+    {{#power-select-multiple selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=true as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
 });
 
-skip('The search term is yielded as second argument in single selects', function(assert) {
+test('The search term is yielded as second argument in single selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
       {{term}}:{{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
