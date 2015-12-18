@@ -18,7 +18,8 @@ export default Ember.Component.extend({
   }),
 
   maybePlaceholder: computed('placeholder', 'selection.length', function() {
-    return this.get('selection.length') === 0 ? (this.get('placeholder') || '') : '';
+    const selection = this.get('selection');
+    return (!selection || get(selection, 'length') === 0) ? (this.get('placeholder') || '') : '';
   }),
 
   // Actions
@@ -35,13 +36,15 @@ export default Ember.Component.extend({
         closeOnSelect,
         onkeydown,
         select,
-        selection,
         searchText
-      } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'select', 'selection', 'searchText');
+      } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'select', 'searchText');
+      const selection = Ember.A((this.get('selection') || []));
       if (onkeydown) { onkeydown(select, e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 13 && select.isOpen) {
-        this.get('select.actions.select')(this.buildNewSelection(highlighted), e);
+        if ((this.get('selection') || []).indexOf(highlighted) === -1) {
+          this.get('select.actions.select')(this.buildNewSelection(highlighted), e);
+        }
         if (closeOnSelect) { this.get('select.actions.close')(e); }
       } else if (e.keyCode === 8 && isBlank(searchText)) {
         const lastSelection = get(selection, 'lastObject');
