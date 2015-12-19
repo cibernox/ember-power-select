@@ -5,6 +5,12 @@ export default Ember.Component.extend({
   tagName: '',
   layout,
 
+  // Lifecycle hooks
+  didInsertElement() {
+    this._super(...arguments);
+    Ember.run.schedule('afterRender', () => Ember.$('.ember-power-select-search input').focus());
+  },
+
   // Actions
   actions: {
     handleKeydown(e) {

@@ -199,7 +199,6 @@ export default Ember.Component.extend({
   handleOpen(dropdown, e) {
     const action = this.get('onopen');
     if (action) { action(this.buildPublicAPI(dropdown), e); }
-    run.scheduleOnce('afterRender', this, this.focusSearch, e);
     run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
   },
 
@@ -274,10 +273,6 @@ export default Ember.Component.extend({
       isOpen: dropdown.isOpen,
       actions: Ember.merge(ownActions, dropdown.actions)
     };
-  },
-
-  focusSearch() {
-    Ember.$('.ember-power-select-search input').focus();
   },
 
   defaultHighlighted() {
