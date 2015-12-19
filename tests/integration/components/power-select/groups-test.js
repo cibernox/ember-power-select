@@ -4,10 +4,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { groupedNumbers } from '../constants';
 
-/**
-6 - Groups
-*/
-
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Groups)', {
   integration: true
 });

@@ -105,9 +105,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select multiple=true selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
+    \{{#power-select-multiple selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
       \{{name}}
-    \{{/power-select}}
+    \{{/power-select-multiple}}
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -125,9 +125,9 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select multiple=true selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
+    {{#power-select-multiple selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
       {{name}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   </div>
 {{/code-sample}}
 

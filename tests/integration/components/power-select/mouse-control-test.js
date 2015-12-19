@@ -4,9 +4,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
-/**
-7 - Mouse control
-*/
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Mouse control)', {
   integration: true
 });

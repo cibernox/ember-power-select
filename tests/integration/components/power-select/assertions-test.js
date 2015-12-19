@@ -1,9 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from '../constants';
-/**
-13 - Development assertions
-*/
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Assertions)', {
   integration: true

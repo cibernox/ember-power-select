@@ -18,7 +18,7 @@
   {{/power-select}}
 
   <h4>Select of strings with value tracking</h4>
-  {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+  {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
 
@@ -53,21 +53,21 @@
   {{/power-select}}
 
   <h4>Select multiple [WORK IN PROGRESS]</h4>
-  {{#power-select options=(readonly simpleOptions) selected=multipleSelection multiple=true onchange=(action (mut multipleSelection)) as |option|}}
+  {{#power-select-multiple options=(readonly simpleOptions) selected=multipleSelection onchange=(action (mut multipleSelection)) as |option|}}
     {{option}}
-  {{/power-select}}
+  {{/power-select-multiple}}
 
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
 
   <h4>Select multiple with placeholder</h4>
-  {{#power-select options=simpleOptions selected=multipleFoo multiple=true placeholder="foo bar hey!" onchange=(action (mut multipleFoo)) as |option|}}
+  {{#power-select-multiple options=simpleOptions selected=multipleFoo placeholder="foo bar hey!" onchange=(action (mut multipleFoo)) as |option|}}
     {{option}}
-  {{/power-select}}
+  {{/power-select-multiple}}
 
   <h4>Select multiple </h4>
-  {{#power-select options=(readonly complexOptions) multiple=true searchField="name" selected=baz onchange=(action (mut baz)) as |option|}}
+  {{#power-select-multiple options=(readonly complexOptions) searchField="name" selected=baz onchange=(action (mut baz)) as |option|}}
     <i class="icon-flag {{option.code}}"></i> {{option.name}}
-  {{/power-select}}
+  {{/power-select-multiple}}
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
 
   <h4>Custom block. When your options are not strings, just customize the html of each option with a block</h4>

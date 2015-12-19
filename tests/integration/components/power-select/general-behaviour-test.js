@@ -225,7 +225,7 @@ test('If the user passes `renderInPlace=true` the dropdown is added below the tr
   assert.equal(this.$('.ember-power-select-dropdown').length, 1, 'The dropdown is inside the component');
 });
 
-test('If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option', function(assert) {
+test('If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option with the mouse', function(assert) {
   assert.expect(4);
 
   this.numbers = numbers;
@@ -242,6 +242,26 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
+
+test('If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option with the with the keyboard', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  Ember.run(() => $('.ember-power-select-option:eq(3)').mouseover());
+  triggerKeydown($('.ember-power-select-search input')[0], 13);
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+});
+
 
 test('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', function(assert) {
   let done = assert.async();
@@ -696,9 +716,9 @@ test('BUGFIX: The highlighted element is reset when multiple selects are closed'
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select multiple=true options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();

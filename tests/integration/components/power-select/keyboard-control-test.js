@@ -4,10 +4,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
-/**
-8 - Keyboard control
-*/
-
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
   integration: true
 });
@@ -198,7 +194,7 @@ test('Pressing ESC while the component is opened closes it and focuses the trigg
 });
 
 test('In single-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', function(assert) {
-  assert.expect(7);
+  assert.expect(9);
 
   this.numbers = numbers;
   this.selected = null;
@@ -206,7 +202,9 @@ test('In single-mode, when the user presses a key being the search input focused
     assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
     assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
     assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
-    assert.ok(select.actions.toggle, 'The yieded object has an `actions.toggle` key');
+    assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
+    assert.ok(select.actions.highlight, 'The yieded object has an `actions.highlight` key');
+    assert.ok(select.actions.search, 'The yieded object has an `actions.search` key');
     assert.equal(e.keyCode, 13, 'The event is received as second argument');
   };
 
@@ -244,7 +242,7 @@ test('in single-mode if the users calls preventDefault on the event received in 
 });
 
 test('In multiple-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', function(assert) {
-  assert.expect(7);
+  assert.expect(9);
 
   this.numbers = numbers;
   this.selectedNumbers = [];
@@ -252,14 +250,16 @@ test('In multiple-mode, when the user presses a key being the search input focus
     assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
     assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
     assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
-    assert.ok(select.actions.toggle, 'The yieded object has an `actions.toggle` key');
+    assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
+    assert.ok(select.actions.highlight, 'The yieded object has an `actions.highlight` key');
+    assert.ok(select.actions.search, 'The yieded object has an `actions.search` key');
     assert.equal(e.keyCode, 13, 'The event is received as second argument');
   };
 
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();
@@ -278,9 +278,9 @@ test('in multiple-mode if the users calls preventDefault on the event received i
   };
 
   this.render(hbs`
-    {{#power-select multiple=true options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+    {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
       {{option}}
-    {{/power-select}}
+    {{/power-select-multiple}}
   `);
 
   clickTrigger();

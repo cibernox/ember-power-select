@@ -1,39 +1,50 @@
-{{#component concreteComponentName
-    options=options
-    selected=selected
-    onchange=onchange
-    onkeydown=onkeydown
-    onfocus=onfocus
-    onopen=onopen
-    onclose=onclose
-    disabled=disabled
-    placeholder=placeholder
-    searchEnabled=searchEnabled
-    searchPlaceholder=searchPlaceholder
-    loadingMessage=loadingMessage
-    noMatchesMessage=noMatchesMessage
-    searchMessage=searchMessage
-    selectedComponent=selectedComponentOrDefault
-    beforeOptionsComponent=beforeOptionsComponentOrDefault
-    optionsComponent=optionsComponent
-    afterOptionsComponent=afterOptionsComponent
-    matcher=matcher
-    searchField=searchField
-    renderInPlace=renderInPlace
-    search=search
-    allowClear=allowClear
-    dropdownPosition=dropdownPosition
-    closeOnSelect=closeOnSelect
-    opened=opened
-    hasInverseBlock=(hasBlock "inverse")
-    tabindex=tabindex
-    dir=dir
-    class=class
-    triggerClass=triggerClass
-    dropdownClass=dropdownClass
-    extra=extra
-    as |option term|}}
-    {{yield option term}}
-  {{else}}
-    {{yield to="inverse"}}
-{{/component}}
+{{#basic-dropdown class=(readonly concatenatedClasses) dir=(readonly dir) tabindex=(readonly tabindex) renderInPlace=(readonly renderInPlace) matchTriggerWidth=true
+  disabled=(readonly disabled) dropdownPosition=(readonly dropdownPosition) triggerClass=(readonly concatenatedTriggerClasses) dropdownClass=(readonly concatenatedDropdownClasses)
+  opened=opened onOpen=(action handleOpen) onClose=(action handleClose) onFocus=(action "handleFocus") onKeydown=(action "handleKeydown") registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+  {{#with (hash
+    isOpen=dropdown.isOpen
+    actions=(hash
+      open=(action "open" dropdown)
+      close=(action "close" dropdown)
+      select=(action "select" dropdown)
+      highlight=(action "highlight" dropdown)
+      search=(action "search" dropdown)
+      handleKeydown=(action "handleKeydown" dropdown)
+    )) as |select|}}
+      {{component beforeOptionsComponent closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown) select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled) highlighted=(readonly highlighted)}}
+      {{#if mustShowSearchMessage}}
+        <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
+      {{else if mustShowNoMessages}}
+        {{#if (hasBlock "inverse")}}
+          {{yield to="inverse"}}
+        {{else if noMatchesMessage}}
+          <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{noMatchesMessage}}</li></ul>
+        {{/if}}
+      {{else}}
+        {{#component optionsComponent options=(readonly results) allOptions=(readonly results) highlighted=(readonly highlighted)
+          selected=(readonly selected) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
+          select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage)
+          class="ember-power-select-options" closeOnSelect=(readonly closeOnSelect) as |option term|}}
+          {{yield option term}}
+        {{/component}}
+      {{/if}}
+      {{component afterOptionsComponent select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled)}}
+  {{/with}}
+{{else}}
+  {{#with (hash
+    isOpen=registeredDropdown.isOpen
+    actions=(hash
+      open=(action "open" registeredDropdown)
+      close=(action "close" registeredDropdown)
+      select=(action "select" registeredDropdown)
+      highlight=(action "highlight" registeredDropdown)
+      search=(action "search" registeredDropdown)
+      handleKeydown=(action "handleKeydown" registeredDropdown)
+    )) as |select|}}
+    {{#component selectedComponent options=(readonly results) selected=(readonly selected) searchText=(readonly searchText)
+      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted) allowClear=(readonly allowClear)
+      select=(readonly select) extra=(readonly extra) closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown) as |opt term|}}
+      {{yield opt term}}
+    {{/component}}
+  {{/with}}
+{{/basic-dropdown}}

@@ -11,6 +11,6 @@
   {{num}}
 {{/power-select}}
 
-{{#power-select class="select-multiple" options=numbers multiple=true selected=selectedList onchange=(action (mut selectedList)) as |num|}}
+{{#power-select-multiple class="select-multiple" options=numbers selected=selectedList onchange=(action (mut selectedList)) as |num|}}
   {{num}}
-{{/power-select}}
+{{/power-select-multiple}}

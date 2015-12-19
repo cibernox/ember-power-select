@@ -3,11 +3,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';
 
-/**
-11 - Customization using components
-  c) [NOT DONE] The selected component receives the select's public API and can make use of it
-*/
-
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
   integration: true
 });

@@ -1,5 +1,15 @@
 # Master
 
+- [BREAKING] Eliminame multiple mode and create `{{#power-select-multiple}}` as a separated component
+  for dogfooding
+- [BREAKING] The name of the selected property inside the custom components is now `selected` instead of `selection`
+  for consistency with the external API.
+- [BREAKING] More bahaviour has been transfered from the main components to the default implementation
+  of the `selectedComponent`, `optionsComponent` and `beforeOptionsComponent`. This makes the component
+  more flexible but less straigtforward to extend. The API for extending the component was never publish
+  but still, expect things to break.
+
+
 # 0.7.2
 - [FEATURE] Allow to pass a component name under in `afterOptionsComponent` to customize the content after the options list.
 - [FEATURE] Allow to pass a component name under in `beforeOptionsComponent` to customize the content before the options list.
