@@ -13,8 +13,8 @@ test('The onchange of single selects action receives the selection and the publi
   assert.expect(6);
 
   this.numbers = numbers;
-  this.handleChange = (selection, select) => {
-    assert.equal(selection, 'one', 'The first option is the selection');
+  this.handleChange = (selected, select) => {
+    assert.equal(selected, 'one', 'The first option is the selected');
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
@@ -36,8 +36,8 @@ test('The onchange of multiple selects action receives the selection and the pub
   assert.expect(6);
 
   this.numbers = numbers;
-  this.handleChange = (selection, select) => {
-    assert.equal(selection, 'one', 'The first option is the selection');
+  this.handleChange = (selected, select) => {
+    assert.equal(selected, 'one', 'The first option is the selected');
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');

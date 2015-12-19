@@ -191,7 +191,7 @@
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
   \{{#liquid-bind options use=animation enableGrowth=enableGrowth as |currentOptions|}}
     \{{#each currentOptions as |opt|}}
-      &lt;li class="ember-power-select-option \{{ember-power-select-option-classes opt selection highlighted}}" onclick=\{{action select opt dropdown}} onmouseover=\{{action highlight opt}}&gt;
+      &lt;li class="ember-power-select-option \{{ember-power-select-option-classes opt selected highlighted}}" onclick=\{{action select opt dropdown}} onmouseover=\{{action highlight opt}}&gt;
         \{{yield opt}}
       &lt;/li&gt;
     \{{/each}}
@@ -227,7 +227,7 @@
 <pre>
 {{#liquid-bind options use=animation enableGrowth=enableGrowth as |currentOptions|}}
   {{#each currentOptions as |opt|}}
-    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}" onclick={{action select opt dropdown}} onmouseover={{action highlight opt}}>
+    <li class="ember-power-select-option {{ember-power-select-option-classes opt selected highlighted}}" onclick={{action select opt dropdown}} onmouseover={{action highlight opt}}>
       {{yield opt}}
     </li>
   {{/each}}

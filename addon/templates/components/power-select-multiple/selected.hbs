@@ -1,4 +1,4 @@
-{{#each selection as |opt|}}
+{{#each selected as |opt|}}
   <span class="ember-power-select-multiple-option">
     {{#unless disabled}}
       <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action "removeOption" opt}}>&times;</span>

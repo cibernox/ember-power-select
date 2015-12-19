@@ -61,11 +61,6 @@ export default Ember.Component.extend({
   },
 
   // CPs
-  selection: computed('selected', {
-    get() { return this.get('selected'); },
-    set(_, v) { return v; }
-  }),
-
   concatenatedClasses: computed('class', function() {
     const classes = ['ember-power-select'];
     if (this.get('class')) { classes.push(this.get('class')); }
@@ -150,11 +145,11 @@ export default Ember.Component.extend({
       this._doSearch(term);
     },
 
-    select(dropdown, selection, e) {
+    select(dropdown, selected, e) {
       e.preventDefault();
       e.stopPropagation();
-      if (this.get('selection') !== selection) {
-        this.get('onchange')(selection, this.buildPublicAPI(dropdown));
+      if (this.get('selected') !== selected) {
+        this.get('onchange')(selected, this.buildPublicAPI(dropdown));
       }
     },
 
@@ -286,10 +281,10 @@ export default Ember.Component.extend({
   },
 
   defaultHighlighted() {
-    const selection = this.get('selection');
-    if (!selection || this.indexOfOption(selection) === -1) {
+    const selected = this.get('selected');
+    if (!selected || this.indexOfOption(selected) === -1) {
       return this.optionAtIndex(0);
     }
-    return selection;
+    return selected;
   }
 });

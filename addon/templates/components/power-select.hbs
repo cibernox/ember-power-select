@@ -22,7 +22,7 @@
         {{/if}}
       {{else}}
         {{#component optionsComponent options=(readonly results) allOptions=(readonly results) highlighted=(readonly highlighted)
-          selection=(readonly selection) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
+          selected=(readonly selected) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
           select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage)
           class="ember-power-select-options" closeOnSelect=(readonly closeOnSelect) as |option term|}}
           {{yield option term}}
@@ -41,7 +41,7 @@
       search=(action "search" registeredDropdown)
       handleKeydown=(action "handleKeydown" registeredDropdown)
     )) as |select|}}
-    {{#component selectedComponent options=(readonly results) selection=(readonly selection) searchText=(readonly searchText)
+    {{#component selectedComponent options=(readonly results) selected=(readonly selected) searchText=(readonly searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted) allowClear=(readonly allowClear)
       select=(readonly select) extra=(readonly extra) closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown) as |opt term|}}
       {{yield opt term}}

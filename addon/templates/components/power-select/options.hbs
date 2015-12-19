@@ -7,14 +7,14 @@
   {{#if opt.groupName}}
     <li class="ember-power-select-group" role="option">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
-      {{#component optionsComponent highlighted=(readonly highlighted) selection=(readonly selection)
+      {{#component optionsComponent highlighted=(readonly highlighted) selected=(readonly selected)
         options=(readonly opt.options) allOptions=(readonly allOptions) optionsComponent=(readonly optionsComponent) select=(readonly select)
         class="ember-power-select-options ember-power-select-options--nested" closeOnSelect=(readonly closeOnSelect) as |option|}}
         {{yield option searchText}}
       {{/component}}
     </li>
   {{else}}
-    <li class="ember-power-select-option {{ember-power-select-option-classes opt selection highlighted}}"
+    <li class="ember-power-select-option {{ember-power-select-option-classes opt selected highlighted}}"
       onmouseup={{action "choose" opt}} onmouseover={{action select.actions.highlight opt}} role="option">
       {{yield opt searchText}}
     </li>

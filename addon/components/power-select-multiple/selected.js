@@ -9,17 +9,17 @@ export default Ember.Component.extend({
   layout,
 
   // CPs
-  triggerMultipleInputStyle: computed('searchText.length', 'selection.length', function() {
-    if (this.get('selection.length') === 0) {
+  triggerMultipleInputStyle: computed('searchText.length', 'selected.length', function() {
+    if (this.get('selected.length') === 0) {
       return htmlSafe('width: 100%;');
     } else {
       return htmlSafe(`width: ${(this.get('searchText.length') || 0) * 0.5 + 2}em`);
     }
   }),
 
-  maybePlaceholder: computed('placeholder', 'selection.length', function() {
-    const selection = this.get('selection');
-    return (!selection || get(selection, 'length') === 0) ? (this.get('placeholder') || '') : '';
+  maybePlaceholder: computed('placeholder', 'selected.length', function() {
+    const selected = this.get('selected');
+    return (!selected || get(selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
   }),
 
   // Actions
@@ -38,16 +38,16 @@ export default Ember.Component.extend({
         select,
         searchText
       } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'select', 'searchText');
-      const selection = Ember.A((this.get('selection') || []));
+      const selected = Ember.A((this.get('selected') || []));
       if (onkeydown) { onkeydown(select, e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 13 && select.isOpen) {
-        if ((this.get('selection') || []).indexOf(highlighted) === -1) {
+        if ((this.get('selected') || []).indexOf(highlighted) === -1) {
           this.get('select.actions.select')(this.buildNewSelection(highlighted), e);
         }
         if (closeOnSelect) { this.get('select.actions.close')(e); }
       } else if (e.keyCode === 8 && isBlank(searchText)) {
-        const lastSelection = get(selection, 'lastObject');
+        const lastSelection = get(selected, 'lastObject');
         if (lastSelection) {
           this.get('select.actions.select')(this.buildNewSelection(lastSelection), e);
           this.get('select.actions.search')(lastSelection);
@@ -64,7 +64,7 @@ export default Ember.Component.extend({
 
   // Methods
   buildNewSelection(option) {
-    const newSelection = Ember.A((this.get('selection') || []).slice(0));
+    const newSelection = Ember.A((this.get('selected') || []).slice(0));
     if (newSelection.indexOf(option) > -1) {
       newSelection.removeObject(option);
     } else {

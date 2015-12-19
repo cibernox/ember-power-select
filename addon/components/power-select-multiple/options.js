@@ -19,7 +19,7 @@ export default Ember.Component.extend({
 
   // Methods
   buildNewSelection(option) {
-    const newSelection = Ember.A((this.get('selection') || []).slice(0));
+    const newSelection = Ember.A((this.get('selected') || []).slice(0));
     if (newSelection.indexOf(option) > -1) {
       newSelection.removeObject(option);
     } else {
