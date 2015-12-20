@@ -1,5 +1,7 @@
 # Master
 
+# 0.8.0-beta.1
+
 - [BREAKING] Eliminame multiple mode and create `{{#power-select-multiple}}` as a separated component
   for dogfooding
 - [BREAKING] The name of the selected property inside the custom components is now `selected` instead of `selection`
