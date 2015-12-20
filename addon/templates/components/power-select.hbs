@@ -4,8 +4,8 @@
   {{#with (hash
     isOpen=dropdown.isOpen
     actions=(hash
-      open=(action "open" dropdown)
-      close=(action "close" dropdown)
+      open=(action dropdown.actions.open)
+      close=(action dropdown.actions.close)
       select=(action "select" dropdown)
       highlight=(action "highlight" dropdown)
       search=(action "search" dropdown)
@@ -34,8 +34,8 @@
   {{#with (hash
     isOpen=registeredDropdown.isOpen
     actions=(hash
-      open=(action "open" registeredDropdown)
-      close=(action "close" registeredDropdown)
+      open=(action registeredDropdown.actions.open)
+      close=(action registeredDropdown.actions.close)
       select=(action "select" registeredDropdown)
       highlight=(action "highlight" registeredDropdown)
       search=(action "search" registeredDropdown)

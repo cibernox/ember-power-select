@@ -129,20 +129,13 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    open(dropdown, e) {
-      dropdown.actions.open(e);
-    },
-
-    close(dropdown, e) {
-      dropdown.actions.close(e);
-    },
-
     highlight(dropdown, option) {
-      this._doHighlight(option);
+      if (option && get(option, 'disabled')) { return; }
+      this.set('currentlyHighlighted', option);
     },
 
     search(dropdown, term /*, e */) {
-      this._doSearch(term);
+      this.set('searchText', term);
     },
 
     select(dropdown, selected, e) {
@@ -159,7 +152,10 @@ export default Ember.Component.extend({
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
         if (dropdown.isOpen) {
-          this.handleVerticalArrowKey(e);
+          e.preventDefault();
+          const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
+          this.send('highlight', dropdown, newHighlighted, e);
+          run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
         } else {
           dropdown.actions.open(e);
         }
@@ -205,15 +201,8 @@ export default Ember.Component.extend({
   handleClose(dropdown, e) {
     const action = this.get('onclose');
     if (action) { action(this.buildPublicAPI(dropdown), e); }
-    this._doSearch('');
-    this._doHighlight(null);
-  },
-
-  handleVerticalArrowKey(e) {
-    e.preventDefault();
-    const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
-    this._doHighlight(newHighlighted);
-    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
+    this.send('search', dropdown, '');
+    this.send('highlight', dropdown, null);
   },
 
   scrollIfHighlightedIsOutOfViewport() {
@@ -258,17 +247,8 @@ export default Ember.Component.extend({
     return filterOptions(options || [], searchText, matcher);
   },
 
-  _doSearch(term) {
-    this.set('searchText', term);
-  },
-
-  _doHighlight(option) {
-    if (option && get(option, 'disabled')) { return; }
-    this.set('currentlyHighlighted', option);
-  },
-
   buildPublicAPI(dropdown) {
-    const ownActions = { search: this._doSearch.bind(this), highlight: this._doHighlight.bind(this) };
+    const ownActions = { search: this.actions.search.bind(this), highlight: this.actions.highlight.bind(this) };
     return {
       isOpen: dropdown.isOpen,
       actions: Ember.merge(ownActions, dropdown.actions)
