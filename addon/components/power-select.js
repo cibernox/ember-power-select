@@ -16,7 +16,6 @@ function fallbackIfUndefined(fallback) {
 export default Ember.Component.extend({
   // HTML
   layout: layout,
-  attributeBindings: ['dir'],
   tagName: fallbackIfUndefined(''),
 
   // Config
@@ -159,9 +158,7 @@ export default Ember.Component.extend({
         } else {
           dropdown.actions.open(e);
         }
-      } else if (e.keyCode === 9) {  // Tab
-        dropdown.actions.close(e);
-      } else if (e.keyCode === 27) { // ESC
+      } else if (e.keyCode === 9 || e.keyCode === 27) {  // Tab or ESC
         dropdown.actions.close(e);
       }
     },
@@ -201,8 +198,8 @@ export default Ember.Component.extend({
   handleClose(dropdown, e) {
     const action = this.get('onclose');
     if (action) { action(this.buildPublicAPI(dropdown), e); }
-    this.send('search', dropdown, '');
-    this.send('highlight', dropdown, null);
+    this.send('search', dropdown, '', e);
+    this.send('highlight', dropdown, null, e);
   },
 
   scrollIfHighlightedIsOutOfViewport() {
