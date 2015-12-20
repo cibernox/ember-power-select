@@ -16,7 +16,6 @@ function fallbackIfUndefined(fallback) {
 export default Ember.Component.extend({
   // HTML
   layout: layout,
-  attributeBindings: ['dir'],
   tagName: fallbackIfUndefined(''),
 
   // Config
@@ -129,20 +128,12 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    open(dropdown, e) {
-      dropdown.actions.open(e);
-    },
-
-    close(dropdown, e) {
-      dropdown.actions.close(e);
-    },
-
     highlight(dropdown, option) {
-      this._doHighlight(option);
+      this._doHighlight(dropdown, option);
     },
 
     search(dropdown, term /*, e */) {
-      this._doSearch(term);
+      this._doSearch(dropdown, term);
     },
 
     select(dropdown, selected, e) {
@@ -159,13 +150,14 @@ export default Ember.Component.extend({
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
         if (dropdown.isOpen) {
-          this.handleVerticalArrowKey(e);
+          e.preventDefault();
+          const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
+          this.send('highlight', dropdown, newHighlighted, e);
+          run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
         } else {
           dropdown.actions.open(e);
         }
-      } else if (e.keyCode === 9) {  // Tab
-        dropdown.actions.close(e);
-      } else if (e.keyCode === 27) { // ESC
+      } else if (e.keyCode === 9 || e.keyCode === 27) {  // Tab or ESC
         dropdown.actions.close(e);
       }
     },
@@ -205,15 +197,8 @@ export default Ember.Component.extend({
   handleClose(dropdown, e) {
     const action = this.get('onclose');
     if (action) { action(this.buildPublicAPI(dropdown), e); }
-    this._doSearch('');
-    this._doHighlight(null);
-  },
-
-  handleVerticalArrowKey(e) {
-    e.preventDefault();
-    const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
-    this._doHighlight(newHighlighted);
-    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
+    this.send('search', dropdown, '', e);
+    this.send('highlight', dropdown, null, e);
   },
 
   scrollIfHighlightedIsOutOfViewport() {
@@ -258,15 +243,6 @@ export default Ember.Component.extend({
     return filterOptions(options || [], searchText, matcher);
   },
 
-  _doSearch(term) {
-    this.set('searchText', term);
-  },
-
-  _doHighlight(option) {
-    if (option && get(option, 'disabled')) { return; }
-    this.set('currentlyHighlighted', option);
-  },
-
   buildPublicAPI(dropdown) {
     const ownActions = { search: this._doSearch.bind(this), highlight: this._doHighlight.bind(this) };
     return {
@@ -281,5 +257,14 @@ export default Ember.Component.extend({
       return this.optionAtIndex(0);
     }
     return selected;
+  },
+
+  _doHighlight(dropdown, option) {
+    if (option && get(option, 'disabled')) { return; }
+    this.set('currentlyHighlighted', option);
+  },
+
+  _doSearch(dropdown, term) {
+    this.set('searchText', term);
   }
 });
