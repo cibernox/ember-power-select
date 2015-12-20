@@ -129,12 +129,11 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     highlight(dropdown, option) {
-      if (option && get(option, 'disabled')) { return; }
-      this.set('currentlyHighlighted', option);
+      this._doHighlight(dropdown, option);
     },
 
     search(dropdown, term /*, e */) {
-      this.set('searchText', term);
+      this._doSearch(dropdown, term);
     },
 
     select(dropdown, selected, e) {
@@ -245,7 +244,7 @@ export default Ember.Component.extend({
   },
 
   buildPublicAPI(dropdown) {
-    const ownActions = { search: this.actions.search.bind(this), highlight: this.actions.highlight.bind(this) };
+    const ownActions = { search: this._doSearch.bind(this), highlight: this._doHighlight.bind(this) };
     return {
       isOpen: dropdown.isOpen,
       actions: Ember.merge(ownActions, dropdown.actions)
@@ -258,5 +257,14 @@ export default Ember.Component.extend({
       return this.optionAtIndex(0);
     }
     return selected;
+  },
+
+  _doHighlight(dropdown, option) {
+    if (option && get(option, 'disabled')) { return; }
+    this.set('currentlyHighlighted', option);
+  },
+
+  _doSearch(dropdown, term) {
+    this.set('searchText', term);
   }
 });
