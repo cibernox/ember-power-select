@@ -24,7 +24,7 @@ module.exports = function(environment) {
       'font-src': "'self'",
       'connect-src': "'self' http://api.github.com https://api.github.com",
       'img-src': "'self' data:",
-      'style-src': "'self' 'unsafe-inline'",
+      'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
       'media-src': "'self'"
     }
   };
