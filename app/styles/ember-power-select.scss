@@ -179,7 +179,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 
 // LTR styles
 .ember-power-select-trigger {
-  padding: 0 16px 0 8px;
+  padding: $ember-power-select-trigger-ltr-padding;
 }
 .ember-power-select-status-icon {
   right: 5px;
@@ -200,7 +200,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 // RTL styles
 .ember-power-select[dir=rtl] {
   .ember-power-select-trigger {
-    padding: 0 8px 0 16px;
+    padding: $ember-power-select-trigger-rtl-padding;
   }
   .ember-power-select-status-icon {
     left: 5px;
