@@ -76,7 +76,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   }
 }
 .ember-power-select-multiple-option {
-  border: 1px solid gray;
+  border: $ember-power-select-multiple-option-border;
   border-radius: $ember-power-select-multiple-option-border-radius;
   color: $ember-power-select-multiple-selection-color;
   background-color: $ember-power-select-multiple-selection-background-color;
