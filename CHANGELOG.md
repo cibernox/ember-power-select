@@ -1,5 +1,7 @@
 # Master
 
+- [BREAKING] Renamed `selectedComponent` to `triggerComponent`, which is more accurate, in preparation
+  to add a `selectedItemComponent` soon. `selectedComponent` continues to work, but throws a deprecation.
 - [FEATURE] Add new sass variables for customize the border & padding of each option in multiple mode,
   and the padding of the trigger in ltr/rtl modes.
 

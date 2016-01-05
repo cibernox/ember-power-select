@@ -7,14 +7,14 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true
 });
 
-test('selected option can be customized using selectedComponent', function(assert) {
+test('selected option can be customized using triggerComponent', function(assert) {
   assert.expect(2);
 
   this.countries = countries;
   this.country = countries[1]; // Spain
 
   this.render(hbs`
-    {{#power-select options=countries selected=country selectedComponent="selected-country" onchange=(action (mut foo)) as |country|}}
+    {{#power-select options=countries selected=country triggerComponent="selected-country" onchange=(action (mut foo)) as |country|}}
       {{country.name}}
     {{/power-select}}
   `);

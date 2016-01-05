@@ -41,7 +41,7 @@
 
 <p>
   Since we have run out of block to pass the the component we need to use other components if we want to
-  go any further. Pass <code>selectedComponent="component-name"</code> to the component.
+  go any further. Pass <code>triggerComponent="component-name"</code> to the component.
 </p>
 
 <p>
@@ -50,7 +50,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-  \{{#power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
+  \{{#power-select options=countries selected=country triggerComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
     &lt;div class="country-detailed-info"&gt;
       &lt;img src="\{{country.flagUrl}}" class="country-flag"&gt;
       &lt;div class="country-data-text"&gt;
@@ -78,7 +78,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-  {{#power-select options=countries selected=country selectedComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
+  {{#power-select options=countries selected=country triggerComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
     <div class="country-detailed-info">
       <img src="{{country.flagUrl}}" class="country-flag">
       <div class="country-data-text">

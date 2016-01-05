@@ -32,7 +32,7 @@ export default Ember.Component.extend({
   triggerClass: fallbackIfUndefined(null),
   dir: fallbackIfUndefined(null),
   opened: fallbackIfUndefined(false),
-  selectedComponent: fallbackIfUndefined('power-select/selected'),
+  triggerComponent: fallbackIfUndefined('power-select/trigger'),
   optionsComponent: fallbackIfUndefined('power-select/options'),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   afterOptionsComponent: fallbackIfUndefined(null),
@@ -60,6 +60,8 @@ export default Ember.Component.extend({
   },
 
   // CPs
+  selectedComponent: Ember.computed.deprecatingAlias('triggerComponent', { id: 'power-select-selected-component', until: '0.9'}),
+
   concatenatedClasses: computed('class', function() {
     const classes = ['ember-power-select'];
     if (this.get('class')) { classes.push(this.get('class')); }
