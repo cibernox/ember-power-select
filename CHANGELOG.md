@@ -1,5 +1,13 @@
 # Master
 
+- [FEATURE] Add new sass variables for customize the border & padding of each option in multiple mode,
+  and the padding of the trigger in ltr/rtl modes.
+
+# 0.8.0-beta.2
+- [INTERNAL] Update ember-cli
+- [BUGFIX] Update deps to ember-basic-dropdown 0.7.2. Fixed duplicated wormhole placeholder when
+  ember-basic-dropdown is also a direct dependency of the project.
+
 # 0.8.0-beta.1
 
 - [BREAKING] Eliminame multiple mode and create `{{#power-select-multiple}}` as a separated component
