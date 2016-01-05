@@ -24,7 +24,7 @@ module.exports = {
     var emberBasicDropdown = this.addons.filter(function(addon) {
       return addon.name === 'ember-basic-dropdown';
     })[0]
-    return emberBasicDropdown.contentFor.apply(this, [type, config]);
+    return emberBasicDropdown.contentFor(type, config);
   }
 };
  
