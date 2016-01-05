@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from '../constants';
 
-moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Assertions)', {
+moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Assertions & deprecations)', {
   integration: true
 });
 

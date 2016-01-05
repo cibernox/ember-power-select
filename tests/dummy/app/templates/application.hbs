@@ -10,7 +10,7 @@
       {{#link-to 'application'}}
         <img src="/ember_logo.png" alt="ember">
       {{/link-to}}
-      {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled searchEnabled=false selectedComponent='main-header-select-trigger' onchange=(action "changeOptions") class="main-header-select" as |opt|}}
+      {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled searchEnabled=false triggerComponent='main-header-select-trigger' onchange=(action "changeOptions") class="main-header-select" as |opt|}}
         {{opt}}
       {{/power-select}}
     </div>

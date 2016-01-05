@@ -3,9 +3,12 @@ import layout from '../templates/components/power-select-multiple';
 
 export default Ember.Component.extend({
   layout,
-  selectedComponent: 'power-select-multiple/selected',
+  triggerComponent: 'power-select-multiple/trigger',
   beforeOptionsComponent: null,
   optionsComponent: 'power-select-multiple/options',
+
+  // CPs
+  selectedComponent: Ember.computed.deprecatingAlias('triggerComponent', { id: 'power-select-multiple-selected-component', until: '0.9'}),
 
   // Actions
   actions: {
