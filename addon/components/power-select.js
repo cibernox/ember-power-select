@@ -1,21 +1,15 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
+import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
 const { RSVP, computed, run, get, isBlank } = Ember;
 const Promise = RSVP.Promise;
 const PromiseArray = Ember.ArrayProxy.extend(Ember.PromiseProxyMixin);
 
-function fallbackIfUndefined(fallback) {
-  return computed({
-    get() { return fallback; },
-    set(_, v) { return v === undefined ? fallback : v; }
-  });
-}
-
 export default Ember.Component.extend({
   // HTML
-  layout: layout,
+  layout,
   tagName: fallbackIfUndefined(''),
 
   // Config
@@ -32,14 +26,14 @@ export default Ember.Component.extend({
   triggerClass: fallbackIfUndefined(null),
   dir: fallbackIfUndefined(null),
   opened: fallbackIfUndefined(false),
-  triggerComponent: fallbackIfUndefined('power-select/trigger'),
-  optionsComponent: fallbackIfUndefined('power-select/options'),
-  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
-  afterOptionsComponent: fallbackIfUndefined(null),
   searchEnabled: fallbackIfUndefined(true),
   searchMessage: fallbackIfUndefined("Type to search"),
   searchPlaceholder: fallbackIfUndefined(null),
   allowClear: fallbackIfUndefined(false),
+  triggerComponent: fallbackIfUndefined('power-select/trigger'),
+  optionsComponent: fallbackIfUndefined('power-select/options'),
+  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
+  afterOptionsComponent: fallbackIfUndefined(null),
 
   // Attrs
   searchText: '',

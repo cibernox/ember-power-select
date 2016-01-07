@@ -1,11 +1,28 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-multiple';
+import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
 export default Ember.Component.extend({
   layout,
-  triggerComponent: 'power-select-multiple/trigger',
-  beforeOptionsComponent: null,
-  optionsComponent: 'power-select-multiple/options',
+  // Config
+  disabled: fallbackIfUndefined(false),
+  placeholder: fallbackIfUndefined(null),
+  loadingMessage: fallbackIfUndefined('Loading options...'),
+  noMatchesMessage: fallbackIfUndefined('No results found'),
+  dropdownPosition: fallbackIfUndefined('auto'),
+  searchField: fallbackIfUndefined(null),
+  search: fallbackIfUndefined(null),
+  closeOnSelect: fallbackIfUndefined(true),
+  dropdownClass: fallbackIfUndefined(null),
+  triggerClass: fallbackIfUndefined(null),
+  dir: fallbackIfUndefined(null),
+  opened: fallbackIfUndefined(false),
+  searchEnabled: fallbackIfUndefined(true),
+  searchMessage: fallbackIfUndefined("Type to search"),
+  searchPlaceholder: fallbackIfUndefined(null),
+  triggerComponent: fallbackIfUndefined('power-select-multiple/trigger'),
+  beforeOptionsComponent: fallbackIfUndefined(null),
+  optionsComponent: fallbackIfUndefined('power-select-multiple/options'),
 
   // CPs
   selectedComponent: Ember.computed.deprecatingAlias('triggerComponent', { id: 'power-select-multiple-selected-component', until: '0.9'}),
