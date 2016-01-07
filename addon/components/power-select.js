@@ -26,14 +26,14 @@ export default Ember.Component.extend({
   triggerClass: fallbackIfUndefined(null),
   dir: fallbackIfUndefined(null),
   opened: fallbackIfUndefined(false),
-  triggerComponent: fallbackIfUndefined('power-select/trigger'),
-  optionsComponent: fallbackIfUndefined('power-select/options'),
-  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
-  afterOptionsComponent: fallbackIfUndefined(null),
   searchEnabled: fallbackIfUndefined(true),
   searchMessage: fallbackIfUndefined("Type to search"),
   searchPlaceholder: fallbackIfUndefined(null),
   allowClear: fallbackIfUndefined(false),
+  triggerComponent: fallbackIfUndefined('power-select/trigger'),
+  optionsComponent: fallbackIfUndefined('power-select/options'),
+  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
+  afterOptionsComponent: fallbackIfUndefined(null),
 
   // Attrs
   searchText: '',
