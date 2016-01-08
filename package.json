@@ -63,7 +63,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-basic-dropdown": "^0.7.2",
+    "ember-basic-dropdown": "^0.8.0-beta.0",
     "ember-hash-helper-polyfill": "^0.1.0"
   },
   "ember-addon": {

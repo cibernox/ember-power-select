@@ -40,7 +40,7 @@
 
 <p>
   When the component is not rendered in place the dropdown can be configured to be added below
-  or above the trigger using the <code>dropdownPosition</code> option. The possible values
+  or above the trigger using the <code>verticalPosition</code> option. The possible values
   are <code>below</code>, <code>above</code> and <code>auto</code> (the default).
 </p>
 <p>
@@ -52,7 +52,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select options=names verticalPosition='above' selected=name onchange=(action (mut name)) as |name|}}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -62,7 +62,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names dropdownPosition='above' selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select options=names verticalPosition='above' selected=name onchange=(action (mut name)) as |name|}}
       {{name}}
     {{/power-select}}
     (This list of options will always be on top regardless of how much available space there is around)
