@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   placeholder: fallbackIfUndefined(null),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
-  dropdownPosition: fallbackIfUndefined('auto'),
+  verticalPosition: fallbackIfUndefined('auto'),
   matcher: fallbackIfUndefined(defaultMatcher),
   searchField: fallbackIfUndefined(null),
   search: fallbackIfUndefined(null),
@@ -54,6 +54,7 @@ export default Ember.Component.extend({
   },
 
   // CPs
+  dropdownPosition: Ember.computed.deprecatingAlias('verticalPosition', { id: 'power-select-dropdown-position', until: '0.9'}),
   selectedComponent: Ember.computed.deprecatingAlias('triggerComponent', { id: 'power-select-selected-component', until: '0.9'}),
 
   concatenatedClasses: computed('class', function() {

@@ -389,7 +389,7 @@ test('It has the appropriate class when it receives a specific dropdown position
   assert.expect(1);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) dropdownPosition="above" as |option|}}
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) verticalPosition="above" as |option|}}
       {{option}}
     {{/power-select}}
   `);
