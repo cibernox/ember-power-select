@@ -1,5 +1,9 @@
 # Master
 
+- [BREAKING] `dropdownPosition` is now `verticalPosition`. It will continue to work until 0.9 but throwing
+  a deprecation warning.
+
+# 0.8.0-beta.3
 - [BUGFIX] `{{power-select-multiple}}` has fallback values for the component names. Makes it composable.
 - [BREAKING] Renamed `selectedComponent` to `triggerComponent`, which is more accurate, in preparation
   to add a `selectedItemComponent` soon. `selectedComponent` continues to work, but throws a deprecation.
