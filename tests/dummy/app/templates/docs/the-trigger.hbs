@@ -78,7 +78,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-  {{#power-select options=countries selected=country triggerComponent="selected-country" searchField="name" onchange=(action (mut country)) as |country|}}
+  {{#power-select options=countries selected=country selectedItemComponent="selected-item-country" searchField="name" onchange=(action (mut country)) as |country|}}
     <div class="country-detailed-info">
       <img src="{{country.flagUrl}}" class="country-flag">
       <div class="country-data-text">
