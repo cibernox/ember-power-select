@@ -135,8 +135,10 @@ export default Ember.Component.extend({
     },
 
     select(dropdown, selected, e) {
-      e.preventDefault();
-      e.stopPropagation();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       if (this.get('selected') !== selected) {
         this.get('onchange')(selected, this.buildPublicAPI(dropdown));
       }
