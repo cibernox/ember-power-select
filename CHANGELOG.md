@@ -1,5 +1,8 @@
 # Master
 
+- [FEATURE] Added a new slot that can be customized with the `selectedItemComponent`. This allows to
+  customize the markup of the selected option(s) without forcing the user to customize the entire
+  trigger component. This doesn't enable any new pattern but makes customization easier.
 - [BREAKING] `dropdownPosition` is now `verticalPosition`. It will continue to work until 0.9 but throwing
   a deprecation warning.
 
