@@ -1,5 +1,9 @@
 {{#if selected}}
-  {{yield selected searchText}}
+  {{#if selectedItemComponent}}
+    {{component selectedItemComponent selected=selected searchText=searchText}}
+  {{else}}
+    {{yield selected searchText}}
+  {{/if}}
   {{#if allowClear}}
     <span class="ember-power-select-clear-btn" onmousedown={{action "clear"}}>&times;</span>
   {{/if}}

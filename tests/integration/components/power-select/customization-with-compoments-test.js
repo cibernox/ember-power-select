@@ -8,7 +8,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 });
 
 test('selected option can be customized using triggerComponent', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   this.countries = countries;
   this.country = countries[1]; // Spain
@@ -19,6 +19,25 @@ test('selected option can be customized using triggerComponent', function(assert
     {{/power-select}}
   `);
 
+  assert.equal($('.ember-power-select-status-icon').length, 0, 'The provided trigger component is not rendered');
+  assert.equal($('.ember-power-select-trigger .icon-flag').length, 1, 'The custom flag appears.');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'Spain', 'With the country name as the text.');
+
+});
+
+test('selected item option can be customized using selectedItemComponent', function(assert) {
+  assert.expect(3);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#power-select options=countries selected=country selectedItemComponent="selected-item-country" onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-status-icon').length, 1, 'The provided trigger component is rendered');
   assert.equal($('.ember-power-select-trigger .icon-flag').length, 1, 'The custom flag appears.');
   assert.equal($('.ember-power-select-trigger').text().trim(), 'Spain', 'With the country name as the text.');
 });

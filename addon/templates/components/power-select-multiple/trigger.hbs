@@ -3,7 +3,11 @@
     {{#unless disabled}}
       <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action "removeOption" opt}}>&times;</span>
     {{/unless}}
-    {{yield opt searchText}}
+    {{#if selectedItemComponent}}
+      {{component selectedItemComponent selected=opt searchText=searchText}}
+    {{else}}
+      {{yield opt searchText}}
+    {{/if}}
   </span>
 {{/each}}
 <input type="search" class="ember-power-select-trigger-multiple-input" tabindex="0" autocomplete="off"
