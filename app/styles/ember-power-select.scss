@@ -82,8 +82,9 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   background-color: $ember-power-select-multiple-selection-background-color;
   padding: $ember-power-select-multiple-option-padding;
   display: inline-block;
-  line-height: 1.5;
-  margin: 2px 0;
+  line-height: 1.45;
+  float: left;
+  margin: 2px 3px 2px 0;
 }
 .ember-power-select-multiple-remove-btn {
   cursor: pointer;
