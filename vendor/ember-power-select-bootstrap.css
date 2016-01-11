@@ -82,8 +82,9 @@
   background-color: #e4e4e4;
   padding: 0 4px;
   display: inline-block;
-  line-height: 1.5;
-  margin: 2px 0; }
+  line-height: 1.45;
+  float: left;
+  margin: 2px 3px 2px 0; }
 
 .ember-power-select-multiple-remove-btn {
   cursor: pointer; }
