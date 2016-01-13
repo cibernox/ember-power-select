@@ -1,5 +1,6 @@
 # Master
 
+# 0.8.0-beta.7
 - [BUGFIX] Not returning from the `search` action but instead setting `options` to a promise does not
   prevent subsequent searches.
 - [BUGFIX] Pressing Backspace to delete the last selected option in multiple select when options are not
