@@ -33,9 +33,10 @@ export default Ember.Component.extend({
 
     handleKeydown(e) {
       const { highlighted, onkeydown, select, searchText} = this.getProperties('highlighted', 'onkeydown', 'select', 'searchText');
-      const selected = Ember.A((this.get('selected') || []));
       if (onkeydown) { onkeydown(select, e); }
       if (e.defaultPrevented) { return; }
+
+      const selected = Ember.A((this.get('selected') || []));
       if (e.keyCode === 13 && select.isOpen) {
         if (selected.indexOf(highlighted) === -1) {
           select.actions.choose(buildNewSelection([highlighted, selected], { multiple: true }), e);
@@ -44,7 +45,13 @@ export default Ember.Component.extend({
         const lastSelection = get(selected, 'lastObject');
         if (lastSelection) {
           select.actions.select(buildNewSelection([lastSelection, selected], { multiple: true }), e);
-          select.actions.search(lastSelection);
+          if (typeof lastSelection === 'string') {
+            select.actions.search(lastSelection);
+          } else {
+            let searchField = this.get('searchField');
+            Ember.assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings', searchField);
+            select.actions.search(get(lastSelection, searchField));
+          }
         }
       } else {
         select.actions.handleKeydown(e);

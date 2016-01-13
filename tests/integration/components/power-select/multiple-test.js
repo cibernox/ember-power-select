@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
-import { numbers } from '../constants';
+import { numbers, countries } from '../constants';
 
 const { RSVP } = Ember;
 
@@ -355,6 +355,30 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 8);
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'two', 'The text of the seach input is two now');
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
+  assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
+});
+
+test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly (when options are not strings)', function(assert) {
+  assert.expect(7);
+
+  this.contries = countries;
+  this.country = [countries[2], countries[4]];
+  this.didChange = (val, dropdown) => {
+    assert.deepEqual(val, [countries[2]], 'The selected item was unselected');
+    this.set('country', val);
+    assert.ok(dropdown.actions.close, 'The dropdown API is received as second argument');
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=contries selected=country onchange=didChange searchField="name" as |c|}}
+      {{c.name}}
+    {{/power-select-multiple}}
+  `);
+  clickTrigger();
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 2, 'There is two elements selected');
+  triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 8);
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'Latvia', 'The text of the seach input is two "Latvia"');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
 });
