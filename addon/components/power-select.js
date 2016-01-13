@@ -97,7 +97,10 @@ export default Ember.Component.extend({
   results: computed('options.[]', 'searchText', function() {
     const { options, searchText, previousResults = Ember.A() } = this.getProperties('options', 'searchText', 'previousResults'); // jshint ignore:line
     let promise;
-    if (isBlank(searchText) || this.searchReturnedUndefined) {
+    if (isBlank(searchText)) {
+      promise = Promise.resolve(options).then(opts => Ember.A(opts));
+    } else if (this.searchReturnedUndefined) {
+      this.searchReturnedUndefined = null;
       promise = Promise.resolve(options).then(opts => Ember.A(opts));
     } else if (this.get('search')) {
       let result = this.get('search')(searchText);

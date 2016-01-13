@@ -357,3 +357,55 @@ test('Don\'t return from the search action and update the options instead also w
   }, 100);
 });
 
+test('Setting the options to a promise from the custom search function works (and does not prevent further searches)', function(assert) {
+  let done = assert.async();
+  assert.expect(14);
+
+  this.selectedOptions = RSVP.resolve(numbers);
+  let searchCalls = 0;
+  this.searchFn = (term) => {
+    searchCalls++;
+    let promise = new RSVP.Promise(function(resolve) {
+      Ember.run.later(() => {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 30);
+    });
+    this.set('selectedOptions', promise);
+  };
+
+  this.render(hbs`
+    <div id="different-node"></div>
+    {{#power-select options=selectedOptions search=searchFn onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
+  typeInSearch("teen");
+  assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown plus the loading message');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
+
+  setTimeout(function() {
+    assert.equal(searchCalls, 1, 'The search was called only once');
+    assert.equal($('.ember-power-select-option').length, 7);
+    typeInSearch("seven");
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
+    assert.equal($('.ember-power-select-option').length, 8);
+  }, 40);
+
+  setTimeout(function() {
+    assert.equal(searchCalls, 2, 'The search was called only twice');
+    assert.equal($('.ember-power-select-option').length, 8);
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'It is still searching the previous result');
+    typeInSearch("four");
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
+    assert.equal($('.ember-power-select-option').length, 8);
+  }, 60);
+
+  setTimeout(function() {
+    assert.equal(searchCalls, 3, 'The search was called only three times');
+    assert.equal($('.ember-power-select-option').length, 2);
+    done();
+  }, 200);
+});
