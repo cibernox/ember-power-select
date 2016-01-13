@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Not returning from the `search` action but instead setting `options` to a promise does not
+  prevent subsequent searches.
 - [BUGFIX] Pressing Backspace to delete the last selected option in multiple select when options are not
   plain strings now works as expected. It makes `searchField` mandatory, and asserts its presence.
 - [INTERNAL] Refactor internals to don't force people providing custom components for slots to
