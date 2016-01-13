@@ -134,7 +134,7 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names selected="Pluto" allowClear=true onchange=(action (mut name)) as |name|}}
+    \{{#power-select options=names selected=name allowClear=true onchange=(action (mut name)) as |name|}}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -144,7 +144,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names selected="Pluto" allowClear=true onchange=(action (mut name)) as |name|}}
+    {{#power-select options=names selected=name allowClear=true onchange=(action (mut name)) as |name|}}
       {{name}}
     {{/power-select}}
   </div>
