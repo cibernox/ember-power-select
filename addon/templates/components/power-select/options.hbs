@@ -15,7 +15,8 @@
     </li>
   {{else}}
     <li class="ember-power-select-option {{ember-power-select-option-classes opt selected highlighted}}"
-      onmouseup={{action select.actions.choose (ember-power-select-build-selection opt selected multiple=multiple)}} onmouseover={{action select.actions.highlight opt}} role="option">
+      onmouseup={{action select.actions.choose (ember-power-select-build-selection opt selected multiple=multiple)}}
+      onmouseover={{action select.actions.highlight opt}} role="option">
       {{yield opt searchText}}
     </li>
   {{/if}}
