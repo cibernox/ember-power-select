@@ -15,11 +15,10 @@ export default Ember.Component.extend({
   actions: {
     handleKeydown(e) {
       if (e.keyCode === 13) {
-        const { select, onkeydown, closeOnSelect } = this.getProperties('select', 'onkeydown', 'closeOnSelect');
+        const { select, onkeydown } = this.getProperties('select', 'onkeydown');
         if (onkeydown) { onkeydown(select, e); }
         if (e.defaultPrevented) { return; }
-        this.get('select.actions.select')(this.get('highlighted'), e);
-        if (closeOnSelect) { this.get('select.actions.close')(e); }
+        this.get('select.actions.choose')(this.get('highlighted'), e);
       } else {
         this.get('select.actions.handleKeydown')(e);
       }

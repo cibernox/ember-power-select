@@ -5,15 +5,5 @@ export default Ember.Component.extend({
   layout: layout,
   tagName: 'ul',
   attributeBindings: ['role'],
-  role: 'listbox',
-
-  // Actions
-  actions: {
-    choose(dropdown, option, e) {
-      this.get('select.actions.select')(dropdown, option, e);
-      if (this.get('closeOnSelect')) {
-        this.get('select.actions.close')(e);
-      }
-    }
-  }
+  role: 'listbox'
 });
