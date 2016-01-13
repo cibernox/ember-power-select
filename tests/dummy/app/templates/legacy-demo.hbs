@@ -2,7 +2,11 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
-  <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
+  {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
+    {{country.name}}
+  {{/power-select-multiple}}
+
+  {{!-- <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
 
   {{#power-select options=model selected=selectedUser onchange=(action (mut selectedUser)) as |user|}}
     {{user.name}}
@@ -196,5 +200,5 @@
   <br>
   <br>
   <br>
-
+ --}}
 </section>

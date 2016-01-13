@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Pressing Backspace to delete the last selected option in multiple select when options are not
+  plain strings now works as expected. It makes `searchField` mandatory, and asserts its presence.
 - [INTERNAL] Refactor internals to don't force people providing custom components for slots to
   implement that much logic on it. Also logic for the `closeOnSelect` configuration lies in a single place.
 

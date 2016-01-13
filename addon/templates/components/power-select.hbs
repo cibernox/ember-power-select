@@ -46,7 +46,7 @@
     {{#component triggerComponent options=(readonly results) selected=(readonly selected) searchText=(readonly searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted) allowClear=(readonly allowClear)
       select=(readonly select) extra=(readonly extra) onkeydown=(readonly onkeydown)
-    selectedItemComponent=(readonly selectedItemComponent) as |opt term|}}
+      selectedItemComponent=(readonly selectedItemComponent) searchField=(readonly searchField) as |opt term|}}
       {{yield opt term}}
     {{/component}}
   {{/with}}
