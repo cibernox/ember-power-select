@@ -1,5 +1,16 @@
 # Master
 
+- [INTERNAL] Refactor internals to don't force people providing custom components for slots to
+  implement that much logic on it. Also logic for the `closeOnSelect` configuration lies in a single place.
+
+# 0.8.0-beta.6
+- [INTERNAL] Remove unnecesary action. Makes customization of triggerComponent easier.
+
+# 0.8.0-beta.5
+- [BUGFIX] Do not rely on significant whitepace + inlineBlock for styling selections in multiple select.
+  Use float: left
+
+# 0.8.0-beta.4
 - [FEATURE] Added a new slot that can be customized with the `selectedItemComponent`. This allows to
   customize the markup of the selected option(s) without forcing the user to customize the entire
   trigger component. This doesn't enable any new pattern but makes customization easier.
