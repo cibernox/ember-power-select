@@ -33,19 +33,17 @@ export default Ember.Component.extend({
     handleKeydown(e) {
       const {
         highlighted,
-        closeOnSelect,
         onkeydown,
         select,
         searchText
-      } = this.getProperties('highlighted', 'closeOnSelect', 'onkeydown', 'select', 'searchText');
+      } = this.getProperties('highlighted', 'onkeydown', 'select', 'searchText');
       const selected = Ember.A((this.get('selected') || []));
       if (onkeydown) { onkeydown(select, e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 13 && select.isOpen) {
         if ((this.get('selected') || []).indexOf(highlighted) === -1) {
-          this.get('select.actions.select')(this.buildNewSelection(highlighted), e);
+          this.get('select.actions.choose')(this.buildNewSelection(highlighted), e);
         }
-        if (closeOnSelect) { this.get('select.actions.close')(e); }
       } else if (e.keyCode === 8 && isBlank(searchText)) {
         const lastSelection = get(selected, 'lastObject');
         if (lastSelection) {

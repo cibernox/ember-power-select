@@ -6,12 +6,13 @@
     actions=(hash
       open=(action dropdown.actions.open)
       close=(action dropdown.actions.close)
+      choose=(action "choose" dropdown)
       select=(action "select" dropdown)
       highlight=(action "highlight" dropdown)
       search=(action "search" dropdown)
       handleKeydown=(action "handleKeydown" dropdown)
     )) as |select|}}
-      {{component beforeOptionsComponent closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown) select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled) highlighted=(readonly highlighted)}}
+      {{component beforeOptionsComponent onkeydown=(readonly onkeydown) select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled) highlighted=(readonly highlighted)}}
       {{#if mustShowSearchMessage}}
         <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
       {{else if mustShowNoMessages}}
@@ -24,7 +25,7 @@
         {{#component optionsComponent options=(readonly results) allOptions=(readonly results) highlighted=(readonly highlighted)
           selected=(readonly selected) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
           select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage)
-          class="ember-power-select-options" closeOnSelect=(readonly closeOnSelect) as |option term|}}
+          class="ember-power-select-options" as |option term|}}
           {{yield option term}}
         {{/component}}
       {{/if}}
@@ -36,6 +37,7 @@
     actions=(hash
       open=(action registeredDropdown.actions.open)
       close=(action registeredDropdown.actions.close)
+      choose=(action "choose" registeredDropdown)
       select=(action "select" registeredDropdown)
       highlight=(action "highlight" registeredDropdown)
       search=(action "search" registeredDropdown)
@@ -43,7 +45,7 @@
     )) as |select|}}
     {{#component triggerComponent options=(readonly results) selected=(readonly selected) searchText=(readonly searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted) allowClear=(readonly allowClear)
-      select=(readonly select) extra=(readonly extra) closeOnSelect=(readonly closeOnSelect) onkeydown=(readonly onkeydown)
+      select=(readonly select) extra=(readonly extra) onkeydown=(readonly onkeydown)
     selectedItemComponent=(readonly selectedItemComponent) as |opt term|}}
       {{yield opt term}}
     {{/component}}

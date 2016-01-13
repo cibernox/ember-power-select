@@ -144,6 +144,13 @@ export default Ember.Component.extend({
       }
     },
 
+    choose(dropdown, selection, e) {
+      this.send('select', dropdown, selection, e);
+      if (this.get('closeOnSelect')) {
+        dropdown.actions.close(e);
+      }
+    },
+
     handleKeydown(dropdown, e) {
       const onkeydown = this.get('onkeydown');
       if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
