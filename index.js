@@ -1,13 +1,11 @@
 /* jshint node: true */
 'use strict';
 
-// var path = require('path');
-
 module.exports = {
   name: 'ember-power-select',
 
   included: function(appOrAddon) {
-    let app = appOrAddon.app || appOrAddon;
+    var app = appOrAddon.app || appOrAddon;
     if (!app.__emberPowerSelectIncludedInvoked) {
       app.__emberPowerSelectIncludedInvoked = true;
       this._super.included.apply(this, arguments);
