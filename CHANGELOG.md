@@ -1,5 +1,12 @@
 # Master
 
+# 0.8.0-beta.9
+- [BUGFIX] Do not use `let` in node code (unless you want node 0.12 to break)
+
+# 0.8.0-beta.8
+- [BUGFIX] Ensure that the `included` hook works when invoked from another addon (being a dependency)
+  instead of directly by the consumer app, and also that the function is a noop the 2nd time it's invoked.
+
 # 0.8.0-beta.7
 - [BUGFIX] Not returning from the `search` action but instead setting `options` to a promise does not
   prevent subsequent searches.
