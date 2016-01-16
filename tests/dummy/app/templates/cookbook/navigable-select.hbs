@@ -46,7 +46,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    <div style="margin: 0 auto; max-width: 250px;">
+    <div style="max-width: 250px;">
       {{#navigable-select options=groupedNumbers selected=selectedNumber onchange=(action (mut selectedNumber)) as |option|}}
         {{option}}
       {{/navigable-select}}
