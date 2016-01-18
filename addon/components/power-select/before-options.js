@@ -13,7 +13,9 @@ export default Ember.Component.extend({
 
   willDestroy() {
     this._super(...arguments);
-    this.get('select.actions.search')('');
+    if (this.get('searchEnabled')) {
+      this.get('select.actions.search')('');
+    }
   },
 
   // Actions
