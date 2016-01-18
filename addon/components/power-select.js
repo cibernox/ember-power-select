@@ -207,7 +207,6 @@ export default Ember.Component.extend({
   handleClose(dropdown, e) {
     const action = this.get('onclose');
     if (action) { action(this.buildPublicAPI(dropdown), e); }
-    this.send('search', dropdown, '', e);
     this.send('highlight', dropdown, null, e);
   },
 

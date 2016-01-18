@@ -573,3 +573,24 @@ test('The search term is yielded as second argument in single selects', function
   typeInSearch('thr');
   assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the search term');
 });
+
+test('The search input is cleared when the component is closed', function(assert) {
+  assert.expect(3);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+    <div id="other-thing">Other div</div>
+  `);
+
+  clickTrigger();
+  typeInSearch('asjdnah');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'No results found');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'asjdnah');
+  Ember.run(() => {
+    let event = new window.Event('mousedown');
+    this.$('#other-thing')[0].dispatchEvent(event);
+  });
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), '');
+});

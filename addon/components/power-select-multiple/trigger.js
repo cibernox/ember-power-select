@@ -9,6 +9,14 @@ export default Ember.Component.extend({
   tagName: '',
   layout,
 
+  // Lifecycle hooks
+  didReceiveAttrs({ oldAttrs, newAttrs }) {
+    this._super(...arguments);
+    if (oldAttrs && oldAttrs.select && oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
+      this.handleClose();
+    }
+  },
+
   // CPs
   triggerMultipleInputStyle: computed('searchText.length', 'selected.length', function() {
     if (this.get('selected.length') === 0) {
@@ -57,5 +65,10 @@ export default Ember.Component.extend({
         select.actions.handleKeydown(e);
       }
     }
+  },
+
+  // Methods
+  handleClose() {
+    this.get('select.actions.search')('');
   }
 });
