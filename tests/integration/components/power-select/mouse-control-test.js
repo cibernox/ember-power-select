@@ -122,12 +122,14 @@ test('Doing mouseup over an option less than 2px in the Y axis of where the mous
   clickTrigger(null, { clientY: 123 });
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   Ember.run(() => {
-    let event = new window.MouseEvent('mouseup', { clientX: 0, clientY: 124, bubbles: true, cancelable: true, view: window });
+    let event = new window.Event('mouseup', { bubbles: true, cancelable: true, view: window });
+    event.clientY = 124;
     Ember.run(() => Ember.$('.ember-power-select-option:eq(1)')[0].dispatchEvent(event));
   });
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
   Ember.run(() => {
-    let event = new window.MouseEvent('mouseup', { clientX: 0, clientY: 125, bubbles: true, cancelable: true, view: window });
+    let event = new window.Event('mouseup', { bubbles: true, cancelable: true, view: window });
+    event.clientY = 125;
     Ember.run(() => Ember.$('.ember-power-select-option:eq(1)')[0].dispatchEvent(event));
   });
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed now');
