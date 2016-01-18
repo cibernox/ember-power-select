@@ -25,7 +25,12 @@
   min-height: 1.75em;
   user-select: none;
   -webkit-user-select: none;
-  color: inherit; }
+  color: inherit;
+  /* Minimum clearfix for modern browsers */ }
+  .ember-power-select-trigger:after {
+    content: "";
+    display: table;
+    clear: both; }
   .ember-power-select-trigger:focus {
     border: 1px solid #aaaaaa;
     box-shadow: none; }
