@@ -30,12 +30,12 @@ export function typeInSearch(text) {
   });
 }
 
-export function clickTrigger(scope) {
+export function clickTrigger(scope, options = {}) {
   let selector = '.ember-power-select-trigger';
   if (scope) {
     selector = scope + ' ' + selector;
   }
-  let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
+  let event = new window.MouseEvent('mousedown', Object.assign({ bubbles: true, cancelable: true, view: window }, options));
   Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
 }
 
