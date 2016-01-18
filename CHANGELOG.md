@@ -1,5 +1,8 @@
 # Master
 
+- [ENHANCEMENT] The mouseup over on element of the list doesn't selects that element if the mouse is
+  still in the same coordinates (+/- 2px) of the mousedown that opened the component. This allows the
+  options list to be rendered over the trigger and not wrongly select the element above the trigger
 
 # 0.8.0-beta.12
 - [BUGFIX] default `beforeOptions` component only clear the search on destroy when the search is enabled.
