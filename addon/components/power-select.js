@@ -40,6 +40,7 @@ export default Ember.Component.extend({
   searchText: '',
   searchReturnedUndefined: false,
   activeSearch: null,
+  openingEvent: null,
 
   // Lifecycle hooks
   init() {
@@ -148,6 +149,12 @@ export default Ember.Component.extend({
     },
 
     choose(dropdown, selection, e) {
+      if (e && e.clientY) {
+        let openingEvent = this.get('openingEvent');
+        if (openingEvent && openingEvent.clientY) {
+          if (Math.abs(openingEvent.clientY - e.clientY) < 2) { return; }
+        }
+      }
       this.send('select', dropdown, selection, e);
       if (this.get('closeOnSelect')) {
         dropdown.actions.close(e);
@@ -195,21 +202,23 @@ export default Ember.Component.extend({
     registerDropdown(dropdown) {
       this.set('registeredDropdown', dropdown);
     },
+
+    handleOpen(dropdown, e) {
+      const action = this.get('onopen');
+      if (action) { action(this.buildPublicAPI(dropdown), e); }
+      if (e) { this.set('openingEvent', e); }
+      run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
+    },
+
+    handleClose(dropdown, e) {
+      const action = this.get('onclose');
+      if (action) { action(this.buildPublicAPI(dropdown), e); }
+      if (e) { this.set('openingEvent', null); }
+      this.send('highlight', dropdown, null, e);
+    },
   },
 
   // Methods
-  handleOpen(dropdown, e) {
-    const action = this.get('onopen');
-    if (action) { action(this.buildPublicAPI(dropdown), e); }
-    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
-  },
-
-  handleClose(dropdown, e) {
-    const action = this.get('onclose');
-    if (action) { action(this.buildPublicAPI(dropdown), e); }
-    this.send('highlight', dropdown, null, e);
-  },
-
   scrollIfHighlightedIsOutOfViewport() {
     const optionsList = document.querySelector('.ember-power-select-options');
     if (!optionsList) { return; }
