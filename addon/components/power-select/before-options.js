@@ -11,6 +11,11 @@ export default Ember.Component.extend({
     Ember.run.schedule('afterRender', () => Ember.$('.ember-power-select-search input').focus());
   },
 
+  willDestroy() {
+    this._super(...arguments);
+    this.get('select.actions.search')('');
+  },
+
   // Actions
   actions: {
     handleKeydown(e) {

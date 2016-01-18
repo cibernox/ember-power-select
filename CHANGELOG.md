@@ -1,5 +1,9 @@
 # Master
 
+# 0.8.0-beta.11
+- [BUGFIX] Not it's responsability of the component holding the searchbox to clear (or not) clear the
+  search when the component is closed. The default components (single/multiple) do it.
+
 # 0.8.0-beta.10
 - [BUGFIX] Trigger should use clearfix so when the amount of options selected (multiple selects) overflows
   the available width is grows.
