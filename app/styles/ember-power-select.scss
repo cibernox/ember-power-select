@@ -23,6 +23,12 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   user-select: none;
   -webkit-user-select: none;
   color: $ember-power-select-text-color;
+  /* Minimum clearfix for modern browsers */
+  &:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
   &:focus {
     border: $ember-power-select-trigger-focus-border;
     box-shadow: $ember-power-select-focus-box-shadow;

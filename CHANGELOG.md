@@ -1,5 +1,9 @@
 # Master
 
+# 0.8.0-beta.10
+- [BUGFIX] Trigger should use clearfix so when the amount of options selected (multiple selects) overflows
+  the available width is grows.
+
 # 0.8.0-beta.9
 - [BUGFIX] Do not use `let` in node code (unless you want node 0.12 to break)
 
