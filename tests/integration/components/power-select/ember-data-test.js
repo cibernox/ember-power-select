@@ -1,13 +1,17 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import mirageInitializer from '../../../../initializers/ember-cli-mirage';
+import emberDataInitializer from '../../../../initializers/ember-data';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Ember-data integration)', {
   integration: true,
   beforeEach() {
-    mirageInitializer.initialize(this.container);
-    this.store = this.container.lookup('service:store');
+    let owner = Ember.getOwner(this);
+    mirageInitializer.initialize(owner);
+    emberDataInitializer.initialize(owner);
+    this.store = owner.lookup('service:store');
   }
 });
 
@@ -36,7 +40,6 @@ test('Passing as options of a `store.findAll` works', function(assert) {
 test('Passing as options the result of `store.query` works', function(assert) {
   let done = assert.async();
   server.createList('user', 10);
-
   this.users = this.store.query('user', { foo: 'bar' });
   this.render(hbs`
     {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
