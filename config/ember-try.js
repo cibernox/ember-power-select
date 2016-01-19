@@ -7,10 +7,10 @@ module.exports = {
     {
       name: 'ember-1.13',
       dependencies: {
-        'ember': '1.13.10'
+        'ember': '1.13.12'
       },
       resolutions: {
-        'ember': '1.13.10'
+        'ember': '1.13.12'
       }
     },
     {
