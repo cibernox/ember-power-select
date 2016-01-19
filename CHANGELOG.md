@@ -1,5 +1,7 @@
 # Master
 
+# 0.8.0
+- [INTERNAL] Update to ember-cli 2.3.0-beta.1
 - [ENHANCEMENT] The mouseup over on element of the list doesn't selects that element if the mouse is
   still in the same coordinates (+/- 2px) of the mousedown that opened the component. This allows the
   options list to be rendered over the trigger and not wrongly select the element above the trigger
