@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
@@ -7,9 +8,10 @@ import emberDataInitializer from '../../../../initializers/ember-data';
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Ember-data integration)', {
   integration: true,
   beforeEach() {
-    mirageInitializer.initialize(this.container);
-    emberDataInitializer.initialize(this.registry);
-    this.store = this.container.lookup('service:store');
+    let owner = Ember.getOwner(this);
+    mirageInitializer.initialize(owner);
+    emberDataInitializer.initialize(owner);
+    this.store = owner.lookup('service:store');
   }
 });
 
