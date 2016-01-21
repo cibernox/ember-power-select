@@ -588,6 +588,7 @@ test('The search input is cleared when the component is closed', function(assert
   typeInSearch('asjdnah');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'No results found');
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'asjdnah');
+  debugger;
   Ember.run(() => {
     let event = new window.Event('mousedown');
     this.$('#other-thing')[0].dispatchEvent(event);
