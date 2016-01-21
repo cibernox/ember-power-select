@@ -4,8 +4,6 @@ import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptio
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
 const { computed, run, get, isBlank } = Ember;
-// const Promise = RSVP.Promise;
-// const PromiseArray = Ember.ArrayProxy.extend(Ember.PromiseProxyMixin);
 
 export default Ember.Component.extend({
   // HTML
