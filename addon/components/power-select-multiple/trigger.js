@@ -69,6 +69,7 @@ export default Ember.Component.extend({
 
   // Methods
   handleClose() {
+    this.set('searchText', ''); // This line shouldn't be necessary. Why is it?
     this.get('select.actions.search')('');
   }
 });

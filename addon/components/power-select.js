@@ -130,7 +130,7 @@ export default Ember.Component.extend({
         options.then(results => this.set('results', results));
         return this.previousResults || [];
       } else {
-        this.set('loading', false);
+        this.setProperties({ loading: false, currentlyHighlighted: undefined });
         let newResults = searchAction ? options : this.filter(options, this.get('searchText'));
         this.previousResults = newResults;
         return newResults;
@@ -138,7 +138,7 @@ export default Ember.Component.extend({
     },
     set(_, newResults) {
       this.previousResults = newResults;
-      this.set('loading', false);
+      this.setProperties({ loading: false, currentlyHighlighted: undefined });
       return newResults;
     }
   }),
