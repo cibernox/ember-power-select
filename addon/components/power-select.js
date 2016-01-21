@@ -38,9 +38,10 @@ export default Ember.Component.extend({
 
   // Attrs
   searchText: '',
-  searchReturnedUndefined: false,
   activeSearch: null,
   openingEvent: null,
+  loading: false,
+  previousResults: null,
 
   // Lifecycle hooks
   init() {
@@ -95,32 +96,6 @@ export default Ember.Component.extend({
     return !this.get('loading') && this.get('results.length') === 0;
   }),
 
-  // results: computed('options.[]', 'searchText', function() {
-  //   const { options, searchText, previousResults = Ember.A() } = this.getProperties('options', 'searchText', 'previousResults'); // jshint ignore:line
-  //   let promise;
-  //   if (isBlank(searchText)) {
-  //     promise = Promise.resolve(options).then(opts => Ember.A(opts || []));
-  //   } else if (this.searchReturnedUndefined) {
-  //     this.searchReturnedUndefined = null;
-  //     promise = Promise.resolve(options).then(opts => Ember.A(opts || []));
-  //   } else if (this.get('search')) {
-  //     let result = this.get('search')(searchText);
-  //     if (!result) {
-  //       promise = Promise.resolve(previousResults);
-  //       this.searchReturnedUndefined = true;
-  //     } else {
-  //       this.searchReturnedUndefined = false;
-  //       let search = this.activeSearch = Promise.resolve(result);
-  //       promise = search.then(opts => search !== this.activeSearch ? previousResults : Ember.A(opts));
-  //     }
-  //   } else {
-  //     promise = Promise.resolve(options).then(opts => this.filter(Ember.A(opts), this.get('searchText')));
-  //   }
-  //   promise.then(opts => this.setProperties({ currentlyHighlighted: undefined, previousResults: opts }));
-  //   return PromiseArray.create({ promise, content: previousResults });
-  // }),
-  loading: false,
-  previousResults: null,
   results: computed('options.[]', {
     get() {
       let options = this.get('options') || [];
@@ -129,12 +104,10 @@ export default Ember.Component.extend({
         this.set('loading', true);
         options.then(results => this.set('results', results));
         return this.previousResults || [];
-      } else {
-        this.setProperties({ loading: false, currentlyHighlighted: undefined });
-        let newResults = searchAction ? options : this.filter(options, this.get('searchText'));
-        this.previousResults = newResults;
-        return newResults;
       }
+      this.setProperties({ loading: false, currentlyHighlighted: undefined });
+      this.previousResults = newResults;
+      return searchAction ? options : this.filter(options, this.get('searchText'));
     },
     set(_, newResults) {
       this.previousResults = newResults;
