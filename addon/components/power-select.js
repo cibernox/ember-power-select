@@ -105,9 +105,10 @@ export default Ember.Component.extend({
         options.then(results => this.set('results', results));
         return this.previousResults || [];
       }
+      let newResults = searchAction ? options : this.filter(options, this.get('searchText'));
       this.setProperties({ loading: false, currentlyHighlighted: undefined });
       this.previousResults = newResults;
-      return searchAction ? options : this.filter(options, this.get('searchText'));
+      return newResults;
     },
     set(_, newResults) {
       this.previousResults = newResults;
