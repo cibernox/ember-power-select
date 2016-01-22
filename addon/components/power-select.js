@@ -3,9 +3,7 @@ import layout from '../templates/components/power-select';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
-const { RSVP, computed, run, get, isBlank } = Ember;
-const Promise = RSVP.Promise;
-const PromiseArray = Ember.ArrayProxy.extend(Ember.PromiseProxyMixin);
+const { computed, run, get, isBlank } = Ember;
 
 export default Ember.Component.extend({
   // HTML
@@ -38,9 +36,10 @@ export default Ember.Component.extend({
 
   // Attrs
   searchText: '',
-  searchReturnedUndefined: false,
   activeSearch: null,
   openingEvent: null,
+  loading: false,
+  previousResults: null,
 
   // Lifecycle hooks
   init() {
@@ -91,33 +90,29 @@ export default Ember.Component.extend({
     return this.get('searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage') && this.get('results.length') === 0;
   }),
 
-  mustShowNoMessages: computed('results.{isFulfilled,length}', function() {
-    return this.get('results.isFulfilled') && this.get('results.length') === 0;
+  mustShowNoMessages: computed('results.length', 'loading', function() {
+    return !this.get('loading') && this.get('results.length') === 0;
   }),
 
-  results: computed('options.[]', 'searchText', function() {
-    const { options, searchText, previousResults = Ember.A() } = this.getProperties('options', 'searchText', 'previousResults'); // jshint ignore:line
-    let promise;
-    if (isBlank(searchText)) {
-      promise = Promise.resolve(options).then(opts => Ember.A(opts || []));
-    } else if (this.searchReturnedUndefined) {
-      this.searchReturnedUndefined = null;
-      promise = Promise.resolve(options).then(opts => Ember.A(opts || []));
-    } else if (this.get('search')) {
-      let result = this.get('search')(searchText);
-      if (!result) {
-        promise = Promise.resolve(previousResults);
-        this.searchReturnedUndefined = true;
-      } else {
-        this.searchReturnedUndefined = false;
-        let search = this.activeSearch = Promise.resolve(result);
-        promise = search.then(opts => search !== this.activeSearch ? previousResults : Ember.A(opts));
+  results: computed('options.[]', {
+    get() {
+      let options = this.get('options') || [];
+      let searchAction = this.get('search');
+      if (options.then) {
+        this.set('loading', true);
+        options.then(results => this.set('results', results));
+        return this.previousResults || [];
       }
-    } else {
-      promise = Promise.resolve(options).then(opts => this.filter(Ember.A(opts), this.get('searchText')));
+      let newResults = searchAction ? options : this.filter(options, this.get('searchText'));
+      this.setProperties({ loading: false, currentlyHighlighted: undefined });
+      this.previousResults = newResults;
+      return newResults;
+    },
+    set(_, newResults) {
+      this.previousResults = newResults;
+      this.setProperties({ loading: false, currentlyHighlighted: undefined });
+      return newResults;
     }
-    promise.then(opts => this.setProperties({ currentlyHighlighted: undefined, previousResults: opts }));
-    return PromiseArray.create({ promise, content: previousResults });
   }),
 
   highlighted: computed('results.[]', 'currentlyHighlighted', 'selected', function() {
@@ -284,5 +279,28 @@ export default Ember.Component.extend({
 
   _doSearch(dropdown, term) {
     this.set('searchText', term);
+    let options = this.get('options') || [];
+    if (isBlank(term)) {
+      this.set('loading', false);
+      return this.set('results', options);
+    }
+    let searchAction = this.get('search');
+    if (searchAction) {
+      let newResults = searchAction(term);
+      if (!newResults) { return; }
+      if (newResults.then) {
+        this.activeSearch = newResults;
+        this.set('loading', true);
+        newResults.then((items) => {
+          if (this.activeSearch === newResults) {
+            this.set('results', items);
+          }
+        });
+      } else {
+        this.set('results', newResults);
+      }
+    } else {
+      this.set('results', this.filter(options, term));
+    }
   }
 });
