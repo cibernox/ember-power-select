@@ -1,5 +1,15 @@
 # Master
 
+# 0.8.2
+- [BUGFIX] Update ember-basic-dropdown again to fix bad positioning issue.
+- [INTERNAL] Stop using ArrayProxy internally. That saves some double render, improving performance
+  when filtering greatly (+100%) and very slightly in initial openinig (+5%)
+- [BUGFIX] The `search` and `highlight` functions in the public API weren't working because they
+  missed a binding to the dropdown.
+
+# 0.8.1
+- [BUGFIX] Update ember-basic-dropdown.
+
 # 0.8.0
 - [INTERNAL] Update to ember-cli 2.3.0-beta.1
 - [ENHANCEMENT] The mouseup over on element of the list doesn't selects that element if the mouse is

@@ -191,3 +191,41 @@ test('the `onclose` action is invoked when the dropdown closes', function(assert
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is closed');
 });
+
+test('the `search` action of the public api passed to the public actions works as expected', function(assert) {
+  assert.expect(5);
+
+  this.handleSearch = (term) => {
+    assert.equal(term, 'abc', 'The search term receives `abc`');
+    return ['foo', 'bar', 'baz'];
+  };
+  this.handleOpen = (select) => {
+    select.actions.search('abc');
+  };
+  this.render(hbs`
+    {{#power-select onchange=(action (mut foo)) onopen=handleOpen search=handleSearch as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+  clickTrigger();
+  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'foo');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'bar');
+  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'baz');
+});
+
+test('the `highlight` action of the public api passed to the public actions works as expected', function(assert) {
+  assert.expect(2);
+  this.options = ['foo', 'bar', 'baz'];
+  this.handleOpen = (select) => {
+    select.actions.highlight('baz');
+  };
+  this.render(hbs`
+    {{#power-select options=options onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+  clickTrigger();
+  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
+  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'baz', 'The third option is highlighted');
+});

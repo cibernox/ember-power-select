@@ -2,6 +2,11 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
+{{#power-select-multiple onopen=(action "onSelectOpen") search=(action "searchFoo") selected=foobar onchange=(action (mut foobar)) as |name|}}
+  {{name}}
+{{/power-select-multiple}}
+
+
 {{!--   {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
     {{country.name}}
   {{/power-select-multiple}}
@@ -19,13 +24,13 @@
     onchange=(action (mut simpleSelected))
     onfocus=(action "didFocus") as |option|}}
     {{option}}
-  {{/power-select}} --}}
+  {{/power-select}}
 
   <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
-{{!--
+
   <h4>Diacritics search</h4>
   {{#power-select options=(readonly names) selected=diacriticName onchange=(action (mut diacriticName)) as |option|}}
     {{option}}

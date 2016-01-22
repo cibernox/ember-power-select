@@ -257,7 +257,7 @@ export default Ember.Component.extend({
   },
 
   buildPublicAPI(dropdown) {
-    const ownActions = { search: this._doSearch.bind(this), highlight: this._doHighlight.bind(this) };
+    const ownActions = { search: this._doSearch.bind(this, dropdown), highlight: this._doHighlight.bind(this, dropdown) };
     return {
       isOpen: dropdown.isOpen,
       actions: Ember.merge(ownActions, dropdown.actions)

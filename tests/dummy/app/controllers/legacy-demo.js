@@ -395,6 +395,14 @@ export default Ember.Controller.extend({
   ],
 
   actions: {
+    onSelectOpen(select) {
+      select.actions.search('foo');
+    },
+
+    searchFoo() {
+      return ['one', 'two'];
+    },
+
     debugSelection(option) {
       console.debug("I've selected", option);
     },
