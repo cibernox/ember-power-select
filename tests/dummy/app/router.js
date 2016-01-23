@@ -27,6 +27,7 @@ Router.map(function() {
     // OTHER
     this.route('test-helpers');
     this.route('troubleshooting');
+    this.route('architecture');
     this.route('api-reference');
 
   });
