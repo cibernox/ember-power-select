@@ -1,6 +1,25 @@
-{{#basic-dropdown class=(readonly concatenatedClasses) dir=(readonly dir) tabindex=(readonly tabindex) renderInPlace=(readonly renderInPlace) matchTriggerWidth=true
-  disabled=(readonly disabled) verticalPosition=(readonly verticalPosition) triggerClass=(readonly concatenatedTriggerClasses) dropdownClass=(readonly concatenatedDropdownClasses)
-  opened=opened onOpen=(action "handleOpen") onClose=(action "handleClose") onFocus=(action "handleFocus") onKeydown=(action "handleKeydown") registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+{{#basic-dropdown
+    class=(readonly concatenatedClasses)
+    dir=(readonly dir)
+    tabindex=(readonly tabindex)
+    role="combobox"
+    renderInPlace=(readonly renderInPlace)
+    matchTriggerWidth=true
+    disabled=(readonly disabled)
+    verticalPosition=(readonly verticalPosition)
+    triggerClass=(readonly concatenatedTriggerClasses)
+    dropdownClass=(readonly concatenatedDropdownClasses)
+    opened=opened
+    onOpen=(action "handleOpen")
+    onClose=(action "handleClose")
+    onFocus=(action "handleFocus")
+    onKeydown=(action "handleKeydown")
+    registerActionsInParent=(action "registerDropdown")
+    ariaLabelledBy=ariaLabelledBy
+    ariaDescribedBy=ariaDescribedBy
+    ariaRequired=ariaRequired
+    ariaInvalid=ariaInvalid
+    as |dropdown|}}
   {{#with (hash
     isOpen=dropdown.isOpen
     actions=(hash
