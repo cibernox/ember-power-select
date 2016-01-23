@@ -56,7 +56,7 @@ test('The onchange of multiple selects action receives the selection and the pub
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
@@ -65,6 +65,7 @@ test('The onkeydown of single selects action receives the public API and the key
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -76,6 +77,31 @@ test('The onkeydown of single selects action receives the public API and the key
 
   clickTrigger();
   triggerKeydown($('.ember-power-select-search input')[0], 13);
+});
+
+test('The onkeydown can be used to easily allow to select on tab', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.onKeyDown = (select, e) => {
+    if (e.keyCode === 9) {
+      select.actions.select(select.highlighted);
+      select.actions.close();
+    }
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onkeydown=onKeyDown onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-trigger')[0], 40);
+  triggerKeydown($('.ember-power-select-trigger')[0], 40);
+  triggerKeydown($('.ember-power-select-trigger')[0], 9);
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'three', 'The highlighted options has been selected');
+  assert.equal($('.ember-power-select-options').length, 0, 'The select is closed');
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
