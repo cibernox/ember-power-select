@@ -134,13 +134,7 @@ export default Ember.Component.extend({
     },
 
     select(dropdown, selected, e) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      if (this.get('selected') !== selected) {
-        this.get('onchange')(selected, this.buildPublicAPI(dropdown));
-      }
+      this._doSelect(dropdown, selected, e);
     },
 
     choose(dropdown, selection, e) {
@@ -257,9 +251,14 @@ export default Ember.Component.extend({
   },
 
   buildPublicAPI(dropdown) {
-    const ownActions = { search: this._doSearch.bind(this, dropdown), highlight: this._doHighlight.bind(this, dropdown) };
+    const ownActions = {
+      search: this._doSearch.bind(this, dropdown),
+      highlight: this._doHighlight.bind(this, dropdown),
+      select: this._doSelect.bind(this, dropdown)
+    };
     return {
       isOpen: dropdown.isOpen,
+      highlighted: this.get('highlighted'),
       actions: Ember.merge(ownActions, dropdown.actions)
     };
   },
@@ -270,6 +269,16 @@ export default Ember.Component.extend({
       return this.optionAtIndex(0);
     }
     return selected;
+  },
+
+  _doSelect(dropdown, selected, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (this.get('selected') !== selected) {
+      this.get('onchange')(selected, this.buildPublicAPI(dropdown));
+    }
   },
 
   _doHighlight(dropdown, option) {
