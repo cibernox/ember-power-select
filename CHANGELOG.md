@@ -1,5 +1,9 @@
 # Master
 
+- [BUGFIX] the "publicAPI" object passed as penultimate object to the public actions includes a `highlighted`
+  property and the `action.select` function to enable more customization.
+- [DOC] Document architectural decissions of the component.
+
 # 0.8.2
 - [BUGFIX] Update ember-basic-dropdown again to fix bad positioning issue.
 - [INTERNAL] Stop using ArrayProxy internally. That saves some double render, improving performance
