@@ -1,5 +1,9 @@
 # Master
 
+- [BUGFIX] Ensure the second argument yielded to the block is the searchText corresponding to the
+  results being displayed. This is formally more correct and also save an expensive re-render that
+  can cause the component to jank in sufficiently bug/complex selects.
+
 # 0.8.4
 - [BUGFIX] Ensure that if the component is destroyed while an async search is in
   progress it doesn't fail.
