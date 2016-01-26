@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Ensure that when clearing the search input any pending search
+
 # 0.8.3
 - [BUGFIX] Ensure that pressing enter when there is no highlighted element (p.e after a search without results)
   closes the component without calling the onchange function.
