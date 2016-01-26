@@ -290,8 +290,8 @@ export default Ember.Component.extend({
     this.set('searchText', term);
     let options = this.get('options') || [];
     if (isBlank(term)) {
-      this.set('loading', false);
-      return this.set('results', options);
+      this.activeSearch = null;
+      return this.setProperties({ results: options, loading: false });
     }
     let searchAction = this.get('search');
     if (searchAction) {

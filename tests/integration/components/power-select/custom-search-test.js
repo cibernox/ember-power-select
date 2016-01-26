@@ -409,3 +409,36 @@ test('Setting the options to a promise from the custom search function works (an
     done();
   }, 200);
 });
+
+test('If you delete the last char of the input before the previous promise resolves, that promise is discarded', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+  this.numbers = numbers;
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers search=searchFn onchange=(action (mut foo)) as |number searchTerm|}}
+      {{number}}:{{searchTerm}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch("teen");
+  setTimeout(function() {
+    typeInSearch("t");
+  }, 150);
+  setTimeout(function() {
+    typeInSearch("");
+  }, 200);
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option').length, numbers.length, 'All the options are displayed after clearing the search');
+    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'two:', 'The results are the original options');
+    done();
+  }, 300);
+});
