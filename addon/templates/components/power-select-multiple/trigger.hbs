@@ -4,9 +4,9 @@
       <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action select.actions.select (ember-power-select-build-selection opt selected multiple=true)}}>&times;</span>
     {{/unless}}
     {{#if selectedItemComponent}}
-      {{component selectedItemComponent selected=opt searchText=searchText}}
+      {{component selectedItemComponent selected=opt lastSearchedText=lastSearchedText}}
     {{else}}
-      {{yield opt searchText}}
+      {{yield opt lastSearchedText}}
     {{/if}}
   </span>
 {{/each}}

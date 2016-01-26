@@ -36,6 +36,7 @@ export default Ember.Component.extend({
 
   // Attrs
   searchText: '',
+  lastSearchedText: '',
   activeSearch: null,
   openingEvent: null,
   loading: false,
@@ -245,14 +246,14 @@ export default Ember.Component.extend({
     return nextOption;
   },
 
-  filter(options, searchText) {
+  filter(options, term) {
     let matcher;
     if (this.get('searchField')) {
       matcher = (option, text) => this.get('matcher')(get(option, this.get('searchField')), text);
     } else {
       matcher = (option, text) => this.get('matcher')(option, text);
     }
-    return filterOptions(options || [], searchText, matcher);
+    return filterOptions(options || [], term, matcher);
   },
 
   buildPublicAPI(dropdown) {
@@ -296,12 +297,15 @@ export default Ember.Component.extend({
     let options = this.get('options') || [];
     if (isBlank(term)) {
       this.activeSearch = null;
-      return this.setProperties({ results: options, loading: false });
+      return this.setProperties({ results: options, lastSearchedText: term, loading: false });
     }
     let searchAction = this.get('search');
     if (searchAction) {
       let newResults = searchAction(term);
-      if (!newResults) { return; }
+      if (!newResults) {
+        this.set('lastSearchedText', term);
+        return;
+      }
       if (newResults.then) {
         this.activeSearch = newResults;
         this.set('loading', true);
@@ -311,12 +315,16 @@ export default Ember.Component.extend({
             }
             this.set('results', items);
           }
+        }).finally(() => {
+          if (this.activeSearch === newResults) {
+            this.set('lastSearchedText', term);
+          }
         });
       } else {
-        this.set('results', newResults);
+        this.setProperties({ results: newResults, lastSearchedText: term });
       }
     } else {
-      this.set('results', this.filter(options, term));
+      this.setProperties({ results: this.filter(options, term), lastSearchedText: term });
     }
   }
 });
