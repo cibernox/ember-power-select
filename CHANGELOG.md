@@ -1,5 +1,6 @@
 # Master
 
+# 0.8.3
 - [BUGFIX] Ensure that pressing enter when there is no highlighted element (p.e after a search without results)
   closes the component without calling the onchange function.
 - [BUGFIX] Update ember-basic-dropdown to 0.8.5+ fixes positioning issues in IE11 and fatal error in browsers without
