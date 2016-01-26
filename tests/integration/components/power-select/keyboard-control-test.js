@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
+import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
@@ -94,6 +94,26 @@ test('Pressing ENTER selects the highlighted element, closes the dropdown and fo
   triggerKeydown($('.ember-power-select-search input')[0], 40);
   triggerKeydown($('.ember-power-select-search input')[0], 13);
   assert.equal($('.ember-power-select-trigger').text().trim(), 'two', 'The highlighted element was selected');
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
+});
+
+test('Pressing ENTER when there is no highlighted element, closes the dropdown and focuses the trigger without calling the onchange function', function(assert) {
+  assert.expect(3);
+  this.numbers = numbers;
+  this.handleChange = () => {
+    assert.ok(false, 'The handle change should not be called');
+  };
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action handleChange) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('asjdnah');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'No results found');
+  triggerKeydown($('.ember-power-select-search input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
