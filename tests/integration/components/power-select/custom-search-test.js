@@ -442,3 +442,33 @@ test('If you delete the last char of the input before the previous promise resol
     done();
   }, 300);
 });
+
+test('BUGFIX: Destroy a component why an async search is pending does not cause an error', function(assert) {
+  let done = assert.async();
+  assert.expect(0); // This test has no assertions. The fact that nothing fails is the proof that it works
+  this.numbers = numbers;
+  this.visible = true;
+
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 200);
+    });
+  };
+
+  this.render(hbs`
+    {{#if visible}}
+      {{#power-select-multiple options=numbers search=searchFn onchange=(action (mut foo)) as |number searchTerm|}}
+        {{number}}:{{searchTerm}}
+      {{/power-select-multiple}}
+    {{/if}}
+  `);
+
+  clickTrigger();
+  typeInSearch("teen");
+  this.set('visible', false);
+  setTimeout(() => {
+    done();
+  }, 150);
+});

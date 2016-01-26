@@ -54,6 +54,11 @@ export default Ember.Component.extend({
     Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
 
+  willDestroy() {
+    this._super(...arguments);
+    this.activeSearch = null;
+  },
+
   // CPs
   dropdownPosition: Ember.computed.deprecatingAlias('verticalPosition', { id: 'power-select-dropdown-position', until: '0.9'}),
   selectedComponent: Ember.computed.deprecatingAlias('triggerComponent', { id: 'power-select-selected-component', until: '0.9'}),
@@ -302,6 +307,8 @@ export default Ember.Component.extend({
         this.set('loading', true);
         newResults.then((items) => {
           if (this.activeSearch === newResults) {
+            if (this.get('isDestroyed')) {
+            }
             this.set('results', items);
           }
         });
