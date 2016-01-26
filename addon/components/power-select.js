@@ -36,6 +36,7 @@ export default Ember.Component.extend({
 
   // Attrs
   searchText: '',
+  lastSearchedText: '',
   activeSearch: null,
   openingEvent: null,
   loading: false,
@@ -245,14 +246,14 @@ export default Ember.Component.extend({
     return nextOption;
   },
 
-  filter(options, searchText) {
+  filter(options, term) {
     let matcher;
     if (this.get('searchField')) {
       matcher = (option, text) => this.get('matcher')(get(option, this.get('searchField')), text);
     } else {
       matcher = (option, text) => this.get('matcher')(option, text);
     }
-    return filterOptions(options || [], searchText, matcher);
+    return filterOptions(options || [], term, matcher);
   },
 
   buildPublicAPI(dropdown) {
