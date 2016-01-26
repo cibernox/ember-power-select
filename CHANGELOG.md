@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Update ember-basic-dropdown to 0.8.5+ fixes positioning issues in IE11 and fatal error in browsers without
+  MutationObserver (effectively only ie10 )
 - [BUGFIX] the "publicAPI" object passed as penultimate object to the public actions includes a `highlighted`
   property and the `action.select` function to enable more customization.
 - [DOC] Document architectural decissions of the component.
