@@ -292,16 +292,18 @@ export default Ember.Component.extend({
   },
 
   _doSearch(dropdown, term) {
-    this.set('searchText', term);
     let options = this.get('options') || [];
     if (isBlank(term)) {
       this.activeSearch = null;
-      return this.setProperties({ results: options, loading: false });
+      return this.setProperties({ results: options, searchText: term, loading: false });
     }
     let searchAction = this.get('search');
     if (searchAction) {
       let newResults = searchAction(term);
-      if (!newResults) { return; }
+      if (!newResults) {
+        this.set('searchText', term);
+        return;
+      }
       if (newResults.then) {
         this.activeSearch = newResults;
         this.set('loading', true);
@@ -311,12 +313,16 @@ export default Ember.Component.extend({
             }
             this.set('results', items);
           }
+        }).finally(() => {
+          if (this.activeSearch === newResults) {
+            this.set('searchText', term);
+          }
         });
       } else {
-        this.set('results', newResults);
+        this.setProperties({ results: newResults, searchText: term });
       }
     } else {
-      this.set('results', this.filter(options, term));
+      this.setProperties({ results: this.filter(options, term), searchText: term });
     }
   }
 });

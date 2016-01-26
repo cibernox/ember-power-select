@@ -380,6 +380,7 @@ export default Ember.Controller.extend({
   complexOptionsWithDisabled: contriesWithDisabled,
 
   multipleSelection: ['one','two','three','four','five','six','seven','eight','nine','ten','eleven'],
+  emptyMultipleSelection: [],
 
   groupedOptions: [
     { groupName: "Smalls", options: ["one", "two", "three"] },
@@ -415,8 +416,7 @@ export default Ember.Controller.extend({
     asyncSearch(term) {
       return new Ember.RSVP.Promise(function(resolve) {
         Ember.run.later(function() {
-          var length = term.length;
-          resolve(numbers.filter(str => str.length === length)); // returns the numbers with the same length than the current
+          resolve(numbers.filter(str => str.indexOf(term) > -1));
         }, 1500);
       });
     },

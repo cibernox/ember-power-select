@@ -443,6 +443,64 @@ test('If you delete the last char of the input before the previous promise resol
   }, 300);
 });
 
+test('The yielded search term in single selects is updated only when the async search for it finishes', function(assert) {
+  let done = assert.async();
+  assert.expect(3);
+  this.numbers = numbers;
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers search=searchFn onchange=(action (mut foo)) as |number searchTerm|}}
+      {{number}}:{{searchTerm}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch("teen");
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
+    typeInSearch("four");
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
+    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
+    done();
+  }, 150);
+});
+
+test('The yielded search term in multiple selects is updated only when the async search for it finishes', function(assert) {
+  let done = assert.async();
+  assert.expect(3);
+  this.numbers = numbers;
+  this.searchFn = function(term) {
+    return new RSVP.Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(numbers.filter(str => str.indexOf(term) > -1));
+      }, 100);
+    });
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers search=searchFn onchange=(action (mut foo)) as |number searchTerm|}}
+      {{number}}:{{searchTerm}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch("teen");
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
+    typeInSearch("four");
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
+    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
+    done();
+  }, 150);
+});
+
 test('BUGFIX: Destroy a component why an async search is pending does not cause an error', function(assert) {
   let done = assert.async();
   assert.expect(0); // This test has no assertions. The fact that nothing fails is the proof that it works
