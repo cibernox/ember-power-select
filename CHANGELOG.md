@@ -1,5 +1,6 @@
 # Master
 
+# 0.8.4
 - [BUGFIX] Ensure that if the component is destroyed while an async search is in
   progress it doesn't fail.
 - [BUGFIX] Ensure that when clearing the search input any pending search
