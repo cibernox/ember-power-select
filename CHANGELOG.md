@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Ensure that pressing enter when there is no highlighted element (p.e after a search without results)
+  closes the component without calling the onchange function.
 - [BUGFIX] Update ember-basic-dropdown to 0.8.5+ fixes positioning issues in IE11 and fatal error in browsers without
   MutationObserver (effectively only ie10 )
 - [BUGFIX] the "publicAPI" object passed as penultimate object to the public actions includes a `highlighted`

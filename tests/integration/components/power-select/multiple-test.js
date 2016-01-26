@@ -594,3 +594,23 @@ test('The search input is cleared when the component is closed', function(assert
   });
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), '');
 });
+
+test('When hitting ENTER after a search with no results, the component is closed but the onchange function is not invoked', function(assert) {
+  assert.expect(3);
+  this.numbers = numbers;
+  this.handleChange = () => {
+    assert.ok(false, 'The handle change should not be called');
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action handleChange) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch('asjdnah');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'No results found');
+  triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 13);
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
+  assert.ok(this.$('.ember-power-select-trigger-multiple-input')[0] === document.activeElement, 'The input is focused');
+});
