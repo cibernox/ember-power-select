@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] The input of the multiple component should have a transparent background by default. It's
+  probably the desired behaviour almost all situations.
 - [BUGFIX] Ensure the input of the multiple select flows to the next line when number of selections
   make the select grow to a second line.
 

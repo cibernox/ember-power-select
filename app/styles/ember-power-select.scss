@@ -78,6 +78,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   outline: none;
   padding: 0;
   float: left;
+  background-color: transparent;
   &:disabled {
     background-color: $ember-power-select-disabled-background-color;
   }
