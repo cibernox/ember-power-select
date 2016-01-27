@@ -135,7 +135,7 @@ test('The onkeydown of multiple selects action receives the public API and the k
 });
 
 test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
@@ -143,6 +143,7 @@ test('The onfocus of single selects action receives the public API and the focus
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
@@ -159,7 +160,7 @@ test('The onfocus of single selects action receives the public API and the focus
 });
 
 test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
@@ -167,6 +168,7 @@ test('The onfocus of multiple selects action receives the public API and the foc
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
@@ -183,7 +185,7 @@ test('The onfocus of multiple selects action receives the public API and the foc
 });
 
 test('the `onopen` action is invoked when the dropdown opens', function(assert) {
-  assert.expect(9);
+  assert.expect(10);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
@@ -191,6 +193,7 @@ test('the `onopen` action is invoked when the dropdown opens', function(assert) 
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');

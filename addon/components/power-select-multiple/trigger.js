@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../../templates/components/power-select-multiple/trigger';
 import { emberPowerSelectBuildSelection as buildNewSelection } from '../../helpers/ember-power-select-build-selection';
 
-const { computed, get, isBlank } = Ember;
+const { computed, get, isBlank, run } = Ember;
 const { htmlSafe } = Ember.String;
 
 export default Ember.Component.extend({
@@ -19,6 +19,7 @@ export default Ember.Component.extend({
 
   // CPs
   triggerMultipleInputStyle: computed('searchText.length', 'selected.length', function() {
+    run.scheduleOnce('afterRender', this.get('select.actions.reposition'));
     if (this.get('selected.length') === 0) {
       return htmlSafe('width: 100%;');
     } else {
