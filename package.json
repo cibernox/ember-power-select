@@ -45,6 +45,7 @@
     "ember-disable-prototype-extensions": "^1.0.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
+    "ember-one-way-controls": "0.4.0",
     "ember-pagefront": "0.9.7",
     "ember-resolver": "^2.0.3",
     "ember-truth-helpers": "1.2.0",

@@ -10,10 +10,18 @@ export default Ember.Component.extend({
   layout,
 
   // Lifecycle hooks
+  didInsertElement() {
+    this._super(...arguments);
+    this.input = document.querySelector(`.${this.elementId}-input`);
+  },
+
   didUpdateAttrs({ oldAttrs, newAttrs }) {
     this._super(...arguments);
     if (oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
       this.handleClose();
+    }
+    if (newAttrs.searchText !== oldAttrs.searchText) {
+      run.scheduleOnce('afterRender', this, this.updateInput, oldAttrs.searchText, newAttrs.searchText);
     }
   },
 
@@ -35,7 +43,7 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     search(term, e) {
-      const { search, open } = this.get('select.actions');
+      let { search, open } = this.get('select.actions');
       search(term, e);
       open(e);
     },
@@ -71,5 +79,17 @@ export default Ember.Component.extend({
   // Methods
   handleClose() {
     run.scheduleOnce('actions', null, this.get('select.actions.search'), '');
+  },
+
+  updateInput(oldText, newText) {
+    if (!this.input) { return; }
+    if (isBlank(oldText)) {
+      this.input.value = newText;
+    } else {
+      let { selectionStart, selectionEnd } = this.input;
+      this.input.value = newText;
+      this.input.selectionStart = selectionStart;
+      this.input.selectionEnd = selectionEnd;
+    }
   }
 });
