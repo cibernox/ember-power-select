@@ -4,8 +4,9 @@
   {{#with (hash
     isOpen=dropdown.isOpen
     actions=(hash
-      open=(action dropdown.actions.open)
-      close=(action dropdown.actions.close)
+      open=dropdown.actions.open
+      close=dropdown.actions.close
+      reposition=dropdown.actions.reposition
       choose=(action "choose" dropdown)
       select=(action "select" dropdown)
       highlight=(action "highlight" dropdown)
@@ -35,8 +36,9 @@
   {{#with (hash
     isOpen=registeredDropdown.isOpen
     actions=(hash
-      open=(action registeredDropdown.actions.open)
-      close=(action registeredDropdown.actions.close)
+      open=registeredDropdown.actions.open
+      close=registeredDropdown.actions.close
+      reposition=registeredDropdown.actions.reposition
       choose=(action "choose" registeredDropdown)
       select=(action "select" registeredDropdown)
       highlight=(action "highlight" registeredDropdown)

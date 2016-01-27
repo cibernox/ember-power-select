@@ -1,5 +1,11 @@
 # Master
 
+- [BUGFIX] If the trigger grows in height because the input becomes too long to fit in one line,
+  the list of options is repositioned automatically.
+- [PERF] A couple of perf improved like avoiding some extra calls to `action` to wrap what already
+  are closure actions. The ember-basic-dropdown also uses `Ember.run.join` to avoid one extra runloop.
+- [FEATURE] The select exposes an action to manually trigger a reposition. This is a very low level
+  thing that probably nobody but me will use.
 - [BUGFIX] The input of the multiple component should have a transparent background by default. It's
   probably the desired behaviour almost all situations.
 - [BUGFIX] Ensure the input of the multiple select flows to the next line when number of selections
