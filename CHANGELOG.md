@@ -1,5 +1,6 @@
 # Master
 
+- [BUGFIX] Disabled components are not focusable.
 - [BUGFIX] Ensure the second argument yielded to the block is the searchText corresponding to the
   results being displayed. This is formally more correct and also save an expensive re-render that
   can cause the component to jank in sufficiently bug/complex selects. This is potentially breaking,

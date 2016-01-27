@@ -26,17 +26,16 @@ test('A disabled dropdown doesn\'t responds to mouse/keyboard events', function(
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
 });
 
-test('A disabled dropdown is not focusable', function(assert) {
+test('A disabled dropdown is not focusable, and ignores the passed tabindex ', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers tabindex="123" disabled=true onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/power-select}}
   `);
-
-  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), "-1", 'The trigger is not reachable with TAB');
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), undefined, 'The trigger has no tabindex so it can\'t be focused');
 });
 
 test('Options with a disabled field set to true are styled as disabled', function(assert) {
@@ -83,4 +82,32 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   triggerKeydown($('.ember-power-select-search input')[0], 40);
   triggerKeydown($('.ember-power-select-search input')[0], 40);
   assert.ok($('.ember-power-select-option--highlighted').text().trim(), 'LV: Latvia' ,'The hovered option was not highlighted because it\'s disabled');
+});
+
+test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) disabled=true as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.ok(this.$('.ember-power-select-trigger-multiple-input').prop('disabled'), 'The input is disabled');
+});
+
+test('When passed `disabled=true`, the options cannot be removed', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.selectedNumbers = [numbers[2], numbers[4]];
+
+  this.render(hbs`
+    {{#power-select-multiple selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=true as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
 });

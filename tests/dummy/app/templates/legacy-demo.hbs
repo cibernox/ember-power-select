@@ -104,6 +104,11 @@
     {{option.code}}: {{option.name}}
   {{/power-select}}
 
+  <h4>Multiple Select disabled</h4>
+  {{#power-select-multiple disabled=true options=(readonly complexOptions) searchField="name" selected=baz onchange=(action (mut baz)) as |option|}}
+    <i class="icon-flag {{option.code}}"></i> {{option.name}}
+  {{/power-select-multiple}}
+
   <h4>Select with disabled options</h4>
   {{#power-select options=(readonly complexOptionsWithDisabled) searchField="name" selected=complexSelected onchange=(action (mut complexSelected)) as |option|}}
     {{option.code}}: {{option.name}}
