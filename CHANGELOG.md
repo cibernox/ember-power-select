@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Ensure the input of the multiple select flows to the next line when number of selections
+  make the select grow to a second line.
+
 # 0.8.5
 - [BUGFIX] Disabled components are not focusable.
 - [BUGFIX] Ensure the second argument yielded to the block is the searchText corresponding to the
