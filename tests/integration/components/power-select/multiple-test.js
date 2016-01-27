@@ -528,34 +528,6 @@ test('Typing in the input opens the component and filters the options also with 
   }, 150);
 });
 
-test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
-  assert.expect(1);
-
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) disabled=true as |option|}}
-      {{option}}
-    {{/power-select-multiple}}
-  `);
-
-  assert.ok(this.$('.ember-power-select-trigger-multiple-input').prop('disabled'), 'The input is disabled');
-});
-
-test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
-  assert.expect(1);
-
-  this.numbers = numbers;
-  this.selectedNumbers = [numbers[2], numbers[4]];
-
-  this.render(hbs`
-    {{#power-select-multiple selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=true as |option|}}
-      {{option}}
-    {{/power-select-multiple}}
-  `);
-
-  assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
-});
-
 test('The search term is yielded as second argument in single selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
