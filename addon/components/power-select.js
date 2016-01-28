@@ -286,8 +286,8 @@ export default Ember.Component.extend({
   },
 
   _doSearch(dropdown, term) {
-    let options = this.get('options') || [];
     if (isBlank(term)) {
+      let options = this.get('options') || [];
       this.activeSearch = null;
       this.setProperties({ results: options, searchText: term, lastSearchedText: term, loading: false });
     } else {
@@ -308,7 +308,7 @@ export default Ember.Component.extend({
           this.setProperties({ results: search, searchText: term, lastSearchedText: term });
         }
       } else {
-        this.setProperties({ results: this.filter(options, term), searchText: term, lastSearchedText: term });
+        this.setProperties({ results: this.filter(this.get('options'), term), searchText: term, lastSearchedText: term });
       }
     }
   }
