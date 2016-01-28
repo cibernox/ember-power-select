@@ -46,21 +46,21 @@ export default function() {
   const isEmberOne = Ember.VERSION.match(/1\.13/);
 
   Ember.Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    const uuid = find(cssPath).find('.ember-power-select-trigger').attr('class').match(/ember-power-select-trigger-(\d+)/)[1]
+    const id = find(cssPath).find('.ember-power-select-trigger').attr('class').match(/ember-power-select-trigger-ember(\d+)/)[1]
     // If the dropdown is closed, open it
-    if (Ember.$(`.ember-power-select-dropdown-${uuid}`).length === 0) {
+    if (Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0) {
       click(`${cssPath} .ember-power-select-trigger`);
     }
 
     // Select the option with the given text
-    click(`.ember-power-select-dropdown-${uuid} .ember-power-select-option:contains("${value}")`);
+    click(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`);
   });
 
   Ember.Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    const uuid = find(cssPath).find('.ember-power-select-trigger').attr('class').match(/ember-power-select-trigger-(\d+)/)[1]
+    const id = find(cssPath).find('.ember-power-select-trigger').attr('class').match(/ember-power-select-trigger-ember(\d+)/)[1]
     const isMultipleSelect = Ember.$(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
-    let dropdownIsClosed = Ember.$(`.ember-power-select-dropdown-${uuid}`).length === 0;
+    let dropdownIsClosed = Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0;
     if (dropdownIsClosed) {
       click(`${cssPath} .ember-power-select-trigger`);
     }
@@ -73,7 +73,7 @@ export default function() {
     } else {
       fillIn('.ember-power-select-search input', value);
       if (isEmberOne) {
-        triggerEvent(`.ember-power-select-dropdown-${uuid} .ember-power-select-search input`, 'input');
+        triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search input`, 'input');
       }
     }
 

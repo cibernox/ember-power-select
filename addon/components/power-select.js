@@ -43,13 +43,6 @@ export default Ember.Component.extend({
   previousResults: null,
 
   // Lifecycle hooks
-  init() {
-    this._super(...arguments);
-    const randomUUID = Math.random().toString().slice(-10);
-    this.triggerUniqueClass = `ember-power-select-trigger-${randomUUID}`;
-    this.dropdownUniqueClass = `ember-power-select-dropdown-${randomUUID}`;
-  },
-
   didInitAttrs() {
     this._super(...arguments);
     Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
@@ -71,7 +64,7 @@ export default Ember.Component.extend({
   }),
 
   concatenatedTriggerClasses: computed('class', function() {
-    let classes = ['ember-power-select-trigger', this.triggerUniqueClass];
+    let classes = ['ember-power-select-trigger', `ember-power-select-trigger-${this.elementId}`];
     if (this.get('triggerClass')) {
       classes.push(this.get('triggerClass'));
     }
@@ -82,7 +75,7 @@ export default Ember.Component.extend({
   }),
 
   concatenatedDropdownClasses: computed('class', function() {
-    let classes = ['ember-power-select-dropdown', this.dropdownUniqueClass];
+    let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
     if (this.get('dropdownClass')) {
       classes.push(this.get('dropdownClass'));
     }
