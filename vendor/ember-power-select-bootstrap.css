@@ -76,7 +76,9 @@
   line-height: inherit;
   -webkit-appearance: none;
   outline: none;
-  padding: 0; }
+  padding: 0;
+  float: left;
+  background-color: transparent; }
   .ember-power-select-trigger-multiple-input:disabled {
     background-color: #eeeeee; }
 
