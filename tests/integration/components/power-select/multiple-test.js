@@ -357,6 +357,7 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'two', 'The text of the seach input is two now');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
+  assert.ok(false, 'NOT IMPLEMENTED: ADD ASSERTION TO CHECK THAT THE CURSOR POSITION IS AT THE END');
 });
 
 test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly (when options are not strings)', function(assert) {

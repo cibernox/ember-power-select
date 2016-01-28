@@ -2,6 +2,6 @@
   <div class="ember-power-select-search">
     <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
       spellcheck="false" role="combobox" placeholder={{searchPlaceholder}}
-      oninput={{action select.actions.search value="e.target"}} onkeydown={{action "handleKeydown"}}>
+      oninput={{action select.actions.search value="target.value"}} onkeydown={{action "handleKeydown"}}>
   </div>
 {{/if}}
