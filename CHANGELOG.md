@@ -1,5 +1,6 @@
 # Master
 
+# 0.8.6
 - [BUGFIX] If the trigger grows in height because the input becomes too long to fit in one line,
   the list of options is repositioned automatically.
 - [PERF] A couple of perf improved like avoiding some extra calls to `action` to wrap what already
