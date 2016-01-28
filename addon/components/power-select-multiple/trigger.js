@@ -10,9 +10,9 @@ export default Ember.Component.extend({
   layout,
 
   // Lifecycle hooks
-  didReceiveAttrs({ oldAttrs, newAttrs }) {
+  didUpdateAttrs({ oldAttrs, newAttrs }) {
     this._super(...arguments);
-    if (oldAttrs && oldAttrs.select && oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
+    if (oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
       this.handleClose();
     }
   },
