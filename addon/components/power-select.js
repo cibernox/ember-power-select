@@ -296,34 +296,27 @@ export default Ember.Component.extend({
     let options = this.get('options') || [];
     if (isBlank(term)) {
       this.activeSearch = null;
-      return this.setProperties({ results: options, searchText: term, lastSearchedText: term, loading: false });
-    }
-    let searchAction = this.get('search');
-    if (searchAction) {
-      let newResults = searchAction(term);
-      if (!newResults) {
-        this.setProperties({ lastSearchedText: term, searchText: term });
-        return;
-      }
-      if (newResults.then) {
-        this.activeSearch = newResults;
-        this.setProperties({ loading: true, searchText: term });
-        newResults.then((items) => {
-          if (this.activeSearch === newResults) {
-            if (this.get('isDestroyed')) {
-            }
-            this.set('results', items);
-          }
-        }).finally(() => {
-          if (this.activeSearch === newResults) {
-            this.set('lastSearchedText', term);
-          }
-        });
-      } else {
-        this.setProperties({ results: newResults, lastSearchedText: term });
-      }
+      this.setProperties({ results: options, searchText: term, lastSearchedText: term, loading: false });
     } else {
-      this.setProperties({ results: this.filter(options, term), searchText: term, lastSearchedText: term });
+      let searchAction = this.get('search');
+      if (searchAction) {
+        let search = searchAction(term);
+        if (!search) {
+          this.setProperties({ lastSearchedText: term, searchText: term });
+        } else if (search.then) {
+          this.activeSearch = search;
+          this.setProperties({ loading: true, searchText: term });
+          search.then((results) => {
+            if (this.activeSearch === search) { this.setProperties({ results, lastSearchedText: term }); }
+          }, () => {
+            if (this.activeSearch === search) { this.set('lastSearchedText', term); }
+          });
+        } else {
+          this.setProperties({ results: search, searchText: term, lastSearchedText: term });
+        }
+      } else {
+        this.setProperties({ results: this.filter(options, term), searchText: term, lastSearchedText: term });
+      }
     }
   }
 });
