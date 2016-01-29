@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Modify the searchText programatically (through the `select.actions.search('foo')` per example)
+  updates the input, respecting the cursor position.
+
 # 0.8.6
 - [BUGFIX] If the trigger grows in height because the input becomes too long to fit in one line,
   the list of options is repositioned automatically.

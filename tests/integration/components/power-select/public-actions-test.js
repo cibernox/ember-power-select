@@ -271,3 +271,41 @@ test('the `highlight` action of the public api passed to the public actions work
   assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
   assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'baz', 'The third option is highlighted');
 });
+
+test('The programmer can use the received public API to perform searches in single selects', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.initSearch = (select) => {
+    assert.ok(true, 'The onopen action is fired');
+    select.actions.search('hello');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onopen=initSearch onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-search input')[0].value, 'hello', 'The search text contains the searched string');
+});
+
+test('The programmer can use the received public API to perform searches in mutiple selects', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.initSearch = (select) => {
+    assert.ok(true, 'The onopen action is fired');
+    select.actions.search('hello');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onopen=initSearch onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-trigger-multiple-input')[0].value, 'hello', 'The search text contains the searched string');
+});

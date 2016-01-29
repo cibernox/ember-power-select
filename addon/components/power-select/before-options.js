@@ -1,14 +1,27 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select/before-options';
+import updateInput from '../../utils/update-input-value';
+
+const { run } = Ember;
 
 export default Ember.Component.extend({
   tagName: '',
   layout,
 
   // Lifecycle hooks
+  didReceiveAttrs({ oldAttrs, newAttrs }) {
+    this._super(...arguments);
+    if (!oldAttrs || newAttrs.searchText !== oldAttrs.searchText) {
+      run.scheduleOnce('afterRender', this, this.updateInput, oldAttrs && oldAttrs.searchText, newAttrs.searchText);
+    }
+  },
+
   didInsertElement() {
     this._super(...arguments);
-    Ember.run.schedule('afterRender', () => Ember.$('.ember-power-select-search input').focus());
+    this.input = document.querySelector('.ember-power-select-search input');
+    if (this.input) {
+      Ember.run.schedule('afterRender', this.input, 'focus');
+    }
   },
 
   willDestroy() {
@@ -31,5 +44,10 @@ export default Ember.Component.extend({
         select.actions.handleKeydown(e);
       }
     }
+  },
+
+  // Methods
+  updateInput(oldText, newText) {
+    updateInput(this.input, oldText, newText);
   }
 });
