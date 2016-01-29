@@ -12,7 +12,6 @@ export default Ember.Component.extend({
   optionsComponent: fallbackIfUndefined('power-select-multiple/options'),
 
   // CPs
-  selectedComponent: computed.deprecatingAlias('triggerComponent', { id: 'power-select-multiple-selected-component', until: '0.9'}),
   concatenatedTriggerClass: computed('triggerClass', function() {
     let classes = ['ember-power-select-multiple-trigger'];
     if (this.get('triggerClass')) {

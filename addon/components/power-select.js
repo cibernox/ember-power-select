@@ -54,9 +54,6 @@ export default Ember.Component.extend({
   },
 
   // CPs
-  dropdownPosition: Ember.computed.deprecatingAlias('verticalPosition', { id: 'power-select-dropdown-position', until: '0.9'}),
-  selectedComponent: Ember.computed.deprecatingAlias('triggerComponent', { id: 'power-select-selected-component', until: '0.9'}),
-
   concatenatedClasses: computed('class', function() {
     const classes = ['ember-power-select'];
     if (this.get('class')) { classes.push(this.get('class')); }
