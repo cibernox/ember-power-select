@@ -67,17 +67,22 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 }
 
 // Multiple select
+.ember-power-select-multiple-trigger {
+  display: flex;
+  flex-wrap: wrap;
+}
 .ember-power-select-trigger-multiple-input {
   flex: 1;
   font-family: inherit;
   font-size: inherit;
   border: none;
+  width: 25px;
   display: inline-block;
   line-height: inherit;
   -webkit-appearance: none;
   outline: none;
   padding: 0;
-  // float: left;
+  float: left;
   background-color: transparent;
   &:disabled {
     background-color: $ember-power-select-disabled-background-color;
