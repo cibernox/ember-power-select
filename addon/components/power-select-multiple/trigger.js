@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select-multiple/trigger';
 import { emberPowerSelectBuildSelection as buildNewSelection } from '../../helpers/ember-power-select-build-selection';
+import updateInput from '../../utils/update-input-value';
 
 const { computed, get, isBlank, run } = Ember;
 const { htmlSafe } = Ember.String;
@@ -82,14 +83,6 @@ export default Ember.Component.extend({
   },
 
   updateInput(oldText, newText) {
-    if (!this.input) { return; }
-    if (isBlank(oldText)) {
-      this.input.value = newText;
-    } else {
-      let { selectionStart, selectionEnd } = this.input;
-      this.input.value = newText;
-      this.input.selectionStart = selectionStart;
-      this.input.selectionEnd = selectionEnd;
-    }
+    updateInput(this.input, oldText, newText);
   }
 });

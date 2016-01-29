@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select/before-options';
+import updateInput from '../../utils/update-input-value';
 
-const { run, isBlank } = Ember;
+const { run } = Ember;
 
 export default Ember.Component.extend({
   tagName: '',
@@ -10,7 +11,7 @@ export default Ember.Component.extend({
   // Lifecycle hooks
   didReceiveAttrs({ oldAttrs, newAttrs }) {
     this._super(...arguments);
-    if (!oldAttrs && !isBlank(oldAttrs.searchText) || newAttrs.searchText !== oldAttrs.searchText) {
+    if (!oldAttrs || newAttrs.searchText !== oldAttrs.searchText) {
       run.scheduleOnce('afterRender', this, this.updateInput, oldAttrs && oldAttrs.searchText, newAttrs.searchText);
     }
   },
@@ -47,14 +48,6 @@ export default Ember.Component.extend({
 
   // Methods
   updateInput(oldText, newText) {
-    if (!this.input) { return; }
-    if (isBlank(oldText)) {
-      this.input.value = newText;
-    } else {
-      let { selectionStart, selectionEnd } = this.input;
-      this.input.value = newText;
-      this.input.selectionStart = selectionStart;
-      this.input.selectionEnd = selectionEnd;
-    }
+    updateInput(this.input, oldText, newText);
   }
 });
