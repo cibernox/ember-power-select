@@ -67,11 +67,16 @@
   position: absolute;
   cursor: pointer; }
 
+.ember-power-select-multiple-trigger {
+  display: flex;
+  flex-wrap: wrap; }
+
 .ember-power-select-trigger-multiple-input {
+  flex: 1;
   font-family: inherit;
   font-size: inherit;
-  width: 25px;
   border: none;
+  width: 25px;
   display: inline-block;
   line-height: inherit;
   -webkit-appearance: none;
