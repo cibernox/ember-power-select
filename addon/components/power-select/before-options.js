@@ -8,16 +8,19 @@ export default Ember.Component.extend({
   layout,
 
   // Lifecycle hooks
-  didUpdateAttrs({ oldAttrs, newAttrs }) {
+  didReceiveAttrs({ oldAttrs, newAttrs }) {
     this._super(...arguments);
-    if (newAttrs.searchText !== oldAttrs.searchText) {
-      run.scheduleOnce('afterRender', this, this.updateInput, oldAttrs.searchText, newAttrs.searchText);
+    if (!oldAttrs && !isBlank(oldAttrs.searchText) || newAttrs.searchText !== oldAttrs.searchText) {
+      run.scheduleOnce('afterRender', this, this.updateInput, oldAttrs && oldAttrs.searchText, newAttrs.searchText);
     }
   },
 
   didInsertElement() {
     this._super(...arguments);
-    Ember.run.schedule('afterRender', () => Ember.$('.ember-power-select-search input').focus());
+    this.input = document.querySelector('.ember-power-select-search input');
+    if (this.input) {
+      Ember.run.schedule('afterRender', this.input, 'focus');
+    }
   },
 
   willDestroy() {
