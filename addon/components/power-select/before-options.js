@@ -11,8 +11,8 @@ export default Ember.Component.extend({
   // Lifecycle hooks
   didReceiveAttrs({ oldAttrs, newAttrs }) {
     this._super(...arguments);
-    if (!oldAttrs || newAttrs.searchText !== oldAttrs.searchText) {
-      run.scheduleOnce('afterRender', this, this.updateInput, oldAttrs && oldAttrs.searchText, newAttrs.searchText);
+    if (newAttrs.searchText !== undefined && newAttrs.searchText !== null) {
+      run.scheduleOnce('afterRender', this, this.updateInput, newAttrs.searchText);
     }
   },
 
@@ -47,7 +47,7 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  updateInput(oldText, newText) {
-    updateInput(this.input, oldText, newText);
+  updateInput(value) {
+    updateInput(this.input, value);
   }
 });
