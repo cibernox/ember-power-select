@@ -589,3 +589,16 @@ test('When hitting ENTER after a search with no results, the component is closed
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
   assert.ok(this.$('.ember-power-select-trigger-multiple-input')[0] === document.activeElement, 'The input is focused');
 });
+
+test('The trigger of multiple selects have a special class to distinguish them from regular ones, even if you pass them another one', function(assert) {
+  assert.expect(2);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers triggerClass="foobar-trigger" selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-multiple-trigger'), 'The trigger has the default class');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('foobar-trigger'), 'The trigger has the given class');
+});

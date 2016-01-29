@@ -30,9 +30,9 @@ export default Ember.Component.extend({
   triggerMultipleInputStyle: computed('searchText.length', 'selected.length', function() {
     run.scheduleOnce('afterRender', this.get('select.actions.reposition'));
     if (this.get('selected.length') === 0) {
-      return htmlSafe('width: 100%;');
+      return htmlSafe('min-width: 100%;');
     } else {
-      return htmlSafe(`width: ${(this.get('searchText.length') || 0) * 0.5 + 2}em`);
+      return htmlSafe(`min-width: ${(this.get('searchText.length') || 0) * 0.5 + 0.5}em`);
     }
   }),
 

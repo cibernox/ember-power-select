@@ -2,6 +2,8 @@ import Ember from 'ember';
 import layout from '../templates/components/power-select-multiple';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
+const { computed } = Ember;
+
 export default Ember.Component.extend({
   layout,
   // Config
@@ -10,7 +12,14 @@ export default Ember.Component.extend({
   optionsComponent: fallbackIfUndefined('power-select-multiple/options'),
 
   // CPs
-  selectedComponent: Ember.computed.deprecatingAlias('triggerComponent', { id: 'power-select-multiple-selected-component', until: '0.9'}),
+  selectedComponent: computed.deprecatingAlias('triggerComponent', { id: 'power-select-multiple-selected-component', until: '0.9'}),
+  concatenatedTriggerClass: computed('triggerClass', function() {
+    let classes = ['ember-power-select-multiple-trigger'];
+    if (this.get('triggerClass')) {
+      classes.push(this.get('triggerClass'));
+    }
+    return classes.join(' ');
+  }),
 
   // Actions
   actions: {

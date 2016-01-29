@@ -68,16 +68,16 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 
 // Multiple select
 .ember-power-select-trigger-multiple-input {
+  flex: 1;
   font-family: inherit;
   font-size: inherit;
-  width: 25px;
   border: none;
   display: inline-block;
   line-height: inherit;
   -webkit-appearance: none;
   outline: none;
   padding: 0;
-  float: left;
+  // float: left;
   background-color: transparent;
   &:disabled {
     background-color: $ember-power-select-disabled-background-color;
