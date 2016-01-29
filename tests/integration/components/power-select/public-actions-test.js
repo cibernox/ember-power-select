@@ -235,7 +235,7 @@ test('the `onclose` action is invoked when the dropdown closes', function(assert
 });
 
 test('the `search` action of the public api passed to the public actions works as expected', function(assert) {
-  assert.expect(5);
+  assert.expect(6);
 
   this.handleSearch = (term) => {
     assert.equal(term, 'abc', 'The search term receives `abc`');
@@ -250,6 +250,7 @@ test('the `search` action of the public api passed to the public actions works a
     {{/power-select}}
   `);
   clickTrigger();
+  assert.equal($('.ember-power-select-search input')[0].value, 'abc');
   assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'foo');
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'bar');
