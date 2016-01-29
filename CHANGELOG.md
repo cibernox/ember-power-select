@@ -1,5 +1,6 @@
 # Master
 
+- [FEATURE] Multiple selects have a distintive class in the trigger so they be styled accordingly.
 - [BUGFIX] Modify the searchText programatically (through the `select.actions.search('foo')` per example)
   updates the input, respecting the cursor position.
 
