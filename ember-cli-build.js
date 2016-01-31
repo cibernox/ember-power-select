@@ -1,10 +1,13 @@
 /*jshint node:true*/
 /* global require, module */
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+var path = require('path');
 
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
-    // Add options here
+    'ember-cli-mirage': {
+      directory: path.resolve(__dirname, path.join('tests', 'dummy', 'mirage'))
+    }
   });
 
   /*
