@@ -4,7 +4,7 @@
 
 <p>
   The default search box is by itself surprisingly smart. As you type it will filter the results
- that contain the given string ignoring diacritic differences and capitalization. That means that
+  that contain the given string ignoring diacritic differences and capitalization. That means that
   the string <code>maria</code> will match against <code>María</code>, <code>oren</code> against
   <code>Søren</code> and so on.
 </p>
@@ -98,6 +98,53 @@
     {{/power-select}}
   </div>
 {{/code-sample}}
+
+<h3>Using the search term inside the block</h3>
+
+<p>
+  Is very common to need the search term from withing the block used to render each one of the options,
+  typically for apply a highlight some substring of the option's text. For that, the block receives
+  the last searched text as the second argument.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select options=names selected=selected onchange=(action (mut selected)) as |name term|}}
+      \{{highlight-text name term}}
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+    });
+
+    // helpers/highlight-substr.js
+    export default Ember.Helper.helper(function([text, termToHighlight]) {
+      return Ember.String.htmlSafe(text.replace(new RegExp(termToHighlight, 'i'), '<b>$&</b>')); // Warning. This is not XSS safe!
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select options=names selected=selected onchange=(action (mut selected)) as |name term|}}
+      {{highlight-substr name term}}
+    {{/power-select}}
+  </div>
+{{/code-sample}}
+
+<p>
+  There is a few thigs to be aware of this search term:
+</p>
+
+<ul>
+  <li>
+    Even if the default search is smart enough to transform diacritics, the term will unmodified, and
+    therefore you need to handle terms as "João" or "María" yourself.
+  </li>
+  <li>
+    The yielded term is always in synch with the results being displayed. That means that if your search
+    is asynchronous and you search "abc", the search term will still be an empty string until the async
+    search finishes. Then both the options and the search text update at once.
+  </li>
+</ul>
 
 <h3>Search box placeholder</h3>
 

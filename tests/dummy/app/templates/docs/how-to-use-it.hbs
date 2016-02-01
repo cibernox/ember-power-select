@@ -2,14 +2,15 @@
 
 <p>
   The basic component usage is very simple. The only mandatory arguments you have to
-  pass to it are <code>options</code>(*) which has to be a <em>collection</em> of any kind, including
+  pass to it are <code>options</code>(<b>*</b>) which has to be a <em>collection</em> of any kind, including
   the result of ember-data operations like <code>.find</code> or <code>.query</code>, and the
   <code>onchange</code> action.
   The component will yield each individual item in the collection to the block to generate the list.
 </p>
 
 <p>
-  * There's one exception: When you use the <code>search</code> property you don't need to pass the options. Read more about {{#link-to 'docs.the-search'}} the search{{/link-to}}
+  <b>*</b> There's one exception: When you use the <code>search</code> action passing an initial
+  set of options is optional. Read more about {{#link-to 'docs.the-search'}} the search{{/link-to}}
 </p>
 
 <p><strong>Selects in this page seem to not work. This is intended.</strong> See last paragraph.</p>
