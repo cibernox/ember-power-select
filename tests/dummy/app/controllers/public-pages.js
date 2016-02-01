@@ -10,10 +10,11 @@ const options = [
 ];
 
 export default Ember.Controller.extend({
+  applicationController: Ember.inject.controller('application'),
   mainSelectOptions: options[0],
   mainSelected: 'foo',
-  disabled: Ember.computed('currentPath', function() {
-    return this.get('currentPath') !== 'public-pages.index';
+  disabled: Ember.computed('applicationController.currentPath', function() {
+    return this.get('applicationController.currentPath') !== 'public-pages.index';
   }),
 
   actions: {
