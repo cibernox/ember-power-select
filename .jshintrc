@@ -1,5 +1,6 @@
 {
   "predef": [
+    "self",
     "server",
     "document",
     "window",

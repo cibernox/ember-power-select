@@ -205,6 +205,7 @@ export default Ember.Component.extend({
 
   // Methods
   scrollIfHighlightedIsOutOfViewport() {
+    if (!self.document) { return; }
     const optionsList = document.querySelector('.ember-power-select-options');
     if (!optionsList) { return; }
     const highlightedOption = optionsList.querySelector('.ember-power-select-option--highlighted');
