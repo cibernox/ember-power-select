@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
   mainSelectOptions: options[0],
   mainSelected: 'foo',
   disabled: Ember.computed('currentPath', function() {
-    return this.get('currentPath') !== 'index';
+    return this.get('currentPath') !== 'public-pages.index';
   }),
 
   actions: {

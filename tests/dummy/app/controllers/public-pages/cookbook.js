@@ -7,15 +7,15 @@ const groupedSections = [
   {
     groupName: 'Basic recipes',
     options: [
-      { route: 'cookbook.index',            text: 'System-wide config' },
-      { route: 'cookbook.bootstrap-theme',  text: 'Bootstrap theme' },
-      { route: 'cookbook.debounce-searches',text: 'Debounce searches' },
+      { route: 'public-pages.cookbook.index',            text: 'System-wide config' },
+      { route: 'public-pages.cookbook.bootstrap-theme',  text: 'Bootstrap theme' },
+      { route: 'public-pages.cookbook.debounce-searches',text: 'Debounce searches' },
     ]
   },
   {
     groupName: 'Advanced recipes',
     options: [
-      { route: 'cookbook.navigable-select', text: 'Navigable select' },
+      { route: 'public-pages.cookbook.navigable-select', text: 'Navigable select' },
     ]
   }
 ];

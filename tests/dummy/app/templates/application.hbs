@@ -1,13 +1,13 @@
 <header class="main-header">
   <nav class="main-header-nav">
     <div class="main-header-nav-links">
-      {{#link-to 'docs' class="main-header-nav-link"}}Docs{{/link-to}}
-      {{#link-to 'cookbook' class="main-header-nav-link"}}Cookbook{{/link-to}}
-      {{#link-to 'addons' class="main-header-nav-link"}}Addons{{/link-to}}
+      {{#link-to 'public-pages.docs' class="main-header-nav-link"}}Docs{{/link-to}}
+      {{#link-to 'public-pages.cookbook' class="main-header-nav-link"}}Cookbook{{/link-to}}
+      {{#link-to 'public-pages.addons' class="main-header-nav-link"}}Addons{{/link-to}}
       <a href="https://github.com/cibernox/ember-power-select" class="main-header-nav-link">Github</a>
     </div>
     <div class="main-header-logo">
-      {{#link-to 'application'}}
+      {{#link-to 'public-pages.index'}}
         <img src="/ember_logo.png" alt="ember">
       {{/link-to}}
       {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled searchEnabled=false triggerComponent='main-header-select-trigger' onchange=(action "changeOptions") class="main-header-select" as |opt|}}
