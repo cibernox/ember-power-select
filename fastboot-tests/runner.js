@@ -1,7 +1,7 @@
 var glob = require('glob');
 var Mocha = require('mocha');
 
-var root = 'tests/{acceptance,unit}';
+var root = 'fastboot-tests/acceptance';
 
 var mocha = new Mocha({
   timeout: 5000,

@@ -11,7 +11,7 @@
     "build": "ember build && ember fastboot:build",
     "start": "ember server",
     "test": "ember try:testall",
-    "test-fastboot": "\"ember fastboot --no-build &\" && sleep 10 && node fastboot-tests/basic-test.js"
+    "test-fastboot": "sh run-tests.sh"
   },
   "repository": {
     "type": "git",
