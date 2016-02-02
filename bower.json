@@ -1,7 +1,7 @@
 {
   "name": "ember-power-select",
   "dependencies": {
-    "ember": "2.3.0",
+    "ember": "components/ember#canary",
     "ember-cli-shims": "0.1.0",
     "ember-cli-test-loader": "0.2.2",
     "ember-load-initializers": "0.1.7",
@@ -13,7 +13,7 @@
     "Faker": "~3.0.0"
   },
   "resolutions": {
-    "ember": "2.3.0",
+    "ember": "canary",
     "FakeXMLHttpRequest": "^1.3.0"
   },
   "devDependencies": {
