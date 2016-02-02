@@ -19,7 +19,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   background-color: $ember-power-select-background-color;
   line-height: $ember-power-select-line-height;
   text-overflow: ellipsis;
-  min-height: #{$ember-power-select-line-height}em;
+  min-height: #{$ember-power-select-line-height}$ember-power-select-line-height-unit;
   user-select: none;
   -webkit-user-select: none;
   color: $ember-power-select-text-color;
@@ -160,7 +160,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   -webkit-user-select: none;
   &:not(.ember-power-select-options--nested) {
     overflow-y: auto;
-    max-height: #{$ember-power-select-number-of-visible-options * $ember-power-select-line-height}em;
+    max-height: #{$ember-power-select-number-of-visible-options * $ember-power-select-line-height}$ember-power-select-line-height-unit;
   }
 }
 
