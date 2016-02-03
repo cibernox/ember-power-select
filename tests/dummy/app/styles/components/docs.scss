@@ -8,6 +8,7 @@
 // Doc page
 .doc-page {
   flex: 1;
+  min-width: 0; // Flexbox issue in chrome??
 }
 .doc-page-title {
   margin-top: 0;
