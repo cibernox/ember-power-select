@@ -8,9 +8,10 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build",
+    "build": "ember build && ember fastboot:build",
     "start": "ember server",
-    "test": "ember try:testall"
+    "test": "ember try:testall",
+    "test-fastboot": "sh run-tests.sh"
   },
   "repository": {
     "type": "git",
@@ -52,7 +53,12 @@
     "ember-try": "0.1.0",
     "liquid-fire": "0.23.0",
     "node-sass": "^3.4.2",
-    "simple-git": "^1.10.0"
+    "simple-git": "^1.10.0",
+
+    "qunitjs": "^1.20.0",
+    "qunit-extras": "^1.4.0",
+    "request": "^2.69.0",
+    "jsdom": "8.0.2"
   },
   "keywords": [
     "ember-addon",
