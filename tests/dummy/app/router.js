@@ -44,8 +44,11 @@ Router.map(function() {
 
   this.route('legacy-demo');
 
-  // Routers for tests
+  // Routes for tests
   this.route('helpers-testing');
+
+  // Routes for fastboot tests
+  this.route('fastboot-test');
 });
 
 export default Router;
