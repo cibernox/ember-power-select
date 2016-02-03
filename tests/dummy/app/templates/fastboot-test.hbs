@@ -1,3 +1,23 @@
-{{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |num|}}
-  {{num}}
-{{/power-select}}
+<div id="single-select-without-selected">
+  {{#power-select options=numbers selected=none onchange=(action (mut none)) as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>
+
+<div id="single-select-with-selected">
+  {{#power-select options=numbers selected=singleSelected onchange=(action (mut singleSelected)) as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>
+
+<div id="multiple-select-without-selected">
+  {{#power-select-multiple options=numbers selected=none onchange=(action (mut none)) as |num|}}
+    {{num}}
+  {{/power-select-multiple}}
+</div>
+
+<div id="multiple-select-with-selected">
+  {{#power-select-multiple options=numbers selected=multipleSelected onchange=(action (mut multipleSelected)) as |num|}}
+    {{num}}
+  {{/power-select-multiple}}
+</div>

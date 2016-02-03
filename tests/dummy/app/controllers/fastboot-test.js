@@ -24,5 +24,7 @@ const numbers = [
 ];
 
 export default Ember.Controller.extend({
-  numbers
+  numbers,
+  singleSelected: 'four',
+  multipleSelected: ['two', 'six']
 });
