@@ -57,7 +57,8 @@
 
     "qunitjs": "^1.20.0",
     "qunit-extras": "^1.4.0",
-    "request": "^2.69.0"
+    "request": "^2.69.0",
+    "jsdom": "8.0.2"
   },
   "keywords": [
     "ember-addon",
