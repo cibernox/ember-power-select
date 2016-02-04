@@ -21,7 +21,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select
+      options=names
+      renderInPlace=true
+      selected=name
+      onchange=(action (mut name))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -31,7 +37,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names renderInPlace=true selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select
+      options=names
+      renderInPlace=true
+      selected=name
+      onchange=(action (mut name))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
     (Looks the same but inspect the DOM to see the difference)
@@ -52,7 +64,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names verticalPosition='above' selected=name onchange=(action (mut name)) as |name|}}
+    \{{#power-select
+      options=names
+      verticalPosition='above'
+      selected=name
+      onchange=(action (mut name))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -62,7 +80,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names verticalPosition='above' selected=name onchange=(action (mut name)) as |name|}}
+    {{#power-select
+      options=names
+      verticalPosition='above'
+      selected=name
+      onchange=(action (mut name))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
     (This list of options will always be on top regardless of how much available space there is around)
@@ -79,7 +103,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select
+      options=emptyList
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -89,7 +118,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select
+      options=emptyList
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -101,7 +135,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select
+      options=emptyList
+      noMatchesMessage="404 bro"
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -111,7 +151,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=emptyList noMatchesMessage="404 bro" selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select
+      options=emptyList
+      noMatchesMessage="404 bro"
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -124,7 +170,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select
+      options=emptyList
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       \{{name}}
     \{{else}}
       &lt;div class="text-center"&gt;
@@ -138,7 +189,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=emptyList selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select
+      options=emptyList
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       {{name}}
     {{else}}
       <div class="text-center">
@@ -170,12 +226,23 @@
     &lt;button onclick=\{{action "refreshCollection"}}&gt;Refresh collection&lt;/button&gt;
 
     Default loading message
-    \{{#power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select
+      options=promise
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
 
     Custom loading message
-    \{{#power-select options=promise loadingMessage="Waiting for the server" selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select
+      options=promise
+      loadingMessage="Waiting for the server"
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -199,12 +266,23 @@
     <button onclick={{action "refreshCollection"}}>Refresh collection</button>
     <br>
     Default loading message
-    {{#power-select options=promise selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select
+      options=promise
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
     <br>
     Custom loading message (press the <code>Refresh Collection</code> button and open this select)
-    {{#power-select options=promise loadingMessage="Waiting for the server...." selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select
+      options=promise
+      loadingMessage="Waiting for the server...."
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -225,7 +303,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=countries selected=country onchange=(action (mut country)) as |country|}}
+    \{{#power-
+      select options=countries
+      selected=country
+      onchange=(action (mut country))
+      as |country|
+    }}
       \{{country.name}}
     \{{/power-select}}
   </pre>
@@ -243,7 +326,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=countries selected=country onchange=(action (mut country)) as |country|}}
+    {{#power-select
+      options=countries
+      selected=country
+      onchange=(action (mut country))
+      as |country|
+    }}
       {{country.name}}
     {{/power-select}}
   </div>
