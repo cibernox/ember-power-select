@@ -10,8 +10,7 @@
   "scripts": {
     "build": "ember build && ember fastboot:build",
     "start": "ember server",
-    "test": "ember try:testall",
-    "test-fastboot": "sh run-tests.sh"
+    "test": "ember try:testall && node run-fastboot-tests.js"
   },
   "repository": {
     "type": "git",
