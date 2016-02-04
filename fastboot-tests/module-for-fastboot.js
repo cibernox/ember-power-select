@@ -15,34 +15,34 @@ var server = new FastBootServer({
 
 module.exports = function moduleForFastboot(name, opts) {
   var opts = opts || {};
+  var app = express();
+  var appPort = 3211;
+  app.get('/*', server.middleware());
+  app.listen(3211);
+
+  function visit(path) {
+    var context = this;
+    this._document = this.statusCode = this.headers = this.body = null;
+    return request('http://localhost:' + appPort + path)
+      .then(function(response) {
+        context.statusCode = response.statusCode;
+        context.headers = response.headers;
+        context.body = response.body;
+        return response;
+      });
+  }
 
   QUnit.module('Fastboot: ' + name, {
     beforeEach: function() {
-      this.app = express();
-      this.appPort = 3211;
-      this.app.get('/*', server.middleware());
-      this.app.listen(3211);
-      if (opts.beforeEach) {
-        opts.beforeEach.call(this);
-      }
-      var context = this;
+      this.app = app;
+      this.visit = visit.bind(this);
 
-      this.visit = function(path) {
-        context._document = null;
-        return request('http://localhost:' + context.appPort + path)
-          .then(function(response) {
-            context.statusCode = response.statusCode;
-            context.headers = response.headers;
-            context.body = response.body;
-            return response;
-          });
-      }
-      Object.defineProperties(context, {
+      Object.defineProperties(this, {
         document: {
           get: function() {
             if (this._document) {
               return this._document;
-            } else {
+            } else if (this.body) {
               return this._document = jsdom(this.body).defaultView.document;
             }
           },
@@ -50,6 +50,11 @@ module.exports = function moduleForFastboot(name, opts) {
           enumerable: true
         }
       });
+
+      if (opts.beforeEach) {
+        opts.beforeEach.call(this);
+      }
+
     },
 
     afterEach() {
