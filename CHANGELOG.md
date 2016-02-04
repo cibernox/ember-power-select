@@ -1,6 +1,15 @@
 # Master
 
+- [TESTING] Run fasboot tests as part of CI
+- [TESTING] Add fastboot tests harness.
 - [FEATURE] Initial Fastboot support!!
+- [INTERNAL] Removed deprecated properties
+- [INTERNAL] Updated mirage, liquidfire, ember-try and others.
+- [FEATURE] `$ember-power-select-line-height` variable can have units now.
+
+# 0.9.0-beta.0
+- [IMPROVEMENT] Multiple select's trigger uses flexbox to improve appearance and behavior. In browsers
+  without flexbox works as it did before.
 - [FEATURE] Multiple selects have a distintive class in the trigger so they be styled accordingly.
 - [BUGFIX] Modify the searchText programatically (through the `select.actions.search('foo')` per example)
   updates the input, respecting the cursor position.
