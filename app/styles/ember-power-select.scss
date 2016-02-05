@@ -176,12 +176,12 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   cursor: pointer;
   padding: 0 $ember-power-select-option-padding;
 }
-.ember-power-select-option--disabled {
+.ember-power-select-option[aria-disabled="true"] {
   color: $ember-power-select-disabled-option-color;
   pointer-events: none;
 }
-.ember-power-select-option--selected { background-color: $ember-power-select-selected-background; }
-.ember-power-select-option--highlighted {
+.ember-power-select-option[aria-selected="true"] { background-color: $ember-power-select-selected-background; }
+.ember-power-select-option[aria-current="true"] {
   background-color: $ember-power-select-highlighted-background;
   color: $ember-power-select-highlighted-color;
 }
@@ -193,10 +193,8 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 }
 
 // Disabled styles
-.ember-power-select.ember-basic-dropdown--disabled {
-  .ember-power-select-trigger {
-    background-color: $ember-power-select-disabled-background-color;
-  }
+.ember-power-select-trigger[aria-disabled=true] {
+  background-color: $ember-power-select-disabled-background-color;
 }
 
 // LTR styles

@@ -1,5 +1,12 @@
 # Master
 
+- [BREAKING] **Warning**. Classes ending in `--disabled`, `--highlighted` and `--selected` have been
+  replaced by aria attributes `[aria-disabled="true"]`, `[aria-current="true"]` and `[aria-selected="true"]`
+  respectively. Those attributes are needed for a11y and the recomendation is to style based on them
+  instead of classes.
+  Styles have been updated accordingly, so people using them and customizing the appearance using the
+  sass variables won't notice anything, but people that relied on those classes for overriding styles
+  will have to update them.
 - [TESTING] Run fasboot tests as part of CI
 - [TESTING] Add fastboot tests harness.
 - [FEATURE] Initial Fastboot support!!

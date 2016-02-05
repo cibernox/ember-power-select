@@ -19,9 +19,9 @@ test('Mouseovering a list item highlights it', function(assert) {
   `);
 
   clickTrigger();
-  assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first element is highlighted');
+  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first element is highlighted');
   Ember.run(() => $('.ember-power-select-option:eq(3)').trigger('mouseover'));
-  assert.ok($('.ember-power-select-option:eq(3)').hasClass('ember-power-select-option--highlighted'), 'The 4th element is highlighted');
+  assert.equal($('.ember-power-select-option:eq(3)').attr('aria-current'), 'true', 'The 4th element is highlighted');
   assert.equal($('.ember-power-select-option:eq(3)').text().trim(), 'four');
 });
 

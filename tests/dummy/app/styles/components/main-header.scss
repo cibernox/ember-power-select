@@ -28,7 +28,7 @@
 }
 // Easter egg
 $almost-white: #fff2f2;
-.main-header-select, .main-header-select.ember-basic-dropdown--disabled {
+.main-header-select {
   display: inline-block;
   a { color: $almost-white; }
   .ember-basic-dropdown-trigger.ember-power-select-trigger {
@@ -58,10 +58,10 @@ $almost-white: #fff2f2;
     border-bottom: 2px solid $almost-white;
   }
   border-bottom: 2px solid $almost-white;
-  .ember-power-select-option--selected {
+  .ember-power-select-option[aria-selected=true] {
     background-color: transparent;
   }
-  .ember-power-select-option--highlighted {
+  .ember-power-select-option[aria-current=true] {
     background-color: $almost-white;
     color: $brand-color;
   }

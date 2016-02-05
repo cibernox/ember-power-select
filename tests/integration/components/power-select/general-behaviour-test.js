@@ -188,8 +188,8 @@ test('If the `selected` value changes the select gets updated, but the `onchange
   Ember.run(() => this.set('selected', 'three'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', 'The `three` element is selected');
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The proper option gets highlighed');
-  assert.equal($('.ember-power-select-option--selected').text().trim(), 'three', 'The proper option gets selected');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three', 'The proper option gets highlighed');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'three', 'The proper option gets selected');
 });
 
 test('If the user selects a value and later on the selected value changes from the outside, the components updates too', function(assert) {
@@ -333,9 +333,9 @@ test('If the content of the selected is refreshed while opened the first element
   `);
   clickTrigger();
   triggerKeydown($('.ember-power-select-search input')[0], 40);
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The second options is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The second options is highlighted');
   Ember.run(() => this.set('numbers', ['foo', 'bar', 'baz']));
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'foo', 'The first element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'foo', 'The first element is highlighted');
 });
 
 test('If the user passes `dropdownClass` the dropdown content should have that class', function(assert) {
@@ -466,8 +466,8 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option--highlighted').length, 1, 'One element is highlighted');
-  assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first one to be precise');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
+  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first one to be precise');
 });
 
 test('When `selected` option is provided, it appears in the trigger yielded with the same block as the options', function(assert) {
@@ -501,7 +501,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   clickTrigger();
-  const $highlightedOption = $('.ember-power-select-option--highlighted');
+  const $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'three', 'The third option is highlighted');
 });
@@ -518,7 +518,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
 
   clickTrigger();
   const $selectedOption = $('.ember-power-select-option:contains("three")');
-  assert.ok($selectedOption.hasClass('ember-power-select-option--selected'), 'The third option is marked as selected');
+  assert.equal($selectedOption.attr('aria-selected'), 'true', 'The third option is marked as selected');
 });
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
@@ -578,8 +578,8 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
 
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option--highlighted').length, 1, 'One element is highlighted');
-  assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first one to be precise');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
+  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first one to be precise');
 });
 
 test('When a option is provided that options is rendered in the trigger using the same block as the options', function(assert) {
@@ -608,7 +608,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   clickTrigger();
-  const $highlightedOption = $('.ember-power-select-option--highlighted');
+  const $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'ES: Spain', 'The second option is highlighted');
 });
@@ -626,7 +626,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
 
   clickTrigger();
   const $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
-  assert.ok($selectedOption.hasClass('ember-power-select-option--selected'), 'The second option is marked as selected');
+  assert.equal($selectedOption.attr('aria-selected'), 'true', 'The second option is marked as selected');
 });
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
@@ -703,12 +703,12 @@ test('BUGFIX: The highlighted element is reset when single selects are closed', 
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The third element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three', 'The third element is highlighted');
   triggerKeydown($('.ember-power-select-search input')[0], 40);
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'four', 'The forth element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The forth element is highlighted');
   clickTrigger();
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three', 'The third element is highlighted again');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three', 'The third element is highlighted again');
 });
 
 test('BUGFIX: The highlighted element is reset when multiple selects are closed', function(assert) {
@@ -722,12 +722,12 @@ test('BUGFIX: The highlighted element is reset when multiple selects are closed'
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The first element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
   triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 40);
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The second element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The second element is highlighted');
   clickTrigger();
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The first element is highlighted again');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted again');
 });
 
 test('The trigger of the select has a id derived from the element id of the component', function(assert) {
