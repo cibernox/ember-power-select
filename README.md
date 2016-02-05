@@ -43,6 +43,10 @@ wouldn't work in IE9+. If you find any problem please file an issue.
 In testing it requires phantomjs 2.0+. This component also provides some convenient [test helpers](http://www.ember-power-select.com/docs/test-helpers)
 to interact with the component in acceptance tests.
 
+## Contributing
+
+Any contribution is welcome. Please read our [guidelines](CONTRIBUTING.md).
+
 ## Troubleshooting
 
 If something doesn't work visit the [Troubleshooting](http://www.ember-power-select.com/docs/troubleshooting)
