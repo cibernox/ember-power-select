@@ -54,6 +54,10 @@ export default Ember.Component.extend({
   },
 
   // CPs
+  triggerId: computed(function() {
+    return `ember-power-select-trigger-${this.elementId}`;
+  }),
+
   concatenatedClasses: computed('class', function() {
     const classes = ['ember-power-select'];
     if (this.get('class')) { classes.push(this.get('class')); }
@@ -61,7 +65,7 @@ export default Ember.Component.extend({
   }),
 
   concatenatedTriggerClasses: computed('class', function() {
-    let classes = ['ember-power-select-trigger', `ember-power-select-trigger-${this.elementId}`];
+    let classes = ['ember-power-select-trigger'];
     if (this.get('triggerClass')) {
       classes.push(this.get('triggerClass'));
     }
