@@ -26,7 +26,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
+    \{{#power-select
+      selected=destination
+      options=cities
+      onchange=(action "chooseDestination")
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -45,7 +50,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select selected=destination options=cities onchange=(action "chooseDestination") as |name|}}
+    {{#power-select
+      selected=destination
+      options=cities
+      onchange=(action "chooseDestination")
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -59,7 +69,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
+    \{{#power-select
+      selected=destination
+      options=cities
+      onchange=(action (mut destination))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -70,7 +85,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select selected=destination options=cities onchange=(action (mut destination)) as |name|}}
+    {{#power-select
+      selected=destination
+      options=cities
+      onchange=(action (mut destination))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -105,7 +125,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select-multiple selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
+    \{{#power-select-multiple
+      selected=selectedCities
+      options=cities
+      onchange=(action (mut selectedCities))
+      onkeydown=(action "handleKeydown")
+      as |name|
+    }}
       \{{name}}
     \{{/power-select-multiple}}
   </pre>
@@ -125,7 +151,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select-multiple selected=selectedCities options=cities onchange=(action (mut selectedCities)) onkeydown=(action "handleKeydown") as |name|}}
+    {{#power-select-multiple
+      selected=selectedCities
+      options=cities
+      onchange=(action (mut selectedCities))
+      onkeydown=(action "handleKeydown")
+      as |name|
+    }}
       {{name}}
     {{/power-select-multiple}}
   </div>
@@ -146,7 +178,13 @@
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
     &lt;input type="text" placeholder="Focus me and press TAB to focus the select"&gt;
-    \{{#power-select selected=selected options=cities onchange=(action (mut selected)) onfocus=(action "handleFocus") as |name|}}
+    \{{#power-select
+      selected=selected
+      options=cities
+      onchange=(action (mut selected))
+      onfocus=(action "handleFocus")
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -164,7 +202,13 @@
     <input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
     <br>
     <br>
-    {{#power-select selected=selected options=cities onchange=(action (mut selected)) onfocus=(action "handleFocus") as |name|}}
+    {{#power-select
+      selected=selected
+      options=cities
+      onchange=(action (mut selected))
+      onfocus=(action "handleFocus")
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -188,7 +232,14 @@
     \{{#if destroyed}}
       The bomb has exploded! Reload to try again :)
     \{{else}}
-      \{{#power-select selected=number options=numbers onchange=(action (mut number)) onopen=(action "startSelfDestroyCountdown") placeholder="Once opened this component will destroy itself in 8 seconds" as |number|}}
+      \{{#power-select
+        selected=number
+        options=numbers
+        onchange=(action (mut number))
+        onopen=(action "startSelfDestroyCountdown")
+        placeholder="Once opened this component will destroy itself in 8 seconds"
+        as |number|
+      }}
         \{{number}}
       \{{/power-select}}
       \{{#if countdown}}&lt;p&gt;This component will be destroyed in \{{counter}} seconds&lt;/p&gt;\{{/if}}
@@ -214,7 +265,14 @@
     {{#if destroyed}}
       The bomb has exploded! Reload to try again :)
     {{else}}
-      {{#power-select selected=number options=numbers onchange=(action (mut number)) onopen=(action "startSelfDestroyCountdown") placeholder="Once opened this component will destroy itself in 8 seconds" as |number|}}
+      {{#power-select
+        selected=number
+        options=numbers
+        onchange=(action (mut number))
+        onopen=(action "startSelfDestroyCountdown")
+        placeholder="Once opened this component will destroy itself in 8 seconds"
+        as |number|
+      }}
         {{number}}
       {{/power-select}}
       {{#if countdown}}<p>This component will be destroyed in {{counter}} seconds</p>{{/if}}

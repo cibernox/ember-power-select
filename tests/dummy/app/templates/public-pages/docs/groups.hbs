@@ -8,7 +8,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=groupedNumbers selected=number onchange=(action (mut number)) as |num|}}
+    \{{#power-select
+      options=groupedNumbers
+      selected=number
+      onchange=(action (mut number))
+      as |num|
+    }}
       \{{num}}
     \{{/power-select}}
   </pre>
@@ -29,7 +34,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=groupedNumbers selected=number onchange=(action (mut number)) as |num|}}
+    {{#power-select
+      options=groupedNumbers
+      selected=number
+      onchange=(action (mut number))
+      as |num|
+    }}
       {{num}}
     {{/power-select}}
   </div>

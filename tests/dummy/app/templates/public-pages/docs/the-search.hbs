@@ -11,7 +11,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names selected=selected onchange=(action (mut selected)) as |name|}}
+    \{{#power-select
+      options=names
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -21,7 +26,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=diacritics selected=selected onchange=(action (mut selected)) as |name|}}
+    {{#power-select
+      options=diacritics
+      selected=selected
+      onchange=(action (mut selected))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -37,7 +47,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
+    \{{#power-select
+      options=countries
+      searchField="name"
+      selected=selected
+      onchange=(action (mut selected))
+      as |country|
+    }}
       \{{country.name}}
     \{{/power-select}}
   </pre>
@@ -55,7 +71,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=countries searchField="name" selected=selected onchange=(action (mut selected)) as |country|}}
+    {{#power-select
+      options=countries
+      searchField="name"
+      selected=selected
+      onchange=(action (mut selected))
+      as |country|
+    }}
       {{country.name}}
     {{/power-select}}
   </div>
@@ -72,7 +94,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
+    \{{#power-
+      select options=people
+      matcher=myMatcher
+      selected=selected
+      onchange=(action (mut selected))
+      as |person|
+    }}
       \{{person.name}} {{person.surname}}
     \{{/power-select}}
   </pre>
@@ -93,7 +121,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=people matcher=myMatcher selected=selected onchange=(action (mut selected)) as |person|}}
+    {{#power-select
+      options=people
+      matcher=myMatcher
+      selected=selected
+      onchange=(action (mut selected))
+      as |person|
+    }}
       {{person.name}} {{person.surname}}
     {{/power-select}}
   </div>
@@ -109,7 +143,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names selected=selected onchange=(action (mut selected)) as |name term|}}
+    \{{#power-select
+      options=names
+      selected=selected
+      onchange=(action (mut selected))
+      as |name term|
+    }}
       \{{highlight-text name term}}
     \{{/power-select}}
   </pre>
@@ -124,7 +163,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names selected=selected onchange=(action (mut selected)) as |name term|}}
+    {{#power-select
+      options=names
+      selected=selected
+      onchange=(action (mut selected))
+      as |name term|
+    }}
       {{highlight-substr name term}}
     {{/power-select}}
   </div>
@@ -152,7 +196,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names searchPlaceholder="Type to filter..." selected=person onchange=(action (mut person)) as |name|}}
+    \{{#power-select
+      options=names
+      searchPlaceholder="Type to filter..."
+      selected=person
+      onchange=(action (mut person))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -162,7 +212,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=diacritics searchPlaceholder="Type to filter..." selected=person onchange=(action (mut person)) as |name|}}
+    {{#power-select
+      options=diacritics
+      searchPlaceholder="Type to filter..."
+      selected=person
+      onchange=(action (mut person))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>
@@ -176,7 +232,13 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names searchEnabled=false selected=user onchange=(action (mut user)) as |name|}}
+    \{{#power-
+      select options=names
+      searchEnabled=false
+      selected=user
+      onchange=(action (mut user))
+      as |name|
+    }}
       \{{name}}
     \{{/power-select}}
   </pre>
@@ -186,7 +248,13 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names searchEnabled=false selected=user onchange=(action (mut user)) as |name|}}
+    {{#power-select
+      options=names
+      searchEnabled=false
+      selected=user
+      onchange=(action (mut user))
+      as |name|
+    }}
       {{name}}
     {{/power-select}}
   </div>

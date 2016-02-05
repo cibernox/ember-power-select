@@ -44,7 +44,12 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=countries selected=destination onchange=(action "foo") as |country|}}
+    \{{#power-select
+      options=countries
+      selected=destination
+      onchange=(action "foo")
+      as |country|
+    }}
       &lt;img src="\{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
     \{{/power-select}}
   </pre>
@@ -68,7 +73,12 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=countries selected=destination onchange=(action "foo") as |country|}}
+    {{#power-select
+      options=countries
+      selected=destination
+      onchange=(action "foo")
+      as |country|
+    }}
       <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
     {{/power-select}}
   </div>
