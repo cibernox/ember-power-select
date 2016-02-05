@@ -112,8 +112,8 @@ test('If there is many selections, all those options are styled as `selected`', 
   `);
 
   clickTrigger();
-  assert.ok($('.ember-power-select-option:eq(1)').hasClass('ember-power-select-option--selected'), 'The second option is styled as selected');
-  assert.ok($('.ember-power-select-option:eq(3)').hasClass('ember-power-select-option--selected'), 'The 4th option is styled as selected');
+  assert.equal($('.ember-power-select-option:eq(1)').attr('aria-selected'), 'true', 'The second option is styled as selected');
+  assert.equal($('.ember-power-select-option:eq(3)').attr('aria-selected'), 'true', 'The 4th option is styled as selected');
 });
 
 test('When the popup opens, the first items is highlighed, even if there is only one selection', function(assert) {
@@ -129,10 +129,10 @@ test('When the popup opens, the first items is highlighed, even if there is only
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').length, 1, 'There is one element highlighted');
-  assert.equal($('.ember-power-select-option--selected').length, 1, 'There is one element selected');
-  assert.equal($('.ember-power-select-option--highlighted.ember-power-select-option--selected').length, 0, 'They are not the same');
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The highlighted element is the first one');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'There is one element highlighted');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 1, 'There is one element selected');
+  assert.equal($('.ember-power-select-option[aria-current="true"][aria-selected="true"]').length, 0, 'They are not the same');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The highlighted element is the first one');
 });
 
 test('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', function(assert) {
@@ -153,7 +153,7 @@ test('Clicking on an option that is already selected unselects it, closes the se
 
   assert.equal($('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
   clickTrigger();
-  Ember.run(() => $('.ember-power-select-option--selected').mouseup());
+  Ember.run(() => $('.ember-power-select-option[aria-selected="true"]').mouseup());
   assert.equal($('.ember-power-select-multiple-option').length, 0, 'There is no options selected');
 });
 

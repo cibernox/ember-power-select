@@ -19,9 +19,9 @@ test('Pressing keydown highlights the next option', function(assert) {
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
   triggerKeydown($('.ember-power-select-search input')[0], 40);
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The next options is highlighted now');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The next options is highlighted now');
 });
 
 test('Pressing keyup highlights the previous option', function(assert) {
@@ -35,9 +35,9 @@ test('Pressing keyup highlights the previous option', function(assert) {
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'three');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three');
   triggerKeydown($('.ember-power-select-search input')[0], 38);
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'two', 'The previous options is highlighted now');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The previous options is highlighted now');
 });
 
 test('When you the last option is highlighted, pressing keydown doesn\'t change the highlighted', function(assert) {
@@ -52,9 +52,9 @@ test('When you the last option is highlighted, pressing keydown doesn\'t change 
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'twenty');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'twenty');
   triggerKeydown($('.ember-power-select-search input')[0], 40);
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'twenty', 'The last option is still the highlighted one');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'twenty', 'The last option is still the highlighted one');
 });
 
 test('When you the first option is highlighted, pressing keyup doesn\'t change the highlighted', function(assert) {
@@ -69,9 +69,9 @@ test('When you the first option is highlighted, pressing keyup doesn\'t change t
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
   triggerKeydown($('.ember-power-select-search input')[0], 38);
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'one', 'The first option is still the highlighted one');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first option is still the highlighted one');
 });
 
 test('Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {

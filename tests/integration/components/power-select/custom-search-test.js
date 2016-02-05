@@ -236,7 +236,7 @@ test('On an empty select, when the search resolves, the first element is highlig
   typeInSearch("teen");
 
   setTimeout(function() {
-    assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first result is highlighted');
+    assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
     done();
   }, 110);
 });
@@ -262,11 +262,11 @@ test('On an select with a selected value, if after a search this value is not am
   `);
 
   clickTrigger();
-  assert.ok($('.ember-power-select-option:eq(2)').hasClass('ember-power-select-option--highlighted'), 'The 3rd result is highlighted');
+  assert.equal($('.ember-power-select-option:eq(2)').attr('aria-current'), 'true', 'The 3rd result is highlighted');
   typeInSearch("teen");
 
   setTimeout(function() {
-    assert.ok($('.ember-power-select-option:eq(0)').hasClass('ember-power-select-option--highlighted'), 'The first result is highlighted');
+    assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
     done();
   }, 110);
 });

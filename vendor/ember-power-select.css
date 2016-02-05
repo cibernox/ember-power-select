@@ -149,14 +149,14 @@
   cursor: pointer;
   padding: 0 8px; }
 
-.ember-power-select-option--disabled {
+.ember-power-select-option[aria-disabled="true"] {
   color: #999999;
   pointer-events: none; }
 
-.ember-power-select-option--selected {
+.ember-power-select-option[aria-selected="true"] {
   background-color: #dddddd; }
 
-.ember-power-select-option--highlighted {
+.ember-power-select-option[aria-current="true"] {
   background-color: #5897fb;
   color: #ffffff; }
 
@@ -164,7 +164,7 @@
   cursor: default;
   font-weight: bold; }
 
-.ember-power-select.ember-basic-dropdown--disabled .ember-power-select-trigger {
+.ember-power-select-trigger[aria-disabled=true] {
   background-color: #eeeeee; }
 
 .ember-power-select-trigger {

@@ -212,7 +212,7 @@ export default Ember.Component.extend({
     if (!self.document) { return; }
     const optionsList = document.querySelector('.ember-power-select-options');
     if (!optionsList) { return; }
-    const highlightedOption = optionsList.querySelector('.ember-power-select-option--highlighted');
+    const highlightedOption = optionsList.querySelector('.ember-power-select-option[aria-current="true"]');
     if (!highlightedOption) { return; }
     const optionTopScroll = highlightedOption.offsetTop - optionsList.offsetTop;
     const optionBottomScroll = optionTopScroll + highlightedOption.offsetHeight;

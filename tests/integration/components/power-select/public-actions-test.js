@@ -270,7 +270,7 @@ test('the `highlight` action of the public api passed to the public actions work
   `);
   clickTrigger();
   assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
-  assert.equal($('.ember-power-select-option--highlighted').text().trim(), 'baz', 'The third option is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'baz', 'The third option is highlighted');
 });
 
 test('The programmer can use the received public API to perform searches in single selects', function(assert) {
