@@ -31,17 +31,17 @@
       search=(action "search" dropdown)
       handleKeydown=(action "handleKeydown" dropdown)
     )) as |select|}}
-      {{component beforeOptionsComponent onkeydown=(readonly onkeydown) select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled) highlighted=(readonly highlighted)}}
+      {{component beforeOptionsComponent listboxId=listboxId selectedOptionId=selectedOptionId onkeydown=(readonly onkeydown) select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled) highlighted=(readonly highlighted)}}
       {{#if mustShowSearchMessage}}
-        <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
+        <ul id={{listboxId}} class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
       {{else if mustShowNoMessages}}
         {{#if (hasBlock "inverse")}}
           {{yield to="inverse"}}
         {{else if noMatchesMessage}}
-          <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{noMatchesMessage}}</li></ul>
+          <ul id={{listboxId}} class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{noMatchesMessage}}</li></ul>
         {{/if}}
       {{else}}
-        {{#component optionsComponent options=(readonly results) loading=(readonly loading) allOptions=(readonly results) highlighted=(readonly highlighted)
+        {{#component optionsComponent id=listboxId selectedOptionId=selectedOptionId options=(readonly results) loading=(readonly loading) allOptions=(readonly results) highlighted=(readonly highlighted)
           selected=(readonly selected) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText)
           select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage)
           class="ember-power-select-options" as |option term|}}
@@ -65,7 +65,8 @@
     {{#component triggerComponent options=(readonly results) selected=(readonly selected) searchText=(readonly searchText)
       placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted) allowClear=(readonly allowClear)
       select=(readonly select) extra=(readonly extra) onkeydown=(readonly onkeydown)
-      selectedItemComponent=(readonly selectedItemComponent) searchField=(readonly searchField) as |opt term|}}
+      selectedItemComponent=(readonly selectedItemComponent)
+      searchField=(readonly searchField) as |opt term|}}
       {{yield opt term}}
     {{/component}}
   {{/with}}

@@ -9,7 +9,8 @@ moduleForComponent('power-select', 'Integration | Component | Ember Power Select
 test('The aria-labelledby property can be set', function(assert) {
   assert.expect(1);
   this.render(hbs`
-    {{#power-select ariaLabelledBy="foo123" onchange=(action (mut foo)) as |option|}}
+    <label id="foo123">Foo</label>
+    {{#power-select selected=selected options=options ariaRequired="true" ariaLabelledBy="foo123" onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/power-select}}
   `);
@@ -44,4 +45,15 @@ test('The aria-invalid property can be set', function(assert) {
     {{/power-select}}
   `);
   assert.equal($('.ember-power-select-trigger').attr('aria-invalid'), 'true');
+});
+
+test('The search input has the aria-autocomplete="list" attr', function(assert) {
+  assert.async();
+  this.options = ['male', 'female', 'unknown'];
+  this.selected = ['female'];
+  this.render(hbs`
+    {{#power-select options=options selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
 });

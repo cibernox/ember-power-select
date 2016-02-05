@@ -1,7 +1,17 @@
 {{#if searchEnabled}}
   <div class="ember-power-select-search">
-    <input type="search" autocomplete="off" autocorrect="off" autocapitalize="off"
-    spellcheck="false" role="combobox" oninput={{action select.actions.search value="target.value"}}
-    onkeydown={{action "handleKeydown"}} placeholder={{searchPlaceholder}}>
+    <input type="search"
+           autocomplete="off"
+           autocorrect="off"
+           autocapitalize="off"
+           spellcheck="false"
+           role="combobox"
+           aria-expanded="true"
+           aria-autocomplete="list"
+           aria-owns={{listboxId}}
+           aria-activedescendant={{selectedOptionId}}
+           oninput={{action select.actions.search value="target.value"}}
+           onkeydown={{action "handleKeydown"}}
+           placeholder={{searchPlaceholder}}>
   </div>
 {{/if}}

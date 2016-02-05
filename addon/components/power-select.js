@@ -94,6 +94,14 @@ export default Ember.Component.extend({
     return !this.get('loading') && this.get('results.length') === 0;
   }),
 
+  listboxId: computed(function() {
+    return `${this.get('elementId')}-listbox`;
+  }),
+
+  selectedOptionId: computed(function() {
+    return `${this.get('elementId')}-selected-option`;
+  }),
+
   results: computed('options.[]', {
     get() {
       let options = this.get('options') || [];

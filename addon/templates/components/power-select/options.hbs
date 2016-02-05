@@ -5,7 +5,7 @@
 {{/if}}
 {{#each options as |opt|}}
   {{#if opt.groupName}}
-    <li class="ember-power-select-group" role="option">
+    <li class="ember-power-select-group" role="option" >
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       {{#component optionsComponent highlighted=(readonly highlighted) selected=(readonly selected)
         options=(readonly opt.options) allOptions=(readonly allOptions) optionsComponent=(readonly optionsComponent) select=(readonly select)
@@ -15,6 +15,8 @@
     </li>
   {{else}}
     <li class="ember-power-select-option {{ember-power-select-option-classes opt selected highlighted}}"
+      id={{if (ember-power-select-is-selected opt selected) selectedOptionId}}
+      aria-selected={{ember-power-select-is-selected opt selected}}
       onmouseup={{action select.actions.choose (ember-power-select-build-selection opt selected multiple=multiple)}}
       onmouseover={{action select.actions.highlight opt}} role="option">
       {{yield opt searchText}}
