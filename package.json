@@ -69,7 +69,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown.git#e5b00210c22b18d0513222421be54ba03abde506",
+    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown.git#807a162aef32d7411bc4495b0d25c7ec2d854f6c",
     "ember-hash-helper-polyfill": "^0.1.0",
     "ember-truth-helpers": "^1.2.0"
   },
