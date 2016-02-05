@@ -1,5 +1,8 @@
 # Master
 
+- [BREAKING] The `*--open` class on the `.ember-power-select` div has been removed. Now styles
+  target `[aria-expanded=true/false]`, and it applies to the trigger, not to the top-most div.
+  People explicitly targeting this class in they styles will need to update.
 - [BREAKING] **Warning**. Classes ending in `--disabled`, `--highlighted` and `--selected` have been
   replaced by aria attributes `[aria-disabled="true"]`, `[aria-current="true"]` and `[aria-selected="true"]`
   respectively. Those attributes are needed for a11y and the recomendation is to style based on them
