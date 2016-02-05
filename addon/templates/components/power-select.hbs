@@ -1,6 +1,20 @@
-{{#basic-dropdown class=(readonly concatenatedClasses) dir=(readonly dir) tabindex=(readonly tabindex) renderInPlace=(readonly renderInPlace) matchTriggerWidth=true
-  disabled=(readonly disabled) verticalPosition=(readonly verticalPosition) triggerClass=(readonly concatenatedTriggerClasses) dropdownClass=(readonly concatenatedDropdownClasses)
-  opened=opened onOpen=(action "handleOpen") onClose=(action "handleClose") onFocus=(action "handleFocus") onKeydown=(action "handleKeydown") registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+{{#basic-dropdown
+  class=(readonly concatenatedClasses)
+  dir=(readonly dir)
+  tabindex=(readonly tabindex)
+  renderInPlace=(readonly renderInPlace)
+  matchTriggerWidth=true
+  disabled=(readonly disabled)
+  verticalPosition=(readonly verticalPosition)
+  triggerClass=(readonly concatenatedTriggerClasses)
+  dropdownClass=(readonly concatenatedDropdownClasses)
+  opened=opened
+  triggerId=triggerId
+  onOpen=(action "handleOpen")
+  onClose=(action "handleClose")
+  onFocus=(action "handleFocus")
+  onKeydown=(action "handleKeydown")
+  registerActionsInParent=(action "registerDropdown") as |dropdown|}}
   {{#with (hash
     isOpen=dropdown.isOpen
     actions=(hash
@@ -23,9 +37,18 @@
           <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{noMatchesMessage}}</li></ul>
         {{/if}}
       {{else}}
-        {{#component optionsComponent options=(readonly results) loading=(readonly loading) allOptions=(readonly results) highlighted=(readonly highlighted)
-          selected=(readonly selected) optionsComponent=(readonly optionsComponent) searchText=(readonly searchText) lastSearchedText=(readonly lastSearchedText)
-          select=(readonly select) extra=(readonly extra) loadingMessage=(readonly loadingMessage)
+        {{#component optionsComponent
+          options=(readonly results)
+          loading=(readonly loading)
+          allOptions=(readonly results)
+          highlighted=(readonly highlighted)
+          selected=(readonly selected)
+          optionsComponent=(readonly optionsComponent)
+          searchText=(readonly searchText)
+          lastSearchedText=(readonly lastSearchedText)
+          select=(readonly select)
+          extra=(readonly extra)
+          loadingMessage=(readonly loadingMessage)
           class="ember-power-select-options" as |option term|}}
           {{yield option term}}
         {{/component}}
@@ -45,10 +68,20 @@
       search=(action "search" registeredDropdown)
       handleKeydown=(action "handleKeydown" registeredDropdown)
     )) as |select|}}
-    {{#component triggerComponent options=(readonly results) selected=(readonly selected) searchText=(readonly searchText) lastSearchedText=(readonly lastSearchedText)
-      placeholder=(readonly placeholder) disabled=(readonly disabled) highlighted=(readonly highlighted) allowClear=(readonly allowClear)
-      select=(readonly select) extra=(readonly extra) onkeydown=(readonly onkeydown)
-      selectedItemComponent=(readonly selectedItemComponent) searchField=(readonly searchField) as |opt term|}}
+    {{#component triggerComponent
+      options=(readonly results)
+      selected=(readonly selected)
+      highlighted=(readonly highlighted)
+      searchText=(readonly searchText)
+      lastSearchedText=(readonly lastSearchedText)
+      placeholder=(readonly placeholder)
+      disabled=(readonly disabled)
+      allowClear=(readonly allowClear)
+      select=(readonly select)
+      extra=(readonly extra)
+      onkeydown=(readonly onkeydown)
+      selectedItemComponent=(readonly selectedItemComponent)
+      searchField=(readonly searchField) as |opt term|}}
       {{yield opt term}}
     {{/component}}
   {{/with}}

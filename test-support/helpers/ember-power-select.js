@@ -46,7 +46,7 @@ export default function() {
   const isEmberOne = Ember.VERSION.match(/1\.13/);
 
   Ember.Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    const id = find(cssPath).find('.ember-power-select-trigger').attr('class').match(/ember-power-select-trigger-ember(\d+)/)[1]
+    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/ember-power-select-trigger-ember(\d+)/)[1]
     // If the dropdown is closed, open it
     if (Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0) {
       click(`${cssPath} .ember-power-select-trigger`);
@@ -57,7 +57,7 @@ export default function() {
   });
 
   Ember.Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    const id = find(cssPath).find('.ember-power-select-trigger').attr('class').match(/ember-power-select-trigger-ember(\d+)/)[1]
+    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/ember-power-select-trigger-ember(\d+)/)[1]
     const isMultipleSelect = Ember.$(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
     let dropdownIsClosed = Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0;
