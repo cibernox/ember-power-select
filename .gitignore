@@ -21,3 +21,4 @@ coverage.json
 .pagefrontrc
 .thoughts.md
 .env.deploy.*
+.elasticbeanstalk
