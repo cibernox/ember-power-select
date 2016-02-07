@@ -1,5 +1,7 @@
 # Master
 
+- [BREAKING] The `ember-power-select-options--nested` class is not used anymore. Now nested groups
+  have `role=group`, and the top-most one has `role=listbox`.
 - [BREAKING] The `*--open` class on the `.ember-power-select` div has been removed. Now styles
   target `[aria-expanded=true/false]`, and it applies to the trigger, not to the top-most div.
   People explicitly targeting this class in they styles will need to update.

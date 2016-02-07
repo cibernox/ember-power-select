@@ -32,7 +32,7 @@ test('Options that have a `groupName` and `options` are considered groups and ar
   assert.equal($($rootLevelOptions[0]).text().trim(), 'one hundred');
   assert.equal($($rootLevelOptions[1]).text().trim(), 'one thousand');
 
-  let $bigs = $($rootLevelGroups[2]).find('> .ember-power-select-options--nested');
+  let $bigs = $($rootLevelGroups[2]).find('> .ember-power-select-options[role="group"]');
   assert.equal($bigs.find('> .ember-power-select-group').length, 2, 'There is 2 sub-groups in the "bigs" group');
   assert.equal($bigs.find('> .ember-power-select-option').length, 1, 'There is 1 option in the "bigs" group');
 });
