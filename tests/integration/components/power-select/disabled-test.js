@@ -38,21 +38,6 @@ test('A disabled dropdown is not focusable, and ignores the passed tabindex ', f
   assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), undefined, 'The trigger has no tabindex so it can\'t be focused');
 });
 
-test('Options with a disabled field set to true are styled as disabled', function(assert) {
-  assert.expect(2);
-
-  this.countriesWithDisabled = countriesWithDisabled;
-  this.render(hbs`
-    {{#power-select options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
-      {{option.code}}: {{option.name}}
-    {{/power-select}}
-  `);
-
-  clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 7, 'There is 7 options');
-  assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
-});
-
 test('Disabled options are not highlighted when hovered with the mouse', function(assert) {
   assert.expect(1);
 
