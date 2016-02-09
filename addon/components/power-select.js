@@ -33,6 +33,7 @@ export default Ember.Component.extend({
   optionsComponent: fallbackIfUndefined('power-select/options'),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   afterOptionsComponent: fallbackIfUndefined(null),
+  matchTriggerWidth: fallbackIfUndefined(true),
 
   // Attrs
   searchText: '',
