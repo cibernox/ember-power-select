@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] When the list of options is empty but the component is given a search action, it should
+  not show the `No results found` until the user actually performs a search and there and it comes
+  empty.
 - [BREAKING] The `ember-power-select-options--nested` class is not used anymore. Now nested groups
   have `role=group`, and the top-most one has `role=listbox`.
 - [BREAKING] The `*--open` class on the `.ember-power-select` div has been removed. Now styles
