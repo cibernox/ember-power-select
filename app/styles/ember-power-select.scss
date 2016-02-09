@@ -130,7 +130,6 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 
 // Dropdown
 .ember-power-select-dropdown {
-  width: 100%;
   border-left: $ember-power-select-dropdown-left-border;
   border-right: $ember-power-select-dropdown-right-border;
   line-height: $ember-power-select-line-height;
@@ -157,6 +156,10 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
     border-top-right-radius: $ember-power-select-opened-border-radius;
   }
 }
+.ember-power-select .ember-power-select-dropdown { // Dropdown when rendered in place
+  width: 100%;
+}
+// Options
 .ember-power-select-options {
   list-style: none;
   margin: 0;

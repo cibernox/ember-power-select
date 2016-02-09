@@ -171,6 +171,13 @@
     {{/power-select}}
   </div>
 
+  <h4>Match trigger width can be disabled</h4>
+  <div style="width: 150px;">
+    {{#power-select options=(readonly simpleOptions) selected=simpleSelected4 onchange=(action (mut simpleSelected4)) matchTriggerWidth=false as |opt|}}
+      {{opt}}
+    {{/power-select}}
+  </div>
+
   <br>
   <br>
   <br>
