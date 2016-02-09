@@ -90,8 +90,8 @@ export default Ember.Component.extend({
     return this.get('searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage') && this.get('results.length') === 0;
   }),
 
-  mustShowNoMessages: computed('results.length', 'loading', function() {
-    return !this.get('loading') && this.get('results.length') === 0;
+  mustShowNoMessages: computed('results.length', 'loading', 'search', 'lastSearchedText', function() {
+    return !this.get('loading') && this.get('results.length') === 0 && (!this.get('search') || this.get('lastSearchedText.length') > 0);
   }),
 
   results: computed('options.[]', {
