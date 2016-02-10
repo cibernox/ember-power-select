@@ -1,17 +1,23 @@
-{{#each selected as |opt|}}
-  <span class="ember-power-select-multiple-option">
-    {{#unless disabled}}
-      <span aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action select.actions.select (ember-power-select-build-selection opt selected multiple=true)}}>&times;</span>
-    {{/unless}}
-    {{#if selectedItemComponent}}
-      {{component selectedItemComponent selected=opt lastSearchedText=lastSearchedText}}
-    {{else}}
-      {{yield opt lastSearchedText}}
-    {{/if}}
-  </span>
-{{/each}}
-<input type="search" class="ember-power-select-trigger-multiple-input {{elementId}}-input" tabindex="0"
-  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="combobox"
-  style={{triggerMultipleInputStyle}} placeholder={{maybePlaceholder}} disabled={{disabled}}
-  oninput={{action "search" value="target.value"}} onkeydown={{action "handleKeydown"}}>
+<ul class="ember-power-select-multiple-options">
+  {{#each selected as |opt|}}
+    <li class="ember-power-select-multiple-option">
+      {{#unless disabled}}
+        <span role="button" aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action select.actions.select (ember-power-select-build-selection opt selected multiple=true)}}>&times;</span>
+      {{/unless}}
+      {{#if selectedItemComponent}}
+        {{component selectedItemComponent selected=opt lastSearchedText=lastSearchedText}}
+      {{else}}
+        {{yield opt lastSearchedText}}
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>
+<input type="search" class="ember-power-select-trigger-multiple-input {{elementId}}-input"
+  tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+  aria-controls={{listboxId}}
+  style={{triggerMultipleInputStyle}}
+  placeholder={{maybePlaceholder}}
+  disabled={{disabled}}
+  oninput={{action "search" value="target.value"}}
+  onkeydown={{action "handleKeydown"}}>
 <span class="ember-power-select-status-icon"></span>

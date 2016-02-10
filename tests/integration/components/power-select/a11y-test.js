@@ -275,6 +275,21 @@ test('Single-select: The searchbox has type `search` and `aria-controls=<id-of-l
   assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-search input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
 });
 
+test('Multiple-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-trigger-multiple-input').attr('type'), 'search', 'The type of the input is `search`');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-trigger-multiple-input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
+});
+
 test('Single-select: The listbox has `aria-controls=<id-of-the-trigger>`', function(assert) {
   assert.expect(1);
 
@@ -303,4 +318,22 @@ test('Multiple-select: The listbox has `aria-controls=<id-of-the-trigger>`', fun
   assert.ok(/^ember-power-select-trigger-ember\d+$/.test($('.ember-power-select-options').attr('aria-controls')), 'The listbox controls the trigger');
 });
 
+test('Multiple-select: The selected elements are <li>s inside an <ul>, and have an item with `role=button` with `aria-label="remove element"`', function(assert) {
+  assert.expect(12);
 
+  this.numbers = numbers;
+  this.selected = ['two', 'four', 'six']
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  this.$('.ember-power-select-multiple-option').toArray().forEach(function(e) {
+    assert.equal(e.tagName, 'LI', 'The element is a list item');
+    assert.equal(e.parentElement.tagName, 'UL', 'The parent element is a list');
+    let closeButton = e.querySelector('.ember-power-select-multiple-remove-btn');
+    assert.equal($(closeButton).attr('role'), 'button', 'The role of the close button is "button"');
+    assert.equal($(closeButton).attr('aria-label'), 'remove element', 'The close button has a helpful aria label');
+  });
+});
