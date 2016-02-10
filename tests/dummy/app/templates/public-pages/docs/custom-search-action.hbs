@@ -1,4 +1,4 @@
-<h1 class="doc-page-title">Asynchronous search</h1>
+<h1 class="doc-page-title">Custom search action</h1>
 
 <p>
   In {{#link-to 'public-pages.docs.the-search'}}The search{{/link-to}} chapter we saw all the possible ways of
@@ -18,8 +18,22 @@
 </p>
 
 <p>
-  Using this solution your action must return a collection or a promise that will resolve to a
-  collection. Is up to you to decide your search strategy, debouncing times and what not.
+  Using that option you have complete freedom about how you search. Synchronous, asynchronous, with
+  debouncing, using generators, you name it. It's entirely up you you.
+  <br>
+  There is only three things to know about this action:
+  <ul>
+    <li>You should return a collection or a promise that resolves to a collection from this action.</li>
+    <li>
+      You can provide both <code>options</code> and a <code>search</code> action. Those options will be
+      the initial set of options, but as soon as the user performs a search, the results of that search
+      will be displayed instead.
+    </li>
+    <li>
+      This action **will not be fired** when the search term is blank. It will display the elements
+      inside the <code>options</code> instead.
+    </li>
+  </ul>
 </p>
 
 {{#code-sample as |component|}}
