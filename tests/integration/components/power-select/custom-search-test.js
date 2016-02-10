@@ -25,6 +25,21 @@ test('When you pass a custom search action instead of options, opening the selec
   assert.equal($('.ember-power-select-option').text(), 'Type to search', 'The dropdown shows the "type to seach" message');
 });
 
+test('When no options are given but there is a search action, a "type to search" message is rendered', function(assert) {
+  assert.expect(2);
+
+  this.searchFn = function() {};
+  this.render(hbs`
+    {{#power-select search=searchFn onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option').text(), 'Type to search');
+  assert.ok($('.ember-power-select-option').hasClass('ember-power-select-option--search-message'), 'The option with the search message has a special class');
+});
+
 test('The "type to search" message can be customized passing `searchMessage=something`', function(assert) {
   assert.expect(1);
 
