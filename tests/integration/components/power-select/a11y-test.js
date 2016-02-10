@@ -322,7 +322,7 @@ test('Multiple-select: The selected elements are <li>s inside an <ul>, and have 
   assert.expect(12);
 
   this.numbers = numbers;
-  this.selected = ['two', 'four', 'six']
+  this.selected = ['two', 'four', 'six'];
   this.render(hbs`
     {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
       {{option}}
