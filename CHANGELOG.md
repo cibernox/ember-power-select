@@ -1,5 +1,7 @@
 # Master
 
+- [FEATURE] Proper Accesibility!! Lots of roles and `aria-*` tags have been added to make the component
+  friendly, according with the guidelines in [the RFC](https://github.com/cibernox/ember-power-select/issues/293)
 - [BUGFIX] When the component received a promise as `options` and also a `search` action, clearing
   the search must show the content of that promise.
 - [FEATURE] The `.ember-power-select-option`s added to wrap the `noMatchesMessage` and the `searchMessage`
