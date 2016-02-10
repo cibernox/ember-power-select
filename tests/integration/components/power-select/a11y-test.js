@@ -232,60 +232,75 @@ test('Multiple-select: The trigger attributes `aria-expanded` and `aria-pressed`
   assert.equal(this.$('.ember-power-select-trigger').attr('aria-pressed'), 'true', 'Not pressed');
 });
 
+test('Single-select: The listbox has a unique id`', function(assert) {
+  assert.expect(1);
 
-// test('Single-select: The searchbox has `role=combobox`, `aria-autocomplete=list`, `aria-owns=<id-of-the-listbox>`', function(assert) {
-//   assert.expect(1);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
-//       {{option}}
-//     {{/power-select}}
-//   `);
+  clickTrigger();
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-options').attr('id')), 'The search has a unique id');
+});
 
-//   clickTrigger();
-//   assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
-// });
+test('Multiple-select: The listbox has a unique id`', function(assert) {
+  assert.expect(1);
 
-// test('Multiple-select: The searchbox has `role=combobox`, `aria-autocomplete=list`, `aria-owns=<id-of-the-listbox>`', function(assert) {
-//   assert.expect(1);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#power-select-multiple options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
-//       {{option}}
-//     {{/power-select-multiple}}
-//   `);
+  clickTrigger();
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-options').attr('id')), 'The search has a unique id');
+});
 
-//   clickTrigger();
-//   assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
-// });
+test('Single-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', function(assert) {
+  assert.expect(2);
 
-// test('Single-select: The searchbox has `aria-expanded=true`', function(assert) {
-//   assert.expect(1);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
-//       {{option}}
-//     {{/power-select}}
-//   `);
+  clickTrigger();
+  assert.equal($('.ember-power-select-search input').attr('type'), 'search', 'The type of the input is `search`');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-search input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
+});
 
-//   clickTrigger();
-//   assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
-// });
+test('Single-select: The listbox has `aria-controls=<id-of-the-trigger>`', function(assert) {
+  assert.expect(1);
 
-// test('Multiple-select: The searchbox has `aria-expanded=true` when the component is opened and `aria-expanded=false` when closed', function(assert) {
-//   assert.expect(1);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
 
-//   this.numbers = numbers;
-//   this.render(hbs`
-//     {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
-//       {{option}}
-//     {{/power-select}}
-//   `);
+  clickTrigger();
+  assert.ok(/^ember-power-select-trigger-ember\d+$/.test($('.ember-power-select-options').attr('aria-controls')), 'The listbox controls the trigger');
+});
 
-//   clickTrigger();
-//   assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
-// });
+test('Multiple-select: The listbox has `aria-controls=<id-of-the-trigger>`', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.ok(/^ember-power-select-trigger-ember\d+$/.test($('.ember-power-select-options').attr('aria-controls')), 'The listbox controls the trigger');
+});
+
 
