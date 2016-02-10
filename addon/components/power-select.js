@@ -60,6 +60,10 @@ export default Ember.Component.extend({
     return `ember-power-select-trigger-${this.elementId}`;
   }),
 
+  optionsId: computed(function() {
+    return `ember-power-select-options-${this.elementId}`;
+  }),
+
   concatenatedClasses: computed('class', function() {
     const classes = ['ember-power-select'];
     if (this.get('class')) { classes.push(this.get('class')); }

@@ -4,7 +4,7 @@ import layout from '../../templates/components/power-select/options';
 export default Ember.Component.extend({
   layout: layout,
   tagName: 'ul',
-  attributeBindings: ['role'],
+  attributeBindings: ['role', 'aria-controls'],
   role: 'listbox',
   multiple: true
 });
