@@ -27,7 +27,14 @@
       search=(action "search" dropdown)
       handleKeydown=(action "handleKeydown" dropdown)
     )) as |select|}}
-      {{component beforeOptionsComponent searchText=(readonly searchText) onkeydown=(readonly onkeydown) select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled) highlighted=(readonly highlighted)}}
+      {{component beforeOptionsComponent
+        searchText=(readonly searchText)
+        onkeydown=(readonly onkeydown)
+        select=(readonly select)
+        searchPlaceholder=(readonly searchPlaceholder)
+        searchEnabled=(readonly searchEnabled)
+        highlighted=(readonly highlighted)
+        eventSender=eventSender}}
       {{#if mustShowSearchMessage}}
         <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option" role="option">{{searchMessage}}</li></ul>
       {{else if mustShowNoMessages}}

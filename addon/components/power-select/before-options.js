@@ -18,10 +18,8 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    this.input = document.querySelector('.ember-power-select-search input');
-    if (this.input) {
-      Ember.run.schedule('afterRender', this.input, 'focus');
-    }
+    this.focusInput();
+    this.get('eventSender').on('focus', this, this.focusInput);
   },
 
   willDestroy() {
@@ -29,6 +27,7 @@ export default Ember.Component.extend({
     if (this.get('searchEnabled')) {
       this.get('select.actions.search')('');
     }
+    this.get('eventSender').off('focus', this, this.focusInput);
   },
 
   // Actions
@@ -49,5 +48,12 @@ export default Ember.Component.extend({
   // Methods
   updateInput(value) {
     updateInput(this.input, value);
+  },
+
+  focusInput() {
+    this.input = self.document.querySelector('.ember-power-select-search input');
+    if (this.input) {
+      run.scheduleOnce('afterRender', this.input, 'focus');
+    }
   }
 });
