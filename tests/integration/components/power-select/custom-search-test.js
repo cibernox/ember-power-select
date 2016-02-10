@@ -530,3 +530,25 @@ test('BUGFIX: Destroy a component why an async search is pending does not cause 
     done();
   }, 150);
 });
+
+// test('BUGFIX: When the given options are a promise and a search function is provided, clearing the search must display the results of the original promise', function(assert) {
+//   assert.expect(3);
+//   this.numbersPromise = RSVP.Promise.resolve(numbers);
+
+//   this.searchFn = function(term) {
+//     return numbers.filter(str => str.indexOf(term) > -1);
+//   };
+
+//   this.render(hbs`
+//     {{#power-select options=numbersPromise search=searchFn selected=foo onchange=(action (mut foo)) as |number|}}
+//       {{number}}
+//     {{/power-select}}
+//   `);
+
+//   clickTrigger();
+//   assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options');
+//   typeInSearch("teen");
+//   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 options');
+//   typeInSearch("");
+//   assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options again§');
+// });
