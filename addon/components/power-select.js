@@ -4,6 +4,7 @@ import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptio
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
 const { computed, run, get, isBlank } = Ember;
+const EventSender = Ember.Object.extend(Ember.Evented);
 
 export default Ember.Component.extend({
   // HTML
@@ -124,6 +125,10 @@ export default Ember.Component.extend({
     return countOptions(this.get('results'));
   }),
 
+  eventSender: computed(function() {
+    return EventSender.create();
+  }),
+
   // Actions
   actions: {
     highlight(dropdown, option) {
@@ -174,6 +179,7 @@ export default Ember.Component.extend({
       if (action) {
         action(this.buildPublicAPI(dropdown), event);
       }
+      this.get('eventSender').trigger('focus');
     },
 
     // It is not evident what is going on here, so I'll explain why.
