@@ -1,5 +1,9 @@
 # Master
 
+- [BUGFIX] Single selects without searchbox can be focused normally. Fixed updating ember-basic-dropdown.
+  Ember basic dropdown was calling `preventDefault` on the mousedown event to prevent the user to
+  select text when moving the mouse between the mouseup and the mousedown. Now the event is not defaultPrevented,
+  it uses another technique.
 - [BUGFIX] When the list of options is empty but the component is given a search action, it should
   not show the `No results found` until the user actually performs a search and there and it comes
   empty.
