@@ -4,6 +4,10 @@
 .ember-basic-dropdown, .ember-basic-dropdown *, .ember-basic-dropdown-content, .ember-basic-dropdown-content * {
   box-sizing: border-box; }
 
+.ember-basic-dropdown-text-select-disabled {
+  user-select: none;
+  -webkit-user-select: none; }
+
 .ember-basic-dropdown-content {
   position: absolute;
   width: auto;
@@ -90,6 +94,10 @@
   .ember-power-select-trigger-multiple-input:disabled {
     background-color: #eeeeee; }
 
+.ember-power-select-multiple-options {
+  padding: 0;
+  margin: 0; }
+
 .ember-power-select-multiple-option {
   border: 1px solid gray;
   border-radius: 4px;
@@ -121,7 +129,6 @@
       outline: 0; }
 
 .ember-power-select-dropdown {
-  width: 100%;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   line-height: 2;
@@ -141,6 +148,9 @@
     border-bottom: 1px solid #ccc;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px; }
+
+.ember-power-select .ember-power-select-dropdown {
+  width: 100%; }
 
 .ember-power-select-options {
   list-style: none;
