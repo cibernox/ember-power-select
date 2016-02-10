@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] When the component received a promise as `options` and also a `search` action, clearing
+  the search must show the content of that promise.
 - [FEATURE] The `.ember-power-select-option`s added to wrap the `noMatchesMessage` and the `searchMessage`
   have special classes to help styling them (`ember-power-select-option--no-matches-message` & `ember-power-select-option--search-message`)
 - [BUGFIX] Single selects without searchbox can be focused normally. Fixed updating ember-basic-dropdown.
