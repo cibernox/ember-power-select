@@ -27,7 +27,7 @@ const groupedSections = [
   {
     groupName: 'Advanced customization',
     options: [
-      { route: 'public-pages.docs.asynchronous-search', text: 'Asynchronous search' },
+      { route: 'public-pages.docs.custom-search-action', text: 'Custom search action' },
     ]
   },
   {

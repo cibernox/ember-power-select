@@ -23,7 +23,7 @@ Router.map(function() {
       this.route('styles');
 
       // ADVANCED CUSTOMIZATION
-      this.route('asynchronous-search');
+      this.route('custom-search-action');
 
       // OTHER
       this.route('test-helpers');
