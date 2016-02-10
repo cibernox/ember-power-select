@@ -166,6 +166,73 @@ test('Multiple-select: Options with a disabled field have `aria-disabled=true`',
   assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
 });
 
+test('Single-select: The trigger has `role=button`, `aria-haspopup=true` and `aria-controls=<id-of-dropdown>`', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal(this.$('.ember-power-select-trigger').attr('role'), 'button', 'The trigger has role button');
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-haspopup'), 'true', 'aria-haspopup is true');
+  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test(this.$('.ember-power-select-trigger').attr('aria-controls')), 'aria-controls point to the dropdown');
+});
+
+test('Multiple-select: The trigger has `role=button`, `aria-haspopup=true` and `aria-controls=<id-of-dropdown>`', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal(this.$('.ember-power-select-trigger').attr('role'), 'button', 'The trigger has role button');
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-haspopup'), 'true', 'aria-haspopup is true');
+  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test(this.$('.ember-power-select-trigger').attr('aria-controls')), 'aria-controls point to the dropdown');
+});
+
+test('Single-select: The trigger attributes `aria-expanded` and `aria-pressed` that are true when the dropdown is opened', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-expanded'), 'false', 'Not expanded');
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-pressed'), 'false', 'Not pressed');
+  clickTrigger();
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-expanded'), 'true', 'Not expanded');
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-pressed'), 'true', 'Not pressed');
+});
+
+test('Multiple-select: The trigger attributes `aria-expanded` and `aria-pressed` that are true when the dropdown is opened', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-expanded'), 'false', 'Not expanded');
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-pressed'), 'false', 'Not pressed');
+  clickTrigger();
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-expanded'), 'true', 'Not expanded');
+  assert.equal(this.$('.ember-power-select-trigger').attr('aria-pressed'), 'true', 'Not pressed');
+});
+
+
 // test('Single-select: The searchbox has `role=combobox`, `aria-autocomplete=list`, `aria-owns=<id-of-the-listbox>`', function(assert) {
 //   assert.expect(1);
 
