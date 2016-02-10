@@ -426,6 +426,7 @@ test('If there is no search action and the options is empty the select shows the
   clickTrigger();
   assert.equal($('.ember-power-select-option').length, 1);
   assert.equal($('.ember-power-select-option').text().trim(), 'No results found');
+  assert.ok($('.ember-power-select-option').hasClass('ember-power-select-option--no-matches-message'), 'The row has a special class to differentiate it from regular options');
 });
 
 test('If there is a search action and the options is empty it shows the `searchMessage`, and if after searching there is no results, it shows the `noResults` message', function(assert) {

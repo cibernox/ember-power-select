@@ -1,5 +1,7 @@
 # Master
 
+- [FEATURE] The `.ember-power-select-option`s added to wrap the `noMatchesMessage` and the `searchMessage`
+  have special classes to help styling them (`ember-power-select-option--no-matches-message` & `ember-power-select-option--search-message`)
 - [BUGFIX] Single selects without searchbox can be focused normally. Fixed updating ember-basic-dropdown.
   Ember basic dropdown was calling `preventDefault` on the mousedown event to prevent the user to
   select text when moving the mouse between the mouseup and the mousedown. Now the event is not defaultPrevented,
