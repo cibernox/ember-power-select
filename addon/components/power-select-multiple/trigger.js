@@ -50,19 +50,12 @@ export default Ember.Component.extend({
     },
 
     handleKeydown(e) {
-      let { highlighted, onkeydown, select } = this.getProperties('highlighted', 'onkeydown', 'select');
+      let { onkeydown, select } = this.getProperties('onkeydown', 'select');
       if (onkeydown) { onkeydown(select, e); }
       if (e.defaultPrevented) { return; }
 
       let selected = Ember.A((this.get('selected') || []));
-      if (e.keyCode === 13 && select.isOpen && highlighted !== undefined) {
-        e.stopPropagation();
-        if (selected.indexOf(highlighted) === -1) {
-          select.actions.choose(buildNewSelection([highlighted, selected], { multiple: true }), e);
-        } else {
-          select.actions.close(e);
-        }
-      } else if (e.keyCode === 8 && isBlank(e.target.value)) {
+      if (e.keyCode === 8 && isBlank(e.target.value)) {
         let lastSelection = get(selected, 'lastObject');
         if (lastSelection) {
           select.actions.select(buildNewSelection([lastSelection, selected], { multiple: true }), e);
@@ -74,8 +67,6 @@ export default Ember.Component.extend({
             select.actions.search(get(lastSelection, searchField));
           }
         }
-      } else {
-        select.actions.handleKeydown(e);
       }
     }
   },

@@ -270,6 +270,23 @@ test('Pressing ENTER when the select is closed opens and nothing is written on t
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
+test('Pressing ENTER on a multiple select with `searchEnabled=false` when it is closed opens it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple searchEnabled=false options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  trigger.focus();
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  triggerKeydown(trigger, 13);
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+});
+
 test('Pressing ENTER over a highlighted element selects it', function(assert) {
   assert.expect(2);
 
@@ -288,6 +305,48 @@ test('Pressing ENTER over a highlighted element selects it', function(assert) {
   triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 40);
   triggerKeydown(this.$('.ember-power-select-trigger-multiple-input')[0], 13);
   assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element was selected');
+});
+
+test('Pressing ENTER over a highlighted element on a multiple select with `searchEnabled=false` selects it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple searchEnabled=false options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  triggerKeydown(trigger, 40);
+  triggerKeydown(trigger, 13);
+  assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element was selected');
+});
+
+
+test('Pressing ENTER over a highlighted element on a select with `searchEnabled=false` selects it', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.change = (selected) => {
+    assert.deepEqual(selected, ['two']);
+    this.set('foo', selected);
+  };
+  this.render(hbs`
+    {{#power-select-multiple searchEnabled=false options=numbers selected=foo onchange=change as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  triggerKeydown(trigger, 40);
+  triggerKeydown(trigger, 13);
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
+  assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element is "two"');
 });
 
 test('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', function(assert) {

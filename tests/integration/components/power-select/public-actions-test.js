@@ -115,7 +115,7 @@ test('The onkeydown of multiple selects action receives the public API and the k
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'undefined', 'select.highlighted is still undefined');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');

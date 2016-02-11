@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-multiple';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+import { emberPowerSelectBuildSelection as buildNewSelection } from '../helpers/ember-power-select-build-selection';
 
 const { computed } = Ember;
 
@@ -32,11 +33,31 @@ export default Ember.Component.extend({
       let action = this.get('onfocus');
       if (action) { action(select, e); }
       this.focusInput();
+    },
+
+    handleKeydown(select, e) {
+      let action = this.get('onkeydown');
+      if (action) { action(select, e); }
+      if (e.defaultPrevented) { return; }
+      let selected = Ember.A((this.get('selected') || []));
+      if (e.keyCode === 13 && select.isOpen) {
+        e.stopPropagation();
+        if (select.highlighted !== undefined) {
+          if (selected.indexOf(select.highlighted) === -1) {
+            select.actions.choose(buildNewSelection([select.highlighted, selected], { multiple: true }), e);
+          } else {
+            select.actions.close(e);
+          }
+        } else {
+          select.actions.close(e);
+        }
+      }
     }
   },
 
   // Methods
   focusInput() {
-    this.element.querySelector('.ember-power-select-trigger-multiple-input').focus();
+    let input = this.element.querySelector('.ember-power-select-trigger-multiple-input');
+    if (input) { input.focus(); }
   }
 });
