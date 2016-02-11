@@ -332,3 +332,9 @@ test('in multiple-mode if the users calls preventDefault on the event received i
   triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
 });
+
+// test('Typing on a closed single select selects the value that matches the string typed so far')
+// test('Typing on a closed multiple select selects the value that matches the string typed so far')
+// test('Typing on a opened single select highlights the value that matches the string typed so far, scrolling if needed')
+// test('Typing on a opened multiple select highlights the value that matches the string typed so far, scrolling if needed')
+// test('The typed string gets reset after 1s idle')
