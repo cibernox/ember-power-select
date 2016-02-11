@@ -1,5 +1,6 @@
 # Master
 
+- [FEATURE] Search can be disabled in multiple selects, instead of only in single selects.
 - [BUGFIX] Pressing enter in a select without searchbox correctly selects the highlighted element
 
 # 0.9.0-beta.1

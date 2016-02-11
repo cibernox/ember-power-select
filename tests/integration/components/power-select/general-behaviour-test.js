@@ -262,7 +262,6 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
-
 test('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', function(assert) {
   let done = assert.async();
   assert.expect(2);

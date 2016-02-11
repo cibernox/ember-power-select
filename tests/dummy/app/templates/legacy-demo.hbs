@@ -2,10 +2,6 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
-  {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
-    {{country.name}}
-  {{/power-select-multiple}}
-
   <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
 
   {{#power-select options=model selected=selectedUser onchange=(action (mut selectedUser)) as |user|}}
@@ -56,12 +52,12 @@
     {{option.code}}: {{option.name}}
   {{/power-select}}
 
-  <h4>Select multiple [WORK IN PROGRESS]</h4>
+  <h4>Select multiple with async search</h4>
   {{#power-select-multiple options=(readonly simpleOptions) selected=emptyMultipleSelection onchange=(action (mut multipleSelection)) search=(action 'asyncSearch') as |option|}}
     {{option}}
   {{/power-select-multiple}}
 
-  <h4>Select multiple [WORK IN PROGRESS]</h4>
+  <h4>Select multiple</h4>
   {{#power-select-multiple options=(readonly simpleOptions) selected=multipleSelection onchange=(action (mut multipleSelection)) as |option|}}
     {{option}}
   {{/power-select-multiple}}
@@ -154,6 +150,11 @@
     {{option}}
   {{/power-select}}
 
+  <h4>The search box can be disabled passing `searchEnabled=false` on multiple selects too</h4>
+  {{#power-select-multiple searchEnabled=false options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
+    {{country.name}}
+  {{/power-select-multiple}}
+
   <h4>Right to left styles</h4>
   {{#power-select options=(readonly complexOptions) dir="rtl" selected=(readonly complexSelected) allowClear=true onchange=(action (mut complexSelected)) as |option|}}
     {{option.code}}: {{option.name}}
@@ -177,7 +178,6 @@
       {{opt}}
     {{/power-select}}
   </div>
-
   <br>
   <br>
   <br>

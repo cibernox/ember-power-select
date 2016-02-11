@@ -63,11 +63,15 @@
           {{yield option term}}
         {{/component}}
       {{/if}}
-      {{component afterOptionsComponent select=(readonly select) searchPlaceholder=(readonly searchPlaceholder) searchEnabled=(readonly searchEnabled)}}
+      {{component afterOptionsComponent
+        select=(readonly select)
+        searchPlaceholder=(readonly searchPlaceholder)
+        searchEnabled=(readonly searchEnabled)}}
   {{/with}}
 {{else}}
   {{#with (hash
     isOpen=registeredDropdown.isOpen
+    highlighted=(readonly highlighted)
     actions=(hash
       open=registeredDropdown.actions.open
       close=registeredDropdown.actions.close
@@ -81,7 +85,6 @@
     {{#component triggerComponent
       options=(readonly results)
       selected=(readonly selected)
-      highlighted=(readonly highlighted)
       searchText=(readonly searchText)
       lastSearchedText=(readonly lastSearchedText)
       placeholder=(readonly placeholder)
@@ -92,6 +95,7 @@
       onkeydown=(readonly onkeydown)
       listboxId=(readonly optionsId)
       selectedItemComponent=(readonly selectedItemComponent)
+      searchEnabled=(readonly searchEnabled)
       searchField=(readonly searchField) as |opt term|}}
       {{yield opt term}}
     {{/component}}

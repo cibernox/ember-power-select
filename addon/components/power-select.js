@@ -268,7 +268,8 @@ export default Ember.Component.extend({
     const ownActions = {
       search: this._doSearch.bind(this, dropdown),
       highlight: this._doHighlight.bind(this, dropdown),
-      select: this._doSelect.bind(this, dropdown)
+      select: this._doSelect.bind(this, dropdown),
+      choose: (selected, e) => this.send('choose', dropdown, selected, e)
     };
     return {
       isOpen: dropdown.isOpen,

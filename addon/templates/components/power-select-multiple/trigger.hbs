@@ -12,12 +12,14 @@
     </li>
   {{/each}}
 </ul>
-<input type="search" class="ember-power-select-trigger-multiple-input {{elementId}}-input"
-  tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-  aria-controls={{listboxId}}
-  style={{triggerMultipleInputStyle}}
-  placeholder={{maybePlaceholder}}
-  disabled={{disabled}}
-  oninput={{action "search" value="target.value"}}
-  onkeydown={{action "handleKeydown"}}>
+{{#if searchEnabled}}
+  <input type="search" class="ember-power-select-trigger-multiple-input {{elementId}}-input"
+    tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+    aria-controls={{listboxId}}
+    style={{triggerMultipleInputStyle}}
+    placeholder={{maybePlaceholder}}
+    disabled={{disabled}}
+    oninput={{action "search" value="target.value"}}
+    onkeydown={{action "handleKeydown"}}>
+{{/if}}
 <span class="ember-power-select-status-icon"></span>
