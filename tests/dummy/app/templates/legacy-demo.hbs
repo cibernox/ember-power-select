@@ -2,6 +2,10 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
+{{!--   {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
+    {{country.name}}
+  {{/power-select-multiple}}
+
   <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
 
   {{#power-select options=model selected=selectedUser onchange=(action (mut selectedUser)) as |user|}}
@@ -15,7 +19,7 @@
     onchange=(action (mut simpleSelected))
     onfocus=(action "didFocus") as |option|}}
     {{option}}
-  {{/power-select}}
+  {{/power-select}} --}}
 
   <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
@@ -27,7 +31,7 @@
     {{option}}
   {{/power-select}}
 
-  <h4>If the default filter matches doesn't work, you can pass your own. This check that results end with the given string. Try searching for "teen"</h4>
+{{!--   <h4>If the default filter matches doesn't work, you can pass your own. This check that results end with the given string. Try searching for "teen"</h4>
   {{#power-select options=(readonly simpleOptions) matcher=endsWithMatcher selected=simpleOpt onchange=(action (mut simpleOpt)) as |option|}}
     {{option}}
   {{/power-select}}
@@ -178,6 +182,7 @@
       {{opt}}
     {{/power-select}}
   </div>
+ --}}
   <br>
   <br>
   <br>

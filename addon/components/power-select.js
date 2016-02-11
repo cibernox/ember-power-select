@@ -39,6 +39,7 @@ export default Ember.Component.extend({
   // Attrs
   searchText: '',
   lastSearchedText: '',
+  expirableSearchText: '',
   activeSearch: null,
   openingEvent: null,
   loading: false,
@@ -177,6 +178,16 @@ export default Ember.Component.extend({
         this.send('choose', dropdown, this.get('highlighted'), e);
       } else if (e.keyCode === 9 || e.keyCode === 27) {  // Tab or ESC
         dropdown.actions.close(e);
+      } else if(e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
+        let term = this.get('expirableSearchText') + String.fromCharCode(e.keyCode);
+        this.set('expirableSearchText', term);
+        run.debounce(this, 'set', 'expirableSearchText', '', 1000);
+        let firstMatch = this.filter(this.get('results'), term)[0]; // TODO: match only words starting with this substr?
+        if (dropdown.isOpen) {
+          this._doHighlight(dropdown, firstMatch, e)
+        } else {
+          this._doSelect(dropdown, firstMatch, e);
+        }
       }
     },
 
