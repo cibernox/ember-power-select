@@ -173,6 +173,8 @@ export default Ember.Component.extend({
         } else {
           dropdown.actions.open(e);
         }
+      } else if (dropdown.isOpen && e.keyCode === 13) {  // ENTER
+        this.send('choose', dropdown, this.get('highlighted'), e);
       } else if (e.keyCode === 9 || e.keyCode === 27) {  // Tab or ESC
         dropdown.actions.close(e);
       }

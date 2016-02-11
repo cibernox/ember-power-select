@@ -56,8 +56,11 @@ export default Ember.Component.extend({
 
       let selected = Ember.A((this.get('selected') || []));
       if (e.keyCode === 13 && select.isOpen && highlighted !== undefined) {
+        e.stopPropagation();
         if (selected.indexOf(highlighted) === -1) {
           select.actions.choose(buildNewSelection([highlighted, selected], { multiple: true }), e);
+        } else {
+          select.actions.close(e);
         }
       } else if (e.keyCode === 8 && isBlank(e.target.value)) {
         let lastSelection = get(selected, 'lastObject');
