@@ -427,3 +427,25 @@ test('The typed string gets reset after 1s idle', function(assert) {
     done();
   }, 1100);
 });
+
+test('Type something that doesn\'t give you any result leaves the current selection', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  trigger.focus();
+  assert.equal(trigger.textContent.trim(), '', 'nothing is selected');
+  triggerKeydown(trigger, 78); // n
+  triggerKeydown(trigger, 73); // i
+  triggerKeydown(trigger, 78); // n
+  triggerKeydown(trigger, 69); // e
+  assert.equal(trigger.textContent.trim(), 'nine', 'nine has been selected');
+  triggerKeydown(trigger, 87); // w
+  assert.equal(trigger.textContent.trim(), 'nine', 'nine is still selected because "ninew" gave no results');
+});

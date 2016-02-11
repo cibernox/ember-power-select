@@ -183,10 +183,12 @@ export default Ember.Component.extend({
         this.set('expirableSearchText', term);
         this.expirableSearchDebounceId = run.debounce(this, 'set', 'expirableSearchText', '', 1000);
         let firstMatch = this.filter(this.get('results'), term)[0]; // TODO: match only words starting with this substr?
-        if (dropdown.isOpen) {
-          this._doHighlight(dropdown, firstMatch, e);
-        } else {
-          this._doSelect(dropdown, firstMatch, e);
+        if (firstMatch !== undefined) {
+          if (dropdown.isOpen) {
+            this._doHighlight(dropdown, firstMatch, e);
+          } else {
+            this._doSelect(dropdown, firstMatch, e);
+          }
         }
       }
     },
