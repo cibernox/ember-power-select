@@ -51,6 +51,9 @@ export default Ember.Component.extend({
         } else {
           select.actions.close(e);
         }
+      } else if (!select.isOpen && e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
+        // Closed multiple selects should not do anything when typing on them
+        e.preventDefault();
       }
     }
   },

@@ -1,5 +1,9 @@
 # Master
 
+- [FEATURE] Now you can type in closed single selects and automatically select the first match as you type.
+  The typed text is erased after one second. It doesn't work in closed multiple select without searchbox (what would be the correct behavior?)
+- [FEATURE] Now you can type in opened selects witout searcbox (multiple or single) to highlight the
+  first marching option as you type. The typed text is erased after one second.
 - [FEATURE] Search can be disabled in multiple selects, instead of only in single selects.
 - [BUGFIX] Pressing enter in a select without searchbox correctly selects the highlighted element
 

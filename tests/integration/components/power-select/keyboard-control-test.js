@@ -333,8 +333,97 @@ test('in multiple-mode if the users calls preventDefault on the event received i
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
 });
 
-// test('Typing on a closed single select selects the value that matches the string typed so far')
-// test('Typing on a closed multiple select selects the value that matches the string typed so far')
-// test('Typing on a opened single select highlights the value that matches the string typed so far, scrolling if needed')
-// test('Typing on a opened multiple select highlights the value that matches the string typed so far, scrolling if needed')
-// test('The typed string gets reset after 1s idle')
+test('Typing on a closed single select selects the value that matches the string typed so far', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  trigger.focus();
+  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is closed');
+  triggerKeydown(trigger, 78); // n
+  triggerKeydown(trigger, 73); // i
+  triggerKeydown(trigger, 78); // n
+  assert.equal(trigger.textContent.trim(), 'nine', '"nine" has been selected');
+  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is still closed');
+});
+
+//
+// I'm actually not sure what multiple selects closed should do when typing on them.
+// For now they just do nothing
+//
+// test('Typing on a closed multiple select with no searchbox does nothing', function(assert) {
+// });
+
+test('Typing on a opened single select highlights the value that matches the string typed so far, scrolling if needed', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is open');
+  triggerKeydown(trigger, 78); // n
+  triggerKeydown(trigger, 73); // i
+  triggerKeydown(trigger, 78); // n
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'nine', 'The option containing "nine" has been highlighted');
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
+});
+
+test('Typing on a opened multiple select highlights the value that matches the string typed so far, scrolling if needed', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is open');
+  triggerKeydown(trigger, 78); // n
+  triggerKeydown(trigger, 73); // i
+  triggerKeydown(trigger, 78); // n
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'nine', 'The option containing "nine" has been highlighted');
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
+});
+
+test('The typed string gets reset after 1s idle', function(assert) {
+  let done = assert.async();
+  assert.expect(5);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  trigger.focus();
+  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is closed');
+  triggerKeydown(trigger, 84); // t
+  triggerKeydown(trigger, 87); // w
+  assert.equal(trigger.textContent.trim(), 'two', '"two" has been selected');
+  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is still closed');
+  setTimeout(function() {
+    triggerKeydown(trigger, 79); // o
+    assert.equal(trigger.textContent.trim(), 'one', '"one" has been selected, instead of "two", because the typing started over');
+    assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is still closed');
+    done();
+  }, 1100);
+});
