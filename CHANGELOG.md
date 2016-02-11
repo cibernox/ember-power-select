@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Pressing enter in a select without searchbox correctly selects the highlighted element
+
 # 0.9.0-beta.1
 - [FEATURE] Proper Accesibility!! Lots of roles and `aria-*` tags have been added to make the component
   friendly, according with the guidelines in [the RFC](https://github.com/cibernox/ember-power-select/issues/293)
