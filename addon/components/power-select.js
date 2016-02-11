@@ -39,6 +39,7 @@ export default Ember.Component.extend({
   // Attrs
   searchText: '',
   lastSearchedText: '',
+  expirableSearchText: '',
   activeSearch: null,
   openingEvent: null,
   loading: false,
@@ -53,6 +54,7 @@ export default Ember.Component.extend({
   willDestroy() {
     this._super(...arguments);
     this.activeSearch = null;
+    run.cancel(this.expirableSearchDebounceId);
   },
 
   // CPs
@@ -169,7 +171,6 @@ export default Ember.Component.extend({
           e.preventDefault();
           const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
           this.send('highlight', dropdown, newHighlighted, e);
-          run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
         } else {
           dropdown.actions.open(e);
         }
@@ -177,6 +178,18 @@ export default Ember.Component.extend({
         this.send('choose', dropdown, this.get('highlighted'), e);
       } else if (e.keyCode === 9 || e.keyCode === 27) {  // Tab or ESC
         dropdown.actions.close(e);
+      } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
+        let term = this.get('expirableSearchText') + String.fromCharCode(e.keyCode);
+        this.set('expirableSearchText', term);
+        this.expirableSearchDebounceId = run.debounce(this, 'set', 'expirableSearchText', '', 1000);
+        let firstMatch = this.filter(this.get('results'), term)[0]; // TODO: match only words starting with this substr?
+        if (firstMatch !== undefined) {
+          if (dropdown.isOpen) {
+            this._doHighlight(dropdown, firstMatch, e);
+          } else {
+            this._doSelect(dropdown, firstMatch, e);
+          }
+        }
       }
     },
 
@@ -298,6 +311,7 @@ export default Ember.Component.extend({
 
   _doHighlight(dropdown, option) {
     if (option && get(option, 'disabled')) { return; }
+    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
     this.set('currentlyHighlighted', option);
   },
 

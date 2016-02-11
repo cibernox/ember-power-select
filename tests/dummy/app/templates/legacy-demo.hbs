@@ -2,6 +2,26 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
+  <h4>Select of strings with value tracking</h4>
+  {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+    {{option}}
+  {{/power-select}}
+
+  <h4>Select of strings with value tracking</h4>
+  {{#power-select searchEnabled=false options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+    {{option}}
+  {{/power-select}}
+
+  <h4>Multiple without search</h4>
+  {{#power-select searchEnabled=false options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
+    {{option}}
+  {{/power-select}}
+
+
+{{!--   {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
+    {{country.name}}
+  {{/power-select-multiple}}
+
   <p><strong>Trying to reproduce bug with store.findAll('user')</strong></p>
 
   {{#power-select options=model selected=selectedUser onchange=(action (mut selectedUser)) as |user|}}
@@ -178,6 +198,7 @@
       {{opt}}
     {{/power-select}}
   </div>
+ --}}
   <br>
   <br>
   <br>
