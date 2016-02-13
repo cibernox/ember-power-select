@@ -21,14 +21,13 @@ module.exports = function moduleForFastboot(name, opts) {
   app.listen(3211);
 
   function visit(path) {
-    var context = this;
-    this._document = this.statusCode = this.headers = this.body = null;
     return request('http://localhost:' + appPort + path)
       .then(function(response) {
-        context.statusCode = response.statusCode;
-        context.headers = response.headers;
-        context.body = response.body;
-        return response;
+        return [
+          response.statusCode,
+          response.headers,
+          jsdom(response.body).defaultView.document
+        ];
       });
   }
 
@@ -36,20 +35,6 @@ module.exports = function moduleForFastboot(name, opts) {
     beforeEach: function() {
       this.app = app;
       this.visit = visit.bind(this);
-
-      Object.defineProperties(this, {
-        document: {
-          get: function() {
-            if (this._document) {
-              return this._document;
-            } else if (this.body) {
-              return this._document = jsdom(this.body).defaultView.document;
-            }
-          },
-          configurable: true,
-          enumerable: true
-        }
-      });
 
       if (opts.beforeEach) {
         opts.beforeEach.call(this);
