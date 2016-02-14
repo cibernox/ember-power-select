@@ -45,17 +45,14 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
+    "ember-fastboot-test-helpers": "0.1.0",
     "ember-load-initializers": "^0.5.0",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
     "ember-try": "0.1.0",
-    "jsdom": "8.0.2",
     "liquid-fire": "0.23.0",
     "loader.js": "^4.0.0",
     "node-sass": "^3.4.2",
-    "qunit-extras": "^1.4.0",
-    "qunitjs": "^1.20.0",
-    "request": "^2.69.0",
     "simple-git": "^1.10.0"
   },
   "keywords": [
