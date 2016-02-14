@@ -1,4 +1,4 @@
-var moduleForFastboot = require('./module-for-fastboot');
+var moduleForFastboot = require('ember-fastboot-test-helpers').moduleForFastboot;
 
 moduleForFastboot('Basic rendering');
 
