@@ -1,5 +1,6 @@
 # Master
 
+# 0.9.0-beta.3
 - [BUGFIX] Ensure `beforeOptionsComponent` and `afterOptionsComponent` receive the `extra` object.
 
 # 0.9.0-beta.2
