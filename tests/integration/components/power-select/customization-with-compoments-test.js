@@ -121,9 +121,3 @@ test('the `beforeOptionsComponent` and `afterOptionsComponent` receive the `extr
   Ember.run(() => $('.custom-after-options2-button')[0].click());
   assert.equal(counter, 2, 'The action inside the extra hash has been called twice');
 });
-
-
-function clickSelector(selector, options = {}) {
-  let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
-  Ember.run(() => $(selector)[0].dispatchEvent(event));
-}
