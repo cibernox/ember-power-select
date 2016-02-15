@@ -2,6 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';
+import Ember from 'ember';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
   integration: true
@@ -93,3 +94,36 @@ test('the content after the list can be customized passing `afterOptionsComponen
   assert.equal($('.ember-power-select-dropdown #custom-after-options-p-tag').length, 1, 'The custom component is rendered instead of the usual search bar');
   assert.equal($('.ember-power-select-search input').length, 1, 'The search input is still visible');
 });
+
+
+test('the `beforeOptionsComponent` and `afterOptionsComponent` receive the `extra` hash', function(assert) {
+  assert.expect(1);
+  let counter = 0;
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+  this.someAction = function() {
+    counter++;
+  };
+
+  this.render(hbs`
+    {{#power-select options=countries
+      selected=country
+      onchange=(action (mut selected))
+      afterOptionsComponent="custom-after-options2"
+      beforeOptionsComponent="custom-before-options2"
+      extra=(hash passedAction=(action someAction)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => $('.custom-before-options2-button')[0].click());
+  Ember.run(() => $('.custom-after-options2-button')[0].click());
+  assert.equal(counter, 2, 'The action inside the extra hash has been called twice');
+});
+
+
+function clickSelector(selector, options = {}) {
+  let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
+  Ember.run(() => $(selector)[0].dispatchEvent(event));
+}

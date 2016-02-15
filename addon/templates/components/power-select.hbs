@@ -35,6 +35,7 @@
         searchEnabled=(readonly searchEnabled)
         highlighted=(readonly highlighted)
         listboxId=(readonly optionsId)
+        extra=(readonly extra)
         eventSender=eventSender}}
       {{#if mustShowSearchMessage}}
         <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option ember-power-select-option--search-message" role="option">{{searchMessage}}</li></ul>
@@ -66,7 +67,8 @@
       {{component afterOptionsComponent
         select=(readonly select)
         searchPlaceholder=(readonly searchPlaceholder)
-        searchEnabled=(readonly searchEnabled)}}
+        searchEnabled=(readonly searchEnabled)
+        extra=(readonly extra)}}
   {{/with}}
 {{else}}
   {{#with (hash

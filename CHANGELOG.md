@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Ensure `beforeOptionsComponent` and `afterOptionsComponent` receive the `extra` object.
+
 # 0.9.0-beta.2
 - [FEATURE] Now you can type in closed single selects and automatically select the first match as you type.
   The typed text is erased after one second. It doesn't work in closed multiple select without searchbox (what would be the correct behavior?)
