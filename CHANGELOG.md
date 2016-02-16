@@ -1,5 +1,8 @@
 # Master
 
+# 0.9.0-beta.4
+- [BUGFIX] Ensure `triggerComponent` receives the `loading` property to allow showing spinners and things like that.
+
 # 0.9.0-beta.3
 - [BUGFIX] Ensure `beforeOptionsComponent` and `afterOptionsComponent` receive the `extra` object.
 
