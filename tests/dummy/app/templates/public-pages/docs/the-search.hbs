@@ -28,8 +28,8 @@
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
     {{#power-select
       options=diacritics
-      selected=selected
-      onchange=(action (mut selected))
+      selected=selectedDiacritic
+      onchange=(action (mut selectedDiacritic))
       as |name|
     }}
       {{name}}
@@ -124,8 +124,8 @@
     {{#power-select
       options=people
       matcher=myMatcher
-      selected=selected
-      onchange=(action (mut selected))
+      selected=selectedPerson
+      onchange=(action (mut selectedPerson))
       as |person|
     }}
       {{person.name}} {{person.surname}}
@@ -165,8 +165,8 @@
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
     {{#power-select
       options=names
-      selected=selected
-      onchange=(action (mut selected))
+      selected=selectedPersonName
+      onchange=(action (mut selectedPersonName))
       as |name term|
     }}
       {{highlight-substr name term}}
