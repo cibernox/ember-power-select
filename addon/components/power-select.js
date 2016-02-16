@@ -110,7 +110,7 @@ export default Ember.Component.extend({
         this.set('loading', true);
         options.then(results => {
           if (this.get('isDestroyed')) { return; }
-          this.set('results', results)
+          this.set('results', results);
         });
         return this.previousResults || [];
       }
