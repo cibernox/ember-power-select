@@ -95,7 +95,6 @@ test('the content after the list can be customized passing `afterOptionsComponen
   assert.equal($('.ember-power-select-search input').length, 1, 'The search input is still visible');
 });
 
-
 test('the `beforeOptionsComponent` and `afterOptionsComponent` receive the `extra` hash', function(assert) {
   assert.expect(1);
   let counter = 0;
@@ -120,4 +119,27 @@ test('the `beforeOptionsComponent` and `afterOptionsComponent` receive the `extr
   Ember.run(() => $('.custom-before-options2-button')[0].click());
   Ember.run(() => $('.custom-after-options2-button')[0].click());
   assert.equal(counter, 2, 'The action inside the extra hash has been called twice');
+});
+
+test('the `triggerComponent` receives the `loading` state', function(assert) {
+  assert.expect(2);
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+  this.render(hbs`
+    {{#power-select options=countries
+      selected=country
+      onchange=(action (mut selected))
+      triggerComponent="custom-trigger-for-loading" as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'It isn\'t loading', 'Results are not loading');
+  let pendingPromise = new Ember.RSVP.Promise(function(resolve) {
+    setTimeout(function() {
+      resolve(countries);
+    }, 100);
+  });
+  Ember.run(this, 'set', 'countries', pendingPromise);
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'Is loading', 'Results are loading');
 });

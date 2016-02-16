@@ -108,7 +108,10 @@ export default Ember.Component.extend({
       let searchAction = this.get('search');
       if (options.then) {
         this.set('loading', true);
-        options.then(results => this.set('results', results));
+        options.then(results => {
+          if (this.get('isDestroyed')) { return; }
+          this.set('results', results)
+        });
         return this.previousResults || [];
       }
       let newResults = searchAction ? options : this.filter(options, this.get('searchText'));
