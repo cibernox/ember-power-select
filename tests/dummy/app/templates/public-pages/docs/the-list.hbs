@@ -4,11 +4,11 @@
   If there's a key area of the component that must be absolutely customizable, it's the dropdown with the list. This is probably the most dense chapter so far so we recommend that you read it cover to cover.
 </p>
 
-<h3>Position</h3>
+<h3>Position and destination</h3>
 
 <p>
   The dropdown in Ember Power Select is pretty smart. By default this component inserts the dropdown
-  not next the the trigger but in the root of your app (typically the <code>&lt;body&gt;</code>) using
+  not next the the trigger but in the a placeholder element in the root of your app (typically the <code>&lt;body&gt;</code>) using
   the awesome <a href="https://github.com/yapplabs/ember-wormhole">ember-wormhole</a> addon and then
   absolutely positions it.
 </p>
@@ -16,7 +16,28 @@
 <p>
   This is a safe default because by default it won't be affected by the overflow constraints of
   the element where the component lives in. However, there are a few situations where this is not
-  practical, so you can opt-out of this behavior by passing <code>renderInPlace=true</code>.
+  practical, so you can tune this in two different ways.
+</p>
+
+<p>
+  You can configure Ember Basic Dropdown (the addon used internally by EPS) to use a different element
+  as destination for the dropdown. By default an <code>&lt;div id="ember-basic-dropdown-wormhole"&gt;&lt;/div&gt;</code> div
+  is added to the root of your app and used as destination, but you can specify a different one:
+</p>
+
+<pre>
+  // config/environment.js
+
+  ENV['ember-basic-dropdown'] = {
+    destination: '&lt;id-of-destination-element&gt;'
+  }
+</pre>
+
+<p>If you customize the destination element, then it is up to you to add that element somewhere in your app.</p>
+
+<p>
+  The second option is to opt-out to render the dropdown in a different place. Just pass <code>renderInPlace=true</code>
+  and the dropdown will be placed next to the trigger element in the DOM.
 </p>
 
 {{#code-sample as |component|}}
