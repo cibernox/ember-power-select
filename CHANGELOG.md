@@ -1,5 +1,9 @@
 # Master
 
+# 0.9.0-beta.5
+- [FEATURE] Update to `ember-basic-dropdown` 0.9.0 final. This allows to customize the wormhole destination
+  of all dropdowns of the app, including ember-power-select's dropdowns.
+
 # 0.9.0-beta.4
 - [BUGFIX] Ensure `triggerComponent` receives the `loading` property to allow showing spinners and things like that.
 
