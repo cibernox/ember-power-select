@@ -22,7 +22,7 @@
 <p>
   You can configure Ember Basic Dropdown (the addon used internally by EPS) to use a different element
   as destination for the dropdown. By default an <code>&lt;div id="ember-basic-dropdown-wormhole"&gt;&lt;/div&gt;</code> div
-  is added to the root of your app and used as destination, but you can specify a different one:
+  is added to the root of your app and used as destination, but you can specify a different one globally:
 </p>
 
 <pre>
@@ -34,6 +34,43 @@
 </pre>
 
 <p>If you customize the destination element, then it is up to you to add that element somewhere in your app.</p>
+
+<p>
+  You can also specify a destination div on a per component basis, using the <code>destination</code> property.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select
+      options=names
+      destination="customized-destination"
+      selected=name123
+      onchange=(action (mut name123))
+      as |name|
+    }}
+      \{{name}}
+    \{{/power-select}}
+    &lt;div id="customized-destination"&gt;&lt;/div&gt;
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select
+      options=names
+      destination="customized-destination"
+      selected=name123
+      onchange=(action (mut name123))
+      as |name|
+    }}
+      {{name}}
+    {{/power-select}}
+    <div id="customized-destination"></div>
+    (Looks the same but inspect the DOM to see the difference)
+  </div>
+{{/code-sample}}
 
 <p>
   The second option is to opt-out to render the dropdown in a different place. Just pass <code>renderInPlace=true</code>
