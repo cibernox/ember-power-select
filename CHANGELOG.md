@@ -1,5 +1,8 @@
 # Master
 
+# 0.9.0-beta.6
+- [FEATURE] Allow to customize the destination element used by ember-wormhole on a per-component basis
+
 # 0.9.0-beta.5
 - [FEATURE] Update to `ember-basic-dropdown` 0.9.0 final. This allows to customize the wormhole destination
   of all dropdowns of the app, including ember-power-select's dropdowns.
