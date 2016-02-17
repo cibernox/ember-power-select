@@ -27,7 +27,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.3.0",
     "ember-ajax": "0.7.1",
-    "ember-cli": "^2.3.0-beta.2",
+    "ember-cli": "^2.3.0",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-blanket": "0.6.2",
     "ember-cli-dependency-checker": "^1.2.0",
@@ -49,7 +49,7 @@
     "ember-load-initializers": "^0.5.0",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
-    "ember-try": "0.1.0",
+    "ember-try": "0.1.2",
     "liquid-fire": "0.23.0",
     "loader.js": "^4.0.0",
     "node-sass": "^3.4.2",
