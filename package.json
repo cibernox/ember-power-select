@@ -45,7 +45,7 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-fastboot-test-helpers": "0.1.0",
+    "ember-fastboot-test-helpers": "0.1.1",
     "ember-load-initializers": "^0.5.0",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
