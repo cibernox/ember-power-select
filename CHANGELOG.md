@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Ensure the placeholder text of simple selects doesn't overflow the container trigger.
+
 # 0.9.0-beta.6
 - [FEATURE] Allow to customize the destination element used by ember-wormhole on a per-component basis
 
