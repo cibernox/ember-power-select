@@ -54,6 +54,10 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 }
 .ember-power-select-placeholder {
   color: $ember-power-select-placeholder-color;
+  display: block;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .ember-power-select-status-icon {
   position: absolute;
