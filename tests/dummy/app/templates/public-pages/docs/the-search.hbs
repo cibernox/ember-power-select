@@ -89,7 +89,8 @@
   Sometimes the default matcher is not enough for you, for example if you need to match against several
   fields or you need to perform fuzzy matching. If that is the case just pass your own matcher
   function. It will receive the option and the search term and you can do whatever you feel like
-  inside as long as it returns <code>true</code> or <code>false</code>.
+  inside as long as it returns <code>-1</code> if it doesn't match and a positive number if it does.
+  Returning a boolean works too, but might be removed in the near future.
 </p>
 
 {{#code-sample as |component|}}
