@@ -320,35 +320,43 @@ export default Ember.Component.extend({
 
   _doSearch(dropdown, term) {
     if (isBlank(term)) {
-      let options = this.get('options') || [];
-      this.activeSearch = null;
-      if (options.then) {
-        options.then((data) => {
-          this.setProperties({ results: data, searchText: term, lastSearchedText: term, loading: false });
-        });
-      } else {
-        this.setProperties({ results: options, searchText: term, lastSearchedText: term, loading: false });
-      }
+      this._resetSearch();
     } else {
       let searchAction = this.get('search');
       if (searchAction) {
-        let search = searchAction(term);
-        if (!search) {
-          this.setProperties({ lastSearchedText: term, searchText: term });
-        } else if (search.then) {
-          this.activeSearch = search;
-          this.setProperties({ loading: true, searchText: term });
-          search.then((results) => {
-            if (this.activeSearch === search) { this.setProperties({ results, lastSearchedText: term }); }
-          }, () => {
-            if (this.activeSearch === search) { this.set('lastSearchedText', term); }
-          });
-        } else {
-          this.setProperties({ results: search, searchText: term, lastSearchedText: term });
-        }
+        this._performSearch(searchAction, term);
       } else {
         this.setProperties({ results: this.filter(this.get('options'), term), searchText: term, lastSearchedText: term });
       }
+    }
+  },
+
+  _resetSearch() {
+    let options = this.get('options') || [];
+    this.activeSearch = null;
+    if (options.then) {
+      options.then((data) => {
+        this.setProperties({ results: data, searchText: '', lastSearchedText: '', loading: false });
+      });
+    } else {
+      this.setProperties({ results: options, searchText: '', lastSearchedText: '', loading: false });
+    }
+  },
+
+  _performSearch(searchAction, term) {
+    let search = searchAction(term);
+    if (!search) {
+      this.setProperties({ lastSearchedText: term, searchText: term });
+    } else if (search.then) {
+      this.activeSearch = search;
+      this.setProperties({ loading: true, searchText: term });
+      search.then((results) => {
+        if (this.activeSearch === search) { this.setProperties({ results, lastSearchedText: term }); }
+      }, () => {
+        if (this.activeSearch === search) { this.set('lastSearchedText', term); }
+      });
+    } else {
+      this.setProperties({ results: search, searchText: term, lastSearchedText: term });
     }
   }
 });
