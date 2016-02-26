@@ -1,5 +1,9 @@
 # Master
 
+- [ENHALCEMENT] The custom matchers defined by the user now can and should return numbers instead of
+  `true/false`. Returning a boolean still works, but support for this might be deprecated and later
+  on removed. The reason is that returning a number gives us more posibilities, like sorting the
+  results.
 - [BUGFIX] Ensure the placeholder text of simple selects doesn't overflow the container trigger.
 
 # 0.9.0-beta.6
