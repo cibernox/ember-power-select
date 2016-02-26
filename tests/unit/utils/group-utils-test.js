@@ -60,7 +60,7 @@ test('#optionAtIndex knows how to transverse groups', function(assert) {
   assert.equal(optionAtIndex(groupedOptions, -1), undefined);
 });
 
-test('#filterOptions generates new options respecting groups', function(assert) {
+test('#filterOptions generates new options respecting groups when the matches returns a boolean', function(assert) {
   const matcher = function(value, searchText) {
     return new RegExp(searchText, 'i').test(value);
   };
@@ -84,6 +84,32 @@ test('#filterOptions generates new options respecting groups', function(assert) 
 
   assert.deepEqual(filterOptions(groupedOptions, 'imposible', matcher), []);
   assert.deepEqual(filterOptions(groupedOptions, '', matcher), groupedOptions);
+});
+
+test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function(assert) {
+  const matcher = function(value, searchText) {
+    return value.indexOf(searchText);
+  };
+  assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [{ groupName: "Smalls", options: ["zero"] }]);
+  assert.deepEqual(filterOptions(groupedOptions, 'ele', matcher), [
+    { groupName: "Bigs", options: [
+        { groupName: "Really big", options: ["eleven"] },
+      ]
+    }
+  ]);
+  assert.deepEqual(filterOptions(groupedOptions, 't', matcher), [
+    { groupName: "Smalls", options: ["two","three"] },
+    { groupName: "Bigs", options: [
+        { groupName: "Fairly big", options: ["eight"] },
+        { groupName: "Really big", options: [ "ten", "twelve" ] },
+        "thirteen"
+      ]
+    },
+    "one thousand"
+  ]);
+
+  assert.deepEqual(filterOptions(groupedOptions, 'imposible', matcher), [], 'when nothing matches, an empty array is returned');
+  assert.deepEqual(filterOptions(groupedOptions, '', matcher), groupedOptions, 'when all matches, all options ');
 });
 
 test('#stripDiacritics returns the given string with diacritics normalized into simple letters', function(assert) {

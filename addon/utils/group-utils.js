@@ -82,8 +82,13 @@ export function filterOptions(options, text, matcher) {
       if (get(suboptions, 'length') > 0) {
         opts.push({ groupName: entry.groupName, options: suboptions });
       }
-    } else if (matcher(entry, text)) {
-      opts.push(entry);
+    } else {
+      let matchResult = matcher(entry, text);
+      if (typeof matchResult === 'number') {
+        if (matchResult >= 0) { opts.push(entry); }
+      } else if (matchResult) {
+        opts.push(entry);
+      }
     }
   }
   return opts;
@@ -942,5 +947,5 @@ export function stripDiacritics(text) {
 }
 
 export function defaultMatcher(value, text) {
-  return text === '' || stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase()) > -1;
+  return stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase());
 }

@@ -261,13 +261,14 @@ export default Ember.Component.extend({
   },
 
   filter(options, term) {
-    let matcher;
-    if (this.get('searchField')) {
-      matcher = (option, text) => this.get('matcher')(get(option, this.get('searchField')), text);
+    let optionMatcher;
+    let { matcher, searchField } = this.getProperties('matcher', 'searchField');
+    if (searchField) {
+      optionMatcher = (option, text) => matcher(get(option, searchField), text);
     } else {
-      matcher = (option, text) => this.get('matcher')(option, text);
+      optionMatcher = (option, text) => matcher(option, text);
     }
-    return filterOptions(options || [], term, matcher);
+    return filterOptions(options || [], term, optionMatcher);
   },
 
   buildPublicAPI(dropdown) {
