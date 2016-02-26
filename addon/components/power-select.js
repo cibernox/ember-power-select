@@ -182,17 +182,7 @@ export default Ember.Component.extend({
       } else if (e.keyCode === 9 || e.keyCode === 27) {  // Tab or ESC
         dropdown.actions.close(e);
       } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
-        let term = this.get('expirableSearchText') + String.fromCharCode(e.keyCode);
-        this.set('expirableSearchText', term);
-        this.expirableSearchDebounceId = run.debounce(this, 'set', 'expirableSearchText', '', 1000);
-        let firstMatch = this.filter(this.get('results'), term)[0]; // TODO: match only words starting with this substr?
-        if (firstMatch !== undefined) {
-          if (dropdown.isOpen) {
-            this._doHighlight(dropdown, firstMatch, e);
-          } else {
-            this._doSelect(dropdown, firstMatch, e);
-          }
-        }
+        this._handleTriggerTyping(dropdown, e);
       }
     },
 
@@ -357,6 +347,20 @@ export default Ember.Component.extend({
       });
     } else {
       this.setProperties({ results: search, searchText: term, lastSearchedText: term });
+    }
+  },
+
+  _handleTriggerTyping(dropdown, e) {
+    let term = this.get('expirableSearchText') + String.fromCharCode(e.keyCode);
+    this.set('expirableSearchText', term);
+    this.expirableSearchDebounceId = run.debounce(this, 'set', 'expirableSearchText', '', 1000);
+    let firstMatch = this.filter(this.get('results'), term)[0]; // TODO: match only words starting with this substr?
+    if (firstMatch !== undefined) {
+      if (dropdown.isOpen) {
+        this._doHighlight(dropdown, firstMatch, e);
+      } else {
+        this._doSelect(dropdown, firstMatch, e);
+      }
     }
   }
 });
