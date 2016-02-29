@@ -170,17 +170,13 @@ export default Ember.Component.extend({
       if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
-        if (dropdown.isOpen) {
-          e.preventDefault();
-          const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
-          this.send('highlight', dropdown, newHighlighted, e);
-        } else {
-          dropdown.actions.open(e);
-        }
-      } else if (dropdown.isOpen && e.keyCode === 13) {  // ENTER
-        this.send('choose', dropdown, this.get('highlighted'), e);
-      } else if (e.keyCode === 9 || e.keyCode === 27) {  // Tab or ESC
-        dropdown.actions.close(e);
+        this._handleKeyUpDown(dropdown, e);
+      } else if (e.keyCode === 13) {  // ENTER
+        this._handleKeyEnter(dropdown, e);
+      } else if (e.keyCode === 9) {   //Tab
+        this._handleKeyTab(dropdown, e);
+      } else if (e.keyCode === 27) {  // ESC
+        this._handleKeyESC(dropdown, e);
       } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
         this._handleTriggerTyping(dropdown, e);
       }
@@ -223,7 +219,31 @@ export default Ember.Component.extend({
       if (action) { action(this.buildPublicAPI(dropdown), e); }
       if (e) { this.set('openingEvent', null); }
       this.send('highlight', dropdown, null, e);
-    },
+    }
+  },
+
+  _handleKeyUpDown(dropdown, e) {
+    if (dropdown.isOpen) {
+      e.preventDefault();
+      const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
+      this.send('highlight', dropdown, newHighlighted, e);
+    } else {
+      dropdown.actions.open(e);
+    }
+  },
+
+  _handleKeyEnter(dropdown, e) {
+    if (dropdown.isOpen) {
+      this.send('choose', dropdown, this.get('highlighted'), e);
+    }
+  },
+
+  _handleKeyTab(dropdown, e) {
+    dropdown.actions.close(e);
+  },
+
+  _handleKeyESC(dropdown, e) {
+    dropdown.actions.close(e);
   },
 
   // Methods
