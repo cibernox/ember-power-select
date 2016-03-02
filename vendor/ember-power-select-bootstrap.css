@@ -54,7 +54,11 @@
   border-top-right-radius: 4px; }
 
 .ember-power-select-placeholder {
-  color: #999999; }
+  color: #999999;
+  display: block;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
 
 .ember-power-select-status-icon {
   position: absolute;
