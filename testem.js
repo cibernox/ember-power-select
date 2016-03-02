@@ -1,4 +1,5 @@
-{
+/* jshint node:true */
+var options = {
   "framework": "qunit",
   "test_page": "tests/index.html?hidepassed",
   "disable_watching": true,
@@ -10,3 +11,5 @@
     "Chrome"
   ]
 }
+
+module.exports = options;
