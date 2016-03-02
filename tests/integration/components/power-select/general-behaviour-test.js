@@ -772,3 +772,30 @@ test('The trigger of the select has a id derived from the element id of the comp
   `);
   assert.ok(/^ember-power-select-trigger-ember\d+$/.test(this.$('.ember-power-select-trigger').attr('id'), 'The trigger has the proper id'));
 });
+
+test('If the passed options is a promise that is resolved, searching should filter the results from a promise', function(assert) {
+  let done = assert.async();
+  assert.expect(5);
+
+  this.numbersPromise = new RSVP.Promise(function(resolve) {
+    Ember.run.later(function() {resolve(numbers); }, 100);
+  });
+
+  this.render(hbs`
+    {{#power-select options=numbersPromise onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  setTimeout(function() {
+    clickTrigger();
+    typeInSearch("o");
+
+    assert.equal($('.ember-power-select-option').length, 4, 'The dropdown is opened and results shown.');
+    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
+    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'two');
+    assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'four');
+    assert.equal($('.ember-power-select-option:eq(3)').text().trim(), 'fourteen');
+    done();
+  }, 150);
+});

@@ -343,7 +343,7 @@ export default Ember.Component.extend({
             this.setProperties({ results: this.filter(data, term), searchText: term, lastSearchedText: term });
           });
         } else {
-          this.setProperties({ results: this.filter(this.get('options'), term), searchText: term, lastSearchedText: term });
+          this.setProperties({ results: this.filter(options, term), searchText: term, lastSearchedText: term });
         }
       }
     }
