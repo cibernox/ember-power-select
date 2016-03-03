@@ -325,7 +325,6 @@ test('Pressing ENTER over a highlighted element on a multiple select with `searc
   assert.ok(/two/.test($('.ember-power-select-trigger').text().trim()), 'The element was selected');
 });
 
-
 test('Pressing ENTER over a highlighted element on a select with `searchEnabled=false` selects it', function(assert) {
   assert.expect(4);
 

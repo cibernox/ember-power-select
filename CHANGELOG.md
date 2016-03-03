@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Allow to type in closed multiple selects. Before the default behaviour of keydown events
+  was being prevented, disallowing the typing.
 - [BUGFIX] Ensure the public API passed to the components and to the ourside world is the same, by
   making it a CP and and use it as single source of truth.
 
