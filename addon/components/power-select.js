@@ -138,6 +138,26 @@ export default Ember.Component.extend({
     return EventSender.create();
   }),
 
+  publicAPI: computed('registeredDropdown.isOpen', 'highlighted', 'searchText', function() {
+    let dropdown = this.get('registeredDropdown');
+    if (dropdown) {
+      let ownActions = {
+        search: this._doSearch.bind(this, dropdown),
+        highlight: this._doHighlight.bind(this, dropdown),
+        select: this._doSelect.bind(this, dropdown),
+        choose: (selected, e) => this.send('choose', dropdown, selected, e),
+        handleKeydown: (e) => this.send('handleKeydown', dropdown, e)
+      };
+      return {
+        isOpen: dropdown.isOpen,
+        highlighted: this.get('highlighted'),
+        searchText: this.get('searchText'),
+        actions: Ember.merge(ownActions, dropdown.actions)
+      };
+    }
+    return {};
+  }),
+
   // Actions
   actions: {
     highlight(dropdown, option) {
@@ -167,7 +187,7 @@ export default Ember.Component.extend({
 
     handleKeydown(dropdown, e) {
       const onkeydown = this.get('onkeydown');
-      if (onkeydown) { onkeydown(this.buildPublicAPI(dropdown), e); }
+      if (onkeydown) { onkeydown(this.get('publicAPI'), e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
         this._handleKeyUpDown(dropdown, e);
@@ -185,7 +205,7 @@ export default Ember.Component.extend({
     handleFocus(dropdown, event) {
       const action = this.get('onfocus');
       if (action) {
-        action(this.buildPublicAPI(dropdown), event);
+        action(this.get('publicAPI'), event);
       }
       this.get('eventSender').trigger('focus');
     },
@@ -209,14 +229,14 @@ export default Ember.Component.extend({
 
     handleOpen(dropdown, e) {
       const action = this.get('onopen');
-      if (action) { action(this.buildPublicAPI(dropdown), e); }
+      if (action) { action(this.get('publicAPI'), e); }
       if (e) { this.set('openingEvent', e); }
       run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
     },
 
     handleClose(dropdown, e) {
       const action = this.get('onclose');
-      if (action) { action(this.buildPublicAPI(dropdown), e); }
+      if (action) { action(this.get('publicAPI'), e); }
       if (e) { this.set('openingEvent', null); }
       this.send('highlight', dropdown, null, e);
     }
@@ -291,20 +311,6 @@ export default Ember.Component.extend({
     return filterOptions(options || [], term, optionMatcher);
   },
 
-  buildPublicAPI(dropdown) {
-    const ownActions = {
-      search: this._doSearch.bind(this, dropdown),
-      highlight: this._doHighlight.bind(this, dropdown),
-      select: this._doSelect.bind(this, dropdown),
-      choose: (selected, e) => this.send('choose', dropdown, selected, e)
-    };
-    return {
-      isOpen: dropdown.isOpen,
-      highlighted: this.get('highlighted'),
-      actions: Ember.merge(ownActions, dropdown.actions)
-    };
-  },
-
   defaultHighlighted() {
     const selected = this.get('selected');
     if (!selected || this.indexOfOption(selected) === -1) {
@@ -319,7 +325,7 @@ export default Ember.Component.extend({
       e.stopPropagation();
     }
     if (this.get('selected') !== selected) {
-      this.get('onchange')(selected, this.buildPublicAPI(dropdown));
+      this.get('onchange')(selected, this.get('publicAPI'));
     }
   },
 
