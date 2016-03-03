@@ -1,0 +1,79 @@
+<h1 class="doc-page-title">Create custom options</h1>
+
+<p>
+  Ember Power Select exposes an <code>onkeydown</code> action that allows you to
+  react to keyboard events before the default behaviour takes place. This gives
+  you the ability to enrich the component with very few lines of code.
+</p>
+
+<p>
+  Let's create one component on top of the multiple select that, besides of allowing
+  you to select among the selected options, lets you create new options on the fly.
+</p>
+
+<p>You guessed right, the typical tag creator.</p>
+
+<p>
+  Just define an action called <code>onkeydown</code>. That action will check if
+  the pressed key is the <kbd>Enter</kbd> key, it was pressed while the component
+  is opened and there is no option highlighted and the used typed some text.
+</p>
+
+<p>
+  If those 4 conditions are met, create a new item, add it to the list of options
+  and use the <code>choose</code> action of the select (received as first argument)
+  to select a new set of results.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select-multiple options=options selected=selected
+      onchange=(action (mut selected))
+      onkeydown=(action "createOnEnter")
+      as |number|}}
+      \{{number}}
+    \{{/power-select-multiple}}
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    import Ember from 'ember';
+
+    export default Ember.Controller.extend({
+      options: Ember.A(['Barcelona', 'London', 'New York', 'Porto']),
+      selected: [],
+
+      actions: {
+        createOnEnter(select, e) {
+          if (e.keyCode === 13 && select.isOpen &&
+            !select.highlighted && !Ember.isBlank(select.searchText)) {
+
+            let selected = this.get('selected');
+            if (!selected.includes(select.searchText)) {
+              this.get('options').pushObject(select.searchText);
+              let newSelection = selected.concat([select.searchText]);
+              select.actions.choose(newSelection);
+            }
+          }
+        }
+      }
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    <div style="margin: 0 auto; max-width: 250px;">
+      {{#power-select-multiple options=options selected=selected
+        onchange=(action (mut selected))
+        onkeydown=(action "createOnEnter")
+        as |number|}}
+        {{number}}
+      {{/power-select-multiple}}
+    </div>
+  </div>
+{{/code-sample}}
+
+<p>
+  <i>Et voilà</i>, you've created a component that allows you to create custom tags.
+</p>
+
+<div class="doc-page-nav">
+  {{#link-to 'public-pages.cookbook.debounce-searches' class="doc-page-nav-link-prev"}}&lt; Debounce searches{{/link-to}}
+  {{#link-to 'public-pages.cookbook.navigable-select' class="doc-page-nav-link-next"}}Navigable select &gt;{{/link-to}}
+</div>
