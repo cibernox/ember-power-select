@@ -8,3 +8,5 @@ export default function() {
   this.pretender.get('/*passthrough', this.pretender.passthrough);
 
 }
+export function testConfig() {
+}
