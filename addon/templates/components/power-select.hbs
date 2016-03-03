@@ -16,92 +16,65 @@
   onFocus=(action "handleFocus")
   onKeydown=(action "handleKeydown")
   registerActionsInParent=(action "registerDropdown") as |dropdown|}}
-  {{#with (hash
-    isOpen=dropdown.isOpen
-    actions=(hash
-      open=dropdown.actions.open
-      close=dropdown.actions.close
-      reposition=dropdown.actions.reposition
-      choose=(action "choose" dropdown)
-      select=(action "select" dropdown)
-      highlight=(action "highlight" dropdown)
-      search=(action "search" dropdown)
-      handleKeydown=(action "handleKeydown" dropdown)
-    )) as |select|}}
-      {{component beforeOptionsComponent
-        searchText=(readonly searchText)
-        onkeydown=(readonly onkeydown)
-        select=(readonly select)
-        searchPlaceholder=(readonly searchPlaceholder)
-        searchEnabled=(readonly searchEnabled)
-        highlighted=(readonly highlighted)
-        listboxId=(readonly optionsId)
-        extra=(readonly extra)
-        eventSender=eventSender}}
-      {{#if mustShowSearchMessage}}
-        <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option ember-power-select-option--search-message" role="option">{{searchMessage}}</li></ul>
-      {{else if mustShowNoMessages}}
-        {{#if (hasBlock "inverse")}}
-          {{yield to="inverse"}}
-        {{else if noMatchesMessage}}
-          <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">{{noMatchesMessage}}</li></ul>
-        {{/if}}
-      {{else}}
-        {{#component optionsComponent
-          options=(readonly results)
-          loading=(readonly loading)
-          allOptions=(readonly results)
-          highlighted=(readonly highlighted)
-          selected=(readonly selected)
-          optionsComponent=(readonly optionsComponent)
-          searchText=(readonly searchText)
-          lastSearchedText=(readonly lastSearchedText)
-          select=(readonly select)
-          extra=(readonly extra)
-          id=(readonly optionsId)
-          aria-controls=(readonly triggerId)
-          loadingMessage=(readonly loadingMessage)
-          class="ember-power-select-options" as |option term|}}
-          {{yield option term}}
-        {{/component}}
-      {{/if}}
-      {{component afterOptionsComponent
-        select=(readonly select)
-        searchPlaceholder=(readonly searchPlaceholder)
-        searchEnabled=(readonly searchEnabled)
-        extra=(readonly extra)}}
-  {{/with}}
-{{else}}
-  {{#with (hash
-    isOpen=registeredDropdown.isOpen
+  {{component beforeOptionsComponent
+    searchText=(readonly searchText)
+    onkeydown=(readonly onkeydown)
+    select=(readonly publicAPI)
+    searchPlaceholder=(readonly searchPlaceholder)
+    searchEnabled=(readonly searchEnabled)
     highlighted=(readonly highlighted)
-    actions=(hash
-      open=registeredDropdown.actions.open
-      close=registeredDropdown.actions.close
-      reposition=registeredDropdown.actions.reposition
-      choose=(action "choose" registeredDropdown)
-      select=(action "select" registeredDropdown)
-      highlight=(action "highlight" registeredDropdown)
-      search=(action "search" registeredDropdown)
-      handleKeydown=(action "handleKeydown" registeredDropdown)
-    )) as |select|}}
-    {{#component triggerComponent
+    listboxId=(readonly optionsId)
+    extra=(readonly extra)
+    eventSender=eventSender}}
+  {{#if mustShowSearchMessage}}
+    <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option ember-power-select-option--search-message" role="option">{{searchMessage}}</li></ul>
+  {{else if mustShowNoMessages}}
+    {{#if (hasBlock "inverse")}}
+      {{yield to="inverse"}}
+    {{else if noMatchesMessage}}
+      <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">{{noMatchesMessage}}</li></ul>
+    {{/if}}
+  {{else}}
+    {{#component optionsComponent
       options=(readonly results)
+      loading=(readonly loading)
+      allOptions=(readonly results)
+      highlighted=(readonly highlighted)
       selected=(readonly selected)
+      optionsComponent=(readonly optionsComponent)
       searchText=(readonly searchText)
       lastSearchedText=(readonly lastSearchedText)
-      placeholder=(readonly placeholder)
-      disabled=(readonly disabled)
-      allowClear=(readonly allowClear)
-      select=(readonly select)
+      select=(readonly publicAPI)
       extra=(readonly extra)
-      onkeydown=(readonly onkeydown)
-      listboxId=(readonly optionsId)
-      selectedItemComponent=(readonly selectedItemComponent)
-      searchEnabled=(readonly searchEnabled)
-      loading=(readonly loading)
-      searchField=(readonly searchField) as |opt term|}}
-      {{yield opt term}}
+      id=(readonly optionsId)
+      aria-controls=(readonly triggerId)
+      loadingMessage=(readonly loadingMessage)
+      class="ember-power-select-options" as |option term|}}
+      {{yield option term}}
     {{/component}}
-  {{/with}}
+  {{/if}}
+  {{component afterOptionsComponent
+    select=(readonly publicAPI)
+    searchPlaceholder=(readonly searchPlaceholder)
+    searchEnabled=(readonly searchEnabled)
+    extra=(readonly extra)}}
+{{else}}
+  {{#component triggerComponent
+    options=(readonly results)
+    selected=(readonly selected)
+    searchText=(readonly searchText)
+    lastSearchedText=(readonly lastSearchedText)
+    placeholder=(readonly placeholder)
+    disabled=(readonly disabled)
+    allowClear=(readonly allowClear)
+    select=(readonly publicAPI)
+    extra=(readonly extra)
+    onkeydown=(readonly onkeydown)
+    listboxId=(readonly optionsId)
+    selectedItemComponent=(readonly selectedItemComponent)
+    searchEnabled=(readonly searchEnabled)
+    loading=(readonly loading)
+    searchField=(readonly searchField) as |opt term|}}
+    {{yield opt term}}
+  {{/component}}
 {{/basic-dropdown}}

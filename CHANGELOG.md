@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Ensure the public API passed to the components and to the ourside world is the same, by
+  making it a CP and and use it as single source of truth.
+
 # 0.9.0-beta.7
 - [BUGFIX] Fix a bug filtering when the given options is a promise.
 - [ENHALCEMENT] The custom matchers defined by the user now can and should return numbers instead of

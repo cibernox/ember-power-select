@@ -10,15 +10,17 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 });
 
 test('The onchange of single selects action receives the selection and the public API', function(assert) {
-  assert.expect(8);
+  assert.expect(10);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
     assert.equal(selected, 'one', 'The first option is the selected');
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
@@ -35,15 +37,17 @@ test('The onchange of single selects action receives the selection and the publi
 });
 
 test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
-  assert.expect(8);
+  assert.expect(10);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
     assert.equal(selected, 'one', 'The first option is the selected');
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
@@ -60,14 +64,16 @@ test('The onchange of multiple selects action receives the selection and the pub
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(8);
+  assert.expect(10);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'undefined', 'select.highlighted is a still undefined');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
@@ -110,14 +116,16 @@ test('The onkeydown can be used to easily allow to select on tab', function(asse
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(8);
+  assert.expect(10);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
@@ -135,12 +143,13 @@ test('The onkeydown of multiple selects action receives the public API and the k
 });
 
 test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
-  assert.expect(9);
+  assert.expect(10);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
     assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
@@ -160,12 +169,13 @@ test('The onfocus of single selects action receives the public API and the focus
 });
 
 test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
-  assert.expect(9);
+  assert.expect(10);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
     assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
@@ -185,12 +195,13 @@ test('The onfocus of multiple selects action receives the public API and the foc
 });
 
 test('the `onopen` action is invoked when the dropdown opens', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
     assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
@@ -211,15 +222,20 @@ test('the `onopen` action is invoked when the dropdown opens', function(assert) 
 });
 
 test('the `onclose` action is invoked when the dropdown closes', function(assert) {
-  assert.expect(7);
+  assert.expect(12);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
     assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
     assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.choose, 'function', 'select.actions.choose is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
