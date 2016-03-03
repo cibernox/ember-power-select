@@ -36,6 +36,7 @@ Router.map(function() {
       this.route('bootstrap-theme');
       this.route('navigable-select');
       this.route('debounce-searches');
+      this.route('create-custom-options');
     });
 
     this.route('addons', function() {
