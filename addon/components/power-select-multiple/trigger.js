@@ -67,6 +67,8 @@ export default Ember.Component.extend({
             select.actions.search(get(lastSelection, searchField));
           }
         }
+      } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
+        e.stopPropagation();
       }
     }
   },
