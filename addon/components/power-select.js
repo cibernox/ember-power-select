@@ -138,6 +138,11 @@ export default Ember.Component.extend({
     return EventSender.create();
   }),
 
+  publicAPI: computed('registeredDropdown.isOpen', 'highlighted', 'searchText', function() {
+    let dropdown = this.get('registeredDropdown');
+    return dropdown ? this.buildPublicAPI(this.get('registeredDropdown')) : {};
+  }),
+
   // Actions
   actions: {
     highlight(dropdown, option) {
@@ -296,11 +301,13 @@ export default Ember.Component.extend({
       search: this._doSearch.bind(this, dropdown),
       highlight: this._doHighlight.bind(this, dropdown),
       select: this._doSelect.bind(this, dropdown),
-      choose: (selected, e) => this.send('choose', dropdown, selected, e)
+      choose: (selected, e) => this.send('choose', dropdown, selected, e),
+      handleKeydown: (e) => this.send('handleKeydown', dropdown, e)
     };
     return {
       isOpen: dropdown.isOpen,
       highlighted: this.get('highlighted'),
+      searchText: this.get('searchText'),
       actions: Ember.merge(ownActions, dropdown.actions)
     };
   },
