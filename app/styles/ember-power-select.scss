@@ -232,6 +232,12 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 .ember-power-select[dir=rtl] {
   .ember-power-select-trigger {
     padding: $ember-power-select-trigger-rtl-padding;
+    .ember-power-select-multiple-option {
+      float: right;
+    }
+    .ember-power-select-trigger-multiple-input {
+      float: right;
+    }
   }
   .ember-power-select-status-icon {
     left: 5px;
