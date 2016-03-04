@@ -37,6 +37,46 @@
   </div>
 {{/code-sample}}
 
+<p>
+  Also (only in single selects) this component supports searching and highlighting even when
+  there is no searchbox or the component is focused but closed. It just works out of the box.
+</p>
+
+<p>Try focusing the next component and typing, while it's opened and also while it's closed.</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    &lt;input type="text" placeholder="Focus me and press TAB to focus the select"&gt;
+    \{{#power-select
+      options=diacritics
+      selected=fellow
+      searchEnabled=false
+      onchange=(action (mut fellow))
+      as |name|}}
+      \{{name}}
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      names: [ "María", "Søren Larsen", "João", "Saša Jurić", "Íñigo" ]
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    <input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
+    <br>
+    <br>
+    {{#power-select
+      options=diacritics
+      selected=fellow
+      searchEnabled=false
+      onchange=(action (mut fellow))
+      as |name|}}
+      {{name}}
+    {{/power-select}}
+  </div>
+{{/code-sample}}
+
+
 <h3>Customize the search field</h3>
 
 <p>
@@ -82,6 +122,11 @@
     {{/power-select}}
   </div>
 {{/code-sample}}
+
+<p>
+  This field is also used when the user types over a select without searchbox that has
+  the focus.
+</p>
 
 <h3>Pass a custom matcher</h3>
 
@@ -133,6 +178,11 @@
     {{/power-select}}
   </div>
 {{/code-sample}}
+
+<p>
+  This field is also used when the user types over a select without searchbox that has
+  the focus.
+</p>
 
 <h3>Using the search term inside the block</h3>
 

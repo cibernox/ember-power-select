@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
-import { numbers } from '../constants';
+import { numbers, countries } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
   integration: true
@@ -448,4 +448,24 @@ test('Type something that doesn\'t give you any result leaves the current select
   assert.equal(trigger.textContent.trim(), 'nine', 'nine has been selected');
   triggerKeydown(trigger, 87); // w
   assert.equal(trigger.textContent.trim(), 'nine', 'nine is still selected because "ninew" gave no results');
+});
+
+test('Typing on a opened single select highlights the value that matches the string, also when the options are complex, using the `searchField` for that', function(assert) {
+  assert.expect(4);
+
+  this.countries = countries;
+  this.render(hbs`
+    {{#power-select options=countries selected=selected onchange=(action (mut selected)) searchField="name" as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is open');
+  triggerKeydown(trigger, 80); // p
+  triggerKeydown(trigger, 79); // o
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'Portugal', 'The option containing "Portugal" has been highlighted');
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
 });
