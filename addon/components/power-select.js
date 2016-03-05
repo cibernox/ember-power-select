@@ -77,9 +77,6 @@ export default Ember.Component.extend({
     if (this.get('triggerClass')) {
       classes.push(this.get('triggerClass'));
     }
-    if (this.get('class')) {
-      classes.push(`${this.get('class')}-trigger`);
-    }
     return classes.join(' ');
   }),
 
@@ -87,9 +84,6 @@ export default Ember.Component.extend({
     let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
     if (this.get('dropdownClass')) {
       classes.push(this.get('dropdownClass'));
-    }
-    if (this.get('class')) {
-      classes.push(`${this.get('class')}-dropdown`);
     }
     return classes.join(' ');
   }),
