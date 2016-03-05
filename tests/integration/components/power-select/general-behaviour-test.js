@@ -350,8 +350,8 @@ test('If the user passes `dropdownClass` the dropdown content should have that c
   assert.ok($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), 'dropdownClass can be customized');
 });
 
-test('If the user passes `class` the classes of the dropdown are customized using that', function(assert) {
-  assert.expect(2);
+test('If the user passes `class` the dropdown gets that class', function(assert) {
+  assert.expect(1);
   this.options = [];
   this.render(hbs`
     {{#power-select options=options selected=foo onchange=(action (mut foo)) class="my-foo" as |option|}}
@@ -359,8 +359,6 @@ test('If the user passes `class` the classes of the dropdown are customized usin
     {{/power-select}}
   `);
   assert.ok($('.ember-power-select').hasClass('my-foo'), 'the entire select inherits that class');
-  clickTrigger();
-  assert.ok($('.ember-power-select-dropdown').hasClass('my-foo-dropdown'), 'the dropdown derives its class from the given one too');
 });
 
 test('The filtering is reverted after closing the select', function(assert) {

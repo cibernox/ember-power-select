@@ -1,5 +1,10 @@
 # Master
 
+- [BREAKING CHANGE] Passing `class="my-foo"` to the component just customizes the class of the top-most
+  component, but doesn't try to derive classes from it for the trigger and the dropdown. This behavour
+  was unexpected, confusing, didn't work with multiple classes `class="foo bar baz"` and doesn't enables
+  any feature that `triggerClass=` and `dropdownClass=` don't allow already. Ditched.
+
 # 0.9.0-beta.8
 - [BUGFIX] Allow to type in closed multiple selects. Before the default behaviour of keydown events
   was being prevented, disallowing the typing.
