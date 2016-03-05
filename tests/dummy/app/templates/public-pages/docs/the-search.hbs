@@ -162,7 +162,7 @@
       ],
 
       myMatcher(person, term) {
-        return term === '' || person.name.indexOf(term) > -1 || person.surname.indexOf(term) > -1;
+        return return (person.name + ' ' + person.surname).indexOf(term);
       }
     });
   </pre>

@@ -62,7 +62,7 @@ test('#optionAtIndex knows how to transverse groups', function(assert) {
 
 test('#filterOptions generates new options respecting groups when the matches returns a boolean', function(assert) {
   const matcher = function(value, searchText) {
-    return new RegExp(searchText, 'i').test(value);
+    return new RegExp(searchText, 'i').test(value) ? 0 : -1;
   };
   assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [{ groupName: "Smalls", options: ["zero"] }]);
   assert.deepEqual(filterOptions(groupedOptions, 'ele', matcher), [

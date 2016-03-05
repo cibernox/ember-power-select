@@ -120,6 +120,15 @@ export default Ember.Component.extend({
     }
   }),
 
+  optionMatcher: computed('searchField', 'matcher', function() {
+    let { matcher, searchField } = this.getProperties('matcher', 'searchField');
+    if (searchField) {
+      return (option, text) => matcher(get(option, searchField), text);
+    } else {
+      return (option, text) => matcher(option, text);
+    }
+  }),
+
   highlighted: computed('results.[]', 'currentlyHighlighted', 'selected', function() {
     return this.get('currentlyHighlighted') || this.defaultHighlighted();
   }),
@@ -295,14 +304,7 @@ export default Ember.Component.extend({
   },
 
   filter(options, term) {
-    let optionMatcher;
-    let { matcher, searchField } = this.getProperties('matcher', 'searchField');
-    if (searchField) {
-      optionMatcher = (option, text) => matcher(get(option, searchField), text);
-    } else {
-      optionMatcher = (option, text) => matcher(option, text);
-    }
-    return filterOptions(options || [], term, optionMatcher);
+    return filterOptions(options || [], term, this.get('optionMatcher'));
   },
 
   defaultHighlighted() {
