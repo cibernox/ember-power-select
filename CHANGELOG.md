@@ -1,5 +1,6 @@
 # Master
 
+# 0.9.0 Final
 - [BREAKING CHANGE] Passing `class="my-foo"` to the component just customizes the class of the top-most
   component, but doesn't try to derive classes from it for the trigger and the dropdown. This behavour
   was unexpected, confusing, didn't work with multiple classes `class="foo bar baz"` and doesn't enables
