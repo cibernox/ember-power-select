@@ -209,7 +209,7 @@ test('The filtering specifying a custom matcher works in multiple model', functi
 
   this.numbers = numbers;
   this.endsWithMatcher = function(value, text) {
-    return text === '' || value.slice(text.length * -1) === text;
+    return value.slice(text.length * -1) === text ? 0 : -1;
   };
 
   this.render(hbs`

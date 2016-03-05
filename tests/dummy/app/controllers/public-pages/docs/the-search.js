@@ -28,6 +28,6 @@ export default Ember.Controller.extend({
   ],
 
   myMatcher(person, term) {
-    return term === '' || person.name.indexOf(term) > -1 || person.surname.indexOf(term) > -1;
+    return (person.name + ' ' + person.surname).indexOf(term);
   }
 });

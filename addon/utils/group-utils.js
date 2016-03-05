@@ -70,7 +70,7 @@ export function optionAtIndex(originalCollection, index) {
     }
   })(originalCollection);
 }
-
+let deprecatedMatchers = {};
 export function filterOptions(options, text, matcher) {
   const sanitizedOptions =  options.objectAt ? options : Ember.A(options);
   const opts = Ember.A();
@@ -87,6 +87,15 @@ export function filterOptions(options, text, matcher) {
       if (typeof matchResult === 'number') {
         if (matchResult >= 0) { opts.push(entry); }
       } else if (matchResult) {
+        let matcherToString = matcher.toString();
+        if (!deprecatedMatchers[matcherToString]) {
+          deprecatedMatchers[matcherToString] = true;
+          Ember.deprecate(
+            `Your custom matcher returned ${matchResult}. This is deprecated, custom matchers must return a number. Return any negative number when there was no match and return 0+ for positive matches. This will allow EPS to prioritize results`,
+            false,
+            { id: 'ember-power-select-matcher-return-number', until: '0.10' }
+          );
+        }
         opts.push(entry);
       }
     }

@@ -579,7 +579,7 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 
   this.numbers = numbers;
   this.endsWithMatcher = function(option, text) {
-    return text === '' || option.slice(text.length * -1) === text;
+    return option.slice(text.length * -1) === text ? 0 : -1;
   };
 
   this.render(hbs`
@@ -702,8 +702,8 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
     { name: 'Lisa',   surname: 'Simpson' },
   ];
 
-  this.nameOrSurnameNoDiacriticsCaseSensitive = function(value, text) {
-    return text === '' || value.name.indexOf(text) > -1 || value.surname.indexOf(text) > -1;
+  this.nameOrSurnameNoDiacriticsCaseSensitive = function(person, term) {
+    return (person.name + ' ' + person.surname).indexOf(term);
   };
 
   this.render(hbs`
