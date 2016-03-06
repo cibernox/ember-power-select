@@ -25,6 +25,7 @@
       aria-disabled={{opt.disabled}}
       aria-current={{eq opt highlighted}}
       onmouseup={{action select.actions.choose (ember-power-select-build-selection opt selected multiple=multiple)}}
+      onclick={{action select.actions.choose (ember-power-select-build-selection opt selected multiple=multiple)}}
       onmouseover={{action select.actions.highlight opt}} role="option">
       {{yield opt lastSearchedText}}
     </li>
