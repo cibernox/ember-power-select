@@ -63,7 +63,7 @@ export default Ember.Component.extend({
             select.actions.search(lastSelection);
           } else {
             let searchField = this.get('searchField');
-            Ember.assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings', searchField);
+            Ember.assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
             select.actions.search(get(lastSelection, searchField));
           }
         }
