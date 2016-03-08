@@ -14,7 +14,7 @@
 
 # 0.9.0-beta.7
 - [BUGFIX] Fix a bug filtering when the given options is a promise.
-- [ENHALCEMENT] The custom matchers defined by the user now can and should return numbers instead of
+- [ENHANCEMENT] The custom matchers defined by the user now can and should return numbers instead of
   `true/false`. Returning a boolean still works, but support for this might be deprecated and later
   on removed. The reason is that returning a number gives us more posibilities, like sorting the
   results.
