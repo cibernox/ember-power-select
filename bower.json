@@ -7,7 +7,8 @@
     "ember-qunit-notifications": "0.1.0",
     "lodash": "~3.7.0",
     "pretender": "~0.12.0",
-    "Faker": "~3.0.0"
+    "Faker": "~3.0.0",
+    "fastclick": "^1.0.6"
   },
   "resolutions": {
     "ember": "canary",
