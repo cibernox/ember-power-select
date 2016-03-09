@@ -5,7 +5,7 @@ import updateInput from '../../utils/update-input-value';
 
 const { computed, get, isBlank, run } = Ember;
 const { htmlSafe } = Ember.String;
-const ua = window.navigator.userAgent;
+const ua = self.window ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 export default Ember.Component.extend({
   tagName: '',
