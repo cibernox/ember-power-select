@@ -1,5 +1,11 @@
 # Master
 
+# 0.9.1
+- [BUGFIX] Disable placeholder of multiple select in Internet Explorer. There is a bug in IE that
+  prevents the component from loosing the focus because the placeholder is updated. Very weird.
+  This is less than ideal, but it's better to have a component without placeholder in IE than to
+  have a component than once opened cannot be closed. I have to get to the bottom of this.
+
 # 0.9.0 Final
 - [BREAKING CHANGE] Passing `class="my-foo"` to the component just customizes the class of the top-most
   component, but doesn't try to derive classes from it for the trigger and the dropdown. This behavour
