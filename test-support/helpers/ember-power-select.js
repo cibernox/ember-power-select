@@ -7,6 +7,12 @@ function typeText(selector, text) {
   $(selector).trigger('input');
 }
 
+function nativeMouseDown(selector, options = {}) {
+  let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
+  Object.keys(options).forEach(key => event[key] = options[key]);
+  Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
+}
+
 export function triggerKeydown(domElement, k) {
   var oEvent = document.createEvent("Events");
   oEvent.initEvent('keydown', true, true);
@@ -35,9 +41,7 @@ export function clickTrigger(scope, options = {}) {
   if (scope) {
     selector = scope + ' ' + selector;
   }
-  let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
-  Object.keys(options).forEach(key => event[key] = options[key]);
-  Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
+  nativeMouseDown(selector, options);
 }
 
 // Helpers for acceptance tests
@@ -49,7 +53,7 @@ export default function() {
     const id = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/ember-power-select-trigger-ember(\d+)/)[1]
     // If the dropdown is closed, open it
     if (Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0) {
-      click(`${cssPath} .ember-power-select-trigger`);
+      nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
     }
 
     // Select the option with the given text
@@ -62,7 +66,7 @@ export default function() {
 
     let dropdownIsClosed = Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0;
     if (dropdownIsClosed) {
-      click(`${cssPath} .ember-power-select-trigger`);
+      nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
     }
 
     if (isMultipleSelect) {
