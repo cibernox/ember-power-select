@@ -1,12 +1,66 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
+import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Public actions)', {
   integration: true
+});
+
+test('The search action of single selects action receives the search term and the public API', function(assert) {
+  assert.expect(10);
+
+  this.numbers = numbers;
+  this.handleSearch = (term, select) => {
+    assert.equal(term, 'el', 'The search term is received as 1st argument');
+    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) search=handleSearch as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('el');
+});
+
+test('The search action of multiple selects action receives the search term and the public API', function(assert) {
+  assert.expect(10);
+
+  this.numbers = numbers;
+  this.handleSearch = (term, select) => {
+    assert.equal(term, 'el', 'The search term is received as 1st argument');
+    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) search=handleSearch as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch('el');
 });
 
 test('The onchange of single selects action receives the selection and the public API', function(assert) {
