@@ -1,5 +1,8 @@
 # Master
 
+- [ENHANCEMENT] Pass the public API of the componet as second argument to the search action, as it is
+  the case with the rest of the public actions.
+
 # 0.9.2
 - [BUGFIX] Fix acceptance helpers (`selectChoose` & co) to fire native events even in Ember < 2.5.
   Fixes a bug with Ember Basic Dropdown 0.9.2.

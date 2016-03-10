@@ -364,7 +364,7 @@ export default Ember.Component.extend({
   },
 
   _performSearch(searchAction, term) {
-    let search = searchAction(term);
+    let search = searchAction(term, this.get('publicAPI'));
     if (!search) {
       this.setProperties({ lastSearchedText: term, searchText: term });
     } else if (search.then) {
