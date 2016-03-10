@@ -1,5 +1,9 @@
 # Master
 
+# 0.9.2
+- [BUGFIX] Fix acceptance helpers (`selectChoose` & co) to fire native events even in Ember < 2.5.
+  Fixes a bug with Ember Basic Dropdown 0.9.2.
+
 # 0.9.1
 - [BUGFIX] Disable placeholder of multiple select in Internet Explorer. There is a bug in IE that
   prevents the component from loosing the focus because the placeholder is updated. Very weird.
