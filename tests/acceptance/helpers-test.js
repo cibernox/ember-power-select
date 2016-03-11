@@ -37,6 +37,32 @@ test('selectChoose selects the option with the given text on an already opened s
   });
 });
 
+test('scott selectChoose helper works with an onopen function that fetches data async on single selects', function(assert) {
+  visit('/helpers-testing');
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectChoose('.select-choose-onopen', 'three');
+  });
+  andThen(function() {
+    assert.equal(find('.select-choose-onopen .ember-power-select-trigger').text().trim(), 'three', 'The proper value has been selected');
+    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+  });
+});
+
+test('scott selectChoose helper works with an onopen function that fetches data async on multiple selects', function(assert) {
+  visit('/helpers-testing');
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectChoose('.select-choose-onopen-multiple', 'three');
+  });
+  andThen(function() {
+    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-multiple-option').length, 1, 'One options has been selected');
+    assert.ok(/three/.test(find('.select-choose-onopen-multiple .ember-power-select-multiple-option:eq(0)').text().trim()), 'The proper value has been selected');
+    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+  });
+});
+
 moduleForAcceptance('Acceptance | helpers | selectSearch');
 
 test('selectSearch helper searches in the given single select if it is already opened', function(assert) {

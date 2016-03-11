@@ -26,6 +26,7 @@ const numbers = [
 export default Ember.Controller.extend({
   numbers,
   selectedList: [],
+  optionz: [],
   // Actions
   actions: {
     searchAsync(term) {
@@ -33,6 +34,13 @@ export default Ember.Controller.extend({
         Ember.run.later(function() {
           resolve(numbers.filter(n => n.indexOf(term) > -1));
         }, 100);
+      });
+    },
+    onOpenHandle(){
+      new Ember.RSVP.Promise((resolve) => {
+          Ember.run.later(() => {
+            resolve(this.set('optionz', numbers));
+          }, 100);
       });
     }
   }

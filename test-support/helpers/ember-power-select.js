@@ -54,6 +54,7 @@ export default function() {
     // If the dropdown is closed, open it
     if (Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
+      wait();
     }
 
     // Select the option with the given text
@@ -67,6 +68,7 @@ export default function() {
     let dropdownIsClosed = Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0;
     if (dropdownIsClosed) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
+      wait();
     }
 
     if (isMultipleSelect) {
