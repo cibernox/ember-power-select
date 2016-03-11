@@ -3,6 +3,14 @@
   {{num}}
 {{/power-select}}
 
+{{#power-select class="select-choose-onopen" onopen=(action "onOpenHandle") options=optionz selected=selected onchange=(action (mut selected)) searchEnabled=false as |num|}}
+  {{num}}
+{{/power-select}}
+
+{{#power-select-multiple class="select-choose-onopen-multiple" onopen=(action "onOpenHandle") options=optionz selected=selected2 onchange=(action (mut selected2)) searchEnabled=false as |num|}}
+  {{num}}
+{{/power-select-multiple}}
+
 {{#if selected}}
   <span class="select-choose-target">You've selected: {{selected}}</span>
 {{/if}}
