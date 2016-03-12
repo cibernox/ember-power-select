@@ -380,3 +380,22 @@ test('The programmer can use the received public API to perform searches in muti
   clickTrigger();
   assert.equal($('.ember-power-select-trigger-multiple-input')[0].value, 'hello', 'The search text contains the searched string');
 });
+
+// test('The search action of multiple selects has the searchText set to the up-to-date value', function(assert) {
+//   assert.expect(2);
+
+//   this.numbers = numbers;
+//   this.handleSearch = (term, select) => {
+//     assert.equal(term, 'el', 'The search term is received as 1st argument');
+//     assert.equal(select.searchText, 'el', 'the public API object has the searchText up to date');
+//   };
+
+//   this.render(hbs`
+//     {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) search=handleSearch as |number|}}
+//       {{number}}
+//     {{/power-select-multiple}}
+//   `);
+
+//   clickTrigger();
+//   typeInSearch('el');
+// });
