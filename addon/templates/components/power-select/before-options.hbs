@@ -5,7 +5,7 @@
       spellcheck="false" role="combobox"
       aria-controls={{listboxId}}
       placeholder={{searchPlaceholder}}
-      oninput={{action select.actions.search value="target.value"}}
+      oninput={{handleInput}}
       onkeydown={{action "handleKeydown"}}>
   </div>
 {{/if}}

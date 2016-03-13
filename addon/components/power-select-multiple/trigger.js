@@ -45,10 +45,11 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    search(term, e) {
-      let { search, open } = this.get('select.actions');
-      search(term, e);
-      open(e);
+    handleInput(e) {
+      let action = this.get('handleInput');
+      if (action) { action(e); }
+      if (e.defaultPrevented) { return; }
+      this.get('select.actions.open')(e);
     },
 
     handleKeydown(e) {
