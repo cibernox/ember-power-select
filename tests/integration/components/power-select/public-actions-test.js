@@ -304,6 +304,108 @@ test('the `onclose` action is invoked when the dropdown closes', function(assert
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is closed');
 });
 
+test('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', function(assert) {
+  assert.expect(15);
+
+  this.numbers = numbers;
+  this.handleInput = (value, select, e) => {
+    assert.equal(value, 'tw', 'The first argument is the value of the input');
+    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(select.searchText, '', 'select.searchText is still empty');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The third argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('tw');
+  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'two');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'twelve');
+  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'twenty');
+});
+
+test('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', function(assert) {
+  assert.expect(15);
+
+  this.numbers = numbers;
+  this.handleInput = (value, select, e) => {
+    assert.equal(value, 'tw', 'The first argument is the value of the input');
+    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(select.searchText, '', 'select.searchText is still empty');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The third argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch('tw');
+  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'two');
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'twelve');
+  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'twenty');
+});
+
+test('if the `oninput` action of single selects returns false the search is cancelled', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.handleInput = (/*value, select, e*/) => {
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('tw');
+  assert.equal($('.ember-power-select-option').length, 20, 'There is the same options than before');
+});
+
+test('if `oninput` action of multiple selects returns false the search is cancelled', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.handleInput = (/*value, select, e*/) => {
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch('tw');
+  assert.equal($('.ember-power-select-option').length, 20, 'There is the same options than before');
+});
+
 test('the `search` action of the public api passed to the public actions works as expected', function(assert) {
   assert.expect(6);
 

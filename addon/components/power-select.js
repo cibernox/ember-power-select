@@ -174,8 +174,10 @@ export default Ember.Component.extend({
     handleInput(e) {
       let term = e.target.value;
       let action = this.get('oninput');
-      if (action) { action(e.target.value, this.get('publicAPI'), e); }
-      if (e.defaultPrevented) { return; }
+      if (action) {
+        let returnValue = action(e.target.value, this.get('publicAPI'), e);
+        if (returnValue === false) { return; }
+      }
       this.send('search', this.get('registeredDropdown'), term, e);
     },
 

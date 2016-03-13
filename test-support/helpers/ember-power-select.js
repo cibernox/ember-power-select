@@ -3,8 +3,11 @@ import Ember from 'ember';
 // Helpers for integration tests
 
 function typeText(selector, text) {
-  $(selector).val(text);
-  $(selector).trigger('input');
+  let $selector = $(selector);
+  $selector.val(text);
+  let event = document.createEvent("Events");
+  event.initEvent('input', true, true);
+  $selector[0].dispatchEvent(event)
 }
 
 function nativeMouseDown(selector, options = {}) {
