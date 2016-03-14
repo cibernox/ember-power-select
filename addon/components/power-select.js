@@ -72,7 +72,7 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }),
 
-  concatenatedTriggerClasses: computed('class', function() {
+  concatenatedTriggerClasses: computed('triggerClass', function() {
     let classes = ['ember-power-select-trigger'];
     if (this.get('triggerClass')) {
       classes.push(this.get('triggerClass'));
@@ -80,7 +80,7 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }),
 
-  concatenatedDropdownClasses: computed('class', function() {
+  concatenatedDropdownClasses: computed('dropdownClass', function() {
     let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
     if (this.get('dropdownClass')) {
       classes.push(this.get('dropdownClass'));
