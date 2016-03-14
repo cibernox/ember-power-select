@@ -1,5 +1,13 @@
 # Master
 
+# 0.9.3-beta.0
+
+- [FEATURE] Add support for CSS transitions and animations. When the dropdown is rendered, it gets
+  a `.ember-basic-dropdown--transitioned-in` class after it's first rendered, so it's trivial to add
+  transitions when opened. The closed, the dropdown gets a `ember-basic-dropdown--transitioning-out`
+  class, and if there is any CSS animation or transition on that element, dropdown is not closed
+  until that animation finishes. All this behaviour is actually part of ember-basic-dropdown.
+- [BUGFIX] Ensure the `triggerClass` and `dropdownClass` can change in runtime
 - [BUGFIX] The the public API received by the `search` action now has the searchText up to date
   with the value entered by the user.
 - [BUGFIX] Acceptance tests helpers are now async inside. They used to be fully async before 0.9.2.
