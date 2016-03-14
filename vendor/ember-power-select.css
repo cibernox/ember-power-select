@@ -3,6 +3,10 @@
 
 .ember-basic-dropdown, .ember-basic-dropdown *, .ember-basic-dropdown-content, .ember-basic-dropdown-content * {
   box-sizing: border-box; }
+  .ember-basic-dropdown .ember-basic-dropdown--left, .ember-basic-dropdown * .ember-basic-dropdown--left, .ember-basic-dropdown-content .ember-basic-dropdown--left, .ember-basic-dropdown-content * .ember-basic-dropdown--left {
+    left: 0; }
+  .ember-basic-dropdown .ember-basic-dropdown--right, .ember-basic-dropdown * .ember-basic-dropdown--right, .ember-basic-dropdown-content .ember-basic-dropdown--right, .ember-basic-dropdown-content * .ember-basic-dropdown--right {
+    right: 0; }
 
 .ember-basic-dropdown-text-select-disabled {
   user-select: none;
