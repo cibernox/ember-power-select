@@ -22,9 +22,19 @@ $side-nav-color: #777;
   display: block;
   color: #999;
   padding-left: 16px;
+  .beta-label {
+    color: white;
+    background-color: #999;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 80%;
+  }
   &.active {
     border-left: 3px solid $brand-color;
     color: $brand-color;
     padding-left: 16px - 3px;
+    .beta-label {
+      background-color: $brand-color;
+    }
   }
 }

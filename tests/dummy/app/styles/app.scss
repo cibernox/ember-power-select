@@ -349,3 +349,39 @@
 }
 
 //// End of bootstrap styles
+
+@keyframes drop-fade-below {
+  0%   {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+}
+@keyframes drop-fade-above {
+  0%   {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.slide-fade {
+  &.ember-basic-dropdown--below.ember-basic-dropdown--transitioning-in {
+    animation: drop-fade-below .15s;
+  }
+  &.ember-basic-dropdown--below.ember-basic-dropdown--transitioning-out {
+    animation: drop-fade-below .15s reverse;
+  }
+  &.ember-basic-dropdown--above.ember-basic-dropdown--transitioning-in {
+    animation: drop-fade-above .15s;
+  }
+  &.ember-basic-dropdown--above.ember-basic-dropdown--transitioning-out {
+    animation: drop-fade-above .15s reverse;
+  }
+}

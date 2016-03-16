@@ -11,6 +11,6 @@ const countries = [
 ];
 
 export default Ember.Controller.extend({
-  tabs: ['template', 'CSS', 'result'],
+  tabs: ['template', 'styles', 'result'],
   options: countries
 });

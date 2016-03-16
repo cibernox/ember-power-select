@@ -1,4 +1,10 @@
-<h1 class="doc-page-title">Bootstrap theme</h1>
+<h1 class="doc-page-title">CSS animations</h1>
+
+<p>
+  <strong>Disclaimer:</strong> <em>Support for animations is only in 0.9.3-beta, and is somewhat experimental.
+  The final API or classes might vary, and maybe liquid-fire support is added at some point. Take this
+  chapter with a grain of salt.</em>
+</p>
 
 <p>
   Want to add some fancy effects to your selects when they open and close?
@@ -38,24 +44,69 @@
 
 {{#code-sample tabs=tabs as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select class="slide-fade" options=opts selected=country onchange=(action (mut country)) as |country|}}
+    \{{#power-select dropdownClass="slide-fade" options=opts selected=country onchange=(action (mut country)) as |country|}}
       \{{name}}
     \{{/power-select}}
   </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'CSS') 'active'}}">
-    import contries from '../utils/list-of-countries';
-    export default Ember.Controller.extend({
-      options: countries
-    });
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'styles') 'active'}}">
+    @keyframes drop-fade-below {
+      0%   {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(3px);
+      }
+    }
+    @keyframes drop-fade-above {
+      0%   {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
+    .slide-fade {
+
+      // When opening below the trigger
+      &.ember-basic-dropdown--below.ember-basic-dropdown--transitioning-in {
+        animation: drop-fade-below .15s;
+      }
+      &.ember-basic-dropdown--below.ember-basic-dropdown--transitioning-out {
+        animation: drop-fade-below .15s reverse;
+      }
+
+      // When opening above the trigger
+      &.ember-basic-dropdown--above.ember-basic-dropdown--transitioning-in {
+        animation: drop-fade-above .15s;
+      }
+      &.ember-basic-dropdown--above.ember-basic-dropdown--transitioning-out {
+        animation: drop-fade-above .15s reverse;
+      }
+    }
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select class="bootstrap-theme slide-fade" dropdownClass="bootstrap-theme-dropdown" options=options selected=country onchange=(action (mut country)) as |country|}}
+    {{#power-select class="bootstrap-theme" dropdownClass="slide-fade bootstrap-theme-dropdown" options=options selected=country onchange=(action (mut country)) as |country|}}
       <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
     {{/power-select}}
   </div>
 {{/code-sample}}
 
+<p>
+  Now that you can add animations, the first rule of animations is use them with caution, and if you
+  decide that it worth adding them, keep them short. Almost any animation over a third of a second
+  is probably too long.
+</p>
+
+<p>
+  Now lets dive in something more serious. Debounding searches.
+</p>
+
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.cookbook.index' class="doc-page-nav-link-prev"}}&lt; System-wide config{{/link-to}}
+  {{#link-to 'public-pages.cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
   {{#link-to 'public-pages.cookbook.debounce-searches' class="doc-page-nav-link-next"}}Debounce searches &gt;{{/link-to}}
 </div>
