@@ -40,6 +40,23 @@
 </pre>
 
 <p>
+  The result looks like this:
+</p>
+
+<div class="evenly-splitted">
+  <div>
+    {{#power-select options=options selected=selectedSingle onchange=(action (mut selectedSingle)) class="bootstrap-theme" dropdownClass="bootstrap-theme-dropdown" as |country|}}
+      <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+    {{/power-select}}
+  </div>
+  <div>
+    {{#power-select-multiple options=options selected=selectedMultiple onchange=(action (mut selectedMultiple)) class="bootstrap-theme" dropdownClass="bootstrap-theme-dropdown" as |country|}}
+      <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+    {{/power-select-multiple}}
+  </div>
+</div>
+
+<p>
   If your project is not using sass, you can still use the precompiled bootstrap theme instead of
   the default one with just a couple lines of configuration when creating your app on the
   <code>ember-cli-build.js</code> file.
