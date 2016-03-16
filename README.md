@@ -18,6 +18,30 @@ As any other ember-cli addon, run:
 ember install ember-power-select
 ```
 
+## Features overview
+
+Ember Power Select wants to be as agnostic as possible about how you're going to use it, but it still provides
+some default implementations that will match 95% of your needs, and exposes actions to customize the other
+5% of usages.
+
+Features include:
+
+* Single select
+* Multiple select
+* HTML inside the options or the trigger.
+* Filter options sanitizing diacritics.
+* Custom matchers.
+* Asynchonous searches.
+* Theming
+* Fully promise-aware, with loading states.
+* Compatibility with ember-data's ArrayProxies
+* Groups (with not deep limit), placeholders...
+* Clear the selection
+* Disable the component or individual options
+* CSS animations and transitions [in beta]
+* ... and anything else you want. Just replace parts of the selects with your own components.
+
+
 ## Usage
 
 Check the full documentation with live examples at [www.ember-power-select.com](http://www.ember-power-select.com) and
@@ -50,50 +74,6 @@ Any contribution is welcome. Please read our [guidelines](CONTRIBUTING.md).
 ## Troubleshooting
 
 If something doesn't work visit the [Troubleshooting](http://www.ember-power-select.com/docs/troubleshooting)
-section of the docs first and if your problem persist open an issue.
+section of the docs first and if your problem persist open an issue, specify the version of the component,
+Ember and browser.
 
-## Motivation
-
-> Why reinvent the wheel when there are already good framework-agnostic libraries out there that are
-battle tested and can be wrapped?
-
-> — Your brain, now.
-
-Believe me, I tried. And it worked for a while. Two good ember examples of addons doing that are
-[ember-cli-selectize](https://github.com/miguelcobain/ember-cli-selectize) and [https://github.com/iStefo/ember-select-2](ember-select-2).
-
-However this approach has inherent downsides.
-
-By accepting to use a framework agnostic library one needs to renounce to take advantage of the more higher
-level primitives that Ember and HTMLBars provide.
-
-Let's say that you need to build a mildly complex select which, as you type in a search-box,
-shows you a list of users that match that search with their avatars, names, and other information,
-and if there is no match it shows some message. When you select one user you navigate to the user profile.
-
-Using components and blocks this can be expressed very naturally.
-
-```hbs
-{{#my-select search=(action "findUsers") onchange=(action "seeProfile") as |user|}}
-  <img src="{{user.avatarUrl}}" alt="{{t 'alts.avatar-of' user=user.fullName}}">
-  <strong>{{user.fullName}}</strong>
-  <em>{{user.email}}</em>
-{{else}}
-  <img src="sad-face.svg">
-  <p>{{t "users.sorry-no-matches-try-again"}}</p>
-{{/my-select}}
-```
-
-This is the kind of expressiveness I wanted to find but is actually not possible to achieve translating between
-the "Ember world" where we solve problems in terms of actions and templates and the lower level world
-of those libraries where things are expressed in terms of events and DOM nodes.
-
-Even for things that are not impossible to do, translating between the bindings and data structures we use in
-ember and those in the libraries requires a surprising amount of glue code and is a very tricky task.
-
-Also those libraries tend to be quite complex and bloated with functionality not directly related with
-the task they have to solve, like internationalization for example. We don't need that code making this
-libraries weight ~100KB when we already have better and more natural ways to do it already.
-
-I thought that we deserved a select component for ember projects built with from scratch with ember in mind.
-That also allowed this library to weight <10KB (JS + CSS + images) when gzipped.
