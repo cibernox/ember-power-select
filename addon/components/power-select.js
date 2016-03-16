@@ -182,7 +182,7 @@ export default Ember.Component.extend({
           if (Math.abs(openingEvent.clientY - e.clientY) < 2) { return; }
         }
       }
-      this.send('select', dropdown, selection, e);
+      this.send('select', dropdown, this.get('buildSelection')(selection), e);
       if (this.get('closeOnSelect')) {
         dropdown.actions.close(e);
       }
@@ -313,6 +313,10 @@ export default Ember.Component.extend({
       return this.optionAtIndex(0);
     }
     return selected;
+  },
+
+  buildSelection(option) {
+    return option;
   },
 
   _doSelect(dropdown, selected, e) {
