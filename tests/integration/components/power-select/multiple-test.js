@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
+import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseDown } from '../../../helpers/ember-power-select';
 import { numbers, countries } from '../constants';
 
 const { RSVP } = Ember;
@@ -529,7 +529,7 @@ test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #9
   clickTrigger();
   Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
-  Ember.run(() => this.$('.ember-power-select-multiple-remove-btn').mousedown());
+  nativeMouseDown('.ember-power-select-multiple-remove-btn');
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
 });
 
@@ -544,7 +544,26 @@ test('Selecting and removing should result in desired behavior', function(assert
   clickTrigger();
   Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
   assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'Should add selected option');
-  Ember.run(() => this.$('.ember-power-select-multiple-remove-btn').mousedown());
+  nativeMouseDown('.ember-power-select-multiple-remove-btn');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
+});
+
+test('Selecting and removing can also be done with touch events', function(assert) {
+  assert.expect(3);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+  clickTrigger();
+  Ember.run(() => $('.ember-power-select-option:eq(1)').mouseup());
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'Should add selected option');
+  Ember.run(() => {
+    let event = new window.Event('touchstart', { bubbles: true, cancelable: true, view: window });
+    Ember.$('.ember-power-select-multiple-remove-btn')[0].dispatchEvent(event);
+  });
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'Input still does not have a placeholder');
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
 });
