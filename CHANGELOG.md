@@ -1,5 +1,14 @@
 # Master
 
+# 0.9.3-beta.2
+- [BUGFIX] Fix bug when the outer array was mutated in place and then changing the selection performed
+  an outdated selection. This was done by addin a new feature
+- [FEATURE] The component accepts a `buildSelection` action that, given an option, constructs the
+  new array of options from it. This allowed some internal cleanup.
+
+# 0.9.3-beta.1
+- [ENHANCEMENT] Update EBS to have better animation support
+
 # 0.9.3-beta.0
 
 - [FEATURE] Add support for CSS transitions and animations. When the dropdown is rendered, it gets
