@@ -1,8 +1,11 @@
-<ul class="ember-power-select-multiple-options">
-  {{#each selected as |opt|}}
+<ul id="{{elementId}}-ember-power-select-multiple-options" class="ember-power-select-multiple-options">
+  {{#each selected as |opt idx|}}
     <li class="ember-power-select-multiple-option">
       {{#unless disabled}}
-        <span role="button" aria-label="remove element" class="ember-power-select-multiple-remove-btn" onmousedown={{action select.actions.choose opt}}>&times;</span>
+        <span role="button"
+          aria-label="remove element"
+          class="ember-power-select-multiple-remove-btn"
+          data-selected-index={{idx}}>&times;</span>
       {{/unless}}
       {{#if selectedItemComponent}}
         {{component selectedItemComponent selected=opt lastSearchedText=lastSearchedText}}

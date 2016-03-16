@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Allow to remove elements on the power-select-multiple with touch events.
+
 # 0.9.3-beta.2
 - [BUGFIX] Fix bug when the outer array was mutated in place and then changing the selection performed
   an outdated selection. This was done by addin a new feature

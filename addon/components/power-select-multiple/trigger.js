@@ -6,6 +6,8 @@ const { computed, get, isBlank, run } = Ember;
 const { htmlSafe } = Ember.String;
 const ua = self.window ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
+const isTouchDevice = (Ember.testing || !!self.window && 'ontouchstart' in self.window);
+
 export default Ember.Component.extend({
   tagName: '',
   layout,
@@ -14,6 +16,19 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     this.input = document.querySelector(`.${this.elementId}-input`);
+    let optionsList = document.getElementById(`${this.elementId}-ember-power-select-multiple-options`);
+    let chooseOption = e => {
+      if (e.target.dataset.selectedIndex) {
+        e.stopPropagation();
+        e.preventDefault();
+        let selected = this.get('selected');
+        this.get('select.actions.choose')(get(selected, e.target.dataset.selectedIndex));
+      }
+    };
+    if (isTouchDevice) {
+      optionsList.addEventListener('touchstart', chooseOption);
+    }
+    optionsList.addEventListener('mousedown', chooseOption);
   },
 
   didUpdateAttrs({ oldAttrs, newAttrs }) {
