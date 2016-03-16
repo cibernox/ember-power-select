@@ -1,0 +1,61 @@
+<h1 class="doc-page-title">Bootstrap theme</h1>
+
+<p>
+  Want to add some fancy effects to your selects when they open and close?
+  Ember Power Select has you covered!
+</p>
+
+<p>
+  When opening and closing the selects EPS adds some utility classes to the <code>.ember-power-select-dropdown</code>
+  element that you can target to perform your CSS vodoo.
+</p>
+<p>The lifecycle of those clases is:</p>
+<ul>
+  <li>
+    After the <code>.ember-power-select-dropdown</code> has been added to the DOM, it receives a
+    <code>.ember-basic-dropdown--transitioning-in</code> class.
+  </li>
+  <li>
+    Once all opening animations or transitions have finished, <code>.ember-basic-dropdown--transitioning-in</code> is
+    replaced by <code>.ember-basic-dropdown--transitioned-in</code>.
+  </li>
+  <li>
+    When closed, EPS replaces its content with a close and adds a <code>.ember-basic-dropdown--transitioning-out</code> to it.
+  </li>
+  <li>
+    Once all closing animations or transitions have finished, the "ghost" clone is finally removed.
+  </li>
+  <li>
+    If you don't have animations nor transitions, most of this work is skipped.
+  </li>
+</ul>
+
+<p>
+  So, what do you have to do to enable this? Nothing, just add some animation with CSS.
+</p>
+
+<p>Lets add some slide and fade in animation to a select using the bootstrap theme.</p>
+
+{{#code-sample tabs=tabs as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select class="slide-fade" options=opts selected=country onchange=(action (mut country)) as |country|}}
+      \{{name}}
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'CSS') 'active'}}">
+    import contries from '../utils/list-of-countries';
+    export default Ember.Controller.extend({
+      options: countries
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select class="bootstrap-theme slide-fade" dropdownClass="bootstrap-theme-dropdown" options=options selected=country onchange=(action (mut country)) as |country|}}
+      <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+    {{/power-select}}
+  </div>
+{{/code-sample}}
+
+<div class="doc-page-nav">
+  {{#link-to 'public-pages.cookbook.index' class="doc-page-nav-link-prev"}}&lt; System-wide config{{/link-to}}
+  {{#link-to 'public-pages.cookbook.debounce-searches' class="doc-page-nav-link-next"}}Debounce searches &gt;{{/link-to}}
+</div>

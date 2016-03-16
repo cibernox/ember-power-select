@@ -34,6 +34,7 @@ Router.map(function() {
     });
     this.route('cookbook', function() {
       this.route('bootstrap-theme');
+      this.route('css-animations');
       this.route('navigable-select');
       this.route('debounce-searches');
       this.route('create-custom-options');
