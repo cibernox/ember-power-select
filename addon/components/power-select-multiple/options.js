@@ -5,6 +5,5 @@ export default Ember.Component.extend({
   layout: layout,
   tagName: 'ul',
   attributeBindings: ['role', 'aria-controls'],
-  role: 'listbox',
-  multiple: true
+  role: 'listbox'
 });

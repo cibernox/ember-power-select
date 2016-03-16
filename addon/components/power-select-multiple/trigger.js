@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select-multiple/trigger';
-import { emberPowerSelectBuildSelection as buildNewSelection } from '../../helpers/ember-power-select-build-selection';
 import updateInput from '../../utils/update-input-value';
 
 const { computed, get, isBlank, run } = Ember;
@@ -60,7 +59,7 @@ export default Ember.Component.extend({
       if (e.keyCode === 8 && isBlank(e.target.value)) {
         let lastSelection = get(selected, 'lastObject');
         if (lastSelection) {
-          select.actions.select(buildNewSelection([lastSelection, selected], { multiple: true }), e);
+          select.actions.select(this.get('buildSelection')(lastSelection), e);
           if (typeof lastSelection === 'string') {
             select.actions.search(lastSelection);
           } else {

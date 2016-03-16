@@ -660,3 +660,18 @@ test('The trigger of multiple selects have a special class to distinguish them f
   assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-multiple-trigger'), 'The trigger has the default class');
   assert.ok(this.$('.ember-power-select-trigger').hasClass('foobar-trigger'), 'The trigger has the given class');
 });
+
+test('The component works when the array of selected elements is mutated in place instead of replaced', function(assert) {
+  assert.expect(1);
+  this.numbers = numbers;
+  this.selected = Ember.A();
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+  clickTrigger();
+  Ember.run(() => this.get('selected').pushObject(numbers[3]));
+  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
+});

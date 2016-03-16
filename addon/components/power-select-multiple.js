@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/power-select-multiple';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
-import { emberPowerSelectBuildSelection as buildNewSelection } from '../helpers/ember-power-select-build-selection';
 
 const { computed } = Ember;
 
@@ -44,7 +43,7 @@ export default Ember.Component.extend({
         e.stopPropagation();
         if (select.highlighted !== undefined) {
           if (selected.indexOf(select.highlighted) === -1) {
-            select.actions.choose(buildNewSelection([select.highlighted, selected], { multiple: true }), e);
+            select.actions.choose(select.highlighted, e);
           } else {
             select.actions.close(e);
           }
@@ -52,6 +51,17 @@ export default Ember.Component.extend({
           select.actions.close(e);
         }
       }
+    },
+
+    buildSelection(option) {
+      let newSelection = (this.get('selected') || []).slice(0);
+      let idx = newSelection.indexOf(option);
+      if (idx > -1) {
+        newSelection.splice(idx, 1);
+      } else {
+        newSelection.push(option);
+      }
+      return newSelection;
     }
   },
 
