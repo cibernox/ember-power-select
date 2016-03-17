@@ -1,5 +1,6 @@
 # Master
 
+# 0.10.0-beta.0
 - [BREAKING CHANGE] Use event delegations in the list of options. This might break tests not using
   the provided acceptance helpers in Ember < 2.5. Also, people customizing the `optionsComponent`
   will have to revisit the component, but is a component very few people customizes.
