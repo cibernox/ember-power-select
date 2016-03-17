@@ -25,7 +25,8 @@
       aria-disabled={{opt.disabled}}
       aria-current={{eq opt highlighted}}
       onmouseup={{action select.actions.choose opt}}
-      ontouchstart={{action select.actions.choose opt}}
+      ontouchstart={{action "handleTouchStart"}}
+      ontouchend={{action "handleTouchEnd" opt}}
       onmouseover={{action select.actions.highlight opt}}
       role="option">
       {{yield opt lastSearchedText}}

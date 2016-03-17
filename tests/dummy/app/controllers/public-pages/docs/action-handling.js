@@ -3,7 +3,7 @@ import Ember from 'ember';
 const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 
 export default Ember.Controller.extend({
-  cities: ['Barcelona', 'London', 'New York', 'Porto'],
+  cities: ['Barcelona', 'London', 'New York', 'Porto', 'Coruña', 'Kracow', 'Siena', 'Portland', 'Springfield', 'Tokio'],
   destination: 'London',
   selectedCities: [],
   numbers,
