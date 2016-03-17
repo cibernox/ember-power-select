@@ -21,13 +21,13 @@ export default Ember.Component.extend({
     if (this.get('role') === 'group') { return; }
     let chooseOption = e => {
       if (e.target.dataset.optionIndex) {
-        this.get('select.actions.choose')(this._optionFromIndex(e.target.dataset.optionIndex));
+        this.get('select.actions.choose')(this._optionFromIndex(e.target.dataset.optionIndex), e);
       }
     };
     this.element.addEventListener('mousedown', chooseOption);
     this.element.addEventListener('mouseover', e => {
       if (e.target.dataset.optionIndex) {
-        this.get('select.actions.highlight')(this._optionFromIndex(e.target.dataset.optionIndex));
+        this.get('select.actions.highlight')(this._optionFromIndex(e.target.dataset.optionIndex), e);
       }
     });
 

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { clickTrigger } from '../../../helpers/ember-power-select';
+import { clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Mouse control)', {
@@ -20,7 +20,10 @@ test('Mouseovering a list item highlights it', function(assert) {
 
   clickTrigger();
   assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first element is highlighted');
-  Ember.run(() => $('.ember-power-select-option:eq(3)').trigger('mouseover'));
+  Ember.run(() => {
+    let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
+    $('.ember-power-select-option:eq(3)')[0].dispatchEvent(event);
+  });
   assert.equal($('.ember-power-select-option:eq(3)').attr('aria-current'), 'true', 'The 4th element is highlighted');
   assert.equal($('.ember-power-select-option:eq(3)').text().trim(), 'four');
 });
@@ -40,7 +43,7 @@ test('Clicking an item selects it, closes the dropdown and focuses the trigger',
   `);
 
   clickTrigger();
-  Ember.run(() => $('.ember-power-select-option:eq(3)').mouseup());
+  nativeMouseUp('.ember-power-select-option:eq(3)');
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select was closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });

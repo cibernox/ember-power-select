@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { groupedNumbers } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Groups)', {
@@ -67,7 +67,7 @@ test('Click on an option of a group select selects the option and closes the dro
     {{/power-select}}
   `);
   clickTrigger();
-  Ember.run(() => $('.ember-power-select-option:contains("four")').mouseup());
+  nativeMouseUp('.ember-power-select-option:contains("four")');
   assert.equal($('.ember-power-select-trigger').text().trim(), "four", 'The clicked option was selected');
   assert.equal($('.ember-power-select-options').length, 0, 'The dropdown has dissapeared');
 });
