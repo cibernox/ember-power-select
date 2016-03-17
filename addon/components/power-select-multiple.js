@@ -9,7 +9,6 @@ export default Ember.Component.extend({
   // Config
   triggerComponent: fallbackIfUndefined('power-select-multiple/trigger'),
   beforeOptionsComponent: fallbackIfUndefined(null),
-  optionsComponent: fallbackIfUndefined('power-select-multiple/options'),
 
   // CPs
   concatenatedTriggerClass: computed('triggerClass', function() {
