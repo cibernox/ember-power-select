@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
+import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
 
@@ -87,7 +87,7 @@ test('The onchange of single selects action receives the selection and the publi
   `);
 
   clickTrigger();
-  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+  nativeMouseUp('.ember-power-select-option:eq(0)');
 });
 
 test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
@@ -114,7 +114,7 @@ test('The onchange of multiple selects action receives the selection and the pub
   `);
 
   clickTrigger();
-  Ember.run(() => $('.ember-power-select-option:eq(0)').mouseup());
+  nativeMouseUp('.ember-power-select-option:eq(0)');
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {

@@ -3,7 +3,7 @@
     <li class="ember-power-select-option" role="option">{{loadingMessage}}</li>
   {{/if}}
 {{/if}}
-{{#each options as |opt|}}
+{{#each options as |opt index|}}
   {{#if opt.groupName}}
     <li class="ember-power-select-group" role="option">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
@@ -14,6 +14,7 @@
         allOptions=(readonly allOptions)
         optionsComponent=(readonly optionsComponent)
         select=(readonly select)
+        groupIndex=(concat groupIndex index ".")
         role="group"
         class="ember-power-select-options" as |option|}}
         {{yield option lastSearchedText}}
@@ -24,10 +25,7 @@
       aria-selected={{ember-power-select-is-selected opt selected}}
       aria-disabled={{opt.disabled}}
       aria-current={{eq opt highlighted}}
-      onmouseup={{action select.actions.choose opt}}
-      ontouchstart={{action "handleTouchStart"}}
-      ontouchend={{action "handleTouchEnd" opt}}
-      onmouseover={{action select.actions.highlight opt}}
+      data-option-index="{{groupIndex}}{{index}}"
       role="option">
       {{yield opt lastSearchedText}}
     </li>

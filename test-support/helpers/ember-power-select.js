@@ -13,6 +13,12 @@ export function nativeMouseDown(selector, options = {}) {
   Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
 }
 
+export function nativeMouseUp(selector, options = {}) {
+  let event = new window.Event('mouseup', { bubbles: true, cancelable: true, view: window });
+  Object.keys(options).forEach(key => event[key] = options[key]);
+  Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
+}
+
 export function triggerKeydown(domElement, k) {
   var oEvent = document.createEvent("Events");
   oEvent.initEvent('keydown', true, true);
@@ -58,7 +64,9 @@ export default function() {
     }
 
     // Select the option with the given text
-    click(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`);
+    andThen(function() {
+      nativeMouseUp(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`);
+    });
   });
 
   Ember.Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
