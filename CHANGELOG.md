@@ -1,10 +1,14 @@
 # Master
 
+# 0.10.0-beta.2
+- [FEATURE] Added `oninput` action that will be fired by changes in the search input. If the user
+  returns `false` from this action the default behaviour (perform a search) is not run.
+  This is particular useful for addons than need to preprocess the text being typed, by example to
+  tokenize it and add entries instead of performing a search.
 - [ENHANCEMENT] Improve accuracy `selectChoose`. Before `selectChoose('.my-select', 'User')` might,
   erroneously, select the option containing the text `User team` if it was before than `User` in the
   list. Now if there is more than one option containing the given text it but the content of
   one of the options is *identical*, then that one is choosen. If none is identical, the first one.
-
 
 # 0.10.0-beta.1
 - [BUGFIX] Fix bug with the new delegation methods when the list of options was not an Ember.A()
