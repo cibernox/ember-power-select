@@ -171,6 +171,16 @@ export default Ember.Component.extend({
       this._doSearch(dropdown, term);
     },
 
+    handleInput(e) {
+      let term = e.target.value;
+      let action = this.get('oninput');
+      if (action) {
+        let returnValue = action(e.target.value, this.get('publicAPI'), e);
+        if (returnValue === false) { return; }
+      }
+      this.send('search', this.get('registeredDropdown'), term, e);
+    },
+
     select(dropdown, selected, e) {
       this._doSelect(dropdown, selected, e);
     },
@@ -187,6 +197,7 @@ export default Ember.Component.extend({
         dropdown.actions.close(e);
       }
     },
+
 
     handleKeydown(dropdown, e) {
       const onkeydown = this.get('onkeydown');

@@ -17,10 +17,15 @@
     {{option}}
   {{/power-select}}
 
-  <h4>Multiple without search</h4>
-  {{#power-select searchEnabled=false options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
+  <h4>Multiple with search</h4>
+  {{#power-select-multiple options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
     {{option}}
-  {{/power-select}}
+  {{/power-select-multiple}}
+
+  <h4>Multiple without search</h4>
+  {{#power-select-multiple searchEnabled=false options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
+    {{option}}
+  {{/power-select-multiple}}
 
 
 {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
