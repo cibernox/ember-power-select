@@ -608,7 +608,7 @@ test('Typing in the input opens the component and filters the options also with 
   }, 150);
 });
 
-test('The search term is yielded as second argument in single selects', function(assert) {
+test('The search term is yielded as second argument in multiple selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`

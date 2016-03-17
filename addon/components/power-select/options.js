@@ -11,31 +11,35 @@ export default Ember.Component.extend({
   role: 'listbox',
 
   // Lifecycle hooks
-  init() {
-    this._super(...arguments);
-    this._touchMoveHandler = this._touchMoveHandler.bind(this);
-  },
-
   didInsertElement() {
     this._super(...arguments);
     if (this.get('role') === 'group') { return; }
-    let chooseOption = e => {
+
+    this.element.addEventListener('mouseup', e => {
       if (e.target.dataset.optionIndex) {
         this.get('select.actions.choose')(this._optionFromIndex(e.target.dataset.optionIndex), e);
       }
-    };
-    this.element.addEventListener('mousedown', chooseOption);
+    });
     this.element.addEventListener('mouseover', e => {
       if (e.target.dataset.optionIndex) {
         this.get('select.actions.highlight')(this._optionFromIndex(e.target.dataset.optionIndex), e);
       }
     });
 
-    if (!this.get('isTouchDevice')) { return; }
+    if (this.get('isTouchDevice')) {
+      this._addTouchEvents();
+    }
+  },
 
+  // Methods
+  _addTouchEvents() {
+    let touchMoveHandler = () => {
+      this.hasMoved = true;
+      this.element.removeEventListener('touchmove', touchMoveHandler);
+    }
     // Add touch event handlers to detect taps
     this.element.addEventListener('touchstart', () => {
-      this.element.addEventListener('touchmove', this._touchMoveHandler);
+      this.element.addEventListener('touchmove', touchMoveHandler);
     });
     this.element.addEventListener('touchend', e => {
       e.preventDefault();
@@ -43,15 +47,10 @@ export default Ember.Component.extend({
         this.hasMoved = false;
         return;
       }
-      chooseOption(e);
+      if (e.target.dataset.optionIndex) {
+        this.get('select.actions.choose')(this._optionFromIndex(e.target.dataset.optionIndex), e);
+      }
     });
-
-  },
-
-  // Methods
-  _touchMoveHandler() {
-    this.hasMoved = true;
-    this.element.removeEventListener('touchmove', this._touchMoveHandler);
   },
 
   _optionFromIndex(index) {
@@ -62,6 +61,5 @@ export default Ember.Component.extend({
       option = get(option.options, parts[i]);
     }
     return option;
-  },
-
+  }
 });
