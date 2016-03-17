@@ -10,16 +10,28 @@ function typeText(selector, text) {
   $selector[0].dispatchEvent(event)
 }
 
-export function nativeMouseDown(selector, options = {}) {
+export function nativeMouseDown(selectorOrDomElement, options = {}) {
   let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
   Object.keys(options).forEach(key => event[key] = options[key]);
-  Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
+  let target;
+  if (typeof selectorOrDomElement === 'string') {
+    target = Ember.$(selectorOrDomElement)[0];
+  } else {
+    target = selectorOrDomElement;
+  }
+  Ember.run(() => target.dispatchEvent(event));
 }
 
-export function nativeMouseUp(selector, options = {}) {
+export function nativeMouseUp(selectorOrDomElement, options = {}) {
   let event = new window.Event('mouseup', { bubbles: true, cancelable: true, view: window });
   Object.keys(options).forEach(key => event[key] = options[key]);
-  Ember.run(() => Ember.$(selector)[0].dispatchEvent(event));
+  let target;
+  if (typeof selectorOrDomElement === 'string') {
+    target = Ember.$(selectorOrDomElement)[0];
+  } else {
+    target = selectorOrDomElement;
+  }
+  Ember.run(() => target.dispatchEvent(event));
 }
 
 export function triggerKeydown(domElement, k) {
@@ -68,7 +80,14 @@ export default function() {
 
     // Select the option with the given text
     andThen(function() {
-      nativeMouseUp(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`);
+      let potentialTargets = $(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`).toArray();
+      let target;
+      if (potentialTargets.length > 1) {
+        target = potentialTargets.find(t => t.textContent.trim() === value) || potentialTargets[0];
+      } else {
+        target = potentialTargets[0];
+      }
+      nativeMouseUp(target);
     });
   });
 
