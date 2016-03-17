@@ -1,5 +1,8 @@
 # Master
 
+# 0.10.0-beta.1
+- [BUGFIX] Fix bug with the new delegation methods when the list of options was not an Ember.A()
+
 # 0.10.0-beta.0
 - [BREAKING CHANGE] Use event delegations in the list of options. This might break tests not using
   the provided acceptance helpers in Ember < 2.5. Also, people customizing the `optionsComponent`
