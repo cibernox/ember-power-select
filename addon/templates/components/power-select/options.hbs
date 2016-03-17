@@ -14,7 +14,7 @@
         allOptions=(readonly allOptions)
         optionsComponent=(readonly optionsComponent)
         select=(readonly select)
-        indexPrefix=(concat indexPrefix index ".")
+        groupIndex=(concat groupIndex index ".")
         role="group"
         class="ember-power-select-options" as |option|}}
         {{yield option lastSearchedText}}
@@ -25,7 +25,7 @@
       aria-selected={{ember-power-select-is-selected opt selected}}
       aria-disabled={{opt.disabled}}
       aria-current={{eq opt highlighted}}
-      data-option-index="{{indexPrefix}}{{index}}"
+      data-option-index="{{groupIndex}}{{index}}"
       role="option">
       {{yield opt lastSearchedText}}
     </li>

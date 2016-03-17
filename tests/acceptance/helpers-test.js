@@ -37,7 +37,7 @@ test('selectChoose selects the option with the given text on an already opened s
   });
 });
 
-test('scott selectChoose helper works with an onopen function that fetches data async on single selects', function(assert) {
+test('the selectChoose helper works with an onopen function that fetches data async on single selects', function(assert) {
   visit('/helpers-testing');
   andThen(function() {
     assert.equal(currentURL(), '/helpers-testing');
@@ -50,7 +50,7 @@ test('scott selectChoose helper works with an onopen function that fetches data 
   });
 });
 
-test('scott selectChoose helper works with an onopen function that fetches data async on multiple selects', function(assert) {
+test('the selectChoose helper works with an onopen function that fetches data async on multiple selects', function(assert) {
   visit('/helpers-testing');
   andThen(function() {
     assert.equal(currentURL(), '/helpers-testing');

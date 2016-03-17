@@ -37,11 +37,9 @@ export default Ember.Controller.extend({
       });
     },
     onOpenHandle(){
-      new Ember.RSVP.Promise((resolve) => {
-          Ember.run.later(() => {
-            resolve(this.set('optionz', numbers));
-          }, 100);
-      });
+      Ember.run.later(() => {
+        this.set('optionz', numbers);
+      }, 100);
     }
   }
 });
