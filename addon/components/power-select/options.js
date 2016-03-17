@@ -15,11 +15,11 @@ export default Ember.Component.extend({
   // Actions
   actions: {
     handleTouchStart(e) {
-      e.preventDefault();
       this.element.addEventListener('touchmove', this._touchMoveHandler);
     },
 
     handleTouchEnd(option, e) {
+      e.preventDefault();
       if (this.hasMoved) {
         this.hasMoved = false;
         return;
