@@ -52,6 +52,7 @@
     "ember-try": "^0.1.2",
     "liquid-fire": "0.23.0",
     "loader.js": "^4.0.0",
+    "memory-scroll": "0.2.0",
     "node-sass": "^3.4.2",
     "simple-git": "^1.10.0"
   },
