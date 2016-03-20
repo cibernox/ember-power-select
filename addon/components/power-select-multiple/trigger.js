@@ -21,8 +21,12 @@ export default Ember.Component.extend({
       if (e.target.dataset.selectedIndex) {
         e.stopPropagation();
         e.preventDefault();
+
+        let index = e.target.dataset.selectedIndex;
         let selected = this.get('selected');
-        this.get('select.actions.choose')(get(selected, e.target.dataset.selectedIndex));
+        let object = this.selectedObject(selected, index);
+
+        this.get('select.actions.choose')(object);
       }
     };
     if (isTouchDevice) {
@@ -98,5 +102,13 @@ export default Ember.Component.extend({
 
   updateInput(value) {
     updateInput(this.input, value);
+  },
+
+  selectedObject(list, index) {
+    if (list.objectAt) {
+      return list.objectAt(index);
+    } else {
+      return get(list, index);
+    }
   }
 });
