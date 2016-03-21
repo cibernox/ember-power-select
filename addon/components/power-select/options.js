@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select/options';
 
-const { get } = Ember;
-
 export default Ember.Component.extend({
   isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
   layout: layout,
@@ -16,9 +14,9 @@ export default Ember.Component.extend({
     if (this.get('role') === 'group') { return; }
 
     this.element.addEventListener('mouseup', e => {
-      if (e.target.dataset.optionIndex) {
-        this.get('select.actions.choose')(this._optionFromIndex(e.target.dataset.optionIndex), e);
-      }
+      const optionItem = Ember.$(e.target).closest('[data-option-index]');
+      if (!optionItem) { return; }
+      this.get('select.actions.choose')(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
     });
     this.element.addEventListener('mouseover', e => {
       if (e.target.dataset.optionIndex) {
@@ -36,7 +34,7 @@ export default Ember.Component.extend({
     let touchMoveHandler = () => {
       this.hasMoved = true;
       this.element.removeEventListener('touchmove', touchMoveHandler);
-    }
+    };
     // Add touch event handlers to detect taps
     this.element.addEventListener('touchstart', () => {
       this.element.addEventListener('touchmove', touchMoveHandler);
