@@ -145,9 +145,9 @@ export default Ember.Component.extend({
     let dropdown = this.get('registeredDropdown');
     if (dropdown) {
       let ownActions = {
-        search: this._doSearch.bind(this, dropdown),
-        highlight: this._doHighlight.bind(this, dropdown),
-        select: this._doSelect.bind(this, dropdown),
+        search: (term, e) => this.send('search', dropdown, term, e),
+        highlight: (option) => this.send('highlight', dropdown, option),
+        select: (selected, e) => this.send('select', dropdown, selected, e),
         choose: (selected, e) => this.send('choose', dropdown, selected, e),
         handleKeydown: (e) => this.send('handleKeydown', dropdown, e)
       };
