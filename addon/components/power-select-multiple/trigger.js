@@ -83,6 +83,7 @@ export default Ember.Component.extend({
             Ember.assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
             select.actions.search(get(lastSelection, searchField));
           }
+          select.actions.open(e);
         }
       } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
         e.stopPropagation();

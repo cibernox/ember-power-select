@@ -392,7 +392,7 @@ test('Pressing BACKSPACE on the search input when there is text on it does nothi
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
 });
 
-test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly', function(assert) {
+test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly, opening the select if closed', function(assert) {
   assert.expect(9);
 
   this.numbers = numbers;
@@ -409,12 +409,11 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   `);
 
   let input = this.$('.ember-power-select-trigger-multiple-input')[0];
-  clickTrigger();
   assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
   triggerKeydown(input, 8);
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'two', 'The text of the seach input is two now');
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown is still opened');
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown has been opened');
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
   assert.equal(input.selectionStart, 3);
   assert.equal(input.selectionEnd, 3);
