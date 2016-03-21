@@ -139,5 +139,24 @@ test('Doing mouseup over an option less than 2px in the Y axis of where the mous
   assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'two', 'The element has been selected');
 });
 
+test('Clicking on a wrapped option should select it', function(assert) {
+  assert.expect(3);
 
+  this.numbers = numbers;
+
+  this.foo = (val) => {
+    assert.equal(val, 'four', 'The expected value was selected');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers onchange=foo as |option|}}
+      <span class="special-class">{{option}}</span>
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  nativeMouseUp('.special-class:eq(3)');
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select was closed');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
+});
 
