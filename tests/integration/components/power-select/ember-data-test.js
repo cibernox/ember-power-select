@@ -10,7 +10,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true,
   beforeEach() {
     let owner = Ember.getOwner(this);
-    this.server = startMirage();
+    this.server = startMirage({ environment: 'test', modulePrefix: 'dummy' });
 
     emberDataInitializer.initialize(owner);
     this.store = owner.lookup('service:store');
@@ -22,6 +22,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 });
 
 test('Passing as options of a `store.findAll` works', function(assert) {
+  server.createList('user', 10);
   this.users = this.store.findAll('user');
   this.render(hbs`
     {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
@@ -40,6 +41,7 @@ test('Passing as options of a `store.findAll` works', function(assert) {
 });
 
 test('Passing as options the result of `store.query` works', function(assert) {
+  server.createList('user', 10);
   this.users = this.store.query('user', { foo: 'bar' });
   this.render(hbs`
     {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
