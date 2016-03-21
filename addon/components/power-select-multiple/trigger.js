@@ -33,7 +33,7 @@ export default Ember.Component.extend({
 
   didUpdateAttrs({ oldAttrs, newAttrs }) {
     this._super(...arguments);
-    if (oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
+    if (oldAttrs.select.value.isOpen && !newAttrs.select.value.isOpen) {
       this.handleClose();
     }
     if (newAttrs.searchText !== undefined && newAttrs.searchText !== null) {

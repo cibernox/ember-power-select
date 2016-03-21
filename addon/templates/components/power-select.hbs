@@ -19,7 +19,7 @@
   {{component beforeOptionsComponent
     searchText=(readonly searchText)
     onkeydown=(readonly onkeydown)
-    select=(readonly publicAPI)
+    select=publicAPI
     handleInput=(action "handleInput")
     searchPlaceholder=(readonly searchPlaceholder)
     searchEnabled=(readonly searchEnabled)
@@ -45,7 +45,7 @@
       optionsComponent=(readonly optionsComponent)
       searchText=(readonly searchText)
       lastSearchedText=(readonly lastSearchedText)
-      select=(readonly publicAPI)
+      select=publicAPI
       extra=(readonly extra)
       id=(readonly optionsId)
       groupIndex=""
@@ -56,7 +56,7 @@
     {{/component}}
   {{/if}}
   {{component afterOptionsComponent
-    select=(readonly publicAPI)
+    select=publicAPI
     searchPlaceholder=(readonly searchPlaceholder)
     searchEnabled=(readonly searchEnabled)
     extra=(readonly extra)}}
@@ -70,7 +70,7 @@
     disabled=(readonly disabled)
     handleInput=(action "handleInput")
     allowClear=(readonly allowClear)
-    select=(readonly publicAPI)
+    select=publicAPI
     extra=(readonly extra)
     buildSelection=(readonly buildSelection)
     onkeydown=(readonly onkeydown)
