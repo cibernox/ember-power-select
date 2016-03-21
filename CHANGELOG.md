@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] In multiple selects, deleting the last element of the list using BACKSPACE to trigger a
+  search must open the dropdown if not already opened.
+
 # 0.10.0-beta.2
 - [FEATURE] Added `oninput` action that will be fired by changes in the search input. If the user
   returns `false` from this action the default behaviour (perform a search) is not run.
