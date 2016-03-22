@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Fix option highlighting when the use mouseovers in an element inside the `<li>`s
+
 # 0.10.0-beta.3
 - [BUGFIX] Fix option selection when the use click in an element inside the `<li>`s
 - [BUGFIX] In multiple selects, deleting the last element of the list using BACKSPACE to trigger a
