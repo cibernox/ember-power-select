@@ -149,11 +149,11 @@
       <td>Object to store any arbitrary configuration meant to be used by custom components</td>
     </tr>
     <tr>
-      <td>opened</td>
+      <td>initiallyOpened</td>
       <td><code>boolean</code></td>
       <td>
-        Boolean property that controls if the component is opened or closed. Unlinke all other properties
-        passed to this component, this is the only one desiged to be mutable.
+        Boolean property that controls if the component is rendered initially in the open state. It
+        won't mutate if the component is opened/closed. It won't close/open the component when mutated either.
       </td>
     </tr>
     <tr>

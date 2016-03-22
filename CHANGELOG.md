@@ -1,5 +1,11 @@
 # Master
 
+# 0.10.0-beta.4
+- [REMOVE FEATURE] The `opened` property (the only using double bindings instead of DDAU) has been
+  removed. It was the cause of some errors due to race conditions in the bindings propagation.
+  It is still possible to pass `initiallyOpened=true` to render a select already opened, but it is
+  a one time property. It won't onpen/close the select when mutated nor will be mutated when the
+  select is opened or closed.
 - [BUGFIX] Fix option highlighting when the use mouseovers in an element inside the `<li>`s
 
 # 0.10.0-beta.3
