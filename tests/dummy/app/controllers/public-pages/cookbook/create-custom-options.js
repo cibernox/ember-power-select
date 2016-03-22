@@ -12,8 +12,7 @@ export default Ember.Controller.extend({
         let selected = this.get('selected');
         if (!selected.includes(select.searchText)) {
           this.get('options').pushObject(select.searchText);
-          let newSelection = selected.concat([select.searchText]);
-          select.actions.choose(newSelection);
+          select.actions.choose(select.searchText);
         }
       }
     }
