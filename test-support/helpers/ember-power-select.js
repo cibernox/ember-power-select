@@ -114,4 +114,24 @@ export default function() {
     }
 
   });
+
+  Ember.Test.registerAsyncHelper('removeMultipleOption', function(app, cssPath, value) {
+    const elem = find(`${cssPath} .ember-power-select-multiple-options > li:contains(${value}) > .ember-power-select-multiple-remove-btn`)[0];
+    try {
+      nativeMouseDown(elem);
+    } catch (e) {
+      console.warn('css path to remove btn not found');
+      throw e;
+    }
+  });
+
+  Ember.Test.registerAsyncHelper('clearSelected', function(app, cssPath, value) {
+    const elem = find(`${cssPath} .ember-power-select-clear-btn`)[0];
+    try {
+      nativeMouseDown(elem);
+    } catch (e) {
+      console.warn('css path to clear btn not found');
+      throw e;
+    }
+  });
 }
