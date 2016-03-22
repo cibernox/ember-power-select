@@ -160,3 +160,23 @@ test('Clicking on a wrapped option should select it', function(assert) {
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
 
+test('Mouse-overing on a wrapped option should select it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <span class="special-class">{{option}}</span>
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
+  Ember.run(() => {
+    let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
+    $('.special-class:eq(3)')[0].dispatchEvent(event);
+  });
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The fourth element is highlighted');
+});
+
