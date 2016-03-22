@@ -24,7 +24,7 @@ export default Ember.Component.extend({
   dropdownClass: fallbackIfUndefined(null),
   triggerClass: fallbackIfUndefined(null),
   dir: fallbackIfUndefined(null),
-  opened: fallbackIfUndefined(false),
+  initiallyOpened: fallbackIfUndefined(false),
   searchEnabled: fallbackIfUndefined(true),
   searchMessage: fallbackIfUndefined("Type to search"),
   searchPlaceholder: fallbackIfUndefined(null),
