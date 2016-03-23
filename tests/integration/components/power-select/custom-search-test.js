@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
@@ -73,7 +74,6 @@ test('The search function can return an array and those options get rendered', f
 });
 
 test('The search function can return a promise that resolves to an array and those options get rendered', function(assert) {
-  let done = assert.async();
   assert.expect(1);
 
   this.searchFn = function(term) {
@@ -93,14 +93,12 @@ test('The search function can return a promise that resolves to an array and tho
   clickTrigger();
   typeInSearch("teen");
 
-  setTimeout(function() {
+  return wait().then(function() {
     assert.equal($('.ember-power-select-option').length, 7);
-    done();
-  }, 150);
+  });
 });
 
 test('While the async search is being performed the "Type to search" dissapears the "Loading..." message appears', function(assert) {
-  let done = assert.async();
   assert.expect(3);
 
   this.searchFn = function(term) {
@@ -122,11 +120,10 @@ test('While the async search is being performed the "Type to search" dissapears 
   typeInSearch("teen");
   assert.ok(!/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message dissapeared');
   assert.ok(/Loading options\.\.\./.test($('.ember-power-select-dropdown').text()), '"Loading options..." message appears');
-  setTimeout(done, 150);
+  return wait();
 });
 
 test('When the search resolves to an empty array then the "No results found" message or block appears.', function(assert) {
-  var done = assert.async();
   assert.expect(1);
 
   this.searchFn = function() {
@@ -143,14 +140,12 @@ test('When the search resolves to an empty array then the "No results found" mes
 
   clickTrigger();
   typeInSearch("teen");
-  setTimeout(() => {
+  return wait().then(function() {
     assert.ok(/No results found/.test($('.ember-power-select-option').text()), 'The default "No results" message renders');
-    done();
-  }, 20);
+  });
 });
 
 test('When the search resolves to an empty array then the custom "No results" message appears', function(assert) {
-  var done = assert.async();
   assert.expect(1);
 
   this.searchFn = function() {
@@ -167,14 +162,12 @@ test('When the search resolves to an empty array then the custom "No results" me
 
   clickTrigger();
   typeInSearch("teen");
-  setTimeout(() => {
+  return wait().then(function() {
     assert.ok(/Meec\. Try again/.test($('.ember-power-select-option').text()), 'The customized "No results" message renders');
-    done();
-  }, 20);
+  });
 });
 
 test('When the search resolves to an empty array then the custom alternate block renders', function(assert) {
-  var done = assert.async();
   assert.expect(1);
 
   this.searchFn = function() {
@@ -193,10 +186,9 @@ test('When the search resolves to an empty array then the custom alternate block
 
   clickTrigger();
   typeInSearch("teen");
-  setTimeout(() => {
+  return wait().then(function() {
     assert.equal($('.ember-power-select-dropdown .foo-bar').length, 1, 'The alternate block message gets rendered');
-    done();
-  }, 20);
+  });
 });
 
 test('When one search is fired before the previous one resolved, the "Loading" continues until the 2nd is resolved', function(assert) {
@@ -230,7 +222,6 @@ test('When one search is fired before the previous one resolved, the "Loading" c
 });
 
 test('On an empty select, when the search resolves, the first element is highlighted like with regular filtering', function(assert) {
-  var done = assert.async();
   assert.expect(1);
 
   this.searchFn = function(term) {
@@ -250,14 +241,12 @@ test('On an empty select, when the search resolves, the first element is highlig
   clickTrigger();
   typeInSearch("teen");
 
-  setTimeout(function() {
+  return wait().then(function() {
     assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
-    done();
-  }, 110);
+  });
 });
 
 test('On an select with a selected value, if after a search this value is not among the options the first element is highlighted', function(assert) {
-  var done = assert.async();
   assert.expect(2);
 
   this.numbers = numbers;
@@ -280,10 +269,9 @@ test('On an select with a selected value, if after a search this value is not am
   assert.equal($('.ember-power-select-option:eq(2)').attr('aria-current'), 'true', 'The 3rd result is highlighted');
   typeInSearch("teen");
 
-  setTimeout(function() {
+  return wait().then(function() {
     assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
-    done();
-  }, 110);
+  });
 });
 
 test('Closing a component with a custom search cleans the search box and the results list', function(assert) {
@@ -314,7 +302,6 @@ test('Closing a component with a custom search cleans the search box and the res
 });
 
 test('When received both options and search, those options are shown when the dropdown opens before the first search is performed', function(assert) {
-  var done = assert.async();
   assert.expect(4);
 
   this.numbers = numbers;
@@ -338,14 +325,12 @@ test('When received both options and search, those options are shown when the dr
   typeInSearch("teen");
   assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown and also the loading message');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...');
-  setTimeout(function() {
+  return wait().then(function() {
     assert.equal($('.ember-power-select-option').length, 7, 'All the options are shown but no the loading message');
-    done();
-  }, 100);
+  });
 });
 
 test('Don\'t return from the search action and update the options instead also works as an strategy', function(assert) {
-  let done = assert.async();
   assert.expect(2);
 
   this.selectedOptions = numbers;
@@ -366,10 +351,9 @@ test('Don\'t return from the search action and update the options instead also w
   assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
   typeInSearch("teen");
 
-  setTimeout(function() {
+  return wait().then(function() {
     assert.equal($('.ember-power-select-option').length, 7);
-    done();
-  }, 100);
+  });
 });
 
 test('Setting the options to a promise from the custom search function works (and does not prevent further searches)', function(assert) {
@@ -478,13 +462,13 @@ test('The yielded search term in single selects is updated only when the async s
 
   clickTrigger();
   typeInSearch("teen");
-  setTimeout(function() {
+  return wait().then(function() {
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
     typeInSearch("four");
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
     assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
     done();
-  }, 150);
+  });
 });
 
 test('The yielded search term in multiple selects is updated only when the async search for it finishes', function(assert) {
