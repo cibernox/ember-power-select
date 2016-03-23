@@ -462,7 +462,7 @@ test('The yielded search term in single selects is updated only when the async s
 
   clickTrigger();
   typeInSearch("teen");
-  setTimeout(() => {
+  setTimeout(function() {
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
     typeInSearch("four");
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
