@@ -24,7 +24,9 @@
     "currentPath",
     "currentRouteName",
     "selectChoose",
-    "selectSearch"
+    "selectSearch",
+    "removeMultipleOption",
+    "clearSelected"
   ],
   "node": false,
   "browser": false,
