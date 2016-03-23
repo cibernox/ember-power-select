@@ -462,13 +462,13 @@ test('The yielded search term in single selects is updated only when the async s
 
   clickTrigger();
   typeInSearch("teen");
-  return wait().then(function() {
+  setTimeout(() => {
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
     typeInSearch("four");
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
     assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
     done();
-  });
+  }, 150);
 });
 
 test('The yielded search term in multiple selects is updated only when the async search for it finishes', function(assert) {
