@@ -44,8 +44,8 @@ test('the selectChoose helper works with an onopen function that fetches data as
     selectChoose('.select-choose-onopen', 'three');
   });
   andThen(function() {
-    assert.equal(find('.select-choose-onopen .ember-power-select-trigger').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.select-choose-onopen .ember-power-select-trigger').text().trim().split(' ')[0].trim(), 'three', 'The proper value has been selected');
+    assert.equal($('.ember-power-select-options').length, 0, 'The select is closed');
     assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
   });
 });
@@ -116,5 +116,44 @@ test('selectSearch helper searches in the given multiple select closed', functio
 
   andThen(function() {
     assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
+
+test('removeMultipleOption removes selected option', function(assert) {
+  visit('/helpers-testing');
+
+  selectChoose('.select-choose-onopen-multiple', 'three');
+  selectChoose('.select-choose-onopen-multiple', 'four');
+  andThen(function() {
+    assert.equal(find('.select-choose-onopen-multiple > .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 2, 'Multiple options selected');
+  });
+
+  removeMultipleOption('.select-choose-onopen-multiple', 'three');
+  andThen(function() {
+    assert.equal(find('.select-choose-onopen-multiple > .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 1, 'One option removed');
+  });
+
+  removeMultipleOption('.select-choose-onopen-multiple', 'four');
+  andThen(function() {
+    assert.equal(find('.select-choose-onopen-multiple > .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 0, 'Last option removed');
+  });
+});
+
+test('clearSelected removes selected option', function(assert) {
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.notOk(find('.select-choose-onopen .ember-power-select-clear-btn').text());
+  });
+
+  selectChoose('.select-choose-onopen', 'three');
+  andThen(function() {
+    assert.ok(find('.select-choose-onopen .ember-power-select-clear-btn').text());
+    assert.ok(find('.select-choose-onopen .ember-power-select-selected-item').text(), 'three', 'The proper value has been selected');
+  });
+
+  clearSelected('.select-choose-onopen', 'three');
+  andThen(function() {
+    assert.notOk(find('.select-choose-onopen .ember-power-select-clear-btn').text());
   });
 });
