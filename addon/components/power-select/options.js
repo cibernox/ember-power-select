@@ -15,12 +15,12 @@ export default Ember.Component.extend({
 
     this.element.addEventListener('mouseup', e => {
       const optionItem = Ember.$(e.target).closest('[data-option-index]');
-      if (!optionItem) { return; }
+      if (!optionItem || !(0 in optionItem)) { return; }
       this.get('select.actions.choose')(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
     });
     this.element.addEventListener('mouseover', e => {
       const optionItem = Ember.$(e.target).closest('[data-option-index]');
-      if (!optionItem) { return; }
+      if (!optionItem || !(0 in optionItem)) { return; }
       this.get('select.actions.highlight')(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
     });
 
