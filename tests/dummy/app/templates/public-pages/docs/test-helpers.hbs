@@ -1,7 +1,7 @@
 <h1 class="doc-page-title">Test helpers</h1>
 
 <p>
-  Since 0.7.0 ember-power-select bundles some handy test helpers (<code>selectChoose</code> and <code>selectSearch</code>)
+  Since 0.7.0 ember-power-select bundles some handy test helpers (<code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code>)
   that make nicer to interact with the component in acceptance tests tests.
 </p>
 
@@ -25,6 +25,7 @@
   export default function startApp(attrs) {
     //...
   }
+
 </pre>
 
 <h3><code>selectChoose(cssPath, optionText)</code></h3>
@@ -39,6 +40,7 @@
   selectChoose('.city-selector', 'Rome');
   // ...
   click('.submit-btn');
+
 </pre>
 
 
@@ -55,10 +57,38 @@
   andThen(function() {
     selectChoose('.city-selector', 'New Orleans');
   });
+
+</pre>
+
+
+<h3><code>removeMultipleOption(cssPath, optionText)</code></h3>
+
+<p>
+  Use this helper to remove an option from a multiple select. 
+</p>
+
+<pre>
+  selectChoose('.city-selector', 'new');
+  // ...
+  removeMultipleOption('.city-selector', 'new');
+
+</pre>
+
+<h3><code>clearSelected(cssPath, optionText)</code></h3>
+
+<p>
+  Use this helper to remove an option from a single select when allowClear is set to true. 
+</p>
+
+<pre>
+  selectChoose('.city-selector', 'new');
+  // ...
+  clearSelected('.city-selector', 'new');
+
 </pre>
 
 <p>
-  <strong>Note:</strong> Remember to whitelist <code>selectChoose</code> and <code>selectSearch</code> in the list of allowed
+<strong>Note:</strong> Remember to whitelist <code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code> in the list of allowed
   globals in your <code>tests/.jshintrc</code> manifest.
 </p>
 

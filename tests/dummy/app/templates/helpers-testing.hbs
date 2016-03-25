@@ -3,7 +3,7 @@
   {{num}}
 {{/power-select}}
 
-{{#power-select class="select-choose-onopen" onopen=(action "onOpenHandle") options=optionz selected=selected onchange=(action (mut selected)) searchEnabled=false as |num|}}
+{{#power-select class="select-choose-onopen" onopen=(action "onOpenHandle") options=optionz selected=selected onchange=(action (mut selected)) allowClear=true searchEnabled=false as |num|}}
   {{num}}
 {{/power-select}}
 
