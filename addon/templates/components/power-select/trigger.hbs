@@ -7,7 +7,7 @@
   {{#if allowClear}}
     <span class="ember-power-select-clear-btn" onmousedown={{action select.actions.select null}}>&times;</span>
   {{/if}}
-{{else if placeholder}}
-  <div class="ember-power-select-placeholder">{{{placeholder}}}</div>
+{{else}}
+  {{component placeholderComponent placeholder=placeholder}}
 {{/if}}
 <span class="ember-power-select-status-icon"></span>

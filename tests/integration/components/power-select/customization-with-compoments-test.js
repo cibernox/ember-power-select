@@ -143,3 +143,26 @@ test('the `triggerComponent` receives the `loading` state', function(assert) {
   Ember.run(this, 'set', 'countries', pendingPromise);
   assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'Is loading', 'Results are loading');
 });
+
+test('placeholder can be customized using placeholderComponent', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+
+  this.render(hbs`
+    {{#power-select
+      options=countries
+      placeholder="test"
+      placeholderComponent="custom-placeholder"
+      onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-placeholder').length, 1, 'The placeholder appears.');
+  assert.equal(
+    $('.ember-power-select-placeholder').text().trim(),
+    'This is a very bold placeholder',
+    'The placeholder content is equal.'
+  );
+});

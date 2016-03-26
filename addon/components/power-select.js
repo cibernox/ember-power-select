@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   // Config
   disabled: fallbackIfUndefined(false),
   placeholder: fallbackIfUndefined(null),
+  placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
   verticalPosition: fallbackIfUndefined('auto'),
