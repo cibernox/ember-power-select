@@ -155,7 +155,7 @@ export default Ember.Component.extend({
         isOpen: dropdown.isOpen,
         highlighted: this.get('highlighted'),
         searchText: this.get('searchText'),
-        actions: Ember.merge(ownActions, dropdown.actions)
+        actions: Ember.assign(ownActions, dropdown.actions)
       };
     }
     return {};
