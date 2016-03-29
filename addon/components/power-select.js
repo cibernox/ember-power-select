@@ -5,6 +5,7 @@ import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
 const { computed, run, get, isBlank } = Ember;
 const EventSender = Ember.Object.extend(Ember.Evented);
+const assign = Ember.assign || Ember.merge;
 
 export default Ember.Component.extend({
   // HTML
@@ -155,7 +156,7 @@ export default Ember.Component.extend({
         isOpen: dropdown.isOpen,
         highlighted: this.get('highlighted'),
         searchText: this.get('searchText'),
-        actions: Ember.assign(ownActions, dropdown.actions)
+        actions: assign(ownActions, dropdown.actions)
       };
     }
     return {};
