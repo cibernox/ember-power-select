@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] In multiple selects when test in the searchbox was too long the text overflowed the trigger.
+
 # 0.10.0-beta.5
 - [REMOVE FEATURE] The `opened` property (the only using double bindings instead of DDAU) has been
   removed. It was the cause of some errors due to race conditions in the bindings propagation.
