@@ -55,7 +55,7 @@ export default Ember.Component.extend({
     let parts = index.split('.');
     let options = this.get('options');
     if (!options.objectAt) {
-      option = Ember.A(options);
+      options = Ember.A(options);
     }
     let option = options.objectAt(parseInt(parts[0], 10));
     for (let i = 1; i < parts.length; i++) {
