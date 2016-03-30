@@ -5,5 +5,5 @@ body  > .ember-view {
 }
 
 .main-content {
-  flex: 1; // Expand to fix all available vertical space
+  flex-grow: 1;
 }
