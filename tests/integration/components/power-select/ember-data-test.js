@@ -74,3 +74,34 @@ test('Delete an item in a multiple selection', function(assert) {
     assert.equal($('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
   });
 });
+
+test('The `selected` option can be an async belongsTo', function(assert) {
+  let done = assert.async();
+  assert.expect(6);
+
+  let users = server.createList('user', 10);
+  let mainUser = server.create('user', { friendIds: users.map(u => u.id), bestieId: users[3].id });
+
+  Ember.run(() => {
+    this.store.findRecord('user', mainUser.id).then(record => {
+      this.mainUser = record;
+      this.render(hbs`
+        {{#power-select options=mainUser.friends selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}
+          {{option.name}}
+        {{/power-select}}
+      `);
+
+      clickTrigger();
+      assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'User 0', 'The first element is highlighted');
+      assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
+      assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+
+      setTimeout(function() {
+        assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'User 3', 'The 4th element is highlighted');
+        assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'User 3', 'The 4th element is highlighted');
+        assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'User 3', 'The trigger has the proper content');
+        done();
+      }, 10);
+    });
+  })
+});
