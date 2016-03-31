@@ -797,3 +797,17 @@ test('If the passed options is a promise that is resolved, searching should filt
     done();
   }, 150);
 });
+
+test('Disabled single selects don\'t have a clear button even if `allowClear` is true', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.foo = numbers[2];
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) allowClear=true disabled=true as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-clear-btn').length, 0, 'There is no clear button');
+});

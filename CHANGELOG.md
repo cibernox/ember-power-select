@@ -1,5 +1,6 @@
 # Master
 
+- [BUGFIX] Disabled select shouldn't be clearable even if `allowClear=true`.
 - [BUGFIX] In multiple selects when test in the searchbox was too long the text overflowed the trigger.
 
 # 0.10.0-beta.5

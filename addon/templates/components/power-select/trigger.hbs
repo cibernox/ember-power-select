@@ -4,7 +4,7 @@
   {{else}}
     <span class="ember-power-select-selected-item">{{yield selected lastSearchedText}}</span>
   {{/if}}
-  {{#if allowClear}}
+  {{#if (and allowClear (not disabled))}}
     <span class="ember-power-select-clear-btn" onmousedown={{action select.actions.select null}}>&times;</span>
   {{/if}}
 {{else if placeholder}}
