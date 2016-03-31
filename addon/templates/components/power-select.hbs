@@ -41,7 +41,7 @@
       loading=(readonly loading)
       allOptions=(readonly results)
       highlighted=(readonly highlighted)
-      selected=(readonly selected)
+      selected=(readonly resolvedSelected)
       optionsComponent=(readonly optionsComponent)
       searchText=(readonly searchText)
       lastSearchedText=(readonly lastSearchedText)
@@ -63,7 +63,7 @@
 {{else}}
   {{#component triggerComponent
     options=(readonly results)
-    selected=(readonly selected)
+    selected=(readonly resolvedSelected)
     searchText=(readonly searchText)
     lastSearchedText=(readonly lastSearchedText)
     placeholder=(readonly placeholder)

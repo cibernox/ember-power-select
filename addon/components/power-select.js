@@ -121,6 +121,21 @@ export default Ember.Component.extend({
     }
   }),
 
+  resolvedSelected: computed('selected', {
+    get() {
+      let selected = this.get('selected');
+      if (selected && selected.then) {
+        selected.then(value => {
+          if (this.get('isDestroyed')) { return; }
+          this.set('resolvedSelected', value)
+        });
+      } else {
+        return selected;
+      }
+    },
+    set(_, v) { return v; }
+  }),
+
   optionMatcher: computed('searchField', 'matcher', function() {
     let { matcher, searchField } = this.getProperties('matcher', 'searchField');
     if (searchField) {
@@ -130,7 +145,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  highlighted: computed('results.[]', 'currentlyHighlighted', 'selected', function() {
+  highlighted: computed('results.[]', 'currentlyHighlighted', 'resolvedSelected', function() {
     return this.get('currentlyHighlighted') || this.defaultHighlighted();
   }),
 
@@ -320,7 +335,7 @@ export default Ember.Component.extend({
   },
 
   defaultHighlighted() {
-    const selected = this.get('selected');
+    const selected = this.get('resolvedSelected');
     if (!selected || this.indexOfOption(selected) === -1) {
       return this.optionAtIndex(0);
     }
@@ -336,7 +351,7 @@ export default Ember.Component.extend({
       e.preventDefault();
       e.stopPropagation();
     }
-    if (this.get('selected') !== selected) {
+    if (this.get('resolvedSelected') !== selected) {
       this.get('onchange')(selected, this.get('publicAPI'));
     }
   },

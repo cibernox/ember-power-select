@@ -811,3 +811,69 @@ test('Disabled single selects don\'t have a clear button even if `allowClear` is
 
   assert.equal(this.$('.ember-power-select-clear-btn').length, 0, 'There is no clear button');
 });
+
+test('If the passed selected element is a pending promise, the first element is highlighted and the trigger is empty', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.selected = new RSVP.Promise(function(resolve) {
+    Ember.run.later(resolve, numbers[3], 50);
+  });
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+});
+
+test('If the passed selected element is a resolved promise, that element is selected and the trigger contains the proper text', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.selected = RSVP.resolve(numbers[3]);
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is highlighted');
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+});
+
+test('If the passed selected element is a pending promise that resolves while the select is opened, the highlighted & selected elements get updated, along with the trigger', function(assert) {
+  let done = assert.async();
+  assert.expect(6);
+
+  this.numbers = numbers;
+  this.selected = new RSVP.Promise(function(resolve) {
+    Ember.run.later(resolve, numbers[3], 50);
+  });
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
+    assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is highlighted');
+    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+    done();
+  }, 100);
+});
