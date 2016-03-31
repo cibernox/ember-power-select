@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Fixed bug after event-delegation refactor where mouseovering the list itself
+  (which happens when options are disabled) throwed an error.
 - [BUGFIX] Disabled select shouldn't be clearable even if `allowClear=true`.
 - [BUGFIX] In multiple selects when test in the searchbox was too long the text overflowed the trigger.
 

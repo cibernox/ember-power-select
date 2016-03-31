@@ -180,3 +180,21 @@ test('Mouse-overing on a wrapped option should select it', function(assert) {
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The fourth element is highlighted');
 });
 
+test('Mouse-overing the list itself doesn\'t crashes the app', function(assert) {
+  assert.expect(0); // NOTE: The fact that this tests runs without errors is the prove that it works
+
+  this.numbers = numbers;
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <span class="special-class">{{option}}</span>
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => {
+    let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
+    $('ul')[0].dispatchEvent(event);
+  });
+});
+
