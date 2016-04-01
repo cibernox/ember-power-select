@@ -103,5 +103,5 @@ test('The `selected` option can be an async belongsTo', function(assert) {
         done();
       }, 10);
     });
-  })
+  });
 });
