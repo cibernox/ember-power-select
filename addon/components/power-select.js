@@ -127,7 +127,10 @@ export default Ember.Component.extend({
       if (selected && selected.then) {
         selected.then(value => {
           if (this.get('isDestroyed')) { return; }
-          this.set('resolvedSelected', value)
+          // Ensure that we don't overwrite new value
+          if (this.get('selected') === selected) {
+            this.set('resolvedSelected', value);
+          }
         });
       } else {
         return selected;

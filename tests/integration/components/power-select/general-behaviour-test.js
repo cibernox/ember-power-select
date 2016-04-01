@@ -877,3 +877,39 @@ test('If the passed selected element is a pending promise that resolves while th
     done();
   }, 100);
 });
+
+test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'t the same promise it resolved from', function(assert) {
+  let done = assert.async();
+  assert.expect(6);
+
+  let promise1 = new RSVP.Promise(function(resolve) {
+    Ember.run.later(resolve, numbers[3], 80);
+  });
+
+  let promise2 = new RSVP.Promise(function(resolve) {
+    Ember.run.later(resolve, numbers[4], 20);
+  });
+
+  this.numbers = numbers;
+  this.selected = promise1;
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  this.set('selected', promise2);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'five', 'The 5th element is highlighted');
+    assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'five', 'The 5th element is highlighted');
+    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'five', 'The trigger has the proper content');
+    done();
+  }, 100);
+});
