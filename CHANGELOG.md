@@ -1,5 +1,9 @@
 # Master
 
+- [FEATURE] The `selected` option can now also be a promise. When it's a promise, the component
+  won't have a have any selection (the trigger will be empty, no option of the list will be
+  highlighted) until trat promise resolves. Once it resolves, the triger and the highlighted
+  option will update.
 - [BUGFIX] Fixed bug after event-delegation refactor where mouseovering the list itself
   (which happens when options are disabled) throwed an error.
 - [BUGFIX] Disabled select shouldn't be clearable even if `allowClear=true`.
