@@ -693,3 +693,18 @@ test('The component works when the array of selected elements is mutated in plac
   nativeMouseUp('.ember-power-select-option:eq(0)');
   assert.equal(this.$('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
 });
+
+test('When the input inside the multiple select gets focused the entire component gains the `ember-basic-dropdown--focus-inside` class', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.ok(!this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select doesn\'t have the class yet');
+  clickTrigger();
+  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select has the class now');
+});

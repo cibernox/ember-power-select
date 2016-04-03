@@ -913,3 +913,19 @@ test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'
     done();
   }, 100);
 });
+
+test('When the input inside the select gets focused the entire component gains the `ember-basic-dropdown--focus-inside` class', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.ok(!this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select doesn\'t have the class yet');
+  clickTrigger();
+  Ember.run(() => $('.ember-power-select-search input').focus());
+  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select has the class now');
+});

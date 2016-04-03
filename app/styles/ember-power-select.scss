@@ -33,8 +33,8 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
     display:table;
     clear:both;
   }
-  &:focus {
-    border: $ember-power-select-trigger-focus-border;
+  &:focus, .ember-basic-dropdown--focus-inside & {
+    border: $ember-power-select-active-trigger-border;
     box-shadow: $ember-power-select-focus-box-shadow;
     @if $ember-power-select-focus-outline {
       outline: $ember-power-select-focus-outline;
@@ -126,7 +126,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
     line-height: inherit;
     padding: 0 5px;
     &:focus {
-      border: 1px solid $ember-power-select-focus-border-color;
+      border: $ember-power-select-search-field-focus-border;
       box-shadow: $ember-power-select-focus-box-shadow;
       @if $ember-power-select-focus-outline {
         outline: $ember-power-select-focus-outline;
