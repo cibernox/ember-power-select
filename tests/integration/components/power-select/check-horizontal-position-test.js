@@ -6,7 +6,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true
 });
 
-test('check horizontal position without property', function(assert) {
+test('check horizontal position specifying `right`', function(assert) {
   assert.expect(2);
 
   this.render(hbs`
@@ -20,7 +20,7 @@ test('check horizontal position without property', function(assert) {
   assert.equal($('.ember-basic-dropdown--right').length, 2);
 });
 
-test('check horizontal position with property', function(assert) {
+test('check horizontal position without specify any property', function(assert) {
   assert.expect(2);
 
   this.render(hbs`

@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Allow to pass `horizontalPosition` to customize to which edge of the trigger
+  the dropdown is anchored to.
+
 # 0.10.0-beta.7
 - [FEATURE] The `selected` option can now also be a promise. When it's a promise, the component
   won't have any selection (the trigger will be empty, no option of the list will be
