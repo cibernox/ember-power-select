@@ -16,7 +16,7 @@ test('check horizontal position without property', function(assert) {
   `);
 
   clickTrigger();
-  assert.equal($('.ember-basic-dropdown--left').length, 0);;
+  assert.equal($('.ember-basic-dropdown--left').length, 0);
   assert.equal($('.ember-basic-dropdown--right').length, 2);
 });
 
