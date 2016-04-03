@@ -18,6 +18,7 @@ export default Ember.Component.extend({
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
   verticalPosition: fallbackIfUndefined('auto'),
+  horizontalPosition: fallbackIfUndefined('auto'),
   matcher: fallbackIfUndefined(defaultMatcher),
   searchField: fallbackIfUndefined(null),
   search: fallbackIfUndefined(null),
