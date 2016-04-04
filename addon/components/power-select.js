@@ -334,8 +334,8 @@ export default Ember.Component.extend({
     return nextOption;
   },
 
-  filter(options, term) {
-    return filterOptions(options || [], term, this.get('optionMatcher'));
+  filter(options, term, skipDisabled = false) {
+    return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
   },
 
   defaultHighlighted() {
@@ -424,7 +424,7 @@ export default Ember.Component.extend({
     let term = this.get('expirableSearchText') + String.fromCharCode(e.keyCode);
     this.set('expirableSearchText', term);
     this.expirableSearchDebounceId = run.debounce(this, 'set', 'expirableSearchText', '', 1000);
-    let firstMatch = this.filter(this.get('results'), term)[0]; // TODO: match only words starting with this substr?
+    let firstMatch = this.filter(this.get('results'), term, true)[0]; // TODO: match only words starting with this substr?
     if (firstMatch !== undefined) {
       if (dropdown.isOpen) {
         this._doHighlight(dropdown, firstMatch, e);

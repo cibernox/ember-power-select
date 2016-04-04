@@ -71,18 +71,18 @@ export function optionAtIndex(originalCollection, index) {
   })(originalCollection);
 }
 let deprecatedMatchers = {};
-export function filterOptions(options, text, matcher) {
+export function filterOptions(options, text, matcher, skipDisabled = false) {
   const sanitizedOptions =  options.objectAt ? options : Ember.A(options);
   const opts = Ember.A();
   const length = get(options, 'length');
   for (let i = 0; i < length; i++) {
     let entry = sanitizedOptions.objectAt(i);
     if (isGroup(entry)) {
-      let suboptions = filterOptions(get(entry, 'options'), text, matcher);
+      let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
       if (get(suboptions, 'length') > 0) {
         opts.push({ groupName: entry.groupName, options: suboptions });
       }
-    } else {
+    } else if (!skipDisabled || !entry.disabled) {
       let matchResult = matcher(entry, text);
       if (typeof matchResult === 'number') {
         if (matchResult >= 0) { opts.push(entry); }

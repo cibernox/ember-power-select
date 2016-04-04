@@ -132,3 +132,21 @@ test('BUGFIX: When after a search there is two results and the first one is a di
   assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'United Kingdom', 'The first non-disabled element is highlighted');
 });
+
+test('BUGFIX: When searching by pressing keys on a focused & closed select, disabled options are ignored', function(assert) {
+  assert.expect(3);
+  this.countriesWithDisabled = countriesWithDisabled;
+
+  this.render(hbs`
+   {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{country.name}}
+   {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  trigger.focus();
+  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is closed');
+  triggerKeydown(trigger, 79); // o
+  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is still closed');
+  assert.equal(trigger.textContent.trim(), 'United Kingdom', '"United Kingdom" has been selected');
+});
