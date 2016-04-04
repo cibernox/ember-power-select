@@ -21,7 +21,7 @@ module.exports = function(environment) {
 
   ENV.serviceWorker = {
     enabled: true,
-    debug: true,
+    debug: environment !== 'production',
     precacheURLs: ['https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic'],
     // excludePaths: ['test.*', 'robots.txt',],
     // fallback: [
