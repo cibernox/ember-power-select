@@ -1,6 +1,6 @@
 # Master
 
-- [BUGFIX] Avoid selecting disabled options when typing in a focused & closed single select.
+# 0.10.0-beta.8
 - [BUGFIX] Avoid highlight disabled options when they are the first option after a search. Instead,
   highlight the first non-disabled option in the list. When all results are disabled, nothing gets
   highlighted.

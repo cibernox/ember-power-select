@@ -39,7 +39,7 @@
     content: "";
     display: table;
     clear: both; }
-  .ember-power-select-trigger:focus {
+  .ember-power-select-trigger:focus, .ember-basic-dropdown--focus-inside .ember-power-select-trigger {
     border: 1px solid #aaaaaa;
     box-shadow: none; }
   .ember-power-select.multiple .ember-power-select-trigger {
