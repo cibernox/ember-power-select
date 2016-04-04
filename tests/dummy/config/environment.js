@@ -19,6 +19,22 @@ module.exports = function(environment) {
     }
   };
 
+  ENV.serviceWorker = {
+    enabled: true,
+    debug: true,
+    precacheURLs: ['https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic'],
+    // excludePaths: ['test.*', 'robots.txt',],
+    // fallback: [
+    //   '/online.html /offline.html'
+    // ],
+    // networkFirstURLs: [
+    //   '/api/todos'
+    // ],
+    includeRegistration: true,
+    serviceWorkerFile: "service-worker.js",
+    skipWaiting: true
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
