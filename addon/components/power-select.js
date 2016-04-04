@@ -341,7 +341,11 @@ export default Ember.Component.extend({
   defaultHighlighted() {
     const selected = this.get('resolvedSelected');
     if (!selected || this.indexOfOption(selected) === -1) {
-      return this.optionAtIndex(0);
+      let nextOption = this.optionAtIndex(0);
+      while (nextOption && nextOption.disabled) {
+        nextOption = this.advanceSelectableOption(nextOption, 1);
+      }
+      return nextOption;
     }
     return selected;
   },

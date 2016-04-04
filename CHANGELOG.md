@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Avoid highlight disabled options when they are the first option after a search. Instead,
+  highlight the first non-disabled option in the list. When all results are disabled, nothing gets
+  highlighted.
 - [ENHANCEMENT] Add a class to the component when an element inside has the focus. This allows to
   style the component not only when the component itself is focused but when an input inside
   is, which was previously impossible.

@@ -374,6 +374,7 @@
 }
 
 .slide-fade {
+  will-change: transform, opacity;
   &.ember-basic-dropdown--below.ember-basic-dropdown--transitioning-in {
     animation: drop-fade-below .15s;
   }

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger } from '../../../helpers/ember-power-select';
+import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Disabled)', {
@@ -95,4 +95,40 @@ test('When passed `disabled=true`, the options cannot be removed', function(asse
   `);
 
   assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
+});
+
+test('BUGFIX: When after a search the only result is a disabled element, it isn\'t highlighted and cannot be selected', function(assert) {
+  assert.expect(3);
+  this.countriesWithDisabled = countriesWithDisabled;
+
+  this.render(hbs`
+   {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{country.name}}
+   {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch("Br");
+  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 0, 'Nothing is highlighted');
+  triggerKeydown($('.ember-power-select-trigger')[0], 13);
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing was selected');
+});
+
+test('BUGFIX: When after a search there is two results and the first one is a disabled element, the second one is highlighted', function(assert) {
+  assert.expect(4);
+  this.countriesWithDisabled = countriesWithDisabled;
+
+  this.render(hbs`
+   {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{country.name}}
+   {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch("o"); // Finds ["Portugal", "United Kingdom"]
+  assert.equal($('.ember-power-select-option').length, 2, 'There is two results');
+  assert.equal($('.ember-power-select-option[aria-disabled="true"]').length, 1, 'One is disabled');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'United Kingdom', 'The first non-disabled element is highlighted');
 });
