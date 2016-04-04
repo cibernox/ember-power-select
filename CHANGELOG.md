@@ -1,5 +1,8 @@
 # Master
 
+- [ENHANCEMENT] Add a class to the component when an element inside has the focus. This allows to
+  style the component not only when the component itself is focused but when an input inside
+  is, which was previously impossible.
 - [BUGFIX] Allow to pass `horizontalPosition` to customize to which edge of the trigger
   the dropdown is anchored to.
 

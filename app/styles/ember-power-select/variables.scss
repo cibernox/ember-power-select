@@ -21,9 +21,10 @@ $ember-power-select-default-border: 1px solid $ember-power-select-border-color !
 $ember-power-select-default-focus-border: 1px solid $ember-power-select-focus-border-color !default;
 
 $ember-power-select-trigger-border: $ember-power-select-default-border !default;
-$ember-power-select-trigger-focus-border: $ember-power-select-default-focus-border !default;
-$ember-power-select-dropdown-border: $ember-power-select-default-border !default;
+$ember-power-select-active-trigger-border: $ember-power-select-default-focus-border !default;
+$ember-power-select-dropdown-border: $ember-power-select-default-focus-border !default;
 $ember-power-select-search-field-border: $ember-power-select-default-border !default;
+$ember-power-select-search-field-focus-border: $ember-power-select-default-focus-border !default;
 
 $ember-power-select-dropdown-top-border: $ember-power-select-dropdown-border !default;
 $ember-power-select-dropdown-right-border: $ember-power-select-dropdown-border !default;
