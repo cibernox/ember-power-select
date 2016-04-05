@@ -914,6 +914,40 @@ test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'
   }, 100);
 });
 
+test('When both `selected` and `options` are async, and `selected` resolves before `options`, the proper options are selected/highlighted', function(assert) {
+  let done = assert.async();
+  assert.expect(6);
+
+  this.asyncOptions = new Ember.RSVP.Promise((resolve) => {
+    setTimeout(() => resolve(numbers), 200);
+  });
+  this.asyncSelected = new Ember.RSVP.Promise((resolve) => {
+    setTimeout(() => resolve('four'), 10);
+  });
+
+  this.render(hbs`
+    {{#power-select options=asyncOptions selected=asyncSelected onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+
+  setTimeout(function() {
+    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+  }, 20);
+
+  setTimeout(function() {
+    assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
+    assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is highlighted');
+    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+    done();
+  }, 220);
+});
+
 test('When the input inside the select gets focused the entire component gains the `ember-basic-dropdown--focus-inside` class', function(assert) {
   assert.expect(2);
 
