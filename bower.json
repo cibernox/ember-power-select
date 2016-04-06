@@ -10,8 +10,7 @@
     "Faker": "~3.0.0"
   },
   "resolutions": {
-    "ember": "2.4.1",
-    "FakeXMLHttpRequest": "^1.3.0"
+    "ember": "2.4.1"
   },
   "devDependencies": {
     "blanket": "~1.1.5"

@@ -337,3 +337,95 @@ test('Multiple-select: The selected elements are <li>s inside an <ul>, and have 
     assert.equal($(closeButton).attr('aria-label'), 'remove element', 'The close button has a helpful aria label');
   });
 });
+
+test('Single-select: The trigger element correctly passes through WAI-ARIA widget attributes', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select
+      ariaInvalid=true
+      ariaLabel='ariaLabelString'
+      onchange=(action (mut foo))
+      options=numbers
+      required=true
+      selected=selected
+      as |option|
+    }}
+      {{option}}
+    {{/power-select}}
+  `);
+  const $trigger = this.$('.ember-power-select-trigger');
+
+  assert.equal($trigger.attr('aria-label'), 'ariaLabelString', 'aria-label set correctly');
+  assert.equal($trigger.attr('aria-invalid'), 'true', 'aria-invalid set correctly');
+  assert.equal($trigger.attr('aria-required'), 'true', 'aria-required set correctly');
+});
+
+test('Multiple-select: The trigger element correctly passes through WAI-ARIA widget attributes', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple
+      ariaLabel='ariaLabelString'
+      ariaInvalid=true
+      onchange=(action (mut foo))
+      options=numbers
+      required=true
+      selected=selected
+      as |option|
+    }}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+  const $trigger = this.$('.ember-power-select-trigger');
+
+  assert.equal($trigger.attr('aria-label'), 'ariaLabelString', 'aria-label set correctly');
+  assert.equal($trigger.attr('aria-invalid'), 'true', 'aria-invalid set correctly');
+  assert.equal($trigger.attr('aria-required'), 'true', 'aria-required set correctly');
+});
+
+test('Single-select: The trigger element correctly passes through WAI-ARIA relationship attributes', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select
+      ariaDescribedBy='ariaDescribedByString'
+      ariaLabelledBy='ariaLabelledByString'
+      onchange=(action (mut foo))
+      options=numbers
+      selected=selected
+      as |option|
+    }}
+      {{option}}
+    {{/power-select}}
+  `);
+  const $trigger = this.$('.ember-power-select-trigger');
+
+  assert.equal($trigger.attr('aria-describedby'), 'ariaDescribedByString', 'aria-describedby set correctly');
+  assert.equal($trigger.attr('aria-labelledby'), 'ariaLabelledByString', 'aria-required set correctly');
+});
+
+test('Multiple-select: The trigger element correctly passes through WAI-ARIA relationship attributes', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple
+      ariaDescribedBy='ariaDescribedByString'
+      ariaLabelledBy='ariaLabelledByString'
+      onchange=(action (mut foo))
+      options=numbers
+      selected=selected
+      as |option|
+    }}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+  const $trigger = this.$('.ember-power-select-trigger');
+
+  assert.equal($trigger.attr('aria-describedby'), 'ariaDescribedByString', 'aria-describedby set correctly');
+  assert.equal($trigger.attr('aria-labelledby'), 'ariaLabelledByString', 'aria-required set correctly');
+});

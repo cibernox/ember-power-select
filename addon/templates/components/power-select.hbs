@@ -1,22 +1,28 @@
 {{#basic-dropdown
+  ariaDescribedBy=(readonly ariaDescribedBy)
+  ariaInvalid=(readonly ariaInvalid)
+  ariaLabel=(readonly ariaLabel)
+  ariaLabelledBy=(readonly ariaLabelledBy)
+  ariaRequired=(readonly required)
   class=(readonly concatenatedClasses)
-  dir=(readonly dir)
-  tabindex=(readonly tabindex)
-  renderInPlace=(readonly renderInPlace)
-  matchTriggerWidth=matchTriggerWidth
-  disabled=(readonly disabled)
-  verticalPosition=(readonly verticalPosition)
-  horizontalPosition=(readonly horizontalPosition)
-  triggerClass=(readonly concatenatedTriggerClasses)
-  dropdownClass=(readonly concatenatedDropdownClasses)
   destination=(readonly destination)
+  dir=(readonly dir)
+  disabled=(readonly disabled)
+  dropdownClass=(readonly concatenatedDropdownClasses)
+  horizontalPosition=(readonly horizontalPosition)
   initiallyOpened=initiallyOpened
-  triggerId=triggerId
-  onOpen=(action "handleOpen")
+  matchTriggerWidth=matchTriggerWidth
   onClose=(action "handleClose")
   onFocus=(action "handleFocus")
   onKeydown=(action "handleKeydown")
-  registerActionsInParent=(action "registerDropdown") as |dropdown|}}
+  onOpen=(action "handleOpen")
+  registerActionsInParent=(action "registerDropdown")
+  renderInPlace=(readonly renderInPlace)
+  tabindex=(readonly tabindex)
+  triggerClass=(readonly concatenatedTriggerClasses)
+  triggerId=triggerId
+  verticalPosition=(readonly verticalPosition)
+  as |dropdown|}}
   {{component beforeOptionsComponent
     searchText=(readonly searchText)
     onkeydown=(readonly onkeydown)
@@ -38,21 +44,22 @@
     {{/if}}
   {{else}}
     {{#component optionsComponent
-      options=(readonly results)
-      loading=(readonly loading)
       allOptions=(readonly results)
+      aria-controls=(readonly triggerId)
+      class="ember-power-select-options"
+      extra=(readonly extra)
+      groupIndex=""
       highlighted=(readonly highlighted)
-      selected=(readonly resolvedSelected)
+      id=(readonly optionsId)
+      lastSearchedText=(readonly lastSearchedText)
+      loading=(readonly loading)
+      loadingMessage=(readonly loadingMessage)
+      options=(readonly results)
       optionsComponent=(readonly optionsComponent)
       searchText=(readonly searchText)
-      lastSearchedText=(readonly lastSearchedText)
       select=(readonly publicAPI)
-      extra=(readonly extra)
-      id=(readonly optionsId)
-      groupIndex=""
-      aria-controls=(readonly triggerId)
-      loadingMessage=(readonly loadingMessage)
-      class="ember-power-select-options" as |option term|}}
+      selected=(readonly resolvedSelected)
+      as |option term|}}
       {{yield option term}}
     {{/component}}
   {{/if}}
@@ -63,23 +70,24 @@
     extra=(readonly extra)}}
 {{else}}
   {{#component triggerComponent
-    options=(readonly results)
-    selected=(readonly resolvedSelected)
-    searchText=(readonly searchText)
-    lastSearchedText=(readonly lastSearchedText)
-    placeholder=(readonly placeholder)
-    disabled=(readonly disabled)
-    handleInput=(action "handleInput")
     allowClear=(readonly allowClear)
-    select=(readonly publicAPI)
-    extra=(readonly extra)
     buildSelection=(readonly buildSelection)
-    onkeydown=(readonly onkeydown)
+    disabled=(readonly disabled)
+    extra=(readonly extra)
+    handleInput=(action "handleInput")
+    lastSearchedText=(readonly lastSearchedText)
     listboxId=(readonly optionsId)
-    selectedItemComponent=(readonly selectedItemComponent)
-    searchEnabled=(readonly searchEnabled)
     loading=(readonly loading)
-    searchField=(readonly searchField) as |opt term|}}
+    onkeydown=(readonly onkeydown)
+    options=(readonly results)
+    placeholder=(readonly placeholder)
+    searchEnabled=(readonly searchEnabled)
+    searchField=(readonly searchField)
+    searchText=(readonly searchText)
+    select=(readonly publicAPI)
+    selected=(readonly resolvedSelected)
+    selectedItemComponent=(readonly selectedItemComponent)
+    as |opt term|}}
     {{yield opt term}}
   {{/component}}
 {{/basic-dropdown}}
