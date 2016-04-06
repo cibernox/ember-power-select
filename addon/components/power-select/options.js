@@ -12,18 +12,13 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     if (this.get('role') === 'group') { return; }
-
-    this.element.addEventListener('mouseup', e => {
-      const optionItem = Ember.$(e.target).closest('[data-option-index]');
+    let findOptionAndPerform = (action, e) => {
+      let optionItem = Ember.$(e.target).closest('[data-option-index]');
       if (!optionItem || !(0 in optionItem)) { return; }
-      this.get('select.actions.choose')(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
-    });
-    this.element.addEventListener('mouseover', e => {
-      const optionItem = Ember.$(e.target).closest('[data-option-index]');
-      if (!optionItem || !(0 in optionItem)) { return; }
-      this.get('select.actions.highlight')(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
-    });
-
+      action(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
+    }
+    this.element.addEventListener('mouseup', e => findOptionAndPerform(this.get('select.actions.choose'), e));
+    this.element.addEventListener('mouseover', e => findOptionAndPerform(this.get('select.actions.highlight'), e));
     if (this.get('isTouchDevice')) {
       this._addTouchEvents();
     }
