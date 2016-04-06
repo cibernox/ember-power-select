@@ -16,7 +16,7 @@ export default Ember.Component.extend({
       let optionItem = Ember.$(e.target).closest('[data-option-index]');
       if (!optionItem || !(0 in optionItem)) { return; }
       action(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
-    }
+    };
     this.element.addEventListener('mouseup', e => findOptionAndPerform(this.get('select.actions.choose'), e));
     this.element.addEventListener('mouseover', e => findOptionAndPerform(this.get('select.actions.highlight'), e));
     if (this.get('isTouchDevice')) {

@@ -7,7 +7,7 @@ const { computed, run, get, isBlank } = Ember;
 const EventSender = Ember.Object.extend(Ember.Evented);
 const assign = Ember.assign || Ember.merge;
 function concatWithProperty(strings, property) {
-  if (property) { strings.push(property) }
+  if (property) { strings.push(property); }
   return strings.join(' ');
 }
 
