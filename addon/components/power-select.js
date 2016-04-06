@@ -6,6 +6,10 @@ import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 const { computed, run, get, isBlank } = Ember;
 const EventSender = Ember.Object.extend(Ember.Evented);
 const assign = Ember.assign || Ember.merge;
+function concatWithProperty(strings, property) {
+  if (property) { strings.push(property) }
+  return strings.join(' ');
+}
 
 export default Ember.Component.extend({
   // HTML
@@ -69,25 +73,18 @@ export default Ember.Component.extend({
   }),
 
   concatenatedClasses: computed('class', function() {
-    const classes = ['ember-power-select'];
-    if (this.get('class')) { classes.push(this.get('class')); }
-    return classes.join(' ');
+    return concatWithProperty(['ember-power-select'], this.get('class'));
   }),
 
   concatenatedTriggerClasses: computed('triggerClass', function() {
-    let classes = ['ember-power-select-trigger'];
-    if (this.get('triggerClass')) {
-      classes.push(this.get('triggerClass'));
-    }
-    return classes.join(' ');
+    return concatWithProperty(['ember-power-select-trigger'], this.get('triggerClass'));
   }),
 
   concatenatedDropdownClasses: computed('dropdownClass', function() {
-    let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
-    if (this.get('dropdownClass')) {
-      classes.push(this.get('dropdownClass'));
-    }
-    return classes.join(' ');
+    return concatWithProperty(
+      ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`],
+      this.get('dropdownClass')
+    );
   }),
 
   mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', 'results.length', function(){
