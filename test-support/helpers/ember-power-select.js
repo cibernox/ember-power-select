@@ -10,8 +10,8 @@ function typeText(selector, text) {
   $selector[0].dispatchEvent(event)
 }
 
-export function nativeMouseDown(selectorOrDomElement, options = {}) {
-  let event = new window.Event('mousedown', { bubbles: true, cancelable: true, view: window });
+function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
+  let event = new window.Event(eventType, { bubbles: true, cancelable: true, view: window });
   Object.keys(options).forEach(key => event[key] = options[key]);
   let target;
   if (typeof selectorOrDomElement === 'string') {
@@ -22,16 +22,12 @@ export function nativeMouseDown(selectorOrDomElement, options = {}) {
   Ember.run(() => target.dispatchEvent(event));
 }
 
-export function nativeMouseUp(selectorOrDomElement, options = {}) {
-  let event = new window.Event('mouseup', { bubbles: true, cancelable: true, view: window });
-  Object.keys(options).forEach(key => event[key] = options[key]);
-  let target;
-  if (typeof selectorOrDomElement === 'string') {
-    target = Ember.$(selectorOrDomElement)[0];
-  } else {
-    target = selectorOrDomElement;
-  }
-  Ember.run(() => target.dispatchEvent(event));
+export function nativeMouseDown(selectorOrDomElement, options) {
+  fireNativeMouseEvent('mousedown', selectorOrDomElement, options);
+}
+
+export function nativeMouseUp(selectorOrDomElement, options) {
+  fireNativeMouseEvent('mouseup', selectorOrDomElement, options);
 }
 
 export function triggerKeydown(domElement, k) {
