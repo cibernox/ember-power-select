@@ -1,5 +1,9 @@
 # Master
 
+# 0.10.0-beta.9
+- [FEATURE] Selects can now be nested inside other dropdowns.
+- [FEATURE] Allow to pass WAI-ARIA states (ariaDescribedBy, ariaInvalid, ariaLabel, ariaLabelledBy and required)
+
 # 0.10.0-beta.8
 - [BUGFIX] Avoid highlight disabled options when they are the first option after a search. Instead,
   highlight the first non-disabled option in the list. When all results are disabled, nothing gets
