@@ -79,7 +79,7 @@ export default function() {
       let potentialTargets = $(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`).toArray();
       let target;
       if (potentialTargets.length > 1) {
-        target = potentialTargets.find(t => t.textContent.trim() === value) || potentialTargets[0];
+        target = Ember.A(potentialTargets).find(t => t.textContent.trim() === value) || potentialTargets[0];
       } else {
         target = potentialTargets[0];
       }
