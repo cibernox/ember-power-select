@@ -49,8 +49,8 @@ export default Ember.Controller.extend({
     let currentRouteName = this.get('routing.currentRouteName');
     for (let i = 0; i < groupedSections.length; i++) {
       let group = groupedSections[i];
-      for (let j = 0; j < groupedSections.length; j++) {
-        let section = group[j];
+      for (let j = 0; j < group.options.length; j++) {
+        let section = group.options[j];
         if (section.route === currentRouteName) {
           return section;
         }
