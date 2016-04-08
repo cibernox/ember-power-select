@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] The trigger of the single select applies overflow if the content is too long
+
 # 0.10.0-beta.9
 - [FEATURE] Selects can now be nested inside other dropdowns.
 - [FEATURE] Allow to pass WAI-ARIA states (ariaDescribedBy, ariaInvalid, ariaLabel, ariaLabelledBy and required)

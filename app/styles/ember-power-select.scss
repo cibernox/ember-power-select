@@ -18,6 +18,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   border-radius: $ember-power-select-trigger-default-border-radius;
   background-color: $ember-power-select-background-color;
   line-height: $ember-power-select-line-height;
+  overflow-x: hidden;
   text-overflow: ellipsis;
   @if unitless($ember-power-select-line-height) {
     min-height: #{$ember-power-select-line-height}em;
