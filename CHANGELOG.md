@@ -1,7 +1,8 @@
 # Master
 
 - [INTERNAL] Update Ember-basic-dropdown to 0.9.5-beta.14. PublicAPI should be the same, but
-  internal have been simplified and responsabilities better divided across components.
+  internal have been simplified and responsabilities better divided across components. Nothing should
+  break, but given the size of the changes ¯\_(ツ)_/¯
 - [BUGFIX] The trigger of the single select applies overflow if the content is too long
 
 # 0.10.0-beta.9

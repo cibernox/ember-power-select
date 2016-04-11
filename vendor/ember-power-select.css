@@ -29,6 +29,7 @@
   border-radius: 4px;
   background-color: #ffffff;
   line-height: 1.75;
+  overflow-x: hidden;
   text-overflow: ellipsis;
   min-height: 1.75em;
   user-select: none;
