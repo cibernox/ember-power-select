@@ -1,5 +1,6 @@
 # Master
 
+# 0.10.0-beta.11
 - [BREAKING] `e.preventDefault()` no longer affects the behaviour of the component, just prevents
   the native browser behaviour. Return `false` instead.
 - [BUGFIX/BREAKING] `onopen`/`onclose` actions are called **before** the component is opens/closes,
