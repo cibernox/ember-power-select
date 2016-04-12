@@ -123,6 +123,16 @@
         <td>The component to render to customize just the selected item of the trigger</td>
     </tr>
     <tr>
+      <td>afterOptionsComponent</td>
+      <td><code>string/contextua-component</code></td>
+      <td>The component rendered after the list of options. It is empty by default in both single and multiple selects</td>
+    </tr>
+    <tr>
+      <td>beforeOptionsComponent</td>
+      <td><code>string/contextua-component</code></td>
+      <td>The component rendered before the list of options. In single selects defaults to the searchbox. In multiple select defaults to nothing</td>
+    </tr>
+    <tr>
       <td>optionsComponent</td>
       <td><code>string</code></td>
       <td>The component to render instead of the default one inside the list of options</td>
@@ -131,6 +141,14 @@
       <td>renderInPlace</td>
       <td><code>boolean</code></td>
       <td>When truthy, the list of options will be rendered in place instead of being attaches to the root of the body and positioned with javascript</td>
+    </tr>
+    <tr>
+      <td>closeOnSelect</td>
+      <td><code>boolean</code></td>
+      <td>
+        Defaults to true. When false, the component won't be closed after the user <em>chooses</em>
+        an option, either with the mouse/keyboard or using the `choose` action in the publicAPI.
+      </td>
     </tr>
     <tr>
       <td>allowClear</td>
@@ -198,6 +216,11 @@
       <td>
         The id of the element used as target for the dropdown's content, when not rendered in place.
       </td>
+    </tr>
+    <tr>
+      <td>tabindex</td>
+      <td><code>String</code></td>
+      <td>The tabindex of the trigger</td>
     </tr>
   </tbody>
 </table>
