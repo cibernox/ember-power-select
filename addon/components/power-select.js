@@ -165,7 +165,7 @@ export default Ember.Component.extend({
         search: (term, e) => this.send('search', dropdown, term, e),
         highlight: (option) => this.send('highlight', dropdown, option),
         select: (selected, e) => this.send('select', dropdown, selected, e),
-        choose: (selected, e) => this.send('choose', dropdown, selected, e),
+        choose: (selected, e) => this._doChoose(dropdown, selected, e),
         handleKeydown: (e) => this.send('handleKeydown', dropdown, e)
       };
       return {
@@ -199,37 +199,27 @@ export default Ember.Component.extend({
     },
 
     select(dropdown, selected, e) {
-      this._doSelect(dropdown, selected, e);
+      return this._doSelect(dropdown, selected, e);
     },
 
     choose(dropdown, selection, e) {
-      if (e && e.clientY) {
-        let openingEvent = this.get('openingEvent');
-        if (openingEvent && openingEvent.clientY) {
-          if (Math.abs(openingEvent.clientY - e.clientY) < 2) { return; }
-        }
-      }
-      this.send('select', dropdown, this.get('buildSelection')(selection), e);
-      if (this.get('closeOnSelect')) {
-        dropdown.actions.close(e);
-      }
+      return this._doChoose(dropdown, selection, e);
     },
-
 
     handleKeydown(dropdown, e) {
       const onkeydown = this.get('onkeydown');
       if (onkeydown) { onkeydown(this.get('publicAPI'), e); }
       if (e.defaultPrevented) { return; }
       if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
-        this._handleKeyUpDown(dropdown, e);
+        return this._handleKeyUpDown(dropdown, e);
       } else if (e.keyCode === 13) {  // ENTER
-        this._handleKeyEnter(dropdown, e);
+        return this._handleKeyEnter(dropdown, e);
       } else if (e.keyCode === 9) {   //Tab
-        this._handleKeyTab(dropdown, e);
+        return this._handleKeyTab(dropdown, e);
       } else if (e.keyCode === 27) {  // ESC
-        this._handleKeyESC(dropdown, e);
+        return this._handleKeyESC(dropdown, e);
       } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
-        this._handleTriggerTyping(dropdown, e);
+        return this._handleTriggerTyping(dropdown, e);
       }
     },
 
@@ -285,7 +275,7 @@ export default Ember.Component.extend({
 
   _handleKeyEnter(dropdown, e) {
     if (dropdown.isOpen) {
-      this.send('choose', dropdown, this.get('highlighted'), e);
+      return this._doChoose(dropdown, this.get('highlighted'), e);
     }
   },
 
@@ -351,11 +341,21 @@ export default Ember.Component.extend({
     return option;
   },
 
-  _doSelect(dropdown, selected, e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
+  _doChoose(dropdown, selected, e) {
+    if (e && e.clientY) {
+      let openingEvent = this.get('openingEvent');
+      if (openingEvent && openingEvent.clientY) {
+        if (Math.abs(openingEvent.clientY - e.clientY) < 2) { return; }
+      }
     }
+    this.send('select', dropdown, this.get('buildSelection')(selected), e);
+    if (this.get('closeOnSelect')) {
+      dropdown.actions.close(e);
+      return false;
+    }
+  },
+
+  _doSelect(dropdown, selected /*, e */) {
     if (this.get('resolvedSelected') !== selected) {
       this.get('onchange')(selected, this.get('publicAPI'));
     }

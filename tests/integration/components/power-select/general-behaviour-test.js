@@ -973,7 +973,7 @@ test('When both `selected` and `options` are async, and `options` resolves befor
   setTimeout(function() {
     assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'The trigger is still empty');
     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The 1st element is highlighted');
-  }, 20);
+  }, 50);
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');

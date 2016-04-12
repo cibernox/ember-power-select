@@ -3,5 +3,13 @@ import layout from '../../templates/components/power-select/trigger';
 
 export default Ember.Component.extend({
   layout: layout,
-  tagName: ''
+  tagName: '',
+
+  // Actions
+  actions: {
+    clear(e) {
+      e.stopPropagation();
+      this.get('select.actions.select')(null);
+    }
+  }
 });
