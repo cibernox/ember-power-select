@@ -23,12 +23,7 @@ export default Ember.Component.extend({
   actions: {
     handleOpen(select, e) {
       let action = this.get('onopen');
-      if (action) {
-        let returnValue = action(select, e);
-        if (returnValue === false || (e && e.defaultPrevented)) {
-          return false;
-        }
-      }
+      if (action && action(select, e) === false) { return false; }
       this.focusInput();
     },
 
@@ -40,8 +35,10 @@ export default Ember.Component.extend({
 
     handleKeydown(select, e) {
       let action = this.get('onkeydown');
-      if (action) { action(select, e); }
-      if (e.defaultPrevented) { return; }
+      if (action && action(select, e) === false) {
+        e.stopPropagation();
+        return false;
+      }
       let selected = Ember.A((this.get('selected') || []));
       if (e.keyCode === 13 && select.isOpen) {
         e.stopPropagation();

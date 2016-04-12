@@ -72,9 +72,7 @@ export default Ember.Component.extend({
 
     handleKeydown(e) {
       let { onkeydown, select } = this.getProperties('onkeydown', 'select');
-      if (onkeydown) { onkeydown(select, e); }
-      if (e.defaultPrevented) { return; }
-
+      if (onkeydown && onkeydown(select, e) === false) { return false; }
       let selected = Ember.A((this.get('selected') || []));
       if (e.keyCode === 8 && isBlank(e.target.value)) {
         let lastSelection = get(selected, 'lastObject');

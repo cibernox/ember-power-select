@@ -317,9 +317,7 @@ test('in multiple-mode if the users calls preventDefault on the event received i
 
   this.numbers = numbers;
   this.selectedNumbers = [];
-  this.handleKeydown = (select, e) => {
-    e.preventDefault();
-  };
+  this.handleKeydown = () => false;
 
   this.render(hbs`
     {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
