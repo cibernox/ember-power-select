@@ -110,7 +110,7 @@ test('BUGFIX: When after a search the only result is a disabled element, it isn\
   clickTrigger();
   typeInSearch("Br");
   assert.equal($('.ember-power-select-option[aria-current="true"]').length, 0, 'Nothing is highlighted');
-  triggerKeydown($('.ember-power-select-trigger')[0], 13);
+  triggerKeydown($('.ember-power-select-search input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
   assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing was selected');
 });
