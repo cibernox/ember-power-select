@@ -248,12 +248,12 @@ test('The onfocus of multiple selects action receives the public API and the foc
   Ember.run(() => this.$('.ember-power-select-trigger').focus());
 });
 
-test('the `onopen` action is invoked when the dropdown opens', function(assert) {
+test('the `onopen` action is invoked just before the dropdown opens', function(assert) {
   assert.expect(11);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
@@ -275,12 +275,124 @@ test('the `onopen` action is invoked when the dropdown opens', function(assert) 
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is opened');
 });
 
-test('the `onclose` action is invoked when the dropdown closes', function(assert) {
+test('calling `e.preventDefault()` on the event received by onopen prevents the single select from opening', function(assert) {
+  assert.expect(11);
+
+  this.numbers = numbers;
+  this.handleOpen = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    e.preventDefault();
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+});
+
+test('returning false from the `onopen` action prevents the single select from opening', function(assert) {
+  assert.expect(11);
+
+  this.numbers = numbers;
+  this.handleOpen = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+});
+
+test('calling `e.preventDefault()` on the event received by onopen prevents the multiple select from opening', function(assert) {
+  assert.expect(11);
+
+  this.numbers = numbers;
+  this.handleOpen = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    e.preventDefault();
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+});
+
+test('returning false from the `onopen` action prevents the multiple select from opening', function(assert) {
+  assert.expect(11);
+
+  this.numbers = numbers;
+  this.handleOpen = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+});
+
+test('the `onclose` action is invoked just before the dropdown closes', function(assert) {
   assert.expect(12);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
     assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
     assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
@@ -302,6 +414,127 @@ test('the `onclose` action is invoked when the dropdown closes', function(assert
   clickTrigger();
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is closed');
+});
+
+
+test('calling `e.preventDefault()` on the event received by onclose prevents the single select from closing', function(assert) {
+  assert.expect(12);
+
+  this.numbers = numbers;
+  this.handleClose = (select, e) => {
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    e.preventDefault();
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
+});
+
+test('returning false from the `onclose` action prevents the single select from closing', function(assert) {
+  assert.expect(12);
+
+  this.numbers = numbers;
+  this.handleClose = (select, e) => {
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
+});
+
+test('calling `e.preventDefault()` on the event received by onclose prevents the multiple select from closing', function(assert) {
+  assert.expect(12);
+
+  this.numbers = numbers;
+  this.handleClose = (select, e) => {
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    e.preventDefault();
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
+});
+
+test('returning false from the `onclose` action prevents the multiple select from closing', function(assert) {
+  assert.expect(12);
+
+  this.numbers = numbers;
+  this.handleClose = (select, e) => {
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
+    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', function(assert) {

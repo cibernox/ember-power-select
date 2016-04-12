@@ -250,14 +250,24 @@ export default Ember.Component.extend({
 
     handleOpen(dropdown, e) {
       const action = this.get('onopen');
-      if (action) { action(this.get('publicAPI'), e); }
+      if (action) {
+        let returnValue = action(this.get('publicAPI'), e);
+        if (returnValue === false || (e && e.defaultPrevented)) {
+          return false;
+        }
+      }
       if (e) { this.set('openingEvent', e); }
       run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
     },
 
     handleClose(dropdown, e) {
       const action = this.get('onclose');
-      if (action) { action(this.get('publicAPI'), e); }
+      if (action) {
+        let returnValue = action(this.get('publicAPI'), e);
+        if (returnValue === false || (e && e.defaultPrevented)) {
+          return false;
+        }
+      }
       if (e) { this.set('openingEvent', null); }
       this.send('highlight', dropdown, null, e);
     }
