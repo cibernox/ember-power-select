@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX/BREAKING] `onopen`/`onclose` actions are called **before** the component is opens/closes,
+  giving the user the change to prevent that from happening either by returning false or calling
+  `e.preventDefault()` on the received event.
 - [INTERNAL] Update Ember-basic-dropdown to 0.9.5-beta.14. PublicAPI should be the same, but
   internal have been simplified and responsabilities better divided across components. Nothing should
   break, but given the size of the changes ¯\_(ツ)_/¯

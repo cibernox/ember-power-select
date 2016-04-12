@@ -23,7 +23,12 @@ export default Ember.Component.extend({
   actions: {
     handleOpen(select, e) {
       let action = this.get('onopen');
-      if (action) { action(select, e); }
+      if (action) {
+        let returnValue = action(select, e);
+        if (returnValue === false || (e && e.defaultPrevented)) {
+          return false;
+        }
+      }
       this.focusInput();
     },
 
