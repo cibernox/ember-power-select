@@ -208,8 +208,7 @@ export default Ember.Component.extend({
 
     handleKeydown(dropdown, e) {
       const onkeydown = this.get('onkeydown');
-      if (onkeydown) { onkeydown(this.get('publicAPI'), e); }
-      if (e.defaultPrevented) { return; }
+      if (onkeydown && onkeydown(this.get('publicAPI'), e) === false) { return; }
       if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
         return this._handleKeyUpDown(dropdown, e);
       } else if (e.keyCode === 13) {  // ENTER
