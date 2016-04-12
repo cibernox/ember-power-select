@@ -1,8 +1,9 @@
 # Master
 
+- [BREAKING] `e.preventDefault()` no longer affects the behaviour of the component, just prevents
+  the native browser behaviour. Return `false` instead.
 - [BUGFIX/BREAKING] `onopen`/`onclose` actions are called **before** the component is opens/closes,
-  giving the user the change to prevent that from happening either by returning false or calling
-  `e.preventDefault()` on the received event.
+  giving the user the change to prevent that from happening by returning false.
 - [BUGFIX] `select.actions.select` doesn't call `stopPropagation` or `preventDefault` in the given
   event anymore. It's not it's responsability.
 - [INTERNAL] Update Ember-basic-dropdown to 0.9.5-beta.14. PublicAPI should be the same, but
