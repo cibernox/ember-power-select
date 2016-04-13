@@ -285,21 +285,50 @@
 <p>
   Another neat trick is that you can prevent the component from open/close if you return <code>false</code>
   from this actions, so you have the last word. This is all that takes to create a mandatory select component
-  that once opened it cannot be closed until you select some value
+  that once opened it cannot be closed until you select some value, and changes
+  the styles of the component.
 </p>
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select
+      selected=mandatoryNumber
+      options=numbers
+      class=selectClass
+      dropdownClass=selectClass
+      onchange=(action (mut mandatoryNumber))
+      onclose=(action "verifyPresence")
+      placeholder="I really NEED this info"
+      as |number|}}
+
+      \{{number}}
+
+    \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+    export default Ember.Controller.extend({
+      actions: {
+        verifyPresence(select /*, e */) {
+          if (this.get('mandatoryNumber')) {
+            this.set('selectClass', null);
+          } else {
+            this.set('selectClass', 'has-error');
+            return false;
+          }
+        }
+      }
+    });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
     {{#power-select
-      selected=number
+      selected=mandatoryNumber
       options=numbers
+      class=selectClass
+      dropdownClass=selectClass
       onchange=(action (mut mandatoryNumber))
       onclose=(action "verifyPresence")
-      placeholder="Gimme your DATA"
+      placeholder="I really NEED this info"
       as |number|}}
       {{number}}
     {{/power-select}}

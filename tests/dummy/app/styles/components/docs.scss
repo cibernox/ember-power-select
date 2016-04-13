@@ -42,3 +42,18 @@
     fill: $brand-color;
   }
 }
+
+.ember-power-select.has-error {
+  .ember-power-select-trigger {
+    border: 1px solid red;
+  }
+}
+.ember-power-select-dropdown.has-error {
+  border: 1px solid red;
+  &.ember-basic-dropdown--above {
+    border-top: 1px solid red;
+  }
+  &.ember-basic-dropdown--below {
+    border-bottom: 1px solid red;
+  }
+}

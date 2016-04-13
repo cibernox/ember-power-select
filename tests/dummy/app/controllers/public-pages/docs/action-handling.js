@@ -33,6 +33,15 @@ export default Ember.Controller.extend({
         if (!this.get('destroyed')) { Ember.run.later(tick, 1000); }
       };
       this.set('countdown', Ember.run.later(tick, 1000));
+    },
+
+    verifyPresence(select /*, e */) {
+      if (this.get('mandatoryNumber')) {
+        this.set('selectClass', null);
+      } else {
+        this.set('selectClass', 'has-error');
+        return false;
+      }
     }
   }
 });
