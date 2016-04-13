@@ -218,7 +218,7 @@
 <h3><code>onopen/onclose</code> Actions</h3>
 
 <p>
-  As their names suggest, this actions are fired when the component is opened or closed respectively,
+  As their names suggest, this actions are fired when the component is about to be opened or closed respectively,
   and they both have the same signature <code>(select, event)</code> (the event will be undefined if
   the component is not opened as result of user interaction).
 </p>
@@ -279,6 +279,30 @@
       {{#if countdown}}<p>This component will be destroyed in {{counter}} seconds</p>{{/if}}
     {{/if}}
     <p>Selected number: {{number}}</p>
+  </div>
+{{/code-sample}}
+
+<p>
+  Another neat trick is that you can prevent the component from open/close if you return <code>false</code>
+  from this actions, so you have the last word. This is all that takes to create a mandatory select component
+  that once opened it cannot be closed until you select some value
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select
+      selected=number
+      options=numbers
+      onchange=(action (mut mandatoryNumber))
+      onclose=(action "verifyPresence")
+      placeholder="Gimme your DATA"
+      as |number|}}
+      {{number}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
