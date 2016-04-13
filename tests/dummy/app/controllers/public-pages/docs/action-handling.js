@@ -35,7 +35,7 @@ export default Ember.Controller.extend({
       this.set('countdown', Ember.run.later(tick, 1000));
     },
 
-    verifyPresence(select /*, e */) {
+    verifyPresence(/* select, e */) {
       if (this.get('mandatoryNumber')) {
         this.set('selectClass', null);
       } else {
