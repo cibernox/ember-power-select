@@ -113,9 +113,10 @@
 <p>
   This action receives two arguments, <code>dropdown</code> and <code>event</code>. The first one is
   an object that you can use to control the component through it's actions (open, close, toggle...).
-  The event is the raw <code>keypress</code> event you can use to decide what to do next. If you
-  prevent default on this component you will also prevent the default behavior in the component
-  when that key is pressed (p.e. open/close the select or navigate through the options using the arrow keys)
+  The event is the raw <code>keydown</code> event you can use to decide what to do next.
+  If you desire to highjack the browsers' default bahaviour you can call `preventDefault` on that
+  event. If you want to avoid the component's default behaviour (p.e. open/close the select or
+  navigate through the options using the arrow keys) return false from this action.
 </p>
 
 <p>

@@ -22,8 +22,8 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#navigable-
-      select options=groupedNumbers
+    \{{#navigable-select
+      options=groupedNumbers
       selected=selectedNumber
       onchange=(action (mut selectedNumber))
       as |option|

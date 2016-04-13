@@ -12,6 +12,11 @@
   display: block;
   text-align: center;
   line-height: 66px;
+  padding-top: 5px;
+  height: 76px;
+  .home-link {
+    vertical-align: text-bottom;
+  }
   img {
     height: 36px;
     vertical-align: -5%;
