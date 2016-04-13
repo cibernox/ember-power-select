@@ -218,7 +218,7 @@
 <h3><code>onopen/onclose</code> Actions</h3>
 
 <p>
-  As their names suggest, this actions are fired when the component is opened or closed respectively,
+  As their names suggest, this actions are fired when the component is about to be opened or closed respectively,
   and they both have the same signature <code>(select, event)</code> (the event will be undefined if
   the component is not opened as result of user interaction).
 </p>
@@ -279,6 +279,59 @@
       {{#if countdown}}<p>This component will be destroyed in {{counter}} seconds</p>{{/if}}
     {{/if}}
     <p>Selected number: {{number}}</p>
+  </div>
+{{/code-sample}}
+
+<p>
+  Another neat trick is that you can prevent the component from open/close if you return <code>false</code>
+  from this actions, so you have the last word. This is all that takes to create a mandatory select component
+  that once opened it cannot be closed until you select some value, and changes
+  the styles of the component.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select
+      selected=mandatoryNumber
+      options=numbers
+      class=selectClass
+      dropdownClass=selectClass
+      onchange=(action (mut mandatoryNumber))
+      onclose=(action "verifyPresence")
+      placeholder="I really NEED this info"
+      as |number|}}
+
+      \{{number}}
+
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
+    const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+    export default Ember.Controller.extend({
+      actions: {
+        verifyPresence(select /*, e */) {
+          if (this.get('mandatoryNumber')) {
+            this.set('selectClass', null);
+          } else {
+            this.set('selectClass', 'has-error');
+            return false;
+          }
+        }
+      }
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select
+      selected=mandatoryNumber
+      options=numbers
+      class=selectClass
+      dropdownClass=selectClass
+      onchange=(action (mut mandatoryNumber))
+      onclose=(action "verifyPresence")
+      placeholder="I really NEED this info"
+      as |number|}}
+      {{number}}
+    {{/power-select}}
   </div>
 {{/code-sample}}
 
