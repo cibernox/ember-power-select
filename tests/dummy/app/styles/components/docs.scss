@@ -48,8 +48,18 @@
     border: 1px solid red;
   }
 }
+
+@keyframes shake {
+  0%   { transform: translateX(0px); }
+  20%   { transform: translateX(-20px); }
+  40%   { transform: translateX(20px); }
+  60%   { transform: translateX(-20px); }
+  80%   { transform: translateX(20px); }
+  100% { transform: translateX(0px); }
+}
 .ember-power-select-dropdown.has-error {
   border: 1px solid red;
+  animation: shake .5s;
   &.ember-basic-dropdown--above {
     border-top: 1px solid red;
   }
