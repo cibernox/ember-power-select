@@ -52,7 +52,7 @@ export default Ember.Component.extend({
   previousResults: null,
 
   // Lifecycle hooks
-  didInitAttrs() {
+  init() {
     this._super(...arguments);
     Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
