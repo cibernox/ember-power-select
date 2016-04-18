@@ -77,12 +77,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 }
 
 // Multiple select
-.ember-power-select-multiple-trigger {
-  display: flex;
-  flex-wrap: wrap;
-}
 .ember-power-select-trigger-multiple-input {
-  flex: 1;
   font-family: inherit;
   font-size: inherit;
   border: none;
