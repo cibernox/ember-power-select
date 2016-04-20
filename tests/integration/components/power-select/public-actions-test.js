@@ -197,7 +197,7 @@ test('The onkeydown of multiple selects action receives the public API and the k
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in single selects', function(assert) {
-  assert.expect(11);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleKeyDown = (select, e) => {
@@ -222,6 +222,8 @@ test('returning false from the `onkeydown` action prevents the default behaviour
 
   triggerKeydown($('.ember-power-select-trigger')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is still closed');
+  triggerKeydown($('.ember-power-select-trigger')[0], 84); // 't'
+  assert.notEqual($('.ember-power-select-trigger').text().trim(), 'two', 'nothing was selected');
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in multiple selects', function(assert) {
