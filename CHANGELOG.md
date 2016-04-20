@@ -1,5 +1,13 @@
 # Master
 
+# 0.10.0-beta.13
+- [BUGFIX] Ensure that returning `false` from the `onkeydown` action prevents the default behaviour
+  even when that default behaviour is handled by ember-basic-dropdown.
+
+# 0.10.0-beta.12
+
+- I don't remember, but nothing important :D
+
 # 0.10.0-beta.11
 - [BREAKING] `e.preventDefault()` no longer affects the behaviour of the component, just prevents
   the native browser behaviour. Return `false` instead.
