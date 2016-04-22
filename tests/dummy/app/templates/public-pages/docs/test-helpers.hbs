@@ -98,6 +98,15 @@
 <br>
 <h2>Integration Tests</h2>
 
+<p>
+  Test helpers must be imported at the top of your integration test.  The basic functionality of these helpers are unlikely to change, but may experience minor revisions in the future.  
+</p>
+<p><code>import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select'</code></p>
+<p>
+  Also note that you could extract the code for these test helpers into your own helpers file was well.
+</p>
+<p><code>import { typeInSearch, clickTrigger } from 'my-app/tests/helpers/test-helpers'</code></p>
+
 <h3><code>clickTrigger(scope, options = {})</code></h3>
 
 <p>
