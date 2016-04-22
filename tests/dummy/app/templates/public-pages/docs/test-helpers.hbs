@@ -1,8 +1,11 @@
 <h1 class="doc-page-title">Test helpers</h1>
 
+<br>
+<h2>Acceptance Tests</h2>
+
 <p>
   Since 0.7.0 ember-power-select bundles some handy test helpers (<code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code>)
-  that make nicer to interact with the component in acceptance tests tests.
+  that make it nicer to interact with the component in acceptance tests.
 </p>
 
 <p>
@@ -91,6 +94,42 @@
 <strong>Note:</strong> Remember to whitelist <code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code> in the list of allowed
   globals in your <code>tests/.jshintrc</code> manifest.
 </p>
+
+<br>
+<h2>Integration Tests</h2>
+
+<p>
+  Test helpers must be imported at the top of your integration test.  The basic functionality of these helpers are unlikely to change, but may experience minor revisions in the future.  
+</p>
+<p><code>import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select'</code></p>
+<p>
+  Also note that you could extract the code for these test helpers into your own helpers file was well.
+</p>
+<p><code>import { typeInSearch, clickTrigger } from 'my-app/tests/helpers/test-helpers'</code></p>
+
+<h3><code>clickTrigger(scope, options = {})</code></h3>
+
+<p>
+  This helper opens the dropdown based on the class name (scope) defined on the power select.  Scope is optional if integration test renders only one power select.
+</p>
+
+<pre>
+  clickTrigger(".t-select-foo");
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+
+</pre>
+
+<h3><code>typeInSearch(text)</code></h3>
+
+<p>
+  This helper is used in conjunction with opening a power select dropdown as long as search is not disabled.
+</p>
+
+<pre>
+  clickTrigger(".t-select-foo");
+  typeInSearch("wat");
+
+</pre>
 
 <div class="doc-page-nav">
   {{#link-to 'public-pages.docs.custom-search-action' class="doc-page-nav-link-prev"}}&lt; Custom search action{{/link-to}}
