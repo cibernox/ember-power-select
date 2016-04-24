@@ -1,5 +1,8 @@
 # Master
 
+# 0.10.1
+- [ENHANCEMENT] Allow trigger the `onfocus` action from within the trigger component.
+
 # 0.10.0
 
 - No changes since beta.13
