@@ -143,3 +143,32 @@ test('the `triggerComponent` receives the `loading` state', function(assert) {
   Ember.run(this, 'set', 'countries', pendingPromise);
   assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'Is loading', 'Results are loading');
 });
+
+test('the `triggerComponent` receives the `handleFocus` action that triggers the `onfocus` action in the outside', function(assert) {
+  assert.expect(10);
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+  this.didFocusInside = function(select, event) {
+    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.highlighted, 'object', 'select.highlighted is a string');
+    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.ok(event instanceof window.Event, 'The second argument is an event');
+  };
+  this.render(hbs`
+    {{#power-select options=countries
+      selected=country
+      onchange=(action (mut selected))
+      triggerComponent="custom-trigger-that-handles-focus"
+      onfocus=didFocusInside as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  this.$('#focusable-input')[0].focus();
+});
