@@ -213,7 +213,9 @@ export default Ember.Component.extend({
         return this._handleKeyUpDown(dropdown, e);
       } else if (e.keyCode === 13) {  // ENTER
         return this._handleKeyEnter(dropdown, e);
-      } else if (e.keyCode === 9) {   //Tab
+      } else if (e.keyCode === 32) {  // Space
+        return this._handleKeySpace(dropdown, e);
+      } else if (e.keyCode === 9) {   // Tab
         return this._handleKeyTab(dropdown, e);
       } else if (e.keyCode === 27) {  // ESC
         return this._handleKeyESC(dropdown, e);
@@ -284,6 +286,13 @@ export default Ember.Component.extend({
 
   _handleKeyEnter(dropdown, e) {
     if (dropdown.isOpen) {
+      return this._doChoose(dropdown, this.get('highlighted'), e);
+    }
+  },
+
+  _handleKeySpace(dropdown, e) {
+    if (dropdown.isOpen) {
+      e.preventDefault();
       return this._doChoose(dropdown, this.get('highlighted'), e);
     }
   },

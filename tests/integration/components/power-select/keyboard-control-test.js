@@ -142,6 +142,30 @@ test('Pressing ENTER when there is no highlighted element, closes the dropdown a
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
 
+test('Pressing SPACE selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {
+  assert.expect(5);
+
+  this.numbers = numbers;
+  this.changed = (val, dropdown) => {
+    assert.equal(val, 'two', 'The onchange action is triggered with the selected value');
+    this.set('selected', val);
+    assert.ok(dropdown.actions.close, 'The action receives the dropdown as second argument');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action changed) searchEnabled=false as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-trigger')[0], 40);
+  triggerKeydown($('.ember-power-select-trigger')[0], 32); // Space
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'two', 'The highlighted element was selected');
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
+  assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
+});
+
 test('Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger', function(assert) {
   assert.expect(3);
 
