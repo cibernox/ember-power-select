@@ -7,7 +7,7 @@ function typeText(selector, text) {
   $selector.val(text);
   let event = document.createEvent("Events");
   event.initEvent('input', true, true);
-  $selector[0].dispatchEvent(event)
+  $selector[0].dispatchEvent(event);
 }
 
 function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
@@ -67,7 +67,7 @@ export default function() {
   const isEmberOne = Ember.VERSION.match(/1\.13/);
 
   Ember.Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/ember-power-select-trigger-ember(\d+)/)[1]
+    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/ember-power-select-trigger-ember(\d+)/)[1];
     // If the dropdown is closed, open it
     if (Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
@@ -88,7 +88,7 @@ export default function() {
   });
 
   Ember.Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/ember-power-select-trigger-ember(\d+)/)[1]
+    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/ember-power-select-trigger-ember(\d+)/)[1];
     const isMultipleSelect = Ember.$(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
     let dropdownIsClosed = Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0;
@@ -121,7 +121,7 @@ export default function() {
     }
   });
 
-  Ember.Test.registerAsyncHelper('clearSelected', function(app, cssPath, value) {
+  Ember.Test.registerAsyncHelper('clearSelected', function(app, cssPath) {
     const elem = find(`${cssPath} .ember-power-select-clear-btn`)[0];
     try {
       nativeMouseDown(elem);
