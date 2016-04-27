@@ -172,12 +172,12 @@ test('The component is focusable using the TAB key as any other kind of input', 
   assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), "0", 'The trigger is reachable with TAB');
 });
 
-test('If the component is focused, pressing ENTER opens it', function(assert) {
-  assert.expect(2);
+test('If the component is focused, pressing ENTER toggles it', function(assert) {
+  assert.expect(3);
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false as |option|}}
       {{option}}
     {{/power-select}}
   `);
@@ -186,6 +186,26 @@ test('If the component is focused, pressing ENTER opens it', function(assert) {
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
   triggerKeydown($('.ember-power-select-trigger')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  triggerKeydown($('.ember-power-select-trigger')[0], 13);
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed again');
+});
+
+test('If the single component is focused, pressing SPACE toggles it', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  Ember.run(() => $('.ember-power-select-trigger').focus());
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+  triggerKeydown($('.ember-power-select-trigger')[0], 32);
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  triggerKeydown($('.ember-power-select-trigger')[0], 32);
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed again');
 });
 
 test('If the single component is focused, pressing KEYDOWN opens it', function(assert) {

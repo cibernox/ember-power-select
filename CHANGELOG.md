@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] The component can and closed with the spacebar while the trigger is focused.
+
 # 0.10.1
 - [ENHANCEMENT] Allow trigger the `onfocus` action from within the trigger component.
 
