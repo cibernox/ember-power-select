@@ -39,6 +39,8 @@ export default Ember.Component.extend({
         if (onkeydown) { onkeydown(select, e); }
         if (e.defaultPrevented) { return; }
         select.actions.choose(this.get('highlighted'), e);
+      } else if (e.keyCode === 32) {
+        // noop
       } else {
         select.actions.handleKeydown(e);
       }
