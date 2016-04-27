@@ -1,5 +1,6 @@
 # Master
 
+# 0.10.2
 - [BUGFIX] The highlighted element can be selected with the spacebar when the trigger is focused.
 - [BUGFIX] The component can and closed with the spacebar while the trigger is focused.
 
