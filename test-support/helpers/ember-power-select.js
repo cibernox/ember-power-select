@@ -61,6 +61,27 @@ export function clickTrigger(scope, options = {}) {
   nativeMouseDown(selector, options);
 }
 
+export function nativeTouch (selectorOrDomElement) {
+  let event = new window.Event('touchstart', { bubbles: true, cancelable: true, view: window });
+  let target;
+
+  if (typeof selectorOrDomElement === 'string') {
+    target = Ember.$(selectorOrDomElement)[0];
+  } else {
+    target = selectorOrDomElement;
+  }
+  Ember.run(() => target.dispatchEvent(event));
+  Ember.run(() => {
+    event = new window.Event('touchend', { bubbles: true, cancelable: true, view: window });
+    target.dispatchEvent(event);
+  });
+}
+
+export function touchTrigger () {
+  let selector = '.ember-power-select-trigger';
+  nativeTouch(selector);
+}
+
 // Helpers for acceptance tests
 
 export default function() {

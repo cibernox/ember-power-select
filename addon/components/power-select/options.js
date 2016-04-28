@@ -35,14 +35,17 @@ export default Ember.Component.extend({
       this.element.addEventListener('touchmove', touchMoveHandler);
     });
     this.element.addEventListener('touchend', e => {
+	  let optionItem = Ember.$(e.target).closest('[data-option-index]');
+
+	  if (!optionItem || !(0 in optionItem)) { return; }
+
       e.preventDefault();
       if (this.hasMoved) {
         this.hasMoved = false;
         return;
       }
-      if (e.target.dataset.optionIndex) {
-        this.get('select.actions.choose')(this._optionFromIndex(e.target.dataset.optionIndex), e);
-      }
+
+      this.get('select.actions.choose')(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
     });
   },
 
