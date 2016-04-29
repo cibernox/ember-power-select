@@ -1,5 +1,10 @@
 # Master
 
+# 0.10.3
+- [ENHANCEMENT] The `selectChoose` helper is less dependent on the class names of the input, and will
+  *probably* work with any markup as long as the searchbox has `[type=search]`.\
+- [BUGFIX] Fixed bug selecting options with touch events.
+
 # 0.10.2
 - [BUGFIX] The highlighted element can be selected with the spacebar when the trigger is focused.
 - [BUGFIX] The component can and closed with the spacebar while the trigger is focused.
