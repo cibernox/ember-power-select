@@ -119,6 +119,20 @@ test('selectSearch helper searches in the given multiple select closed', functio
   });
 });
 
+test('selectSearch helper works even with custom components as long as the input has [type=searcg]', function(assert) {
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    click('.select-custom-search .ember-power-select-trigger');
+    selectSearch('.select-custom-search', 'three');
+  });
+
+  andThen(function() {
+    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
+
 test('removeMultipleOption removes selected option', function(assert) {
   visit('/helpers-testing');
 

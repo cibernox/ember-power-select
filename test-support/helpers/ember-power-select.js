@@ -117,16 +117,29 @@ export default function() {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
       wait();
     }
+    const isDefaultSingleSelect = Ember.$(`.ember-power-select-search input`).length > 0;
 
     if (isMultipleSelect) {
       fillIn(`${cssPath} .ember-power-select-trigger-multiple-input`, value);
       if (isEmberOne) {
         triggerEvent(`${cssPath} .ember-power-select-trigger-multiple-input`, 'input');
       }
-    } else {
+    } else if (isDefaultSingleSelect) {
       fillIn('.ember-power-select-search input', value);
       if (isEmberOne) {
         triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search input`, 'input');
+      }
+    } else { // It's probably a customized version
+      let inputIsInTrigger = !!find(`${cssPath} .ember-power-select-trigger input[type=search]`)[0];
+      if (inputIsInTrigger) {
+        fillIn(`${cssPath} .ember-power-select-trigger input[type=search]`, value);
+        if (isEmberOne) {
+          triggerEvent(`${cssPath} .ember-power-select-trigger input[type=search]`, 'input');
+        }
+      } else {
+        if (isEmberOne) {
+          triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search input[type=search]`, 'input');
+        }
       }
     }
 

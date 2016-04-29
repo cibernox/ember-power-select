@@ -22,3 +22,14 @@
 {{#power-select-multiple class="select-multiple" options=numbers selected=selectedList onchange=(action (mut selectedList)) as |num|}}
   {{num}}
 {{/power-select-multiple}}
+
+<h3>Customized component</h3>
+
+{{#power-select class="select-custom-search"
+  selected=selected3
+  onchange=(action (mut selected3))
+  search=(action "searchAsync")
+  beforeOptionsComponent=null
+  triggerComponent="custom-trigger-with-search" as |num|}}
+  {{num}}
+{{/power-select}}
