@@ -182,6 +182,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 .ember-power-select-option {
   cursor: pointer;
   padding: 0 $ember-power-select-option-padding;
+  word-wrap: break-word;
 }
 .ember-power-select-option[aria-disabled="true"] {
   color: $ember-power-select-disabled-option-color;
