@@ -1,8 +1,11 @@
 # Master
 
+- [ENHANCEMENT] The option containing the loading message has a a distinctive `.ember-power-select-option--loading-message`
+  class.
+
 # 0.10.3
 - [ENHANCEMENT] The `selectChoose` helper is less dependent on the class names of the input, and will
-  *probably* work with any markup as long as the searchbox has `[type=search]`.\
+  *probably* work with any markup as long as the searchbox has `[type=search]`.
 - [BUGFIX] Fixed bug selecting options with touch events.
 
 # 0.10.2
