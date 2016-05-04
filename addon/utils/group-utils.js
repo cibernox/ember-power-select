@@ -955,6 +955,9 @@ export function stripDiacritics(text) {
   return `${text}`.replace(/[^\u0000-\u007E]/g, match);
 }
 
-export function defaultMatcher(value, text) {
+export function defaultMatcher(value, text, searchField) {
+  if (searchField) {
+    value = get(value, searchField);
+  }
   return stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase());
 }
