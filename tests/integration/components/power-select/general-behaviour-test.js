@@ -109,7 +109,7 @@ test('Each option of the select is the result of yielding an item', function(ass
 
 test('If the passed options is a promise and it\'s not resolved the component shows a Loading message', function(assert) {
   let done = assert.async();
-  assert.expect(3);
+  assert.expect(4);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
     Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
@@ -123,6 +123,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
 
   clickTrigger();
   assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
+  assert.ok($('.ember-power-select-option').hasClass('ember-power-select-option--loading-message'), 'The row has a special class to differentiate it from regular options');
   setTimeout(function() {
     assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
     assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
