@@ -139,11 +139,7 @@ export default Ember.Component.extend({
 
   optionMatcher: computed('searchField', 'matcher', function() {
     let { matcher, searchField } = this.getProperties('matcher', 'searchField');
-    if (searchField) {
-      return (option, text) => matcher(get(option, searchField), text);
-    } else {
-      return (option, text) => matcher(option, text);
-    }
+    return (option, text) => matcher(option, text, searchField);
   }),
 
   highlighted: computed('results.[]', 'currentlyHighlighted', 'resolvedSelected', function() {
