@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Ensure customMatchers receive always receive the entire option, even when used in conjunction
+  with `searchField` option.
 - [ENHANCEMENT] The option containing the loading message has a a distinctive `.ember-power-select-option--loading-message`
   class.
 

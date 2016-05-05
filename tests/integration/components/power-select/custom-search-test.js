@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
-import { numbers } from '../constants';
+import { numbers, countries } from '../constants';
 
 const { RSVP } = Ember;
 
@@ -550,4 +550,19 @@ test('BUGFIX: When the given options are a promise and a search function is prov
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 options');
   typeInSearch("");
   assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options again§');
+});
+
+test('BUGFIX: If the user provides a custom matcher, the that matcher receives the entire option even if the user also provided a searchField', function(assert) {
+  assert.expect(14);
+  this.countries = countries;
+  this.matcherFn = function(option) {
+    assert.equal(typeof option, 'object', 'The first argument received by the custom matches is the option itself');
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=countries matcher=matcherFn searchField="name" onchange=(action (mut foo)) as |number searchTerm|}}
+      {{country.name}}
+    {{/power-select-multiple}}
+  `);
+
+  typeInSearch('po');
 });
