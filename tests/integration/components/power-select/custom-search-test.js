@@ -552,7 +552,7 @@ test('BUGFIX: When the given options are a promise and a search function is prov
   assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options again§');
 });
 
-test('BUGFIX: If the user provides a custom matcher, the that matcher receives the entire option even if the user also provided a searchField', function(assert) {
+test('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', function(assert) {
   assert.expect(14);
   this.countries = countries;
   this.matcherFn = function(option) {
