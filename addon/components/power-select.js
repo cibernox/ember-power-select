@@ -166,7 +166,8 @@ export default Ember.Component.extend({
         highlight: (option) => this.send('highlight', dropdown, option),
         select: (selected, e) => this.send('select', dropdown, selected, e),
         choose: (selected, e) => this._doChoose(dropdown, selected, e),
-        handleKeydown: (e) => this.send('handleKeydown', dropdown, e)
+        handleKeydown: (e) => this.send('handleKeydown', dropdown, e),
+        scrollTo: (option, e) => this.send('scrollTo', option, dropdown, e)
       };
       return {
         isOpen: dropdown.isOpen,
@@ -232,6 +233,22 @@ export default Ember.Component.extend({
       this.get('eventSender').trigger('focus');
     },
 
+    scrollTo(option /*, dropdown, e */) {
+      if (!self.document || !option) { return; }
+      let optionsList = self.document.querySelector('.ember-power-select-options');
+      if (!optionsList) { return; }
+      let index = this.indexOfOption(option);
+      if (index === -1) { return; }
+      let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
+      let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+      let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+      if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+        optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+      } else if (optionTopScroll < optionsList.scrollTop) {
+        optionsList.scrollTop = optionTopScroll;
+      }
+    },
+
     // It is not evident what is going on here, so I'll explain why.
     //
     // As of this writting, Ember doesn allow to yield data to the "inverse" block.
@@ -258,7 +275,6 @@ export default Ember.Component.extend({
         }
       }
       if (e) { this.set('openingEvent', e); }
-      run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
     },
 
     handleClose(dropdown, e) {
@@ -277,8 +293,9 @@ export default Ember.Component.extend({
   _handleKeyUpDown(dropdown, e) {
     if (dropdown.isOpen) {
       e.preventDefault();
-      const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
+      let newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
       this.send('highlight', dropdown, newHighlighted, e);
+      run.scheduleOnce('afterRender', this, this.send, 'scrollTo', newHighlighted, dropdown, e);
     } else {
       dropdown.actions.open(e);
     }
@@ -306,21 +323,6 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  scrollIfHighlightedIsOutOfViewport() {
-    if (!self.document) { return; }
-    const optionsList = document.querySelector('.ember-power-select-options');
-    if (!optionsList) { return; }
-    const highlightedOption = optionsList.querySelector('.ember-power-select-option[aria-current="true"]');
-    if (!highlightedOption) { return; }
-    const optionTopScroll = highlightedOption.offsetTop - optionsList.offsetTop;
-    const optionBottomScroll = optionTopScroll + highlightedOption.offsetHeight;
-    if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
-      optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
-    } else if (optionTopScroll < optionsList.scrollTop) {
-      optionsList.scrollTop = optionTopScroll;
-    }
-  },
-
   indexOfOption(option) {
     return indexOfOption(this.get('results'), option);
   },
@@ -381,7 +383,6 @@ export default Ember.Component.extend({
 
   _doHighlight(dropdown, option) {
     if (option && get(option, 'disabled')) { return; }
-    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
     this.set('currentlyHighlighted', option);
   },
 
@@ -443,6 +444,7 @@ export default Ember.Component.extend({
     if (firstMatch !== undefined) {
       if (dropdown.isOpen) {
         this._doHighlight(dropdown, firstMatch, e);
+        this.send('scrollTo', firstMatch, dropdown, e);
       } else {
         this._doSelect(dropdown, firstMatch, e);
       }

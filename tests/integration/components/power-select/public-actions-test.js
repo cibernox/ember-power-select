@@ -10,7 +10,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 });
 
 test('The search action of single selects action receives the search term and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.handleSearch = (term, select) => {
@@ -24,6 +24,7 @@ test('The search action of single selects action receives the search term and th
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
   };
 
   this.render(hbs`
@@ -37,7 +38,7 @@ test('The search action of single selects action receives the search term and th
 });
 
 test('The search action of multiple selects action receives the search term and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.handleSearch = (term, select) => {
@@ -51,6 +52,7 @@ test('The search action of multiple selects action receives the search term and 
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
   };
 
   this.render(hbs`
@@ -64,7 +66,7 @@ test('The search action of multiple selects action receives the search term and 
 });
 
 test('The onchange of single selects action receives the selection and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
@@ -78,6 +80,7 @@ test('The onchange of single selects action receives the selection and the publi
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
   };
 
   this.render(hbs`
@@ -91,7 +94,7 @@ test('The onchange of single selects action receives the selection and the publi
 });
 
 test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
@@ -105,6 +108,7 @@ test('The onchange of multiple selects action receives the selection and the pub
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
   };
 
   this.render(hbs`
@@ -118,7 +122,7 @@ test('The onchange of multiple selects action receives the selection and the pub
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
@@ -131,6 +135,7 @@ test('The onkeydown of single selects action receives the public API and the key
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -170,7 +175,7 @@ test('The onkeydown can be used to easily allow to select on tab', function(asse
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
@@ -183,6 +188,7 @@ test('The onkeydown of multiple selects action receives the public API and the k
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -197,7 +203,7 @@ test('The onkeydown of multiple selects action receives the public API and the k
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in single selects', function(assert) {
-  assert.expect(22);
+  assert.expect(24);
 
   this.numbers = numbers;
   this.handleKeyDown = (select, e) => {
@@ -210,6 +216,7 @@ test('returning false from the `onkeydown` action prevents the default behaviour
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
     return false;
   };
@@ -227,7 +234,7 @@ test('returning false from the `onkeydown` action prevents the default behaviour
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in multiple selects', function(assert) {
-  assert.expect(11);
+  assert.expect(12);
 
   this.numbers = numbers;
   this.handleKeyDown = (select, e) => {
@@ -240,6 +247,7 @@ test('returning false from the `onkeydown` action prevents the default behaviour
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
     return false;
   };
@@ -255,7 +263,7 @@ test('returning false from the `onkeydown` action prevents the default behaviour
 });
 
 test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
@@ -268,6 +276,7 @@ test('The onfocus of single selects action receives the public API and the focus
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -281,7 +290,7 @@ test('The onfocus of single selects action receives the public API and the focus
 });
 
 test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
@@ -294,6 +303,7 @@ test('The onfocus of multiple selects action receives the public API and the foc
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -307,7 +317,7 @@ test('The onfocus of multiple selects action receives the public API and the foc
 });
 
 test('the `onopen` action is invoked just before the dropdown opens', function(assert) {
-  assert.expect(11);
+  assert.expect(12);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
@@ -320,6 +330,7 @@ test('the `onopen` action is invoked just before the dropdown opens', function(a
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -334,7 +345,7 @@ test('the `onopen` action is invoked just before the dropdown opens', function(a
 });
 
 test('returning false from the `onopen` action prevents the single select from opening', function(assert) {
-  assert.expect(11);
+  assert.expect(12);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
@@ -347,6 +358,7 @@ test('returning false from the `onopen` action prevents the single select from o
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
     return false;
   };
@@ -362,7 +374,7 @@ test('returning false from the `onopen` action prevents the single select from o
 });
 
 test('returning false from the `onopen` action prevents the multiple select from opening', function(assert) {
-  assert.expect(11);
+  assert.expect(12);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
@@ -375,6 +387,7 @@ test('returning false from the `onopen` action prevents the multiple select from
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
     return false;
   };
@@ -390,7 +403,7 @@ test('returning false from the `onopen` action prevents the multiple select from
 });
 
 test('the `onclose` action is invoked just before the dropdown closes', function(assert) {
-  assert.expect(12);
+  assert.expect(13);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
@@ -404,6 +417,7 @@ test('the `onclose` action is invoked just before the dropdown closes', function
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
     assert.equal(typeof select.actions.choose, 'function', 'select.actions.choose is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -419,7 +433,7 @@ test('the `onclose` action is invoked just before the dropdown closes', function
 });
 
 test('returning false from the `onclose` action prevents the single select from closing', function(assert) {
-  assert.expect(12);
+  assert.expect(13);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
@@ -432,6 +446,7 @@ test('returning false from the `onclose` action prevents the single select from 
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
     return false;
   };
@@ -449,7 +464,7 @@ test('returning false from the `onclose` action prevents the single select from 
 });
 
 test('returning false from the `onclose` action prevents the multiple select from closing', function(assert) {
-  assert.expect(12);
+  assert.expect(13);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
@@ -462,6 +477,7 @@ test('returning false from the `onclose` action prevents the multiple select fro
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The second argument is an event');
     return false;
   };
@@ -479,7 +495,7 @@ test('returning false from the `onclose` action prevents the multiple select fro
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', function(assert) {
-  assert.expect(15);
+  assert.expect(16);
 
   this.numbers = numbers;
   this.handleInput = (value, select, e) => {
@@ -493,6 +509,7 @@ test('the `oninput` action is invoked when the user modifies the text of the sea
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The third argument is an event');
   };
 
@@ -511,7 +528,7 @@ test('the `oninput` action is invoked when the user modifies the text of the sea
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', function(assert) {
-  assert.expect(15);
+  assert.expect(16);
 
   this.numbers = numbers;
   this.handleInput = (value, select, e) => {
@@ -525,6 +542,7 @@ test('the `oninput` action is invoked when the user modifies the text of the sea
     assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
     assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
     assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
     assert.ok(e instanceof window.Event, 'The third argument is an event');
   };
 
