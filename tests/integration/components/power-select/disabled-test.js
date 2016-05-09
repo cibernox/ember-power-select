@@ -150,3 +150,30 @@ test('BUGFIX: When searching by pressing keys on a focused & closed select, disa
   assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is still closed');
   assert.equal(trigger.textContent.trim(), 'United Kingdom', '"United Kingdom" has been selected');
 });
+
+test('The title of a group can be marked as disabled', function(assert) {
+  assert.expect(1);
+
+  const options = [
+    { groupName: "Smalls", options: ["one", "two", "three"] },
+    { groupName: "Mediums", disabled: true, options: ["four", "five", "six"] },
+    { groupName: "Bigs", options: [
+        { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
+        { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+        "thirteen"
+      ]
+    },
+    "one hundred",
+    "one thousand"
+  ];
+
+  this.options = options;
+  this.render(hbs`
+    {{#power-select options=options onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'group is disabled');
+});
