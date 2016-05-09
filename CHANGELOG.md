@@ -1,5 +1,9 @@
 # Master
 
+- [BUGFIX] Select doesn't scroll to make the selection visible on open. Regression introduced in 0.10.0.
+- [BUGFIX] Highlight and scrolling has been decouple, so now highlighting a partially hidden option
+  with the mouse not longer triggers a scroll on the list, which was wrong behaviour.
+  However, using the arrow keys still scrolls the list is necessary.
 - [BUGFIX] Ensure customMatchers receive always receive the entire option, even when used in conjunction
   with `searchField` option.
 - [ENHANCEMENT] The option containing the loading message has a a distinctive `.ember-power-select-option--loading-message`

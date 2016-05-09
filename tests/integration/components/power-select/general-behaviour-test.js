@@ -999,3 +999,18 @@ test('When the input inside the select gets focused the entire component gains t
   Ember.run(() => $('.ember-power-select-search input').focus());
   assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select has the class now');
 });
+
+test('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected="nine" onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'nine');
+  assert.ok($('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
+});
