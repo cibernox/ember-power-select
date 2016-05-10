@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
 import {
+  digits,
   numbers,
   names,
   countries,
@@ -1013,4 +1014,20 @@ test('[BUGFIX] When the component opens, if the selected option is not visible t
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'nine');
   assert.ok($('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
+});
+
+test('[BUGFIX] When numerical 0 is selected option, make sure it is selected in the UI', function(assert) {
+  assert.expect(2);
+
+  this.digits = digits;
+  this.select = 0;
+  this.render(hbs`
+    {{#power-select options=digits selected=select onchange=(action (mut select)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  assert.equal( $('.ember-power-select-selected-item').text().trim() , '0', '0 is shown as the selected item');
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), '0', '0 is shown as selected in the dropdown');
 });
