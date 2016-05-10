@@ -205,7 +205,7 @@ test('If a group is disabled, any options inside cannot be interacted with mouse
 
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0), 'No option is selected';
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'No option is selected');
   Ember.run(() => {
     let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
     $('.ember-power-select-option:eq(8)')[0].dispatchEvent(event);

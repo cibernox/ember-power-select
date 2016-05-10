@@ -1,5 +1,8 @@
 # Master
 
+- [ENHANCEMENT] If a group is disabled, its options (or the options of nested groups) are automatically
+  considered disabled too.
+
 # 0.10.4
 - [ENHANCEMENT] Groups can contain disabled=true property that will add aria-disabled="true" to the group.
 - [BUGFIX] Select doesn't scroll to make the selection visible on open. Regression introduced in 0.10.0.

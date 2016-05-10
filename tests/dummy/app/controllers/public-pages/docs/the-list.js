@@ -16,11 +16,25 @@ const countries = [
   { name: 'United Kingdom', code: 'GB', population: 64596752 },
 ];
 
+const groupedNumbers = [
+  { groupName: "Smalls", disabled: true, options: ["one", "two", "three"] },
+  { groupName: "Mediums", options: ["four", "five", "six"] },
+  { groupName: "Bigs", disabled: true, options: [
+      { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
+      { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+      "thirteen"
+    ]
+  },
+  "one hundred",
+  "one thousand"
+];
+
 export default Ember.Controller.extend({
   names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
   emptyList: [],
   promise: null,
   countries,
+  groupedNumbers,
 
   actions: {
     refreshCollection() {
