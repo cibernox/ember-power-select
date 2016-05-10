@@ -151,8 +151,8 @@ test('BUGFIX: When searching by pressing keys on a focused & closed select, disa
   assert.equal(trigger.textContent.trim(), 'United Kingdom', '"United Kingdom" has been selected');
 });
 
-test('The title of a group can be marked as disabled', function(assert) {
-  assert.expect(1);
+test('The title of a group can be marked as disabled, and it is still disabled after filtering', function(assert) {
+  assert.expect(2);
 
   const options = [
     { groupName: "Smalls", options: ["one", "two", "three"] },
@@ -175,5 +175,7 @@ test('The title of a group can be marked as disabled', function(assert) {
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'group is disabled');
+  assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is disabled');
+  typeInSearch('fiv');
+  assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is still disabled');
 });
