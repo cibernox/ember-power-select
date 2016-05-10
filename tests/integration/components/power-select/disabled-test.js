@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
+import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Disabled)', {
@@ -178,4 +178,39 @@ test('The title of a group can be marked as disabled, and it is still disabled a
   assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is disabled');
   typeInSearch('fiv');
   assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is still disabled');
+});
+
+test('If a group is disabled, any options inside cannot be interacted with mouse', function(assert) {
+  assert.expect(4);
+
+  const options = [
+    { groupName: "Smalls", options: ["one", "two", "three"] },
+    { groupName: "Mediums", options: ["four", "five", "six"] },
+    { groupName: "Bigs", disabled: true, options: [
+        { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
+        { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+        "thirteen"
+      ]
+    },
+    "one hundred",
+    "one thousand"
+  ];
+
+  this.options = options;
+  this.render(hbs`
+    {{#power-select options=options selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'No option is selected');
+  Ember.run(() => {
+    let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
+    $('.ember-power-select-option:eq(8)')[0].dispatchEvent(event);
+  });
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
+  nativeMouseUp('.ember-power-select-option:eq(9)');
+  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'Noting was selected');
 });

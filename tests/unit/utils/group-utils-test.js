@@ -13,6 +13,18 @@ const groupedOptions = [
   "one hundred",
   "one thousand"
 ];
+const groupedOptionsWithDisabledThings = [
+  { groupName: "Smalls", options: ["zero", { disabled: true, value: "one" }, "two", "three"] },
+  { groupName: "Mediums", options: ["four", "five", "six"] },
+  { groupName: "Bigs", disabled: true, options: [
+      { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
+      { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+      "thirteen"
+    ]
+  },
+  "one hundred",
+  "one thousand"
+];
 const basicOptions = ['zero', 'one', 'two', 'three', 'four', 'five'];
 
 module('Unit | Utility | Group utils');
@@ -42,22 +54,34 @@ test('#indexOfOption also works transversing groups', function(assert) {
   assert.equal(indexOfOption(groupedOptions, null), -1);
 });
 
-test('#optionAtIndex returns the option in that index is present, null othewise', function(assert) {
-  assert.equal(optionAtIndex(basicOptions, 0), 'zero');
-  assert.equal(optionAtIndex(basicOptions, 5), 'five');
-  assert.equal(optionAtIndex(basicOptions, 7), null);
-  assert.equal(optionAtIndex(basicOptions, -1), null); // Should this return the last??
+test('#optionAtIndex returns an object `{ disabled, option }`, disabled being true if that option or any ancestor is disabled, and the option will be undefined if the index is out of range', function(assert) {
+  assert.deepEqual(optionAtIndex(basicOptions, 0), { disabled: false, option: 'zero'});
+  assert.deepEqual(optionAtIndex(basicOptions, 5), { disabled: false, option: 'five'});
+  assert.deepEqual(optionAtIndex(basicOptions, 7), { disabled: false, option: undefined });
+  assert.deepEqual(optionAtIndex(basicOptions, -1), { disabled: false, option: undefined }); // Should this return the last??
 });
 
 test('#optionAtIndex knows how to transverse groups', function(assert) {
-  assert.equal(optionAtIndex(groupedOptions, 0), 'zero');
-  assert.equal(optionAtIndex(groupedOptions, 6), 'six');
-  assert.equal(optionAtIndex(groupedOptions, 7), 'seven');
-  assert.equal(optionAtIndex(groupedOptions, 12), 'twelve');
-  assert.equal(optionAtIndex(groupedOptions, 13), 'thirteen');
-  assert.equal(optionAtIndex(groupedOptions, 15), 'one thousand');
-  assert.equal(optionAtIndex(groupedOptions, 16), undefined);
-  assert.equal(optionAtIndex(groupedOptions, -1), undefined);
+  assert.deepEqual(optionAtIndex(groupedOptions, 0),  { disabled: false, option: 'zero' });
+  assert.deepEqual(optionAtIndex(groupedOptions, 6),  { disabled: false, option: 'six' });
+  assert.deepEqual(optionAtIndex(groupedOptions, 7),  { disabled: false, option: 'seven' });
+  assert.deepEqual(optionAtIndex(groupedOptions, 12), { disabled: false, option: 'twelve' });
+  assert.deepEqual(optionAtIndex(groupedOptions, 13), { disabled: false, option: 'thirteen' });
+  assert.deepEqual(optionAtIndex(groupedOptions, 15), { disabled: false, option: 'one thousand' });
+  assert.deepEqual(optionAtIndex(groupedOptions, 16), { disabled: false, option: undefined });
+  assert.deepEqual(optionAtIndex(groupedOptions, -1), { disabled: false, option: undefined });
+});
+
+test('#optionAtIndex knows that an option is disabled if an ancestor is disabled', function(assert) {
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 0),  { disabled: false, option: 'zero' });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 1),  { disabled: true, option: { disabled: true, value: "one" } });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 6),  { disabled: false, option: 'six' });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 7),  { disabled: true, option: 'seven' });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 12), { disabled: true, option: 'twelve' });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 13), { disabled: true, option: 'thirteen' });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 15), { disabled: false, option: 'one thousand' });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 16), { disabled: false, option: undefined });
+  assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, -1), { disabled: false, option: undefined });
 });
 
 test('#filterOptions generates new options respecting groups when the matches returns a boolean', function(assert) {

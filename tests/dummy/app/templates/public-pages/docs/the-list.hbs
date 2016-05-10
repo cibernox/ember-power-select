@@ -346,7 +346,7 @@
   </div>
 {{/code-sample}}
 
-<h3>Disabling specific options</h3>
+<h3>Disabling specific options or groups</h3>
 
 <p>
   In {{#link-to 'public-pages.docs.the-trigger'}}the trigger{{/link-to}} we saw how to disable the entire component,
@@ -393,6 +393,50 @@
       as |country|
     }}
       {{country.name}}
+    {{/power-select}}
+  </div>
+{{/code-sample}}
+
+<p>
+  This also works with groups. If a group has a property <code>disabled: true</code>, all options inside
+  that group, including nested groups are considered disabled, without having to mark every option as disabled.
+</p>
+
+{{#code-sample as |component|}}
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select
+      options=groupedNumbers
+      selected=number
+      onchange=(action (mut number))
+      as |num|
+    }}
+      \{{num}}
+    \{{/power-select}}
+  </pre>
+  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      groupedNumbers: [
+        { groupName: "Smalls", disabled: true, options: ["one", "two", "three"] },
+        { groupName: "Mediums", options: ["four", "five", "six"] },
+        { groupName: "Bigs", disabled: true, options: [
+            { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
+            { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+            "thirteen"
+          ]
+        },
+        "one hundred",
+        "one thousand"
+      ]
+    });
+  </pre>
+  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    {{#power-select
+      options=groupedNumbers
+      selected=number
+      onchange=(action (mut number))
+      as |num|
+    }}
+      {{num}}
     {{/power-select}}
   </div>
 {{/code-sample}}

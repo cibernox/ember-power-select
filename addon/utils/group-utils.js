@@ -49,8 +49,8 @@ export function indexOfOption(collection, option) {
 
 export function optionAtIndex(originalCollection, index) {
   let counter = 0;
-  return (function walk(collection) {
-    if (!collection) { return null; }
+  return (function walk(collection, ancestorIsDisabled) {
+    if (!collection || index < 0) { return { disabled: false, option: undefined }; }
     if (!collection.objectAt) {
       collection = Ember.A(collection);
     }
@@ -59,16 +59,16 @@ export function optionAtIndex(originalCollection, index) {
     while (counter <= index && localCounter < length) {
       let entry = collection.objectAt(localCounter);
       if (isGroup(entry)) {
-        let found = walk(get(entry, 'options'));
+        let found = walk(get(entry, 'options'), ancestorIsDisabled || !!get(entry, 'disabled'));
         if (found) { return found; }
       } else if (counter === index) {
-        return entry;
+        return { disabled: ancestorIsDisabled || !!get(entry, 'disabled'), option: entry };
       } else {
         counter++;
       }
       localCounter++;
     }
-  })(originalCollection);
+  })(originalCollection, false) || { disabled: false, option: undefined };
 }
 let deprecatedMatchers = {};
 export function filterOptions(options, text, matcher, skipDisabled = false) {

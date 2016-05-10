@@ -382,9 +382,10 @@ export default Ember.Controller.extend({
   multipleSelection: ['one','two','three','four','five','six','seven','eight','nine','ten','eleven'],
   emptyMultipleSelection: [],
 
+  optionOfGroup: null,
   groupedOptions: [
-    { groupName: "Smalls", options: ["one", "two", "three"] },
-    { groupName: "Mediums", options: ["four", "five", "six"] },
+    { groupName: "Smalls", disabled: true, options: ["one", "two", "three"] },
+    { groupName: "Mediums", disabled: true, options: ["four", "five", "six"] },
     { groupName: "Bigs", options: [
         { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
         { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
