@@ -1,5 +1,6 @@
 # Master
 
+# 0.10.4
 - [ENHANCEMENT] Groups can contain disabled=true property that will add aria-disabled="true" to the group.
 - [BUGFIX] Select doesn't scroll to make the selection visible on open. Regression introduced in 0.10.0.
 - [BUGFIX] Highlight and scrolling has been decouple, so now highlighting a partially hidden option
