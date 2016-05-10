@@ -80,7 +80,11 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
     if (isGroup(entry)) {
       let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
       if (get(suboptions, 'length') > 0) {
-        opts.push({ groupName: entry.groupName, options: suboptions });
+        let groupCopy = { groupName: entry.groupName, options: suboptions };
+        if (entry.hasOwnProperty('disabled')) {
+          groupCopy.disabled = entry.disabled;
+        }
+        opts.push(groupCopy);
       }
     } else if (!skipDisabled || !entry.disabled) {
       let matchResult = matcher(entry, text);
