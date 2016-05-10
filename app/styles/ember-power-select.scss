@@ -183,9 +183,15 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   cursor: pointer;
   padding: 0 $ember-power-select-option-padding;
 }
+.ember-power-select-group[aria-disabled="true"] {
+  color: $ember-power-select-disabled-option-color;
+  cursor: not-allowed;
+}
+.ember-power-select-group[aria-disabled="true"] .ember-power-select-option,
 .ember-power-select-option[aria-disabled="true"] {
   color: $ember-power-select-disabled-option-color;
   pointer-events: none;
+  cursor: not-allowed;
 }
 .ember-power-select-option[aria-selected="true"] { background-color: $ember-power-select-selected-background; }
 .ember-power-select-option[aria-current="true"] {

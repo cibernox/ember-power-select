@@ -2,11 +2,11 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
+{{!--
 {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
   {{option}}
 {{/power-select}}
 
-{{!--
   <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
@@ -165,11 +165,12 @@
     <a href="#">Contact us to complain about this</a>
   {{/power-select}}
 
+--}}
   <h4>Select with groups</h4>
   {{#power-select options=(readonly groupedOptions) selected=optionOfGroup onchange=(action (mut optionOfGroup)) as |option|}}
     {{option}}
   {{/power-select}}
-
+{{!--
   <h4>Options are appended to the body, unless you pass `renderInPlace=true`</h4>
   {{#power-select options=(readonly simpleOptions) renderInPlace=true selected=simpleSelected2 onchange=(action (mut simpleSelected2)) as |option|}}
     {{option}}

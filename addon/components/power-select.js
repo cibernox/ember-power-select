@@ -334,11 +334,13 @@ export default Ember.Component.extend({
   advanceSelectableOption(activeHighlighted, step) {
     let resultsLength = this.get('resultsLength');
     let startIndex = Math.min(Math.max(this.indexOfOption(activeHighlighted) + step, 0), resultsLength - 1);
-    let nextOption = this.optionAtIndex(startIndex);
-    while (nextOption && get(nextOption, 'disabled')) {
-      nextOption = this.optionAtIndex(startIndex += step);
+    let { disabled, option } = this.optionAtIndex(startIndex);
+    while (option && disabled) {
+      let next = this.optionAtIndex(startIndex += step);
+      disabled = next.disabled;
+      option = next.option;
     }
-    return nextOption;
+    return option;
   },
 
   filter(options, term, skipDisabled = false) {
@@ -347,12 +349,8 @@ export default Ember.Component.extend({
 
   defaultHighlighted() {
     const selected = this.get('resolvedSelected');
-    if (!selected || this.indexOfOption(selected) === -1) {
-      let nextOption = this.optionAtIndex(0);
-      while (nextOption && nextOption.disabled) {
-        nextOption = this.advanceSelectableOption(nextOption, 1);
-      }
-      return nextOption;
+    if (selected === undefined || this.indexOfOption(selected) === -1) {
+      return this.advanceSelectableOption(selected, 1);
     }
     return selected;
   },

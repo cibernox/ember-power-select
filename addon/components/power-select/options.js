@@ -13,10 +13,13 @@ export default Ember.Component.extend({
   // Lifecycle hooks
   didInsertElement() {
     this._super(...arguments);
-    if (this.get('role') === 'group') { return; }
+    if (this.get('role') === 'group') {
+      return;
+    }
     let findOptionAndPerform = (action, e) => {
       let optionItem = Ember.$(e.target).closest('[data-option-index]');
       if (!optionItem || !(0 in optionItem)) { return; }
+      if (optionItem.closest('[aria-disabled=true]').length) { return; } // Abort if the item or an ancestor is disabled
       action(this._optionFromIndex(optionItem[0].dataset.optionIndex), e);
     };
     this.element.addEventListener('mouseup', e => findOptionAndPerform(this.get('select.actions.choose'), e));
