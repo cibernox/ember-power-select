@@ -35,7 +35,6 @@ test('check horizontal position without specify property (using power-select com
   assert.equal($('.ember-basic-dropdown--left').length, 2);
 });
 
-
 test('check horizontal position without specify property (using power-select-multiple component)', function(assert) {
   assert.expect(2);
 
