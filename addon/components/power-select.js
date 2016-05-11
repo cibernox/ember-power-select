@@ -189,11 +189,10 @@ export default Ember.Component.extend({
       this._doSearch(dropdown, term);
     },
 
-    handleInput(e) {
-      let term = e.target.value;
+    handleInput(term, e) {
       let action = this.get('oninput');
       if (action) {
-        let returnValue = action(e.target.value, this.get('publicAPI'), e);
+        let returnValue = action(term, this.get('publicAPI'), e);
         if (returnValue === false) { return; }
       }
       this.send('search', this.get('registeredDropdown'), term, e);
