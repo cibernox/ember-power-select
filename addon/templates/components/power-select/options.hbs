@@ -7,7 +7,10 @@
   {{#if opt.groupName}}
     <li class="ember-power-select-group" aria-disabled={{opt.disabled}} role="option">
       {{#if groupNameComponent}}
-        {{component groupNameComponent name=opt.groupName option=opt index=index}}
+        {{component groupNameComponent
+          name=opt.groupName
+          option=opt
+          index=index}}
       {{else}}
         <span class="ember-power-select-group-name">
           {{opt.groupName}}
