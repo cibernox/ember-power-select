@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/power-select';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+import readInput from '../utils/read-input-value';
 
 const { computed, run, get, isBlank } = Ember;
 const EventSender = Ember.Object.extend(Ember.Evented);
@@ -189,7 +190,8 @@ export default Ember.Component.extend({
       this._doSearch(dropdown, term);
     },
 
-    handleInput(term, e) {
+    handleInput(e) {
+      let term = readInput(e.target);
       let action = this.get('oninput');
       if (action) {
         let returnValue = action(term, this.get('publicAPI'), e);

@@ -56,7 +56,7 @@ export default Ember.Component.extend({
   actions: {
     handleInput(e) {
       let action = this.get('handleInput');
-      if (action) { action(readInput(e.target), e); }
+      if (action) { action(e); }
       if (e.defaultPrevented) { return; }
       this.get('select.actions.open')(e);
     },
