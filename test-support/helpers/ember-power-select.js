@@ -1,13 +1,16 @@
 import Ember from 'ember';
 
 // Helpers for integration tests
-
 function typeText(selector, text) {
-  let $selector = $(selector);
-  $selector.val(text);
+  let target = $(selector).get(0);
+  if (target.contentEditable === 'true') {
+    target.textContent = text;
+  } else {
+    target.value = text;
+  }
   let event = document.createEvent('Events');
   event.initEvent('input', true, true);
-  $selector[0].dispatchEvent(event);
+  target.dispatchEvent(event);
 }
 
 function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
