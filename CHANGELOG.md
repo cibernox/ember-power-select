@@ -1,5 +1,6 @@
 # Master
 
+- [BUGFIX] Depend on EBS ^0.11.5 to fix issue with touch devices.
 - [BUGFIX] Depend on EBS ^0.11.4 to fix some issues with IE9
 - [ENHANCEMENT] If a group is disabled, its options (or the options of nested groups) are automatically
   considered disabled too.
