@@ -81,8 +81,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   font-family: inherit;
   font-size: inherit;
   border: none;
-  width: 25px;
-  display: inline-block;
+  min-width: 25px;
   line-height: inherit;
   -webkit-appearance: none;
   outline: none;

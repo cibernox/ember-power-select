@@ -412,7 +412,7 @@ test('Pressing BACKSPACE on the search input when it\'s empty removes the last s
   assert.equal(this.$('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
   triggerKeydown(input, 8);
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
-  assert.equal(this.$('.ember-power-select-trigger-multiple-input').val(), 'two', 'The text of the seach input is two now');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').text(), 'two', 'The text of the seach input is two now');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The dropown has been opened');
   assert.equal($('.ember-power-select-option').length, 1, 'The list has been filtered');
   assert.equal(input.selectionStart, 3);
