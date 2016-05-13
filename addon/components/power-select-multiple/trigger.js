@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../../templates/components/power-select-multiple/trigger';
 import updateInput from '../../utils/update-input-value';
 
-const { computed, get, isBlank, run } = Ember;
+const { computed, get, isBlank, run, inject: { service } } = Ember;
 const { htmlSafe } = Ember.String;
 const ua = self.window ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
@@ -11,11 +11,13 @@ const isTouchDevice = (Ember.testing || !!self.window && 'ontouchstart' in self.
 export default Ember.Component.extend({
   tagName: '',
   layout,
+  textMeasurer: service(),
 
   // Lifecycle hooks
   didInsertElement() {
     this._super(...arguments);
     this.input = document.querySelector(`.${this.elementId}-input`);
+    this.inputFont = this.input ? window.getComputedStyle(this.input).font : null;
     let optionsList = document.getElementById(`${this.elementId}-ember-power-select-multiple-options`);
     let chooseOption = e => {
       if (e.target.dataset.selectedIndex) {
@@ -51,7 +53,11 @@ export default Ember.Component.extend({
     if (!this.get('selected.length')) {
       return htmlSafe('width: 100%;');
     } else {
-      return htmlSafe(`width: ${(this.get('searchText.length') || 0) * 0.5 + 1.5}em`);
+      let textWidth = 0;
+      if (this.inputFont) {
+        textWidth = this.get('textMeasurer').measure(this.get('searchText'), this.inputFont);
+      }
+      return htmlSafe(`width: ${textWidth + 25}px`);
     }
   }),
 
