@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Perform pixel-perfect text measurements using `ember-text-measurer` instead of using the
+  naive `0.5em * numberOfChars` that yields to imperfect results.
 - [BUGFIX] Calling `preventDefault` on the events that trigger an open or a close no longer prevent
   the component's default behaviour. Only `return false` can do that.
 
