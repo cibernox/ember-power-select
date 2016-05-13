@@ -1,5 +1,6 @@
 # Master
 
+# 0.10.7
 - [BUGFIX] Update `ember-text-measurer` to 0.3.0 and properly move it to runtime dependencies.
 - [BUGFIX] Ensure `ember-power-select` runs before `ember-cli-sri`.
 
