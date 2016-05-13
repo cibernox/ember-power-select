@@ -1,5 +1,9 @@
 # Master
 
+- [BUGFIX] Update `ember-text-measurer` to 0.3.0 and properly move it to runtime dependencies.
+- [BUGFIX] Ensure `ember-power-select` runs before `ember-cli-sri`.
+
+# 0.10.6
 - [BUGFIX] Perform pixel-perfect text measurements using `ember-text-measurer` instead of using the
   naive `0.5em * numberOfChars` that yields to imperfect results.
 - [BUGFIX] Calling `preventDefault` on the events that trigger an open or a close no longer prevent
