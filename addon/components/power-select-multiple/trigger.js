@@ -55,7 +55,7 @@ export default Ember.Component.extend({
     } else {
       let textWidth = 0;
       if (this.inputFont) {
-        textWidth = this.get('textMeasurer').measure(this.get('searchText'), this.inputFont);
+        textWidth = this.get('textMeasurer').width(this.get('searchText'), this.inputFont);
       }
       return htmlSafe(`width: ${textWidth + 25}px`);
     }
