@@ -88,7 +88,8 @@ export default function() {
   const isEmberOne = Ember.VERSION.match(/1\.13/);
 
   Ember.Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').replace(/\D/g, '');
+    let match = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/\d+$/);
+    let id = match[0];
     // If the dropdown is closed, open it
     if (Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
