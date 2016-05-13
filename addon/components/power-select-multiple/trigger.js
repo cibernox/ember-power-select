@@ -17,6 +17,7 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     this.input = document.querySelector(`.${this.elementId}-input`);
+    this.inputFont = this.input ? window.getComputedStyle(this.input).font : null;
     let optionsList = document.getElementById(`${this.elementId}-ember-power-select-multiple-options`);
     let chooseOption = e => {
       if (e.target.dataset.selectedIndex) {
@@ -52,8 +53,10 @@ export default Ember.Component.extend({
     if (!this.get('selected.length')) {
       return htmlSafe('width: 100%;');
     } else {
-      let font = window.getComputedStyle(this.input).font;
-      let textWidth = this.get('textMeasurer').measure(this.get('searchText'), font);
+      let textWidth = 0;
+      if (this.inputFont) {
+        textWidth = this.get('textMeasurer').measure(this.get('searchText'), this.inputFont);
+      }
       return htmlSafe(`width: ${textWidth + 25}px`);
     }
   }),
