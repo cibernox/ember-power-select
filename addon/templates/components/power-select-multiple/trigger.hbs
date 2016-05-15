@@ -5,7 +5,9 @@
         <span role="button"
           aria-label="remove element"
           class="ember-power-select-multiple-remove-btn"
-          data-selected-index={{idx}}>&times;</span>
+          data-selected-index={{idx}}>
+          &times;
+        </span>
       {{/unless}}
       {{#if selectedItemComponent}}
         {{component selectedItemComponent selected=opt lastSearchedText=lastSearchedText}}
