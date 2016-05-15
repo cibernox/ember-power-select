@@ -27,7 +27,9 @@
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select-multiple options=options selected=selected
+    \{{#power-select-multiple
+      options=options
+      selected=selected
       onchange=(action (mut selected))
       onkeydown=(action "createOnEnter")
       as |number|}}
@@ -58,7 +60,9 @@
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
     <div style="margin: 0 auto; max-width: 250px;">
-      {{#power-select-multiple options=options selected=selected
+      {{#power-select-multiple
+        options=options
+        selected=selected
         onchange=(action (mut selected))
         onkeydown=(action "createOnEnter")
         as |number|}}
