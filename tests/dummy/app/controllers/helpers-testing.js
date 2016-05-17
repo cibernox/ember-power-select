@@ -26,6 +26,7 @@ const numbers = [
 export default Ember.Controller.extend({
   numbers,
   selectedList: [],
+  asyncSelectedList: [],
   optionz: [],
   // Actions
   actions: {
@@ -39,6 +40,11 @@ export default Ember.Controller.extend({
     onOpenHandle(){
       Ember.run.later(() => {
         this.set('optionz', numbers);
+      }, 100);
+    },
+    onChangeAsync(key, selected) {
+      Ember.run.later(() => {
+        this.set(key, selected);
       }, 100);
     }
   }
