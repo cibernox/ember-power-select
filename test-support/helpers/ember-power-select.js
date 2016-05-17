@@ -151,6 +151,7 @@ export default function() {
     const elem = find(`${cssPath} .ember-power-select-multiple-options > li:contains(${value}) > .ember-power-select-multiple-remove-btn`).get(0);
     try {
       nativeMouseDown(elem);
+      wait();
     } catch (e) {
       console.warn('css path to remove btn not found');
       throw e;
@@ -161,6 +162,7 @@ export default function() {
     const elem = find(`${cssPath} .ember-power-select-clear-btn`).get(0);
     try {
       nativeMouseDown(elem);
+      wait();
     } catch (e) {
       console.warn('css path to clear btn not found');
       throw e;

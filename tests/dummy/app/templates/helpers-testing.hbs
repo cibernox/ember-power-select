@@ -23,6 +23,14 @@
   {{num}}
 {{/power-select-multiple}}
 
+{{#power-select-multiple id="select-multiple-async" options=numbers selected=asyncSelectedList onchange=(action "onChangeAsync" 'asyncSelectedList') as |num|}}
+  {{num}}
+{{/power-select-multiple}}
+
+{{#power-select class="select-deselect-async" options=numbers selected=asyncSelected onchange=(action "onChangeAsync" 'asyncSelected') allowClear=true as |num|}}
+  {{num}}
+{{/power-select}}
+
 <h3>Customized component</h3>
 
 {{#power-select class="select-custom-search"

@@ -133,6 +133,8 @@ test('selectSearch helper works even with custom components as long as the input
   });
 });
 
+moduleForAcceptance('Acceptance | helpers | removeMultipleOption');
+
 test('removeMultipleOption removes selected option', function(assert) {
   visit('/helpers-testing');
 
@@ -153,6 +155,23 @@ test('removeMultipleOption removes selected option', function(assert) {
   });
 });
 
+test('removeMultipleOption works with async onchange action', function(assert) {
+  visit('/helpers-testing');
+
+  selectChoose('#select-multiple-async', 'three');
+  selectChoose('#select-multiple-async', 'four');
+  andThen(function() {
+    assert.equal(find('#select-multiple-async .ember-power-select-multiple-option').length, 2, 'Multiple options selected');
+  });
+
+  removeMultipleOption('#select-multiple-async', 'three');
+  andThen(function() {
+    assert.equal(find('#select-multiple-async .ember-power-select-multiple-option').length, 1, 'One option removed');
+  });
+});
+
+moduleForAcceptance('Acceptance | helpers | clearSelected');
+
 test('clearSelected removes selected option', function(assert) {
   visit('/helpers-testing');
 
@@ -169,5 +188,24 @@ test('clearSelected removes selected option', function(assert) {
   clearSelected('.select-choose-onopen', 'three');
   andThen(function() {
     assert.notOk(find('.select-choose-onopen .ember-power-select-clear-btn').text());
+  });
+});
+
+test('clearSelected works with async onchange action', function (assert) {
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.notOk(find('.select-deselect-async .ember-power-select-clear-btn').text());
+  });
+
+  selectChoose('.select-deselect-async', 'three');
+  andThen(function() {
+    assert.ok(find('.select-deselect-async .ember-power-select-clear-btn').text());
+    assert.ok(find('.select-deselect-async .ember-power-select-selected-item').text(), 'three', 'The proper value has been selected');
+  });
+
+  clearSelected('.select-deselect-async', 'three');
+  andThen(function() {
+    assert.notOk(find('.select-deselect-async .ember-power-select-clear-btn').text());
   });
 });
