@@ -6,7 +6,16 @@
 {{#each options as |opt index|}}
   {{#if opt.groupName}}
     <li class="ember-power-select-group" aria-disabled={{opt.disabled}} role="option">
-      <span class="ember-power-select-group-name">{{opt.groupName}}</span>
+      {{#if groupNameComponent}}
+        {{component groupNameComponent
+          name=opt.groupName
+          option=opt
+          index=index}}
+      {{else}}
+        <span class="ember-power-select-group-name">
+          {{opt.groupName}}
+        </span>
+      {{/if}}
       {{#component optionsComponent
         highlighted=(readonly highlighted)
         selected=(readonly selected)
