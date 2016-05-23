@@ -4,6 +4,10 @@
 module.exports = {
   name: 'ember-power-select',
 
+  isDevelopingAddon: function() {
+    return true;
+  },
+
   included: function(appOrAddon) {
     var app = appOrAddon.app || appOrAddon;
     if (!app.__emberPowerSelectIncludedInvoked) {
