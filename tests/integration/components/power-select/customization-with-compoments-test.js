@@ -75,7 +75,7 @@ test('the content before the list can be customized passing `beforeOptionsCompon
 
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown #custom-before-options-p-tag').length, 1, 'The custom component is rendered instead of the usual search bar');
-  assert.equal($('.ember-power-select-search input').length, 0, 'The search input is not visible');
+  assert.equal($('.ember-power-select-search-input').length, 0, 'The search input is not visible');
 });
 
 test('the content after the list can be customized passing `afterOptionsComponent`', function(assert) {
@@ -92,7 +92,7 @@ test('the content after the list can be customized passing `afterOptionsComponen
 
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown #custom-after-options-p-tag').length, 1, 'The custom component is rendered instead of the usual search bar');
-  assert.equal($('.ember-power-select-search input').length, 1, 'The search input is still visible');
+  assert.equal($('.ember-power-select-search-input').length, 1, 'The search input is still visible');
 });
 
 test('the `beforeOptionsComponent` and `afterOptionsComponent` receive the `extra` hash', function(assert) {

@@ -20,7 +20,7 @@ test('Pressing keydown highlights the next option', function(assert) {
 
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
-  triggerKeydown($('.ember-power-select-search input')[0], 40);
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The next options is highlighted now');
 });
 
@@ -36,7 +36,7 @@ test('Pressing keyup highlights the previous option', function(assert) {
 
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three');
-  triggerKeydown($('.ember-power-select-search input')[0], 38);
+  triggerKeydown($('.ember-power-select-search-input')[0], 38);
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The previous options is highlighted now');
 });
 
@@ -53,7 +53,7 @@ test('When you the last option is highlighted, pressing keydown doesn\'t change 
 
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'twenty');
-  triggerKeydown($('.ember-power-select-search input')[0], 40);
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'twenty', 'The last option is still the highlighted one');
 });
 
@@ -70,7 +70,7 @@ test('When you the first option is highlighted, pressing keyup doesn\'t change t
 
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
-  triggerKeydown($('.ember-power-select-search input')[0], 38);
+  triggerKeydown($('.ember-power-select-search-input')[0], 38);
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first option is still the highlighted one');
 });
 
@@ -87,7 +87,7 @@ test('The arrow keys also scroll the list if the new highlighted element if it i
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'seven');
   assert.equal($('.ember-power-select-options')[0].scrollTop, 0, 'The list is not scrolled');
-  triggerKeydown($('.ember-power-select-search input')[0], 40);
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'eight', 'The next option is highlighted now');
   assert.ok($('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
 });
@@ -109,8 +109,8 @@ test('Pressing ENTER selects the highlighted element, closes the dropdown and fo
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search input')[0], 40);
-  triggerKeydown($('.ember-power-select-search input')[0], 13);
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
+  triggerKeydown($('.ember-power-select-search-input')[0], 13);
   assert.equal($('.ember-power-select-trigger').text().trim(), 'two', 'The highlighted element was selected');
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
@@ -155,7 +155,7 @@ test('Pressing ENTER when there is no highlighted element, closes the dropdown a
   clickTrigger();
   typeInSearch('asjdnah');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'No results found');
-  triggerKeydown($('.ember-power-select-search input')[0], 13);
+  triggerKeydown($('.ember-power-select-search-input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
@@ -195,8 +195,8 @@ test('Pressing TAB closes the select WITHOUT selecting the highlighed element an
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search input')[0], 40);
-  triggerKeydown($('.ember-power-select-search input')[0], 9);
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
+  triggerKeydown($('.ember-power-select-search-input')[0], 9);
   assert.equal($('.ember-power-select-trigger').text().trim(), '', 'The highlighted element wasn\'t selected');
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigges is focused');
@@ -322,7 +322,7 @@ test('In single-mode, when the user presses a key being the search input focused
 
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
-  triggerKeydown($('.ember-power-select-search input')[0], 13);
+  triggerKeydown($('.ember-power-select-search-input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
 });
 
@@ -343,7 +343,7 @@ test('in single-mode if the users calls preventDefault on the event received in 
 
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
-  triggerKeydown($('.ember-power-select-search input')[0], 13);
+  triggerKeydown($('.ember-power-select-search-input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
 });
 

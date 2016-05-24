@@ -113,19 +113,19 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 // Search bar
 .ember-power-select-search {
   padding: 4px;
-  input {
-    border: $ember-power-select-search-field-border;
-    border-radius: $ember-power-select-search-input-border-radius;
-    width: 100%;
-    font-size: inherit;
-    line-height: inherit;
-    padding: 0 5px;
-    &:focus {
-      border: $ember-power-select-search-field-focus-border;
-      box-shadow: $ember-power-select-focus-box-shadow;
-      @if $ember-power-select-focus-outline {
-        outline: $ember-power-select-focus-outline;
-      }
+}
+.ember-power-select-search-input {
+  border: $ember-power-select-search-field-border;
+  border-radius: $ember-power-select-search-input-border-radius;
+  width: 100%;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0 5px;
+  &:focus {
+    border: $ember-power-select-search-field-focus-border;
+    box-shadow: $ember-power-select-focus-box-shadow;
+    @if $ember-power-select-focus-outline {
+      outline: $ember-power-select-focus-outline;
     }
   }
 }

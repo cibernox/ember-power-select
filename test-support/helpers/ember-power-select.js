@@ -3,7 +3,7 @@ import Ember from 'ember';
 // Helpers for integration tests
 
 function typeText(selector, text) {
-  let $selector = $(selector);
+  let $selector = $($(selector).get(0)); // Only interact with the first result
   $selector.val(text);
   let event = document.createEvent('Events');
   event.initEvent('input', true, true);
@@ -49,7 +49,7 @@ export function triggerKeydown(domElement, k) {
 
 export function typeInSearch(text) {
   Ember.run(() => {
-    typeText('.ember-power-select-search input, .ember-power-select-trigger-multiple-input', text);
+    typeText('.ember-power-select-search-input, .ember-power-select-search input, .ember-power-select-trigger-multiple-input, input[type="search"]', text);
   });
 }
 
@@ -118,7 +118,7 @@ export default function() {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
       wait();
     }
-    const isDefaultSingleSelect = Ember.$(`.ember-power-select-search input`).length > 0;
+    const isDefaultSingleSelect = Ember.$(`.ember-power-select-search-input`).length > 0;
 
     if (isMultipleSelect) {
       fillIn(`${cssPath} .ember-power-select-trigger-multiple-input`, value);
@@ -126,9 +126,9 @@ export default function() {
         triggerEvent(`${cssPath} .ember-power-select-trigger-multiple-input`, 'input');
       }
     } else if (isDefaultSingleSelect) {
-      fillIn('.ember-power-select-search input', value);
+      fillIn('.ember-power-select-search-input', value);
       if (isEmberOne) {
-        triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search input`, 'input');
+        triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search-input`, 'input');
       }
     } else { // It's probably a customized version
       let inputIsInTrigger = !!find(`${cssPath} .ember-power-select-trigger input[type=search]`)[0];
@@ -138,9 +138,9 @@ export default function() {
           triggerEvent(`${cssPath} .ember-power-select-trigger input[type=search]`, 'input');
         }
       } else {
-        fillIn(`.ember-power-select-dropdown-ember${id} .ember-power-select-search input[type=search]`, 'input');
+        fillIn(`.ember-power-select-dropdown-ember${id} .ember-power-select-search-input[type=search]`, 'input');
         if (isEmberOne) {
-          triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search input[type=search]`, 'input');
+          triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search-input[type=search]`, 'input');
         }
       }
     }
