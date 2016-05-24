@@ -1,5 +1,16 @@
 # Master
 
+- [BUGFIX] Fix IE9/10 bug because `element.dataset` doesn't work :facepalm:
+
+# 0.10.9
+- [INTERNAL] Add `ember-cli-template-lint`.
+- [BUGFIX] Make removeMultipleOption and clearSelected async friendly
+- [INTERNAL] Add a class to the search input of single selects so the CSS hierarchy is flat.
+- [ENHANCEMENT] Make `typeInSearch` helper less dependent on the actual markup of the component.
+
+# 0.10.8
+- Nothing relevant.
+
 # 0.10.7
 - [BUGFIX] Update `ember-text-measurer` to 0.3.0 and properly move it to runtime dependencies.
 - [BUGFIX] Ensure `ember-power-select` runs before `ember-cli-sri`.
