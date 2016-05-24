@@ -7,3 +7,9 @@ body  > .ember-view {
 .main-content {
   flex-grow: 1;
 }
+.important-announcement {
+  padding: 5px;
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-top: 1px solid #faebcc;
+}
