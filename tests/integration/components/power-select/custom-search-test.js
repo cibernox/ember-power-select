@@ -290,7 +290,7 @@ test('Closing a component with a custom search cleans the search box and the res
   clickTrigger();
   typeInSearch("teen");
   assert.equal($('.ember-power-select-option').length, 7, 'Results are filtered');
-  assert.equal($('.ember-power-select-search input').val(), 'teen');
+  assert.equal($('.ember-power-select-search-input').val(), 'teen');
   Ember.run(() => {
     let event = new window.Event('mousedown');
     this.$('#different-node')[0].dispatchEvent(event);
@@ -298,7 +298,7 @@ test('Closing a component with a custom search cleans the search box and the res
   clickTrigger();
   assert.equal($('.ember-power-select-option').length, 1, 'Results have been cleared');
   assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
-  assert.equal($('.ember-power-select-search input').val(), '', 'The searchbox was cleared');
+  assert.equal($('.ember-power-select-search-input').val(), '', 'The searchbox was cleared');
 });
 
 test('When received both options and search, those options are shown when the dropdown opens before the first search is performed', function(assert) {

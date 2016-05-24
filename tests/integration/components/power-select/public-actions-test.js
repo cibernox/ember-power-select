@@ -146,7 +146,7 @@ test('The onkeydown of single selects action receives the public API and the key
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search input')[0], 13);
+  triggerKeydown($('.ember-power-select-search-input')[0], 13);
 });
 
 test('The onkeydown can be used to easily allow to select on tab', function(assert) {
@@ -614,7 +614,7 @@ test('the `search` action of the public api passed to the public actions works a
     {{/power-select}}
   `);
   clickTrigger();
-  assert.equal($('.ember-power-select-search input')[0].value, 'abc');
+  assert.equal($('.ember-power-select-search-input')[0].value, 'abc');
   assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'foo');
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'bar');
@@ -653,7 +653,7 @@ test('The programmer can use the received public API to perform searches in sing
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-search input')[0].value, 'hello', 'The search text contains the searched string');
+  assert.equal($('.ember-power-select-search-input')[0].value, 'hello', 'The search text contains the searched string');
 });
 
 test('The programmer can use the received public API to perform searches in mutiple selects', function(assert) {

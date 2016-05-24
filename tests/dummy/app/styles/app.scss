@@ -297,14 +297,14 @@
       border-bottom: 1px solid #ccc;
       border-top-left-radius: 4px;
       border-top-right-radius: 4px; }
-  .ember-power-select-search input {
+  .ember-power-select-search-input {
     border: 1px solid #ccc;
     border-radius: 3px;
     width: 100%;
     font-size: inherit;
     line-height: inherit;
     padding: 0 5px; }
-    .ember-power-select-search input:focus {
+    .ember-power-select-search-input:focus {
       border: 1px solid #66afe9;
       box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
       outline: 0; }

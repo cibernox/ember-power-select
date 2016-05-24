@@ -115,7 +115,7 @@ test('Single-select: The highlighted option has `aria-current=true` and the rest
   clickTrigger();
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'true', 'the highlighted option has aria-current=true');
   assert.equal($('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
-  triggerKeydown($('.ember-power-select-search input')[0], 40);
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'false', 'the first option has now aria-current=false');
   assert.equal($('.ember-power-select-option:contains("two")').attr('aria-current'), 'true', 'the second option has now aria-current=false');
 });
@@ -133,7 +133,7 @@ test('Multiple-select: The highlighted option has `aria-current=true` and the re
   clickTrigger();
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'true', 'the highlighted option has aria-current=true');
   assert.equal($('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
-  triggerKeydown($('.ember-power-select-search input')[0], 40);
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'false', 'the first option has now aria-current=false');
   assert.equal($('.ember-power-select-option:contains("two")').attr('aria-current'), 'true', 'the second option has now aria-current=false');
 });
@@ -271,8 +271,8 @@ test('Single-select: The searchbox has type `search` and `aria-controls=<id-of-l
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-search input').attr('type'), 'search', 'The type of the input is `search`');
-  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-search input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
+  assert.equal($('.ember-power-select-search-input').attr('type'), 'search', 'The type of the input is `search`');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-search-input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
 });
 
 test('Multiple-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', function(assert) {
