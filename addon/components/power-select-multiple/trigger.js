@@ -20,13 +20,13 @@ export default Ember.Component.extend({
     this.inputFont = this.input ? window.getComputedStyle(this.input).font : null;
     let optionsList = document.getElementById(`${this.elementId}-ember-power-select-multiple-options`);
     let chooseOption = e => {
-      if (e.target.dataset.selectedIndex) {
+      let selectedIndex = e.target.getAttribute('data-selected-index');
+      if (selectedIndex) {
         e.stopPropagation();
         e.preventDefault();
 
-        let index = e.target.dataset.selectedIndex;
         let selected = this.get('selected');
-        let object = this.selectedObject(selected, index);
+        let object = this.selectedObject(selected, selectedIndex);
 
         this.get('select.actions.choose')(object);
       }
