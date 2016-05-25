@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
-import { numbers } from '../constants';
+import { digits, numbers } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Mouse control)', {
   integration: true
@@ -198,3 +198,21 @@ test('Mouse-overing the list itself doesn\'t crashes the app', function(assert) 
   });
 });
 
+test('[BUGFIX] Mouseovering a list item that is digit 0 highlights it and scroll stays in position', function(assert) {
+  assert.expect(2);
+
+  this.digits = digits;
+  this.render(hbs`
+    {{#power-select options=digits onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first element is highlighted');
+  Ember.run(() => {
+    let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
+    $('.ember-power-select-option:eq(6)')[0].dispatchEvent(event);
+  });
+  assert.equal($('.ember-power-select-option:eq(6)').attr('aria-current'), 'true', 'The 6th element is highlighted');
+});
