@@ -84,7 +84,7 @@ test('#optionAtIndex knows that an option is disabled if an ancestor is disabled
   assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, -1), { disabled: false, option: undefined });
 });
 
-test('#filterOptions generates new options respecting groups when the matches returns a boolean', function(assert) {
+test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function(assert) {
   const matcher = function(value, searchText) {
     return new RegExp(searchText, 'i').test(value) ? 0 : -1;
   };
@@ -110,30 +110,39 @@ test('#filterOptions generates new options respecting groups when the matches re
   assert.deepEqual(filterOptions(groupedOptions, '', matcher), groupedOptions);
 });
 
-test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function(assert) {
+test('#filterOptions skips disabled options and groups if it receives a truty values as 4th arguments', function(assert) {
   const matcher = function(value, searchText) {
-    return value.indexOf(searchText);
+    return new RegExp(searchText, 'i').test(value) ? 0 : -1;
   };
-  assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [{ groupName: "Smalls", options: ["zero"] }]);
-  assert.deepEqual(filterOptions(groupedOptions, 'ele', matcher), [
-    { groupName: "Bigs", options: [
-        { groupName: "Really big", options: ["eleven"] },
-      ]
-    }
-  ]);
-  assert.deepEqual(filterOptions(groupedOptions, 't', matcher), [
+  assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'zero', matcher, true), [{ groupName: "Smalls", options: ["zero"] }]);
+  assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'one', matcher, true), ["one hundred", "one thousand"]);
+  assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'ele', matcher, true), []);
+  assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 't', matcher, true), [
     { groupName: "Smalls", options: ["two","three"] },
-    { groupName: "Bigs", options: [
-        { groupName: "Fairly big", options: ["eight"] },
-        { groupName: "Really big", options: [ "ten", "twelve" ] },
-        "thirteen"
-      ]
-    },
     "one thousand"
   ]);
 
-  assert.deepEqual(filterOptions(groupedOptions, 'imposible', matcher), [], 'when nothing matches, an empty array is returned');
-  assert.deepEqual(filterOptions(groupedOptions, '', matcher), groupedOptions, 'when all matches, all options ');
+  assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'imposible', matcher, true), []);
+  assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, '', matcher, true), [
+    {
+      "groupName": "Smalls",
+      "options": [
+        "zero",
+        "two",
+        "three"
+      ]
+    },
+    {
+      "groupName": "Mediums",
+      "options": [
+        "four",
+        "five",
+        "six"
+      ]
+    },
+    "one hundred",
+    "one thousand"
+  ]);
 });
 
 test('#stripDiacritics returns the given string with diacritics normalized into simple letters', function(assert) {

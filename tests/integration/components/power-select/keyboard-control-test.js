@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
-import { numbers, countries } from '../constants';
+import { numbers, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
   integration: true
@@ -420,7 +420,7 @@ test('Typing on a closed single select selects the value that matches the string
 // test('Typing on a closed multiple select with no searchbox does nothing', function(assert) {
 // });
 
-test('Typing on a opened single select highlights the value that matches the string typed so far, scrolling if needed', function(assert) {
+test('Typing on a opened single select highlights the first value that matches the string typed so far, scrolling if needed', function(assert) {
   assert.expect(6);
 
   this.numbers = numbers;
@@ -531,5 +531,64 @@ test('Typing on a opened single select highlights the value that matches the str
   triggerKeydown(trigger, 79); // o
   assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
   assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'Portugal', 'The option containing "Portugal" has been highlighted');
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
+});
+
+test('Typing on a opened single select containing groups highlights the value that matches the string', function(assert) {
+  assert.expect(4);
+
+  this.groupedNumbers = groupedNumbers;
+  this.render(hbs`
+    {{#power-select options=groupedNumbers selected=selected onchange=(action (mut selected)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is open');
+  triggerKeydown(trigger, 69); // e
+  triggerKeydown(trigger, 76); // l
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'eleven', 'The option containing "eleven" has been highlighted');
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
+});
+
+test('Typing on a opened single select highlights skips disabled options', function(assert) {
+  assert.expect(4);
+
+  this.countries = countriesWithDisabled;
+  this.render(hbs`
+    {{#power-select options=countries selected=selected onchange=(action (mut selected)) searchField="name" as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is open');
+  triggerKeydown(trigger, 79); // o
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'United Kingdom', 'The option containing "United Kingdom" has been highlighted');
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
+});
+
+test('Typing on a opened single select highlights skips disabled groups', function(assert) {
+  assert.expect(4);
+
+  this.numbers = groupedNumbersWithDisabled;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  let trigger = this.$('.ember-power-select-trigger')[0];
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is open');
+  triggerKeydown(trigger, 84); // t
+  triggerKeydown(trigger, 87); // w
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'twelve', 'The option containing "United Kingdom" has been highlighted');
   assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
 });
