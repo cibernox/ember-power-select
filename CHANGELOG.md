@@ -1,5 +1,6 @@
 # Master
 
+# 0.10.10
 - [BUGFIX] Fix filtering/selection by typing when the trigger is focused and the options are groups.
 - [CLEANUP] Remove deprecated behaviour: Return a boolean from custom matches is not longer allowed.
 - [BUGFIX] Fix IE9/10 bug because `element.dataset` doesn't work :facepalm:
