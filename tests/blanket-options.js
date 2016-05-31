@@ -1,6 +1,6 @@
 /* globals blanket, module */
 
-var options = {
+let options = {
   modulePrefix: 'ember-power-select',
   filter: '//.*ember-power-select/.*/',
   antifilter: '//.*(tests|template).*/',

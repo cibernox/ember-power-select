@@ -17,14 +17,14 @@ const groupedSections = [
   {
     groupName: 'Advanced recipes',
     options: [
-      { route: 'public-pages.cookbook.navigable-select', text: 'Navigable select' },
+      { route: 'public-pages.cookbook.navigable-select', text: 'Navigable select' }
     ]
   }
 ];
 
 export default Ember.Controller.extend({
   routing: service('-routing'),
-  groupedSections: groupedSections,
+  groupedSections,
 
   currentSection: computed('routing.currentRouteName', function() {
     let currentRouteName = this.get('routing.currentRouteName');
