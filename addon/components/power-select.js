@@ -432,13 +432,15 @@ export default Ember.Component.extend({
     let term = this.get('expirableSearchText') + String.fromCharCode(e.keyCode);
     this.set('expirableSearchText', term);
     this.expirableSearchDebounceId = run.debounce(this, 'set', 'expirableSearchText', '', 1000);
-    let firstMatch = this.filter(this.get('results'), term, true)[0]; // TODO: match only words starting with this substr?
+    let matches = this.filter(this.get('results'), term, true);
+    if (get(matches, 'length') === 0) { return; }
+    let firstMatch = optionAtIndex(matches, 0);
     if (firstMatch !== undefined) {
       if (dropdown.isOpen) {
-        this._doHighlight(dropdown, firstMatch, e);
-        this.send('scrollTo', firstMatch, dropdown, e);
+        this._doHighlight(dropdown, firstMatch.option, e);
+        this.send('scrollTo', firstMatch.option, dropdown, e);
       } else {
-        this._doSelect(dropdown, firstMatch, e);
+        this._doSelect(dropdown, firstMatch.option, e);
       }
     }
   }

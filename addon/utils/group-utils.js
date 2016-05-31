@@ -77,17 +77,19 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
   let length = get(options, 'length');
   for (let i = 0; i < length; i++) {
     let entry = sanitizedOptions.objectAt(i);
-    if (isGroup(entry)) {
-      let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
-      if (get(suboptions, 'length') > 0) {
-        let groupCopy = { groupName: entry.groupName, options: suboptions };
-        if (entry.hasOwnProperty('disabled')) {
-          groupCopy.disabled = entry.disabled;
+    if (!skipDisabled || !get(entry, 'disabled')) {
+      if (isGroup(entry)) {
+        let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
+        if (get(suboptions, 'length') > 0) {
+          let groupCopy = { groupName: entry.groupName, options: suboptions };
+          if (entry.hasOwnProperty('disabled')) {
+            groupCopy.disabled = entry.disabled;
+          }
+          opts.push(groupCopy);
         }
-        opts.push(groupCopy);
+      } else {
+        if (matcher(entry, text) >= 0) { opts.push(entry); }
       }
-    } else if (!skipDisabled || !entry.disabled) {
-      if (matcher(entry, text) >= 0) { opts.push(entry); }
     }
   }
   return opts;
