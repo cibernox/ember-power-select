@@ -55,7 +55,7 @@ export function optionAtIndex(originalCollection, index) {
       collection = Ember.A(collection);
     }
     let localCounter = 0;
-    const length = get(collection, 'length');
+    let length = get(collection, 'length');
     while (counter <= index && localCounter < length) {
       let entry = collection.objectAt(localCounter);
       if (isGroup(entry)) {
@@ -70,11 +70,11 @@ export function optionAtIndex(originalCollection, index) {
     }
   })(originalCollection, false) || { disabled: false, option: undefined };
 }
-let deprecatedMatchers = {};
+
 export function filterOptions(options, text, matcher, skipDisabled = false) {
-  const sanitizedOptions =  options.objectAt ? options : Ember.A(options);
-  const opts = Ember.A();
-  const length = get(options, 'length');
+  let sanitizedOptions =  options.objectAt ? options : Ember.A(options);
+  let opts = Ember.A();
+  let length = get(options, 'length');
   for (let i = 0; i < length; i++) {
     let entry = sanitizedOptions.objectAt(i);
     if (isGroup(entry)) {
@@ -87,21 +87,7 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
         opts.push(groupCopy);
       }
     } else if (!skipDisabled || !entry.disabled) {
-      let matchResult = matcher(entry, text);
-      if (typeof matchResult === 'number') {
-        if (matchResult >= 0) { opts.push(entry); }
-      } else if (matchResult) {
-        let matcherToString = matcher.toString();
-        if (!deprecatedMatchers[matcherToString]) {
-          deprecatedMatchers[matcherToString] = true;
-          Ember.deprecate(
-            `Your custom matcher returned ${matchResult}. This is deprecated, custom matchers must return a number. Return any negative number when there was no match and return 0+ for positive matches. This will allow EPS to prioritize results`,
-            false,
-            { id: 'ember-power-select-matcher-return-number', until: '0.10' }
-          );
-        }
-        opts.push(entry);
-      }
+      if (matcher(entry, text) >= 0) { opts.push(entry); }
     }
   }
   return opts;
