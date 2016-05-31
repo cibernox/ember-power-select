@@ -1,5 +1,6 @@
 # Master
 
+- [CLEANUP] Remove deprecated behaviour: Return a boolean from custom matches is not longer allowed.
 - [BUGFIX] Fix IE9/10 bug because `element.dataset` doesn't work :facepalm:
 
 # 0.10.9
