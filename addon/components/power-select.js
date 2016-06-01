@@ -240,6 +240,7 @@ export default Ember.Component.extend({
       let index = this.indexOfOption(option);
       if (index === -1) { return; }
       let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
+      if (!optionElement) { return; }
       let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
       let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
       if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
