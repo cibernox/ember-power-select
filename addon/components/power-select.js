@@ -72,19 +72,20 @@ export default Ember.Component.extend({
     return `ember-power-select-options-${this.elementId}`;
   }),
 
-  concatenatedClasses: computed('class', function() {
-    return concatWithProperty(['ember-power-select'], this.get('class'));
+  concatenatedTriggerClasses: computed('triggerClass', 'hasFocusInside', function() {
+    let classes = ['ember-power-select-trigger'];
+    if (this.get('hasFocusInside')) {
+      classes.push('ember-power-select-trigger--focus-inside');
+    }
+    return concatWithProperty(classes, this.get('triggerClass'));
   }),
 
-  concatenatedTriggerClasses: computed('triggerClass', function() {
-    return concatWithProperty(['ember-power-select-trigger'], this.get('triggerClass'));
-  }),
-
-  concatenatedDropdownClasses: computed('dropdownClass', function() {
-    return concatWithProperty(
-      ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`],
-      this.get('dropdownClass')
-    );
+  concatenatedDropdownClasses: computed('dropdownClass', 'hasFocusInside', function() {
+    let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
+    if (this.get('hasFocusInside')) {
+      classes.push('ember-power-select-dropdown--focus-inside');
+    }
+    return concatWithProperty(classes, this.get('dropdownClass'));
   }),
 
   mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', 'results.length', function(){

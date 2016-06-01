@@ -3,11 +3,11 @@
   initiallyOpened=(readonly initiallyOpened)
   matchTriggerWidth=(readonly matchTriggerWidth)
   onClose=(action "handleClose")
-  onKeydown=(action "handleKeydown")
   onOpen=(action "handleOpen")
   renderInPlace=(readonly renderInPlace)
   verticalPosition=(readonly verticalPosition)
   registerAPI=(action (mut dropdown))
+  triggerId=(readonly triggerId)
   as |dropdown|}}
 
   {{#dropdown.trigger
@@ -19,6 +19,7 @@
     class=(readonly concatenatedTriggerClasses)
     disabled=(readonly disabled)
     onFocus=(action "handleFocus")
+    onKeydown=(action "handleKeydown")
     tabindex=(readonly tabindex)}}
 
     {{#component triggerComponent
@@ -46,7 +47,11 @@
     {{/component}}
   {{/dropdown.trigger}}
 
-  {{#dropdown.content class=(readonly concatenatedDropdownClasses) destination=(readonly destination)}}
+  {{#dropdown.content
+    class=(readonly concatenatedDropdownClasses)
+    destination=(readonly destination)
+    onFocusIn=(action (mut hasFocusInside) true)
+    onFocusOut=(action (mut hasFocusInside) false)}}
     {{component beforeOptionsComponent
       searchText=(readonly searchText)
       onkeydown=(readonly onkeydown)
@@ -96,9 +101,7 @@
 {{/basic-dropdown}}
 
 {{!-- {{#basic-dropdown
-  class=(readonly concatenatedClasses)
   dir=(readonly dir)
-  triggerId=triggerId
   as |dropdown|}}
   {{component beforeOptionsComponent
     searchText=(readonly searchText)

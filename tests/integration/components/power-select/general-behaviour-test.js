@@ -351,17 +351,6 @@ test('If the user passes `dropdownClass` the dropdown content should have that c
   assert.ok($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), 'dropdownClass can be customized');
 });
 
-test('If the user passes `class` the dropdown gets that class', function(assert) {
-  assert.expect(1);
-  this.options = [];
-  this.render(hbs`
-    {{#power-select options=options selected=foo onchange=(action (mut foo)) class="my-foo" as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  assert.ok($('.ember-power-select').hasClass('my-foo'), 'the entire select inherits that class');
-});
-
 test('The filtering is reverted after closing the select', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
@@ -384,7 +373,7 @@ test('The filtering is reverted after closing the select', function(assert) {
 });
 
 test('It has the appropriate class when it receives a specific dropdown position', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`
     {{#power-select options=numbers selected=foo onchange=(action (mut foo)) verticalPosition="above" as |option|}}
@@ -393,7 +382,8 @@ test('It has the appropriate class when it receives a specific dropdown position
   `);
 
   clickTrigger();
-  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--above'), 'It has the class of dropdowns positioned above');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-basic-dropdown-trigger--above'), 'It has the class in the trigger');
+  assert.ok($('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--above'), 'It has the class in the content');
 });
 
 test('The search term is yielded as second argument in single selects', function(assert) {
@@ -984,7 +974,7 @@ test('When both `selected` and `options` are async, and `options` resolves befor
   }, 220);
 });
 
-test('When the input inside the select gets focused the entire component gains the `ember-basic-dropdown--focus-inside` class', function(assert) {
+test('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--focus-inside` class', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -994,10 +984,10 @@ test('When the input inside the select gets focused the entire component gains t
     {{/power-select}}
   `);
 
-  assert.ok(!this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select doesn\'t have the class yet');
+  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The select doesn\'t have the class yet');
   clickTrigger();
   Ember.run(() => $('.ember-power-select-search-input').focus());
-  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select has the class now');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The select has the class now');
 });
 
 test('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', function(assert) {
