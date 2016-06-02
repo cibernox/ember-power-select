@@ -19,6 +19,8 @@
     class=(readonly concatenatedTriggerClasses)
     disabled=(readonly disabled)
     onFocus=(action "handleFocus")
+    onFocusIn=(action (mut hasFocusInside) true)
+    onFocusOut=(action (mut hasFocusInside) false)
     onKeydown=(action "handleKeydown")
     tabindex=(readonly tabindex)}}
 
