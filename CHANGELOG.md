@@ -1,5 +1,14 @@
 # Master
 
+# 0.11.0-beta.0
+
+- [BREAKING] Dropped support for old versions of Ember. Now only 2.3.1+
+- [BREAKING] Huge internal refactor to migrate to the new Ember Basic Dropdown. The public API
+  of the component is exactly the same in theory. However the component is now tagless, so there is
+  no `.ember-power-select` wrapper around the trigger.
+  Also some classes might have changed that can affect people customizing the styles. A more detailed
+  entry will be added to the docs.
+
 # 0.10.10
 - [BUGFIX] Fix filtering/selection by typing when the trigger is focused and the options are groups.
 - [CLEANUP] Remove deprecated behaviour: Return a boolean from custom matches is not longer allowed.
