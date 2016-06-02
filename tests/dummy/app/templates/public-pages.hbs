@@ -10,12 +10,15 @@
       {{#link-to 'public-pages.index' class="home-link"}}
         <img src="/ember_logo.png" alt="ember">
       {{/link-to}}
-      {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled
-        searchEnabled=false triggerComponent='main-header-select-trigger'
-        onchange=(action "changeOptions")
-        class="main-header-select" dropdownClass="main-header-select-dropdown" as |opt|}}
-        {{opt}}
-      {{/power-select}}
+      <div class="main-header-select">
+        {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled
+          searchEnabled=false
+          triggerComponent='main-header-select-trigger'
+          onchange=(action "changeOptions")
+          dropdownClass="main-header-select-dropdown" as |opt|}}
+          {{opt}}
+        {{/power-select}}
+      </div>
     </div>
   </nav>
 </header>

@@ -694,8 +694,8 @@ test('The component works when the array of selected elements is mutated in plac
   assert.equal(this.$('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
 });
 
-test('When the input inside the multiple select gets focused the entire component gains the `ember-basic-dropdown--focus-inside` class', function(assert) {
-  assert.expect(2);
+test('When the input inside the multiple select gets focused, the trigger and the dropdown gain special `--focus-inside` classes', function(assert) {
+  assert.expect(4);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -704,7 +704,9 @@ test('When the input inside the multiple select gets focused the entire componen
     {{/power-select-multiple}}
   `);
 
-  assert.ok(!this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select doesn\'t have the class yet');
+  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The trigger does not have the class');
+  assert.ok(!$('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--focus-inside'), 'The dropdown does not have the class');
   clickTrigger();
-  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select has the class now');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The trigger has the class');
+  assert.ok($('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--focus-inside'), 'The dropdown has the class');
 });

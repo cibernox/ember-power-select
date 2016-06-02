@@ -141,17 +141,17 @@ test('removeMultipleOption removes selected option', function(assert) {
   selectChoose('.select-choose-onopen-multiple', 'three');
   selectChoose('.select-choose-onopen-multiple', 'four');
   andThen(function() {
-    assert.equal(find('.select-choose-onopen-multiple > .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 2, 'Multiple options selected');
+    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 2, 'Multiple options selected');
   });
 
   removeMultipleOption('.select-choose-onopen-multiple', 'three');
   andThen(function() {
-    assert.equal(find('.select-choose-onopen-multiple > .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 1, 'One option removed');
+    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 1, 'One option removed');
   });
 
   removeMultipleOption('.select-choose-onopen-multiple', 'four');
   andThen(function() {
-    assert.equal(find('.select-choose-onopen-multiple > .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 0, 'Last option removed');
+    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 0, 'Last option removed');
   });
 });
 

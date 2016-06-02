@@ -72,19 +72,20 @@ export default Ember.Component.extend({
     return `ember-power-select-options-${this.elementId}`;
   }),
 
-  concatenatedClasses: computed('class', function() {
-    return concatWithProperty(['ember-power-select'], this.get('class'));
+  concatenatedTriggerClasses: computed('triggerClass', 'hasFocusInside', function() {
+    let classes = ['ember-power-select-trigger'];
+    if (this.get('hasFocusInside')) {
+      classes.push('ember-power-select-trigger--focus-inside');
+    }
+    return concatWithProperty(classes, this.get('triggerClass'));
   }),
 
-  concatenatedTriggerClasses: computed('triggerClass', function() {
-    return concatWithProperty(['ember-power-select-trigger'], this.get('triggerClass'));
-  }),
-
-  concatenatedDropdownClasses: computed('dropdownClass', function() {
-    return concatWithProperty(
-      ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`],
-      this.get('dropdownClass')
-    );
+  concatenatedDropdownClasses: computed('dropdownClass', 'hasFocusInside', function() {
+    let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
+    if (this.get('hasFocusInside')) {
+      classes.push('ember-power-select-dropdown--focus-inside');
+    }
+    return concatWithProperty(classes, this.get('dropdownClass'));
   }),
 
   mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', 'results.length', function(){
@@ -158,8 +159,8 @@ export default Ember.Component.extend({
     return EventSender.create();
   }),
 
-  publicAPI: computed('registeredDropdown.isOpen', 'highlighted', 'searchText', function() {
-    let dropdown = this.get('registeredDropdown');
+  publicAPI: computed('dropdown.isOpen', 'highlighted', 'searchText', function() {
+    let dropdown = this.get('dropdown');
     if (dropdown) {
       let ownActions = {
         search: (term, e) => this.send('search', dropdown, term, e),
@@ -196,7 +197,7 @@ export default Ember.Component.extend({
         let returnValue = action(e.target.value, this.get('publicAPI'), e);
         if (returnValue === false) { return; }
       }
-      this.send('search', this.get('registeredDropdown'), term, e);
+      this.send('search', this.get('dropdown'), term, e);
     },
 
     select(dropdown, selected, e) {
@@ -247,23 +248,6 @@ export default Ember.Component.extend({
       } else if (optionTopScroll < optionsList.scrollTop) {
         optionsList.scrollTop = optionTopScroll;
       }
-    },
-
-    // It is not evident what is going on here, so I'll explain why.
-    //
-    // As of this writting, Ember doesn allow to yield data to the "inverse" block.
-    // Because of that, elements of this component rendered in the trigger can't receive the
-    // yielded object contaning the public API of the ember-basic-dropdown, with actions for open,
-    // close and toggle.
-    //
-    // The only possible workaround for this is to on initialization inject a similar object
-    // to the one yielded and store it to make it available in the entire component.
-    //
-    // This this limitation on ember should be fixed soon, this is temporary. Because of that this
-    // object will be passed to the action from the inverse block like if it was yielded.
-    //
-    registerDropdown(dropdown) {
-      this.set('registeredDropdown', dropdown);
     },
 
     handleOpen(dropdown, e) {

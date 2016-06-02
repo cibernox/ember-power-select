@@ -35,7 +35,7 @@ test('A disabled dropdown is not focusable, and ignores the passed tabindex ', f
       {{option}}
     {{/power-select}}
   `);
-  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), undefined, 'The trigger has no tabindex so it can\'t be focused');
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '-1', 'The trigger has no tabindex so it can\'t be focused');
 });
 
 test('Disabled options are not highlighted when hovered with the mouse', function(assert) {
