@@ -372,20 +372,6 @@ test('The filtering is reverted after closing the select', function(assert) {
   assert.equal($('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
 });
 
-test('It has the appropriate class when it receives a specific dropdown position', function(assert) {
-  assert.expect(2);
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) verticalPosition="above" as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-
-  clickTrigger();
-  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-basic-dropdown-trigger--above'), 'It has the class in the trigger');
-  assert.ok($('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--above'), 'It has the class in the content');
-});
-
 test('The search term is yielded as second argument in single selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
