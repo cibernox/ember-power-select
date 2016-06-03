@@ -1,4 +1,7 @@
-.ember-basic-dropdown-content, .ember-basic-dropdown-content * {
+.ember-basic-dropdown {
+  position: relative; }
+
+.ember-basic-dropdown, .ember-basic-dropdown-content, .ember-basic-dropdown-content * {
   box-sizing: border-box; }
 
 .ember-basic-dropdown-content {
@@ -6,9 +9,9 @@
   width: auto;
   z-index: 1000;
   background-color: #ffffff; }
-  .ember-basic-dropdown-content .ember-basic-dropdown--left {
+  .ember-basic-dropdown-content--left {
     left: 0; }
-  .ember-basic-dropdown-content .ember-basic-dropdown--right {
+  .ember-basic-dropdown-content--right {
     right: 0; }
 
 .ember-power-select {

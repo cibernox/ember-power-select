@@ -1,5 +1,9 @@
 # Master
 
+# 0.11.0-beta.1
+- [INTERNAL] Update EBD to fix scroll problem cause by the dropdown being too slow to reposition
+- [INTERNAL] Use a regular input for the search. Now that the component is 2.3.1+, no hacks are needed.
+
 # 0.11.0-beta.0
 
 - [BREAKING] Dropped support for old versions of Ember. Now only 2.3.1+
