@@ -19,6 +19,7 @@
   {{#if searchEnabled}}
     <input type="search" class="ember-power-select-trigger-multiple-input {{elementId}}-input"
       tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+      value={{searchText}}
       aria-controls={{listboxId}}
       style={{triggerMultipleInputStyle}}
       placeholder={{maybePlaceholder}}
