@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select/before-options';
-import updateInput from '../../utils/update-input-value';
 
 const { run } = Ember;
 
@@ -9,13 +8,6 @@ export default Ember.Component.extend({
   layout,
 
   // Lifecycle hooks
-  didReceiveAttrs({ oldAttrs, newAttrs }) {
-    this._super(...arguments);
-    if (newAttrs.searchText !== undefined && newAttrs.searchText !== null) {
-      run.scheduleOnce('afterRender', this, this.updateInput, newAttrs.searchText);
-    }
-  },
-
   didInsertElement() {
     this._super(...arguments);
     this.focusInput();
@@ -48,10 +40,6 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  updateInput(value) {
-    updateInput(this.input, value);
-  },
-
   focusInput() {
     this.input = self.document.querySelector('.ember-power-select-search-input');
     if (this.input) {

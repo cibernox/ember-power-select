@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select-multiple/trigger';
-import updateInput from '../../utils/update-input-value';
 
 const { computed, get, isBlank, run, inject: { service } } = Ember;
 const { htmlSafe } = Ember.String;
@@ -41,9 +40,6 @@ export default Ember.Component.extend({
     this._super(...arguments);
     if (oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
       this.handleClose();
-    }
-    if (newAttrs.searchText !== undefined && newAttrs.searchText !== null) {
-      run.scheduleOnce('afterRender', this, this.updateInput, newAttrs.searchText);
     }
   },
 
@@ -102,10 +98,6 @@ export default Ember.Component.extend({
   // Methods
   handleClose() {
     run.scheduleOnce('actions', null, this.get('select.actions.search'), '');
-  },
-
-  updateInput(value) {
-    updateInput(this.input, value);
   },
 
   selectedObject(list, index) {
