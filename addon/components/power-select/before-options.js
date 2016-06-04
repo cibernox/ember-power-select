@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     this.focusInput();
-    this.get('eventSender').on('focus', this, this.focusInput);
+    // this.get('eventSender').on('focus', this, this.focusInput);
   },
 
   willDestroy() {
@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     if (this.get('searchEnabled')) {
       this.get('select.actions.search')('');
     }
-    this.get('eventSender').off('focus', this, this.focusInput);
+    // this.get('eventSender').off('focus', this, this.focusInput);
   },
 
   // Actions
