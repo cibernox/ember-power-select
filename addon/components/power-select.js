@@ -4,6 +4,7 @@ import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import { assign } from 'ember-platform';
 import { isBlank } from 'ember-utils';
 import computed from 'ember-computed';
+import get from 'ember-metal/get';
 import set, { setProperties } from 'ember-metal/set';
 import RSVP from 'rsvp';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
@@ -44,6 +45,7 @@ export default Component.extend({
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
   searchMessage: fallbackIfUndefined("Type to search"),
+  closeOnSelect: fallbackIfUndefined(true),
 
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   selectedItemComponent: fallbackIfUndefined(null),
@@ -123,9 +125,9 @@ export default Component.extend({
     registerAPI(dropdown) {
       let actions = {
         search: () => console.log('search!!'),
-        highlight: () => console.log('highlight!!'),
-        select: () => console.log('select!!'),
-        choose: () => console.log('choose!!'),
+        highlight: (...args) => this.send('highlight', ...args),
+        select: (...args) => this.send('select', ...args),
+        choose: (...args) => this.send('choose', ...args),
         handleKeydown: () => console.log('handleKeydown!!'),
         scrollTo: () => console.log('scrollTo!!')
       };
@@ -146,7 +148,7 @@ export default Component.extend({
       if (action && action(this.publicAPI, e) === false) {
         return false;
       }
-      if (e) { this.set('openingEvent', e); }
+      if (e) { this.openingEvent = e; }
       this.resetHighlighted();
     },
 
@@ -155,7 +157,7 @@ export default Component.extend({
       if (action && action(this.publicAPI, e) === false) {
         return false;
       }
-      if (e) { this.set('openingEvent', null); }
+      if (e) { this.openingEvent = null; }
       this.resetHighlighted();
     },
 
@@ -166,6 +168,30 @@ export default Component.extend({
         return;
       }
       this.performSearch(term);
+    },
+
+    highlight(option, e) {
+      if (option && get(option, 'disabled')) { return; }
+      set(this.publicAPI, 'highlighted', option);
+    },
+
+    select(selected /*, e */) {
+      if (this.publicAPI.selected !== selected) {
+        this.get('onchange')(selected, this.publicAPI);
+      }
+    },
+
+    choose(selected, e) {
+      if (e && e.clientY) {
+        if (this.openingEvent && this.openingEvent.clientY) {
+          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) { return; }
+        }
+      }
+      this.send('select', this.get('buildSelection')(selected), e);
+      if (this.get('closeOnSelect')) {
+        this.publicAPI.actions.close(e);
+        return false;
+      }
     }
   },
 
@@ -200,6 +226,10 @@ export default Component.extend({
       highlighted = defaultHighlighted(this.publicAPI.results, this.publicAPI.highlighted || this.publicAPI.selected);
     }
     set(this.publicAPI, 'highlighted', highlighted);
+  },
+
+  buildSelection(option) {
+    return option;
   },
 
   _resetSearch() {
