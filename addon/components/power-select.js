@@ -4,7 +4,7 @@ import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import { assign } from 'ember-platform';
 import { isBlank } from 'ember-utils';
 import computed from 'ember-computed';
-import set from 'ember-metal/set';
+import set, { setProperties } from 'ember-metal/set';
 import RSVP from 'rsvp';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 
@@ -40,6 +40,11 @@ export default Component.extend({
   // Options
   searchEnabled: fallbackIfUndefined(true),
   matchTriggerWidth: fallbackIfUndefined(true),
+  matcher: fallbackIfUndefined(defaultMatcher),
+  loadingMessage: fallbackIfUndefined('Loading options...'),
+  noMatchesMessage: fallbackIfUndefined('No results found'),
+  searchMessage: fallbackIfUndefined("Type to search"),
+
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   selectedItemComponent: fallbackIfUndefined(null),
   optionsComponent: fallbackIfUndefined('power-select/options'),
@@ -97,10 +102,21 @@ export default Component.extend({
     return concatWithProperty(classes, this.get('dropdownClass'));
   }),
 
-  // Tasks
-  // doSearch: task(function * {
+  mustShowSearchMessage: computed('publicAPI.searchText', 'search', 'searchMessage', 'resultsCount', function(){
+    return this.get('publicAPI.searchText.length') === 0 &&
+      !!this.get('search') && !!this.get('searchMessage') &&
+      this.get('resultsCount') === 0;
+  }),
 
-  // }),
+  mustShowNoMessages: computed('resultsCount', 'loading', 'search', 'publicAPI.lastSearchedText', function() {
+    return !this.get('loading') &&
+      this.get('resultsCount') === 0 &&
+      (!this.get('search') || this.get('publicAPI.lastSearchedText.length') > 0);
+  }),
+
+  resultsCount: computed('publicAPI.results', function() {
+    return countOptions(this.get('publicAPI.results'));
+  }),
 
   // Actions
   actions: {
@@ -143,24 +159,34 @@ export default Component.extend({
       this.resetHighlighted();
     },
 
-    onInput() {
+    onInput(e) {
       let term = e.target.value;
       let action = this.get('oninput');
       if (action && action(term, this.publicAPI, e) === false) {
         return;
       }
-      this.send('search', this.publicAPI, term, e);
+      this.performSearch(term);
     }
   },
 
   // Methods
+  performSearch(term) {
+    if (isBlank(term)) {
+      this._resetSearch();
+    } else if (this.getAttr('search')) {
+      // TODO
+    } else {
+      this._performFilter(term);
+    }
+  },
+
   filter(options, term, skipDisabled = false) {
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
   },
 
   updateResults(options) {
-    if (this.get('search')) { // external search
-
+    if (this.getAttr('search')) { // external search
+      // TODO
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
       set(this.publicAPI, 'results', results);
@@ -169,8 +195,25 @@ export default Component.extend({
   },
 
   resetHighlighted() {
-    let opt = this.publicAPI.isOpen ? undefined : defaultHighlighted(this.publicAPI.results, this.publicAPI.selected);
-    set(this.publicAPI, 'highlighted', opt);
+    let highlighted;
+    if (this.publicAPI.isOpen) {
+      highlighted = defaultHighlighted(this.publicAPI.results, this.publicAPI.highlighted || this.publicAPI.selected);
+    }
+    set(this.publicAPI, 'highlighted', highlighted);
+  },
+
+  _resetSearch() {
+    let options = this.get('options') || [];
+    RSVP.resolve(options).then(results => {
+      setProperties(this.publicAPI, { results, searchText: '', lastSearchedText: '' });
+    });
+  },
+
+  _performFilter(term) {
+    let options = this.get('options') || [];
+    RSVP.resolve(options).then(data => {
+      setProperties(this.publicAPI, { results: this.filter(data, term), searchText: term, lastSearchedText: term });
+    });
   }
 });
 

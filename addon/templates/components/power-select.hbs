@@ -36,23 +36,34 @@
       searchEnabled=(readonly searchEnabled)
       onInput=(action "onInput")
       select=(readonly publicAPI)}}
-    {{#each publicAPI.results as |res|}}
-      {{yield res}}
-    {{/each}}
-    {{!--
     {{#if mustShowSearchMessage}}
-      <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option ember-power-select-option--search-message" role="option">{{searchMessage}}</li></ul>
+      <ul class="ember-power-select-options" role="listbox">
+        <li class="ember-power-select-option ember-power-select-option--search-message" role="option">
+          {{searchMessage}}
+        </li>
+      </ul>
     {{else if mustShowNoMessages}}
       {{#if (hasBlock "inverse")}}
         {{yield to="inverse"}}
       {{else if noMatchesMessage}}
-        <ul class="ember-power-select-options" role="listbox"><li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">{{noMatchesMessage}}</li></ul>
+        <ul class="ember-power-select-options" role="listbox">
+          <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
+            {{noMatchesMessage}}
+          </li>
+        </ul>
       {{/if}}
     {{else}}
-      {{#component optionsComponent select=(readonly publicAPI) as |option term|}}
+      {{#component optionsComponent
+        aria-controls=(readonly triggerId)
+        class="ember-power-select-options"
+        groupIndex=""
+        options=(readonly publicAPI.results)
+        select=(readonly publicAPI)
+        as |option term|}}
         {{yield option term}}
       {{/component}}
     {{/if}}
+    {{!--
     {{component afterOptionsComponent select=(readonly publicAPI)}} --}}
   {{/dropdown.content}}
 {{/basic-dropdown}}
