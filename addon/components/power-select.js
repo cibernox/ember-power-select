@@ -125,7 +125,7 @@ export default Component.extend({
   actions: {
     registerAPI(dropdown) {
       let actions = {
-        search: () => (...args) => this.send('search', ...args),
+        search: (...args) => this.send('search', ...args),
         highlight: (...args) => this.send('highlight', ...args),
         select: (...args) => this.send('select', ...args),
         choose: (...args) => this.send('choose', ...args),
@@ -159,7 +159,7 @@ export default Component.extend({
         return false;
       }
       if (e) { this.openingEvent = null; }
-      this.resetHighlighted();
+      set(this.publicAPI, 'highlighted', undefined);
     },
 
     onInput(e) {
@@ -168,7 +168,7 @@ export default Component.extend({
       if (action && action(term, this.publicAPI, e) === false) {
         return;
       }
-      this.performSearch(term);
+      this.publicAPI.actions.search(term);
     },
 
     highlight(option, e) {
@@ -182,8 +182,14 @@ export default Component.extend({
       }
     },
 
-    search() {
-      debugger;
+    search(term) {
+      if (isBlank(term)) {
+        this._resetSearch();
+      } else if (this.getAttr('search')) {
+        // TODO
+      } else {
+        this._performFilter(term);
+      }
     },
 
     choose(selected, e) {
@@ -199,24 +205,24 @@ export default Component.extend({
       }
     },
 
-    onKeydown(e) {
-      const onkeydown = this.get('onkeydown');
+    onTriggerKeydown(_, e) {
+      let onkeydown = this.get('onkeydown');
       if (onkeydown && onkeydown(this.publicAPI, e) === false) {
         return false;
       }
-      if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
-        return this._handleKeyUpDown(e);
-      } else if (e.keyCode === 13) {  // ENTER
-        return this._handleKeyEnter(e);
-      } else if (e.keyCode === 32) {  // Space
-        return this._handleKeySpace(e);
-      } else if (e.keyCode === 9) {   // Tab
-        return this._handleKeyTab(e);
-      } else if (e.keyCode === 27) {  // ESC
-        return this._handleKeyESC(e);
-      } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
+      if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
         return this._handleTriggerTyping(e);
+      } else {
+        this._routeKeydown(e);
       }
+    },
+
+    onKeydown(e) {
+      let onkeydown = this.get('onkeydown');
+      if (onkeydown && onkeydown(this.publicAPI, e) === false) {
+        return false;
+      }
+      this._routeKeydown(e);
     },
 
     scrollTo(option /*, e */) {
@@ -237,16 +243,6 @@ export default Component.extend({
   },
 
   // Methods
-  performSearch(term) {
-    if (isBlank(term)) {
-      this._resetSearch();
-    } else if (this.getAttr('search')) {
-      // TODO
-    } else {
-      this._performFilter(term);
-    }
-  },
-
   filter(options, term, skipDisabled = false) {
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
   },
@@ -257,15 +253,14 @@ export default Component.extend({
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
       set(this.publicAPI, 'results', results);
-      this.resetHighlighted();
+      if (this.publicAPI.isOpen) {
+        this.resetHighlighted();
+      }
     }
   },
 
   resetHighlighted() {
-    let highlighted;
-    if (this.publicAPI.isOpen) {
-      highlighted = defaultHighlighted(this.publicAPI.results, this.publicAPI.highlighted || this.publicAPI.selected);
-    }
+    let highlighted = defaultHighlighted(this.publicAPI.results, this.publicAPI.highlighted || this.publicAPI.selected);
     set(this.publicAPI, 'highlighted', highlighted);
   },
 
@@ -285,6 +280,20 @@ export default Component.extend({
     RSVP.resolve(options).then(data => {
       setProperties(this.publicAPI, { results: this.filter(data, term), searchText: term, lastSearchedText: term });
     });
+  },
+
+  _routeKeydown(e) {
+    if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+      return this._handleKeyUpDown(e);
+    } else if (e.keyCode === 13) {  // ENTER
+      return this._handleKeyEnter(e);
+    } else if (e.keyCode === 32) {  // Space
+      return this._handleKeySpace(e);
+    } else if (e.keyCode === 9) {   // Tab
+      return this._handleKeyTab(e);
+    } else if (e.keyCode === 27) {  // ESC
+      return this._handleKeyESC(e);
+    }
   },
 
   _handleKeyUpDown(e) {

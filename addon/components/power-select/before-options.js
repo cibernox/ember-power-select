@@ -14,10 +14,10 @@ export default Ember.Component.extend({
     // this.get('eventSender').on('focus', this, this.focusInput);
   },
 
-  willDestroy() {
+  willDestroyElement() {
     this._super(...arguments);
-    if (this.get('searchEnabled')) {
-      this.get('select.actions.search')('');
+    if (this.getAttr('searchEnabled')) {
+      this.getAttr('select').actions.search('');
     }
     // this.get('eventSender').off('focus', this, this.focusInput);
   },

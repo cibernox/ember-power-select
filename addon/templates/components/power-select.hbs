@@ -18,6 +18,7 @@
     ariaRequired=(readonly required)
     class=(readonly concatenatedTriggerClasses)
     disabled=(readonly disabled)
+    onKeydown=(action "onTriggerKeydown")
     tabindex=(readonly tabindex)}}
     {{#component triggerComponent
       select=(readonly publicAPI)
@@ -68,7 +69,17 @@
     {{component afterOptionsComponent select=(readonly publicAPI)}} --}}
   {{/dropdown.content}}
 {{/basic-dropdown}}
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <p>publicAPI.isOpen: {{publicAPI.isOpen}}</p>
 <p>publicAPI.selected: {{publicAPI.selected}}</p>
 <p>publicAPI.highlighted: {{publicAPI.highlighted}}</p>
