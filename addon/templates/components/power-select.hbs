@@ -35,6 +35,7 @@
     {{component beforeOptionsComponent
       searchEnabled=(readonly searchEnabled)
       onInput=(action "onInput")
+      onKeydown=(action "onKeydown")
       select=(readonly publicAPI)}}
     {{#if mustShowSearchMessage}}
       <ul class="ember-power-select-options" role="listbox">

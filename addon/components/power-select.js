@@ -6,6 +6,7 @@ import { isBlank } from 'ember-utils';
 import computed from 'ember-computed';
 import get from 'ember-metal/get';
 import set, { setProperties } from 'ember-metal/set';
+import { scheduleOnce } from 'ember-runloop';
 import RSVP from 'rsvp';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 
@@ -124,12 +125,12 @@ export default Component.extend({
   actions: {
     registerAPI(dropdown) {
       let actions = {
-        search: () => console.log('search!!'),
+        search: () => (...args) => this.send('search', ...args),
         highlight: (...args) => this.send('highlight', ...args),
         select: (...args) => this.send('select', ...args),
         choose: (...args) => this.send('choose', ...args),
-        handleKeydown: () => console.log('handleKeydown!!'),
-        scrollTo: () => console.log('scrollTo!!')
+        // handleKeydown: () => console.log('handleKeydown!!'),
+        scrollTo: (...args) => scheduleOnce('afterRender', this, this.send, 'scrollTo', ...args)
       };
       let properties = {
         results: [],
@@ -181,18 +182,58 @@ export default Component.extend({
       }
     },
 
+    search() {
+      debugger;
+    },
+
     choose(selected, e) {
       if (e && e.clientY) {
         if (this.openingEvent && this.openingEvent.clientY) {
           if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) { return; }
         }
       }
-      this.send('select', this.get('buildSelection')(selected), e);
+      this.publicAPI.actions.select(this.get('buildSelection')(selected), e);
       if (this.get('closeOnSelect')) {
         this.publicAPI.actions.close(e);
         return false;
       }
-    }
+    },
+
+    onKeydown(e) {
+      const onkeydown = this.get('onkeydown');
+      if (onkeydown && onkeydown(this.publicAPI, e) === false) {
+        return false;
+      }
+      if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+        return this._handleKeyUpDown(e);
+      } else if (e.keyCode === 13) {  // ENTER
+        return this._handleKeyEnter(e);
+      } else if (e.keyCode === 32) {  // Space
+        return this._handleKeySpace(e);
+      } else if (e.keyCode === 9) {   // Tab
+        return this._handleKeyTab(e);
+      } else if (e.keyCode === 27) {  // ESC
+        return this._handleKeyESC(e);
+      } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
+        return this._handleTriggerTyping(e);
+      }
+    },
+
+    scrollTo(option /*, e */) {
+      if (!self.document || !option) { return; }
+      let optionsList = self.document.querySelector('.ember-power-select-options');
+      if (!optionsList) { return; }
+      let index = indexOfOption(this.publicAPI.results, option);
+      if (index === -1) { return; }
+      let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
+      let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+      let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+      if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+        optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+      } else if (optionTopScroll < optionsList.scrollTop) {
+        optionsList.scrollTop = optionTopScroll;
+      }
+    },
   },
 
   // Methods
@@ -244,6 +285,39 @@ export default Component.extend({
     RSVP.resolve(options).then(data => {
       setProperties(this.publicAPI, { results: this.filter(data, term), searchText: term, lastSearchedText: term });
     });
+  },
+
+  _handleKeyUpDown(e) {
+    if (this.publicAPI.isOpen) {
+      e.preventDefault();
+      let step = e.keyCode === 40 ? 1 : -1;
+      let newHighlighted = advanceSelectableOption(this.publicAPI.results, this.publicAPI.highlighted, step);
+      this.publicAPI.actions.highlight(newHighlighted, e);
+      this.publicAPI.actions.scrollTo(newHighlighted);
+    } else {
+      this.publicAPI.actions.open(e);
+    }
+  },
+
+  _handleKeyEnter(e) {
+    if (this.publicAPI.isOpen) {
+      return this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
+    }
+  },
+
+  _handleKeySpace(e) {
+    if (this.publicAPI.isOpen) {
+      e.preventDefault();
+      return this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
+    }
+  },
+
+  _handleKeyTab(e) {
+    this.publicAPI.actions.close(e);
+  },
+
+  _handleKeyESC(e) {
+    this.publicAPI.actions.close(e);
   }
 });
 
