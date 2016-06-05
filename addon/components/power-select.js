@@ -86,8 +86,11 @@ export default Component.extend({
     get() { return null; },
     set(_, selected) {
       if (selected && selected.then) {
+        this.activeSelectedPromise = selected;
         selected.then(option => {
-          setProperties(this.publicAPI, { selected: option, highlighted: option });
+          if (this.activeSelectedPromise === selected) {
+            setProperties(this.publicAPI, { selected: option, highlighted: option });
+          }
         });
       } else {
         scheduleOnce('actions', this, 'set', 'publicAPI.selected', selected);

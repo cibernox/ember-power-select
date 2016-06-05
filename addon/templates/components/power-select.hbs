@@ -4,10 +4,10 @@
   matchTriggerWidth=(readonly matchTriggerWidth)
   onClose=(action "onClose")
   onOpen=(action "onOpen")
-  renderInPlace=(readonly renderInPlace)
-  verticalPosition=(readonly verticalPosition)
   registerAPI=(action "registerAPI")
+  renderInPlace=(readonly renderInPlace)
   triggerId=(readonly triggerId)
+  verticalPosition=(readonly verticalPosition)
   as |dropdown|}}
 
   {{#dropdown.trigger
@@ -21,10 +21,11 @@
     onKeydown=(action "onTriggerKeydown")
     tabindex=(readonly tabindex)}}
     {{#component triggerComponent
-      select=(readonly publicAPI)
+      allowClear=(readonly allowClear)
       disabled=(readonly disabled)
       placeholder=(readonly placeholder)
       searchEnabled=(readonly searchEnabled)
+      select=(readonly publicAPI)
       as |opt term|}}
       {{yield opt term}}
     {{/component}}
@@ -35,9 +36,9 @@
     class=(readonly concatenatedDropdownClasses)
     destination=(readonly destination)}}
     {{component beforeOptionsComponent
-      searchEnabled=(readonly searchEnabled)
       onInput=(action "onInput")
       onKeydown=(action "onKeydown")
+      searchEnabled=(readonly searchEnabled)
       select=(readonly publicAPI)}}
     {{#if mustShowSearchMessage}}
       <ul class="ember-power-select-options" role="listbox">
