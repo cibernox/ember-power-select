@@ -257,9 +257,8 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  nativeMouseUp('.ember-power-select-option:eq(3)');
   triggerKeydown($('.ember-power-select-search-input')[0], 13);
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'one', '"one" has been selected');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 

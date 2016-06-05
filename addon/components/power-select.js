@@ -81,6 +81,19 @@ export default Component.extend({
     cancel(this.expirableSearchDebounceId);
   },
 
+  // Observers
+  // optionsObserver: Ember.observer('options.[]', function() {
+  //   let options = this.getAttr('options');
+  //   let update = (opts) => this.updateOptions(opts);
+  //   if (options && options.then) {
+  //     set(this, 'loading', true);
+  //     options.then(update).finally(() => set(this, 'loading', false));
+  //   } else {
+  //     debugger;
+  //     update(options);
+  //   }
+  // }),
+
   // CPs
   selected: computed({
     get() { return null; },
@@ -134,20 +147,16 @@ export default Component.extend({
     return concatWithProperty(classes, this.get('dropdownClass'));
   }),
 
-  mustShowSearchMessage: computed('publicAPI.searchText', 'search', 'searchMessage', 'resultsCount', function(){
-    return this.get('publicAPI.searchText.length') === 0 &&
+  mustShowSearchMessage: computed('publicAPI.{searchText,resultsCount}', 'search', 'searchMessage', function(){
+    return this.publicAPI.searchText.length === 0 &&
       !!this.get('search') && !!this.get('searchMessage') &&
-      this.get('resultsCount') === 0;
+      this.publicAPI.resultsCount === 0;
   }),
 
-  mustShowNoMessages: computed('resultsCount', 'loading', 'search', 'publicAPI.lastSearchedText', function() {
+  mustShowNoMessages: computed('loading', 'search', 'publicAPI.{lastSearchedText,resultsCount}', function() {
     return !this.get('loading') &&
-      this.get('resultsCount') === 0 &&
-      (!this.get('search') || this.get('publicAPI.lastSearchedText.length') > 0);
-  }),
-
-  resultsCount: computed('publicAPI.results', function() {
-    return countOptions(this.get('publicAPI.results'));
+      this.publicAPI.resultsCount === 0 &&
+      (!this.get('search') || this.publicAPI.lastSearchedText.length > 0);
   }),
 
   // Actions
@@ -172,6 +181,7 @@ export default Component.extend({
         return false;
       }
       if (e) { this.openingEvent = e; }
+      debugger;
       this.resetHighlighted();
     },
 
@@ -271,15 +281,11 @@ export default Component.extend({
 
   updateOptions(options) {
     if (this.getAttr('search')) { // external search
-      if (isBlank(this.publicAPI.searchText)) {
-        setProperties(this.publicAPI.options, { options, results: options });
-      } else {
-        set(this.publicAPI.options, 'options', options);
-      }
+      setProperties(this.publicAPI, { options, results: options, resultsCount: countOptions(options) });
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
       set(this, 'loading', false);
-      setProperties(this.publicAPI, { results, options });
+      setProperties(this.publicAPI, { results, options, resultsCount: countOptions(results) });
       if (this.publicAPI.isOpen) {
         this.resetHighlighted();
       }
@@ -297,12 +303,12 @@ export default Component.extend({
 
   _resetSearch() {
     let results = this.publicAPI.options;
-    setProperties(this.publicAPI, { results, searchText: '', lastSearchedText: '' });
+    setProperties(this.publicAPI, { results, searchText: '', lastSearchedText: '', resultsCount: countOptions(results) });
   },
 
   _performFilter(term) {
     let results = this.filter(this.publicAPI.options, term);
-    setProperties(this.publicAPI, { results, searchText: term, lastSearchedText: term });
+    setProperties(this.publicAPI, { results, searchText: term, lastSearchedText: term, resultsCount: countOptions(results) });
   },
 
   _performSearch(term) {
@@ -316,7 +322,7 @@ export default Component.extend({
       this.activeSearch = search;
       search.then((results) => {
         if (this.activeSearch === search) {
-          setProperties(this.publicAPI, { results, lastSearchedText: term });
+          setProperties(this.publicAPI, { results, lastSearchedText: term, resultsCount: countOptions(results) });
         }
       }, () => {
         if (this.activeSearch === search) {
@@ -324,7 +330,7 @@ export default Component.extend({
         }
       }).finally(() => set(this, 'loading', false));
     } else {
-      setProperties(this.publicAPI, { results: search, lastSearchedText: term });
+      setProperties(this.publicAPI, { results: search, lastSearchedText: term, resultsCount: countOptions(search) });
     }
   },
 
