@@ -271,7 +271,11 @@ export default Component.extend({
 
   updateOptions(options) {
     if (this.getAttr('search')) { // external search
-      // TODO
+      if (isBlank(this.publicAPI.searchText)) {
+        setProperties(this.publicAPI.options, { options, results: options });
+      } else {
+        set(this.publicAPI.options, 'options', options);
+      }
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
       set(this, 'loading', false);
