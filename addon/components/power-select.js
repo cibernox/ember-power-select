@@ -6,7 +6,7 @@ import { isBlank } from 'ember-utils';
 import computed from 'ember-computed';
 import get from 'ember-metal/get';
 import set, { setProperties } from 'ember-metal/set';
-import { scheduleOnce } from 'ember-runloop';
+import { scheduleOnce, debounce, cancel } from 'ember-runloop';
 import RSVP from 'rsvp';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 
@@ -54,11 +54,20 @@ export default Component.extend({
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   afterOptionsComponent: fallbackIfUndefined(null),
 
+  // Private state
+  expirableSearchText: '',
+  expirableSearchDebounceId: null,
+
   // Lifecycle hooks
   init() {
     this._super(...arguments);
     this.triggerId = `ember-power-select-trigger-${this.elementId}`;
     Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
+  },
+
+  willDestroy() {
+    this._super(...arguments);
+    cancel(this.expirableSearchDebounceId);
   },
 
   // CPs
@@ -186,7 +195,7 @@ export default Component.extend({
       if (isBlank(term)) {
         this._resetSearch();
       } else if (this.getAttr('search')) {
-        // TODO
+        this._performSearch(term);
       } else {
         this._performFilter(term);
       }
@@ -213,7 +222,7 @@ export default Component.extend({
       if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
         return this._handleTriggerTyping(e);
       } else {
-        this._routeKeydown(e);
+        return this._routeKeydown(e);
       }
     },
 
@@ -282,6 +291,29 @@ export default Component.extend({
     });
   },
 
+  _performSearch(term) {
+    let searchAction = this.getAttr('search');
+    set(this.publicAPI, 'searchText', term);
+    let search = searchAction(term, this.publicAPI);
+    if (!search) {
+      set(this.publicAPI, 'lastSearchedText', term);
+    } else if (search.then) {
+      set(this, 'loading', true);
+      this.activeSearch = search;
+      search.then((results) => {
+        if (this.activeSearch === search) {
+          setProperties(this.publicAPI, { results, lastSearchedText: term });
+        }
+      }, () => {
+        if (this.activeSearch === search) {
+          set(this.publicAPI, 'lastSearchedText', term);
+        }
+      }).finally(() => set(this, 'loading', false));
+    } else {
+      setProperties(this.publicAPI, { results: search, lastSearchedText: term });
+    }
+  },
+
   _routeKeydown(e) {
     if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
       return this._handleKeyUpDown(e);
@@ -310,7 +342,8 @@ export default Component.extend({
 
   _handleKeyEnter(e) {
     if (this.publicAPI.isOpen) {
-      return this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
+      this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
+      return false;
     }
   },
 
@@ -327,6 +360,25 @@ export default Component.extend({
 
   _handleKeyESC(e) {
     this.publicAPI.actions.close(e);
+  },
+
+  _handleTriggerTyping(e) {
+    let term = this.expirableSearchText + String.fromCharCode(e.keyCode);
+    this.expirableSearchText = term;
+    this.expirableSearchDebounceId = debounce(this, 'set', 'expirableSearchText', '', 1000);
+    let matches = this.filter(this.publicAPI.results, term, true);
+    if (get(matches, 'length') === 0) {
+      return;
+    }
+    let firstMatch = optionAtIndex(matches, 0);
+    if (firstMatch !== undefined) {
+      if (this.publicAPI.isOpen) {
+        this.publicAPI.actions.highlight(firstMatch.option, e);
+        this.publicAPI.actions.scrollTo(firstMatch.option, e);
+      } else {
+        this.publicAPI.actions.select(firstMatch.option, e);
+      }
+    }
   }
 });
 

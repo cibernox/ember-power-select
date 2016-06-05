@@ -1,8 +1,18 @@
 <section class="legacy-demo">
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
+{{!--
+  {{#power-select options=(readonly simpleOptions) searchEnabled=false selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+    {{option}}
+  {{/power-select}}
+ --}}
+  <h4>Sync search</h4>
+  {{#power-select search=(action "search") selected=abracadabra onchange=(action (mut abracadabra)) as |option|}}
+    {{option}}
+  {{/power-select}}
 
-  {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+  <h4>Async search</h4>
+  {{#power-select search=(action "asyncSearch") selected=abracadabra2 onchange=(action (mut abracadabra2)) as |option|}}
     {{option}}
   {{/power-select}}
 
