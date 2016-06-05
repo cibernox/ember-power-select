@@ -44,7 +44,7 @@ export default Ember.Component.extend({
   },
 
   // CPs
-  triggerMultipleInputStyle: computed('searchText.length', 'selected.length', function() {
+  triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
     run.scheduleOnce('afterRender', this.get('select.actions.reposition'));
     if (!this.get('selected.length')) {
       return htmlSafe('width: 100%;');
@@ -57,7 +57,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  maybePlaceholder: computed('placeholder', 'selected.length', function() {
+  maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
     if (isIE) { return null; }
     const selected = this.get('selected');
     return (!selected || get(selected, 'length') === 0) ? (this.get('placeholder') || '') : '';

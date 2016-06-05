@@ -22,8 +22,9 @@
     tabindex=(readonly tabindex)}}
     {{#component triggerComponent
       select=(readonly publicAPI)
-      disabled=disabled
-      placeholder=placeholder
+      disabled=(readonly disabled)
+      placeholder=(readonly placeholder)
+      searchEnabled=(readonly searchEnabled)
       as |opt term|}}
       {{yield opt term}}
     {{/component}}

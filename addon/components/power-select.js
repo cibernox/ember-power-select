@@ -81,25 +81,14 @@ export default Component.extend({
     cancel(this.expirableSearchDebounceId);
   },
 
-  // Observers
-  // optionsObserver: Ember.observer('options.[]', function() {
-  //   let options = this.getAttr('options');
-  //   let update = (opts) => this.updateOptions(opts);
-  //   if (options && options.then) {
-  //     set(this, 'loading', true);
-  //     options.then(update).finally(() => set(this, 'loading', false));
-  //   } else {
-  //     debugger;
-  //     update(options);
-  //   }
-  // }),
-
   // CPs
   selected: computed({
     get() { return null; },
     set(_, selected) {
       if (selected && selected.then) {
-        selected.then(data => set(this.publicAPI, 'selected', data));
+        selected.then(option => {
+          setProperties(this.publicAPI, { selected: option, highlighted: option });
+        });
       } else {
         scheduleOnce('actions', this, 'set', 'publicAPI.selected', selected);
       }
@@ -181,7 +170,6 @@ export default Component.extend({
         return false;
       }
       if (e) { this.openingEvent = e; }
-      debugger;
       this.resetHighlighted();
     },
 
@@ -280,6 +268,22 @@ export default Component.extend({
   },
 
   updateOptions(options) {
+    this._updateOptionsAndResults(options);
+    options.addObserver('[]', this, function(value) {
+      this._updateOptionsAndResults(options);
+    });
+  },
+
+  resetHighlighted() {
+    let highlighted = defaultHighlighted(this.publicAPI.results, this.publicAPI.highlighted || this.publicAPI.selected);
+    set(this.publicAPI, 'highlighted', highlighted);
+  },
+
+  buildSelection(option) {
+    return option;
+  },
+
+  _updateOptionsAndResults(options) {
     if (this.getAttr('search')) { // external search
       setProperties(this.publicAPI, { options, results: options, resultsCount: countOptions(options) });
     } else { // filter
@@ -290,15 +294,6 @@ export default Component.extend({
         this.resetHighlighted();
       }
     }
-  },
-
-  resetHighlighted() {
-    let highlighted = defaultHighlighted(this.publicAPI.results, this.publicAPI.highlighted || this.publicAPI.selected);
-    set(this.publicAPI, 'highlighted', highlighted);
-  },
-
-  buildSelection(option) {
-    return option;
   },
 
   _resetSearch() {
