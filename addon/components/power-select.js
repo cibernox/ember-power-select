@@ -57,6 +57,16 @@ export default Component.extend({
   // Private state
   expirableSearchText: '',
   expirableSearchDebounceId: null,
+  loading: false,
+  activeSearch: null,
+  publicAPI: {
+    options: [],              // Contains the resolved collection of options
+    results: [],              // Contains the active set of results
+    selected: undefined,      // Contains the resolved selected option
+    highlighted: undefined,   // Contains the currently highlighted option (if any)
+    searchText: '',           // Contains the text of the current search
+    lastSearchedText: ''      // Contains the text of the last finished search
+  },
 
   // Lifecycle hooks
   init() {
@@ -67,6 +77,7 @@ export default Component.extend({
 
   willDestroy() {
     this._super(...arguments);
+    this.activeSearch = null;
     cancel(this.expirableSearchDebounceId);
   },
 
@@ -74,9 +85,11 @@ export default Component.extend({
   selected: computed({
     get() { return null; },
     set(_, selected) {
-      RSVP.resolve(selected).then(resolvedSelected => {
-        set(this.publicAPI, 'selected', resolvedSelected);
-      });
+      if (selected && selected.then) {
+        selected.then(data => set(this.publicAPI, 'selected', data));
+      } else {
+        scheduleOnce('actions', this, 'set', 'publicAPI.selected', selected);
+      }
       return selected;
     }
   }),
@@ -84,7 +97,14 @@ export default Component.extend({
   options: computed({
     get() { return []; },
     set(_, options) {
-      RSVP.resolve(options).then(this.updateResults.bind(this));
+      if (options && options.then) {
+        set(this, 'loading', true);
+        options.then(resolvedOptions => {
+          this.updateOptions(resolvedOptions);
+        }, () => set(this, 'loading', false));
+      } else {
+        scheduleOnce('actions', this, this.updateOptions, options);
+      }
       return options;
     }
   }),
@@ -141,15 +161,8 @@ export default Component.extend({
         // handleKeydown: () => console.log('handleKeydown!!'),
         scrollTo: (...args) => scheduleOnce('afterRender', this, this.send, 'scrollTo', ...args)
       };
-      let properties = {
-        results: [],
-        selected: undefined,
-        highlighted: undefined,
-        searchText: '',
-        lastSearchedText: ''
-      };
       assign(dropdown.actions, actions);
-      assign(dropdown, properties);
+      assign(dropdown, this.publicAPI);
       this.publicAPI = dropdown;
     },
 
@@ -256,12 +269,13 @@ export default Component.extend({
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
   },
 
-  updateResults(options) {
+  updateOptions(options) {
     if (this.getAttr('search')) { // external search
       // TODO
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
-      set(this.publicAPI, 'results', results);
+      set(this, 'loading', false);
+      setProperties(this.publicAPI, { results, options });
       if (this.publicAPI.isOpen) {
         this.resetHighlighted();
       }
@@ -278,17 +292,13 @@ export default Component.extend({
   },
 
   _resetSearch() {
-    let options = this.get('options') || [];
-    RSVP.resolve(options).then(results => {
-      setProperties(this.publicAPI, { results, searchText: '', lastSearchedText: '' });
-    });
+    let results = this.publicAPI.options;
+    setProperties(this.publicAPI, { results, searchText: '', lastSearchedText: '' });
   },
 
   _performFilter(term) {
-    let options = this.get('options') || [];
-    RSVP.resolve(options).then(data => {
-      setProperties(this.publicAPI, { results: this.filter(data, term), searchText: term, lastSearchedText: term });
-    });
+    let results = this.filter(this.publicAPI.options, term);
+    setProperties(this.publicAPI, { results, searchText: term, lastSearchedText: term });
   },
 
   _performSearch(term) {
@@ -366,7 +376,7 @@ export default Component.extend({
     let term = this.expirableSearchText + String.fromCharCode(e.keyCode);
     this.expirableSearchText = term;
     this.expirableSearchDebounceId = debounce(this, 'set', 'expirableSearchText', '', 1000);
-    let matches = this.filter(this.publicAPI.results, term, true);
+    let matches = this.filter(this.publicAPI.options, term, true);
     if (get(matches, 'length') === 0) {
       return;
     }

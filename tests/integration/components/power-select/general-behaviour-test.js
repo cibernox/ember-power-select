@@ -112,7 +112,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   assert.expect(4);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
+    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 150);
   });
 
   this.render(hbs`
@@ -128,7 +128,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
     assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
     assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
     done();
-  }, 150);
+  }, 200);
 });
 
 test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is false, no loading message is shown', function(assert) {

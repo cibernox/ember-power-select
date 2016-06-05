@@ -59,33 +59,17 @@
         aria-controls=(readonly triggerId)
         class="ember-power-select-options"
         groupIndex=""
+        loading=(readonly loading)
+        loadingMessage=(readonly loadingMessage)
         options=(readonly publicAPI.results)
         select=(readonly publicAPI)
         as |option term|}}
         {{yield option term}}
       {{/component}}
     {{/if}}
-    {{!--
-    {{component afterOptionsComponent select=(readonly publicAPI)}} --}}
+    {{component afterOptionsComponent select=(readonly publicAPI)}}
   {{/dropdown.content}}
 {{/basic-dropdown}}
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<p>publicAPI.isOpen: {{publicAPI.isOpen}}</p>
-<p>publicAPI.selected: {{publicAPI.selected}}</p>
-<p>publicAPI.highlighted: {{publicAPI.highlighted}}</p>
-<p>publicAPI.searchText: {{publicAPI.searchText}}</p>
-<p>publicAPI.lastSearchedText: {{publicAPI.lastSearchedText}}</p>
-
 {{!-- {{#basic-dropdown
   horizontalPosition=(readonly horizontalPosition)
   initiallyOpened=(readonly initiallyOpened)
