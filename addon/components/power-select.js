@@ -80,7 +80,9 @@ export default Component.extend({
   willDestroy() {
     this._super(...arguments);
     this.activeSearch = null;
-    this.publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
+    if (this.publicAPI.options && this.publicAPI.options.removeObserver) {
+      this.publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
+    }
     cancel(this.expirableSearchDebounceId);
   },
 
@@ -275,7 +277,7 @@ export default Component.extend({
 
   updateOptions(options) {
     this._updateOptionsAndResults(options);
-    if (options) {
+    if (options && options.addObserver) {
       options.addObserver('[]', this, this._updateOptionsAndResults);
     }
   },
@@ -304,6 +306,8 @@ export default Component.extend({
 
   _resetSearch() {
     let results = this.publicAPI.options;
+    this.activeSearch = null;
+    set(this, 'loading', false);
     setProperties(this.publicAPI, { results, searchText: '', lastSearchedText: '', resultsCount: countOptions(results) });
   },
 

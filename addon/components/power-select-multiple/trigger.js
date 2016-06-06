@@ -65,14 +65,13 @@ export default Ember.Component.extend({
 
   // Actions
   actions: {
-    handleInput(e) {
-      let action = this.get('handleInput');
-      if (action) { action(e); }
-      if (e.defaultPrevented) { return; }
+    onInput(e) {
+      let action = this.get('onInput');
+      if (action &&  action(e) === false) { return; }
       this.getAttr('select').actions.open(e);
     },
 
-    handleKeydown(e) {
+    onKeydown(e) {
       let { onkeydown, select } = this.getProperties('onkeydown', 'select');
       if (onkeydown && onkeydown(select, e) === false) { return false; }
       if (e.keyCode === 8 && isBlank(e.target.value)) {
