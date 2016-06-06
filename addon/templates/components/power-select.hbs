@@ -25,12 +25,15 @@
       allowClear=(readonly allowClear)
       buildSelection=(readonly buildSelection)
       disabled=(readonly disabled)
+      extra=(readonly extra)
       listboxId=(readonly optionsId)
+      loading=(readonly loading)
       onInput=(action "onInput")
       placeholder=(readonly placeholder)
       searchEnabled=(readonly searchEnabled)
       searchField=(readonly searchField)
       select=(readonly publicAPI)
+      selectedItemComponent=(readonly selectedItemComponent)
       as |opt term|}}
       {{yield opt term}}
     {{/component}}
@@ -41,6 +44,7 @@
     class=(readonly concatenatedDropdownClasses)
     destination=(readonly destination)}}
     {{component beforeOptionsComponent
+      extra=(readonly extra)
       listboxId=(readonly optionsId)
       onInput=(action "onInput")
       onKeydown=(action "onKeydown")
@@ -78,7 +82,7 @@
         {{yield option term}}
       {{/component}}
     {{/if}}
-    {{component afterOptionsComponent select=(readonly publicAPI)}}
+    {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
   {{/dropdown.content}}
 {{/basic-dropdown}}
 {{!-- {{#basic-dropdown
