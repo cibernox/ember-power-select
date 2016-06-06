@@ -47,9 +47,11 @@ export default Ember.Component.extend({
             select.actions.choose(select.highlighted, e);
           } else {
             select.actions.close(e);
+            return false;
           }
         } else {
           select.actions.close(e);
+          return false;
         }
       }
     },

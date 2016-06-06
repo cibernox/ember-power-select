@@ -1,16 +1,23 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select-multiple/trigger';
+import get from 'ember-metal/get';
+import computed from 'ember-computed';
+import observer from 'ember-metal/observer';
+import service from 'ember-service/inject';
+import { scheduleOnce } from 'ember-runloop';
+import { isBlank } from 'ember-utils';
+import { htmlSafe } from 'ember-string';
 
-const { computed, get, isBlank, run, inject: { service } } = Ember;
-const { htmlSafe } = Ember.String;
+const { testing } = Ember;
 const ua = self.window ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
-const isTouchDevice = (Ember.testing || !!self.window && 'ontouchstart' in self.window);
+const isTouchDevice = (testing || !!self.window && 'ontouchstart' in self.window);
 
 export default Ember.Component.extend({
   tagName: '',
   layout,
   textMeasurer: service(),
+  _lastIsOpen: false,
 
   // Lifecycle hooks
   didInsertElement() {
@@ -35,12 +42,14 @@ export default Ember.Component.extend({
     optionsList.addEventListener('mousedown', chooseOption);
   },
 
-  didUpdateAttrs({ oldAttrs, newAttrs }) {
-    this._super(...arguments);
-    if (oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
-      this.handleClose();
+  // Observers
+  openObserver: observer('select.isOpen', function() {
+    let select = this.get('select');
+    if (this._lastIsOpen && !select.isOpen) {
+      scheduleOnce('actions', null, select.actions.search, '');
     }
-  },
+    this._lastIsOpen = select.isOpen;
+  }),
 
   // CPs
   triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
@@ -94,10 +103,6 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  handleClose() {
-    run.scheduleOnce('actions', null, this.get('select.actions.search'), '');
-  },
-
   selectedObject(list, index) {
     if (list.objectAt) {
       return list.objectAt(index);

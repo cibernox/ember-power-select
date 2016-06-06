@@ -53,11 +53,11 @@ export default Component.extend({
   searchMessage: fallbackIfUndefined("Type to search"),
   closeOnSelect: fallbackIfUndefined(true),
 
-  triggerComponent: fallbackIfUndefined('power-select/trigger'),
-  selectedItemComponent: fallbackIfUndefined(null),
-  optionsComponent: fallbackIfUndefined('power-select/options'),
-  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   afterOptionsComponent: fallbackIfUndefined(null),
+  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
+  optionsComponent: fallbackIfUndefined('power-select/options'),
+  selectedItemComponent: fallbackIfUndefined(null),
+  triggerComponent: fallbackIfUndefined('power-select/trigger'),
 
   // Private state
   expirableSearchText: '',
