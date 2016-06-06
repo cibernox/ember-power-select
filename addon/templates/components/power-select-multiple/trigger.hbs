@@ -1,5 +1,5 @@
 <ul id="{{elementId}}-ember-power-select-multiple-options" class="ember-power-select-multiple-options">
-  {{#each selected as |opt idx|}}
+  {{#each select.selected as |opt idx|}}
     <li class="ember-power-select-multiple-option">
       {{#unless disabled}}
         <span role="button"
@@ -10,22 +10,24 @@
         </span>
       {{/unless}}
       {{#if selectedItemComponent}}
-        {{component selectedItemComponent selected=opt lastSearchedText=lastSearchedText}}
+        {{component selectedItemComponent select=select}}
       {{else}}
-        {{yield opt lastSearchedText}}
+        {{yield opt select.lastSearchedText}}
       {{/if}}
     </li>
   {{/each}}
   {{#if searchEnabled}}
     <input type="search" class="ember-power-select-trigger-multiple-input {{elementId}}-input"
       tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-      value={{searchText}}
+      value={{select.searchText}}
       aria-controls={{listboxId}}
       style={{triggerMultipleInputStyle}}
       placeholder={{maybePlaceholder}}
       disabled={{disabled}}
-      oninput={{action "handleInput"}}
-      onkeydown={{action "handleKeydown"}}>
+      oninput={{action "onInput"}}
+      onFocus={{activate}}
+      onBlur={{onBlur}}
+      onkeydown={{action "onKeydown"}}>
   {{/if}}
 </ul>
 <span class="ember-power-select-status-icon"></span>

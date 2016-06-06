@@ -11,30 +11,30 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     this.focusInput();
-    this.get('eventSender').on('focus', this, this.focusInput);
+    // this.get('eventSender').on('focus', this, this.focusInput);
   },
 
-  willDestroy() {
+  willDestroyElement() {
     this._super(...arguments);
-    if (this.get('searchEnabled')) {
-      this.get('select.actions.search')('');
+    if (this.getAttr('searchEnabled')) {
+      this.getAttr('select').actions.search('');
     }
-    this.get('eventSender').off('focus', this, this.focusInput);
+    // this.get('eventSender').off('focus', this, this.focusInput);
   },
 
   // Actions
   actions: {
-    handleKeydown(e) {
-      const select = this.get('select');
+    onKeydown(e) {
+      let select = this.get('select');
       if (e.keyCode === 13) {
-        const onkeydown = this.get('onkeydown');
+        let onkeydown = this.get('onkeydown');
         if (onkeydown) { onkeydown(select, e); }
         if (e.defaultPrevented) { return; }
-        select.actions.choose(this.get('highlighted'), e);
+        select.actions.choose(select.highlighted, e);
       } else if (e.keyCode === 32) {
         // noop
       } else {
-        select.actions.handleKeydown(e);
+        this.getAttr('onKeydown')(e);
       }
     }
   },

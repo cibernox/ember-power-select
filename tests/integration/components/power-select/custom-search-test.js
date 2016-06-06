@@ -23,7 +23,7 @@ test('When you pass a custom search action instead of options, opening the selec
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text(), 'Type to search', 'The dropdown shows the "type to seach" message');
+  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search', 'The dropdown shows the "type to seach" message');
 });
 
 test('When no options are given but there is a search action, a "type to search" message is rendered', function(assert) {
@@ -37,7 +37,7 @@ test('When no options are given but there is a search action, a "type to search"
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text(), 'Type to search');
+  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
   assert.ok($('.ember-power-select-option').hasClass('ember-power-select-option--search-message'), 'The option with the search message has a special class');
 });
 
@@ -52,7 +52,7 @@ test('The "type to search" message can be customized passing `searchMessage=some
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text(), 'Type the name of the thing');
+  assert.equal($('.ember-power-select-option').text().trim(), 'Type the name of the thing');
 });
 
 test('The search function can return an array and those options get rendered', function(assert) {
@@ -214,7 +214,7 @@ test('When one search is fired before the previous one resolved, the "Loading" c
   }, 50);
 
   setTimeout(function() {
-    assert.ok(/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is visible');
+    assert.ok(/Loading options/.test($('.ember-power-select-option').text().trim()), 'The loading message is visible');
     assert.equal($('.ember-power-select-option').length, 1, 'No results are shown');
   }, 120);
 
@@ -553,7 +553,7 @@ test('BUGFIX: When the given options are a promise and a search function is prov
 });
 
 test('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', function(assert) {
-  assert.expect(14);
+  assert.expect(7);
   this.countries = countries;
   this.matcherFn = function(option) {
     assert.equal(typeof option, 'object', 'The first argument received by the custom matches is the option itself');

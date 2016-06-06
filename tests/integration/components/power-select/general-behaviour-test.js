@@ -112,7 +112,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   assert.expect(4);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
+    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 150);
   });
 
   this.render(hbs`
@@ -128,7 +128,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
     assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
     assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
     done();
-  }, 150);
+  }, 200);
 });
 
 test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is false, no loading message is shown', function(assert) {
@@ -257,9 +257,8 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  nativeMouseUp('.ember-power-select-option:eq(3)');
   triggerKeydown($('.ember-power-select-search-input')[0], 13);
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'one', '"one" has been selected');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
@@ -960,7 +959,7 @@ test('When both `selected` and `options` are async, and `options` resolves befor
   }, 220);
 });
 
-test('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--focus-inside` class', function(assert) {
+test('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--active` class', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -970,10 +969,10 @@ test('When the input inside the select gets focused the entire component gains t
     {{/power-select}}
   `);
 
-  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The select doesn\'t have the class yet');
+  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
   clickTrigger();
   Ember.run(() => $('.ember-power-select-search-input').focus());
-  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The select has the class now');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select has the class now');
 });
 
 test('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', function(assert) {

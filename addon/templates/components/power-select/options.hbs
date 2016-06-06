@@ -8,26 +8,26 @@
     <li class="ember-power-select-group" aria-disabled={{opt.disabled}} role="option">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       {{#component optionsComponent
-        highlighted=(readonly highlighted)
-        selected=(readonly selected)
         options=(readonly opt.options)
-        allOptions=(readonly allOptions)
-        optionsComponent=(readonly optionsComponent)
         select=(readonly select)
         groupIndex=(concat groupIndex index ".")
+        optionsComponent=(readonly optionsComponent)
         role="group"
         class="ember-power-select-options" as |option|}}
-        {{yield option lastSearchedText}}
+{{!--         highlighted=(readonly highlighted)
+        allOptions=(readonly allOptions)
+        selected=(readonly selected) --}}
+        {{yield option select.lastSearchedText}}
       {{/component}}
     </li>
   {{else}}
     <li class="ember-power-select-option"
-      aria-selected={{ember-power-select-is-selected opt selected}}
+      aria-selected={{ember-power-select-is-selected opt select.selected}}
       aria-disabled={{opt.disabled}}
-      aria-current={{eq opt highlighted}}
+      aria-current={{eq opt select.highlighted}}
       data-option-index="{{groupIndex}}{{index}}"
       role="option">
-      {{yield opt lastSearchedText}}
+      {{yield opt select.lastSearchedText}}
     </li>
   {{/if}}
 {{/each}}

@@ -1,8 +1,6 @@
 import Ember from 'ember';
 import layout from '../../templates/components/power-select/options';
 
-const { run } = Ember;
-
 export default Ember.Component.extend({
   isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
   layout: layout,
@@ -20,7 +18,6 @@ export default Ember.Component.extend({
       let optionItem = Ember.$(e.target).closest('[data-option-index]');
       if (!optionItem || !(0 in optionItem)) { return; }
       if (optionItem.closest('[aria-disabled=true]').length) { return; } // Abort if the item or an ancestor is disabled
-
       let optionIndex = optionItem[0].getAttribute('data-option-index');
       action(this._optionFromIndex(optionIndex), e);
     };
@@ -31,7 +28,7 @@ export default Ember.Component.extend({
     }
     if (this.get('role') !== 'group') {
       let select = this.get('select');
-      run.scheduleOnce('afterRender', null, select.actions.scrollTo, select.highlighted);
+      select.actions.scrollTo(select.highlighted);
     }
   },
 

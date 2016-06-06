@@ -4,10 +4,12 @@
       autocorrect="off" autocapitalize="off"
       spellcheck="false" role="combobox"
       class="ember-power-select-search-input"
-      value={{searchText}}
+      value={{select.searchText}}
       aria-controls={{listboxId}}
       placeholder={{searchPlaceholder}}
-      oninput={{handleInput}}
-      onkeydown={{action "handleKeydown"}}>
+      oninput={{onInput}}
+      onfocus={{onFocus}}
+      onblur={{onBlur}}
+      onkeydown={{action "onKeydown"}}>
   </div>
 {{/if}}

@@ -45,11 +45,14 @@ export default Ember.Component.extend({
         if (select.highlighted !== undefined) {
           if (selected.indexOf(select.highlighted) === -1) {
             select.actions.choose(select.highlighted, e);
+            return false;
           } else {
             select.actions.close(e);
+            return false;
           }
         } else {
           select.actions.close(e);
+          return false;
         }
       }
     },
