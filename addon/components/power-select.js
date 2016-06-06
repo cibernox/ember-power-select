@@ -329,6 +329,7 @@ export default Component.extend({
       search.then((results) => {
         if (this.activeSearch === search) {
           setProperties(this.publicAPI, { results, lastSearchedText: term, resultsCount: countOptions(results) });
+          this.resetHighlighted();
           set(this, 'loading', false);
         }
       }, () => {
@@ -339,6 +340,7 @@ export default Component.extend({
       });
     } else {
       setProperties(this.publicAPI, { results: search, lastSearchedText: term, resultsCount: countOptions(search) });
+      this.resetHighlighted();
     }
   },
 

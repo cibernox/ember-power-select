@@ -553,7 +553,7 @@ test('BUGFIX: When the given options are a promise and a search function is prov
 });
 
 test('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', function(assert) {
-  assert.expect(14);
+  assert.expect(7);
   this.countries = countries;
   this.matcherFn = function(option) {
     assert.equal(typeof option, 'object', 'The first argument received by the custom matches is the option itself');
