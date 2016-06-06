@@ -3,6 +3,7 @@ import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import { assign } from 'ember-platform';
 import { isBlank } from 'ember-utils';
+import { isEmberArray } from 'ember-array/utils';
 import computed from 'ember-computed';
 import get from 'ember-metal/get';
 import set, { setProperties } from 'ember-metal/set';
@@ -32,6 +33,10 @@ function advanceSelectableOption(options, currentOption, step) {
     option = next.option;
   }
   return option;
+}
+
+function toPlainArray(collection) {
+  return collection.toArray ? collection.toArray() : collection;
 }
 
 export default Component.extend({
@@ -92,13 +97,13 @@ export default Component.extend({
     set(_, selected) {
       if (selected && selected.then) {
         this.activeSelectedPromise = selected;
-        selected.then(option => {
+        selected.then(selection => {
           if (this.activeSelectedPromise === selected) {
-            setProperties(this.publicAPI, { selected: option, highlighted: option });
+            this.updateSelection(selection);
           }
         });
       } else {
-        scheduleOnce('actions', this, 'set', 'publicAPI.selected', selected);
+        scheduleOnce('actions', this, this.updateSelection, selected);
       }
       return selected;
     }
@@ -268,6 +273,14 @@ export default Component.extend({
         optionsList.scrollTop = optionTopScroll;
       }
     },
+
+    onTriggerFocus(event) {
+      let action = this.get('onfocus');
+      if (action) {
+        action(this.publicAPI, event);
+      }
+      // this.get('eventSender').trigger('focus');
+    },
   },
 
   // Methods
@@ -276,9 +289,20 @@ export default Component.extend({
   },
 
   updateOptions(options) {
+    if (!options) {
+      return;
+    }
     this._updateOptionsAndResults(options);
     if (options && options.addObserver) {
       options.addObserver('[]', this, this._updateOptionsAndResults);
+    }
+  },
+
+  updateSelection(selection) {
+    if (isEmberArray(selection)) {
+      set(this.publicAPI, 'selected', toPlainArray(selection));
+    } else {
+      setProperties(this.publicAPI, { selected: selection, highlighted: selection });
     }
   },
 
@@ -291,8 +315,9 @@ export default Component.extend({
     return option;
   },
 
-  _updateOptionsAndResults(options) {
+  _updateOptionsAndResults(opts) {
     set(this, 'loading', false);
+    let options = toPlainArray(opts);
     if (this.getAttr('search')) { // external search
       setProperties(this.publicAPI, { options, results: options, resultsCount: countOptions(options) });
     } else { // filter
@@ -328,7 +353,12 @@ export default Component.extend({
       this.activeSearch = search;
       search.then((results) => {
         if (this.activeSearch === search) {
-          setProperties(this.publicAPI, { results, lastSearchedText: term, resultsCount: countOptions(results) });
+          let resultsArray = toPlainArray(results);
+          setProperties(this.publicAPI, {
+            results: resultsArray,
+            lastSearchedText: term,
+            resultsCount: countOptions(results)
+          });
           this.resetHighlighted();
           set(this, 'loading', false);
         }
@@ -339,7 +369,8 @@ export default Component.extend({
         }
       });
     } else {
-      setProperties(this.publicAPI, { results: search, lastSearchedText: term, resultsCount: countOptions(search) });
+      let resultsArray = toPlainArray(search);
+      setProperties(this.publicAPI, { results: resultsArray, lastSearchedText: term, resultsCount: countOptions(resultsArray) });
       this.resetHighlighted();
     }
   },

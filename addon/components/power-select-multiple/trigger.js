@@ -75,7 +75,7 @@ export default Ember.Component.extend({
       let { onkeydown, select } = this.getProperties('onkeydown', 'select');
       if (onkeydown && onkeydown(select, e) === false) { return false; }
       if (e.keyCode === 8 && isBlank(e.target.value)) {
-        let lastSelection = get(select.selected, 'lastObject');
+        let lastSelection = select.selected[select.selected.length - 1];
         if (lastSelection) {
           select.actions.select(this.get('buildSelection')(lastSelection), e);
           if (typeof lastSelection === 'string') {

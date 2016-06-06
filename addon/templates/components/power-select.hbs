@@ -19,14 +19,17 @@
     class=(readonly concatenatedTriggerClasses)
     disabled=(readonly disabled)
     onKeydown=(action "onTriggerKeydown")
+    onFocus=(action "onTriggerFocus")
     tabindex=(readonly tabindex)}}
     {{#component triggerComponent
       allowClear=(readonly allowClear)
+      buildSelection=(readonly buildSelection)
       disabled=(readonly disabled)
       listboxId=(readonly optionsId)
       onInput=(action "onInput")
       placeholder=(readonly placeholder)
       searchEnabled=(readonly searchEnabled)
+      searchField=(readonly searchField)
       select=(readonly publicAPI)
       as |opt term|}}
       {{yield opt term}}
