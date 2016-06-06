@@ -84,7 +84,7 @@ export default Component.extend({
 
   willDestroy() {
     this._super(...arguments);
-    this.activeSearch = null;
+    this.activeSearch = this.activeSelectedPromise = this.activeOptionsPromise = null;
     if (this.publicAPI.options && this.publicAPI.options.removeObserver) {
       this.publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
     }
@@ -114,9 +114,16 @@ export default Component.extend({
     set(_, options) {
       if (options && options.then) {
         set(this, 'loading', true);
+        this.activeOptionsPromise = options;
         options.then(resolvedOptions => {
-          this.updateOptions(resolvedOptions);
-        }, () => set(this, 'loading', false));
+          if (this.activeOptionsPromise === options) {
+            this.updateOptions(resolvedOptions);
+          }
+        }, () => {
+          if (this.activeOptionsPromise === options) {
+            set(this, 'loading', false)
+          }
+        });
       } else {
         scheduleOnce('actions', this, this.updateOptions, options);
       }
@@ -292,10 +299,10 @@ export default Component.extend({
     if (!options) {
       return;
     }
-    this._updateOptionsAndResults(options);
     if (options && options.addObserver) {
       options.addObserver('[]', this, this._updateOptionsAndResults);
     }
+    this._updateOptionsAndResults(options);
   },
 
   updateSelection(selection) {
@@ -316,6 +323,7 @@ export default Component.extend({
   },
 
   _updateOptionsAndResults(opts) {
+    if (get(this, 'isDestroyed')) { return; }
     set(this, 'loading', false);
     let options = toPlainArray(opts);
     if (this.getAttr('search')) { // external search
