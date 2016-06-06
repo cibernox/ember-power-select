@@ -307,6 +307,7 @@ export default Component.extend({
   _performFilter(term) {
     let results = this.filter(this.publicAPI.options, term);
     setProperties(this.publicAPI, { results, searchText: term, lastSearchedText: term, resultsCount: countOptions(results) });
+    this.resetHighlighted();
   },
 
   _performSearch(term) {
