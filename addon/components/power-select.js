@@ -286,8 +286,14 @@ export default Component.extend({
       if (action) {
         action(this.publicAPI, event);
       }
-      // this.get('eventSender').trigger('focus');
     },
+
+    onFocus(event) {
+      let action = this.get('onfocus');
+      if (action) {
+        action(this.publicAPI, event);
+      }
+    }
   },
 
   // Methods
@@ -308,7 +314,7 @@ export default Component.extend({
   updateSelection(selection) {
     if (isEmberArray(selection)) {
       set(this.publicAPI, 'selected', toPlainArray(selection));
-    } else {
+    } else if (selection !== this.publicAPI.selected) {
       setProperties(this.publicAPI, { selected: selection, highlighted: selection });
     }
   },

@@ -144,7 +144,7 @@ test('the `triggerComponent` receives the `loading` state', function(assert) {
   assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'Is loading', 'Results are loading');
 });
 
-test('the `triggerComponent` receives the `handleFocus` action that triggers the `onfocus` action in the outside', function(assert) {
+test('the `triggerComponent` receives the `onFocus` action that triggers the `onfocus` action in the outside', function(assert) {
   assert.expect(10);
   this.countries = countries;
   this.country = countries[1]; // Spain
