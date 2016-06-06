@@ -11,10 +11,10 @@
         options=(readonly opt.options)
         select=(readonly select)
         groupIndex=(concat groupIndex index ".")
+        optionsComponent=(readonly optionsComponent)
         role="group"
         class="ember-power-select-options" as |option|}}
 {{!--         highlighted=(readonly highlighted)
-        optionsComponent=(readonly optionsComponent)
         allOptions=(readonly allOptions)
         selected=(readonly selected) --}}
         {{yield option select.lastSearchedText}}
