@@ -72,6 +72,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.triggerId = `ember-power-select-trigger-${this.elementId}`;
+    this.optionsId = `ember-power-select-options-${this.elementId}`;
     Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
 

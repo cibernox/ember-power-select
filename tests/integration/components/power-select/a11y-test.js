@@ -46,7 +46,7 @@ test('Single-select: All options have `role=option`', function(assert) {
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/power-select}}
   `);
@@ -60,7 +60,7 @@ test('Multiple-select: All options have `role=option`', function(assert) {
 
   this.groupedNumbers = groupedNumbers;
   this.render(hbs`
-    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/power-select}}
   `);
