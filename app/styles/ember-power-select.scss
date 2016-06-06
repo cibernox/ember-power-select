@@ -34,7 +34,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
     display:table;
     clear:both;
   }
-  &:focus, .ember-power-select-trigger--focus-inside {
+  &:focus, .ember-power-select-trigger--active {
     border: $ember-power-select-active-trigger-border;
     box-shadow: $ember-power-select-focus-box-shadow;
     @if $ember-power-select-focus-outline {

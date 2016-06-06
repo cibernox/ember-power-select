@@ -959,7 +959,7 @@ test('When both `selected` and `options` are async, and `options` resolves befor
   }, 220);
 });
 
-test('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--focus-inside` class', function(assert) {
+test('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--active` class', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -969,10 +969,10 @@ test('When the input inside the select gets focused the entire component gains t
     {{/power-select}}
   `);
 
-  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The select doesn\'t have the class yet');
+  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
   clickTrigger();
   Ember.run(() => $('.ember-power-select-search-input').focus());
-  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--focus-inside'), 'The select has the class now');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select has the class now');
 });
 
 test('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', function(assert) {

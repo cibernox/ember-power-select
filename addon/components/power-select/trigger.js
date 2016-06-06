@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from 'ember-component';
 import layout from '../../templates/components/power-select/trigger';
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout: layout,
   tagName: '',
 
@@ -9,7 +9,7 @@ export default Ember.Component.extend({
   actions: {
     clear(e) {
       e.stopPropagation();
-      this.get('select.actions.select')(null);
+      this.getAttr('select').actions.select(null);
     }
   }
 });
