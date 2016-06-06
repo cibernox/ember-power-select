@@ -274,7 +274,7 @@ export default Component.extend({
       }
     },
 
-    onTriggerFocus(event) {
+    onTriggerFocus(_, event) {
       let action = this.get('onfocus');
       if (action) {
         action(this.publicAPI, event);
