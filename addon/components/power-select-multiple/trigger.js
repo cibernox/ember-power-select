@@ -24,10 +24,9 @@ export default Ember.Component.extend({
         e.stopPropagation();
         e.preventDefault();
 
-        let selected = this.get('selected');
-        let object = this.selectedObject(selected, selectedIndex);
-
-        this.get('select.actions.choose')(object);
+        let select = this.getAttr('select');
+        let object = this.selectedObject(select.selected, selectedIndex);
+        select.actions.choose(object);
       }
     };
     if (isTouchDevice) {
@@ -45,13 +44,14 @@ export default Ember.Component.extend({
 
   // CPs
   triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
-    run.scheduleOnce('afterRender', this.get('select.actions.reposition'));
+    let select = this.getAttr('select');
+    select.actions.reposition();
     if (!this.get('selected.length')) {
       return htmlSafe('width: 100%;');
     } else {
       let textWidth = 0;
       if (this.inputFont) {
-        textWidth = this.get('textMeasurer').width(this.get('searchText'), this.inputFont);
+        textWidth = this.get('textMeasurer').width(select.searchText, this.inputFont);
       }
       return htmlSafe(`width: ${textWidth + 25}px`);
     }
@@ -59,8 +59,8 @@ export default Ember.Component.extend({
 
   maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
     if (isIE) { return null; }
-    const selected = this.get('selected');
-    return (!selected || get(selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
+    let select = this.getAttr('select');
+    return (!select.selected || get(select.selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
   }),
 
   // Actions
@@ -69,15 +69,14 @@ export default Ember.Component.extend({
       let action = this.get('handleInput');
       if (action) { action(e); }
       if (e.defaultPrevented) { return; }
-      this.get('select.actions.open')(e);
+      this.getAttr('select').actions.open(e);
     },
 
     handleKeydown(e) {
       let { onkeydown, select } = this.getProperties('onkeydown', 'select');
       if (onkeydown && onkeydown(select, e) === false) { return false; }
-      let selected = Ember.A((this.get('selected') || []));
       if (e.keyCode === 8 && isBlank(e.target.value)) {
-        let lastSelection = get(selected, 'lastObject');
+        let lastSelection = get(select.selected, 'lastObject');
         if (lastSelection) {
           select.actions.select(this.get('buildSelection')(lastSelection), e);
           if (typeof lastSelection === 'string') {

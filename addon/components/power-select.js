@@ -79,6 +79,7 @@ export default Component.extend({
   willDestroy() {
     this._super(...arguments);
     this.activeSearch = null;
+    this.publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
     cancel(this.expirableSearchDebounceId);
   },
 
@@ -273,9 +274,9 @@ export default Component.extend({
 
   updateOptions(options) {
     this._updateOptionsAndResults(options);
-    options.addObserver('[]', this, function(value) {
-      this._updateOptionsAndResults(options);
-    });
+    if (options) {
+      options.addObserver('[]', this, this._updateOptionsAndResults);
+    }
   },
 
   resetHighlighted() {
