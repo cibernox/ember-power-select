@@ -243,7 +243,7 @@ export default Component.extend({
       if (onkeydown && onkeydown(this.publicAPI, e) === false) {
         return false;
       }
-      if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
+      if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
         return this._handleTriggerTyping(e);
       } else {
         return this._routeKeydown(e);
@@ -255,7 +255,7 @@ export default Component.extend({
       if (onkeydown && onkeydown(this.publicAPI, e) === false) {
         return false;
       }
-      this._routeKeydown(e);
+      return this._routeKeydown(e);
     },
 
     scrollTo(option /*, e */) {
@@ -411,7 +411,8 @@ export default Component.extend({
   _handleKeySpace(e) {
     if (this.publicAPI.isOpen) {
       e.preventDefault();
-      return this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
+      this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
+      return false;
     }
   },
 
