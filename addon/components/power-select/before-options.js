@@ -1,9 +1,8 @@
-import Ember from 'ember';
+import Component from 'ember-component';
+import { scheduleOnce } from 'ember-runloop';
 import layout from '../../templates/components/power-select/before-options';
 
-const { run } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
   layout,
 
@@ -43,7 +42,7 @@ export default Ember.Component.extend({
   focusInput() {
     this.input = self.document.querySelector('.ember-power-select-search-input');
     if (this.input) {
-      run.scheduleOnce('afterRender', this.input, 'focus');
+      scheduleOnce('afterRender', this.input, 'focus');
     }
   }
 });

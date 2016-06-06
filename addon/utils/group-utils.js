@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { get } = Ember;
+import { A } from 'ember-array/utils';
+import get from 'ember-metal/get';
 
 export function isGroup(entry) {
   return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');
@@ -11,7 +10,7 @@ export function countOptions(collection) {
   (function walk(collection) {
     if (!collection) { return null; }
     if (!collection.objectAt) {
-      collection = Ember.A(collection);
+      collection = A(collection);
     }
     for (let i = 0; i < get(collection, 'length'); i++) {
       let entry = collection.objectAt(i);
@@ -30,7 +29,7 @@ export function indexOfOption(collection, option) {
   return (function walk(collection) {
     if (!collection) { return null; }
     if (!collection.objectAt) {
-      collection = Ember.A(collection);
+      collection = A(collection);
     }
     for (let i = 0; i < get(collection, 'length'); i++) {
       let entry = collection.objectAt(i);
@@ -52,7 +51,7 @@ export function optionAtIndex(originalCollection, index) {
   return (function walk(collection, ancestorIsDisabled) {
     if (!collection || index < 0) { return { disabled: false, option: undefined }; }
     if (!collection.objectAt) {
-      collection = Ember.A(collection);
+      collection = A(collection);
     }
     let localCounter = 0;
     let length = get(collection, 'length');
@@ -72,8 +71,8 @@ export function optionAtIndex(originalCollection, index) {
 }
 
 export function filterOptions(options, text, matcher, skipDisabled = false) {
-  let sanitizedOptions =  options.objectAt ? options : Ember.A(options);
-  let opts = Ember.A();
+  let sanitizedOptions =  options.objectAt ? options : A(options);
+  let opts = A();
   let length = get(options, 'length');
   for (let i = 0; i < length; i++) {
     let entry = sanitizedOptions.objectAt(i);

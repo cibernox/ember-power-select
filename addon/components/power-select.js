@@ -239,7 +239,7 @@ export default Component.extend({
           if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) { return; }
         }
       }
-      this.publicAPI.actions.select(this.get('buildSelection')(selected), e);
+      this.publicAPI.actions.select(this.get('buildSelection')(selected, this.publicAPI), e);
       if (this.get('closeOnSelect')) {
         this.publicAPI.actions.close(e);
         return false;
@@ -324,7 +324,10 @@ export default Component.extend({
 
   updateSelection(selection) {
     if (isEmberArray(selection)) {
-      set(this.publicAPI, 'selected', toPlainArray(selection));
+      if (selection && selection.addObserver) {
+        selection.addObserver('[]', this, this._updateSelectedArray);
+      }
+      this._updateSelectedArray(selection);
     } else if (selection !== this.publicAPI.selected) {
       setProperties(this.publicAPI, { selected: selection, highlighted: selection });
     }
@@ -335,7 +338,7 @@ export default Component.extend({
     set(this.publicAPI, 'highlighted', highlighted);
   },
 
-  buildSelection(option) {
+  buildSelection(option /*, select */) {
     return option;
   },
 
@@ -352,6 +355,11 @@ export default Component.extend({
         this.resetHighlighted();
       }
     }
+  },
+
+  _updateSelectedArray(selection) {
+    if (get(this, 'isDestroyed')) { return; }
+    set(this.publicAPI, 'selected', toPlainArray(selection));
   },
 
   _resetSearch() {

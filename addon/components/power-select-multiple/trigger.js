@@ -1,10 +1,12 @@
 import Ember from 'ember';
+import Component from 'ember-component';
 import layout from '../../templates/components/power-select-multiple/trigger';
 import get from 'ember-metal/get';
 import computed from 'ember-computed';
 import observer from 'ember-metal/observer';
 import service from 'ember-service/inject';
 import { scheduleOnce } from 'ember-runloop';
+import { assert } from 'ember-metal/utils';
 import { isBlank } from 'ember-utils';
 import { htmlSafe } from 'ember-string';
 
@@ -13,7 +15,7 @@ const ua = self.window ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 const isTouchDevice = (testing || !!self.window && 'ontouchstart' in self.window);
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
   layout,
   textMeasurer: service(),
@@ -86,12 +88,12 @@ export default Ember.Component.extend({
       if (e.keyCode === 8 && isBlank(e.target.value)) {
         let lastSelection = select.selected[select.selected.length - 1];
         if (lastSelection) {
-          select.actions.select(this.get('buildSelection')(lastSelection), e);
+          select.actions.select(this.get('buildSelection')(lastSelection, select), e);
           if (typeof lastSelection === 'string') {
             select.actions.search(lastSelection);
           } else {
             let searchField = this.get('searchField');
-            Ember.assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
+            assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
             select.actions.search(get(lastSelection, searchField));
           }
           select.actions.open(e);
