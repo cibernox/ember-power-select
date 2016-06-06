@@ -62,6 +62,7 @@ export default Component.extend({
   publicAPI: {
     options: [],              // Contains the resolved collection of options
     results: [],              // Contains the active set of results
+    resultsCount: 0,          // Contains the number of results incuding those nested/disabled
     selected: undefined,      // Contains the resolved selected option
     highlighted: undefined,   // Contains the currently highlighted option (if any)
     searchText: '',           // Contains the text of the current search
@@ -289,11 +290,11 @@ export default Component.extend({
   },
 
   _updateOptionsAndResults(options) {
+    set(this, 'loading', false);
     if (this.getAttr('search')) { // external search
       setProperties(this.publicAPI, { options, results: options, resultsCount: countOptions(options) });
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
-      set(this, 'loading', false);
       setProperties(this.publicAPI, { results, options, resultsCount: countOptions(results) });
       if (this.publicAPI.isOpen) {
         this.resetHighlighted();
@@ -324,12 +325,14 @@ export default Component.extend({
       search.then((results) => {
         if (this.activeSearch === search) {
           setProperties(this.publicAPI, { results, lastSearchedText: term, resultsCount: countOptions(results) });
+          set(this, 'loading', false);
         }
       }, () => {
         if (this.activeSearch === search) {
           set(this.publicAPI, 'lastSearchedText', term);
+          set(this, 'loading', false);
         }
-      }).finally(() => set(this, 'loading', false));
+      });
     } else {
       setProperties(this.publicAPI, { results: search, lastSearchedText: term, resultsCount: countOptions(search) });
     }
