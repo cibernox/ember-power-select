@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Update to EBD to fix position classes being wiped on rerenders.
+
 # 1.0.0-alpha.0
 
 - [NO CHANGES] After some though I'm more or less ready to commit to stablility for both the component's
