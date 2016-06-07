@@ -5,6 +5,9 @@ import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../..
 import { numbers } from '../constants';
 
 function assertPublicAPIShape(assert, select) {
+  assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+  assert.equal(typeof select.isActive, 'boolean', 'select.isActive is a boolean');
+  assert.equal(typeof select.loading, 'boolean', 'select.loading is a boolean');
   assert.ok(select.options instanceof Array, 'select.options is an array');
   assert.ok(select.results instanceof Array, 'select.results is an array');
   assert.equal(typeof select.resultsCount, 'number', 'select.resultsCount is a number');
@@ -28,7 +31,7 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
 });
 
 test('The search action of single selects action receives the search term and the public API', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.handleSearch = (term, select) => {
@@ -47,7 +50,7 @@ test('The search action of single selects action receives the search term and th
 });
 
 test('The search action of multiple selects action receives the search term and the public API', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.handleSearch = (term, select) => {
@@ -66,7 +69,7 @@ test('The search action of multiple selects action receives the search term and 
 });
 
 test('The onchange of single selects action receives the selection and the public API', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
@@ -85,7 +88,7 @@ test('The onchange of single selects action receives the selection and the publi
 });
 
 test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
@@ -104,7 +107,7 @@ test('The onchange of multiple selects action receives the selection and the pub
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event when fired on the searchbox', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
@@ -148,7 +151,7 @@ test('The onkeydown can be used to easily allow to select on tab', function(asse
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
@@ -167,7 +170,7 @@ test('The onkeydown of multiple selects action receives the public API and the k
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in single selects', function(assert) {
-  assert.expect(38);
+  assert.expect(44);
 
   this.numbers = numbers;
   this.handleKeyDown = (select, e) => {
@@ -190,7 +193,7 @@ test('returning false from the `onkeydown` action prevents the default behaviour
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in multiple selects', function(assert) {
-  assert.expect(19);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleKeyDown = (select, e) => {
@@ -211,7 +214,7 @@ test('returning false from the `onkeydown` action prevents the default behaviour
 });
 
 test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
@@ -229,7 +232,7 @@ test('The onfocus of single selects action receives the public API and the focus
 });
 
 test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
-  assert.expect(17);
+  assert.expect(20);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
@@ -247,7 +250,7 @@ test('The onfocus of multiple selects action receives the public API and the foc
 });
 
 test('the `onopen` action is invoked just before the dropdown opens', function(assert) {
-  assert.expect(19);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
@@ -267,7 +270,7 @@ test('the `onopen` action is invoked just before the dropdown opens', function(a
 });
 
 test('returning false from the `onopen` action prevents the single select from opening', function(assert) {
-  assert.expect(19);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
@@ -288,7 +291,7 @@ test('returning false from the `onopen` action prevents the single select from o
 });
 
 test('returning false from the `onopen` action prevents the multiple select from opening', function(assert) {
-  assert.expect(19);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
@@ -309,7 +312,7 @@ test('returning false from the `onopen` action prevents the multiple select from
 });
 
 test('the `onclose` action is invoked just before the dropdown closes', function(assert) {
-  assert.expect(19);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
@@ -330,7 +333,7 @@ test('the `onclose` action is invoked just before the dropdown closes', function
 });
 
 test('returning false from the `onclose` action prevents the single select from closing', function(assert) {
-  assert.expect(20);
+  assert.expect(23);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
@@ -353,7 +356,7 @@ test('returning false from the `onclose` action prevents the single select from 
 });
 
 test('returning false from the `onclose` action prevents the multiple select from closing', function(assert) {
-  assert.expect(20);
+  assert.expect(23);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
@@ -376,7 +379,7 @@ test('returning false from the `onclose` action prevents the multiple select fro
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', function(assert) {
-  assert.expect(23);
+  assert.expect(26);
 
   this.numbers = numbers;
   this.handleInput = (value, select, e) => {
@@ -401,7 +404,7 @@ test('the `oninput` action is invoked when the user modifies the text of the sea
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', function(assert) {
-  assert.expect(23);
+  assert.expect(26);
 
   this.numbers = numbers;
   this.handleInput = (value, select, e) => {
@@ -461,29 +464,6 @@ test('if `oninput` action of multiple selects returns false the search is cancel
   clickTrigger();
   typeInSearch('tw');
   assert.equal($('.ember-power-select-option').length, 20, 'There is the same options than before');
-});
-
-test('the `search` action of the public api passed to the public actions works as expected', function(assert) {
-  assert.expect(6);
-
-  this.handleSearch = (term) => {
-    assert.equal(term, 'abc', 'The search term receives `abc`');
-    return ['foo', 'bar', 'baz'];
-  };
-  this.handleOpen = (select) => {
-    select.actions.search('abc');
-  };
-  this.render(hbs`
-    {{#power-select onchange=(action (mut foo)) onopen=handleOpen search=handleSearch as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  clickTrigger();
-  assert.equal($('.ember-power-select-search-input')[0].value, 'abc');
-  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'foo');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'bar');
-  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'baz');
 });
 
 test('the `highlight` action of the public api passed to the public actions works as expected', function(assert) {

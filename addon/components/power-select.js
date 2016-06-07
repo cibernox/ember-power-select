@@ -62,7 +62,6 @@ export default Component.extend({
   // Private state
   expirableSearchText: '',
   expirableSearchDebounceId: null,
-  loading: false,
   activeSearch: null,
   publicAPI: {
     options: [],              // Contains the resolved collection of options
@@ -72,6 +71,7 @@ export default Component.extend({
     highlighted: undefined,   // Contains the currently highlighted option (if any)
     searchText: '',           // Contains the text of the current search
     lastSearchedText: '',     // Contains the text of the last finished search
+    loading: false,           // Truthy if there is a pending promise that will update the results
     isActive: false           // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
   },
 
@@ -114,7 +114,7 @@ export default Component.extend({
     get() { return []; },
     set(_, options) {
       if (options && options.then) {
-        set(this, 'loading', true);
+        set(this.publicAPI, 'loading', true);
         this.activeOptionsPromise = options;
         options.then(resolvedOptions => {
           if (this.activeOptionsPromise === options) {
@@ -122,7 +122,7 @@ export default Component.extend({
           }
         }, () => {
           if (this.activeOptionsPromise === options) {
-            set(this, 'loading', false);
+            set(this.publicAPI, 'loading', false);
           }
         });
       } else {
@@ -163,8 +163,8 @@ export default Component.extend({
       this.publicAPI.resultsCount === 0;
   }),
 
-  mustShowNoMessages: computed('loading', 'search', 'publicAPI.{lastSearchedText,resultsCount}', function() {
-    return !this.get('loading') &&
+  mustShowNoMessages: computed('search', 'publicAPI.{lastSearchedText,resultsCount,loading}', function() {
+    return !this.publicAPI.loading &&
       this.publicAPI.resultsCount === 0 &&
       (!this.get('search') || this.publicAPI.lastSearchedText.length > 0);
   }),
@@ -344,13 +344,12 @@ export default Component.extend({
 
   _updateOptionsAndResults(opts) {
     if (get(this, 'isDestroyed')) { return; }
-    set(this, 'loading', false);
     let options = toPlainArray(opts);
     if (this.getAttr('search')) { // external search
-      setProperties(this.publicAPI, { options, results: options, resultsCount: countOptions(options) });
+      setProperties(this.publicAPI, { options, results: options, resultsCount: countOptions(options), loading: false });
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
-      setProperties(this.publicAPI, { results, options, resultsCount: countOptions(results) });
+      setProperties(this.publicAPI, { results, options, resultsCount: countOptions(results), loading: false });
       if (this.publicAPI.isOpen) {
         this.resetHighlighted();
       }
@@ -365,8 +364,13 @@ export default Component.extend({
   _resetSearch() {
     let results = this.publicAPI.options;
     this.activeSearch = null;
-    set(this, 'loading', false);
-    setProperties(this.publicAPI, { results, searchText: '', lastSearchedText: '', resultsCount: countOptions(results) });
+    setProperties(this.publicAPI, {
+      results,
+      searchText: '',
+      lastSearchedText: '',
+      resultsCount: countOptions(results),
+      loading: false
+    });
   },
 
   _performFilter(term) {
@@ -382,7 +386,7 @@ export default Component.extend({
     if (!search) {
       set(this.publicAPI, 'lastSearchedText', term);
     } else if (search.then) {
-      set(this, 'loading', true);
+      set(this.publicAPI, 'loading', true);
       this.activeSearch = search;
       search.then((results) => {
         if (this.activeSearch === search) {
@@ -390,15 +394,14 @@ export default Component.extend({
           setProperties(this.publicAPI, {
             results: resultsArray,
             lastSearchedText: term,
-            resultsCount: countOptions(results)
+            resultsCount: countOptions(results),
+            loading: false
           });
           this.resetHighlighted();
-          set(this, 'loading', false);
         }
       }, () => {
         if (this.activeSearch === search) {
-          set(this.publicAPI, 'lastSearchedText', term);
-          set(this, 'loading', false);
+          setProperties(this.publicAPI, { lastSearchedText: term, loading: false });
         }
       });
     } else {
