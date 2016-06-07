@@ -1,5 +1,16 @@
 # Master
 
+# 0.11.0-beta.2
+- [INTERNAL] Huge refactor to centralize (most) state inside the public API object. tl;dr; The
+  component inside is totally new.
+- [INTERNAL] Use fine-grained imports from ember-cli-shims. It expects ember-cli-shims >= 0.1.1.
+- [BREAKING] The options received by internal subcomponents has changed (simplified) because most
+  of the state has been centralized in the public API object (named `select` inside alls sub components).
+- [BREAKING] The second argument yielded to the block is now the public API instead of the search term.
+  This gives more flexibility to the user. To retaing old behaviour just change `|opt term|}} {{term}}` by
+  `|opt select|}} {{select.lastSearchedText}}`
+- [BREAKING] The `--focus-inside` class has been replaced by an `--active` class, which is more meaningful.
+
 # 0.11.0-beta.1
 - [INTERNAL] Update EBD to fix scroll problem cause by the dropdown being too slow to reposition
 - [INTERNAL] Use a regular input for the search. Now that the component is 2.3.1+, no hacks are needed.

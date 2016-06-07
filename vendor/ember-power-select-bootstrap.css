@@ -36,7 +36,7 @@
     content: "";
     display: table;
     clear: both; }
-  .ember-power-select-trigger:focus, .ember-power-select-trigger .ember-power-select-trigger--focus-inside {
+  .ember-power-select-trigger:focus, .ember-power-select-trigger .ember-power-select-trigger--active {
     border: 1px solid #66afe9;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
     outline: 0; }
