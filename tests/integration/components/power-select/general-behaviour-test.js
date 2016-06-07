@@ -371,22 +371,22 @@ test('The filtering is reverted after closing the select', function(assert) {
   assert.equal($('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
 });
 
-test('The search term is yielded as second argument in single selects', function(assert) {
+test('The publicAPI is yielded as second argument in single selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
-      {{term}}:{{option}}
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option select|}}
+      {{select.lastSearchedText}}:{{option}}
     {{/power-select}}
   `);
 
   clickTrigger();
   typeInSearch('tw');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the search term');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the public API');
   nativeMouseUp('.ember-power-select-option:eq(0)');
   clickTrigger();
   typeInSearch('thr');
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the search term');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the public API');
 });
 
 test('If there is no search action and the options is empty the select shows the default "no options" message', function(assert) {

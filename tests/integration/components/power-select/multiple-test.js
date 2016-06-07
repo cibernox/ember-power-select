@@ -607,12 +607,12 @@ test('Typing in the input opens the component and filters the options also with 
   }, 150);
 });
 
-test('The search term is yielded as second argument in multiple selects', function(assert) {
+test('The publicAPI is yielded as second argument in multiple selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
-      {{term}}:{{option}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option select|}}
+      {{select.lastSearchedText}}:{{option}}
     {{/power-select-multiple}}
   `);
 
@@ -622,7 +622,7 @@ test('The search term is yielded as second argument in multiple selects', functi
   nativeMouseUp('.ember-power-select-option:eq(0)');
   clickTrigger();
   typeInSearch('thr');
-  assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the search term');
+  assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the public API');
 });
 
 test('The search input is cleared when the component is closed', function(assert) {

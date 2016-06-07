@@ -14,10 +14,7 @@
         optionsComponent=(readonly optionsComponent)
         role="group"
         class="ember-power-select-options" as |option|}}
-{{!--         highlighted=(readonly highlighted)
-        allOptions=(readonly allOptions)
-        selected=(readonly selected) --}}
-        {{yield option select.lastSearchedText}}
+        {{yield option select}}
       {{/component}}
     </li>
   {{else}}
@@ -27,7 +24,7 @@
       aria-current={{eq opt select.highlighted}}
       data-option-index="{{groupIndex}}{{index}}"
       role="option">
-      {{yield opt select.lastSearchedText}}
+      {{yield opt select}}
     </li>
   {{/if}}
 {{/each}}
