@@ -1,5 +1,12 @@
 # Master
 
+# 1.0.0-alpha.0
+
+- [NO CHANGES] After some though I'm more or less ready to commit to stablility for both the component's
+  options and the "publicAPI" object that is passes/yielded as second argument in many places. Maybe
+  the API surface can adjust a little bit as @miguelcobain stresses it to be used inside ember-paper,
+  but I expect changes, if any, to be additive. In any case, this is an alpha version.
+
 # 0.11.0-beta.2
 - [INTERNAL] Huge refactor to centralize (most) state inside the public API object. tl;dr; The
   component inside is totally new.
