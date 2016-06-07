@@ -147,7 +147,10 @@
     <tr>
       <td>renderInPlace</td>
       <td><code>boolean</code></td>
-      <td>When truthy, the list of options will be rendered in place instead of being attaches to the root of the body and positioned with javascript</td>
+      <td>
+        When truthy, the list of options will be rendered in place instead of being attaches to the root of the body and positioned with javascript.
+        Enabling this option also adds a wrapper div around the trigger and the content with class <code>.ember-power-select</code>.
+      </td>
     </tr>
     <tr>
       <td>closeOnSelect</td>
@@ -184,7 +187,8 @@
       <td>class</td>
       <td><code>string</code></td>
       <td>
-        The CSS class of the component.
+        The CSS class of the component. The component by default is tagless, so this won't take
+        any effect unless the user specifies `tagName=div` too.
       </td>
     </tr>
     <tr>
