@@ -10,9 +10,9 @@
         </span>
       {{/unless}}
       {{#if selectedItemComponent}}
-        {{component selectedItemComponent select=select}}
+        {{component selectedItemComponent option=(readonly opt) select=(readonly select)}}
       {{else}}
-        {{yield opt select.lastSearchedText}}
+        {{yield opt select}}
       {{/if}}
     </li>
   {{/each}}

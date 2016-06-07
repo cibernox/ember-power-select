@@ -188,8 +188,10 @@
 
 <p>
   Is very common to need the search term from withing the block used to render each one of the options,
-  typically for apply a highlight some substring of the option's text. For that, the block receives
-  the last searched text as the second argument.
+  typically for apply a highlight some substring of the option's text. For that, the block, as
+  most actions in this component, receives an instance of the publicAPI as second argument. The public
+  API contains <code>searchText</code> and <code>lastSearchedText</code>. Check the {{#link-to 'public-pages.docs.api-reference'}}API reference{{/link-to}}
+  to understand why there is two search term and why they are different.
 </p>
 
 {{#code-sample as |component|}}
@@ -198,9 +200,9 @@
       options=names
       selected=selected
       onchange=(action (mut selected))
-      as |name term|
+      as |name select|
     }}
-      \{{highlight-text name term}}
+      \{{highlight-text name select.lastSearchedText}}
     \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
@@ -218,9 +220,9 @@
       options=names
       selected=selectedPersonName
       onchange=(action (mut selectedPersonName))
-      as |name term|
+      as |name select|
     }}
-      {{highlight-substr name term}}
+      {{highlight-substr name select.lastSearchedText}}
     {{/power-select}}
   </div>
 {{/code-sample}}
