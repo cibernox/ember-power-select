@@ -8,6 +8,7 @@
   renderInPlace=(readonly renderInPlace)
   triggerId=(readonly triggerId)
   verticalPosition=(readonly verticalPosition)
+  disabled=(readonly disabled)
   as |dropdown|}}
 
   {{#dropdown.trigger
@@ -17,7 +18,6 @@
     ariaLabelledBy=(readonly ariaLabelledBy)
     ariaRequired=(readonly required)
     class=(readonly concatenatedTriggerClasses)
-    disabled=(readonly disabled)
     onKeydown=(action "onTriggerKeydown")
     onFocus=(action "onTriggerFocus")
     onBlur=(action "deactivate")
@@ -25,7 +25,6 @@
     {{#component triggerComponent
       allowClear=(readonly allowClear)
       buildSelection=(readonly buildSelection)
-      disabled=(readonly disabled)
       extra=(readonly extra)
       listboxId=(readonly optionsId)
       onFocus=(action "onFocus")
