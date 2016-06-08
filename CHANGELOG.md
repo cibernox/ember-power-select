@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Make `disabled` part of the public API
+
 # 1.0.0-alpha.1
 - [BUGFIX] Fix positioning of the status icon.
 - [BUGFIX] Update to EBD to fix position classes being wiped on rerenders.

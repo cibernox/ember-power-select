@@ -1,7 +1,7 @@
 <ul id="{{elementId}}-ember-power-select-multiple-options" class="ember-power-select-multiple-options">
   {{#each select.selected as |opt idx|}}
     <li class="ember-power-select-multiple-option">
-      {{#unless disabled}}
+      {{#unless select.disabled}}
         <span role="button"
           aria-label="remove element"
           class="ember-power-select-multiple-remove-btn"
@@ -23,7 +23,7 @@
       aria-controls={{listboxId}}
       style={{triggerMultipleInputStyle}}
       placeholder={{maybePlaceholder}}
-      disabled={{disabled}}
+      disabled={{select.disabled}}
       oninput={{action "onInput"}}
       onFocus={{activate}}
       onBlur={{onBlur}}
