@@ -21,6 +21,7 @@
   box-sizing: border-box; }
 
 .ember-power-select-trigger {
+  position: relative;
   border: 1px solid #aaaaaa;
   border-radius: 4px;
   background-color: #ffffff;
