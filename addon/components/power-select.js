@@ -78,7 +78,6 @@ export default Component.extend({
   // Lifecycle hooks
   init() {
     this._super(...arguments);
-    this.triggerId = `ember-power-select-trigger-${this.elementId}`;
     this.optionsId = `ember-power-select-options-${this.elementId}`;
     assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
@@ -177,7 +176,6 @@ export default Component.extend({
         highlight: (...args) => this.send('highlight', ...args),
         select: (...args) => this.send('select', ...args),
         choose: (...args) => this.send('choose', ...args),
-        // handleKeydown: () => console.log('handleKeydown!!'),
         scrollTo: (...args) => scheduleOnce('afterRender', this, this.send, 'scrollTo', ...args)
       };
       assign(dropdown.actions, actions);

@@ -6,7 +6,6 @@
   onOpen=(action "onOpen")
   registerAPI=(action "registerAPI")
   renderInPlace=(readonly renderInPlace)
-  triggerId=(readonly triggerId)
   verticalPosition=(readonly verticalPosition)
   disabled=(readonly disabled)
   as |dropdown|}}
@@ -73,7 +72,6 @@
       {{/if}}
     {{else}}
       {{#component optionsComponent
-        aria-controls=(readonly triggerId)
         class="ember-power-select-options"
         groupIndex=""
         loadingMessage=(readonly loadingMessage)
