@@ -1,4 +1,4 @@
-<ul id="{{elementId}}-ember-power-select-multiple-options" class="ember-power-select-multiple-options">
+<ul id="ember-power-select-multiple-options-{{select._id}}" class="ember-power-select-multiple-options">
   {{#each select.selected as |opt idx|}}
     <li class="ember-power-select-multiple-option">
       {{#unless select.disabled}}
@@ -17,8 +17,9 @@
     </li>
   {{/each}}
   {{#if searchEnabled}}
-    <input type="search" class="ember-power-select-trigger-multiple-input {{elementId}}-input"
+    <input type="search" class="ember-power-select-trigger-multiple-input"
       tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+      id="ember-power-select-trigger-multiple-input-{{select._id}}"
       value={{select.searchText}}
       aria-controls={{listboxId}}
       style={{triggerMultipleInputStyle}}
