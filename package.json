@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select",
-  "version": "0.10.10",
+  "version": "0.10.11",
   "description": "The extensible select component built for ember",
   "homepage": "http://www.ember-power-select.com",
   "directories": {
