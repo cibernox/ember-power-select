@@ -11,7 +11,8 @@ import { isBlank } from 'ember-utils';
 import { htmlSafe } from 'ember-string';
 
 const { testing } = Ember;
-const ua = self.window ? self.window.navigator.userAgent : '';
+
+const ua = self.window && self.window.navigator ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 const isTouchDevice = (testing || !!self.window && 'ontouchstart' in self.window);
 
