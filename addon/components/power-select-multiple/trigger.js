@@ -4,7 +4,7 @@ import updateInput from '../../utils/update-input-value';
 
 const { computed, get, isBlank, run, inject: { service } } = Ember;
 const { htmlSafe } = Ember.String;
-const ua = self.window ? self.window.navigator.userAgent : '';
+const ua = self.window && self.window.navigator ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 const isTouchDevice = (Ember.testing || !!self.window && 'ontouchstart' in self.window);
 
