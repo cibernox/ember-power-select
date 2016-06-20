@@ -1,6 +1,7 @@
 import Component from 'ember-component';
 import $ from 'jquery';
 import layout from '../../templates/components/power-select/options';
+import computed from 'ember-computed';
 
 export default Component.extend({
   isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
@@ -32,6 +33,11 @@ export default Component.extend({
       select.actions.scrollTo(select.highlighted);
     }
   },
+
+  // CPs
+  'aria-controls': computed('select._id', function() {
+    return `ember-power-select-trigger-${this.get('select._id')}`;
+  }),
 
   // Methods
   _addTouchEvents() {

@@ -51,7 +51,7 @@
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
     "ember-try": "^0.2.2",
-    "liquid-fire": "0.23.0",
+    "liquid-fire": "ember-animation/liquid-fire#63481e6415d496a43741d458daf7e90c4edd084a",
     "loader.js": "^4.0.1",
     "memory-scroll": "0.2.0",
     "node-sass": "^3.4.2",
@@ -67,7 +67,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.6",
     "ember-cli-htmlbars": "^1.0.3",
-    "ember-basic-dropdown": "^0.12.0-beta.10",
+    "ember-basic-dropdown": "^0.12.0-beta.15",
     "ember-text-measurer": "^0.3.0",
     "ember-truth-helpers": "^1.2.0"
   },

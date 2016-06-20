@@ -25,9 +25,10 @@ export default Component.extend({
   // Lifecycle hooks
   didInsertElement() {
     this._super(...arguments);
-    this.input = document.querySelector(`.${this.elementId}-input`);
+    let select = this.get('select');
+    this.input = document.getElementById(`ember-power-select-trigger-multiple-input-${select._id}`);
     this.inputFont = this.input ? window.getComputedStyle(this.input).font : null;
-    let optionsList = document.getElementById(`${this.elementId}-ember-power-select-multiple-options`);
+    let optionsList = document.getElementById(`ember-power-select-multiple-options-${select._id}`);
     let chooseOption = e => {
       let selectedIndex = e.target.getAttribute('data-selected-index');
       if (selectedIndex) {

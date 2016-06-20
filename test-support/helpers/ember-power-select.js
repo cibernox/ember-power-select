@@ -88,17 +88,18 @@ export function touchTrigger() {
 
 export default function() {
   Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    let match = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/\d+$/);
-    let id = match[0];
+    let $trigger = find(cssPath).find('.ember-power-select-trigger');
+    let contentId = `${$trigger.attr('aria-controls')}`;
+    let $content = find(`#${contentId}`)
     // If the dropdown is closed, open it
-    if ($(`.ember-power-select-dropdown-ember${id}`).length === 0) {
+    if ($content.length === 0) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
       wait();
     }
 
     // Select the option with the given text
     andThen(function() {
-      let potentialTargets = $(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`).toArray();
+      let potentialTargets = $(`#${contentId} .ember-power-select-option:contains("${value}")`).toArray();
       let target;
       if (potentialTargets.length > 1) {
         target = potentialTargets.filter((t) => t.textContent.trim() === value)[0] || potentialTargets[0];
@@ -110,15 +111,16 @@ export default function() {
   });
 
   Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').replace(/\D/g, '');
-    const isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
+    let $trigger = find(cssPath).find('.ember-power-select-trigger');
+    let contentId = `${$trigger.attr('aria-controls')}`;
+    let isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
-    let dropdownIsClosed = $(`.ember-power-select-dropdown-ember${id}`).length === 0;
+    let dropdownIsClosed = $(`#${contentId}`).length === 0;
     if (dropdownIsClosed) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
       wait();
     }
-    const isDefaultSingleSelect = $(`.ember-power-select-search-input`).length > 0;
+    let isDefaultSingleSelect = $(`.ember-power-select-search-input`).length > 0;
 
     if (isMultipleSelect) {
       fillIn(`${cssPath} .ember-power-select-trigger-multiple-input`, value);
@@ -129,7 +131,7 @@ export default function() {
       if (inputIsInTrigger) {
         fillIn(`${cssPath} .ember-power-select-trigger input[type=search]`, value);
       } else {
-        fillIn(`.ember-power-select-dropdown-ember${id} .ember-power-select-search-input[type=search]`, 'input');
+        fillIn(`#${contentId} .ember-power-select-search-input[type=search]`, 'input');
       }
     }
 
