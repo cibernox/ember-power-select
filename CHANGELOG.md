@@ -1,6 +1,11 @@
 # Master
 
+- [ENHANCEMENT] Add a `registerAPI` public action than can be used to store a reference to the public
+  API of the component from the outside.
+
+# 1.0.0-alpha.2
 - [ENHANCEMENT] Make `disabled` part of the public API
+- [BUGFIX] Fixed a lot of bugs, some related to changes in Ember 2.7, and others.
 
 # 1.0.0-alpha.1
 - [BUGFIX] Fix positioning of the status icon.

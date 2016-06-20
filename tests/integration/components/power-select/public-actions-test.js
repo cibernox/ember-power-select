@@ -539,3 +539,16 @@ test('The search action of multiple selects has the searchText set to the up-to-
   clickTrigger();
   typeInSearch('el');
 });
+
+test('The component invokes the `registerAPI` action with the public API object', function(assert) {
+  assert.expect(20);
+  this.numbers = numbers;
+  this.storeAPI = function(select) {
+    assertPublicAPIShape(assert, select);
+  };
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+});
