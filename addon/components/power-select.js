@@ -181,6 +181,10 @@ export default Component.extend({
       assign(dropdown.actions, actions);
       assign(dropdown, this.publicAPI);
       this.publicAPI = dropdown;
+      let action = this.get('registerAPI');
+      if (action) {
+        action(dropdown);
+      }
     },
 
     onOpen(_, e) {
