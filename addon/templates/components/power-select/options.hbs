@@ -5,7 +5,7 @@
 {{/if}}
 {{#each options as |opt index|}}
   {{#if opt.groupName}}
-    <li class="ember-power-select-group" aria-disabled={{opt.disabled}} role="option">
+    <li class="ember-power-select-group" aria-disabled={{ember-power-select-true-string-if-present opt.disabled}} role="option">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       {{#component optionsComponent
         options=(readonly opt.options)
@@ -20,7 +20,7 @@
   {{else}}
     <li class="ember-power-select-option"
       aria-selected="{{ember-power-select-is-selected opt select.selected}}"
-      aria-disabled="{{opt.disabled}}"
+      aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
       aria-current="{{eq opt select.highlighted}}"
       data-option-index="{{groupIndex}}{{index}}"
       role="option">

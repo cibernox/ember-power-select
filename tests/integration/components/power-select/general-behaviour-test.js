@@ -744,7 +744,7 @@ test('The trigger of the select has a id derived from the element id of the comp
       {{option}}
     {{/power-select}}
   `);
-  assert.ok(/^ember-power-select-trigger-ember\d+$/.test(this.$('.ember-power-select-trigger').attr('id'), 'The trigger has the proper id'));
+  assert.ok(/^ember-basic-dropdown-trigger-\d+$/.test(this.$('.ember-power-select-trigger').attr('id')), 'The trigger has the proper id');
 });
 
 test('If the passed options is a promise that is resolved, searching should filter the results from a promise', function(assert) {
