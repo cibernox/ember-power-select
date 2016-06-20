@@ -932,7 +932,7 @@ test('When both `selected` and `options` are async, and `options` resolves befor
     setTimeout(() => resolve(numbers), 10);
   });
   this.asyncSelected = new Ember.RSVP.Promise((resolve) => {
-    setTimeout(() => resolve('four'), 200);
+    setTimeout(() => resolve('four'), 300);
   });
 
   this.render(hbs`
@@ -949,14 +949,14 @@ test('When both `selected` and `options` are async, and `options` resolves befor
   setTimeout(function() {
     assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'The trigger is still empty');
     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The 1st element is highlighted');
-  }, 50);
+  }, 100);
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
     assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is selected');
     assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
     done();
-  }, 220);
+  }, 350);
 });
 
 test('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--active` class', function(assert) {
