@@ -108,7 +108,7 @@ test('The onchange of multiple selects action receives the selection and the pub
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event when fired on the searchbox', function(assert) {
-  assert.expect(21);
+  assert.expect(42);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
@@ -123,7 +123,9 @@ test('The onkeydown of single selects action receives the public API and the key
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search-input')[0], 13);
+  let input = $('.ember-power-select-search-input')[0];
+  triggerKeydown(input, 13);
+  triggerKeydown(input, 65);
 });
 
 test('The onkeydown can be used to easily allow to select on tab', function(assert) {
@@ -152,7 +154,7 @@ test('The onkeydown can be used to easily allow to select on tab', function(asse
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(21);
+  assert.expect(42);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
@@ -167,7 +169,9 @@ test('The onkeydown of multiple selects action receives the public API and the k
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13);
+  let input = $('.ember-power-select-trigger-multiple-input')[0];
+  triggerKeydown(input, 13);
+  triggerKeydown(input, 65);
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in single selects', function(assert) {
