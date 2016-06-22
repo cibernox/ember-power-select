@@ -42,7 +42,7 @@ function toPlainArray(collection) {
 export default Component.extend({
   // HTML
   layout,
-  tagName: fallbackIfUndefined(''),
+  tagName: '',
 
   // Options
   searchEnabled: fallbackIfUndefined(true),
