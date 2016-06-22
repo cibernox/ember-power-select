@@ -78,7 +78,6 @@ export default Component.extend({
   // Lifecycle hooks
   init() {
     this._super(...arguments);
-    this.optionsId = `ember-power-select-options-${this.elementId}`;
     assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
 
@@ -149,7 +148,7 @@ export default Component.extend({
   }),
 
   concatenatedDropdownClasses: computed('dropdownClass', 'publicAPI.isActive', function() {
-    let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
+    let classes = ['ember-power-select-dropdown'];
     if (this.get('publicAPI.isActive')) {
       classes.push('ember-power-select-dropdown--active');
     }
@@ -181,6 +180,7 @@ export default Component.extend({
       assign(dropdown.actions, actions);
       assign(dropdown, this.publicAPI);
       this.publicAPI = dropdown;
+      this.set('optionsId', `ember-power-select-options-${dropdown._id}`);
       let action = this.get('registerAPI');
       if (action) {
         action(dropdown);
