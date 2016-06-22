@@ -1,5 +1,7 @@
 # Master
 
+# 1.0.0-alpha.4
+- [INTERNAL] Stop relying in `this.elementId` and remove depreaction for using a CP for the `tagName` property.
 - [BUGFIX] Fix styles of selects that are rendered in place so they are full width.
 
 # 1.0.0-alpha.3
