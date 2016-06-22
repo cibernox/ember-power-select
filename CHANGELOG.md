@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Fix styles of selects that are rendered in place so they are full width.
+
 # 1.0.0-alpha.3
 - [BUGFIX] `onkeydown` in multiple selects is also called for keypresses in the A-Z range.
 - [ENHANCEMENT] Add a `registerAPI` public action than can be used to store a reference to the public
