@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] The component properly reacts to changes in the value of the `disabled` property.
+
 # 1.0.0-alpha.4
 - [INTERNAL] Stop relying in `this.elementId` and remove depreaction for using a CP for the `tagName` property.
 - [BUGFIX] Fix styles of selects that are rendered in place so they are full width.
