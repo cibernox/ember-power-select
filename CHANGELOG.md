@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-alpha.5
 - [BUGFIX] The component properly reacts to changes in the value of the `disabled` property.
 
 # 1.0.0-alpha.4
