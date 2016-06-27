@@ -160,7 +160,7 @@ test('Pressing ENTER when there is no highlighted element, closes the dropdown a
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The trigger is focused');
 });
 
-test('Pressing SPACE selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {
+test('Pressing SPACE on a select without a searchbox selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {
   assert.expect(5);
 
   this.numbers = numbers;
@@ -232,7 +232,7 @@ test('If the component is focused, pressing ENTER toggles it', function(assert) 
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed again');
 });
 
-test('If the single component is focused, pressing SPACE toggles it', function(assert) {
+test('If the single component is focused and has no search, pressing SPACE toggles it', function(assert) {
   assert.expect(3);
 
   this.numbers = numbers;
@@ -324,6 +324,62 @@ test('In single-mode, when the user presses a key being the search input focused
   assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
   triggerKeydown($('.ember-power-select-search-input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
+});
+
+test('In single-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', function(assert) {
+  assert.expect(10);
+
+  this.numbers = numbers;
+  this.selected = null;
+  this.handleKeydown = (select, e) => {
+    assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
+    assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
+    assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
+    assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
+    assert.ok(select.actions.highlight, 'The yieded object has an `actions.highlight` key');
+    assert.ok(select.actions.search, 'The yieded object has an `actions.search` key');
+    assert.equal(e.keyCode, 32, 'The event is received as second argument');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  triggerKeydown($('.ember-power-select-search-input')[0], 32);
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
+  assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing was selected');
+});
+
+test('In multiple-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', function(assert) {
+  assert.expect(10);
+
+  this.numbers = numbers;
+  this.selected = null;
+  this.handleKeydown = (select, e) => {
+    assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
+    assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
+    assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
+    assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
+    assert.ok(select.actions.highlight, 'The yieded object has an `actions.highlight` key');
+    assert.ok(select.actions.search, 'The yieded object has an `actions.search` key');
+    assert.equal(e.keyCode, 32, 'The event is received as second argument');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is opened');
+  triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 32);
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is still opened');
+  assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing was selected');
 });
 
 test('in single-mode if the users returns false in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
