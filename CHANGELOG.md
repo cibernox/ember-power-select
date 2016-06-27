@@ -1,5 +1,7 @@
 # Master
 
+# 1.0.0-alpha.6
+- [BUGFIX] Update EBD to beta.18 to fix positioning bug when rendered in place
 - [BUGFIX/BREAKING] After some bikesheding, consensus was that despite of the spacebar being commonly
   used by selects to choose the highlighted option, pressing `SPACE` while the focused element is a
   searchbox is usually expected to add a space to the search term, not perform a selection, so that
