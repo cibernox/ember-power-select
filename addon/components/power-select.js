@@ -248,6 +248,7 @@ export default Component.extend({
       }
     },
 
+    // keydowns handled by the trigger provided by ember-basic-dropdown
     onTriggerKeydown(_, e) {
       let onkeydown = this.get('onkeydown');
       if (onkeydown && onkeydown(this.publicAPI, e) === false) {
@@ -255,11 +256,14 @@ export default Component.extend({
       }
       if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
         return this._handleTriggerTyping(e);
+      } else if (e.keyCode === 32) {  // Space
+        return this._handleKeySpace(e);
       } else {
         return this._routeKeydown(e);
       }
     },
 
+    // keydowns handled by inputs inside the component
     onKeydown(e) {
       let onkeydown = this.get('onkeydown');
       if (onkeydown && onkeydown(this.publicAPI, e) === false) {
@@ -418,8 +422,6 @@ export default Component.extend({
       return this._handleKeyUpDown(e);
     } else if (e.keyCode === 13) {  // ENTER
       return this._handleKeyEnter(e);
-    } else if (e.keyCode === 32) {  // Space
-      return this._handleKeySpace(e);
     } else if (e.keyCode === 9) {   // Tab
       return this._handleKeyTab(e);
     } else if (e.keyCode === 27) {  // ESC
@@ -449,7 +451,6 @@ export default Component.extend({
 
   _handleKeySpace(e) {
     if (this.publicAPI.isOpen) {
-      e.preventDefault();
       this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
       return false;
     }
