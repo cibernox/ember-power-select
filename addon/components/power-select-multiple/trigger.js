@@ -85,8 +85,8 @@ export default Component.extend({
     },
 
     onKeydown(e) {
-      let { onkeydown, select } = this.getProperties('onkeydown', 'select');
-      if (onkeydown && onkeydown(select, e) === false) { return false; }
+      let { onKeydown, select } = this.getProperties('onKeydown', 'select');
+      if (onKeydown && onKeydown(e) === false) { return false; }
       if (e.keyCode === 8 && isBlank(e.target.value)) {
         let lastSelection = select.selected[select.selected.length - 1];
         if (lastSelection) {

@@ -430,6 +430,7 @@ export default Component.extend({
   _handleKeyUpDown(e) {
     if (this.publicAPI.isOpen) {
       e.preventDefault();
+      e.stopPropagation();
       let step = e.keyCode === 40 ? 1 : -1;
       let newHighlighted = advanceSelectableOption(this.publicAPI.results, this.publicAPI.highlighted, step);
       this.publicAPI.actions.highlight(newHighlighted, e);

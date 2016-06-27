@@ -1,5 +1,9 @@
 # Master
 
+- [INTERNAL] Simplify keydown management.
+- [BUGFIX] Calling preventDefault over the event of the `keydown` action does not prevent the component's
+  behaviour. Returning false does.
+
 # 1.0.0-alpha.5
 - [BUGFIX] The component properly reacts to changes in the value of the `disabled` property.
 

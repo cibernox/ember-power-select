@@ -326,13 +326,13 @@ test('In single-mode, when the user presses a key being the search input focused
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
 });
 
-test('in single-mode if the users calls preventDefault on the event received in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
+test('in single-mode if the users returns false in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
   this.selected = null;
-  this.handleKeydown = (select, e) => {
-    e.preventDefault();
+  this.handleKeydown = () => {
+    return false;
   };
 
   this.render(hbs`
@@ -374,7 +374,7 @@ test('In multiple-mode, when the user presses a key being the search input focus
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
 });
 
-test('in multiple-mode if the users calls preventDefault on the event received in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
+test('in multiple-mode if the users returns false in the `onkeydown` action it prevents the component to do the usual thing', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
