@@ -1,5 +1,10 @@
 # Master
 
+- [BUGFIX/BREAKING] After some bikesheding, consensus was that despite of the spacebar being commonly
+  used by selects to choose the highlighted option, pressing `SPACE` while the focused element is a
+  searchbox is usually expected to add a space to the search term, not perform a selection, so that
+  behaviour has been removed.
+  If the spacebar is pressed on selects without a searchbox, then it works as native selects.
 - [INTERNAL] Simplify keydown management.
 - [BUGFIX] Calling preventDefault over the event of the `keydown` action does not prevent the component's
   behaviour. Returning false does.
