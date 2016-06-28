@@ -989,3 +989,20 @@ test('[BUGFIX] When the component opens, if the selected option is not visible t
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'nine');
   assert.ok($('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
 });
+
+test('The destination where the content is rendered can be customized by passing a `destination=id-of-the-destination`', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) destination="alternative-destination" as |option|}}
+      {{option}}
+    {{/power-select}}
+    <div id="alternative-destination"></div>
+  `);
+
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+
+  clickTrigger();
+  assert.equal($('#alternative-destination .ember-power-select-dropdown').length, 1, 'Dropdown is rendered inside the destination element');
+});
