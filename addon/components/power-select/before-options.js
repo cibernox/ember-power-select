@@ -19,6 +19,20 @@ export default Component.extend({
     }
   },
 
+  // Actions
+  actions: {
+    onKeydown(e) {
+      let onKeydown = this.get('onKeydown');
+      if (onKeydown(e) === false) {
+        return false;
+      }
+      if (e.keyCode === 13) {
+        let select = this.get('select');
+        select.actions.close(e);
+      }
+    }
+  },
+
   // Methods
   focusInput() {
     this.input = self.document.querySelector('.ember-power-select-search-input');

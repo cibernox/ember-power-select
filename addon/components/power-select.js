@@ -443,14 +443,14 @@ export default Component.extend({
   },
 
   _handleKeyEnter(e) {
-    if (this.publicAPI.isOpen) {
+    if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
       this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
       return false;
     }
   },
 
   _handleKeySpace(e) {
-    if (this.publicAPI.isOpen) {
+    if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
       this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
       return false;
     }
