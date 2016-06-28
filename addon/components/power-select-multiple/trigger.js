@@ -86,19 +86,25 @@ export default Component.extend({
 
     onKeydown(e) {
       let { onKeydown, select } = this.getProperties('onKeydown', 'select');
-      if (onKeydown && onKeydown(e) === false) { return false; }
-      if (e.keyCode === 8 && isBlank(e.target.value)) {
-        let lastSelection = select.selected[select.selected.length - 1];
-        if (lastSelection) {
-          select.actions.select(this.get('buildSelection')(lastSelection, select), e);
-          if (typeof lastSelection === 'string') {
-            select.actions.search(lastSelection);
-          } else {
-            let searchField = this.get('searchField');
-            assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
-            select.actions.search(get(lastSelection, searchField));
+      if (onKeydown && onKeydown(e) === false) {
+        e.stopPropagation();
+        return false;
+      }
+      if (e.keyCode === 8) {
+        e.stopPropagation();
+        if (isBlank(e.target.value)) {
+          let lastSelection = select.selected[select.selected.length - 1];
+          if (lastSelection) {
+            select.actions.select(this.get('buildSelection')(lastSelection, select), e);
+            if (typeof lastSelection === 'string') {
+              select.actions.search(lastSelection);
+            } else {
+              let searchField = this.get('searchField');
+              assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
+              select.actions.search(get(lastSelection, searchField));
+            }
+            select.actions.open(e);
           }
-          select.actions.open(e);
         }
       } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
         e.stopPropagation();
