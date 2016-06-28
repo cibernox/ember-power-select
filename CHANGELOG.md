@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Fix search box width calculation
+
 # 1.0.0-alpha.6
 - [BUGFIX] Update EBD to beta.18 to fix positioning bug when rendered in place
 - [BUGFIX/BREAKING] After some bikesheding, consensus was that despite of the spacebar being commonly
