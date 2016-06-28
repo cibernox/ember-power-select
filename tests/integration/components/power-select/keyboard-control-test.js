@@ -141,19 +141,21 @@ test('Pressing ENTER on a single select with search disabled selects the highlig
 });
 
 test('Pressing ENTER when there is no highlighted element, closes the dropdown and focuses the trigger without calling the onchange function', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
   this.numbers = numbers;
+  this.selected = 'two';
   this.handleChange = () => {
     assert.ok(false, 'The handle change should not be called');
   };
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action handleChange) as |option|}}
+    {{#power-select options=numbers selected=selected onchange=(action handleChange) as |option|}}
       {{option}}
     {{/power-select}}
   `);
 
   clickTrigger();
   typeInSearch('asjdnah');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'two', 'Two is selected');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'No results found');
   triggerKeydown($('.ember-power-select-search-input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The dropdown is closed');

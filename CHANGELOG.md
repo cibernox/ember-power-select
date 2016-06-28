@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] ENTER/SPACE when no option is highlighted doesn’t selects undefined
+
 # 1.0.0-alpha.7
 - [BUGFIX] Ensure `select.selected` is always an array in multiple selects, not undefined/null.
 - [BUGFIX] Fix search box width calculation
