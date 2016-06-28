@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-alpha.8
 - [BUGFIX] ENTER/SPACE when no option is highlighted doesn’t selects undefined
 
 # 1.0.0-alpha.7
