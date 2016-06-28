@@ -18,6 +18,18 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
+  selected: computed({
+    get() {
+      return [];
+    },
+    set(_, v) {
+      if (v === null || v === undefined) {
+        return [];
+      }
+      return v;
+    }
+  }),
+
   // Actions
   actions: {
     handleOpen(select, e) {

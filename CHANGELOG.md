@@ -1,5 +1,6 @@
 # Master
 
+- [BUGFIX] Ensure `select.selected` is always an array in multiple selects, not undefined/null.
 - [BUGFIX] Fix search box width calculation
 
 # 1.0.0-alpha.6
