@@ -171,6 +171,20 @@ test('If a placeholder is provided, it shows while no element is selected', func
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', 'The selected item replaced it');
 });
 
+test('If a `searchPlaceholder` is provided, it shows on the searchbox of single selects while nothing is there', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo searchPlaceholder="foobar yo!" onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-search-input').attr('placeholder'), 'foobar yo!', 'The searchbox has the proper placeholder');
+});
+
 test('If the `selected` value changes the select gets updated, but the `onchange` action doesn\'t fire', function(assert) {
   assert.expect(3);
 

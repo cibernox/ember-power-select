@@ -1,5 +1,6 @@
 # Master
 
+- [BUGFIX] Fix `searchPlaceholder` config option broken in 1.0.0
 - [BUGFIX] Allow to render the component in an alternative wormhole destination passing `destination=foo`.
   It broke in 1.0.0. Added test to prevent regression.
 
