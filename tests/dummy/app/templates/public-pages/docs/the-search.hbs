@@ -283,10 +283,12 @@
 
 <p>
   Last but not least you can disable and hide the search box from the list by passing <code>searchEnabled=false</code> to the component.
+  This works with both the single and multiple select.
 </p>
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    Single
     \{{#power-
       select options=names
       searchEnabled=false
@@ -296,6 +298,16 @@
     }}
       \{{name}}
     \{{/power-select}}
+    Single
+    \{{#power-select-multiple
+      options=names
+      searchEnabled=false
+      selected=users
+      onchange=(action (mut users))
+      as |name|
+    }}
+      \{{name}}
+    \{{/power-select-multiple}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -303,6 +315,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    Single
     {{#power-select
       options=names
       searchEnabled=false
@@ -312,6 +325,16 @@
     }}
       {{name}}
     {{/power-select}}
+    Multiple
+    {{#power-select-multiple
+      options=names
+      searchEnabled=false
+      selected=users
+      onchange=(action (mut users))
+      as |name|
+    }}
+      {{name}}
+    {{/power-select-multiple}}
   </div>
 {{/code-sample}}
 
