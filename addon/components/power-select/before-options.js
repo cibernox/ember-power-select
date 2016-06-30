@@ -1,61 +1,43 @@
-import Ember from 'ember';
+import Component from 'ember-component';
+import { scheduleOnce } from 'ember-runloop';
 import layout from '../../templates/components/power-select/before-options';
-import updateInput from '../../utils/update-input-value';
 
-const { run } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
   layout,
 
   // Lifecycle hooks
-  didReceiveAttrs({ oldAttrs, newAttrs }) {
-    this._super(...arguments);
-    if (newAttrs.searchText !== undefined && newAttrs.searchText !== null) {
-      run.scheduleOnce('afterRender', this, this.updateInput, newAttrs.searchText);
-    }
-  },
-
   didInsertElement() {
     this._super(...arguments);
     this.focusInput();
-    this.get('eventSender').on('focus', this, this.focusInput);
   },
 
-  willDestroy() {
+  willDestroyElement() {
     this._super(...arguments);
-    if (this.get('searchEnabled')) {
-      this.get('select.actions.search')('');
+    if (this.getAttr('searchEnabled')) {
+      this.getAttr('select').actions.search('');
     }
-    this.get('eventSender').off('focus', this, this.focusInput);
   },
 
   // Actions
   actions: {
-    handleKeydown(e) {
-      const select = this.get('select');
+    onKeydown(e) {
+      let onKeydown = this.get('onKeydown');
+      if (onKeydown(e) === false) {
+        return false;
+      }
       if (e.keyCode === 13) {
-        const onkeydown = this.get('onkeydown');
-        if (onkeydown) { onkeydown(select, e); }
-        if (e.defaultPrevented) { return; }
-        select.actions.choose(this.get('highlighted'), e);
-      } else if (e.keyCode === 32) {
-        // noop
-      } else {
-        select.actions.handleKeydown(e);
+        let select = this.get('select');
+        select.actions.close(e);
       }
     }
   },
 
   // Methods
-  updateInput(value) {
-    updateInput(this.input, value);
-  },
-
   focusInput() {
     this.input = self.document.querySelector('.ember-power-select-search-input');
     if (this.input) {
-      run.scheduleOnce('afterRender', this.input, 'focus');
+      scheduleOnce('afterRender', this.input, 'focus');
     }
   }
 });

@@ -112,7 +112,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   assert.expect(4);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
+    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 150);
   });
 
   this.render(hbs`
@@ -128,7 +128,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
     assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
     assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
     done();
-  }, 150);
+  }, 200);
 });
 
 test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is false, no loading message is shown', function(assert) {
@@ -169,6 +169,20 @@ test('If a placeholder is provided, it shows while no element is selected', func
   nativeMouseUp('.ember-power-select-option:eq(3)');
   assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').length, 0, 'The placeholder is gone');
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', 'The selected item replaced it');
+});
+
+test('If a `searchPlaceholder` is provided, it shows on the searchbox of single selects while nothing is there', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo searchPlaceholder="foobar yo!" onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-search-input').attr('placeholder'), 'foobar yo!', 'The searchbox has the proper placeholder');
 });
 
 test('If the `selected` value changes the select gets updated, but the `onchange` action doesn\'t fire', function(assert) {
@@ -257,9 +271,8 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  nativeMouseUp('.ember-power-select-option:eq(3)');
   triggerKeydown($('.ember-power-select-search-input')[0], 13);
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'one', '"one" has been selected');
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
 });
 
@@ -351,17 +364,6 @@ test('If the user passes `dropdownClass` the dropdown content should have that c
   assert.ok($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), 'dropdownClass can be customized');
 });
 
-test('If the user passes `class` the dropdown gets that class', function(assert) {
-  assert.expect(1);
-  this.options = [];
-  this.render(hbs`
-    {{#power-select options=options selected=foo onchange=(action (mut foo)) class="my-foo" as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  assert.ok($('.ember-power-select').hasClass('my-foo'), 'the entire select inherits that class');
-});
-
 test('The filtering is reverted after closing the select', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
@@ -383,35 +385,22 @@ test('The filtering is reverted after closing the select', function(assert) {
   assert.equal($('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
 });
 
-test('It has the appropriate class when it receives a specific dropdown position', function(assert) {
-  assert.expect(1);
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) verticalPosition="above" as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-
-  clickTrigger();
-  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--above'), 'It has the class of dropdowns positioned above');
-});
-
-test('The search term is yielded as second argument in single selects', function(assert) {
+test('The publicAPI is yielded as second argument in single selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
-      {{term}}:{{option}}
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option select|}}
+      {{select.lastSearchedText}}:{{option}}
     {{/power-select}}
   `);
 
   clickTrigger();
   typeInSearch('tw');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the search term');
+  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the public API');
   nativeMouseUp('.ember-power-select-option:eq(0)');
   clickTrigger();
   typeInSearch('thr');
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the search term');
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the public API');
 });
 
 test('If there is no search action and the options is empty the select shows the default "no options" message', function(assert) {
@@ -769,7 +758,7 @@ test('The trigger of the select has a id derived from the element id of the comp
       {{option}}
     {{/power-select}}
   `);
-  assert.ok(/^ember-power-select-trigger-ember\d+$/.test(this.$('.ember-power-select-trigger').attr('id'), 'The trigger has the proper id'));
+  assert.ok(/^ember-basic-dropdown-trigger-\d+$/.test(this.$('.ember-power-select-trigger').attr('id')), 'The trigger has the proper id');
 });
 
 test('If the passed options is a promise that is resolved, searching should filter the results from a promise', function(assert) {
@@ -957,7 +946,7 @@ test('When both `selected` and `options` are async, and `options` resolves befor
     setTimeout(() => resolve(numbers), 10);
   });
   this.asyncSelected = new Ember.RSVP.Promise((resolve) => {
-    setTimeout(() => resolve('four'), 200);
+    setTimeout(() => resolve('four'), 300);
   });
 
   this.render(hbs`
@@ -974,17 +963,17 @@ test('When both `selected` and `options` are async, and `options` resolves befor
   setTimeout(function() {
     assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'The trigger is still empty');
     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The 1st element is highlighted');
-  }, 50);
+  }, 100);
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
     assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is selected');
     assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
     done();
-  }, 220);
+  }, 350);
 });
 
-test('When the input inside the select gets focused the entire component gains the `ember-basic-dropdown--focus-inside` class', function(assert) {
+test('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--active` class', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -994,10 +983,10 @@ test('When the input inside the select gets focused the entire component gains t
     {{/power-select}}
   `);
 
-  assert.ok(!this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select doesn\'t have the class yet');
+  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
   clickTrigger();
   Ember.run(() => $('.ember-power-select-search-input').focus());
-  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select has the class now');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select has the class now');
 });
 
 test('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', function(assert) {
@@ -1013,4 +1002,21 @@ test('[BUGFIX] When the component opens, if the selected option is not visible t
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'nine');
   assert.ok($('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
+});
+
+test('The destination where the content is rendered can be customized by passing a `destination=id-of-the-destination`', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) destination="alternative-destination" as |option|}}
+      {{option}}
+    {{/power-select}}
+    <div id="alternative-destination"></div>
+  `);
+
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+
+  clickTrigger();
+  assert.equal($('#alternative-destination .ember-power-select-dropdown').length, 1, 'Dropdown is rendered inside the destination element');
 });

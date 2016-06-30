@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import Component from 'ember-component';
+import computed from 'ember-computed';
 import layout from '../templates/components/power-select-multiple';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   // Config
   triggerComponent: fallbackIfUndefined('power-select-multiple/trigger'),
@@ -17,6 +16,18 @@ export default Ember.Component.extend({
       classes.push(this.get('triggerClass'));
     }
     return classes.join(' ');
+  }),
+
+  selected: computed({
+    get() {
+      return [];
+    },
+    set(_, v) {
+      if (v === null || v === undefined) {
+        return [];
+      }
+      return v;
+    }
   }),
 
   // Actions
@@ -39,23 +50,25 @@ export default Ember.Component.extend({
         e.stopPropagation();
         return false;
       }
-      let selected = Ember.A((this.get('selected') || []));
       if (e.keyCode === 13 && select.isOpen) {
         e.stopPropagation();
         if (select.highlighted !== undefined) {
-          if (selected.indexOf(select.highlighted) === -1) {
+          if (!select.selected || select.selected.indexOf(select.highlighted) === -1) {
             select.actions.choose(select.highlighted, e);
+            return false;
           } else {
             select.actions.close(e);
+            return false;
           }
         } else {
           select.actions.close(e);
+          return false;
         }
       }
     },
 
-    buildSelection(option) {
-      let newSelection = (this.get('selected') || []).slice(0);
+    buildSelection(option, select) {
+      let newSelection = (select.selected || []).slice(0);
       let idx = newSelection.indexOf(option);
       if (idx > -1) {
         newSelection.splice(idx, 1);

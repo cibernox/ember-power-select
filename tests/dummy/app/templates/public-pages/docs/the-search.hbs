@@ -135,7 +135,6 @@
   fields or you need to perform fuzzy matching. If that is the case just pass your own matcher
   function. It will receive the option and the search term and you can do whatever you feel like
   inside as long as it returns <code>-1</code> if it doesn't match and a positive number if it does.
-  Returning a boolean works too, but might be removed in the near future.
 </p>
 
 {{#code-sample as |component|}}
@@ -162,7 +161,7 @@
       ],
 
       myMatcher(person, term) {
-        return return (person.name + ' ' + person.surname).indexOf(term);
+        return (person.name + ' ' + person.surname).indexOf(term);
       }
     });
   </pre>
@@ -188,8 +187,9 @@
 
 <p>
   Is very common to need the search term from withing the block used to render each one of the options,
-  typically for apply a highlight some substring of the option's text. For that, the block receives
-  the last searched text as the second argument.
+  typically for apply a highlight some substring of the option's text. For that, the block, as
+  most actions in this component, receives an instance of the publicAPI as second argument. The public
+  API contains <code>searchText</code> and <code>lastSearchedText</code>.
 </p>
 
 {{#code-sample as |component|}}
@@ -198,9 +198,9 @@
       options=names
       selected=selected
       onchange=(action (mut selected))
-      as |name term|
+      as |name select|
     }}
-      \{{highlight-text name term}}
+      \{{highlight-text name select.lastSearchedText}}
     \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
@@ -218,9 +218,9 @@
       options=names
       selected=selectedPersonName
       onchange=(action (mut selectedPersonName))
-      as |name term|
+      as |name select|
     }}
-      {{highlight-substr name term}}
+      {{highlight-substr name select.lastSearchedText}}
     {{/power-select}}
   </div>
 {{/code-sample}}
@@ -235,9 +235,13 @@
     therefore you need to handle terms as "João" or "María" yourself.
   </li>
   <li>
-    The yielded term is always in synch with the results being displayed. That means that if your search
-    is asynchronous and you search "abc", the search term will still be an empty string until the async
-    search finishes. Then both the options and the search text update at once.
+    <em>Likely</em> the attribute of the public API that you want to use is <code>lastSearchedText</code>
+    instead of <code>searchText</code>. That is because <code>searchText</code> contains the text
+    typed in the searchbox, and us updated as the user types, while <code>lastSearchedText</code>
+    contains the search term that yielded the current collection of results. While in synchronous
+    searches they are the same, in asynchronous searches they can temporality diverge while the search
+    is ongoing. In the previous example, if the search was async and you used <code>searchText</code>,
+    the results wouldn't be updated and your highlighting wouldn't find a match.
   </li>
 </ul>
 
@@ -279,10 +283,12 @@
 
 <p>
   Last but not least you can disable and hide the search box from the list by passing <code>searchEnabled=false</code> to the component.
+  This works with both the single and multiple select.
 </p>
 
 {{#code-sample as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    Single
     \{{#power-
       select options=names
       searchEnabled=false
@@ -292,6 +298,16 @@
     }}
       \{{name}}
     \{{/power-select}}
+    Single
+    \{{#power-select-multiple
+      options=names
+      searchEnabled=false
+      selected=users
+      onchange=(action (mut users))
+      as |name|
+    }}
+      \{{name}}
+    \{{/power-select-multiple}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
     export default Ember.Controller.extend({
@@ -299,6 +315,7 @@
     });
   </pre>
   <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+    Single
     {{#power-select
       options=names
       searchEnabled=false
@@ -308,6 +325,16 @@
     }}
       {{name}}
     {{/power-select}}
+    Multiple
+    {{#power-select-multiple
+      options=names
+      searchEnabled=false
+      selected=users
+      onchange=(action (mut users))
+      as |name|
+    }}
+      {{name}}
+    {{/power-select-multiple}}
   </div>
 {{/code-sample}}
 

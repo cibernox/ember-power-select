@@ -607,12 +607,12 @@ test('Typing in the input opens the component and filters the options also with 
   }, 150);
 });
 
-test('The search term is yielded as second argument in multiple selects', function(assert) {
+test('The publicAPI is yielded as second argument in multiple selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
-      {{term}}:{{option}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option select|}}
+      {{select.lastSearchedText}}:{{option}}
     {{/power-select-multiple}}
   `);
 
@@ -622,7 +622,7 @@ test('The search term is yielded as second argument in multiple selects', functi
   nativeMouseUp('.ember-power-select-option:eq(0)');
   clickTrigger();
   typeInSearch('thr');
-  assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the search term');
+  assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the public API');
 });
 
 test('The search input is cleared when the component is closed', function(assert) {
@@ -694,8 +694,8 @@ test('The component works when the array of selected elements is mutated in plac
   assert.equal(this.$('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
 });
 
-test('When the input inside the multiple select gets focused the entire component gains the `ember-basic-dropdown--focus-inside` class', function(assert) {
-  assert.expect(2);
+test('When the input inside the multiple select gets focused, the trigger and the dropdown gain special `--active` classes', function(assert) {
+  assert.expect(4);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -704,7 +704,9 @@ test('When the input inside the multiple select gets focused the entire componen
     {{/power-select-multiple}}
   `);
 
-  assert.ok(!this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select doesn\'t have the class yet');
+  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The trigger does not have the class');
+  assert.ok(!$('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--active'), 'The dropdown does not have the class');
   clickTrigger();
-  assert.ok(this.$('.ember-power-select').hasClass('ember-basic-dropdown--focus-inside'), 'The select has the class now');
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The trigger has the class');
+  assert.ok($('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--active'), 'The dropdown has the class');
 });

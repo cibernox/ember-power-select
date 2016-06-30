@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from 'ember-component';
+import $ from 'jquery';
 import layout from '../../templates/components/power-select/options';
+import computed from 'ember-computed';
 
-const { run } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
   layout: layout,
   tagName: 'ul',
@@ -17,10 +17,9 @@ export default Ember.Component.extend({
       return;
     }
     let findOptionAndPerform = (action, e) => {
-      let optionItem = Ember.$(e.target).closest('[data-option-index]');
+      let optionItem = $(e.target).closest('[data-option-index]');
       if (!optionItem || !(0 in optionItem)) { return; }
       if (optionItem.closest('[aria-disabled=true]').length) { return; } // Abort if the item or an ancestor is disabled
-
       let optionIndex = optionItem[0].getAttribute('data-option-index');
       action(this._optionFromIndex(optionIndex), e);
     };
@@ -31,9 +30,14 @@ export default Ember.Component.extend({
     }
     if (this.get('role') !== 'group') {
       let select = this.get('select');
-      run.scheduleOnce('afterRender', null, select.actions.scrollTo, select.highlighted);
+      select.actions.scrollTo(select.highlighted);
     }
   },
+
+  // CPs
+  'aria-controls': computed('select._id', function() {
+    return `ember-power-select-trigger-${this.get('select._id')}`;
+  }),
 
   // Methods
   _addTouchEvents() {
@@ -46,7 +50,7 @@ export default Ember.Component.extend({
       this.element.addEventListener('touchmove', touchMoveHandler);
     });
     this.element.addEventListener('touchend', e => {
-	  let optionItem = Ember.$(e.target).closest('[data-option-index]');
+	  let optionItem = $(e.target).closest('[data-option-index]');
 
 	  if (!optionItem || !(0 in optionItem)) { return; }
 
@@ -64,16 +68,9 @@ export default Ember.Component.extend({
   _optionFromIndex(index) {
     let parts = index.split('.');
     let options = this.get('options');
-    if (!options.objectAt) {
-      options = Ember.A(options);
-    }
-    let option = options.objectAt(parseInt(parts[0], 10));
+    let option = options[parseInt(parts[0], 10)];
     for (let i = 1; i < parts.length; i++) {
-      let groupOptions = option.options;
-      if (!groupOptions.objectAt) {
-        groupOptions = Ember.A(groupOptions);
-      }
-      option = groupOptions.objectAt(parseInt(parts[i], 10));
+      option = option.options[parseInt(parts[i], 10)];
     }
     return option;
   }

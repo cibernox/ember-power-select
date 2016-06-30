@@ -10,19 +10,22 @@
       {{#link-to 'public-pages.index' class="home-link"}}
         <img src="/ember_logo.png" alt="ember">
       {{/link-to}}
-      {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled
-        searchEnabled=false triggerComponent='main-header-select-trigger'
-        onchange=(action "changeOptions")
-        class="main-header-select" dropdownClass="main-header-select-dropdown" as |opt|}}
-        {{opt}}
-      {{/power-select}}
+      <div class="main-header-select">
+        {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled
+          searchEnabled=false
+          triggerComponent='main-header-select-trigger'
+          onchange=(action "changeOptions")
+          dropdownClass="main-header-select-dropdown" as |opt|}}
+          {{opt}}
+        {{/power-select}}
+      </div>
     </div>
   </nav>
 </header>
 <div class="main-content">
   {{outlet}}
   <div class="important-announcement text-center">
-    <strong>Important announcement:</strong> Support for Ember 1.13 is comming to an end in the next weeks. Time to update!
+    <strong>Feeling adventurous?</strong> Help us test the new 1.0.0-alpha! (2.3+ only, more modular)
   </div>
 </div>
 <footer class="main-footer">

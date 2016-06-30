@@ -1,34 +1,43 @@
 import Ember from 'ember';
+import Component from 'ember-component';
 import layout from '../../templates/components/power-select-multiple/trigger';
-import updateInput from '../../utils/update-input-value';
+import get from 'ember-metal/get';
+import computed from 'ember-computed';
+import observer from 'ember-metal/observer';
+import service from 'ember-service/inject';
+import { scheduleOnce } from 'ember-runloop';
+import { assert } from 'ember-metal/utils';
+import { isBlank } from 'ember-utils';
+import { htmlSafe } from 'ember-string';
 
-const { computed, get, isBlank, run, inject: { service } } = Ember;
-const { htmlSafe } = Ember.String;
-const ua = self.window ? self.window.navigator.userAgent : '';
+const { testing } = Ember;
+
+const ua = self.window && self.window.navigator ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
-const isTouchDevice = (Ember.testing || !!self.window && 'ontouchstart' in self.window);
+const isTouchDevice = (testing || !!self.window && 'ontouchstart' in self.window);
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: '',
   layout,
   textMeasurer: service(),
+  _lastIsOpen: false,
 
   // Lifecycle hooks
   didInsertElement() {
     this._super(...arguments);
-    this.input = document.querySelector(`.${this.elementId}-input`);
+    let select = this.get('select');
+    this.input = document.getElementById(`ember-power-select-trigger-multiple-input-${select._id}`);
     this.inputFont = this.input ? window.getComputedStyle(this.input).font : null;
-    let optionsList = document.getElementById(`${this.elementId}-ember-power-select-multiple-options`);
+    let optionsList = document.getElementById(`ember-power-select-multiple-options-${select._id}`);
     let chooseOption = e => {
       let selectedIndex = e.target.getAttribute('data-selected-index');
       if (selectedIndex) {
         e.stopPropagation();
         e.preventDefault();
 
-        let selected = this.get('selected');
-        let object = this.selectedObject(selected, selectedIndex);
-
-        this.get('select.actions.choose')(object);
+        let select = this.getAttr('select');
+        let object = this.selectedObject(select.selected, selectedIndex);
+        select.actions.choose(object);
       }
     };
     if (isTouchDevice) {
@@ -37,61 +46,65 @@ export default Ember.Component.extend({
     optionsList.addEventListener('mousedown', chooseOption);
   },
 
-  didUpdateAttrs({ oldAttrs, newAttrs }) {
-    this._super(...arguments);
-    if (oldAttrs.select.isOpen && !newAttrs.select.isOpen) {
-      this.handleClose();
+  // Observers
+  openObserver: observer('select.isOpen', function() {
+    let select = this.get('select');
+    if (this._lastIsOpen && !select.isOpen) {
+      scheduleOnce('actions', null, select.actions.search, '');
     }
-    if (newAttrs.searchText !== undefined && newAttrs.searchText !== null) {
-      run.scheduleOnce('afterRender', this, this.updateInput, newAttrs.searchText);
-    }
-  },
+    this._lastIsOpen = select.isOpen;
+  }),
 
   // CPs
-  triggerMultipleInputStyle: computed('searchText.length', 'selected.length', function() {
-    run.scheduleOnce('afterRender', this.get('select.actions.reposition'));
-    if (!this.get('selected.length')) {
+  triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
+    let select = this.get('select');
+    select.actions.reposition();
+    if (!select.selected || select.selected.length === 0) {
       return htmlSafe('width: 100%;');
     } else {
       let textWidth = 0;
       if (this.inputFont) {
-        textWidth = this.get('textMeasurer').width(this.get('searchText'), this.inputFont);
+        textWidth = this.get('textMeasurer').width(select.searchText, this.inputFont);
       }
       return htmlSafe(`width: ${textWidth + 25}px`);
     }
   }),
 
-  maybePlaceholder: computed('placeholder', 'selected.length', function() {
+  maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
     if (isIE) { return null; }
-    const selected = this.get('selected');
-    return (!selected || get(selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
+    let select = this.getAttr('select');
+    return (!select.selected || get(select.selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
   }),
 
   // Actions
   actions: {
-    handleInput(e) {
-      let action = this.get('handleInput');
-      if (action) { action(e); }
-      if (e.defaultPrevented) { return; }
-      this.get('select.actions.open')(e);
+    onInput(e) {
+      let action = this.get('onInput');
+      if (action &&  action(e) === false) { return; }
+      this.getAttr('select').actions.open(e);
     },
 
-    handleKeydown(e) {
-      let { onkeydown, select } = this.getProperties('onkeydown', 'select');
-      if (onkeydown && onkeydown(select, e) === false) { return false; }
-      let selected = Ember.A((this.get('selected') || []));
-      if (e.keyCode === 8 && isBlank(e.target.value)) {
-        let lastSelection = get(selected, 'lastObject');
-        if (lastSelection) {
-          select.actions.select(this.get('buildSelection')(lastSelection), e);
-          if (typeof lastSelection === 'string') {
-            select.actions.search(lastSelection);
-          } else {
-            let searchField = this.get('searchField');
-            Ember.assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
-            select.actions.search(get(lastSelection, searchField));
+    onKeydown(e) {
+      let { onKeydown, select } = this.getProperties('onKeydown', 'select');
+      if (onKeydown && onKeydown(e) === false) {
+        e.stopPropagation();
+        return false;
+      }
+      if (e.keyCode === 8) {
+        e.stopPropagation();
+        if (isBlank(e.target.value)) {
+          let lastSelection = select.selected[select.selected.length - 1];
+          if (lastSelection) {
+            select.actions.select(this.get('buildSelection')(lastSelection, select), e);
+            if (typeof lastSelection === 'string') {
+              select.actions.search(lastSelection);
+            } else {
+              let searchField = this.get('searchField');
+              assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
+              select.actions.search(get(lastSelection, searchField));
+            }
+            select.actions.open(e);
           }
-          select.actions.open(e);
         }
       } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
         e.stopPropagation();
@@ -100,14 +113,6 @@ export default Ember.Component.extend({
   },
 
   // Methods
-  handleClose() {
-    run.scheduleOnce('actions', null, this.get('select.actions.search'), '');
-  },
-
-  updateInput(value) {
-    updateInput(this.input, value);
-  },
-
   selectedObject(list, index) {
     if (list.objectAt) {
       return list.objectAt(index);

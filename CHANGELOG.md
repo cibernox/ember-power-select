@@ -1,5 +1,82 @@
 # Master
 
+# 1.0.0-alpha.10
+- [BUGFIX] Update to EBD 0.12.0-beta.20 which fixes enter animations.
+
+# 1.0.0-alpha.9
+- [BUGFIX] Fix `searchPlaceholder` config option broken in 1.0.0
+- [BUGFIX] Allow to render the component in an alternative wormhole destination passing `destination=foo`.
+  It broke in 1.0.0. Added test to prevent regression.
+
+# 1.0.0-alpha.8
+- [BUGFIX] ENTER/SPACE when no option is highlighted doesn’t selects undefined
+
+# 1.0.0-alpha.7
+- [BUGFIX] Ensure `select.selected` is always an array in multiple selects, not undefined/null.
+- [BUGFIX] Fix search box width calculation
+
+# 1.0.0-alpha.6
+- [BUGFIX] Update EBD to beta.18 to fix positioning bug when rendered in place
+- [BUGFIX/BREAKING] After some bikesheding, consensus was that despite of the spacebar being commonly
+  used by selects to choose the highlighted option, pressing `SPACE` while the focused element is a
+  searchbox is usually expected to add a space to the search term, not perform a selection, so that
+  behaviour has been removed.
+  If the spacebar is pressed on selects without a searchbox, then it works as native selects.
+- [INTERNAL] Simplify keydown management.
+- [BUGFIX] Calling preventDefault over the event of the `keydown` action does not prevent the component's
+  behaviour. Returning false does.
+
+# 1.0.0-alpha.5
+- [BUGFIX] The component properly reacts to changes in the value of the `disabled` property.
+
+# 1.0.0-alpha.4
+- [INTERNAL] Stop relying in `this.elementId` and remove depreaction for using a CP for the `tagName` property.
+- [BUGFIX] Fix styles of selects that are rendered in place so they are full width.
+
+# 1.0.0-alpha.3
+- [BUGFIX] `onkeydown` in multiple selects is also called for keypresses in the A-Z range.
+- [ENHANCEMENT] Add a `registerAPI` public action than can be used to store a reference to the public
+  API of the component from the outside.
+
+# 1.0.0-alpha.2
+- [ENHANCEMENT] Make `disabled` part of the public API
+- [BUGFIX] Fixed a lot of bugs, some related to changes in Ember 2.7, and others.
+
+# 1.0.0-alpha.1
+- [BUGFIX] Fix positioning of the status icon.
+- [BUGFIX] Update to EBD to fix position classes being wiped on rerenders.
+
+# 1.0.0-alpha.0
+
+- [NO CHANGES] After some though I'm more or less ready to commit to stablility for both the component's
+  options and the "publicAPI" object that is passes/yielded as second argument in many places. Maybe
+  the API surface can adjust a little bit as @miguelcobain stresses it to be used inside ember-paper,
+  but I expect changes, if any, to be additive. In any case, this is an alpha version.
+
+# 0.11.0-beta.2
+- [INTERNAL] Huge refactor to centralize (most) state inside the public API object. tl;dr; The
+  component inside is totally new.
+- [INTERNAL] Use fine-grained imports from ember-cli-shims. It expects ember-cli-shims >= 0.1.1.
+- [BREAKING] The options received by internal subcomponents has changed (simplified) because most
+  of the state has been centralized in the public API object (named `select` inside alls sub components).
+- [BREAKING] The second argument yielded to the block is now the public API instead of the search term.
+  This gives more flexibility to the user. To retaing old behaviour just change `|opt term|}} {{term}}` by
+  `|opt select|}} {{select.lastSearchedText}}`
+- [BREAKING] The `--focus-inside` class has been replaced by an `--active` class, which is more meaningful.
+
+# 0.11.0-beta.1
+- [INTERNAL] Update EBD to fix scroll problem cause by the dropdown being too slow to reposition
+- [INTERNAL] Use a regular input for the search. Now that the component is 2.3.1+, no hacks are needed.
+
+# 0.11.0-beta.0
+
+- [BREAKING] Dropped support for old versions of Ember. Now only 2.3.1+
+- [BREAKING] Huge internal refactor to migrate to the new Ember Basic Dropdown. The public API
+  of the component is exactly the same in theory. However the component is now tagless, so there is
+  no `.ember-power-select` wrapper around the trigger.
+  Also some classes might have changed that can affect people customizing the styles. A more detailed
+  entry will be added to the docs.
+
 # 0.10.10
 - [BUGFIX] Fix filtering/selection by typing when the trigger is focused and the options are groups.
 - [CLEANUP] Remove deprecated behaviour: Return a boolean from custom matches is not longer allowed.

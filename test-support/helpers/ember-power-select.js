@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import run from 'ember-runloop';
+import Test from 'ember-test';
 
 // Helpers for integration tests
 
@@ -15,11 +17,11 @@ function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
   Object.keys(options).forEach((key) => event[key] = options[key]);
   let target;
   if (typeof selectorOrDomElement === 'string') {
-    target = Ember.$(selectorOrDomElement)[0];
+    target = $(selectorOrDomElement)[0];
   } else {
     target = selectorOrDomElement;
   }
-  Ember.run(() => target.dispatchEvent(event));
+  run(() => target.dispatchEvent(event));
 }
 
 export function nativeMouseDown(selectorOrDomElement, options) {
@@ -42,13 +44,13 @@ export function triggerKeydown(domElement, k) {
     keyCode: k,
     charCode: k
   });
-  Ember.run(() => {
+  run(() => {
     domElement.dispatchEvent(oEvent);
   });
 }
 
 export function typeInSearch(text) {
-  Ember.run(() => {
+  run(() => {
     typeText('.ember-power-select-search-input, .ember-power-select-search input, .ember-power-select-trigger-multiple-input, input[type="search"]', text);
   });
 }
@@ -66,12 +68,12 @@ export function nativeTouch(selectorOrDomElement) {
   let target;
 
   if (typeof selectorOrDomElement === 'string') {
-    target = Ember.$(selectorOrDomElement)[0];
+    target = $(selectorOrDomElement)[0];
   } else {
     target = selectorOrDomElement;
   }
-  Ember.run(() => target.dispatchEvent(event));
-  Ember.run(() => {
+  run(() => target.dispatchEvent(event));
+  run(() => {
     event = new window.Event('touchend', { bubbles: true, cancelable: true, view: window });
     target.dispatchEvent(event);
   });
@@ -85,23 +87,22 @@ export function touchTrigger() {
 // Helpers for acceptance tests
 
 export default function() {
-  const isEmberOne = Ember.VERSION.match(/1\.13/);
-
-  Ember.Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    let match = find(cssPath).find('.ember-power-select-trigger').attr('id').match(/\d+$/);
-    let id = match[0];
+  Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
+    let $trigger = find(cssPath).find('.ember-power-select-trigger');
+    let contentId = `${$trigger.attr('aria-controls')}`;
+    let $content = find(`#${contentId}`)
     // If the dropdown is closed, open it
-    if (Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0) {
+    if ($content.length === 0) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
       wait();
     }
 
     // Select the option with the given text
     andThen(function() {
-      let potentialTargets = $(`.ember-power-select-dropdown-ember${id} .ember-power-select-option:contains("${value}")`).toArray();
+      let potentialTargets = $(`#${contentId} .ember-power-select-option:contains("${value}")`).toArray();
       let target;
       if (potentialTargets.length > 1) {
-        target = Ember.A(potentialTargets).find((t) => t.textContent.trim() === value) || potentialTargets[0];
+        target = potentialTargets.filter((t) => t.textContent.trim() === value)[0] || potentialTargets[0];
       } else {
         target = potentialTargets[0];
       }
@@ -109,45 +110,34 @@ export default function() {
     });
   });
 
-  Ember.Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    const id = find(cssPath).find('.ember-power-select-trigger').attr('id').replace(/\D/g, '');
-    const isMultipleSelect = Ember.$(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
+  Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
+    let $trigger = find(cssPath).find('.ember-power-select-trigger');
+    let contentId = `${$trigger.attr('aria-controls')}`;
+    let isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
-    let dropdownIsClosed = Ember.$(`.ember-power-select-dropdown-ember${id}`).length === 0;
+    let dropdownIsClosed = $(`#${contentId}`).length === 0;
     if (dropdownIsClosed) {
       nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
       wait();
     }
-    const isDefaultSingleSelect = Ember.$(`.ember-power-select-search-input`).length > 0;
+    let isDefaultSingleSelect = $(`.ember-power-select-search-input`).length > 0;
 
     if (isMultipleSelect) {
       fillIn(`${cssPath} .ember-power-select-trigger-multiple-input`, value);
-      if (isEmberOne) {
-        triggerEvent(`${cssPath} .ember-power-select-trigger-multiple-input`, 'input');
-      }
     } else if (isDefaultSingleSelect) {
       fillIn('.ember-power-select-search-input', value);
-      if (isEmberOne) {
-        triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search-input`, 'input');
-      }
     } else { // It's probably a customized version
       let inputIsInTrigger = !!find(`${cssPath} .ember-power-select-trigger input[type=search]`)[0];
       if (inputIsInTrigger) {
         fillIn(`${cssPath} .ember-power-select-trigger input[type=search]`, value);
-        if (isEmberOne) {
-          triggerEvent(`${cssPath} .ember-power-select-trigger input[type=search]`, 'input');
-        }
       } else {
-        fillIn(`.ember-power-select-dropdown-ember${id} .ember-power-select-search-input[type=search]`, 'input');
-        if (isEmberOne) {
-          triggerEvent(`.ember-power-select-dropdown-ember${id} .ember-power-select-search-input[type=search]`, 'input');
-        }
+        fillIn(`#${contentId} .ember-power-select-search-input[type=search]`, 'input');
       }
     }
 
   });
 
-  Ember.Test.registerAsyncHelper('removeMultipleOption', function(app, cssPath, value) {
+  Test.registerAsyncHelper('removeMultipleOption', function(app, cssPath, value) {
     const elem = find(`${cssPath} .ember-power-select-multiple-options > li:contains(${value}) > .ember-power-select-multiple-remove-btn`).get(0);
     try {
       nativeMouseDown(elem);
@@ -158,7 +148,7 @@ export default function() {
     }
   });
 
-  Ember.Test.registerAsyncHelper('clearSelected', function(app, cssPath) {
+  Test.registerAsyncHelper('clearSelected', function(app, cssPath) {
     const elem = find(`${cssPath} .ember-power-select-clear-btn`).get(0);
     try {
       nativeMouseDown(elem);

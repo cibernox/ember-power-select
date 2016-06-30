@@ -35,7 +35,7 @@ test('A disabled dropdown is not focusable, and ignores the passed tabindex ', f
       {{option}}
     {{/power-select}}
   `);
-  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), undefined, 'The trigger has no tabindex so it can\'t be focused');
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '-1', 'The trigger has no tabindex so it can\'t be focused');
 });
 
 test('Disabled options are not highlighted when hovered with the mouse', function(assert) {
@@ -95,6 +95,26 @@ test('When passed `disabled=true`, the options cannot be removed', function(asse
   `);
 
   assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
+});
+
+test('Multiple select: When passed `disabled=prop`, enabling and disabling that property changes the component', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.selectedNumbers = [numbers[2], numbers[4]];
+  this.set('shouldBeDisabled', true);
+
+  this.render(hbs`
+    {{#power-select-multiple selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=shouldBeDisabled as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  let $trigger = this.$('.ember-power-select-trigger');
+  assert.equal($trigger.attr('aria-disabled'), 'true', 'The trigger has `aria-disabled=true`');
+
+  this.set('shouldBeDisabled', false);
+  assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')), 'The trigger is not disabled');
 });
 
 test('BUGFIX: When after a search the only result is a disabled element, it isn\'t highlighted and cannot be selected', function(assert) {
