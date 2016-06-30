@@ -1,5 +1,8 @@
 # Master
 
+# 1.0.0-alpha.10
+- [BUGFIX] Update to EBD 0.12.0-beta.20 which fixes enter animations.
+
 # 1.0.0-alpha.9
 - [BUGFIX] Fix `searchPlaceholder` config option broken in 1.0.0
 - [BUGFIX] Allow to render the component in an alternative wormhole destination passing `destination=foo`.
