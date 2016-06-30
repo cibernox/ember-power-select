@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Update to EBD 0.12.0-beta.21 which allows to nest dropdowns up to 2 levels.
+
 # 1.0.0-alpha.10
 - [BUGFIX] Update to EBD 0.12.0-beta.20 which fixes enter animations.
 
