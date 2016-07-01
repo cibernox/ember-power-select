@@ -544,7 +544,7 @@ test('The search action of multiple selects has the searchText set to the up-to-
   typeInSearch('el');
 });
 
-test('The component invokes the `registerAPI` action with the public API object', function(assert) {
+test('The single component invokes the `registerAPI` action with the public API object', function(assert) {
   assert.expect(20);
   this.numbers = numbers;
   this.storeAPI = function(select) {
@@ -554,5 +554,18 @@ test('The component invokes the `registerAPI` action with the public API object'
     {{#power-select options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI as |number|}}
       {{number}}
     {{/power-select}}
+  `);
+});
+
+test('The multiple component invokes the `registerAPI` action with the public API object', function(assert) {
+  assert.expect(20);
+  this.numbers = numbers;
+  this.storeAPI = function(select) {
+    assertPublicAPIShape(assert, select);
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
   `);
 });
