@@ -1,5 +1,8 @@
 # Master
 
+# 1.0.0-alpha.12
+- [BUGFIX] The `registerAPI` must be called on multiple selects too.
+
 # 1.0.0-alpha.11
 - [BUGFIX] Update to EBD 0.12.0-beta.21 which allows to nest dropdowns up to 2 levels.
 
