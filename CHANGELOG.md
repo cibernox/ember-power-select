@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-alpha.13
 - [ENHANCEMENT] Close select automatically if it gets disabled while it's open.
 
 # 1.0.0-alpha.12
