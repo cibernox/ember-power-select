@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Close select automatically if it gets disabled while it's open.
+
 # 1.0.0-alpha.12
 - [BUGFIX] The `registerAPI` must be called on multiple selects too.
 
