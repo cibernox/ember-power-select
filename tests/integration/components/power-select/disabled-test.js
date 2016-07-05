@@ -1,6 +1,6 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import run from 'ember-runloop';
 import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
 
@@ -49,7 +49,7 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
   `);
 
   clickTrigger();
-  Ember.run(() => $('.ember-power-select-option[aria-disabled="true"]:eq(0)').trigger('mouseover'));
+  run(() => $('.ember-power-select-option[aria-disabled="true"]:eq(0)').trigger('mouseover'));
   assert.equal($('.ember-power-select-option[aria-disabled="true"]:eq(0)').attr('aria-current'), 'false', 'The hovered option was not highlighted because it\'s disabled');
 });
 
@@ -226,11 +226,45 @@ test('If a group is disabled, any options inside cannot be interacted with mouse
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
   assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'No option is selected');
-  Ember.run(() => {
+  run(() => {
     let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
     $('.ember-power-select-option:eq(8)')[0].dispatchEvent(event);
   });
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
   nativeMouseUp('.ember-power-select-option:eq(9)');
   assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'Noting was selected');
+});
+
+test('If the value of `disabled` changes, the `disabled` property in the publicAPI matches it', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.isDisabled = false;
+  this.foo = numbers[0];
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo disabled=isDisabled onchange=(action (mut foo)) as |option select|}}
+      {{if select.disabled 'disabled!' 'enabled!'}}
+    {{/power-select}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'enabled!', 'The `disabled` attribute in the public API is false');
+  run(() => this.set('isDisabled', true));
+  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'disabled!', 'The `disabled` attribute in the public API is true');
+});
+
+test('If a select gets disabled while it\'s open, it closes automatically', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.isDisabled = false;
+  this.render(hbs`
+    {{#power-select options=numbers disabled=isDisabled onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is open');
+  run(() => this.set('isDisabled', true));
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is now closed');
 });
