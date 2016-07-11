@@ -37,9 +37,10 @@
     content: "";
     display: table;
     clear: both; }
-  .ember-power-select-trigger:focus, .ember-power-select-trigger .ember-power-select-trigger--active {
-    border: 1px solid #aaaaaa;
-    box-shadow: none; }
+
+.ember-power-select-trigger:focus, .ember-power-select-trigger--active {
+  border: 1px solid #aaaaaa;
+  box-shadow: none; }
 
 .ember-basic-dropdown-trigger--below.ember-power-select-trigger[aria-expanded="true"],
 .ember-basic-dropdown-trigger--in-place.ember-power-select-trigger[aria-expanded="true"] {
