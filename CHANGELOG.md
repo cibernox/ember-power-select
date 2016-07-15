@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-alpha.15
 - [BUGFIX] Prevent accidental reset of attributes when options are replaced with the same options
 
 # 1.0.0-alpha.13
