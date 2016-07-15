@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Prevent accidental reset of attributes when options are replaced with the same options
+
 # 1.0.0-alpha.13
 - [ENHANCEMENT] Close select automatically if it gets disabled while it's open.
 
