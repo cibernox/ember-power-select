@@ -110,7 +110,10 @@ export default Component.extend({
 
   options: computed({
     get() { return []; },
-    set(_, options) {
+    set(_, options, oldOptions) {
+      if (options === oldOptions) {
+        return options;
+      }
       if (options && options.then) {
         set(this.publicAPI, 'loading', true);
         this.activeOptionsPromise = options;
