@@ -87,10 +87,25 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   padding: 0;
   float: left;
   background-color: transparent;
+  text-indent: 2px;
   &:disabled {
     background-color: $ember-power-select-disabled-background-color;
   }
+  /* There's a browser bug where this selectos cannot be chained with commas */
+  &::placeholder {
+    color: $ember-power-select-placeholder-color;
+  }
+  &::-webkit-input-placeholder {
+    color: $ember-power-select-placeholder-color;
+  }
+  &::-moz-placeholder {
+    color: $ember-power-select-placeholder-color;
+  }
+  &::-ms-input-placeholder {
+    color: $ember-power-select-placeholder-color;
+  }
 }
+
 .ember-power-select-multiple-options {
   padding: 0; margin: 0;
 }
@@ -103,7 +118,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   display: inline-block;
   line-height: 1.45;
   float: left;
-  margin: 2px 3px 2px 0;
+  margin: 2px 0 2px 3px;
 }
 .ember-power-select-multiple-remove-btn {
   cursor: pointer;
@@ -212,6 +227,9 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 .ember-power-select-trigger {
   padding: $ember-power-select-trigger-ltr-padding;
 }
+.ember-power-select-selected-item, .ember-power-select-placeholder {
+  margin-left: 8px;
+}
 .ember-power-select-status-icon {
   right: 5px;
 }
@@ -229,15 +247,16 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 }
 
 // RTL styles
-.ember-power-select[dir=rtl] {
-  .ember-power-select-trigger {
-    padding: $ember-power-select-trigger-rtl-padding;
-    .ember-power-select-multiple-option {
-      float: right;
-    }
-    .ember-power-select-trigger-multiple-input {
-      float: right;
-    }
+.ember-power-select-trigger[dir=rtl] {
+  padding: $ember-power-select-trigger-rtl-padding;
+  .ember-power-select-selected-item, .ember-power-select-placeholder {
+    margin-right: 8px;
+  }
+  .ember-power-select-multiple-option {
+    float: right;
+  }
+  .ember-power-select-trigger-multiple-input {
+    float: right;
   }
   .ember-power-select-status-icon {
     left: 5px;
@@ -248,6 +267,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
     right: initial;
   }
 }
+
 
 .ember-power-select-dropdown[dir=rtl] {
   .ember-power-select-group {
