@@ -27,7 +27,8 @@ export default Component.extend({
     this._super(...arguments);
     let select = this.get('select');
     this.input = document.getElementById(`ember-power-select-trigger-multiple-input-${select._id}`);
-    this.inputFont = this.input ? window.getComputedStyle(this.input).font : null;
+    let inputStyle = this.input ? window.getComputedStyle(this.input) : null;
+    this.inputFont = inputStyle ? `${ inputStyle.fontStyle } ${  inputStyle.fontVariant} ${ inputStyle.fontWeight } ${ inputStyle.fontSize}/${ inputStyle.lineHeight } ${ inputStyle.fontFamily }` : null;
     let optionsList = document.getElementById(`ember-power-select-multiple-options-${select._id}`);
     let chooseOption = e => {
       let selectedIndex = e.target.getAttribute('data-selected-index');
