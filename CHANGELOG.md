@@ -1,5 +1,14 @@
 # Master
 
+# 1.0.0-beta.1
+- [ENHANCEMENR] The color of the placeholder has been unified when it's an element and when it's a
+  placeholder inside an input.
+- [BREAKING] The trigger now has no padding on the left. It's the content inside the one that has
+  margin on the left now. This may be breaking for people customizing the triggerComponent.
+
+# 1.0.0-beta.0
+- No changes since alpha.15
+
 # 1.0.0-alpha.15
 - [BUGFIX] Prevent accidental reset of attributes when options are replaced with the same options
 
