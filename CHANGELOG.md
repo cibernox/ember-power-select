@@ -1,7 +1,10 @@
 # Master
 
+# 1.0.0-beta.2
+- [ENHANCEMENT] Input placeholders have no opacity now, to be consistent with span-based placeholder.
+
 # 1.0.0-beta.1
-- [ENHANCEMENR] The color of the placeholder has been unified when it's an element and when it's a
+- [ENHANCEMENT] The color of the placeholder has been unified when it's an element and when it's a
   placeholder inside an input.
 - [BREAKING] The trigger now has no padding on the left. It's the content inside the one that has
   margin on the left now. This may be breaking for people customizing the triggerComponent.

@@ -93,12 +93,16 @@
   .ember-power-select-trigger-multiple-input:disabled {
     background-color: #eeeeee; }
   .ember-power-select-trigger-multiple-input::placeholder {
+    opacity: 1;
     color: #999999; }
   .ember-power-select-trigger-multiple-input::-webkit-input-placeholder {
+    opacity: 1;
     color: #999999; }
   .ember-power-select-trigger-multiple-input::-moz-placeholder {
+    opacity: 1;
     color: #999999; }
   .ember-power-select-trigger-multiple-input::-ms-input-placeholder {
+    opacity: 1;
     color: #999999; }
 
 .ember-power-select-multiple-options {

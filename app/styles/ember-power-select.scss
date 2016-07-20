@@ -93,15 +93,19 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   }
   /* There's a browser bug where this selectos cannot be chained with commas */
   &::placeholder {
+    opacity: 1;
     color: $ember-power-select-placeholder-color;
   }
   &::-webkit-input-placeholder {
+    opacity: 1;
     color: $ember-power-select-placeholder-color;
   }
   &::-moz-placeholder {
+    opacity: 1;
     color: $ember-power-select-placeholder-color;
   }
   &::-ms-input-placeholder {
+    opacity: 1;
     color: $ember-power-select-placeholder-color;
   }
 }
