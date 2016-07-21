@@ -196,6 +196,9 @@ export default Component.extend({
         return false;
       }
       if (e) { this.openingEvent = e; }
+      if (e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
+        e.preventDefault();
+      }
       this.resetHighlighted();
     },
 

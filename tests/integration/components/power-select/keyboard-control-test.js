@@ -650,3 +650,117 @@ test('Typing on a opened single select highlights skips disabled groups', functi
   assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'twelve', 'The option containing "United Kingdom" has been highlighted');
   assert.equal($('.ember-power-select-dropdown').length, 1,  'The dropdown is still closed');
 });
+
+test('BUGFIX: If pressing up/down arrow on a single select open the dropdown, the event is defaultPrevented', function(assert) {
+  assert.expect(2);
+  let done = assert.async();
+
+  this.numbers = numbers;
+  let events = [];
+  this.handleOpen = function(_, e) {
+    if (e.type === 'keydown') {
+      events.push(e);
+    }
+  };
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  triggerKeydown($('.ember-power-select-trigger')[0], 40);
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-trigger')[0], 38);
+
+  setTimeout(function() {
+    assert.ok(events[0].defaultPrevented, 'The first event was default prevented');
+    assert.ok(events[1].defaultPrevented, 'The second event was default prevented');
+    done();
+  }, 50);
+});
+
+test('BUGFIX: If pressing up/down arrow on a single select DOES NOT the dropdown, the event is defaultPrevented', function(assert) {
+  assert.expect(2);
+  let done = assert.async();
+
+  this.numbers = numbers;
+  let events = [];
+  this.handleOpen = function(_, e) {
+    if (e.type === 'keydown') {
+      events.push(e);
+    }
+    return false; // prevent the dropdown from opening
+  };
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  triggerKeydown($('.ember-power-select-trigger')[0], 40);
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-trigger')[0], 38);
+
+  setTimeout(function() {
+    assert.ok(!events[0].defaultPrevented, 'The first event was default prevented');
+    assert.ok(!events[1].defaultPrevented, 'The second event was default prevented');
+    done();
+  }, 50);
+});
+
+test('BUGFIX: If pressing up/down arrow on a multiple select opens the select, the event is defaultPrevented', function(assert) {
+  assert.expect(2);
+  let done = assert.async();
+
+  this.numbers = numbers;
+  let events = [];
+  this.handleOpen = function(_, e) {
+    if (e.type === 'keydown') {
+      events.push(e);
+    }
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  triggerKeydown($('.ember-power-select-trigger')[0], 40);
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-trigger')[0], 38);
+
+  setTimeout(function() {
+    assert.ok(events[0].defaultPrevented, 'The first event was default prevented');
+    assert.ok(events[1].defaultPrevented, 'The second event was default prevented');
+    done();
+  }, 50);
+});
+
+test('BUGFIX: If pressing up/down arrow on a multiple select DOES NOT open the select, the event is defaultPrevented', function(assert) {
+  assert.expect(2);
+  let done = assert.async();
+
+  this.numbers = numbers;
+  let events = [];
+  this.handleOpen = function(_, e) {
+    if (e.type === 'keydown') {
+      events.push(e);
+    }
+    return false; // prevent the dropdown from opening
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  triggerKeydown($('.ember-power-select-trigger')[0], 40);
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-trigger')[0], 38);
+
+  setTimeout(function() {
+    assert.ok(!events[0].defaultPrevented, 'The first event was default prevented');
+    assert.ok(!events[1].defaultPrevented, 'The second event was default prevented');
+    done();
+  }, 50);
+});
