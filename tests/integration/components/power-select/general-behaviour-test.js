@@ -90,6 +90,26 @@ test('The search box gain focus automatically when opened', function(assert) {
   assert.ok($('.ember-power-select-search-input').get(0) === document.activeElement, 'The search box is focused after opening select');
 });
 
+test("The search box shouldn't gain focus if autofocus is disabled", function (assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+
+  this.render(hbs`
+    {{#power-select
+    options=numbers
+    onchange=(action (mut foo))
+    beforeOptionsComponent=(component "power-select/before-options" autofocus=false)
+    as |option|
+    }}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.ok($('.ember-power-select-search-input').get(0) !== document.activeElement, 'The search box is not focused after opening select');
+});
+
 test('Each option of the select is the result of yielding an item', function(assert) {
   assert.expect(4);
 

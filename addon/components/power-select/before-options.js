@@ -5,11 +5,15 @@ import layout from '../../templates/components/power-select/before-options';
 export default Component.extend({
   tagName: '',
   layout,
+  autofocus: true,
 
   // Lifecycle hooks
   didInsertElement() {
     this._super(...arguments);
-    this.focusInput();
+
+    if(this.get('autofocus')){
+      this.focusInput();
+    }
   },
 
   willDestroyElement() {
