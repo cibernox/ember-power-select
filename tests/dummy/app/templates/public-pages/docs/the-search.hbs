@@ -128,6 +128,55 @@
   the focus.
 </p>
 
+<h3>Prevent autofocus</h3>
+
+<p>
+    Sometimes you want do disable the default behavior of the search box,
+    where it will be focused when the dropdown opens. To achieve that you have to add the
+    <code>autofocus</code> parameter to the default <code>beforeOptions</code> component.
+</p>
+
+
+{{#code-sample as |component|}}
+    <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+    \{{#power-select
+      options=countries
+      searchField="name"
+      selected=selected
+      onchange=(action (mut selected))
+      beforeOptionsComponent=(component "power-select/before-options" autofocus=false)
+      as |country|
+    }}
+      \{{country.name}}
+      \{{/power-select}}
+  </pre>
+    <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+    export default Ember.Controller.extend({
+      countries: [
+        { name: 'United States' },
+        { name: 'Spain', },
+        { name: 'Portugal' },
+        { name: 'Russia' },
+        { name: 'Latvia' },
+        { name: 'Brazil' },
+        { name: 'United Kingdom' },
+      ]
+    });
+  </pre>
+    <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+      {{#power-select
+      options=countries
+      searchField="name"
+      selected=selected
+      onchange=(action (mut selected))
+      beforeOptionsComponent=(component "power-select/before-options" autofocus=false)
+      as |country|
+      }}
+        {{country.name}}
+      {{/power-select}}
+    </div>
+{{/code-sample}}
+
 <h3>Pass a custom matcher</h3>
 
 <p>

@@ -2,6 +2,8 @@
 
 - [BUGFIX] Pressing up/down arrown on selects without a search wasn't default prevented and the page scrolled.
 - [ENHANCEMENT] Setting `theme` to false in the addon config entirely disables the styles.
+- [ENHANCEMENT] Added optional `autofocus` property to `before-options` component to prevent autofocusing
+  of the search box, when the dropdown is opened.
 
 # 1.0.0-beta.2
 - [ENHANCEMENT] Input placeholders have no opacity now, to be consistent with span-based placeholder.
