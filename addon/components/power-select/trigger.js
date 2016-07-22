@@ -9,7 +9,7 @@ export default Component.extend({
   actions: {
     clear(e) {
       e.stopPropagation();
-      this.getAttr('select').actions.select(null);
+      this.get('select').actions.select(null);
     }
   }
 });

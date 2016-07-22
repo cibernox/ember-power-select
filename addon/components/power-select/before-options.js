@@ -18,8 +18,8 @@ export default Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    if (this.getAttr('searchEnabled')) {
-      this.getAttr('select').actions.search('');
+    if (this.get('searchEnabled')) {
+      this.get('select').actions.search('');
     }
   },
 
