@@ -1,5 +1,8 @@
 # Master
 
+# 1.0.0-beta.4
+- [BUGFIX] Don't assume that `action.open` will receive an event.
+
 # 1.0.0-beta.3
 - [BUGFIX] Pressing up/down arrown on selects without a search wasn't default prevented and the page scrolled.
 - [ENHANCEMENT] Setting `theme` to false in the addon config entirely disables the styles.
