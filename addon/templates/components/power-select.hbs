@@ -56,11 +56,10 @@
       searchPlaceholder=(readonly searchPlaceholder)
       select=(readonly publicAPI)}}
     {{#if mustShowSearchMessage}}
-      <ul class="ember-power-select-options" role="listbox">
-        <li class="ember-power-select-option ember-power-select-option--search-message" role="option">
-          {{searchMessage}}
-        </li>
-      </ul>
+      {{component searchMessageComponent
+        searchMessage=(readonly searchMessage)
+        select=(readonly publicAPI)
+      }}
     {{else if mustShowNoMessages}}
       {{#if (hasBlock "inverse")}}
         {{yield to="inverse"}}

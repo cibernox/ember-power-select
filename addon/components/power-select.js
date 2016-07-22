@@ -58,6 +58,7 @@ export default Component.extend({
   optionsComponent: fallbackIfUndefined('power-select/options'),
   selectedItemComponent: fallbackIfUndefined(null),
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
+  searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
 
   // Private state
   expirableSearchText: '',
