@@ -514,6 +514,22 @@ test('The placeholder is only visible when no options are selected', function(as
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'The placeholder is gone');
 });
 
+test('The placeholder is visible when no options are selected and search is disabled', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple searchEnabled=false options=numbers selected=foo onchange=(action (mut foo)) placeholder="Select stuff here" as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-placeholder').text(), 'Select stuff here', 'There is a placeholder');
+  clickTrigger();
+  nativeMouseUp('.ember-power-select-option:eq(1)');
+  assert.equal(this.$('.ember-power-select-placeholder').text(), '', 'The placeholder is gone');
+});
+
 test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', function(assert) {
   assert.expect(3);
 
