@@ -79,27 +79,27 @@ test('The `selected` option can be an async belongsTo', function(assert) {
   let done = assert.async();
   assert.expect(6);
 
-  let users = server.createList('user', 10);
-  let mainUser = server.create('user', { friendIds: users.map(u => u.id), bestieId: users[3].id });
+  let pets = server.createList('pet', 10);
+  let mainUser = server.create('user', { petIds: pets.map(u => u.id), bestieId: pets[3].id });
 
   Ember.run(() => {
     this.store.findRecord('user', mainUser.id).then(record => {
       this.mainUser = record;
       this.render(hbs`
-        {{#power-select options=mainUser.friends selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}
+        {{#power-select options=mainUser.pets selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}
           {{option.name}}
         {{/power-select}}
       `);
 
       clickTrigger();
-      assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'User 0', 'The first element is highlighted');
+      assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'Pet 0', 'The first element is highlighted');
       assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
       assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
 
       setTimeout(function() {
-        assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'User 3', 'The 4th element is highlighted');
-        assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'User 3', 'The 4th element is highlighted');
-        assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'User 3', 'The trigger has the proper content');
+        assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'Pet 3', 'The 4th element is highlighted');
+        assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'Pet 3', 'The 4th element is highlighted');
+        assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'Pet 3', 'The trigger has the proper content');
         done();
       }, 10);
     });
