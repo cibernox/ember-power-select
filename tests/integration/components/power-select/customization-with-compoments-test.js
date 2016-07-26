@@ -149,3 +149,18 @@ test('the `triggerComponent` receives the `onFocus` action that triggers the `on
 
   this.$('#focusable-input')[0].focus();
 });
+
+test('the search message can be customized passing `searchMessageComponent`', function(assert) {
+  assert.expect(1);
+
+  this.searchFn = function() {};
+
+  this.render(hbs`
+    {{#power-select search=searchFn searchMessageComponent="custom-search-message" onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown #custom-search-message-p-tag').length, 1, 'The custom component is rendered instead of the usual message');
+});
