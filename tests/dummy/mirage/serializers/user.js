@@ -1,11 +1,11 @@
 import BaseSerializer from './application';
 
 export default BaseSerializer.extend({
-  include: ['friends'],
+  include: ['pets'],
   links(model) {
     return {
       bestie: {
-        related: `/users/${model.bestieId}`
+        related: `/pets/${model.bestieId}`
       }
     };
   }

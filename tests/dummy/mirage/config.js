@@ -11,4 +11,6 @@ export default function() {
 export function testConfig() {
   this.get('/users');
   this.get('/users/:id');
+  this.get('/pets');
+  this.get('/pets/:id');
 }
