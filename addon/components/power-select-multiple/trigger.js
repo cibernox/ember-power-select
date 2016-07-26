@@ -36,7 +36,7 @@ export default Component.extend({
         e.stopPropagation();
         e.preventDefault();
 
-        let select = this.getAttr('select');
+        let select = this.get('select');
         let object = this.selectedObject(select.selected, selectedIndex);
         select.actions.choose(object);
       }
@@ -73,7 +73,7 @@ export default Component.extend({
 
   maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
     if (isIE) { return null; }
-    let select = this.getAttr('select');
+    let select = this.get('select');
     return (!select.selected || get(select.selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
   }),
 
@@ -82,7 +82,7 @@ export default Component.extend({
     onInput(e) {
       let action = this.get('onInput');
       if (action &&  action(e) === false) { return; }
-      this.getAttr('select').actions.open(e);
+      this.get('select').actions.open(e);
     },
 
     onKeydown(e) {

@@ -236,7 +236,7 @@ export default Component.extend({
     search(term) {
       if (isBlank(term)) {
         this._resetSearch();
-      } else if (this.getAttr('search')) {
+      } else if (this.get('search')) {
         this._performSearch(term);
       } else {
         this._performFilter(term);
@@ -359,7 +359,7 @@ export default Component.extend({
   _updateOptionsAndResults(opts) {
     if (get(this, 'isDestroyed')) { return; }
     let options = toPlainArray(opts);
-    if (this.getAttr('search')) { // external search
+    if (this.get('search')) { // external search
       setProperties(this.publicAPI, { options, results: options, resultsCount: countOptions(options), loading: false });
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
@@ -394,7 +394,7 @@ export default Component.extend({
   },
 
   _performSearch(term) {
-    let searchAction = this.getAttr('search');
+    let searchAction = this.get('search');
     set(this.publicAPI, 'searchText', term);
     let search = searchAction(term, this.publicAPI);
     if (!search) {
