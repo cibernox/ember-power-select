@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
+import run from 'ember-runloop';
 import {
   numbers,
   names,
@@ -132,7 +133,7 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   assert.expect(4);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 150);
+    run.later(function() { console.debug('resolved!'); resolve(numbers); }, 150);
   });
 
   this.render(hbs`
@@ -156,7 +157,7 @@ test('If the passed options is a promise and it\'s not resolved but the `loading
   assert.expect(2);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    Ember.run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
+    run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
   });
 
   this.render(hbs`
@@ -220,7 +221,7 @@ test('If the `selected` value changes the select gets updated, but the `onchange
     {{/power-select}}
   `);
 
-  Ember.run(() => this.set('selected', 'three'));
+  run(() => this.set('selected', 'three'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', 'The `three` element is selected');
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three', 'The proper option gets highlighed');
@@ -242,7 +243,7 @@ test('If the user selects a value and later on the selected value changes from t
   clickTrigger();
   nativeMouseUp('.ember-power-select-option:eq(3)');
   assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
-  Ember.run(() => this.set('selected', 'three'));
+  run(() => this.set('selected', 'three'));
   assert.equal($('.ember-power-select-trigger').text().trim(), 'three', '"three" has been selected because a change came from the outside');
 });
 
@@ -305,7 +306,7 @@ test('If the content of the options is refreshed (starting with empty array prox
   this.search = () => {
     return new RSVP.Promise(function(resolve) {
       resolve(data);
-      Ember.run.later(function() {
+      run.later(function() {
         data.pushObject('one');
       }, 100);
     });
@@ -332,7 +333,7 @@ test('If the content of the options is updated (starting with populated array pr
   this.search = () => {
     return new RSVP.Promise(function(resolve) {
       resolve(data);
-      Ember.run.later(function() {
+      run.later(function() {
         data.pushObject('owner');
       }, 100);
     });
@@ -367,7 +368,7 @@ test('If the content of the selected is refreshed while opened the first element
   clickTrigger();
   triggerKeydown($('.ember-power-select-search-input')[0], 40);
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The second options is highlighted');
-  Ember.run(() => this.set('numbers', ['foo', 'bar', 'baz']));
+  run(() => this.set('numbers', ['foo', 'bar', 'baz']));
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'foo', 'The first element is highlighted');
 });
 
@@ -397,7 +398,7 @@ test('The filtering is reverted after closing the select', function(assert) {
   clickTrigger();
   typeInSearch('th');
   assert.equal($('.ember-power-select-option').length, 2, 'the dropdown has filtered the results');
-  Ember.run(() => {
+  run(() => {
     let event = new window.Event('mousedown');
     this.$('#outside-div')[0].dispatchEvent(event);
   });
@@ -786,7 +787,7 @@ test('If the passed options is a promise that is resolved, searching should filt
   assert.expect(5);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    Ember.run.later(function() {resolve(numbers); }, 100);
+    run.later(function() {resolve(numbers); }, 100);
   });
 
   this.render(hbs`
@@ -827,7 +828,7 @@ test('If the passed selected element is a pending promise, the first element is 
 
   this.numbers = numbers;
   this.selected = new RSVP.Promise(function(resolve) {
-    Ember.run.later(resolve, numbers[3], 50);
+    run.later(resolve, numbers[3], 50);
   });
 
   this.render(hbs`
@@ -866,7 +867,7 @@ test('If the passed selected element is a pending promise that resolves while th
 
   this.numbers = numbers;
   this.selected = new RSVP.Promise(function(resolve) {
-    Ember.run.later(resolve, numbers[3], 50);
+    run.later(resolve, numbers[3], 50);
   });
 
   this.render(hbs`
@@ -893,11 +894,11 @@ test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'
   assert.expect(6);
 
   let promise1 = new RSVP.Promise(function(resolve) {
-    Ember.run.later(resolve, numbers[3], 80);
+    run.later(resolve, numbers[3], 80);
   });
 
   let promise2 = new RSVP.Promise(function(resolve) {
-    Ember.run.later(resolve, numbers[4], 20);
+    run.later(resolve, numbers[4], 20);
   });
 
   this.numbers = numbers;
@@ -1009,7 +1010,7 @@ test('When the input inside the select gets focused the entire component gains t
 
   assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
   clickTrigger();
-  Ember.run(() => $('.ember-power-select-search-input').focus());
+  run(() => $('.ember-power-select-search-input').focus());
   assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select has the class now');
 });
 
@@ -1043,4 +1044,23 @@ test('The destination where the content is rendered can be customized by passing
 
   clickTrigger();
   assert.equal($('#alternative-destination .ember-power-select-dropdown').length, 1, 'Dropdown is rendered inside the destination element');
+});
+
+test('[BUGFIX] When the component is open and it has a `search` action, if options get updated the highlighted items is reset', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.selected = null;
+  this.search = () => [];
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) search=search as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  triggerKeydown($('.ember-power-select-search-input')[0], 40);
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two');
+  run(() => this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']));
+  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
 });
