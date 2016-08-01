@@ -1,5 +1,12 @@
 # Master
 
+# 1.0.0-beta.6
+- [ENHANCEMENT/BREAKING] IMMUTABLE API! This is a big step towards 1.0.0 final. Now the public API
+  received by all actions and subcomponents is immutable. That means that any change of any property
+  creates a new publicAPI object. That means in practice that sub-components can rely on `didReceiveAttrs`
+  to be notified when any state of the parent component changes.
+  This also means that utilities like time-travel debugging are close to be possible.
+
 # 1.0.0-beta.5
 - [BUGFIX] Reset highlighted element when options change, regardless of of the search is sync or async
 
