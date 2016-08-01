@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Reset highlighted element when options change, regardless of of the search is sync or async
+
 # 1.0.0-beta.4
 - [BUGFIX] Don't assume that `action.open` will receive an event.
 
