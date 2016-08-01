@@ -110,8 +110,9 @@ export default Component.extend({
   willDestroy() {
     this._super(...arguments);
     this.activeSearch = this.activeSelectedPromise = this.activeOptionsPromise = null;
-    if (this.publicAPI.options && this.publicAPI.options.removeObserver) {
-      this.publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
+    let publicAPI = this.get('publicAPI');
+    if (publicAPI.options && publicAPI.options.removeObserver) {
+      publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
     }
     cancel(this.expirableSearchDebounceId);
   },
@@ -368,7 +369,7 @@ export default Component.extend({
         selection.addObserver('[]', this, this._updateSelectedArray);
       }
       this._updateSelectedArray(selection);
-    } else if (selection !== this.publicAPI.selected) {
+    } else if (selection !== this.get('publicAPI').selected) {
       this.updateState({ selected: selection, highlighted: selection });
     }
   },
@@ -386,10 +387,11 @@ export default Component.extend({
   _updateOptionsAndResults(opts) {
     if (get(this, 'isDestroyed')) { return; }
     let options = toPlainArray(opts);
+    let publicAPI;
     if (this.get('search')) { // external search
-      this.updateState({ options, results: options, resultsCount: countOptions(options), loading: false });
+      publicAPI = this.updateState({ options, results: options, resultsCount: countOptions(options), loading: false });
     } else { // filter
-      let publicAPI = this.get('publicAPI');
+      publicAPI = this.get('publicAPI');
       let results = isBlank(publicAPI.searchText) ? options : this.filter(options, publicAPI.searchText);
       publicAPI = this.updateState({ results, options, resultsCount: countOptions(results), loading: false });
     }
