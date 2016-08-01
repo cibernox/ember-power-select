@@ -19,7 +19,7 @@ export default Component.extend({
   willDestroyElement() {
     this._super(...arguments);
     if (this.get('searchEnabled')) {
-      this.get('select').actions.search('');
+      scheduleOnce('actions', this, this.get('select').actions.search, '');
     }
   },
 
