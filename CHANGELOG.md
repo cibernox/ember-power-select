@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-beta.5
 - [BUGFIX] Reset highlighted element when options change, regardless of of the search is sync or async
 
 # 1.0.0-beta.4
