@@ -545,7 +545,6 @@ test('The search action of multiple selects has the searchText set to the up-to-
 });
 
 test('The single component invokes the `registerAPI` action with the public API object', function(assert) {
-  assert.expect(20);
   this.numbers = numbers;
   this.storeAPI = function(select) {
     assertPublicAPIShape(assert, select);
@@ -558,7 +557,6 @@ test('The single component invokes the `registerAPI` action with the public API 
 });
 
 test('The multiple component invokes the `registerAPI` action with the public API object', function(assert) {
-  assert.expect(20);
   this.numbers = numbers;
   this.storeAPI = function(select) {
     assertPublicAPIShape(assert, select);

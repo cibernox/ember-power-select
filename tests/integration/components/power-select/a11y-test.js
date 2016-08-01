@@ -102,7 +102,7 @@ test('Multiple-select: The selected options have `aria-selected=true` and the re
   assert.equal($('.ember-power-select-option[aria-selected="false"]').length, numbers.length - 2, 'All other options have aria-selected=false');
 });
 
-test('Single-select: The highlighted option has `aria-current=true` and the rest `aria-current=false`', function(assert) {
+test('Single-select: The highlighted option has `aria-current=true` and the rest not have `aria-current`', function(assert) {
   assert.expect(4);
 
   this.numbers = numbers;
