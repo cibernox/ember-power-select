@@ -365,9 +365,9 @@ export default Component.extend({
     } else { // filter
       let results = isBlank(this.publicAPI.searchText) ? options : this.filter(options, this.publicAPI.searchText);
       setProperties(this.publicAPI, { results, options, resultsCount: countOptions(results), loading: false });
-      if (this.publicAPI.isOpen) {
-        this.resetHighlighted();
-      }
+    }
+    if (this.publicAPI.isOpen) {
+      this.resetHighlighted();
     }
   },
 
