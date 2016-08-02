@@ -3,7 +3,6 @@ import Component from 'ember-component';
 import layout from '../../templates/components/power-select-multiple/trigger';
 import get from 'ember-metal/get';
 import computed from 'ember-computed';
-import observer from 'ember-metal/observer';
 import service from 'ember-service/inject';
 import { scheduleOnce } from 'ember-runloop';
 import { assert } from 'ember-metal/utils';
@@ -47,14 +46,13 @@ export default Component.extend({
     optionsList.addEventListener('mousedown', chooseOption);
   },
 
-  // Observers
-  openObserver: observer('select.isOpen', function() {
-    let select = this.get('select');
-    if (this._lastIsOpen && !select.isOpen) {
+  didReceiveAttrs() {
+    let oldSelect = this.get('oldSelect') || {};
+    let select = this.set('oldSelect', this.get('select'));
+    if (oldSelect.isOpen && !select.isOpen) {
       scheduleOnce('actions', null, select.actions.search, '');
     }
-    this._lastIsOpen = select.isOpen;
-  }),
+  },
 
   // CPs
   triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
