@@ -64,7 +64,10 @@ const initialState = {
   searchText: '',           // Contains the text of the current search
   lastSearchedText: '',     // Contains the text of the last finished search
   loading: false,           // Truthy if there is a pending promise that will update the results
-  isActive: false           // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+  isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+  // Private API (for now)
+  _expirableSearchText: '',
+  _activeSearch: null,
 };
 
 export default Component.extend({
@@ -89,9 +92,7 @@ export default Component.extend({
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
 
   // Private state
-  expirableSearchText: '',
   expirableSearchDebounceId: null,
-  activeSearch: null,
   publicAPI: initialState,
 
   // Lifecycle hooks
@@ -109,7 +110,7 @@ export default Component.extend({
 
   willDestroy() {
     this._super(...arguments);
-    this.activeSearch = this.activeSelectedPromise = this.activeOptionsPromise = null;
+    this.activeSelectedPromise = this.activeOptionsPromise = null;
     let publicAPI = this.get('publicAPI');
     if (publicAPI.options && publicAPI.options.removeObserver) {
       publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
@@ -407,12 +408,13 @@ export default Component.extend({
 
   _resetSearch() {
     let results = this.get('publicAPI').options;
-    this.activeSearch = null;
-    this.updateState({ results,
+    this.updateState({
+      results,
       searchText: '',
       lastSearchedText: '',
       resultsCount: countOptions(results),
-      loading: false
+      loading: false,
+      _activeSearch: null
     });
   },
 
@@ -429,10 +431,10 @@ export default Component.extend({
     if (!search) {
       publicAPI = this.updateState({ lastSearchedText: term });
     } else if (search.then) {
-      publicAPI = this.updateState({ loading: true });
-      this.activeSearch = search;
+      publicAPI = this.updateState({ loading: true, _activeSearch: search });
       search.then((results) => {
-        if (this.activeSearch === search) {
+        if (this.get('isDestroyed')) { return; }
+        if (this.get('publicAPI')._activeSearch === search) {
           let resultsArray = toPlainArray(results);
           this.updateState({
             results: resultsArray,
@@ -443,7 +445,8 @@ export default Component.extend({
           this.resetHighlighted();
         }
       }, () => {
-        if (this.activeSearch === search) {
+        if (this.get('isDestroyed')) { return; }
+        if (this.get('publicAPI')._activeSearch === search) {
           this.updateState({ lastSearchedText: term, loading: false });
         }
       });
@@ -505,10 +508,10 @@ export default Component.extend({
   },
 
   _handleTriggerTyping(e) {
-    let term = this.expirableSearchText + String.fromCharCode(e.keyCode);
-    this.expirableSearchText = term;
-    this.expirableSearchDebounceId = debounce(this, 'set', 'expirableSearchText', '', 1000);
     let publicAPI = this.get('publicAPI');
+    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
+    this.updateState({ _expirableSearchText: term });
+    this.expirableSearchDebounceId = debounce(this, this.updateState, { _expirableSearchText: '' }, 1000);
     let matches = this.filter(publicAPI.options, term, true);
     if (get(matches, 'length') === 0) {
       return;
@@ -529,7 +532,6 @@ export default Component.extend({
     let registerAPI = this.get('registerAPI');
     if (registerAPI) {
       registerAPI(newState);
-      // scheduleOnce('actions', this, 'registerAPI', newState);
     }
     return newState;
   }
