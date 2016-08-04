@@ -1,5 +1,9 @@
 # Master
 
+# 1.0.0-beta.7
+- [BUGFIX] Having more than one component with `renderInPlace=true` attempted to register views with id null.
+  Fixed in EBD 0.13.0-beta.2
+
 # 1.0.0-beta.6
 - [ENHANCEMENT/BREAKING] IMMUTABLE API! This is a big step towards 1.0.0 final. Now the public API
   received by all actions and subcomponents is immutable. That means that any change of any property
