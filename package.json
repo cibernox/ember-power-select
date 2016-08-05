@@ -24,6 +24,14 @@
     "email": "miguel.camba@gmail.com"
   },
   "license": "MIT",
+  "files": [
+    "addon/",
+    "app/",
+    "blueprints/",
+    "test-support/",
+    "index.js",
+    "vendor"
+  ],
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
     "ember-ajax": "^2.3.2",
