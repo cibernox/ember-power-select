@@ -9,7 +9,8 @@ module.exports = {
     if (!app.__emberPowerSelectIncludedInvoked) {
       app.__emberPowerSelectIncludedInvoked = true;
 
-      var addonConfig = app.options['ember-power-select'] || {};
+      var options = typeof app.options === 'object' ? app.options : {};
+      var addonConfig = options['ember-power-select'] || {};
 
       // Since ember-power-select styles already `@import` styles of ember-basic-dropdown,
       // this flag tells to ember-basic-dropdown to skip importing its styles provided
