@@ -49,6 +49,23 @@ export function triggerKeydown(domElement, k) {
   });
 }
 
+export function triggerKeyup(domElement, k) {
+  let oEvent = document.createEvent('Events');
+  oEvent.initEvent('keyup', true, true);
+  $.extend(oEvent, {
+    view: window,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    metaKey: false,
+    keyCode: k,
+    charCode: k
+  });
+  run(() => {
+    domElement.dispatchEvent(oEvent);
+  });
+}
+
 export function typeInSearch(text) {
   run(() => {
     typeText('.ember-power-select-search-input, .ember-power-select-search input, .ember-power-select-trigger-multiple-input, input[type="search"]', text);
