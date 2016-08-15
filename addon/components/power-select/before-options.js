@@ -34,6 +34,10 @@ export default Component.extend({
         let select = this.get('select');
         select.actions.close(e);
       }
+    },
+    onKeyup(e) {
+      let onKeyup = this.get('onKeyup');
+      onKeyup(e);
     }
   },
 

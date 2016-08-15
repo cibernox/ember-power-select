@@ -32,9 +32,9 @@ export function nativeMouseUp(selectorOrDomElement, options) {
   fireNativeMouseEvent('mouseup', selectorOrDomElement, options);
 }
 
-export function triggerKeydown(domElement, k) {
+function triggerKeyEvent(type, domElement, k) {
   let oEvent = document.createEvent('Events');
-  oEvent.initEvent('keydown', true, true);
+  oEvent.initEvent(type, true, true);
   $.extend(oEvent, {
     view: window,
     ctrlKey: false,
@@ -47,6 +47,14 @@ export function triggerKeydown(domElement, k) {
   run(() => {
     domElement.dispatchEvent(oEvent);
   });
+}
+
+export function triggerKeydown(domElement, k) {
+  triggerKeyEvent('keydown', domElement, k);
+}
+
+export function triggerKeyup(domElement, k) {
+  triggerKeyEvent('keyup', domElement, k);
 }
 
 export function typeInSearch(text) {

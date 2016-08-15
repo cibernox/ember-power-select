@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
+import { triggerKeydown, triggerKeyup, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
@@ -299,6 +299,31 @@ test('Pressing ESC while the component is opened closes it and focuses the trigg
   triggerKeydown($('.ember-power-select-trigger')[0], 27);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
   assert.ok($('.ember-power-select-trigger').get(0) === document.activeElement, 'The select is focused');
+});
+
+test('In single-mode, when the user presses a key being the search input focused the passes `onkeyup` action is invoked with the public API and the event', function(assert) {
+  assert.expect(7);
+
+  this.numbers = numbers;
+  this.selected = null;
+  this.handleKeyup = (select, e) => {
+    assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
+    assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
+    assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
+    assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
+    assert.ok(select.actions.highlight, 'The yieded object has an `actions.highlight` key');
+    assert.ok(select.actions.search, 'The yieded object has an `actions.search` key');
+    assert.equal(e.keyCode, 13, 'The event is received as second argument');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut foo)) onkeyup=(action handleKeyup) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  triggerKeyup($('.ember-power-select-search-input')[0], 13);
 });
 
 test('In single-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', function(assert) {

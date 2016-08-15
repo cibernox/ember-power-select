@@ -308,6 +308,14 @@ export default Component.extend({
       return this._routeKeydown(e);
     },
 
+    // keyups handled by inputs inside the component
+    onKeyup(e) {
+      let onkeyup = this.get('onkeyup');
+      if (onkeyup) {
+        onkeyup(this.get('publicAPI'), e);
+      }
+    },
+
     scrollTo(option /*, e */) {
       if (!self.document || !option) { return; }
       let optionsList = self.document.querySelector('.ember-power-select-options');
