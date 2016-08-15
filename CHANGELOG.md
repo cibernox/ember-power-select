@@ -1,5 +1,11 @@
 # Master
 
+# 1.0.0-beta.9
+- [BUGFIX] Fix problem when a select is disabled and then re-enabled (the bug was in EBD).
+
+# 1.0.0-beta.8
+- [BUGFIX] Depend on a vertion of EPS that doesn't rely on `ember-cli-shims` 0.1.3.
+
 # 1.0.0-beta.7
 - [BUGFIX] Having more than one component with `renderInPlace=true` attempted to register views with id null.
   Fixed in EBD 0.13.0-beta.2

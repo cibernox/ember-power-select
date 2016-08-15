@@ -98,7 +98,7 @@ test('When passed `disabled=true`, the options cannot be removed', function(asse
 });
 
 test('Multiple select: When passed `disabled=prop`, enabling and disabling that property changes the component', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   this.numbers = numbers;
   this.selectedNumbers = [numbers[2], numbers[4]];
@@ -112,9 +112,9 @@ test('Multiple select: When passed `disabled=prop`, enabling and disabling that 
 
   let $trigger = this.$('.ember-power-select-trigger');
   assert.equal($trigger.attr('aria-disabled'), 'true', 'The trigger has `aria-disabled=true`');
-
   this.set('shouldBeDisabled', false);
-  assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')), 'The trigger is not disabled');
+  assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')));
+  assert.notOk(this.$('.ember-power-select-trigger-multiple-input').prop('disabled'), 'The input is not disabled');
 });
 
 test('BUGFIX: When after a search the only result is a disabled element, it isn\'t highlighted and cannot be selected', function(assert) {
