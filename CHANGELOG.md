@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Avoid messing with the scroll when the select contains an input with autofocus in the content.
+  Fixed in EBD by making the first reposition use a fastpath.
+
 # 1.0.0-beta.9
 - [BUGFIX] Fix problem when a select is disabled and then re-enabled (the bug was in EBD).
 
