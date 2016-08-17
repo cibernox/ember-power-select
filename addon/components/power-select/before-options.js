@@ -11,7 +11,7 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    if(this.get('autofocus')){
+    if (this.get('autofocus')){
       this.focusInput();
     }
   },
