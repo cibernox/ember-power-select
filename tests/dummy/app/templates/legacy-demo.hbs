@@ -184,6 +184,11 @@
     {{country.name}}
   {{/power-select-multiple}}
 
+  <h4>Multiple selects without a search can have a placeholder</h4>
+  {{#power-select-multiple searchEnabled=false options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' placeholder="Choose a place!!" as |country|}}
+    {{country.name}}
+  {{/power-select-multiple}}
+
   <h4>Right to left styles</h4>
   {{#power-select options=(readonly complexOptions) dir="rtl" selected=(readonly complexSelected) allowClear=true onchange=(action (mut complexSelected)) as |option|}}
     {{option.code}}: {{option.name}}
