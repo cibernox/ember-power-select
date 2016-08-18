@@ -35,8 +35,8 @@ export default Component.extend({
   },
 
   // CPs
-  'aria-controls': computed('select._id', function() {
-    return `ember-power-select-trigger-${this.get('select._id')}`;
+  'aria-controls': computed('select.uniqueId', function() {
+    return `ember-power-select-trigger-${this.get('select.uniqueId')}`;
   }),
 
   // Methods

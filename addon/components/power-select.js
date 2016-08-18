@@ -207,7 +207,7 @@ export default Component.extend({
       publicAPI.actions = assign({}, dropdown.actions, this._publicAPIActions);
       this.setProperties({
         publicAPI: publicAPI,
-        optionsId: `ember-power-select-options-${publicAPI._id}`
+        optionsId: `ember-power-select-options-${publicAPI.uniqueId}`
       });
       let action = this.get('registerAPI');
       if (action) {
