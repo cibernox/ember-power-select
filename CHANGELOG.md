@@ -1,5 +1,7 @@
 # Master
 
+# 1.0.0-beta.11
+- [BREAKING] The `select._id` property of the publicAPI has been promoted to public API and renamed as `select.uniqueId`.
 - [ENHANCEMENT] Multiple selects without a search can have a placeholder now.
 
 # 1.0.0-beta.10
