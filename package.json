@@ -54,6 +54,7 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
     "ember-fastboot-test-helpers": "0.1.1",
+    "ember-href-to": "1.5.0",
     "ember-load-initializers": "^0.5.1",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",

@@ -328,6 +328,9 @@
   </div>
 {{/code-sample}}
 
+In the default multiple select without searchbox you can use the <code>placeholder</code> property
+to have put text in the trigger.
+
 <h3>Disable the search box</h3>
 
 <p>
@@ -388,6 +391,6 @@
 {{/code-sample}}
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.docs.the-list' class="doc-page-nav-link-prev"}}&lt; The list{{/link-to}}
-  {{#link-to 'public-pages.docs.styles' class="doc-page-nav-link-next"}}Styles &gt;{{/link-to}}
+  <a href="{{href-to 'public-pages.docs.the-list'}}" class="doc-page-nav-link-prev">&lt; The list</a>
+  <a href="{{href-to 'public-pages.docs.styles'}}" class="doc-page-nav-link-next">Styles &gt;</a>
 </div>
