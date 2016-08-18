@@ -15,6 +15,10 @@
         {{yield opt select}}
       {{/if}}
     </li>
+  {{else}}
+    {{#if (and placeholder (not searchEnabled))}}
+      <span class="ember-power-select-placeholder">{{placeholder}}</span>
+    {{/if}}
   {{/each}}
   {{#if searchEnabled}}
     <input type="search" class="ember-power-select-trigger-multiple-input"
