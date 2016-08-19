@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-beta.12
 - [BUGFIX] Component corrently closes when clicked outside of the boundary of the application (in apps not attached to the body but to some internal element).
 
 # 1.0.0-beta.11
