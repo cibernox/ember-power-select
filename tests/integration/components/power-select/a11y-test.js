@@ -180,7 +180,7 @@ test('Single-select: The trigger has `role=button`, `aria-haspopup=true` and `ar
   let $trigger = this.$('.ember-power-select-trigger');
   assert.equal($trigger.attr('role'), 'button', 'The trigger has role button');
   assert.ok(['true', ''].indexOf($trigger.attr('aria-haspopup')) > -1, 'aria-haspopup is true');
-  assert.ok(/^ember-basic-dropdown-content-\d+$/.test($trigger.attr('aria-controls')), 'aria-controls point to the dropdown');
+  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test($trigger.attr('aria-controls')), 'aria-controls point to the dropdown');
 });
 
 test('Multiple-select: The trigger has `role=button`, `aria-haspopup=true` and `aria-controls=<id-of-dropdown>`', function(assert) {
@@ -197,7 +197,7 @@ test('Multiple-select: The trigger has `role=button`, `aria-haspopup=true` and `
   let $trigger = this.$('.ember-power-select-trigger');
   assert.equal($trigger.attr('role'), 'button', 'The trigger has role button');
   assert.ok(['true', ''].indexOf($trigger.attr('aria-haspopup')) > -1, 'aria-haspopup is true');
-  assert.ok(/^ember-basic-dropdown-content-\d+$/.test($trigger.attr('aria-controls')), 'aria-controls point to the dropdown');
+  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test($trigger.attr('aria-controls')), 'aria-controls point to the dropdown');
 });
 
 test('Single-select: The trigger attributes `aria-expanded` and `aria-pressed` that are true when the dropdown is opened', function(assert) {
@@ -247,7 +247,7 @@ test('Single-select: The listbox has a unique id`', function(assert) {
   `);
 
   clickTrigger();
-  assert.ok(/^ember-power-select-options-\d+$/.test($('.ember-power-select-options').attr('id')), 'The search has a unique id');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-options').attr('id')), 'The search has a unique id');
 });
 
 test('Multiple-select: The listbox has a unique id`', function(assert) {
@@ -261,7 +261,7 @@ test('Multiple-select: The listbox has a unique id`', function(assert) {
   `);
 
   clickTrigger();
-  assert.ok(/^ember-power-select-options-\d+$/.test($('.ember-power-select-options').attr('id')), 'The search has a unique id');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-options').attr('id')), 'The search has a unique id');
 });
 
 test('Single-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', function(assert) {
@@ -276,7 +276,7 @@ test('Single-select: The searchbox has type `search` and `aria-controls=<id-of-l
 
   clickTrigger();
   assert.equal($('.ember-power-select-search-input').attr('type'), 'search', 'The type of the input is `search`');
-  assert.ok(/^ember-power-select-options-\d+$/.test($('.ember-power-select-search-input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-search-input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
 });
 
 test('Multiple-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', function(assert) {
@@ -291,7 +291,7 @@ test('Multiple-select: The searchbox has type `search` and `aria-controls=<id-of
 
   clickTrigger();
   assert.equal($('.ember-power-select-trigger-multiple-input').attr('type'), 'search', 'The type of the input is `search`');
-  assert.ok(/^ember-power-select-options-\d+$/.test($('.ember-power-select-trigger-multiple-input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-trigger-multiple-input').attr('aria-controls')), 'The `aria-controls` points to the id of the listbox');
 });
 
 test('Single-select: The listbox has `aria-controls=<id-of-the-trigger>`', function(assert) {
@@ -305,7 +305,7 @@ test('Single-select: The listbox has `aria-controls=<id-of-the-trigger>`', funct
   `);
 
   clickTrigger();
-  assert.ok(/^ember-power-select-trigger-\d+$/.test($('.ember-power-select-options').attr('aria-controls')), 'The listbox controls the trigger');
+  assert.ok(/^ember-power-select-trigger-ember\d+$/.test($('.ember-power-select-options').attr('aria-controls')), 'The listbox controls the trigger');
 });
 
 test('Multiple-select: The listbox has `aria-controls=<id-of-the-trigger>`', function(assert) {
@@ -319,7 +319,7 @@ test('Multiple-select: The listbox has `aria-controls=<id-of-the-trigger>`', fun
   `);
 
   clickTrigger();
-  assert.ok(/^ember-power-select-trigger-\d+$/.test($('.ember-power-select-options').attr('aria-controls')), 'The listbox controls the trigger');
+  assert.ok(/^ember-power-select-trigger-ember\d+$/.test($('.ember-power-select-options').attr('aria-controls')), 'The listbox controls the trigger');
 });
 
 test('Multiple-select: The selected elements are <li>s inside an <ul>, and have an item with `role=button` with `aria-label="remove element"`', function(assert) {
