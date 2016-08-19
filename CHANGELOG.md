@@ -1,5 +1,8 @@
 # Master
 
+- [BREAKING] The `select.uniqueId` should is of the shape `ember1234` to it can safely be used for
+  construct DOM ids (which can't start with number according to the spec).
+
 # 1.0.0-beta.12
 - [BUGFIX] Component corrently closes when clicked outside of the boundary of the application (in apps not attached to the body but to some internal element).
 

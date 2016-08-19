@@ -5,7 +5,7 @@ import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../..
 import { numbers } from '../constants';
 
 function assertPublicAPIShape(assert, select) {
-  assert.equal(typeof select.uniqueId, 'number', 'select.uniqueId is a number');
+  assert.equal(typeof select.uniqueId, 'string', 'select.uniqueId is a string');
   assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
   assert.equal(typeof select.disabled, 'boolean', 'select.disabled is a boolean');
   assert.equal(typeof select.isActive, 'boolean', 'select.isActive is a boolean');
