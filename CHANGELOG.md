@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-beta.13
 - [ENHANCEMENT] Acceptance helpers `selectChose` and `selectSearch` now work both passing the css
   selector of an ancestor of the trigger (as usual) or passing the selector of the trigger itself (new behaviour).
 - [BREAKING] The `select.uniqueId` should is of the shape `ember1234` to it can safely be used for
