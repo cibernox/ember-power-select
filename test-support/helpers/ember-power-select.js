@@ -88,12 +88,15 @@ export function touchTrigger() {
 
 export default function() {
   Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    let $trigger = find(cssPath).find('.ember-power-select-trigger');
+    let $trigger = find(cssPath);
+    if (!$trigger.hasClass('ember-power-select-trigger')) {
+      $trigger = $trigger.find('.ember-power-select-trigger');
+    }
     let contentId = `${$trigger.attr('aria-controls')}`;
     let $content = find(`#${contentId}`)
     // If the dropdown is closed, open it
     if ($content.length === 0) {
-      nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
+      nativeMouseDown($trigger.get(0));
       wait();
     }
 
@@ -111,25 +114,34 @@ export default function() {
   });
 
   Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    let $trigger = find(cssPath).find('.ember-power-select-trigger');
+    let $trigger = find(cssPath);
+    let triggerPath;
+    if ($trigger.hasClass('ember-power-select-trigger')) {
+      triggerPath = cssPath;
+    } else {
+      $trigger = $trigger.find('.ember-power-select-trigger');
+      triggerPath = `${cssPath} .ember-power-select-trigger`;
+    }
+
+
     let contentId = `${$trigger.attr('aria-controls')}`;
     let isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
     let dropdownIsClosed = $(`#${contentId}`).length === 0;
     if (dropdownIsClosed) {
-      nativeMouseDown(`${cssPath} .ember-power-select-trigger`);
+      nativeMouseDown(triggerPath);
       wait();
     }
     let isDefaultSingleSelect = $(`.ember-power-select-search-input`).length > 0;
 
     if (isMultipleSelect) {
-      fillIn(`${cssPath} .ember-power-select-trigger-multiple-input`, value);
+      fillIn(`${triggerPath} .ember-power-select-trigger-multiple-input`, value);
     } else if (isDefaultSingleSelect) {
       fillIn('.ember-power-select-search-input', value);
     } else { // It's probably a customized version
       let inputIsInTrigger = !!find(`${cssPath} .ember-power-select-trigger input[type=search]`)[0];
       if (inputIsInTrigger) {
-        fillIn(`${cssPath} .ember-power-select-trigger input[type=search]`, value);
+        fillIn(`${triggerPath} input[type=search]`, value);
       } else {
         fillIn(`#${contentId} .ember-power-select-search-input[type=search]`, 'input');
       }

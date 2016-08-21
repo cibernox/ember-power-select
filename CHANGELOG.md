@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Acceptance helpers `selectChose` and `selectSearch` now work both passing the css
+  selector of an ancestor of the trigger (as usual) or passing the selector of the trigger itself (new behaviour).
 - [BREAKING] The `select.uniqueId` should is of the shape `ember1234` to it can safely be used for
   construct DOM ids (which can't start with number according to the spec).
 

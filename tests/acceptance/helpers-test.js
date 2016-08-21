@@ -63,6 +63,19 @@ test('the selectChoose helper works with an onopen function that fetches data as
   });
 });
 
+test('the selectChoose helper works when it receives the class of the trigger', function(assert) {
+  visit('/helpers-testing');
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectChoose('.select-with-class-in-trigger', 'three');
+  });
+  andThen(function() {
+    assert.equal(find('.select-with-class-in-trigger').text().trim(), 'three', 'The proper value has been selected');
+    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+  });
+});
+
 moduleForAcceptance('Acceptance | helpers | selectSearch');
 
 test('selectSearch helper searches in the given single select if it is already opened', function(assert) {
@@ -126,6 +139,19 @@ test('selectSearch helper works even with custom components as long as the input
     assert.equal(currentURL(), '/helpers-testing');
     click('.select-custom-search .ember-power-select-trigger');
     selectSearch('.select-custom-search', 'three');
+  });
+
+  andThen(function() {
+    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
+
+test('the selectSearch helper works when it receives the class of the trigger', function(assert) {
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectSearch('.select-with-class-in-trigger', 'three');
   });
 
   andThen(function() {
