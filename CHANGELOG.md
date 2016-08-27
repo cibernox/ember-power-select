@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] A disabled select won't have tabindex at all (it used to have -1)
+- [BUGFIX] If `tabindex=false`, the component won't have tabindex (it used to have -1)
+
 # 1.0.0-beta.13
 - [ENHANCEMENT] Acceptance helpers `selectChose` and `selectSearch` now work both passing the css
   selector of an ancestor of the trigger (as usual) or passing the selector of the trigger itself (new behaviour).
