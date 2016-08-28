@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-beta.14
 - [BUGFIX] Ensure scrolling to the selected option works if another select is still on the page being animated out.
 - [BUGFIX] A disabled select won't have tabindex at all (it used to have -1)
 - [BUGFIX] If `tabindex=false`, the component won't have tabindex (it used to have -1)

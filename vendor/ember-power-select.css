@@ -50,7 +50,8 @@
     display: table;
     clear: both; }
 
-.ember-power-select-trigger:focus, .ember-power-select-trigger--active {
+.ember-power-select-trigger:focus,
+.ember-power-select-trigger--active {
   border: 1px solid #aaaaaa;
   box-shadow: none; }
 
