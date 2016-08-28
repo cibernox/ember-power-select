@@ -310,9 +310,10 @@ export default Component.extend({
 
     scrollTo(option /*, e */) {
       if (!self.document || !option) { return; }
-      let optionsList = self.document.querySelector('.ember-power-select-options');
+      let publicAPI = this.get('publicAPI');
+      let optionsList = self.document.getElementById('ember-power-select-options-' + publicAPI.uniqueId);
       if (!optionsList) { return; }
-      let index = indexOfOption(this.get('publicAPI').results, option);
+      let index = indexOfOption(publicAPI.results, option);
       if (index === -1) { return; }
       let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
       let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
