@@ -103,7 +103,7 @@ export default Component.extend({
       highlight: (...args) => this.send('highlight', ...args),
       select: (...args) => this.send('select', ...args),
       choose: (...args) => this.send('choose', ...args),
-      scrollTo: (...args) => scheduleOnce('afterRender', this, () => this.send('scrollTo', ...args))
+      scrollTo: (...args) => scheduleOnce('afterRender', this, this.send, 'scrollTo', ...args)
     };
     assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
