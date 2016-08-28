@@ -7,7 +7,7 @@ import { isEmberArray } from 'ember-array/utils';
 import computed from 'ember-computed';
 import get from 'ember-metal/get';
 import set from 'ember-metal/set';
-import { scheduleOnce, later, debounce, cancel } from 'ember-runloop';
+import { scheduleOnce, debounce, cancel } from 'ember-runloop';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
@@ -103,7 +103,7 @@ export default Component.extend({
       highlight: (...args) => this.send('highlight', ...args),
       select: (...args) => this.send('select', ...args),
       choose: (...args) => this.send('choose', ...args),
-      scrollTo: (...args) => later(this, () => this.send('scrollTo', ...args))
+      scrollTo: (...args) => scheduleOnce('afterRender', this, () => this.send('scrollTo', ...args))
     };
     assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
