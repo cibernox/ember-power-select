@@ -1033,6 +1033,34 @@ test('[BUGFIX] When the component opens, if the selected option is not visible t
   }, 120);
 });
 
+test('[BUGFIX] When the component opens, if another select with less options was previously opened', function(assert) {
+  let done = assert.async();
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.names = names;
+  this.render(hbs`
+    <div class="numbers">{{#power-select options=numbers selected="twenty" onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}</div>
+    <div class="names">{{#power-select options=names selected="Marta" onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}</div>
+  `);
+
+  clickTrigger('.names');
+  run.later(() => {
+    assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'Marta');
+
+    clickTrigger('.numbers');
+    run.later(() => {
+      assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'twenty');
+      assert.ok($('.ember-power-select-options')[0].scrollTop > 0, 'The displayed list has scrolled');
+      done();
+    }, 120);
+  }, 120);
+});
+
 test('The destination where the content is rendered can be customized by passing a `destination=id-of-the-destination`', function(assert) {
   assert.expect(2);
 
