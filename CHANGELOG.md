@@ -1,4 +1,5 @@
 # Master
+- [BUGFIX] Avoid polluting styles of ember-basic-dropdown.
 
 # 1.0.0-beta.14
 - [BUGFIX] Ensure scrolling to the selected option works if another select is still on the page being animated out.
