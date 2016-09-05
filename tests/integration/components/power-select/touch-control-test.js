@@ -56,3 +56,18 @@ test('Touch on custom option should select it', function (assert) {
 
   assert.equal($('.ember-power-select-selected-item').text().trim(), 'four');
 });
+
+test('Touch on clear button should deselect it', function (assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo allowClear=true onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  nativeTouch('.ember-power-select-clear-btn');
+
+  assert.equal($('.ember-power-select-selected-item').text().trim(), '');
+});
