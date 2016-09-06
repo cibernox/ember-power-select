@@ -22,9 +22,9 @@ export default Component.extend({
     get() {
       return [];
     },
-    set(_, v) {
+    set(_, v, prevValue) {
       if (v === null || v === undefined || typeof v !== 'object') {
-        return [];
+        return prevValue?prevValue:[];
       }
       return v;
     }
