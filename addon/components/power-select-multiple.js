@@ -23,7 +23,7 @@ export default Component.extend({
       return [];
     },
     set(_, v) {
-      if (v === null || v === undefined || typeof v !== 'object' || !v.length) {
+      if (v === null || v === undefined || typeof v !== 'object') {
         return [];
       }
       return v;
