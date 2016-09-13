@@ -111,10 +111,8 @@ export default Component.extend({
   willDestroy() {
     this._super(...arguments);
     this.activeSelectedPromise = this.activeOptionsPromise = null;
-    let publicAPI = this.get('publicAPI');
-    if (publicAPI.options && publicAPI.options.removeObserver) {
-      publicAPI.options.removeObserver('[]', this, this._updateOptionsAndResults);
-    }
+    this._removeObserversInOptions();
+    this._removeObserversInSelected();
     cancel(this.expirableSearchDebounceId);
   },
 
@@ -356,19 +354,23 @@ export default Component.extend({
   },
 
   updateOptions(options) {
+    this._removeObserversInOptions();
     if (!options) {
       return;
     }
     if (options && options.addObserver) {
       options.addObserver('[]', this, this._updateOptionsAndResults);
+      this._observedOptions = options;
     }
     this._updateOptionsAndResults(options);
   },
 
   updateSelection(selection) {
+    this._removeObserversInSelected();
     if (isEmberArray(selection)) {
       if (selection && selection.addObserver) {
         selection.addObserver('[]', this, this._updateSelectedArray);
+        this._observedSelected = selection;
       }
       this._updateSelectedArray(selection);
     } else if (selection !== this.get('publicAPI').selected) {
@@ -525,6 +527,18 @@ export default Component.extend({
       } else {
         publicAPI.actions.select(firstMatch.option, e);
       }
+    }
+  },
+
+  _removeObserversInOptions() {
+    if (this._observedOptions) {
+      this._observedOptions.removeObserver('[]', this, this._updateOptionsAndResults);
+    }
+  },
+
+  _removeObserversInSelected() {
+    if (this._observedSelected) {
+      this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
     }
   },
 

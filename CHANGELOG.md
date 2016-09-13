@@ -1,4 +1,6 @@
 # Master
+
+- [BUGFIX] Fix bad memory leak in multiple selects. Probably messing with people's app in testing.
 - [BUGFIX] Avoid polluting styles of ember-basic-dropdown.
 
 # 1.0.0-beta.14
