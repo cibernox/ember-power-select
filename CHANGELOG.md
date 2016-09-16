@@ -1,5 +1,9 @@
 # Master
 
+# 1.0.0-beta.16
+- [BUGFIX] Widewalk a bug with `Ember.A` in fastboot. See https://github.com/ember-fastboot/ember-cli-fastboot/issues/251
+- [INTERNAL] Upgrade to 2.8 family.
+
 # 1.0.0-beta.15
 - [BUGFIX] Fix bad memory leak in multiple selects. Probably messing with people's app in testing.
 - [BUGFIX] Avoid polluting styles of ember-basic-dropdown.
