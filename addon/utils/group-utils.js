@@ -9,11 +9,8 @@ export function countOptions(collection) {
   let counter = 0;
   (function walk(collection) {
     if (!collection) { return null; }
-    if (!collection.objectAt) {
-      collection = A(collection);
-    }
     for (let i = 0; i < get(collection, 'length'); i++) {
-      let entry = collection.objectAt(i);
+      let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
       if (isGroup(entry)) {
         walk(get(entry, 'options'));
       } else {
@@ -28,11 +25,8 @@ export function indexOfOption(collection, option) {
   let index = 0;
   return (function walk(collection) {
     if (!collection) { return null; }
-    if (!collection.objectAt) {
-      collection = A(collection);
-    }
     for (let i = 0; i < get(collection, 'length'); i++) {
-      let entry = collection.objectAt(i);
+      let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
       if (isGroup(entry)) {
         let result = walk(get(entry, 'options'));
         if (result > -1) { return result; }
@@ -50,13 +44,10 @@ export function optionAtIndex(originalCollection, index) {
   let counter = 0;
   return (function walk(collection, ancestorIsDisabled) {
     if (!collection || index < 0) { return { disabled: false, option: undefined }; }
-    if (!collection.objectAt) {
-      collection = A(collection);
-    }
     let localCounter = 0;
     let length = get(collection, 'length');
     while (counter <= index && localCounter < length) {
-      let entry = collection.objectAt(localCounter);
+      let entry = collection.objectAt ? collection.objectAt(localCounter) : collection[localCounter];
       if (isGroup(entry)) {
         let found = walk(get(entry, 'options'), ancestorIsDisabled || !!get(entry, 'disabled'));
         if (found) { return found; }
@@ -71,11 +62,10 @@ export function optionAtIndex(originalCollection, index) {
 }
 
 export function filterOptions(options, text, matcher, skipDisabled = false) {
-  let sanitizedOptions =  options.objectAt ? options : A(options);
   let opts = A();
   let length = get(options, 'length');
   for (let i = 0; i < length; i++) {
-    let entry = sanitizedOptions.objectAt(i);
+    let entry = options.objectAt ? options.objectAt(i) : options[i];
     if (!skipDisabled || !get(entry, 'disabled')) {
       if (isGroup(entry)) {
         let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
