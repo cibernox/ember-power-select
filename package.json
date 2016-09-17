@@ -54,11 +54,11 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
     "ember-fastboot-test-helpers": "0.1.1",
-    "ember-href-to": "1.5.0",
+    "ember-href-to": "git://github.com/cibernox/ember-href-to.git#update-to-2.8-family",
     "ember-load-initializers": "^0.5.1",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
-    "liquid-fire": "git://github.com/ember-animation/liquid-fire.git#53ef6ba0d7831bf5d70fc74d1335b4868cc758e5",
+    "liquid-fire": "git://github.com/ember-animation/liquid-fire.git#0f3c43624580f6288e5cc93c9c783ea1cfcb5110",
     "loader.js": "^4.0.1",
     "memory-scroll": "0.2.0",
     "node-sass": "^3.8.0",
@@ -74,7 +74,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.10",
     "ember-cli-htmlbars": "^1.1.0",
-    "ember-basic-dropdown": "^0.15.0-beta.6",
+    "ember-basic-dropdown": "^0.15.0-beta.7",
     "ember-text-measurer": "^0.3.3",
     "ember-truth-helpers": "^1.2.0"
   },
