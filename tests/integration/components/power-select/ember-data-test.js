@@ -70,8 +70,10 @@ test('Delete an item in a multiple selection', function(assert) {
   `);
 
   return wait().then(function() {
-    nativeMouseDown('.ember-power-select-multiple-remove-btn:first');
-    assert.equal($('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
+    nativeMouseDown('.ember-power-select-multiple-remove-btn:eq(0)');
+    return wait().then(function() {
+      assert.equal($('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
+    });
   });
 });
 

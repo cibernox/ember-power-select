@@ -1,9 +1,12 @@
 {
   "name": "ember-power-select",
   "dependencies": {
-    "ember": "~2.8.0",
+    "ember": "beta",
     "ember-cli-shims": "~0.1.3",
     "pretender": "~1.1.0",
     "Faker": "~3.1.0"
+  },
+  "resolutions": {
+    "ember": "beta"
   }
 }

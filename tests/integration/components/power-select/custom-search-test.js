@@ -409,7 +409,7 @@ test('Setting the options to a promise from the custom search function works (an
     assert.equal(searchCalls, 3, 'The search was called only three times');
     assert.equal($('.ember-power-select-option').length, 2);
     done();
-  }, 200);
+  }, 300);
 });
 
 test('If you delete the last char of the input before the previous promise resolves, that promise is discarded', function(assert) {
