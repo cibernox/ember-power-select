@@ -76,6 +76,19 @@ test('the selectChoose helper works when it receives the class of the trigger', 
   });
 });
 
+test('the selectChoose helper works when it receives a wildcard css class', function(assert) {
+  visit('/helpers-testing-single-power-select');
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing-single-power-select');
+    selectChoose('*', 'three');
+  });
+  andThen(function() {
+    assert.equal(find('.select-choose').text().trim(), 'three', 'The proper value has been selected');
+    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+  });
+});
+
 moduleForAcceptance('Acceptance | helpers | selectSearch');
 
 test('selectSearch helper searches in the given single select if it is already opened', function(assert) {
@@ -85,6 +98,34 @@ test('selectSearch helper searches in the given single select if it is already o
     assert.equal(currentURL(), '/helpers-testing');
     click('.select-async .ember-power-select-trigger');
     selectSearch('.select-async', 'three');
+  });
+
+  andThen(function() {
+    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
+
+test('selectSearch helper searches an opened select if using a wildcard css selector', function(assert) {
+  visit('/helpers-testing-single-power-select');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing-single-power-select');
+    click('.ember-power-select-trigger');
+    selectSearch('*', 'three');
+  });
+
+  andThen(function() {
+    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
+
+test('selectSearch helper opens and searches select if using a wildcard css selector', function(assert) {
+  visit('/helpers-testing-single-power-select');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing-single-power-select');
+    click('.ember-power-select-trigger');
+    selectSearch('*', 'three');
   });
 
   andThen(function() {
