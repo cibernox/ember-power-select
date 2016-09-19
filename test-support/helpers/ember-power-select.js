@@ -88,10 +88,12 @@ export function touchTrigger() {
 
 export default function() {
   Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    let $trigger = find(cssPath);
-    if (!$trigger.hasClass('ember-power-select-trigger')) {
-      $trigger = $trigger.find('.ember-power-select-trigger');
+    let $trigger = find(`${cssPath} .ember-power-select-trigger`);
+
+    if ($trigger === undefined || $trigger.length === 0) {
+      $trigger = find(cssPath);
     }
+
     let contentId = `${$trigger.attr('aria-controls')}`;
     let $content = find(`#${contentId}`)
     // If the dropdown is closed, open it
@@ -114,15 +116,12 @@ export default function() {
   });
 
   Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    let $trigger = find(cssPath);
-    let triggerPath;
-    if ($trigger.hasClass('ember-power-select-trigger')) {
+    let triggerPath = `${cssPath} .ember-power-select-trigger`;
+    let $trigger = find(triggerPath);
+    if ($trigger === undefined || $trigger.length === 0) {
       triggerPath = cssPath;
-    } else {
-      $trigger = $trigger.find('.ember-power-select-trigger');
-      triggerPath = `${cssPath} .ember-power-select-trigger`;
+      $trigger = find(triggerPath);
     }
-
 
     let contentId = `${$trigger.attr('aria-controls')}`;
     let isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
