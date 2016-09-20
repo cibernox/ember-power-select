@@ -58,7 +58,7 @@
     "ember-load-initializers": "^0.5.1",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
-    "liquid-fire": "git://github.com/ember-animation/liquid-fire.git#218a791ea7f311e38bdd6a8211d488d40baf82ca",
+    "liquid-fire": "0.26.1",
     "loader.js": "^4.0.1",
     "memory-scroll": "0.2.0",
     "node-sass": "^3.8.0",
