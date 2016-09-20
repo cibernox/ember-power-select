@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import OptionsComponent from 'ember-power-select/components/power-select/options';
 
-export default Ember.Component.extend({
+export default OptionsComponent.extend({
   didReceiveAttrs({ oldAttrs, newAttrs }) {
     this._super(...arguments);
     if (!oldAttrs || !oldAttrs.options || !newAttrs.options || oldAttrs.options === newAttrs.options) {
