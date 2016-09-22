@@ -80,7 +80,9 @@ export default Component.extend({
     onInput(e) {
       let action = this.get('onInput');
       if (action &&  action(e) === false) { return; }
-      this.get('select').actions.open(e);
+
+      const select = this.get('select');
+      scheduleOnce('afterRender', null, select.actions.open, e);
     },
 
     onKeydown(e) {
