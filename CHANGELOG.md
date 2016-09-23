@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Update EBD to fix a bug. This prevents open/close actions to be invoked in a destroyed component.
+
 # 1.0.0-beta.17
 - [BUGFIX] Widewalk a bug with `Ember.A` in fastboot. See https://github.com/ember-fastboot/ember-cli-fastboot/issues/251
 - [INTERNAL] Upgrade to 2.8 family.
