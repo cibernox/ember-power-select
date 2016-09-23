@@ -1,6 +1,6 @@
 # Master
 
-# 1.0.0-beta.18
+# 1.0.0-beta.19
 - [BUGFIX] Update EBD to fix a bug. This prevents open/close actions to be invoked in a destroyed component.
 
 # 1.0.0-beta.17
