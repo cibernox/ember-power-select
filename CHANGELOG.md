@@ -1,5 +1,9 @@
 # Master
 
+- [TESTING] Ensure the addon is tested in 2.4LTS
+- [BUGFIX] Fix bug in versions of Ember <= 2.6
+- [INTERNAL] Update to ember-cli 2.9
+
 # 1.0.0-beta.19
 - [BUGFIX] Update EBD to fix a bug. This prevents open/close actions to be invoked in a destroyed component.
 
