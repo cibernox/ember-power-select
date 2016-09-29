@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.0-beta.20
 - [TESTING] Ensure the addon is tested in 2.4LTS
 - [BUGFIX] Fix bug in versions of Ember <= 2.6
 - [INTERNAL] Update to ember-cli 2.9
