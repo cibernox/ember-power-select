@@ -104,6 +104,30 @@ test('the selectChoose helper works when it receives a wildcard css class', func
   });
 });
 
+test('selectChoose helper throws an explicative error when no select is found in the given scope', function(assert) {
+  assert.expect(2);
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectChoose('.there-is-no-select', 'three').catch(function(error) {
+      assert.equal(error.message, `You called "selectChoose('.there-is-no-select', 'three')" but no select was found using selector ".there-is-no-select"`);
+    });
+  });
+});
+
+test('selectChoose helper throws an explicative error when no option matches the given value', function(assert) {
+  assert.expect(2);
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectChoose('.select-choose', 'non-existent-option').catch(function(error) {
+      assert.equal(error.message, `You called "selectChoose('.select-choose', 'non-existent-option')" but "non-existent-option" didn't match any option`);
+    });
+  });
+});
+
 moduleForAcceptance('Acceptance | helpers | selectSearch');
 
 test('selectSearch helper searches in the given single select if it is already opened', function(assert) {
@@ -212,6 +236,18 @@ test('the selectSearch helper works when it receives the class of the trigger', 
 
   andThen(function() {
     assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+  });
+});
+
+test('the selectSearch helper throws an explicative error when no select is found in the given scope', function(assert) {
+  assert.expect(2);
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectSearch('.there-is-no-select', 'three').catch(function(error) {
+      assert.equal(error.message, `You called "selectSearch('.there-is-no-select', 'three')" but no select was found using selector ".there-is-no-select"`);
+    });
   });
 });
 
