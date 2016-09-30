@@ -1,12 +1,6 @@
 <h1 class="doc-page-title">CSS animations</h1>
 
 <p>
-  <strong>Disclaimer:</strong> <em>Support for animations is only in 0.9.3-beta, and is somewhat experimental.
-  The final API or classes might vary, and maybe liquid-fire support is added at some point. Take this
-  chapter with a grain of salt.</em>
-</p>
-
-<p>
   Want to add some fancy effects to your selects when they open and close?
   Ember Power Select has you covered!
 </p>
@@ -37,10 +31,13 @@
 </ul>
 
 <p>
-  So, what do you have to do to enable this? Nothing, just add some animation with CSS.
+  So, what do you have to do to enable this? Nothing, just add some <strong>animation</strong> with CSS.
+<p>
+</p>
+  Note that you have to use CSS animations, <strong>this approach doesn't work with CSS transitions.</strong>
 </p>
 
-<p>Lets add some slide and fade in animation to a select using the bootstrap theme.</p>
+<p>Lets add some slide and fade in animation to a select that uses the bootstrap theme.</p>
 
 {{#code-sample tabs=tabs as |component|}}
   <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">

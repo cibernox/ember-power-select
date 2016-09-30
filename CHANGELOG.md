@@ -1,5 +1,8 @@
 # Master
 
+- [DOCS] Add not explaining that automatic animation detection doesn't work with CSS transitions,
+  only with CSS animations.
+
 # 1.0.0-beta.20
 - [TESTING] Ensure the addon is tested in 2.4LTS
 - [BUGFIX] Fix bug in versions of Ember <= 2.6
