@@ -76,6 +76,21 @@ test('the selectChoose helper works when it receives the class of the trigger', 
   });
 });
 
+test('the selectChoose helper works when it receives the css selector of the chosen option as second arguments', function(assert) {
+  visit('/helpers-testing');
+
+  andThen(function() {
+    assert.equal(currentURL(), '/helpers-testing');
+    selectChoose('.select-with-class-in-trigger', '.ember-power-select-option:eq(2)');
+  });
+
+  andThen(function() {
+    assert.equal(find('.select-choose').text().trim(), 'three', 'The proper value has been selected');
+    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+  });
+});
+
 test('the selectChoose helper works when it receives a wildcard css class', function(assert) {
   visit('/helpers-testing-single-power-select');
   andThen(function() {

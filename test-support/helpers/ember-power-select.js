@@ -87,7 +87,7 @@ export function touchTrigger() {
 // Helpers for acceptance tests
 
 export default function() {
-  Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
+  Test.registerAsyncHelper('selectChoose', function(app, cssPath, valueOrSelector) {
     let $trigger = find(`${cssPath} .ember-power-select-trigger`);
 
     if ($trigger === undefined || $trigger.length === 0) {
@@ -104,10 +104,14 @@ export default function() {
 
     // Select the option with the given text
     andThen(function() {
-      let potentialTargets = $(`#${contentId} .ember-power-select-option:contains("${value}")`).toArray();
+      let potentialTargets = $(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
       let target;
+      if (potentialTargets.length === 0) {
+        // If treating the value as text doesn't gave use any result, let's try if it's a css selector
+        potentialTargets = $(`#${contentId} ${valueOrSelector}`).toArray();
+      }
       if (potentialTargets.length > 1) {
-        target = potentialTargets.filter((t) => t.textContent.trim() === value)[0] || potentialTargets[0];
+        target = potentialTargets.filter((t) => t.textContent.trim() === valueOrSelector)[0] || potentialTargets[0];
       } else {
         target = potentialTargets[0];
       }

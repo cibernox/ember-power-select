@@ -1,5 +1,8 @@
 # Master
 
+- [ENHANCEMENT] The `selectChose` helper now also allows to receive a CSS selector as second argument (instead of
+  the text value of the option). This makes easier for selects with complex HTML inside their options
+  to be interacted with.
 - [DOCS] Add not explaining that automatic animation detection doesn't work with CSS transitions,
   only with CSS animations.
 
