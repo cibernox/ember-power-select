@@ -94,6 +94,10 @@ export default function() {
       $trigger = find(cssPath);
     }
 
+    if ($trigger.length === 0) {
+      throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but no select was found using selector "${cssPath}"`);
+    }
+
     let contentId = `${$trigger.attr('aria-controls')}`;
     let $content = find(`#${contentId}`)
     // If the dropdown is closed, open it
@@ -115,6 +119,9 @@ export default function() {
       } else {
         target = potentialTargets[0];
       }
+      if (!target) {
+        throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`);
+      }
       nativeMouseUp(target);
     });
   });
@@ -125,6 +132,10 @@ export default function() {
     if ($trigger === undefined || $trigger.length === 0) {
       triggerPath = cssPath;
       $trigger = find(triggerPath);
+    }
+
+    if ($trigger.length === 0) {
+      throw new Error(`You called "selectSearch('${cssPath}', '${value}')" but no select was found using selector "${cssPath}"`);
     }
 
     let contentId = `${$trigger.attr('aria-controls')}`;
