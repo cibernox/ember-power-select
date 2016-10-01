@@ -40,11 +40,38 @@
   {{partial partialName}}
 {{/code-sample}}
 
+<h3>Handling of thenables and cancellables (p.e. ember-concurrecy)</h3>
+
 <p>
   It's also worth mentioning that Ember Power Select is smart enough to always prioritize the last request made,
   so in the best scenario avoids expensive repaintings, and in the worst case (when the second request
   resolves before the first), when the first resolves it doesn't override the most recent request.
 </p>
+
+<p>
+  Also, if the returned <em>thenable</em> is also a <em>cancellable</em> (it responds to a <code>.cancel()</code> method),
+  Ember Power Select will attempt to cancel once it isn't interested anymore in it's result. By example, using ember-concurrency's
+  tasks, if you close the component while a search task is still being processed, it gets cancelled saving a potentially
+  expensive operation that would be ignored anyway.
+</p>
+
+<p>
+  Open your dev tools and go to the network tab. I'll wait.
+</p>
+
+<p>
+  In this example below, if you keep typing, no search is fired until after 1500ms of idle time have elapsed.
+  And if before those 1500ms you clear the search or close the select, <strong>no request is made at all!</strong>
+</p>
+
+{{#code-sample hbs="custom-search-action-2.hbs" js="custom-search-action-2-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-sample}}
+
+<p>
+  Cool, eh? Now let's see how you can use all of this in testing.
+</p>
+
 
 <div class="doc-page-nav">
   {{#link-to 'public-pages.docs.styles' class="doc-page-nav-link-prev"}}&lt; Styles{{/link-to}}

@@ -1,5 +1,6 @@
 # Master
 
+- [ENHANCEMENT] Add support for cancellables (p.e ember-concurrecy tasks) in the search action.
 - [DOCS] Use `ember-code-snippet` to finally have proper syntax highlighting in DOCs. Now snippets are also
   evaluated as partials, which servers as an insurance policy agains typos.
 - [INTERNAL] Switch from JSHint to ESLint + `eslint-plugin-ember-suave` for better code uniformity.

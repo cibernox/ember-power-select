@@ -1,11 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  ajax: Ember.inject.service(),
+
   actions: {
     searchRepo(term) {
-      if (Ember.isBlank(term)) { return []; }
-      const url = `//api.github.com/search/repositories?q=${term}`;
-      return ajax({ url }).then(json => json.items);
+      let url = `https://api.github.com/search/repositories?q=${term}`;
+      return this.get('ajax').request(url).then((json) => json.items);
     }
-  }
+  },
 });
