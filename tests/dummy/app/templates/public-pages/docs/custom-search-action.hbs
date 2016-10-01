@@ -53,7 +53,7 @@
         searchRepo(term) {
           if (Ember.isBlank(term)) { return []; }
           const url = `//api.github.com/search/repositories?q=${term}`;
-          return ajax({ url }).then(json => json.items);
+          return ajax({ url }).then((json) => json.items);
         }
       }
     });

@@ -1,4 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import $ from 'jquery';
 import hbs from 'htmlbars-inline-precompile';
 import run from 'ember-runloop';
 import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
@@ -66,7 +67,7 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   clickTrigger();
   triggerKeydown($('.ember-power-select-search-input')[0], 40);
   triggerKeydown($('.ember-power-select-search-input')[0], 40);
-  assert.ok($('.ember-power-select-option[aria-current="true"]').text().trim(), 'LV: Latvia' ,'The hovered option was not highlighted because it\'s disabled');
+  assert.ok($('.ember-power-select-option[aria-current="true"]').text().trim(), 'LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
 });
 
 test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
@@ -128,7 +129,7 @@ test('BUGFIX: When after a search the only result is a disabled element, it isn\
   `);
 
   clickTrigger();
-  typeInSearch("Br");
+  typeInSearch('Br');
   assert.equal($('.ember-power-select-option[aria-current="true"]').length, 0, 'Nothing is highlighted');
   triggerKeydown($('.ember-power-select-search-input')[0], 13);
   assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
@@ -146,7 +147,7 @@ test('BUGFIX: When after a search there is two results and the first one is a di
   `);
 
   clickTrigger();
-  typeInSearch("o"); // Finds ["Portugal", "United Kingdom"]
+  typeInSearch('o'); // Finds ["Portugal", "United Kingdom"]
   assert.equal($('.ember-power-select-option').length, 2, 'There is two results');
   assert.equal($('.ember-power-select-option[aria-disabled="true"]').length, 1, 'One is disabled');
   assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
@@ -174,17 +175,19 @@ test('BUGFIX: When searching by pressing keys on a focused & closed select, disa
 test('The title of a group can be marked as disabled, and it is still disabled after filtering', function(assert) {
   assert.expect(2);
 
-  const options = [
-    { groupName: "Smalls", options: ["one", "two", "three"] },
-    { groupName: "Mediums", disabled: true, options: ["four", "five", "six"] },
-    { groupName: "Bigs", options: [
-        { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
-        { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
-        "thirteen"
+  let options = [
+    { groupName: 'Smalls', options: ['one', 'two', 'three'] },
+    { groupName: 'Mediums', disabled: true, options: ['four', 'five', 'six'] },
+    {
+      groupName: 'Bigs',
+      options: [
+        { groupName: 'Fairly big', options: ['seven', 'eight', 'nine'] },
+        { groupName: 'Really big', options: ['ten', 'eleven', 'twelve'] },
+        'thirteen'
       ]
     },
-    "one hundred",
-    "one thousand"
+    'one hundred',
+    'one thousand'
   ];
 
   this.options = options;
@@ -203,17 +206,20 @@ test('The title of a group can be marked as disabled, and it is still disabled a
 test('If a group is disabled, any options inside cannot be interacted with mouse', function(assert) {
   assert.expect(4);
 
-  const options = [
-    { groupName: "Smalls", options: ["one", "two", "three"] },
-    { groupName: "Mediums", options: ["four", "five", "six"] },
-    { groupName: "Bigs", disabled: true, options: [
-        { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
-        { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
-        "thirteen"
+  let options = [
+    { groupName: 'Smalls', options: ['one', 'two', 'three'] },
+    { groupName: 'Mediums', options: ['four', 'five', 'six'] },
+    {
+      groupName: 'Bigs',
+      disabled: true,
+      options: [
+        { groupName: 'Fairly big', options: ['seven', 'eight', 'nine'] },
+        { groupName: 'Really big', options: ['ten', 'eleven', 'twelve'] },
+        'thirteen'
       ]
     },
-    "one hundred",
-    "one thousand"
+    'one hundred',
+    'one thousand'
   ];
 
   this.options = options;

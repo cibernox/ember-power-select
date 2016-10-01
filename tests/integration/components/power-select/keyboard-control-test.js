@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
@@ -213,7 +214,7 @@ test('The component is focusable using the TAB key as any other kind of input', 
       {{option}}
     {{/power-select}}
   `);
-  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), "0", 'The trigger is reachable with TAB');
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '0', 'The trigger is reachable with TAB');
 });
 
 test('If the component is focused, pressing ENTER toggles it', function(assert) {

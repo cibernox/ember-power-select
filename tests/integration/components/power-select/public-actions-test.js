@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
@@ -438,7 +439,7 @@ test('if the `oninput` action of single selects returns false the search is canc
   assert.expect(1);
 
   this.numbers = numbers;
-  this.handleInput = (/*value, select, e*/) => {
+  this.handleInput = (/* value, select, e */) => {
     return false;
   };
 
@@ -457,7 +458,7 @@ test('if `oninput` action of multiple selects returns false the search is cancel
   assert.expect(1);
 
   this.numbers = numbers;
-  this.handleInput = (/*value, select, e*/) => {
+  this.handleInput = (/* value, select, e */) => {
     return false;
   };
 

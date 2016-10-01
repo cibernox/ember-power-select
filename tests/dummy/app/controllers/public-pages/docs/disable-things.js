@@ -9,6 +9,6 @@ export default Ember.Controller.extend({
     { name: 'Russia'                  },
     { name: 'Latvia', disabled: true  },
     { name: 'Brazil'                  },
-    { name: 'United Kingdom'          },
+    { name: 'United Kingdom'          }
   ]
 });

@@ -13,8 +13,10 @@ export default Ember.Controller.extend({
   },
 
   _performSearch(term, resolve, reject) {
-    if (isBlank(term)) { return resolve([]); }
+    if (isBlank(term)) {
+      return resolve([]);
+    }
     this.get('ajax').request(`https://api.github.com/search/repositories?q=${term}`)
-      .then(json => resolve(json.items), err => reject(err));
+      .then((json) => resolve(json.items), (err) => reject(err));
   }
 });

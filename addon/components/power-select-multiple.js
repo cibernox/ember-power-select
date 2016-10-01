@@ -34,13 +34,17 @@ export default Component.extend({
   actions: {
     handleOpen(select, e) {
       let action = this.get('onopen');
-      if (action && action(select, e) === false) { return false; }
+      if (action && action(select, e) === false) {
+        return false;
+      }
       this.focusInput();
     },
 
     handleFocus(select, e) {
       let action = this.get('onfocus');
-      if (action) { action(select, e); }
+      if (action) {
+        action(select, e);
+      }
       this.focusInput();
     },
 
@@ -82,6 +86,8 @@ export default Component.extend({
   // Methods
   focusInput() {
     let input = this.element.querySelector('.ember-power-select-trigger-multiple-input');
-    if (input) { input.focus(); }
+    if (input) {
+      input.focus();
+    }
   }
 });

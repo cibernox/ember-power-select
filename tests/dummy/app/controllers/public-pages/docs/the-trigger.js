@@ -7,11 +7,11 @@ const countries = [
   { name: 'Russia',         flagUrl: '/flags/ru.svg', population: 146588880 },
   { name: 'Latvia',         flagUrl: '/flags/lv.svg', population: 1978300 },
   { name: 'Brazil',         flagUrl: '/flags/br.svg', population: 204921000 },
-  { name: 'United Kingdom', flagUrl: '/flags/gb.svg', population: 64596752 },
+  { name: 'United Kingdom', flagUrl: '/flags/gb.svg', population: 64596752 }
 ];
 
 export default Ember.Controller.extend({
-  countries: countries,
+  countries,
   destination: countries[2],
   names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
   name: 'Pluto'

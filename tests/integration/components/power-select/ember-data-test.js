@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
@@ -82,10 +83,10 @@ test('The `selected` option can be an async belongsTo', function(assert) {
   assert.expect(6);
 
   let pets = server.createList('pet', 10);
-  let mainUser = server.create('user', { petIds: pets.map(u => u.id), bestieId: pets[3].id });
+  let mainUser = server.create('user', { petIds: pets.map((u) => u.id), bestieId: pets[3].id });
 
   Ember.run(() => {
-    this.store.findRecord('user', mainUser.id).then(record => {
+    this.store.findRecord('user', mainUser.id).then((record) => {
       this.mainUser = record;
       this.render(hbs`
         {{#power-select options=mainUser.pets selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}

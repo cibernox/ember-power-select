@@ -13,7 +13,7 @@ test('selectChoose helper opens the select and selects the option with the given
 
   andThen(function() {
     assert.equal(find('.select-choose .ember-power-select-trigger').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
     assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
   });
 });
@@ -32,7 +32,7 @@ test('selectChoose selects the option with the given text on an already opened s
 
   andThen(function() {
     assert.equal(find('.select-choose .ember-power-select-trigger').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
     assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
   });
 });
@@ -45,7 +45,7 @@ test('the selectChoose helper works with an onopen function that fetches data as
   });
   andThen(function() {
     assert.equal(find('.select-choose-onopen .ember-power-select-trigger').text().trim().split(' ')[0].trim(), 'three', 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The select is closed');
+    assert.equal(find('.ember-power-select-options').length, 0, 'The select is closed');
     assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
   });
 });
@@ -59,7 +59,7 @@ test('the selectChoose helper works with an onopen function that fetches data as
   andThen(function() {
     assert.equal(find('.select-choose-onopen-multiple .ember-power-select-multiple-option').length, 1, 'One options has been selected');
     assert.ok(/three/.test(find('.select-choose-onopen-multiple .ember-power-select-multiple-option:eq(0)').text().trim()), 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
   });
 });
 
@@ -71,7 +71,7 @@ test('the selectChoose helper works when it receives the class of the trigger', 
   });
   andThen(function() {
     assert.equal(find('.select-with-class-in-trigger').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
     assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
   });
 });
@@ -86,7 +86,7 @@ test('the selectChoose helper works when it receives the css selector of the cho
 
   andThen(function() {
     assert.equal(find('.select-choose').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
     assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
   });
 });
@@ -99,7 +99,7 @@ test('the selectChoose helper works when it receives a wildcard css class', func
   });
   andThen(function() {
     assert.equal(find('.select-choose').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal($('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
     assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
   });
 });
@@ -111,7 +111,7 @@ test('selectChoose helper throws an explicative error when no select is found in
   andThen(function() {
     assert.equal(currentURL(), '/helpers-testing');
     selectChoose('.there-is-no-select', 'three').catch(function(error) {
-      assert.equal(error.message, `You called "selectChoose('.there-is-no-select', 'three')" but no select was found using selector ".there-is-no-select"`);
+      assert.equal(error.message, 'You called "selectChoose(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"');
     });
   });
 });
@@ -123,7 +123,7 @@ test('selectChoose helper throws an explicative error when no option matches the
   andThen(function() {
     assert.equal(currentURL(), '/helpers-testing');
     selectChoose('.select-choose', 'non-existent-option').catch(function(error) {
-      assert.equal(error.message, `You called "selectChoose('.select-choose', 'non-existent-option')" but "non-existent-option" didn't match any option`);
+      assert.equal(error.message, 'You called "selectChoose(\'.select-choose\', \'non-existent-option\')" but "non-existent-option" didn\'t match any option');
     });
   });
 });
@@ -246,7 +246,7 @@ test('the selectSearch helper throws an explicative error when no select is foun
   andThen(function() {
     assert.equal(currentURL(), '/helpers-testing');
     selectSearch('.there-is-no-select', 'three').catch(function(error) {
-      assert.equal(error.message, `You called "selectSearch('.there-is-no-select', 'three')" but no select was found using selector ".there-is-no-select"`);
+      assert.equal(error.message, 'You called "selectSearch(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"');
     });
   });
 });
@@ -309,7 +309,7 @@ test('clearSelected removes selected option', function(assert) {
   });
 });
 
-test('clearSelected works with async onchange action', function (assert) {
+test('clearSelected works with async onchange action', function(assert) {
   visit('/helpers-testing');
 
   andThen(function() {

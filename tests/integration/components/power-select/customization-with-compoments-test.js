@@ -1,4 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import $ from 'jquery';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';

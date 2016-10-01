@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
@@ -74,7 +75,7 @@ test('Doing mousedown the clear button removes the selection but does not open t
     assert.ok(dropdown.actions.close, 'The onchange action was called with the dropdown object as second argument');
     this.set('selected', selected);
   };
-  this.selected = "three";
+  this.selected = 'three';
   this.render(hbs`
     {{#power-select options=numbers selected=selected allowClear=true onchange=onChange as |option|}}
       {{option}}
