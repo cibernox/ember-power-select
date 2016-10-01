@@ -1,18 +1,19 @@
 import Ember from 'ember';
+const { computed } = Ember;
 
 export default Ember.Component.extend({
   tagName: 'article',
   classNames: ['code-sample'],
-  tabs: ['template', 'javascript', 'result'],
-  activeTab: 'result',
+  showResult: true,
 
-  // Hooks
-  didInsertElement() {
-    this._super(...arguments);
-    if (window.hljs) {
-      this.$('pre').each(function(i, block) {
-        window.hljs.highlightBlock(block, { languages: ['js', 'hbs'] });
-      });
+  activeTab: computed('showResult', function() {
+    if (this.get('showResult')) {
+      return 'result';
     }
-  }
+    return 'js';
+  }),
+
+  partialName: computed('hbs', function() {
+    return `snippets/${this.get('hbs').replace('.hbs', '')}`;
+  })
 });

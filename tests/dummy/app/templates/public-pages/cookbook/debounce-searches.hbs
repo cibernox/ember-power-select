@@ -10,52 +10,8 @@
   You can do that yourself with a few lines of code:
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select
-      search=(action "searchRepo")
-      selected=selected
-      onchange=(action (mut selected))
-      as |repo|
-    }}
-      \{{repo.full_name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    import Ember from 'ember';
-
-    const { run, isBlank, inject } = Ember;
-
-    export default Ember.Controller.extend({
-      ajax: inject.service(),
-
-      actions: {
-        searchRepo(term) {
-          return new Ember.RSVP.Promise((resolve, reject) => {
-            run.debounce(this, this._performSearch, term, resolve, reject, 600);
-          });
-        }
-      },
-
-      _performSearch(term, resolve, reject) {
-        if (isBlank(term)) { return resolve([]); }
-        this.get('ajax').request(`https//api.github.com/search/repositories?q=${term}`)
-          .then((json) => resolve(json.items), reject);
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    <div style="margin: 0 auto; max-width: 250px;">
-      {{#power-select
-        search=(action "searchRepo")
-        selected=selected
-        onchange=(action (mut selected))
-        as |repo|
-      }}
-        {{repo.full_name}}
-      {{/power-select}}
-    </div>
-  </div>
+{{#code-sample hbs="debounce-searches-1.hbs" js="debounce-searches-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>

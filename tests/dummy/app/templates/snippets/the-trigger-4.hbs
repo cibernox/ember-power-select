@@ -1,0 +1,9 @@
+{{#power-select
+  options=names
+  selected=name
+  allowClear=true
+  onchange=(action (mut name))
+  as |name|
+}}
+  {{name}}
+{{/power-select}}

@@ -17,6 +17,5 @@ const groupedNumbers = [
 
 export default Ember.Controller.extend({
   groupedNumbers,
-  selectedNumber: null,
-  tabsNoExample: ['template', 'javascript']
+  selectedNumber: null
 });
