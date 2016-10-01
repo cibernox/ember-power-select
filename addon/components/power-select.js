@@ -14,7 +14,9 @@ import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptio
 const assign = Object.assign || function EmberAssign(original, ...args) {
   for (let i = 0; i < args.length; i++) {
     let arg = args[i];
-    if (!arg) { continue; }
+    if (!arg) {
+      continue;
+    }
 
     let updates = Object.keys(arg);
 
@@ -28,7 +30,9 @@ const assign = Object.assign || function EmberAssign(original, ...args) {
 };
 
 function concatWithProperty(strings, property) {
-  if (property) { strings.push(property); }
+  if (property) {
+    strings.push(property);
+  }
   return strings.join(' ');
 }
 
@@ -67,7 +71,7 @@ const initialState = {
   isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
   // Private API (for now)
   _expirableSearchText: '',
-  _activeSearch: null,
+  _activeSearch: null
 };
 
 export default Component.extend({
@@ -81,7 +85,7 @@ export default Component.extend({
   matcher: fallbackIfUndefined(defaultMatcher),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
-  searchMessage: fallbackIfUndefined("Type to search"),
+  searchMessage: fallbackIfUndefined('Type to search'),
   closeOnSelect: fallbackIfUndefined(true),
 
   afterOptionsComponent: fallbackIfUndefined(null),
@@ -118,11 +122,13 @@ export default Component.extend({
 
   // CPs
   selected: computed({
-    get() { return null; },
+    get() {
+      return null;
+    },
     set(_, selected) {
       if (selected && selected.then) {
         this.activeSelectedPromise = selected;
-        selected.then(selection => {
+        selected.then((selection) => {
           if (this.activeSelectedPromise === selected) {
             this.updateSelection(selection);
           }
@@ -135,7 +141,9 @@ export default Component.extend({
   }),
 
   options: computed({
-    get() { return []; },
+    get() {
+      return [];
+    },
     set(_, options, oldOptions) {
       if (options === oldOptions) {
         return options;
@@ -143,7 +151,7 @@ export default Component.extend({
       if (options && options.then) {
         this.updateState({ loading: true });
         this.activeOptionsPromise = options;
-        options.then(resolvedOptions => {
+        options.then((resolvedOptions) => {
           if (this.activeOptionsPromise === options) {
             this.updateOptions(resolvedOptions);
           }
@@ -184,18 +192,18 @@ export default Component.extend({
     return concatWithProperty(classes, this.get('dropdownClass'));
   }),
 
-  mustShowSearchMessage: computed('publicAPI.{searchText,resultsCount}', 'search', 'searchMessage', function(){
+  mustShowSearchMessage: computed('publicAPI.{searchText,resultsCount}', 'search', 'searchMessage', function() {
     let publicAPI = this.get('publicAPI');
-    return publicAPI.searchText.length === 0 &&
-      !!this.get('search') && !!this.get('searchMessage') &&
-      publicAPI.resultsCount === 0;
+    return publicAPI.searchText.length === 0
+      && !!this.get('search') && !!this.get('searchMessage')
+      && publicAPI.resultsCount === 0;
   }),
 
   mustShowNoMessages: computed('search', 'publicAPI.{lastSearchedText,resultsCount,loading}', function() {
     let publicAPI = this.get('publicAPI');
-    return !publicAPI.loading &&
-      publicAPI.resultsCount === 0 &&
-      (!this.get('search') || publicAPI.lastSearchedText.length > 0);
+    return !publicAPI.loading
+      && publicAPI.resultsCount === 0
+      && (!this.get('search') || publicAPI.lastSearchedText.length > 0);
   }),
 
   // Actions
@@ -204,7 +212,7 @@ export default Component.extend({
       let publicAPI = assign({}, this.get('publicAPI'), dropdown);
       publicAPI.actions = assign({}, dropdown.actions, this._publicAPIActions);
       this.setProperties({
-        publicAPI: publicAPI,
+        publicAPI,
         optionsId: `ember-power-select-options-${publicAPI.uniqueId}`
       });
       let action = this.get('registerAPI');
@@ -232,7 +240,9 @@ export default Component.extend({
       if (action && action(this.get('publicAPI'), e) === false) {
         return false;
       }
-      if (e) { this.openingEvent = null; }
+      if (e) {
+        this.openingEvent = null;
+      }
       this.updateState({ highlighted: undefined });
     },
 
@@ -246,12 +256,14 @@ export default Component.extend({
       publicAPI.actions.search(term);
     },
 
-    highlight(option /*, e */) {
-      if (option && get(option, 'disabled')) { return; }
+    highlight(option /* , e */) {
+      if (option && get(option, 'disabled')) {
+        return;
+      }
       this.updateState({ highlighted: option });
     },
 
-    select(selected /*, e */) {
+    select(selected /* , e */) {
       let publicAPI = this.get('publicAPI');
       if (publicAPI.selected !== selected) {
         this.get('onchange')(selected, publicAPI);
@@ -271,7 +283,9 @@ export default Component.extend({
     choose(selected, e) {
       if (e && e.clientY) {
         if (this.openingEvent && this.openingEvent.clientY) {
-          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) { return; }
+          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
+            return;
+          }
         }
       }
       let publicAPI = this.get('publicAPI');
@@ -306,13 +320,19 @@ export default Component.extend({
       return this._routeKeydown(e);
     },
 
-    scrollTo(option /*, e */) {
-      if (!self.document || !option) { return; }
+    scrollTo(option /* , e */) {
+      if (!self.document || !option) {
+        return;
+      }
       let publicAPI = this.get('publicAPI');
-      let optionsList = self.document.getElementById('ember-power-select-options-' + publicAPI.uniqueId);
-      if (!optionsList) { return; }
+      let optionsList = self.document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
+      if (!optionsList) {
+        return;
+      }
       let index = indexOfOption(publicAPI.results, option);
-      if (index === -1) { return; }
+      if (index === -1) {
+        return;
+      }
       let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
       let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
       let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
@@ -384,12 +404,14 @@ export default Component.extend({
     this.updateState({ highlighted });
   },
 
-  buildSelection(option /*, select */) {
+  buildSelection(option /* , select */) {
     return option;
   },
 
   _updateOptionsAndResults(opts) {
-    if (get(this, 'isDestroyed')) { return; }
+    if (get(this, 'isDestroyed')) {
+      return;
+    }
     let options = toPlainArray(opts);
     let publicAPI;
     if (this.get('search')) { // external search
@@ -405,7 +427,9 @@ export default Component.extend({
   },
 
   _updateSelectedArray(selection) {
-    if (get(this, 'isDestroyed')) { return; }
+    if (get(this, 'isDestroyed')) {
+      return;
+    }
     this.updateState({ selected: toPlainArray(selection) });
   },
 
@@ -436,7 +460,9 @@ export default Component.extend({
     } else if (search.then) {
       publicAPI = this.updateState({ loading: true, _activeSearch: search });
       search.then((results) => {
-        if (this.get('isDestroyed')) { return; }
+        if (this.get('isDestroyed')) {
+          return;
+        }
         if (this.get('publicAPI')._activeSearch === search) {
           let resultsArray = toPlainArray(results);
           this.updateState({
@@ -448,7 +474,9 @@ export default Component.extend({
           this.resetHighlighted();
         }
       }, () => {
-        if (this.get('isDestroyed')) { return; }
+        if (this.get('isDestroyed')) {
+          return;
+        }
         if (this.get('publicAPI')._activeSearch === search) {
           this.updateState({ lastSearchedText: term, loading: false });
         }

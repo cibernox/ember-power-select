@@ -49,8 +49,8 @@ export default Ember.Component.extend({
     },
 
     search(term) {
-      const normalizedTerm = term.toLowerCase();
-      const results = this.get('currentOptions').filter(o => {
+      let normalizedTerm = term.toLowerCase();
+      let results = this.get('currentOptions').filter((o) => {
         if (o.parentLevel) {
           return normalizedTerm === '';
         } else if (get(o, 'levelName')) {

@@ -8,7 +8,9 @@ export function isGroup(entry) {
 export function countOptions(collection) {
   let counter = 0;
   (function walk(collection) {
-    if (!collection) { return null; }
+    if (!collection) {
+      return null;
+    }
     for (let i = 0; i < get(collection, 'length'); i++) {
       let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
       if (isGroup(entry)) {
@@ -24,12 +26,16 @@ export function countOptions(collection) {
 export function indexOfOption(collection, option) {
   let index = 0;
   return (function walk(collection) {
-    if (!collection) { return null; }
+    if (!collection) {
+      return null;
+    }
     for (let i = 0; i < get(collection, 'length'); i++) {
       let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
       if (isGroup(entry)) {
         let result = walk(get(entry, 'options'));
-        if (result > -1) { return result; }
+        if (result > -1) {
+          return result;
+        }
       } else if (entry === option) {
         return index;
       } else {
@@ -43,14 +49,18 @@ export function indexOfOption(collection, option) {
 export function optionAtIndex(originalCollection, index) {
   let counter = 0;
   return (function walk(collection, ancestorIsDisabled) {
-    if (!collection || index < 0) { return { disabled: false, option: undefined }; }
+    if (!collection || index < 0) {
+      return { disabled: false, option: undefined };
+    }
     let localCounter = 0;
     let length = get(collection, 'length');
     while (counter <= index && localCounter < length) {
       let entry = collection.objectAt ? collection.objectAt(localCounter) : collection[localCounter];
       if (isGroup(entry)) {
         let found = walk(get(entry, 'options'), ancestorIsDisabled || !!get(entry, 'disabled'));
-        if (found) { return found; }
+        if (found) {
+          return found;
+        }
       } else if (counter === index) {
         return { disabled: ancestorIsDisabled || !!get(entry, 'disabled'), option: entry };
       } else {
@@ -76,8 +86,8 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
           }
           opts.push(groupCopy);
         }
-      } else {
-        if (matcher(entry, text) >= 0) { opts.push(entry); }
+      } else if (matcher(entry, text) >= 0) {
+        opts.push(entry);
       }
     }
   }

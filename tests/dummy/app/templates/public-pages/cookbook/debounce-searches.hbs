@@ -40,7 +40,7 @@
       _performSearch(term, resolve, reject) {
         if (isBlank(term)) { return resolve([]); }
         this.get('ajax').request(`https//api.github.com/search/repositories?q=${term}`)
-          .then(json => resolve(json.items), reject);
+          .then((json) => resolve(json.items), reject);
       }
     });
   </pre>

@@ -33,11 +33,11 @@
   </pre>
   <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
     const groupedNumbers = [
-      { groupName: "Smalls", options: ["one", "two", "three"] },
+      { groupName: 'Smalls', options: ['one', 'two', 'three'] },
       { groupName: "Mediums", options: ["four", "five", "six"] },
       { groupName: "Bigs", options: [
           { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
-          { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
+          { groupName: "Really big", options: ['ten', 'eleven', 'twelve'] },
           "thirteen"
         ]
       },
@@ -294,7 +294,7 @@
 
     search(term) {
       const normalizedTerm = term.toLowerCase();
-      const results = this.get('currentOptions').filter(o => {
+      const results = this.get('currentOptions').filter((o) => {
         if (o.parentLevel) {
           return normalizedTerm === '';
         } else if (get(o, 'levelName')) {

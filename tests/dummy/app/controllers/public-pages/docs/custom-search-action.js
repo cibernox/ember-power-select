@@ -7,9 +7,11 @@ export default Ember.Controller.extend({
 
   actions: {
     searchRepo(term) {
-      if (isBlank(term)) { return []; }
-      const url = `https://api.github.com/search/repositories?q=${term}`;
-      return this.get('ajax').request(url).then(json => json.items);
+      if (isBlank(term)) {
+        return [];
+      }
+      let url = `https://api.github.com/search/repositories?q=${term}`;
+      return this.get('ajax').request(url).then((json) => json.items);
     }
   }
 });

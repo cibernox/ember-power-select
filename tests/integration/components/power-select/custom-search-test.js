@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
@@ -59,7 +60,7 @@ test('The search function can return an array and those options get rendered', f
   assert.expect(1);
 
   this.searchFn = function(term) {
-    return numbers.filter(str => str.indexOf(term) > -1);
+    return numbers.filter((str) => str.indexOf(term) > -1);
   };
 
   this.render(hbs`
@@ -69,7 +70,7 @@ test('The search function can return an array and those options get rendered', f
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 7);
 });
 
@@ -79,7 +80,7 @@ test('The search function can return a promise that resolves to an array and tho
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -91,7 +92,7 @@ test('The search function can return a promise that resolves to an array and tho
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
 
   return wait().then(function() {
     assert.equal($('.ember-power-select-option').length, 7);
@@ -104,7 +105,7 @@ test('While the async search is being performed the "Type to search" dissapears 
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -117,7 +118,7 @@ test('While the async search is being performed the "Type to search" dissapears 
 
   clickTrigger();
   assert.ok(/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message is displayed');
-  typeInSearch("teen");
+  typeInSearch('teen');
   assert.ok(!/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message dissapeared');
   assert.ok(/Loading options\.\.\./.test($('.ember-power-select-dropdown').text()), '"Loading options..." message appears');
   return wait();
@@ -128,7 +129,9 @@ test('When the search resolves to an empty array then the "No results found" mes
 
   this.searchFn = function() {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() { resolve([]); }, 10);
+      Ember.run.later(function() {
+        resolve([]);
+      }, 10);
     });
   };
 
@@ -139,7 +142,7 @@ test('When the search resolves to an empty array then the "No results found" mes
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   return wait().then(function() {
     assert.ok(/No results found/.test($('.ember-power-select-option').text()), 'The default "No results" message renders');
   });
@@ -150,7 +153,9 @@ test('When the search resolves to an empty array then the custom "No results" me
 
   this.searchFn = function() {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() { resolve([]); }, 10);
+      Ember.run.later(function() {
+        resolve([]);
+      }, 10);
     });
   };
 
@@ -161,7 +166,7 @@ test('When the search resolves to an empty array then the custom "No results" me
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   return wait().then(function() {
     assert.ok(/Meec\. Try again/.test($('.ember-power-select-option').text()), 'The customized "No results" message renders');
   });
@@ -172,7 +177,9 @@ test('When the search resolves to an empty array then the custom alternate block
 
   this.searchFn = function() {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() { resolve([]); }, 10);
+      Ember.run.later(function() {
+        resolve([]);
+      }, 10);
     });
   };
 
@@ -185,7 +192,7 @@ test('When the search resolves to an empty array then the custom alternate block
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   return wait().then(function() {
     assert.equal($('.ember-power-select-dropdown .foo-bar').length, 1, 'The alternate block message gets rendered');
   });
@@ -213,7 +220,7 @@ test('When the search resolves to an empty array then the custom alternate block
 //   typeInSearch("tee");
 
 //   setTimeout(function() {
-//     typeInSearch("teen");
+//     typeInSearch('teen');
 //   }, 50);
 
 //   setTimeout(function() {
@@ -230,7 +237,7 @@ test('On an empty select, when the search resolves, the first element is highlig
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -242,7 +249,7 @@ test('On an empty select, when the search resolves, the first element is highlig
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
 
   return wait().then(function() {
     assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
@@ -257,7 +264,7 @@ test('On an select with a selected value, if after a search this value is not am
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -270,7 +277,7 @@ test('On an select with a selected value, if after a search this value is not am
 
   clickTrigger();
   assert.equal($('.ember-power-select-option:eq(2)').attr('aria-current'), 'true', 'The 3rd result is highlighted');
-  typeInSearch("teen");
+  typeInSearch('teen');
 
   return wait().then(function() {
     assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
@@ -280,7 +287,7 @@ test('On an select with a selected value, if after a search this value is not am
 test('Closing a component with a custom search cleans the search box and the results list', function(assert) {
   assert.expect(5);
   this.searchFn = function(term) {
-    return RSVP.resolve(numbers.filter(str => str.indexOf(term) > -1));
+    return RSVP.resolve(numbers.filter((str) => str.indexOf(term) > -1));
   };
 
   this.render(hbs`
@@ -291,7 +298,7 @@ test('Closing a component with a custom search cleans the search box and the res
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 7, 'Results are filtered');
   assert.equal($('.ember-power-select-search-input').val(), 'teen');
   Ember.run(() => {
@@ -311,7 +318,7 @@ test('When received both options and search, those options are shown when the dr
   this.searchFn = (term) => {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 50);
     });
   };
@@ -325,7 +332,7 @@ test('When received both options and search, those options are shown when the dr
 
   clickTrigger();
   assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
-  typeInSearch("teen");
+  typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown and also the loading message');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...');
   return wait().then(function() {
@@ -339,7 +346,7 @@ test('Don\'t return from the search action and update the options instead also w
   this.selectedOptions = numbers;
   this.searchFn = (term) => {
     Ember.run.later(() => {
-      this.set('selectedOptions', numbers.filter(str => str.indexOf(term) > -1));
+      this.set('selectedOptions', numbers.filter((str) => str.indexOf(term) > -1));
     }, 20);
   };
 
@@ -352,7 +359,7 @@ test('Don\'t return from the search action and update the options instead also w
 
   clickTrigger();
   assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
-  typeInSearch("teen");
+  typeInSearch('teen');
 
   return wait().then(function() {
     assert.equal($('.ember-power-select-option').length, 7);
@@ -369,7 +376,7 @@ test('Setting the options to a promise from the custom search function works (an
     searchCalls++;
     let promise = new RSVP.Promise(function(resolve) {
       Ember.run.later(() => {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 30);
     });
     this.set('selectedOptions', promise);
@@ -384,14 +391,14 @@ test('Setting the options to a promise from the custom search function works (an
 
   clickTrigger();
   assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
-  typeInSearch("teen");
+  typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown plus the loading message');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
 
   setTimeout(function() {
     assert.equal(searchCalls, 1, 'The search was called only once');
     assert.equal($('.ember-power-select-option').length, 7);
-    typeInSearch("seven");
+    typeInSearch('seven');
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
     assert.equal($('.ember-power-select-option').length, 8);
   }, 40);
@@ -400,7 +407,7 @@ test('Setting the options to a promise from the custom search function works (an
     assert.equal(searchCalls, 2, 'The search was called only twice');
     assert.equal($('.ember-power-select-option').length, 8);
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'It is still searching the previous result');
-    typeInSearch("four");
+    typeInSearch('four');
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
     assert.equal($('.ember-power-select-option').length, 8);
   }, 60);
@@ -419,7 +426,7 @@ test('If you delete the last char of the input before the previous promise resol
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       setTimeout(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -431,12 +438,12 @@ test('If you delete the last char of the input before the previous promise resol
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   setTimeout(function() {
-    typeInSearch("t");
+    typeInSearch('t');
   }, 150);
   setTimeout(function() {
-    typeInSearch("");
+    typeInSearch('');
   }, 200);
   setTimeout(function() {
     assert.equal($('.ember-power-select-option').length, numbers.length, 'All the options are displayed after clearing the search');
@@ -452,7 +459,7 @@ test('The lastSearchedText of the yielded publicAPI in single selects is updated
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       setTimeout(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -464,10 +471,10 @@ test('The lastSearchedText of the yielded publicAPI in single selects is updated
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   setTimeout(function() {
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the lastSearchedText have updated');
-    typeInSearch("four");
+    typeInSearch('four');
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
     assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the lastSearchedText are still the same because the search has not finished yet');
     done();
@@ -481,7 +488,7 @@ test('The lastSearchedText of the yielded publicAPI in multiple selects is updat
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       setTimeout(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -493,10 +500,10 @@ test('The lastSearchedText of the yielded publicAPI in multiple selects is updat
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   setTimeout(function() {
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
-    typeInSearch("four");
+    typeInSearch('four');
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
     assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
     done();
@@ -512,7 +519,7 @@ test('BUGFIX: Destroy a component why an async search is pending does not cause 
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       setTimeout(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 200);
     });
   };
@@ -526,7 +533,7 @@ test('BUGFIX: Destroy a component why an async search is pending does not cause 
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
   this.set('visible', false);
   setTimeout(() => {
     done();
@@ -538,7 +545,7 @@ test('BUGFIX: When the given options are a promise and a search function is prov
   this.numbersPromise = RSVP.Promise.resolve(numbers);
 
   this.searchFn = function(term) {
-    return numbers.filter(str => str.indexOf(term) > -1);
+    return numbers.filter((str) => str.indexOf(term) > -1);
   };
 
   this.render(hbs`
@@ -549,9 +556,9 @@ test('BUGFIX: When the given options are a promise and a search function is prov
 
   clickTrigger();
   assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options');
-  typeInSearch("teen");
+  typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 options');
-  typeInSearch("");
+  typeInSearch('');
   assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options again§');
 });
 

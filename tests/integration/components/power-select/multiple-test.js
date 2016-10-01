@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseDown, nativeMouseUp } from '../../../helpers/ember-power-select';
@@ -181,7 +182,7 @@ test('The filtering specifying a searchkey works in multiple model', function(as
     { name: 'João',   surname: 'Jin' },
     { name: 'Miguel', surname: 'Camba' },
     { name: 'Marta',  surname: 'Stinson' },
-    { name: 'Lisa',   surname: 'Simpson' },
+    { name: 'Lisa',   surname: 'Simpson' }
   ];
 
   this.render(hbs`
@@ -220,7 +221,7 @@ test('The filtering specifying a custom matcher works in multiple model', functi
 
   clickTrigger();
   typeInSearch('on');
-  assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
+  assert.equal($('.ember-power-select-option').text().trim(), 'No results found', 'No number ends in "on"');
   typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
 });
@@ -232,7 +233,7 @@ test('The search using a custom action works int multiple mode', function(assert
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -244,7 +245,7 @@ test('The search using a custom action works int multiple mode', function(assert
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option').length, 7);
@@ -603,7 +604,7 @@ test('Typing in the input opens the component and filters the options also with 
   this.search = (term) => {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };

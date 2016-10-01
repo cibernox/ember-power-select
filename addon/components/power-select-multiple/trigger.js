@@ -29,7 +29,7 @@ export default Component.extend({
     let inputStyle = this.input ? window.getComputedStyle(this.input) : null;
     this.inputFont = inputStyle ? `${ inputStyle.fontStyle } ${  inputStyle.fontVariant} ${ inputStyle.fontWeight } ${ inputStyle.fontSize}/${ inputStyle.lineHeight } ${ inputStyle.fontFamily }` : null;
     let optionsList = document.getElementById(`ember-power-select-multiple-options-${select.uniqueId}`);
-    let chooseOption = e => {
+    let chooseOption = (e) => {
       let selectedIndex = e.target.getAttribute('data-selected-index');
       if (selectedIndex) {
         e.stopPropagation();
@@ -70,7 +70,9 @@ export default Component.extend({
   }),
 
   maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
-    if (isIE) { return null; }
+    if (isIE) {
+      return null;
+    }
     let select = this.get('select');
     return (!select.selected || get(select.selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
   }),
@@ -79,7 +81,9 @@ export default Component.extend({
   actions: {
     onInput(e) {
       let action = this.get('onInput');
-      if (action &&  action(e) === false) { return; }
+      if (action &&  action(e) === false) {
+        return;
+      }
       this.get('select').actions.open(e);
     },
 
