@@ -1,0 +1,12 @@
+{{#power-select
+  options=emptyList
+  selected=selected
+  onchange=(action (mut selected))
+  as |name|
+}}
+  {{name}}
+{{else}}
+  <div class="text-center">
+    <img width="150" src="/grumpy-cat.png">
+  </div>
+{{/power-select}}

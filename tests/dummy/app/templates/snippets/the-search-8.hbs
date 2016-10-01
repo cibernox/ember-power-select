@@ -1,0 +1,20 @@
+Single
+{{#power-select
+  options=names
+  searchEnabled=false
+  selected=user
+  onchange=(action (mut user))
+  as |name|
+}}
+  {{name}}
+{{/power-select}}
+Multiple
+{{#power-select-multiple
+  options=names
+  searchEnabled=false
+  selected=users
+  onchange=(action (mut users))
+  as |name|
+}}
+  {{name}}
+{{/power-select-multiple}}

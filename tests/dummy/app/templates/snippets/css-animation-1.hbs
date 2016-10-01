@@ -1,0 +1,11 @@
+{{#power-select
+  triggerClass="bootstrap-theme-trigger"
+  dropdownClass="slide-fade bootstrap-theme-dropdown"
+  searchField="name"
+  options=options
+  selected=country
+  onchange=(action (mut country))
+  as |country|
+}}
+  <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+{{/power-select}}

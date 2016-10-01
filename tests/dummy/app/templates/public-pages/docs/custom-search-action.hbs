@@ -36,39 +36,8 @@
   </ul>
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select
-      search=(action "searchRepo")
-      selected=selected
-      onchange=(action (mut selected))
-      as |repo|
-    }}
-      \{{repo.full_name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      actions: {
-        searchRepo(term) {
-          if (Ember.isBlank(term)) { return []; }
-          const url = `//api.github.com/search/repositories?q=${term}`;
-          return ajax({ url }).then((json) => json.items);
-        }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select
-      search=(action "searchRepo")
-      selected=selected
-      onchange=(action (mut selected))
-      as |repo|
-    }}
-      {{repo.full_name}}
-    {{/power-select}}
-    (It might fail if the API limit is exceeded)
-  </div>
+{{#code-sample hbs="custom-search-action-1.hbs" js="custom-search-action-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>

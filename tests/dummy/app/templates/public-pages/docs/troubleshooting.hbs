@@ -44,29 +44,6 @@
   <code>application.hbs</code>.
 </p>
 
-<h3>I keep getting <code>\{{power-select}} requires an `onchange` function</code></h3>
-
-<p>
-  Check if you're using Ember 1.13.9+.
-</p>
-
-<h3>In acceptance tests the <code>fillIn</code> helper doesn't work</h3>
-
-<p>
-  This is due to a bug in the <code>fillIn</code> helper that fixed in Ember 2.0. Until you update your app
-  to 2.0+ you must trigger an <code>input</code> event after the filling the search box.
-
-  <pre>
-    fillIn('.ember-power-select-search-input', 'foo');
-    triggerEvent('.ember-power-select-search-input', 'input');
-
-    andThen(() => {
-      // Do your assertions
-    });
-  </pre>
-</p>
-
-
 <div class="doc-page-nav">
   {{#link-to 'public-pages.docs.test-helpers' class="doc-page-nav-link-prev"}}&lt; Test helpers{{/link-to}}
   {{#link-to 'public-pages.docs.architecture' class="doc-page-nav-link-next"}}Architecture &gt;{{/link-to}}

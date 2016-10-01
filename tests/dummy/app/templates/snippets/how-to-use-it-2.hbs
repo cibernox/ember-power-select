@@ -1,0 +1,8 @@
+{{#power-select
+  options=countries
+  selected=destination
+  onchange=(action "foo")
+  as |country|
+}}
+  <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+{{/power-select}}

@@ -1,0 +1,10 @@
+{{#power-select
+  options=names
+  renderInPlace=true
+  selected=name
+  onchange=(action (mut name))
+  as |name|
+}}
+  {{name}}
+{{/power-select}}
+(Looks the same but inspect the DOM to see the difference)
