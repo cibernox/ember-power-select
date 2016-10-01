@@ -1,5 +1,8 @@
 # Master
 
+- [DOCS] Use `ember-code-snippet` to finally have proper syntax highlighting in DOCs. Now snippets are also
+  evaluated as partials, which servers as an insurance policy agains typos.
+- [INTERNAL] Switch from JSHint to ESLint + `eslint-plugin-ember-suave` for better code uniformity.
 - [ENHANCEMENT] The `selectChoose` and `selectSearch` helpers now throw explicative errors when something goes wrong.
 - [ENHANCEMENT] The `selectChoose` helper now also allows to receive a CSS selector as second argument (instead of
   the text value of the option). This makes easier for selects with complex HTML inside their options
