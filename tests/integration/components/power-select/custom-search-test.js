@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import $ from 'jquery';
+import { task, timeout } from 'ember-concurrency';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
@@ -576,3 +577,248 @@ test('BUGFIX: If the user provides a custom matcher, that matcher receives the e
 
   typeInSearch('po');
 });
+
+test('If the value returned from an async search is cancellable and before it completes a new search is fired, the first value gets cancelled', function(assert) {
+  assert.expect(1);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.equal(term, 'nin', 'The second search gets executed');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#power-select search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(function() {
+    typeInSearch('nin');
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 200);
+});
+
+test('If the value returned from an async search is cancellable and before it completes the searchbox gets cleared, it gets cancelled', function(assert) {
+  assert.expect(0);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.ok(false, 'This task should not have been executed this far');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#power-select search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(function() {
+    typeInSearch('');
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 200);
+});
+
+test('If a select is destroyed while a search is still ongoing and the search is cancellable, it gets cancelled', function(assert) {
+  assert.expect(0);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.ok(false, 'This task should not have been executed this far');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#unless hideSelect}}
+      {{#power-select search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+        {{number}}
+      {{/power-select}}
+    {{/unless}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(() => {
+    this.set('hideSelect', true);
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 150);
+});
+
+test('If a select is closed while a search is still ongoing and the search is cancellable, it gets cancelled', function(assert) {
+  assert.expect(0);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.ok(false, 'This task should not have been executed this far');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#power-select search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(() => {
+    clickTrigger();
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 150);
+});
+
+test('If the value returned from an async search of a multiple-select is cancellable and before it completes a new search is fired, the first value gets cancelled', function(assert) {
+  assert.expect(1);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.equal(term, 'nin', 'The second search gets executed');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#power-select-multiple search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(function() {
+    typeInSearch('nin');
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 200);
+});
+
+test('If the value returned from an async search of a multiple-select is cancellable and before it completes the searchbox gets cleared, it gets cancelled', function(assert) {
+  assert.expect(0);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.ok(false, 'This task should not have been executed this far');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#power-select-multiple search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(function() {
+    typeInSearch('');
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 200);
+});
+
+test('If a multiple select is destroyed while a search is still ongoing and the search is cancellable, it gets cancelled', function(assert) {
+  assert.expect(0);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.ok(false, 'This task should not have been executed this far');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#unless hideSelect}}
+      {{#power-select-multiple search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+        {{number}}
+      {{/power-select-multiple}}
+    {{/unless}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(() => {
+    this.set('hideSelect', true);
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 150);
+});
+
+test('If a multiple select is closed while a search is still ongoing and the search is cancellable, it gets cancelled', function(assert) {
+  assert.expect(0);
+  let done = assert.async();
+
+  this.obj = Ember.Object.extend({
+    searchTask: task(function* (term) {
+      yield timeout(100);
+      assert.ok(false, 'This task should not have been executed this far');
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    })
+  }).create();
+
+  this.render(hbs`
+    {{#power-select-multiple search=(perform obj.searchTask) onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  typeInSearch('teen');
+
+  setTimeout(() => {
+    clickTrigger();
+  }, 50);
+
+  setTimeout(function() {
+    done();
+  }, 150);
+});
+
