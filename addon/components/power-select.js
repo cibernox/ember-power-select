@@ -117,6 +117,7 @@ export default Component.extend({
     this.activeSelectedPromise = this.activeOptionsPromise = null;
     this._removeObserversInOptions();
     this._removeObserversInSelected();
+    this._cancelActiveSearch();
     cancel(this.expirableSearchDebounceId);
   },
 
@@ -435,6 +436,7 @@ export default Component.extend({
 
   _resetSearch() {
     let results = this.get('publicAPI').options;
+    this._cancelActiveSearch();
     this.updateState({
       results,
       searchText: '',
@@ -458,6 +460,7 @@ export default Component.extend({
     if (!search) {
       publicAPI = this.updateState({ lastSearchedText: term });
     } else if (search.then) {
+      this._cancelActiveSearch();
       publicAPI = this.updateState({ loading: true, _activeSearch: search });
       search.then((results) => {
         if (this.get('isDestroyed')) {
@@ -567,6 +570,13 @@ export default Component.extend({
   _removeObserversInSelected() {
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
+    }
+  },
+
+  _cancelActiveSearch() {
+    let publicAPI = this.get('publicAPI');
+    if (publicAPI._activeSearch && typeof publicAPI._activeSearch.cancel === 'function') {
+      publicAPI._activeSearch.cancel();
     }
   },
 
