@@ -5,11 +5,14 @@
 
 # Ember-Power-Select
 
-Ember Power Select is an pure ember select component focused in flexibility and extensibility.
+Ember Power Select is a select component written in Ember with a focus in flexibility and extensibility.
+
+It is designed to work well with the way we build Ember apps, si it plays nicely with promises, ember-concurrency's tasks,
+ember-data collections and follows idiomatic patterns.
 
 ## Installation
 
-Ember Power Select works in Ember **1.13.9+** or **2.0+**, including beta and canary, with no deprecations
+Ember Power Select works in Ember **2.3.1+**, beta and canary with no deprecations
 whatsoever. Any deprecation will be considered a bug.
 
 As any other ember-cli addon, run:
@@ -34,6 +37,7 @@ Features include:
 * Asynchonous searches.
 * Theming
 * Fully promise-aware, with loading states.
+* Compatible with ember-concurrency task cancellation.
 * Compatibility with ember-data's ArrayProxies
 * Groups (with not deep limit), placeholders...
 * Clear the selection
