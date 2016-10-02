@@ -7,8 +7,9 @@ import { isEmberArray } from 'ember-array/utils';
 import computed from 'ember-computed';
 import get from 'ember-metal/get';
 import set from 'ember-metal/set';
-import { scheduleOnce, debounce, cancel } from 'ember-runloop';
+import { scheduleOnce } from 'ember-runloop';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
+import { task, timeout } from 'ember-concurrency';
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
 const assign = Object.assign || function EmberAssign(original, ...args) {
@@ -96,7 +97,6 @@ export default Component.extend({
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
 
   // Private state
-  expirableSearchDebounceId: null,
   publicAPI: initialState,
 
   // Lifecycle hooks
@@ -118,7 +118,6 @@ export default Component.extend({
     this._removeObserversInOptions();
     this._removeObserversInSelected();
     this._cancelActiveSearch();
-    cancel(this.expirableSearchDebounceId);
   },
 
   // CPs
@@ -304,7 +303,7 @@ export default Component.extend({
         return false;
       }
       if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
-        return this._handleTriggerTyping(e);
+        this.get('triggerTypingTask').perform(e);
       } else if (e.keyCode === 32) {  // Space
         return this._handleKeySpace(e);
       } else {
@@ -368,6 +367,27 @@ export default Component.extend({
       this.updateState({ isActive: false });
     }
   },
+
+  // Tasks
+  triggerTypingTask: task(function* (e) {
+    let publicAPI = this.get('publicAPI');
+    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
+    this.updateState({ _expirableSearchText: term });
+    let matches = this.filter(publicAPI.options, term, true);
+    if (get(matches, 'length') > 0) {
+      let firstMatch = optionAtIndex(matches, 0);
+      if (firstMatch !== undefined) {
+        if (publicAPI.isOpen) {
+          publicAPI.actions.highlight(firstMatch.option, e);
+          publicAPI.actions.scrollTo(firstMatch.option, e);
+        } else {
+          publicAPI.actions.select(firstMatch.option, e);
+        }
+      }
+    }
+    yield timeout(1000);
+    this.updateState({ _expirableSearchText: '' });
+  }).restartable(),
 
   // Methods
   filter(options, term, skipDisabled = false) {
@@ -539,26 +559,6 @@ export default Component.extend({
 
   _handleKeyESC(e) {
     this.get('publicAPI').actions.close(e);
-  },
-
-  _handleTriggerTyping(e) {
-    let publicAPI = this.get('publicAPI');
-    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
-    this.updateState({ _expirableSearchText: term });
-    this.expirableSearchDebounceId = debounce(this, this.updateState, { _expirableSearchText: '' }, 1000);
-    let matches = this.filter(publicAPI.options, term, true);
-    if (get(matches, 'length') === 0) {
-      return;
-    }
-    let firstMatch = optionAtIndex(matches, 0);
-    if (firstMatch !== undefined) {
-      if (publicAPI.isOpen) {
-        publicAPI.actions.highlight(firstMatch.option, e);
-        publicAPI.actions.scrollTo(firstMatch.option, e);
-      } else {
-        publicAPI.actions.select(firstMatch.option, e);
-      }
-    }
   },
 
   _removeObserversInOptions() {
