@@ -7,8 +7,9 @@ import { isEmberArray } from 'ember-array/utils';
 import computed from 'ember-computed';
 import get from 'ember-metal/get';
 import set from 'ember-metal/set';
-import { scheduleOnce, debounce, cancel } from 'ember-runloop';
+import { scheduleOnce } from 'ember-runloop';
 import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
+import { task, timeout } from 'ember-concurrency';
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
 const assign = Object.assign || function EmberAssign(original, ...args) {
@@ -70,8 +71,7 @@ const initialState = {
   loading: false,           // Truthy if there is a pending promise that will update the results
   isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
   // Private API (for now)
-  _expirableSearchText: '',
-  _activeSearch: null
+  _expirableSearchText: ''
 };
 
 export default Component.extend({
@@ -96,7 +96,6 @@ export default Component.extend({
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
 
   // Private state
-  expirableSearchDebounceId: null,
   publicAPI: initialState,
 
   // Lifecycle hooks
@@ -114,11 +113,8 @@ export default Component.extend({
 
   willDestroy() {
     this._super(...arguments);
-    this.activeSelectedPromise = this.activeOptionsPromise = null;
     this._removeObserversInOptions();
     this._removeObserversInSelected();
-    this._cancelActiveSearch();
-    cancel(this.expirableSearchDebounceId);
   },
 
   // CPs
@@ -128,12 +124,7 @@ export default Component.extend({
     },
     set(_, selected) {
       if (selected && selected.then) {
-        this.activeSelectedPromise = selected;
-        selected.then((selection) => {
-          if (this.activeSelectedPromise === selected) {
-            this.updateSelection(selection);
-          }
-        });
+        this.get('_updateSelectedTask').perform(selected);
       } else {
         scheduleOnce('actions', this, this.updateSelection, selected);
       }
@@ -150,17 +141,7 @@ export default Component.extend({
         return options;
       }
       if (options && options.then) {
-        this.updateState({ loading: true });
-        this.activeOptionsPromise = options;
-        options.then((resolvedOptions) => {
-          if (this.activeOptionsPromise === options) {
-            this.updateOptions(resolvedOptions);
-          }
-        }, () => {
-          if (this.activeOptionsPromise === options) {
-            this.updateState({ loading: false });
-          }
-        });
+        this.get('_updateOptionsTask').perform(options);
       } else {
         scheduleOnce('actions', this, this.updateOptions, options);
       }
@@ -304,7 +285,7 @@ export default Component.extend({
         return false;
       }
       if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
-        return this._handleTriggerTyping(e);
+        this.get('triggerTypingTask').perform(e);
       } else if (e.keyCode === 32) {  // Space
         return this._handleKeySpace(e);
       } else {
@@ -368,6 +349,63 @@ export default Component.extend({
       this.updateState({ isActive: false });
     }
   },
+
+  // Tasks
+  triggerTypingTask: task(function* (e) {
+    let publicAPI = this.get('publicAPI');
+    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
+    this.updateState({ _expirableSearchText: term });
+    let matches = this.filter(publicAPI.options, term, true);
+    if (get(matches, 'length') > 0) {
+      let firstMatch = optionAtIndex(matches, 0);
+      if (firstMatch !== undefined) {
+        if (publicAPI.isOpen) {
+          publicAPI.actions.highlight(firstMatch.option, e);
+          publicAPI.actions.scrollTo(firstMatch.option, e);
+        } else {
+          publicAPI.actions.select(firstMatch.option, e);
+        }
+      }
+    }
+    yield timeout(1000);
+    this.updateState({ _expirableSearchText: '' });
+  }).restartable(),
+
+  _updateSelectedTask: task(function* (selectionPromise) {
+    let selection = yield selectionPromise;
+    this.updateSelection(selection);
+  }).restartable(),
+
+  _updateOptionsTask: task(function* (optionsPromise) {
+    this.updateState({ loading: true });
+    try {
+      let options = yield optionsPromise;
+      this.updateOptions(options);
+    } finally {
+      this.updateState({ loading: false });
+    }
+  }).restartable(),
+
+  handleAsyncSearchTask: task(function* (term, searchThenable) {
+    try {
+      this.updateState({ loading: true });
+      let results = yield searchThenable;
+      let resultsArray = toPlainArray(results);
+      this.updateState({
+        results: resultsArray,
+        lastSearchedText: term,
+        resultsCount: countOptions(results),
+        loading: false
+      });
+      this.resetHighlighted();
+    } catch(e) {
+      this.updateState({ lastSearchedText: term, loading: false });
+    } finally {
+      if (typeof searchThenable.cancel === 'function') {
+        searchThenable.cancel();
+      }
+    }
+  }).restartable(),
 
   // Methods
   filter(options, term, skipDisabled = false) {
@@ -436,14 +474,13 @@ export default Component.extend({
 
   _resetSearch() {
     let results = this.get('publicAPI').options;
-    this._cancelActiveSearch();
+    this.get('handleAsyncSearchTask').cancelAll();
     this.updateState({
       results,
       searchText: '',
       lastSearchedText: '',
       resultsCount: countOptions(results),
-      loading: false,
-      _activeSearch: null
+      loading: false
     });
   },
 
@@ -460,30 +497,7 @@ export default Component.extend({
     if (!search) {
       publicAPI = this.updateState({ lastSearchedText: term });
     } else if (search.then) {
-      this._cancelActiveSearch();
-      publicAPI = this.updateState({ loading: true, _activeSearch: search });
-      search.then((results) => {
-        if (this.get('isDestroyed')) {
-          return;
-        }
-        if (this.get('publicAPI')._activeSearch === search) {
-          let resultsArray = toPlainArray(results);
-          this.updateState({
-            results: resultsArray,
-            lastSearchedText: term,
-            resultsCount: countOptions(results),
-            loading: false
-          });
-          this.resetHighlighted();
-        }
-      }, () => {
-        if (this.get('isDestroyed')) {
-          return;
-        }
-        if (this.get('publicAPI')._activeSearch === search) {
-          this.updateState({ lastSearchedText: term, loading: false });
-        }
-      });
+      this.get('handleAsyncSearchTask').perform(term, search);
     } else {
       let resultsArray = toPlainArray(search);
       this.updateState({ results: resultsArray, lastSearchedText: term, resultsCount: countOptions(resultsArray) });
@@ -541,26 +555,6 @@ export default Component.extend({
     this.get('publicAPI').actions.close(e);
   },
 
-  _handleTriggerTyping(e) {
-    let publicAPI = this.get('publicAPI');
-    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
-    this.updateState({ _expirableSearchText: term });
-    this.expirableSearchDebounceId = debounce(this, this.updateState, { _expirableSearchText: '' }, 1000);
-    let matches = this.filter(publicAPI.options, term, true);
-    if (get(matches, 'length') === 0) {
-      return;
-    }
-    let firstMatch = optionAtIndex(matches, 0);
-    if (firstMatch !== undefined) {
-      if (publicAPI.isOpen) {
-        publicAPI.actions.highlight(firstMatch.option, e);
-        publicAPI.actions.scrollTo(firstMatch.option, e);
-      } else {
-        publicAPI.actions.select(firstMatch.option, e);
-      }
-    }
-  },
-
   _removeObserversInOptions() {
     if (this._observedOptions) {
       this._observedOptions.removeObserver('[]', this, this._updateOptionsAndResults);
@@ -570,13 +564,6 @@ export default Component.extend({
   _removeObserversInSelected() {
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
-    }
-  },
-
-  _cancelActiveSearch() {
-    let publicAPI = this.get('publicAPI');
-    if (publicAPI._activeSearch && typeof publicAPI._activeSearch.cancel === 'function') {
-      publicAPI._activeSearch.cancel();
     }
   },
 
