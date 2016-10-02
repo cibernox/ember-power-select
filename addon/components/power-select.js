@@ -71,8 +71,7 @@ const initialState = {
   loading: false,           // Truthy if there is a pending promise that will update the results
   isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
   // Private API (for now)
-  _expirableSearchText: '',
-  _activeSearch: null
+  _expirableSearchText: ''
 };
 
 export default Component.extend({
@@ -116,7 +115,6 @@ export default Component.extend({
     this._super(...arguments);
     this._removeObserversInOptions();
     this._removeObserversInSelected();
-    this._cancelActiveSearch();
   },
 
   // CPs
@@ -388,6 +386,27 @@ export default Component.extend({
     }
   }).restartable(),
 
+  handleAsyncSearchTask: task(function* (term, searchThenable) {
+    try {
+      this.updateState({ loading: true });
+      let results = yield searchThenable;
+      let resultsArray = toPlainArray(results);
+      this.updateState({
+        results: resultsArray,
+        lastSearchedText: term,
+        resultsCount: countOptions(results),
+        loading: false
+      });
+      this.resetHighlighted();
+    } catch(e) {
+      this.updateState({ lastSearchedText: term, loading: false });
+    } finally {
+      if (typeof searchThenable.cancel === 'function') {
+        searchThenable.cancel();
+      }
+    }
+  }).restartable(),
+
   // Methods
   filter(options, term, skipDisabled = false) {
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
@@ -455,14 +474,13 @@ export default Component.extend({
 
   _resetSearch() {
     let results = this.get('publicAPI').options;
-    this._cancelActiveSearch();
+    this.get('handleAsyncSearchTask').cancelAll();
     this.updateState({
       results,
       searchText: '',
       lastSearchedText: '',
       resultsCount: countOptions(results),
-      loading: false,
-      _activeSearch: null
+      loading: false
     });
   },
 
@@ -479,30 +497,7 @@ export default Component.extend({
     if (!search) {
       publicAPI = this.updateState({ lastSearchedText: term });
     } else if (search.then) {
-      this._cancelActiveSearch();
-      publicAPI = this.updateState({ loading: true, _activeSearch: search });
-      search.then((results) => {
-        if (this.get('isDestroyed')) {
-          return;
-        }
-        if (this.get('publicAPI')._activeSearch === search) {
-          let resultsArray = toPlainArray(results);
-          this.updateState({
-            results: resultsArray,
-            lastSearchedText: term,
-            resultsCount: countOptions(results),
-            loading: false
-          });
-          this.resetHighlighted();
-        }
-      }, () => {
-        if (this.get('isDestroyed')) {
-          return;
-        }
-        if (this.get('publicAPI')._activeSearch === search) {
-          this.updateState({ lastSearchedText: term, loading: false });
-        }
-      });
+      this.get('handleAsyncSearchTask').perform(term, search);
     } else {
       let resultsArray = toPlainArray(search);
       this.updateState({ results: resultsArray, lastSearchedText: term, resultsCount: countOptions(resultsArray) });
@@ -569,13 +564,6 @@ export default Component.extend({
   _removeObserversInSelected() {
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
-    }
-  },
-
-  _cancelActiveSearch() {
-    let publicAPI = this.get('publicAPI');
-    if (publicAPI._activeSearch && typeof publicAPI._activeSearch.cancel === 'function') {
-      publicAPI._activeSearch.cancel();
     }
   },
 
