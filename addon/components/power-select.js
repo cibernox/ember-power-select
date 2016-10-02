@@ -114,7 +114,6 @@ export default Component.extend({
 
   willDestroy() {
     this._super(...arguments);
-    this.activeSelectedPromise = this.activeOptionsPromise = null;
     this._removeObserversInOptions();
     this._removeObserversInSelected();
     this._cancelActiveSearch();
@@ -127,12 +126,7 @@ export default Component.extend({
     },
     set(_, selected) {
       if (selected && selected.then) {
-        this.activeSelectedPromise = selected;
-        selected.then((selection) => {
-          if (this.activeSelectedPromise === selected) {
-            this.updateSelection(selection);
-          }
-        });
+        this.get('_updateSelectedTask').perform(selected);
       } else {
         scheduleOnce('actions', this, this.updateSelection, selected);
       }
@@ -149,17 +143,7 @@ export default Component.extend({
         return options;
       }
       if (options && options.then) {
-        this.updateState({ loading: true });
-        this.activeOptionsPromise = options;
-        options.then((resolvedOptions) => {
-          if (this.activeOptionsPromise === options) {
-            this.updateOptions(resolvedOptions);
-          }
-        }, () => {
-          if (this.activeOptionsPromise === options) {
-            this.updateState({ loading: false });
-          }
-        });
+        this.get('_updateOptionsTask').perform(options);
       } else {
         scheduleOnce('actions', this, this.updateOptions, options);
       }
@@ -387,6 +371,21 @@ export default Component.extend({
     }
     yield timeout(1000);
     this.updateState({ _expirableSearchText: '' });
+  }).restartable(),
+
+  _updateSelectedTask: task(function* (selectionPromise) {
+    let selection = yield selectionPromise;
+    this.updateSelection(selection);
+  }).restartable(),
+
+  _updateOptionsTask: task(function* (optionsPromise) {
+    this.updateState({ loading: true });
+    try {
+      let options = yield optionsPromise;
+      this.updateOptions(options);
+    } finally {
+      this.updateState({ loading: false });
+    }
   }).restartable(),
 
   // Methods
