@@ -2,6 +2,7 @@
 [![Ember Observer Score](http://emberobserver.com/badges/ember-power-select.svg)](http://emberobserver.com/addons/ember-power-select)
 [![Code Climate](https://codeclimate.com/github/cibernox/ember-power-select/badges/gpa.svg)](https://codeclimate.com/github/cibernox/ember-power-select)
 [![npm version](https://badge.fury.io/js/ember-power-select.svg)](https://badge.fury.io/js/ember-power-select)
+[![dependencies](https://david-dm.org/cibernox/ember-power-select.svg)](https://david-dm.org/cibernox/ember-power-select)
 
 # Ember-Power-Select
 
