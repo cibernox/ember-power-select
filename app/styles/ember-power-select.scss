@@ -15,7 +15,10 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 // Trigger
 .ember-power-select-trigger {
   position: relative;
-  border: $ember-power-select-trigger-border;
+  border-top: $ember-power-select-trigger-border-top;
+  border-bottom: $ember-power-select-trigger-border-bottom;
+  border-right: $ember-power-select-trigger-border-right;
+  border-left: $ember-power-select-trigger-border-left;
   border-radius: $ember-power-select-trigger-default-border-radius;
   background-color: $ember-power-select-background-color;
   line-height: $ember-power-select-line-height;
@@ -38,7 +41,10 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 }
 .ember-power-select-trigger:focus,
 .ember-power-select-trigger--active {
-  border: $ember-power-select-active-trigger-border;
+  border-top: $ember-power-select-active-trigger-border-top;
+  border-bottom: $ember-power-select-active-trigger-border-bottom;
+  border-right: $ember-power-select-active-trigger-border-right;
+  border-left: $ember-power-select-active-trigger-border-left;
   box-shadow: $ember-power-select-focus-box-shadow;
   @if $ember-power-select-focus-outline {
     outline: $ember-power-select-focus-outline;
