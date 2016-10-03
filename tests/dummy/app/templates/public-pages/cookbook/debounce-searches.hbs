@@ -24,6 +24,20 @@
   It makes you code a little more but in exchange you always have the ultimate decision.
 </p>
 
+<h3>Debounceing searches with ember-concurrency</h3>
+
+<p>
+  Ember Power Select uses ember-concurrency internally to manage asyncrony in a nice way, and
+  so can you. The above example can be expresed much more succint way using ember-concurrency's task
+  because it abstract you from all the manual bookeeping of promises and debounce times.
+</p>
+
+{{#code-sample hbs="debounce-searches-2.hbs" js="debounce-searches-2-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-sample}}
+
+<p>That's it. Three lines of code for debounced searches with automatic cancellation.</p>
+
 <div class="doc-page-nav">
   {{#link-to 'public-pages.cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
   {{#link-to 'public-pages.cookbook.create-custom-options' class="doc-page-nav-link-next"}}Create custom options &gt;{{/link-to}}
