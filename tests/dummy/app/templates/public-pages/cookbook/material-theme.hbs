@@ -92,12 +92,18 @@
   but it's a good start.
 </p>
 
+<p>To use it in your app, SASS users should import the theme before importing the main stylesheet:</p>
+
+{{code-snippet name="material-theme-2.scss"}}
+
 <p>
   As with the bootstrap one, this skin comes pre-compiled in the app, apps that don't use
   SASS can include it from the <code>ember-cli-build.js</code> file.
 </p>
 
 {{code-snippet name="material-theme-1-js.js" class="max-500-height"}}
+
+<p>In the next section we're going to explain how come this select can be animated without any javascript!</p>
 
 <div class="doc-page-nav">
   {{#link-to 'public-pages.cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
