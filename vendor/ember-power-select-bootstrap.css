@@ -34,7 +34,10 @@
 
 .ember-power-select-trigger {
   position: relative;
-  border: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
   border-radius: 4px;
   background-color: #ffffff;
   line-height: 2;
@@ -52,7 +55,10 @@
 
 .ember-power-select-trigger:focus,
 .ember-power-select-trigger--active {
-  border: 1px solid #66afe9;
+  border-top: 1px solid #66afe9;
+  border-bottom: 1px solid #66afe9;
+  border-right: 1px solid #66afe9;
+  border-left: 1px solid #66afe9;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
   outline: 0; }
 
