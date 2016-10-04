@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
   searchRepo: task(function* (term) {
     yield timeout(600);
     let url = `https://api.github.com/search/repositories?q=${term}`;
-    return this.get('ajax').request(url).then(json => json.items);
+    return this.get('ajax').request(url).then((json) => json.items);
   }),
 
   _performSearch(term, resolve, reject) {
