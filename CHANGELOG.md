@@ -1,5 +1,7 @@
 # Master
 
+# 1.0.0-beta.22
+- [ENHANCEMENT] Added a material-design theme!
 - [INTERNAL] Internal refactor to leverage ember-concurrency. OMG, this is so much better!
 
 # 1.0.0-beta.21
