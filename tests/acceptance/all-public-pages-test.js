@@ -12,7 +12,7 @@ test('visit every Docs page in order', function(assert) {
 });
 
 test('visit every Cookbook page in order', function(assert) {
-  let expectedPages = 6;
+  let expectedPages = 7;
   return keepClickingNext('/cookbook', '.doc-page-nav-link-next').then((urls) => {
     assert.equal(urls.length, expectedPages);
   });
