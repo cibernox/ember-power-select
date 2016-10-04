@@ -26,6 +26,12 @@ $ember-power-select-selected-background: #e1e1e1;
 $ember-power-select-line-height: 2.5;
 $ember-power-select-focus-outline: none;
 $ember-power-select-dropdown-box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+$ember-power-select-search-field-border: none;
+$ember-power-select-search-field-focus-border: none;
+$ember-power-select-multiple-option-border: none;
+$ember-power-select-multiple-option-border-radius: 15px;
+$ember-power-select-multiple-option-padding: 0 10px;
+$ember-power-select-multiple-option-line-height: 2;
 .ember-basic-dropdown-content--below.ember-basic-dropdown--transitioning-in {
   animation: drop-fade-below .15s;
 }

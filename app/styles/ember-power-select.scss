@@ -127,7 +127,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   background-color: $ember-power-select-multiple-selection-background-color;
   padding: $ember-power-select-multiple-option-padding;
   display: inline-block;
-  line-height: 1.45;
+  line-height: $ember-power-select-multiple-option-line-height;
   float: left;
   margin: 2px 0 2px 3px;
 }

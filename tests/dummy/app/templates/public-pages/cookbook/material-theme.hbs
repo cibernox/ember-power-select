@@ -1,6 +1,74 @@
 <h1 class="doc-page-title">Material theme</h1>
 
+<h3>Regular selects without search</h3>
+<div style="display: flex;">
+  <div style="flex: 1; padding: 5px;">
+    {{#power-select
+      options=countries
+      selected=country
+      searchEnabled=false
+      placeholder="Country"
+      searchField="name"
+      onchange=(action (mut country)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  </div>
+  <div style="flex: 1; padding: 5px;">
+    {{#power-select
+      options=cities
+      selected=city
+      searchEnabled=false
+      placeholder="City"
+      allowClear=true
+      onchange=(action (mut city)) as |city|}}
+      {{city}}
+    {{/power-select}}
+  </div>
+</div>
 
+<h3>Regular selects with search</h3>
+{{#power-select
+  options=countries
+  selected=country2
+  placeholder="Country"
+  searchField="name"
+  onchange=(action (mut country2)) as |country|}}
+  {{country.name}}
+{{/power-select}}
+
+<h3>Multiple selects with search</h3>
+{{#power-select-multiple
+  options=countries
+  selected=country2
+  placeholder="Country"
+  searchField="name"
+  onchange=(action (mut country2)) as |country|}}
+  {{country.name}}
+{{/power-select-multiple}}
+<h3>Groups</h3>
+{{#power-select
+  options=groupedNumbers
+  selected=number
+  placeholder="Choose a number"
+  onchange=(action (mut number)) as |num|}}
+  {{num}}
+{{/power-select}}
+
+<h3>Select with clear btn</h3>
+{{#power-select
+  options=countries
+  selected=country3
+  searchEnabled=false
+  placeholder="Country"
+  searchField="name"
+  allowClear=true
+  onchange=(action (mut country3)) as |country|}}
+  {{country.name}}
+{{/power-select}}
+<br>
+<br>
+<br>
+<br>
 <div class="doc-page-nav">
   {{#link-to 'public-pages.cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
   {{#link-to 'public-pages.cookbook.css-animations' class="doc-page-nav-link-next"}}CSS animations &gt;{{/link-to}}
