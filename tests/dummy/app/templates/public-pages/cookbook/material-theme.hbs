@@ -55,10 +55,10 @@
   triggerClass="material-theme-trigger"
   dropdownClass="material-theme-dropdown"
   options=countries
-  selected=country2
+  selected=selectedCountries
   placeholder="Country"
   searchField="name"
-  onchange=(action (mut country2)) as |country|}}
+  onchange=(action (mut selectedCountries)) as |country|}}
   {{country.name}}
 {{/power-select-multiple}}
 <h3>Groups</h3>
