@@ -19,6 +19,14 @@ export default Ember.Component.extend({
     return classes.join(' ');
   }),
 
+  computedTabIndex: computed('tabindex', 'searchEnabled', 'triggerComponent', function() {
+    if (this.get('triggerComponent') === 'power-select-multiple/trigger' && this.get('searchEnabled') !== false) {
+      return '-1';
+    } else {
+      return this.get('tabindex');
+    }
+  }),
+
   // Actions
   actions: {
     handleOpen(select, e) {

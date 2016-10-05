@@ -39,9 +39,9 @@
     searchPlaceholder=searchPlaceholder
     selected=selected
     selectedItemComponent=selectedItemComponent
-    tabindex=tabindex
+    tabindex=computedTabIndex
     triggerClass=concatenatedTriggerClass
-    triggerComponent=triggerComponent
+    triggerComponent=(component triggerComponent tabindex=tabindex)
     verticalPosition=verticalPosition
     as |option term|}}
     {{yield option term}}
@@ -89,9 +89,9 @@
     searchPlaceholder=searchPlaceholder
     selected=selected
     selectedItemComponent=selectedItemComponent
-    tabindex=tabindex
+    tabindex=computedTabIndex
     triggerClass=concatenatedTriggerClass
-    triggerComponent=triggerComponent
+    triggerComponent=(component triggerComponent tabindex=tabindex)
     verticalPosition=verticalPosition
     as |option term|}}
     {{yield option term}}
