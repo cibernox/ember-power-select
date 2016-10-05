@@ -727,3 +727,43 @@ test('When the input inside the multiple select gets focused, the trigger and th
   assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The trigger has the class');
   assert.ok($('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--active'), 'The dropdown has the class');
 });
+
+test('When the power select multiple uses the default component and the search is enabled, the trigger has `tabindex=-1`', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '-1', 'The trigger has tabindex=-1');
+});
+
+test('When the power select multiple uses the default component and the search is disabled, the trigger has `tabindex=0`', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) searchEnabled=false as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '0', 'The trigger has tabindex=0');
+});
+
+test('When the power select multiple uses the default component and the search is enabled, and the component receives an specific tabindex, the trigger has tabindex=-1, and the tabindex is applied to the searchbox inside', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) tabindex=3 as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '-1', 'The trigger has tabindex=1');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('tabindex'), '3', 'The searchbox has tabindex=3');
+});

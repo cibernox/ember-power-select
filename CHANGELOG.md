@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Fix SHIFT+TAB in multiple select: In multiple selects with search enabled that use the default component,
+  the tabindex is applied to the searchbox, and the trigger has -1.
+
 # 1.0.0-beta.22
 - [ENHANCEMENT] Added a material-design theme!
 - [INTERNAL] Internal refactor to leverage ember-concurrency. OMG, this is so much better!
