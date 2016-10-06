@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Add `onblur` event for symmetry with `onfocus`, and also clarify that both are fired for any element of
+  the select gaining the focus, so the `event.target` should be used to disambiguate the origin.
 - [BUGFIX] Fix SHIFT+TAB in multiple select: In multiple selects with search enabled that use the default component,
   the tabindex is applied to the searchbox, and the trigger has -1.
 
