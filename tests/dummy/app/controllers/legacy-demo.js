@@ -400,6 +400,10 @@ export default Ember.Controller.extend({
   ],
 
   actions: {
+    logFocus(select, e) {
+      console.debug('onfocus in ', e.target.classList[0]);
+    },
+
     onSelectOpen(select) {
       select.actions.search('foo');
     },

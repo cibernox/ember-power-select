@@ -5,6 +5,8 @@ import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
+const { run } = Ember;
+
 function assertPublicAPIShape(assert, select) {
   assert.equal(typeof select.uniqueId, 'string', 'select.uniqueId is a string');
   assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
@@ -235,10 +237,28 @@ test('The onfocus of single selects action receives the public API and the focus
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => this.$('.ember-power-select-trigger').focus());
 });
 
 test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
+  assert.expect(44);
+
+  this.numbers = numbers;
+  this.handleFocus = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onfocus=handleFocus onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  run(() => this.$('.ember-power-select-trigger').focus());
+});
+
+test('The onfocus of multiple selects also gets called when the thing getting the focus is the searbox', function(assert) {
   assert.expect(22);
 
   this.numbers = numbers;
@@ -253,7 +273,67 @@ test('The onfocus of multiple selects action receives the public API and the foc
     {{/power-select-multiple}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => this.$('.ember-power-select-trigger-multiple-input').focus());
+});
+
+test('The onblur of single selects action receives the public API and the event', function(assert) {
+  assert.expect(22);
+
+  this.numbers = numbers;
+  this.handleBlur = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+    <input type="text" id="other-element"/>
+  `);
+
+  run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => this.$('#other-element').focus());
+});
+
+test('The onblur of multiple selects action receives the public API and the focus event', function(assert) {
+  assert.expect(22);
+
+  this.numbers = numbers;
+  this.handleBlur = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+    <input type="text" id="other-element"/>
+  `);
+
+  run(() => this.$('.ember-power-select-trigger-multiple-input').focus());
+  run(() => this.$('#other-element').focus());
+});
+
+test('The onblur of multiple selects also gets called when the thing getting the focus is the searbox', function(assert) {
+  assert.expect(22);
+
+  this.numbers = numbers;
+  this.handleBlur = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+    <input type="text" id="other-element"/>
+  `);
+
+  clickTrigger();
+  run(() => this.$('#other-element').focus());
 });
 
 test('the `onopen` action is invoked just before the dropdown opens', function(assert) {

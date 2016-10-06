@@ -341,6 +341,22 @@ export default Component.extend({
       }
     },
 
+    onTriggerBlur(_, event) {
+      this.send('deactivate');
+      let action = this.get('onblur');
+      if (action) {
+        action(this.get('publicAPI'), event);
+      }
+    },
+
+    onBlur(event) {
+      this.send('deactivate');
+      let action = this.get('onblur');
+      if (action) {
+        action(this.get('publicAPI'), event);
+      }
+    },
+
     activate() {
       this.updateState({ isActive: true });
     },
