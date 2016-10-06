@@ -2,11 +2,26 @@
   <input type="text" value="sample input">
   <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
 
-  {{#power-select options=(readonly moarNumbers) renderInPlace=true selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
+  <h4>Single with search</h4>
+  {{#power-select
+    options=(readonly moarNumbers)
+    selected=(readonly simpleSelected)
+    onfocus=(action "logFocus")
+    onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
 
-  <h4>Select of strings with value tracking</h4>
+  <h4>Single without search</h4>
+  {{#power-select
+    options=(readonly moarNumbers)
+    selected=(readonly simpleSelected)
+    onfocus=(action "logFocus")
+    searchEnabled=false
+    onchange=(action (mut simpleSelected)) as |option|}}
+    {{option}}
+  {{/power-select}}
+
+{{!--   <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
@@ -14,19 +29,28 @@
   <h4>Select of strings with value tracking</h4>
   {{#power-select searchEnabled=false options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
-  {{/power-select}}
+  {{/power-select}} --}}
 
   <h4>Multiple with search</h4>
-  {{#power-select-multiple options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
+  {{#power-select-multiple
+    options=(readonly simpleOptions)
+    selected=(readonly someNumbers)
+    onfocus=(action "logFocus")
+    onchange=(action (mut someNumbers)) as |option|}}
     {{option}}
   {{/power-select-multiple}}
 
   <h4>Multiple without search</h4>
-  {{#power-select-multiple searchEnabled=false options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
+  {{#power-select-multiple
+    options=(readonly simpleOptions)
+    selected=(readonly someNumbers)
+    onfocus=(action "logFocus")
+    searchEnabled=false
+    onchange=(action (mut someNumbers)) as |option|}}
     {{option}}
   {{/power-select-multiple}}
 
-
+{{!--
   {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
     {{country.name}}
   {{/power-select-multiple}}
@@ -233,7 +257,7 @@
   <br>
   <br>
   <br>
-  <br>
+ --}}  <br>
   <br>
   <br>
   <br>

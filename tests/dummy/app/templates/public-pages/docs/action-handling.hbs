@@ -75,10 +75,10 @@
   {{partial partialName}}
 {{/code-sample}}
 
-<h3><code>onfocus</code> Action</h3>
+<h3><code>onfocus/onblur</code> Actions</h3>
 
 <p>
-  The third action you can use is <code>onfocus</code>. It does exactly what the names suggests and receives <code>(select, event)</code>
+  The next actions you can use are <code>onfocus/onblur</code>. It does exactly what the names suggests and receives <code>(select, event)</code>
 </p>
 
 <p>
@@ -89,6 +89,12 @@
 {{#code-sample hbs="action-handling-4.hbs" js="action-handling-4-js.js" as |partialName|}}
   {{partial partialName}}
 {{/code-sample}}
+
+<p>
+  Note that this action will be fired when the component or another element inside, like the searchboxes, gain the focus,
+  and sometimes you need which one triggered the focus/blur event. Since the <code>FocusEvent</code> is received
+  as last argument, you can check <code>event.target</code> to know it's origin.
+</p>
 
 <h3><code>onopen/onclose</code> Actions</h3>
 
