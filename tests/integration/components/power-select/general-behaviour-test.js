@@ -1071,3 +1071,47 @@ test('[BUGFIX] When the component is open and it has a `search` action, if optio
   run(() => this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']));
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
 });
+
+test('the item that is highlighted by default can be customized passing a value to `defaultHighlighted`', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.defaultHighlighted = numbers[4];
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) defaultHighlighted=defaultHighlighted as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'five', 'the given element is highlighted instead of the first, as usual');
+});
+
+test('the item that is highlighted by default can be customized passing a function to `defaultHighlighted`', function(assert) {
+  assert.expect(12);
+
+  this.numbers = numbers;
+  this.defaultHighlighted = function(select) {
+    assert.equal(typeof select.uniqueId, 'string', 'select.uniqueId is a string');
+    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.disabled, 'boolean', 'select.disabled is a boolean');
+    assert.equal(typeof select.isActive, 'boolean', 'select.isActive is a boolean');
+    assert.equal(typeof select.loading, 'boolean', 'select.loading is a boolean');
+    assert.ok(select.options instanceof Array, 'select.options is an array');
+    assert.ok(select.results instanceof Array, 'select.results is an array');
+    assert.equal(typeof select.resultsCount, 'number', 'select.resultsCount is a number');
+    assert.ok(select.hasOwnProperty('selected'));
+    assert.ok(select.hasOwnProperty('highlighted'));
+    return 'five';
+  };
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) defaultHighlighted=defaultHighlighted as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'five', 'the given element is highlighted instead of the first, as usual');
+});

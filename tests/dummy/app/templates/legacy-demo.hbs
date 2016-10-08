@@ -215,6 +215,11 @@
     {{/power-select}}
   </div>
 
+  <h4>Customized defaultHighlighted</h4>
+  {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) defaultHighlighted=defaultHighlightedExample as |option|}}
+    {{option}}
+  {{/power-select}}
+
   <br>
   <br>
   <br>
