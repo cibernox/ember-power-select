@@ -8,7 +8,15 @@ import computed from 'ember-computed';
 import get from 'ember-metal/get';
 import set from 'ember-metal/set';
 import { scheduleOnce } from 'ember-runloop';
-import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
+import {
+  defaultMatcher,
+  indexOfOption,
+  optionAtIndex,
+  filterOptions,
+  countOptions,
+  defaultHighlighted,
+  advanceSelectableOption
+} from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
@@ -35,25 +43,6 @@ function concatWithProperty(strings, property) {
     strings.push(property);
   }
   return strings.join(' ');
-}
-
-function defaultHighlighted(results, selected) {
-  if (selected === undefined || indexOfOption(results, selected) === -1) {
-    return advanceSelectableOption(results, selected, 1);
-  }
-  return selected;
-}
-
-function advanceSelectableOption(options, currentOption, step) {
-  let resultsLength = countOptions(options);
-  let startIndex = Math.min(Math.max(indexOfOption(options, currentOption) + step, 0), resultsLength - 1);
-  let { disabled, option } = optionAtIndex(options, startIndex);
-  while (option && disabled) {
-    let next = optionAtIndex(options, startIndex += step);
-    disabled = next.disabled;
-    option = next.option;
-  }
-  return option;
 }
 
 function toPlainArray(collection) {
@@ -87,6 +76,7 @@ export default Component.extend({
   noMatchesMessage: fallbackIfUndefined('No results found'),
   searchMessage: fallbackIfUndefined('Type to search'),
   closeOnSelect: fallbackIfUndefined(true),
+  defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
 
   afterOptionsComponent: fallbackIfUndefined(null),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
@@ -455,7 +445,13 @@ export default Component.extend({
 
   resetHighlighted() {
     let publicAPI = this.get('publicAPI');
-    let highlighted = defaultHighlighted(publicAPI.results, publicAPI.highlighted || publicAPI.selected);
+    let defaultHightlighted = this.get('defaultHighlighted');
+    let highlighted;
+    if (typeof defaultHightlighted === 'function') {
+      highlighted = defaultHightlighted(publicAPI);
+    } else {
+      highlighted = defaultHightlighted;
+    }
     this.updateState({ highlighted });
   },
 

@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Add a `defaultHighlighted` option that can be used to customize what item is highlighted by default with the component is opened.
+  It can either be a value, or a function that gets called with the select and returns that value.
 - [ENHANCEMENT] Add `onblur` event for symmetry with `onfocus`, and also clarify that both are fired for any element of
   the select gaining the focus, so the `event.target` should be used to disambiguate the origin.
 - [BUGFIX] Fix SHIFT+TAB in multiple select: In multiple selects with search enabled that use the default component,

@@ -370,6 +370,7 @@ const searchTypes = [
 export default Ember.Controller.extend({
   names,
   simpleOptions: numbers,
+  defaultHighlightedExample: numbers[3],
   moarNumbers,
   simpleSelected: 'six',
 

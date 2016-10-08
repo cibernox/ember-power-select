@@ -767,3 +767,18 @@ test('When the power select multiple uses the default component and the search i
   assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '-1', 'The trigger has tabindex=1');
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('tabindex'), '3', 'The searchbox has tabindex=3');
 });
+
+test('Multiple selects honor the `defaultHighlighted` option', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.defaultHighlighted = numbers[3];
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) defaultHighlighted=defaultHighlighted as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'four', 'the given defaultHighlighted element is highlighted instead of the first, as usual');
+});

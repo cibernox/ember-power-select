@@ -94,6 +94,27 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
   return opts;
 }
 
+export function defaultHighlighted(select) {
+  let { results, highlighted, selected } = select;
+  let option = highlighted || selected;
+  if (option === undefined || indexOfOption(results, option) === -1) {
+    return advanceSelectableOption(results, option, 1);
+  }
+  return option;
+}
+
+export function advanceSelectableOption(options, currentOption, step) {
+  let resultsLength = countOptions(options);
+  let startIndex = Math.min(Math.max(indexOfOption(options, currentOption) + step, 0), resultsLength - 1);
+  let { disabled, option } = optionAtIndex(options, startIndex);
+  while (option && disabled) {
+    let next = optionAtIndex(options, startIndex += step);
+    disabled = next.disabled;
+    option = next.option;
+  }
+  return option;
+}
+
 const DIACRITICS = {
   'Ⓐ': 'A',
   'Ａ': 'A',
