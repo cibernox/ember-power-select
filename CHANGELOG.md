@@ -1,5 +1,9 @@
 # Master
 
+# 1.0.0-beta.24
+- [ENHANCEMENT] Return an string from the `oninput` action uses that string in the search instead of the original one.
+
+
 # 1.0.0-beta.23
 - [ENHANCEMENT] Add a `defaultHighlighted` option that can be used to customize what item is highlighted by default with the component is opened.
   It can either be a value, or a function that gets called with the select and returns that value.
