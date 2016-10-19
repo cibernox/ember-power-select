@@ -101,7 +101,7 @@ export default Component.extend({
     assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
 
-  willDestroy() {
+  willDestroyElement() {
     this._super(...arguments);
     this._removeObserversInOptions();
     this._removeObserversInSelected();
