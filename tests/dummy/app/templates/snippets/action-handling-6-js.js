@@ -4,14 +4,13 @@ const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
 
 export default Ember.Controller.extend({
   numbers,
-  actions: {
-    verifyPresence(select /*, e */) {
-      if (this.get('mandatoryNumber')) {
-        this.set('selectClass', null);
-      } else {
-        this.set('selectClass', 'has-error');
-        return false;
-      }
-    }
+  counter: 8,
+  destroyed: Ember.computed.lte('counter', 0),
+  startSelfDestroyCountdown() {
+    let tick = () => {
+      this.decrementProperty('counter');
+      if (!this.get('destroyed')) { Ember.run.later(tick, 1000); }
+    };
+    this.set('countdown', Ember.run.later(tick, 1000));
   }
 });

@@ -75,6 +75,28 @@
   {{partial partialName}}
 {{/code-sample}}
 
+<h3><code>oninput</code> Actions</h3>
+
+<p>
+  Selects might have searchboxes. When you type on them you usually want to search, which is the default behaviour,
+  but what if you whant to do other things before searching? Then you have the <code>oninput</code> action that is
+  fired before the search.
+</p>
+
+<p>
+  This action gives your the opportunity to react to any change in the inputs of the select, even when the inputs are
+  emptied, because the <code>search</code> action doesn't fire in that case. If you return false from this action,
+  you will prevent the default behavior, which is searching.
+</p>
+
+<p>
+  Let's create a select that searches only if the length of the search is bigger than 3 chars.
+</p>
+
+{{#code-sample hbs="action-handling-4.hbs" js="action-handling-4-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-sample}}
+
 <h3><code>onfocus/onblur</code> Actions</h3>
 
 <p>
@@ -86,7 +108,7 @@
   perhaps the most straightforward use case is to automatically open the component on focus.
 </p>
 
-{{#code-sample hbs="action-handling-4.hbs" js="action-handling-4-js.js" as |partialName|}}
+{{#code-sample hbs="action-handling-5.hbs" js="action-handling-5-js.js" as |partialName|}}
   {{partial partialName}}
 {{/code-sample}}
 
