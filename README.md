@@ -8,7 +8,7 @@
 
 Ember Power Select is a select component written in Ember with a focus in flexibility and extensibility.
 
-It is designed to work well with the way we build Ember apps, si it plays nicely with promises, ember-concurrency's tasks,
+It is designed to work well with the way we build Ember apps, so it plays nicely with promises, ember-concurrency's tasks,
 ember-data collections and follows idiomatic patterns.
 
 ## Installation
