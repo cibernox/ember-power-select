@@ -1,8 +1,9 @@
 # Master
 
+- [BUGFIX] Ensure EPS depends on a bug-free version of ember-concurrency. Versions from 0.7.11 to 0.7.14 produced a memory leak.
+
 # 1.0.0-beta.24
 - [ENHANCEMENT] Return an string from the `oninput` action uses that string in the search instead of the original one.
-
 
 # 1.0.0-beta.23
 - [ENHANCEMENT] Add a `defaultHighlighted` option that can be used to customize what item is highlighted by default with the component is opened.
