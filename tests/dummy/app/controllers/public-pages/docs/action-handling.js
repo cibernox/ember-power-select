@@ -46,6 +46,14 @@ export default Ember.Controller.extend({
         this.set('selectClass', 'has-error');
         return false;
       }
+    },
+
+    checkLength(text, select) {
+      if (select.searchText.length >= 3 && text.length < 3) {
+        return '';
+      } else {
+        return text.length >= 3;
+      }
     }
   }
 });

@@ -1,12 +1,8 @@
-<input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
-<br>
-<br>
-{{#power-select
-  selected=selected
+{{#power-select-multiple
+  selected=selectedCities
   options=cities
-  onchange=(action (mut selected))
-  onfocus=(action "handleFocus")
-  as |name|
-}}
+  onchange=(action (mut selectedCities))
+  oninput=(action "checkLength")
+  as |name|}}
   {{name}}
-{{/power-select}}
+{{/power-select-multiple}}

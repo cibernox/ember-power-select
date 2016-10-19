@@ -222,10 +222,14 @@ export default Component.extend({
       let term = e.target.value;
       let action = this.get('oninput');
       let publicAPI = this.get('publicAPI');
-      if (action && action(term, publicAPI, e) === false) {
-        return;
+      let correctedTerm;
+      if (action) {
+        correctedTerm = action(e.target.value, publicAPI, e);
+        if (correctedTerm === false) {
+          return;
+        }
       }
-      publicAPI.actions.search(term);
+      publicAPI.actions.search(typeof correctedTerm === 'string' ? correctedTerm : term);
     },
 
     highlight(option /* , e */) {

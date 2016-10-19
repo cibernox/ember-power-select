@@ -1,0 +1,11 @@
+{{#power-select
+  selected=mandatoryNumber
+  options=numbers
+  class=selectClass
+  dropdownClass=selectClass
+  onchange=(action (mut mandatoryNumber))
+  onclose=(action "verifyPresence")
+  placeholder="I really NEED this info"
+  as |number|}}
+  {{number}}
+{{/power-select}}
