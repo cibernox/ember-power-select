@@ -1,5 +1,8 @@
 # Master
 
+# 1.0.0-beta.26
+- [ENHANCEMENT] Define bootstrap and material themes variables with `!default` so they also can be overriden.
+
 # 1.0.0-beta.25
 - [BUGFIX] Ensure EPS depends on a bug-free version of ember-concurrency. Versions from 0.7.11 to 0.7.14 produced a memory leak.
 
