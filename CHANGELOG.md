@@ -75,7 +75,7 @@
 - [BUGFIX] Fix problem when a select is disabled and then re-enabled (the bug was in EBD).
 
 # 1.0.0-beta.8
-- [BUGFIX] Depend on a vertion of EPS that doesn't rely on `ember-cli-shims` 0.1.3.
+- [BUGFIX] Depend on a version of EPS that doesn't rely on `ember-cli-shims` 0.1.3.
 
 # 1.0.0-beta.7
 - [BUGFIX] Having more than one component with `renderInPlace=true` attempted to register views with id null.
@@ -274,7 +274,7 @@
 - [BUGFIX] `select.actions.select` doesn't call `stopPropagation` or `preventDefault` in the given
   event anymore. It's not it's responsability.
 - [INTERNAL] Update Ember-basic-dropdown to 0.9.5-beta.14. PublicAPI should be the same, but
-  internal have been simplified and responsabilities better divided across components. Nothing should
+  internal have been simplified and responsibilities better divided across components. Nothing should
   break, but given the size of the changes ¯\_(ツ)_/¯
 - [BUGFIX] The trigger of the single select applies overflow if the content is too long
 
@@ -325,7 +325,7 @@
 - [ENHANCEMENT] Improve accuracy `selectChoose`. Before `selectChoose('.my-select', 'User')` might,
   erroneously, select the option containing the text `User team` if it was before than `User` in the
   list. Now if there is more than one option containing the given text it but the content of
-  one of the options is *identical*, then that one is choosen. If none is identical, the first one.
+  one of the options is *identical*, then that one is chosen. If none is identical, the first one.
 
 # 0.10.0-beta.1
 - [BUGFIX] Fix bug with the new delegation methods when the list of options was not an Ember.A()
@@ -357,7 +357,7 @@
 - [BUGFIX] The the public API received by the `search` action now has the searchText up to date
   with the value entered by the user.
 - [BUGFIX] Acceptance tests helpers are now async inside. They used to be fully async before 0.9.2.
-- [ENHANCEMENT] Pass the public API of the componet as second argument to the search action, as it is
+- [ENHANCEMENT] Pass the public API of the component as second argument to the search action, as it is
   the case with the rest of the public actions.
 
 # 0.9.2
@@ -432,7 +432,7 @@
   People explicitly targeting this class in they styles will need to update.
 - [BREAKING] **Warning**. Classes ending in `--disabled`, `--highlighted` and `--selected` have been
   replaced by aria attributes `[aria-disabled="true"]`, `[aria-current="true"]` and `[aria-selected="true"]`
-  respectively. Those attributes are needed for a11y and the recomendation is to style based on them
+  respectively. Those attributes are needed for a11y and the recommendation is to style based on them
   instead of classes.
   Styles have been updated accordingly, so people using them and customizing the appearance using the
   sass variables won't notice anything, but people that relied on those classes for overriding styles
