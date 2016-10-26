@@ -10,7 +10,8 @@ html, body {
 html {
   font-size: 100%;
   line-height: 1.6;
-  font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  touch-action: manipulation;
+  font-family: 'Open sans', sans-serif;
 }
 
 body {
