@@ -44,6 +44,7 @@ Router.map(function() {
 
     this.route('addons', function() {
     });
+    this.route('support-the-project');
   });
 
   this.route('legacy-demo');
