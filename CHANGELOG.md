@@ -1,5 +1,9 @@
 # Master
 
+# 1.0.0-beta.27
+- [INTERNAL] Update to ember-basic-dropdown 0.17. This version has a breaking change that does not affect ember-power-select,
+  but might (unlikely) affect people using ember-basic-dropdown directly.
+
 # 1.0.0-beta.26
 - [ENHANCEMENT] Define bootstrap and material themes variables with `!default` so they also can be overriden.
 
