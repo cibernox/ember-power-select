@@ -13,7 +13,17 @@ function typeText(selector, text) {
 }
 
 function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
-  let event = new window.Event(eventType, { bubbles: true, cancelable: true, view: window });
+  let event;
+  try {
+    event = new window.Event(eventType, { bubbles: true, cancelable: true, view: window });
+  } catch (e) {
+    // fix IE11: "Object doesn't support this action"
+    event = document.createEvent('Event');
+    let bubbles = true;
+    let cancelable = true;
+    event.initEvent(eventType, bubbles, cancelable);
+  }
+
   Object.keys(options).forEach((key) => event[key] = options[key]);
   let target;
   if (typeof selectorOrDomElement === 'string') {
