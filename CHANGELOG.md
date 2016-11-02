@@ -1,5 +1,8 @@
 # Master
 
+# 1.0.0-beta.28
+- [BUGFIX] Fix helpers that fire events in IE11.
+
 # 1.0.0-beta.27
 - [INTERNAL] Update to ember-basic-dropdown 0.17. This version has a breaking change that does not affect ember-power-select,
   but might (unlikely) affect people using ember-basic-dropdown directly.
