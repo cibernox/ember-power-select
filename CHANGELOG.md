@@ -2,6 +2,7 @@
 
 # 1.0.0-beta.29
 - [BUGFIX] Improve default bootstrap theme.
+- [NOOP] Republish, since something weird happened while publishing beta.28
 
 # 1.0.0-beta.28
 - [BUGFIX] Fix helpers that fire events in IE11.
