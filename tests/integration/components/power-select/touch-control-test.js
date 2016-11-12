@@ -57,7 +57,7 @@ test('Touch on custom option should select it', function(assert) {
   assert.equal($('.ember-power-select-selected-item').text().trim(), 'four');
 });
 
-test('Touch on clear button should deselect it', function (assert) {
+test('Touch on clear button should deselect it', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
