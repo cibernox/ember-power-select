@@ -1,0 +1,9 @@
+{{#power-select
+  options=emptyList
+  noMatchesMessage="404 bro"
+  selected=selected
+  onchange=(action (mut selected))
+  as |name|
+}}
+  {{name}}
+{{/power-select}}

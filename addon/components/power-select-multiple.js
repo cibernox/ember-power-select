@@ -30,17 +30,29 @@ export default Component.extend({
     }
   }),
 
+  computedTabIndex: computed('tabindex', 'searchEnabled', 'triggerComponent', function() {
+    if (this.get('triggerComponent') === 'power-select-multiple/trigger' && this.get('searchEnabled') !== false) {
+      return '-1';
+    } else {
+      return this.get('tabindex');
+    }
+  }),
+
   // Actions
   actions: {
     handleOpen(select, e) {
       let action = this.get('onopen');
-      if (action && action(select, e) === false) { return false; }
+      if (action && action(select, e) === false) {
+        return false;
+      }
       this.focusInput();
     },
 
     handleFocus(select, e) {
       let action = this.get('onfocus');
-      if (action) { action(select, e); }
+      if (action) {
+        action(select, e);
+      }
       this.focusInput();
     },
 
@@ -82,6 +94,8 @@ export default Component.extend({
   // Methods
   focusInput() {
     let input = this.element.querySelector('.ember-power-select-trigger-multiple-input');
-    if (input) { input.focus(); }
+    if (input) {
+      input.focus();
+    }
   }
 });

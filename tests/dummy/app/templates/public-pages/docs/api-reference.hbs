@@ -42,6 +42,11 @@
       <td>The selected option (or collection of options in multiple mode)</td>
     </tr>
     <tr>
+      <td>defaultHighlighted</td>
+      <td><code>any or function</code></td>
+      <td>By default when the select opens, the highlighted element is the selected one, or the first if none. If you want to change this behaviour, pass an option or a function that receives the publicAPI and resolves to the highlighted option.</td>
+    </tr>
+    <tr>
       <td>onchange</td>
       <td><code>function</code></td>
       <td>The function to be invoked when the user selects or unselects an option</td>
@@ -62,7 +67,12 @@
     <tr>
       <td>onfocus</td>
       <td><code>function</code></td>
-      <td>The function to be invoked when component gains the focus</td>
+      <td>The function to be invoked when component or any of its subitems gains the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
+    </tr>
+    <tr>
+      <td>onblur</td>
+      <td><code>function</code></td>
+      <td>The function to be invoked when component or any of its subitems looses the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
     </tr>
     <tr>
       <td>onopen</td>
@@ -114,7 +124,7 @@
       <td><code>string</code></td>
       <td>
         Message shown in the list of options while the options are still not resolved,
-        tipically after a search but also when <code>options</code> is a promise.
+        typically after a search but also when <code>options</code> is a promise.
       </td>
     </tr>
     <tr>
@@ -238,7 +248,7 @@
     </tr>
     <tr>
       <td>tabindex</td>
-      <td><code>String</code></td>
+      <td><code>string</code></td>
       <td>The tabindex of the trigger</td>
     </tr>
   </tbody>

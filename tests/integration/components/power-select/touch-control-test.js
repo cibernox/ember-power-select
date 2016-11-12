@@ -1,15 +1,15 @@
-// import Ember from 'ember';
-import {moduleForComponent, test} from 'ember-qunit';
+import $ from 'jquery';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import {touchTrigger, nativeTouch} from '../../../helpers/ember-power-select';
+import { touchTrigger, nativeTouch } from '../../../helpers/ember-power-select';
 
-import {numbers} from '../constants';
+import { numbers } from '../constants';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Touch control)', {
   integration: true
 });
 
-test('Touch on trigger should open the dropdown', function (assert) {
+test('Touch on trigger should open the dropdown', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
@@ -23,7 +23,7 @@ test('Touch on trigger should open the dropdown', function (assert) {
   assert.equal($('.ember-power-select-options').length, 1, 'The dropdown is shown');
 });
 
-test('Touch on option should select it', function (assert) {
+test('Touch on option should select it', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
@@ -40,7 +40,7 @@ test('Touch on option should select it', function (assert) {
   assert.equal($('.ember-power-select-selected-item').text().trim(), 'four');
 });
 
-test('Touch on custom option should select it', function (assert) {
+test('Touch on custom option should select it', function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;

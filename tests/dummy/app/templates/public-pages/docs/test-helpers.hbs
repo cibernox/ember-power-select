@@ -17,35 +17,21 @@
   For that import the registration function and invoke it immedialty.
 </p>
 
-<pre>
-  import Ember from 'ember';
-  import Application from '../../app';
-  import config from '../../config/environment';
-  import registerPowerSelectHelpers from '../../tests/helpers/ember-power-select';
+{{code-snippet name="test-helpers-1-js.js"}}
 
-  registerPowerSelectHelpers();
-
-  export default function startApp(attrs) {
-    //...
-  }
-
-</pre>
-
-<h3><code>selectChoose(cssPath, optionText)</code></h3>
+<h3><code>selectChoose(cssPath, optionTextOrOptionSelector)</code></h3>
 
 <p>
   This async helper allows you to select an option of a select by it's text, without worrying about
   if the select is single or multiple or if it is opened or closed.
 </p>
 
-<pre>
-  fillIn('.username', 'Tomster');
-  selectChoose('.city-selector', 'Rome');
-  // ...
-  click('.submit-btn');
+{{code-snippet name="test-helpers-2-js.js"}}
 
-</pre>
+It also allows to pass a complec CSS selector where using the text of the option is not
+convenient:
 
+{{code-snippet name="test-helpers-3-js.js"}}
 
 <h3><code>selectSearch(cssPath, searchText)</code></h3>
 
@@ -54,41 +40,23 @@
   conjunction when the search perform some asynchronous operation
 </p>
 
-<pre>
-  selectSearch('.city-selector', 'new');
-
-  andThen(function() {
-    selectChoose('.city-selector', 'New Orleans');
-  });
-
-</pre>
-
+{{code-snippet name="test-helpers-4-js.js"}}
 
 <h3><code>removeMultipleOption(cssPath, optionText)</code></h3>
 
 <p>
-  Use this helper to remove an option from a multiple select. 
+  Use this helper to remove an option from a multiple select.
 </p>
 
-<pre>
-  selectChoose('.city-selector', 'new');
-  // ...
-  removeMultipleOption('.city-selector', 'new');
-
-</pre>
+{{code-snippet name="test-helpers-5-js.js"}}
 
 <h3><code>clearSelected(cssPath, optionText)</code></h3>
 
 <p>
-  Use this helper to remove an option from a single select when allowClear is set to true. 
+  Use this helper to remove an option from a single select when allowClear is set to true.
 </p>
 
-<pre>
-  selectChoose('.city-selector', 'new');
-  // ...
-  clearSelected('.city-selector', 'new');
-
-</pre>
+{{code-snippet name="test-helpers-6-js.js"}}
 
 <p>
 <strong>Note:</strong> Remember to whitelist <code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code> in the list of allowed
@@ -99,7 +67,7 @@
 <h2>Integration Tests</h2>
 
 <p>
-  Test helpers must be imported at the top of your integration test.  The basic functionality of these helpers are unlikely to change, but may experience minor revisions in the future.  
+  Test helpers must be imported at the top of your integration test.  The basic functionality of these helpers are unlikely to change, but may experience minor revisions in the future.
 </p>
 <p><code>import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select'</code></p>
 <p>
@@ -113,11 +81,7 @@
   This helper opens the dropdown based on the class name (scope) defined on the power select.  Scope is optional if integration test renders only one power select.
 </p>
 
-<pre>
-  clickTrigger(".t-select-foo");
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-
-</pre>
+{{code-snippet name="test-helpers-7-js.js"}}
 
 <h3><code>typeInSearch(text)</code></h3>
 
@@ -125,11 +89,7 @@
   This helper is used in conjunction with opening a power select dropdown as long as search is not disabled.
 </p>
 
-<pre>
-  clickTrigger(".t-select-foo");
-  typeInSearch("wat");
-
-</pre>
+{{code-snippet name="test-helpers-8-js.js"}}
 
 <div class="doc-page-nav">
   {{#link-to 'public-pages.docs.custom-search-action' class="doc-page-nav-link-prev"}}&lt; Custom search action{{/link-to}}

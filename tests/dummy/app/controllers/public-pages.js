@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
 
   actions: {
     changeOptions() {
-      const index = options.indexOf(this.get('mainSelectOptions')) + 1;
+      let index = options.indexOf(this.get('mainSelectOptions')) + 1;
       if (index === options.length) {
         this.set('disabled', true);
       } else {

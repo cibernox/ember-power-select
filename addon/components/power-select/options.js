@@ -5,7 +5,7 @@ import computed from 'ember-computed';
 
 export default Component.extend({
   isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
-  layout: layout,
+  layout,
   tagName: 'ul',
   attributeBindings: ['role', 'aria-controls'],
   role: 'listbox',
@@ -18,13 +18,17 @@ export default Component.extend({
     }
     let findOptionAndPerform = (action, e) => {
       let optionItem = $(e.target).closest('[data-option-index]');
-      if (!optionItem || !(0 in optionItem)) { return; }
-      if (optionItem.closest('[aria-disabled=true]').length) { return; } // Abort if the item or an ancestor is disabled
+      if (!optionItem || !(0 in optionItem)) {
+        return;
+      }
+      if (optionItem.closest('[aria-disabled=true]').length) {
+        return; // Abort if the item or an ancestor is disabled
+      }
       let optionIndex = optionItem[0].getAttribute('data-option-index');
       action(this._optionFromIndex(optionIndex), e);
     };
-    this.element.addEventListener('mouseup', e => findOptionAndPerform(this.get('select.actions.choose'), e));
-    this.element.addEventListener('mouseover', e => findOptionAndPerform(this.get('select.actions.highlight'), e));
+    this.element.addEventListener('mouseup', (e) => findOptionAndPerform(this.get('select.actions.choose'), e));
+    this.element.addEventListener('mouseover', (e) => findOptionAndPerform(this.get('select.actions.highlight'), e));
     if (this.get('isTouchDevice')) {
       this._addTouchEvents();
     }
@@ -49,10 +53,12 @@ export default Component.extend({
     this.element.addEventListener('touchstart', () => {
       this.element.addEventListener('touchmove', touchMoveHandler);
     });
-    this.element.addEventListener('touchend', e => {
-	  let optionItem = $(e.target).closest('[data-option-index]');
+    this.element.addEventListener('touchend', (e) => {
+      let optionItem = $(e.target).closest('[data-option-index]');
 
-	  if (!optionItem || !(0 in optionItem)) { return; }
+      if (!optionItem || !(0 in optionItem)) {
+        return;
+      }
 
       e.preventDefault();
       if (this.hasMoved) {

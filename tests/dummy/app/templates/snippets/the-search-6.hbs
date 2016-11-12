@@ -1,0 +1,8 @@
+{{#power-select
+  options=names
+  selected=selectedPersonName
+  onchange=(action (mut selectedPersonName))
+  as |name select|
+}}
+  {{highlight-substr name select.lastSearchedText}}
+{{/power-select}}

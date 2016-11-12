@@ -1,0 +1,11 @@
+{{#power-select
+  options=names
+  destination="customized-destination"
+  selected=name123
+  onchange=(action (mut name123))
+  as |name|
+}}
+  {{name}}
+{{/power-select}}
+<div id="customized-destination"></div>
+(Looks the same but inspect the DOM to see the difference)

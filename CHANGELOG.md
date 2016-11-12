@@ -1,4 +1,67 @@
 # Master
+
+# 1.0.0-beta.30
+- [BUGFIX] Update version of ember-basic-dropdown, which fixes several positioning issues involving pages
+  with horizontal scroll.
+
+# 1.0.0-beta.29
+- [BUGFIX] Improve default bootstrap theme.
+- [NOOP] Republish, since something weird happened while publishing beta.28
+
+# 1.0.0-beta.28
+- [BUGFIX] Fix helpers that fire events in IE11.
+
+# 1.0.0-beta.27
+- [INTERNAL] Update to ember-basic-dropdown 0.17. This version has a breaking change that does not affect ember-power-select,
+  but might (unlikely) affect people using ember-basic-dropdown directly.
+
+# 1.0.0-beta.26
+- [ENHANCEMENT] Define bootstrap and material themes variables with `!default` so they also can be overriden.
+
+# 1.0.0-beta.25
+- [BUGFIX] Ensure EPS depends on a bug-free version of ember-concurrency. Versions from 0.7.11 to 0.7.14 produced a memory leak.
+
+# 1.0.0-beta.24
+- [ENHANCEMENT] Return an string from the `oninput` action uses that string in the search instead of the original one.
+
+# 1.0.0-beta.23
+- [ENHANCEMENT] Add a `defaultHighlighted` option that can be used to customize what item is highlighted by default with the component is opened.
+  It can either be a value, or a function that gets called with the select and returns that value.
+- [ENHANCEMENT] Add `onblur` event for symmetry with `onfocus`, and also clarify that both are fired for any element of
+  the select gaining the focus, so the `event.target` should be used to disambiguate the origin.
+- [BUGFIX] Fix SHIFT+TAB in multiple select: In multiple selects with search enabled that use the default component,
+  the tabindex is applied to the searchbox, and the trigger has -1.
+
+# 1.0.0-beta.22
+- [ENHANCEMENT] Added a material-design theme!
+- [INTERNAL] Internal refactor to leverage ember-concurrency. OMG, this is so much better!
+
+# 1.0.0-beta.21
+- [ENHANCEMENT] Add support for cancellables (p.e ember-concurrecy tasks) in the search action.
+- [DOCS] Use `ember-code-snippet` to finally have proper syntax highlighting in DOCs. Now snippets are also
+  evaluated as partials, which servers as an insurance policy agains typos.
+- [INTERNAL] Switch from JSHint to ESLint + `eslint-plugin-ember-suave` for better code uniformity.
+- [ENHANCEMENT] The `selectChoose` and `selectSearch` helpers now throw explicative errors when something goes wrong.
+- [ENHANCEMENT] The `selectChoose` helper now also allows to receive a CSS selector as second argument (instead of
+  the text value of the option). This makes easier for selects with complex HTML inside their options
+  to be interacted with.
+- [DOCS] Add not explaining that automatic animation detection doesn't work with CSS transitions,
+  only with CSS animations.
+
+# 1.0.0-beta.20
+- [TESTING] Ensure the addon is tested in 2.4LTS
+- [BUGFIX] Fix bug in versions of Ember <= 2.6
+- [INTERNAL] Update to ember-cli 2.9
+
+# 1.0.0-beta.19
+- [BUGFIX] Update EBD to fix a bug. This prevents open/close actions to be invoked in a destroyed component.
+
+# 1.0.0-beta.17
+- [BUGFIX] Widewalk a bug with `Ember.A` in fastboot. See https://github.com/ember-fastboot/ember-cli-fastboot/issues/251
+- [INTERNAL] Upgrade to 2.8 family.
+
+# 1.0.0-beta.15
+- [BUGFIX] Fix bad memory leak in multiple selects. Probably messing with people's app in testing.
 - [BUGFIX] Avoid polluting styles of ember-basic-dropdown.
 
 # 1.0.0-beta.14
@@ -27,7 +90,7 @@
 - [BUGFIX] Fix problem when a select is disabled and then re-enabled (the bug was in EBD).
 
 # 1.0.0-beta.8
-- [BUGFIX] Depend on a vertion of EPS that doesn't rely on `ember-cli-shims` 0.1.3.
+- [BUGFIX] Depend on a version of EPS that doesn't rely on `ember-cli-shims` 0.1.3.
 
 # 1.0.0-beta.7
 - [BUGFIX] Having more than one component with `renderInPlace=true` attempted to register views with id null.
@@ -226,7 +289,7 @@
 - [BUGFIX] `select.actions.select` doesn't call `stopPropagation` or `preventDefault` in the given
   event anymore. It's not it's responsability.
 - [INTERNAL] Update Ember-basic-dropdown to 0.9.5-beta.14. PublicAPI should be the same, but
-  internal have been simplified and responsabilities better divided across components. Nothing should
+  internal have been simplified and responsibilities better divided across components. Nothing should
   break, but given the size of the changes ¯\_(ツ)_/¯
 - [BUGFIX] The trigger of the single select applies overflow if the content is too long
 
@@ -277,7 +340,7 @@
 - [ENHANCEMENT] Improve accuracy `selectChoose`. Before `selectChoose('.my-select', 'User')` might,
   erroneously, select the option containing the text `User team` if it was before than `User` in the
   list. Now if there is more than one option containing the given text it but the content of
-  one of the options is *identical*, then that one is choosen. If none is identical, the first one.
+  one of the options is *identical*, then that one is chosen. If none is identical, the first one.
 
 # 0.10.0-beta.1
 - [BUGFIX] Fix bug with the new delegation methods when the list of options was not an Ember.A()
@@ -309,7 +372,7 @@
 - [BUGFIX] The the public API received by the `search` action now has the searchText up to date
   with the value entered by the user.
 - [BUGFIX] Acceptance tests helpers are now async inside. They used to be fully async before 0.9.2.
-- [ENHANCEMENT] Pass the public API of the componet as second argument to the search action, as it is
+- [ENHANCEMENT] Pass the public API of the component as second argument to the search action, as it is
   the case with the rest of the public actions.
 
 # 0.9.2
@@ -384,7 +447,7 @@
   People explicitly targeting this class in they styles will need to update.
 - [BREAKING] **Warning**. Classes ending in `--disabled`, `--highlighted` and `--selected` have been
   replaced by aria attributes `[aria-disabled="true"]`, `[aria-current="true"]` and `[aria-selected="true"]`
-  respectively. Those attributes are needed for a11y and the recomendation is to style based on them
+  respectively. Those attributes are needed for a11y and the recommendation is to style based on them
   instead of classes.
   Styles have been updated accordingly, so people using them and customizing the appearance using the
   sass variables won't notice anything, but people that relied on those classes for overriding styles

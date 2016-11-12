@@ -10,6 +10,7 @@
     buildSelection=(action "buildSelection")
     class=class
     closeOnSelect=closeOnSelect
+    defaultHighlighted=defaultHighlighted
     destination=destination
     dir=dir
     disabled=disabled
@@ -21,6 +22,7 @@
     matcher=matcher
     matchTriggerWidth=matchTriggerWidth
     noMatchesMessage=noMatchesMessage
+    onblur=onblur
     onchange=onchange
     onclose=onclose
     onfocus=(action "handleFocus")
@@ -40,9 +42,9 @@
     searchPlaceholder=searchPlaceholder
     selected=selected
     selectedItemComponent=selectedItemComponent
-    tabindex=tabindex
+    tabindex=computedTabIndex
     triggerClass=concatenatedTriggerClass
-    triggerComponent=triggerComponent
+    triggerComponent=(component triggerComponent tabindex=tabindex)
     verticalPosition=verticalPosition
     as |option select|}}
     {{yield option select}}
@@ -61,6 +63,7 @@
     buildSelection=(action "buildSelection")
     class=class
     closeOnSelect=closeOnSelect
+    defaultHighlighted=defaultHighlighted
     destination=destination
     dir=dir
     disabled=disabled
@@ -72,6 +75,7 @@
     matcher=matcher
     matchTriggerWidth=matchTriggerWidth
     noMatchesMessage=noMatchesMessage
+    onblur=onblur
     onchange=onchange
     onclose=onclose
     onfocus=(action "handleFocus")
@@ -91,9 +95,9 @@
     searchPlaceholder=searchPlaceholder
     selected=selected
     selectedItemComponent=selectedItemComponent
-    tabindex=tabindex
+    tabindex=computedTabIndex
     triggerClass=concatenatedTriggerClass
-    triggerComponent=triggerComponent
+    triggerComponent=(component triggerComponent tabindex=tabindex)
     verticalPosition=verticalPosition
     as |option select|}}
     {{yield option select}}

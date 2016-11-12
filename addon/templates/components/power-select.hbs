@@ -19,7 +19,7 @@
     class=(readonly concatenatedTriggerClasses)
     onKeydown=(action "onTriggerKeydown")
     onFocus=(action "onTriggerFocus")
-    onBlur=(action "deactivate")
+    onBlur=(action "onTriggerBlur")
     tabindex=(readonly tabindex)}}
     {{#component triggerComponent
       allowClear=(readonly allowClear)
@@ -27,8 +27,7 @@
       extra=(readonly extra)
       listboxId=(readonly optionsId)
       onFocus=(action "onFocus")
-      activate=(action "activate")
-      onBlur=(action "deactivate")
+      onBlur=(action "onBlur")
       onInput=(action "onInput")
       placeholder=(readonly placeholder)
       onKeydown=(action "onKeydown")
@@ -52,7 +51,7 @@
       onKeydown=(action "onKeydown")
       searchEnabled=(readonly searchEnabled)
       onFocus=(action "onFocus")
-      onBlur=(action "deactivate")
+      onBlur=(action "onBlur")
       searchPlaceholder=(readonly searchPlaceholder)
       select=(readonly publicAPI)}}
     {{#if mustShowSearchMessage}}

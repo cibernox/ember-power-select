@@ -29,41 +29,8 @@
 </p>
 
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select
-      selected=destination
-      options=cities
-      onchange=(action "chooseDestination")
-      as |name|
-    }}
-      \{{name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      cities: ['Barcelona', 'London', 'New York', 'Porto'],
-      destination: 'London',
-
-      actions: {
-        chooseDestination(city) {
-          this.set('destination', city);
-          // this.calculateRoute();
-          // this.updatePrice();
-        }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select
-      selected=destination
-      options=cities
-      onchange=(action "chooseDestination")
-      as |name|
-    }}
-      {{name}}
-    {{/power-select}}
-  </div>
+{{#code-sample hbs="action-handling-1.hbs" js="action-handling-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>
@@ -72,33 +39,8 @@
   <code>mut</code> helper.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select
-      selected=destination
-      options=cities
-      onchange=(action (mut destination))
-      as |name|
-    }}
-      \{{name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      cities: ['Barcelona', 'London', 'New York', 'Porto'],
-      destination: 'London'
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select
-      selected=destination
-      options=cities
-      onchange=(action (mut destination))
-      as |name|
-    }}
-      {{name}}
-    {{/power-select}}
-  </div>
+{{#code-sample hbs="action-handling-2.hbs" js="action-handling-2-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>
@@ -129,51 +71,36 @@
   user introduced free text.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select-multiple
-      selected=selectedCities
-      options=cities
-      onchange=(action (mut selectedCities))
-      onkeydown=(action "handleKeydown")
-      as |name|
-    }}
-      \{{name}}
-    \{{/power-select-multiple}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      cities: ['Barcelona', 'London', 'New York', 'Porto'],
-      selectedCities: [],
-      actions: {
-        handleKeydown(dropdown, e) {
-          if (e.keyCode !== 13) { return; }
-          let text = e.target.value;
-          if (text.length > 0 && this.get('cities').indexOf(text) === -1) {
-            this.get('selectedCities').pushObject(text);
-          }
-        }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select-multiple
-      selected=selectedCities
-      options=cities
-      onchange=(action (mut selectedCities))
-      onkeydown=(action "handleKeydown")
-      as |name|
-    }}
-      {{name}}
-    {{/power-select-multiple}}
-  </div>
+{{#code-sample hbs="action-handling-3.hbs" js="action-handling-3-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
-
-<h3><code>onfocus</code> Action</h3>
+<h3><code>oninput</code> Actions</h3>
 
 <p>
-  The third action you can use is <code>onfocus</code>. It does exactly what the names suggests and receives <code>(select, event)</code>
+  Selects might have searchboxes. When you type on them you usually want to search, which is the default behaviour,
+  but what if you whant to do other things before searching? Then you have the <code>oninput</code> action that is
+  fired before the search.
+</p>
+
+<p>
+  This action gives your the opportunity to react to any change in the inputs of the select, even when the inputs are
+  emptied, because the <code>search</code> action doesn't fire in that case. If you return false from this action,
+  you will prevent the default behavior, which is searching.
+</p>
+
+<p>
+  Let's create a select that searches only if the length of the search is bigger than 3 chars.
+</p>
+
+{{#code-sample hbs="action-handling-4.hbs" js="action-handling-4-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-sample}}
+
+<h3><code>onfocus/onblur</code> Actions</h3>
+
+<p>
+  The next actions you can use are <code>onfocus/onblur</code>. It does exactly what the names suggests and receives <code>(select, event)</code>
 </p>
 
 <p>
@@ -181,44 +108,15 @@
   perhaps the most straightforward use case is to automatically open the component on focus.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    &lt;input type="text" placeholder="Focus me and press TAB to focus the select"&gt;
-    \{{#power-select
-      selected=selected
-      options=cities
-      onchange=(action (mut selected))
-      onfocus=(action "handleFocus")
-      as |name|
-    }}
-      \{{name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      cities: ['Barcelona', 'London', 'New York', 'Porto'],
-      actions: {
-        handleFocus(select, e) {
-          select.actions.open();
-        }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    <input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
-    <br>
-    <br>
-    {{#power-select
-      selected=selected
-      options=cities
-      onchange=(action (mut selected))
-      onfocus=(action "handleFocus")
-      as |name|
-    }}
-      {{name}}
-    {{/power-select}}
-  </div>
+{{#code-sample hbs="action-handling-5.hbs" js="action-handling-5-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
+
+<p>
+  Note that this action will be fired when the component or another element inside, like the searchboxes, gain the focus,
+  and sometimes you need which one triggered the focus/blur event. Since the <code>FocusEvent</code> is received
+  as last argument, you can check <code>event.target</code> to know it's origin.
+</p>
 
 <h3><code>onopen/onclose</code> Actions</h3>
 
@@ -233,58 +131,8 @@
   want to show a useless example: The select components for spies!
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#if destroyed}}
-      The bomb has exploded! Reload to try again :)
-    \{{else}}
-      \{{#power-select
-        selected=number
-        options=numbers
-        onchange=(action (mut number))
-        onopen=(action "startSelfDestroyCountdown")
-        placeholder="Once opened this component will destroy itself in 8 seconds"
-        as |number|
-      }}
-        \{{number}}
-      \{{/power-select}}
-      \{{#if countdown}}&lt;p&gt;This component will be destroyed in \{{counter}} seconds&lt;/p&gt;\{{/if}}
-    \{{/if}}
-    &lt;p&gt;Selected number: \{{number}}&lt;/p&gt;
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-    export default Ember.Controller.extend({
-      numbers,
-      counter: 8,
-      destroyed: Ember.computed.lte('counter', 0),
-      startSelfDestroyCountdown() {
-        let tick = () => {
-          this.decrementProperty('counter');
-          if (!this.get('destroyed')) { Ember.run.later(tick, 1000); }
-        };
-        this.set('countdown', Ember.run.later(tick, 1000));
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#if destroyed}}
-      The bomb has exploded! Reload to try again :)
-    {{else}}
-      {{#power-select
-        selected=number
-        options=numbers
-        onchange=(action (mut number))
-        onopen=(action "startSelfDestroyCountdown")
-        placeholder="Once opened this component will destroy itself in 8 seconds"
-        as |number|
-      }}
-        {{number}}
-      {{/power-select}}
-      {{#if countdown}}<p>This component will be destroyed in {{counter}} seconds</p>{{/if}}
-    {{/if}}
-    <p>Selected number: {{number}}</p>
-  </div>
+{{#code-sample hbs="action-handling-5.hbs" js="action-handling-5-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>
@@ -294,50 +142,8 @@
   the styles of the component.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select
-      selected=mandatoryNumber
-      options=numbers
-      class=selectClass
-      dropdownClass=selectClass
-      onchange=(action (mut mandatoryNumber))
-      onclose=(action "verifyPresence")
-      placeholder="I really NEED this info"
-      as |number|}}
-
-      \{{number}}
-
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-    export default Ember.Controller.extend({
-      actions: {
-        verifyPresence(select /*, e */) {
-          if (this.get('mandatoryNumber')) {
-            this.set('selectClass', null);
-          } else {
-            this.set('selectClass', 'has-error');
-            return false;
-          }
-        }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select
-      selected=mandatoryNumber
-      options=numbers
-      class=selectClass
-      dropdownClass=selectClass
-      onchange=(action (mut mandatoryNumber))
-      onclose=(action "verifyPresence")
-      placeholder="I really NEED this info"
-      as |number|}}
-      {{number}}
-    {{/power-select}}
-  </div>
+{{#code-sample hbs="action-handling-6.hbs" js="action-handling-6-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>

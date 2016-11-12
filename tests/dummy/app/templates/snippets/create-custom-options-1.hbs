@@ -1,0 +1,8 @@
+{{#power-select-multiple
+  options=options
+  selected=selected
+  onchange=(action (mut selected))
+  onkeydown=(action "createOnEnter")
+  as |number|}}
+  {{number}}
+{{/power-select-multiple}}

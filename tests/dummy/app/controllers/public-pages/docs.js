@@ -21,13 +21,13 @@ const groupedSections = [
       { route: 'public-pages.docs.the-list',         text: 'The list' },
       { route: 'public-pages.docs.the-trigger',      text: 'The trigger' },
       { route: 'public-pages.docs.the-search',       text: 'The Search' },
-      { route: 'public-pages.docs.styles',           text: 'Styles' },
+      { route: 'public-pages.docs.styles',           text: 'Styles' }
     ]
   },
   {
     groupName: 'Advanced customization',
     options: [
-      { route: 'public-pages.docs.custom-search-action', text: 'Custom search action' },
+      { route: 'public-pages.docs.custom-search-action', text: 'Custom search action' }
     ]
   },
   {
@@ -43,7 +43,7 @@ const groupedSections = [
 
 export default Ember.Controller.extend({
   routing: service('-routing'),
-  groupedSections: groupedSections,
+  groupedSections,
 
   currentSection: computed('routing.currentRouteName', function() {
     let currentRouteName = this.get('routing.currentRouteName');

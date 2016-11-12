@@ -1,0 +1,9 @@
+{{#power-select
+  options=people
+  matcher=myMatcher
+  selected=selectedPerson
+  onchange=(action (mut selectedPerson))
+  as |person|
+}}
+  {{person.name}} {{person.surname}}
+{{/power-select}}

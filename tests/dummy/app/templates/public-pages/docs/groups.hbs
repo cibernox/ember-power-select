@@ -6,43 +6,8 @@
   attribute named <code>groupName</code> and another named <code>options</code> that is also a collection.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select
-      options=groupedNumbers
-      selected=number
-      onchange=(action (mut number))
-      as |num|
-    }}
-      \{{num}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      groupedNumbers: [
-        { groupName: "Smalls", options: ["one", "two", "three"] },
-        { groupName: "Mediums", options: ["four", "five", "six"] },
-        { groupName: "Bigs", options: [
-            { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
-            { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
-            "thirteen"
-          ]
-        },
-        "one hundred",
-        "one thousand"
-      ]
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select
-      options=groupedNumbers
-      selected=number
-      onchange=(action (mut number))
-      as |num|
-    }}
-      {{num}}
-    {{/power-select}}
-  </div>
+{{#code-sample hbs="groups-1.hbs" js="groups-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>

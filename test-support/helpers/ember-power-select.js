@@ -13,7 +13,17 @@ function typeText(selector, text) {
 }
 
 function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
-  let event = new window.Event(eventType, { bubbles: true, cancelable: true, view: window });
+  let event;
+  try {
+    event = new window.Event(eventType, { bubbles: true, cancelable: true, view: window });
+  } catch (e) {
+    // fix IE11: "Object doesn't support this action"
+    event = document.createEvent('Event');
+    let bubbles = true;
+    let cancelable = true;
+    event.initEvent(eventType, bubbles, cancelable);
+  }
+
   Object.keys(options).forEach((key) => event[key] = options[key]);
   let target;
   if (typeof selectorOrDomElement === 'string') {
@@ -87,11 +97,17 @@ export function touchTrigger() {
 // Helpers for acceptance tests
 
 export default function() {
-  Test.registerAsyncHelper('selectChoose', function(app, cssPath, value) {
-    let $trigger = find(cssPath);
-    if (!$trigger.hasClass('ember-power-select-trigger')) {
-      $trigger = $trigger.find('.ember-power-select-trigger');
+  Test.registerAsyncHelper('selectChoose', function(app, cssPath, valueOrSelector) {
+    let $trigger = find(`${cssPath} .ember-power-select-trigger`);
+
+    if ($trigger === undefined || $trigger.length === 0) {
+      $trigger = find(cssPath);
     }
+
+    if ($trigger.length === 0) {
+      throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but no select was found using selector "${cssPath}"`);
+    }
+
     let contentId = `${$trigger.attr('aria-controls')}`;
     let $content = find(`#${contentId}`)
     // If the dropdown is closed, open it
@@ -102,27 +118,35 @@ export default function() {
 
     // Select the option with the given text
     andThen(function() {
-      let potentialTargets = $(`#${contentId} .ember-power-select-option:contains("${value}")`).toArray();
+      let potentialTargets = $(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
       let target;
+      if (potentialTargets.length === 0) {
+        // If treating the value as text doesn't gave use any result, let's try if it's a css selector
+        potentialTargets = $(`#${contentId} ${valueOrSelector}`).toArray();
+      }
       if (potentialTargets.length > 1) {
-        target = potentialTargets.filter((t) => t.textContent.trim() === value)[0] || potentialTargets[0];
+        target = potentialTargets.filter((t) => t.textContent.trim() === valueOrSelector)[0] || potentialTargets[0];
       } else {
         target = potentialTargets[0];
+      }
+      if (!target) {
+        throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`);
       }
       nativeMouseUp(target);
     });
   });
 
   Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
-    let $trigger = find(cssPath);
-    let triggerPath;
-    if ($trigger.hasClass('ember-power-select-trigger')) {
+    let triggerPath = `${cssPath} .ember-power-select-trigger`;
+    let $trigger = find(triggerPath);
+    if ($trigger === undefined || $trigger.length === 0) {
       triggerPath = cssPath;
-    } else {
-      $trigger = $trigger.find('.ember-power-select-trigger');
-      triggerPath = `${cssPath} .ember-power-select-trigger`;
+      $trigger = find(triggerPath);
     }
 
+    if ($trigger.length === 0) {
+      throw new Error(`You called "selectSearch('${cssPath}', '${value}')" but no select was found using selector "${cssPath}"`);
+    }
 
     let contentId = `${$trigger.attr('aria-controls')}`;
     let isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;

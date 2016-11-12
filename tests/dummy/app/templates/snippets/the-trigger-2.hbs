@@ -1,0 +1,17 @@
+{{#power-select
+  options=countries
+  selected=country
+  selectedItemComponent="selected-item-country"
+  searchField="name"
+  onchange=(action (mut country))
+  as |country|
+}}
+  <div class="country-detailed-info">
+    <img src="{{country.flagUrl}}" class="country-flag">
+    <div class="country-data-text">
+      <strong>{{country.name}}</strong>
+      <br>
+      <small>Population in 2014: <i>{{country.population}}</i></small>
+    </div>
+  </div>
+{{/power-select}}

@@ -16,7 +16,9 @@ export default Ember.Controller.extend({
     },
 
     handleKeydown(dropdown, e) {
-      if (e.keyCode !== 13) { return; }
+      if (e.keyCode !== 13) {
+        return;
+      }
       let text = e.target.value;
       if (text.length > 0 && this.get('cities').indexOf(text) === -1) {
         this.get('selectedCities').pushObject(text);
@@ -30,7 +32,9 @@ export default Ember.Controller.extend({
     startSelfDestroyCountdown() {
       let tick = () => {
         this.decrementProperty('counter');
-        if (!this.get('destroyed')) { Ember.run.later(tick, 1000); }
+        if (!this.get('destroyed')) {
+          Ember.run.later(tick, 1000);
+        }
       };
       this.set('countdown', Ember.run.later(tick, 1000));
     },
@@ -41,6 +45,14 @@ export default Ember.Controller.extend({
       } else {
         this.set('selectClass', 'has-error');
         return false;
+      }
+    },
+
+    checkLength(text, select) {
+      if (select.searchText.length >= 3 && text.length < 3) {
+        return '';
+      } else {
+        return text.length >= 3;
       }
     }
   }

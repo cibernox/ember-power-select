@@ -1,15 +1,21 @@
 import Ember from 'ember';
-
-const { isBlank, inject } = Ember;
+import { task, timeout } from 'ember-concurrency';
 
 export default Ember.Controller.extend({
-  ajax: inject.service(),
+  ajax: Ember.inject.service(),
 
+  // Actions
   actions: {
     searchRepo(term) {
-      if (isBlank(term)) { return []; }
-      const url = `https://api.github.com/search/repositories?q=${term}`;
-      return this.get('ajax').request(url).then(json => json.items);
+      let url = `https://api.github.com/search/repositories?q=${term}`;
+      return this.get('ajax').request(url).then((json) => json.items);
     }
-  }
+  },
+
+  // Tasks
+  searchTask: task(function* (term) {
+    yield timeout(1500);
+    let url = `https://api.github.com/search/repositories?q=${term}`;
+    return this.get('ajax').request(url).then((json) => json.items);
+  })
 });

@@ -5,15 +5,15 @@ import Ember from 'ember';
 moduleForAcceptance('Acceptance | All Public Pages');
 
 test('visit every Docs page in order', function(assert) {
-  const expectedPages = 15;
-  return keepClickingNext('/docs', '.doc-page-nav-link-next').then(urls => {
+  let expectedPages = 15;
+  return keepClickingNext('/docs', '.doc-page-nav-link-next').then((urls) => {
     assert.equal(urls.length, expectedPages);
   });
 });
 
 test('visit every Cookbook page in order', function(assert) {
-  const expectedPages = 6;
-  return keepClickingNext('/cookbook', '.doc-page-nav-link-next').then(urls => {
+  let expectedPages = 7;
+  return keepClickingNext('/cookbook', '.doc-page-nav-link-next').then((urls) => {
     assert.equal(urls.length, expectedPages);
   });
 });
@@ -27,7 +27,7 @@ test('visit /addons', function(assert) {
 
 function keepClickingNext(initialUrl, nextLinkSelector) {
   let seenURLs = Object.create(null);
-  return new Ember.RSVP.Promise(resolve => {
+  return new Ember.RSVP.Promise((resolve) => {
     visit(initialUrl);
     andThen(() => {
       visitNextPage();
@@ -35,7 +35,7 @@ function keepClickingNext(initialUrl, nextLinkSelector) {
     function visitNextPage() {
       andThen(() => {
         if (seenURLs[currentURL()]) {
-          throw new Error("page visitor detected a loop");
+          throw new Error('page visitor detected a loop');
         }
         seenURLs[currentURL()] = true;
         let nextLink = find(nextLinkSelector);

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
@@ -6,7 +7,7 @@ import run from 'ember-runloop';
 import {
   numbers,
   names,
-  countries,
+  countries
 } from '../constants';
 
 const { RSVP } = Ember;
@@ -91,7 +92,7 @@ test('The search box gain focus automatically when opened', function(assert) {
   assert.ok($('.ember-power-select-search-input').get(0) === document.activeElement, 'The search box is focused after opening select');
 });
 
-test("The search box shouldn't gain focus if autofocus is disabled", function (assert) {
+test("The search box shouldn't gain focus if autofocus is disabled", function(assert) {
   assert.expect(1);
 
   this.numbers = numbers;
@@ -133,7 +134,9 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   assert.expect(4);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    run.later(function() { console.debug('resolved!'); resolve(numbers); }, 150);
+    run.later(function() {
+      resolve(numbers);
+    }, 150);
   });
 
   this.render(hbs`
@@ -157,7 +160,9 @@ test('If the passed options is a promise and it\'s not resolved but the `loading
   assert.expect(2);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    run.later(function() { console.debug('resolved!'); resolve(numbers); }, 100);
+    run.later(function() {
+      resolve(numbers);
+    }, 100);
   });
 
   this.render(hbs`
@@ -315,7 +320,7 @@ test('If the content of the options is refreshed (starting with empty array prox
   this.render(hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`);
 
   clickTrigger();
-  typeInSearch("o");
+  typeInSearch('o');
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown after proxy is updated');
@@ -346,7 +351,7 @@ test('If the content of the options is updated (starting with populated array pr
   assert.equal($('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown with initial proxy contents');
   assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
 
-  typeInSearch("o");
+  typeInSearch('o');
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option').length, 2, 'The dropdown is opened and results shown after proxy is updated');
@@ -541,7 +546,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   clickTrigger();
-  const $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
+  let $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'three', 'The third option is highlighted');
 });
@@ -557,7 +562,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
   `);
 
   clickTrigger();
-  const $selectedOption = $('.ember-power-select-option:contains("three")');
+  let $selectedOption = $('.ember-power-select-option:contains("three")');
   assert.equal($selectedOption.attr('aria-selected'), 'true', 'The third option is marked as selected');
 });
 
@@ -601,7 +606,7 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 
   clickTrigger();
   typeInSearch('on');
-  assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
+  assert.equal($('.ember-power-select-option').text().trim(), 'No results found', 'No number ends in "on"');
   typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
 });
@@ -648,7 +653,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   clickTrigger();
-  const $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
+  let $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
   assert.equal($highlightedOption.length, 1, 'One element is highlighted');
   assert.equal($highlightedOption.text().trim(), 'ES: Spain', 'The second option is highlighted');
 });
@@ -665,7 +670,7 @@ test('When `selected` option is provided, that option is marked as `.selected`',
   `);
 
   clickTrigger();
-  const $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
+  let $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
   assert.equal($selectedOption.attr('aria-selected'), 'true', 'The second option is marked as selected');
 });
 
@@ -678,7 +683,7 @@ test('The default search strategy matches disregarding diacritics differences an
     { name: 'João',   surname: 'Jin' },
     { name: 'Miguel', surname: 'Camba' },
     { name: 'Marta',  surname: 'Stinson' },
-    { name: 'Lisa',   surname: 'Simpson' },
+    { name: 'Lisa',   surname: 'Simpson' }
   ];
 
   this.render(hbs`
@@ -710,11 +715,11 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
     { name: 'João',   surname: 'Jin' },
     { name: 'Miguel', surname: 'Camba' },
     { name: 'Marta',  surname: 'Stinson' },
-    { name: 'Lisa',   surname: 'Simpson' },
+    { name: 'Lisa',   surname: 'Simpson' }
   ];
 
   this.nameOrSurnameNoDiacriticsCaseSensitive = function(person, term) {
-    return (person.name + ' ' + person.surname).indexOf(term);
+    return `${person.name} ${person.surname}`.indexOf(term);
   };
 
   this.render(hbs`
@@ -787,7 +792,9 @@ test('If the passed options is a promise that is resolved, searching should filt
   assert.expect(5);
 
   this.numbersPromise = new RSVP.Promise(function(resolve) {
-    run.later(function() {resolve(numbers); }, 100);
+    run.later(function() {
+      resolve(numbers);
+    }, 100);
   });
 
   this.render(hbs`
@@ -798,7 +805,7 @@ test('If the passed options is a promise that is resolved, searching should filt
 
   setTimeout(function() {
     clickTrigger();
-    typeInSearch("o");
+    typeInSearch('o');
 
     assert.equal($('.ember-power-select-option').length, 4, 'The dropdown is opened and results shown.');
     assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
@@ -1063,4 +1070,48 @@ test('[BUGFIX] When the component is open and it has a `search` action, if optio
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two');
   run(() => this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']));
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
+});
+
+test('the item that is highlighted by default can be customized passing a value to `defaultHighlighted`', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.defaultHighlighted = numbers[4];
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) defaultHighlighted=defaultHighlighted as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'five', 'the given element is highlighted instead of the first, as usual');
+});
+
+test('the item that is highlighted by default can be customized passing a function to `defaultHighlighted`', function(assert) {
+  assert.expect(12);
+
+  this.numbers = numbers;
+  this.defaultHighlighted = function(select) {
+    assert.equal(typeof select.uniqueId, 'string', 'select.uniqueId is a string');
+    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+    assert.equal(typeof select.disabled, 'boolean', 'select.disabled is a boolean');
+    assert.equal(typeof select.isActive, 'boolean', 'select.isActive is a boolean');
+    assert.equal(typeof select.loading, 'boolean', 'select.loading is a boolean');
+    assert.ok(select.options instanceof Array, 'select.options is an array');
+    assert.ok(select.results instanceof Array, 'select.results is an array');
+    assert.equal(typeof select.resultsCount, 'number', 'select.resultsCount is a number');
+    assert.ok(select.hasOwnProperty('selected'));
+    assert.ok(select.hasOwnProperty('highlighted'));
+    return 'five';
+  };
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) defaultHighlighted=defaultHighlighted as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'five', 'the given element is highlighted instead of the first, as usual');
 });

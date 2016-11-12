@@ -35,6 +35,7 @@ Router.map(function() {
     });
     this.route('cookbook', function() {
       this.route('bootstrap-theme');
+      this.route('material-theme');
       this.route('css-animations');
       this.route('navigable-select');
       this.route('debounce-searches');
@@ -43,12 +44,14 @@ Router.map(function() {
 
     this.route('addons', function() {
     });
+    this.route('support-the-project');
   });
 
   this.route('legacy-demo');
 
   // Routes for tests
   this.route('helpers-testing');
+  this.route('helpers-testing-single-power-select');
 
   // Routes for fastboot tests
   this.route('fastboot-test');

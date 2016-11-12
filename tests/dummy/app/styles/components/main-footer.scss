@@ -15,3 +15,21 @@
     float: right;
   }
 }
+
+.contribute-call-to-action a {
+  border-radius: 4px;
+  padding: 5px 10px;
+  text-align: center;
+  background-color: $brand-color;
+  color: white;
+  border: 1px solid darken($brand-color, 12%);
+  box-shadow: 0 2px darken($brand-color, 18%);
+  &:hover {
+    background-color: darken($brand-color, 5%);
+  }
+}
+@media only screen and (min-width: $small-breakpoint) {
+  .contribute-call-to-action {
+    float: right;
+  }
+}

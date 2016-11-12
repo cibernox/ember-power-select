@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
@@ -70,8 +71,10 @@ test('Delete an item in a multiple selection', function(assert) {
   `);
 
   return wait().then(function() {
-    nativeMouseDown('.ember-power-select-multiple-remove-btn:first');
-    assert.equal($('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
+    nativeMouseDown('.ember-power-select-multiple-remove-btn:eq(0)');
+    return wait().then(function() {
+      assert.equal($('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
+    });
   });
 });
 
@@ -80,10 +83,10 @@ test('The `selected` option can be an async belongsTo', function(assert) {
   assert.expect(6);
 
   let pets = server.createList('pet', 10);
-  let mainUser = server.create('user', { petIds: pets.map(u => u.id), bestieId: pets[3].id });
+  let mainUser = server.create('user', { petIds: pets.map((u) => u.id), bestieId: pets[3].id });
 
   Ember.run(() => {
-    this.store.findRecord('user', mainUser.id).then(record => {
+    this.store.findRecord('user', mainUser.id).then((record) => {
       this.mainUser = record;
       this.render(hbs`
         {{#power-select options=mainUser.pets selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}

@@ -15,25 +15,8 @@
 
 <p><strong>Selects in this page seem to not work. This is intended.</strong> See last paragraph.</p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select options=names onchange=(action "foo") as |name|}}
-      \{{name}}
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-      actions: {
-        foo() { }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select options=names onchange=(action "foo") as |name|}}
-      {{name}}
-    {{/power-select}}
-  </div>
+{{#code-sample hbs="how-to-use-it-1.hbs" js="how-to-use-it-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>
@@ -42,46 +25,8 @@
   selects with complex HTML inside very naturally.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select
-      options=countries
-      selected=destination
-      onchange=(action "foo")
-      as |country|
-    }}
-      &lt;img src="\{{country.flagUrl}}" class="icon-flag"&gt; &lt;strong&gt;\{{country.name}}&lt;/strong&gt;
-    \{{/power-select}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    const countries = [
-      { name: 'United States',  flagUrl: '/flags/us.svg' },
-      { name: 'Spain',          flagUrl: '/flags/es.svg' },
-      { name: 'Portugal',       flagUrl: '/flags/pt.svg' },
-      { name: 'Russia',         flagUrl: '/flags/ru.svg' },
-      { name: 'Latvia',         flagUrl: '/flags/lv.svg' },
-      { name: 'Brazil',         flagUrl: '/flags/br.svg' },
-      { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
-    ];
-
-    export default Ember.Controller.extend({
-      countries: countries,
-      destination: countries[2],
-      actions: {
-        foo() { }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select
-      options=countries
-      selected=destination
-      onchange=(action "foo")
-      as |country|
-    }}
-      <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
-    {{/power-select}}
-  </div>
+{{#code-sample hbs="how-to-use-it-2.hbs" js="how-to-use-it-2-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>
@@ -98,8 +43,8 @@
 
 <ul>
   <li>
-    The component compares the selected option with the options in the collection by equality, to
-    have in mind that when working with POJOs that <code>{ foo: 'bar' } === { foo: 'bar' }</code> is false.
+    The component compares the selected option with the options in the collection by equality, so
+    when working with POJOs bear in mind that <code>{ foo: 'bar' } === { foo: 'bar' }</code> is false.
   </li>
   <li>
     Updates in the selected element will update the selected value in the component as expected.
