@@ -61,6 +61,7 @@ test('Touch on clear button should deselect it', function (assert) {
   assert.expect(1);
 
   this.numbers = numbers;
+  this.foo = 'one';
   this.render(hbs`
     {{#power-select options=numbers selected=foo allowClear=true onchange=(action (mut foo)) as |option|}}
       {{option}}
