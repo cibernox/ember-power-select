@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
     yield timeout(600);
     let url = `https://api.github.com/search/repositories?q=${term}`;
     return this.get('ajax').request(url).then((json) => json.items);
-  }),
+  }).restartable(),
 
   _performSearch(term, resolve, reject) {
     if (isBlank(term)) {
