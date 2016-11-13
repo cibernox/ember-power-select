@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] The clear button is now activate in touchstart, fixing a bug where in iOS the button was effectively unoperative.
+
 # 1.0.0-beta.30
 - [BUGFIX] Update version of ember-basic-dropdown, which fixes several positioning issues involving pages
   with horizontal scroll.
