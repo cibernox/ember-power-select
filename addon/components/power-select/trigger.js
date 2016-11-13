@@ -10,6 +10,9 @@ export default Component.extend({
     clear(e) {
       e.stopPropagation();
       this.get('select').actions.select(null);
+      if (e.type === 'touchstart') {
+        return false;
+      }
     }
   }
 });
