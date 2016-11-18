@@ -60,7 +60,7 @@
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
     "eslint-plugin-ember-suave": "^1.0.0",
-    "liquid-fire": "0.26.1",
+    "liquid-fire": "0.26.4",
     "loader.js": "^4.0.10",
     "memory-scroll": "0.2.0",
     "node-sass": "^3.10.1",
