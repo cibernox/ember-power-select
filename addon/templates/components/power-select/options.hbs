@@ -4,7 +4,7 @@
   {{/if}}
 {{/if}}
 {{#each options as |opt index|}}
-  {{#if opt.groupName}}
+  {{#if (ember-power-select-is-group opt)}}
     <li class="ember-power-select-group" aria-disabled={{ember-power-select-true-string-if-present opt.disabled}} role="option">
       <span class="ember-power-select-group-name">{{opt.groupName}}</span>
       {{#component optionsComponent

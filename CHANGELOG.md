@@ -1,5 +1,6 @@
 # Master
 
+- [BUGFIX] Ensure that options are not considered a group when they have `groupName` but lack of an `options` property.
 - [BUGFIX] The clear button is now activate in touchstart, fixing a bug where in iOS the button was effectively unoperative.
 
 # 1.0.0-beta.30
