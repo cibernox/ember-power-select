@@ -4,6 +4,9 @@ export default Ember.Controller.extend({
   actions: {
     handleFocus(select, e) {
       select.actions.open();
+    },
+    handleBlur() {
+      console.debug('EPS blurred!');
     }
   }
 });

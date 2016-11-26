@@ -29,6 +29,10 @@ export default Ember.Controller.extend({
       select.actions.open();
     },
 
+    handleBlur() {
+      console.debug('EPS blurred!');
+    },
+
     startSelfDestroyCountdown() {
       let tick = () => {
         this.decrementProperty('counter');
