@@ -30,7 +30,9 @@ export default Ember.Controller.extend({
     },
 
     handleBlur() {
+      /* eslint-disable */
       console.debug('EPS blurred!');
+      /* eslint-enable */
     },
 
     startSelfDestroyCountdown() {
