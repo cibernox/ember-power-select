@@ -26,7 +26,7 @@ export default Ember.Controller.extend({
     },
 
     handleFocus(select, e) {
-      let blurredEl = e.relatedTarget
+      let blurredEl = e.relatedTarget;
       if (!blurredEl || !blurredEl.classList.contains('ember-power-select-search-input')) {
         select.actions.open();
       }
