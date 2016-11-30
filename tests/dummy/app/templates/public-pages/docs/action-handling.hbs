@@ -115,7 +115,8 @@
 <p>
   Note that this action will be fired when the component or another element inside, like the searchboxes, gain the focus,
   and sometimes you need which one triggered the focus/blur event. Since the <code>FocusEvent</code> is received
-  as last argument, you can check <code>event.target</code> to know it's origin.
+  as last argument, you can check <code>event.target</code> to know what element gets the focus, and <code>event.relatedTarget</code>
+  to know the element that had the focus before.
 </p>
 
 <h3><code>onopen/onclose</code> Actions</h3>
