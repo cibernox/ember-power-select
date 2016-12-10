@@ -57,7 +57,7 @@ export default Component.extend({
   // CPs
   triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
     let select = this.get('select');
-    select.actions.reposition();
+    scheduleOnce('actions', select.actions.reposition);
     if (!select.selected || select.selected.length === 0) {
       return htmlSafe('width: 100%;');
     } else {
