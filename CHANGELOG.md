@@ -1,5 +1,11 @@
 # Master
 
+# 1.0.0
+
+- [DOC] Finally 1.0.0. No new features, just stability without stagnation.
+
+# 1.0.0-beta.31
+- [BUGFIX] Fix double render error in glimmer2
 - [BUGFIX] Ensure that options are not considered a group when they have `groupName` but lack of an `options` property.
 - [BUGFIX] The clear button is now activate in touchstart, fixing a bug where in iOS the button was effectively unoperative.
 
