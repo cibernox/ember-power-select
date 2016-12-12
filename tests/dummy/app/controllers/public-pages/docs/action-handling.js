@@ -5,7 +5,7 @@ const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
 export default Ember.Controller.extend({
   cities: ['Barcelona', 'London', 'New York', 'Porto', 'Coruña', 'Kracow', 'Siena', 'Portland', 'Springfield', 'Tokio'],
   destination: 'London',
-  selectedCities: [],
+  selectedCities: Ember.A(),
   numbers,
   counter: 8,
   destroyed: Ember.computed.lte('counter', 0),
