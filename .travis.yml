@@ -9,6 +9,7 @@ cache:
   directories:
     - $HOME/.npm
     - $HOME/.cache # includes bowers cache
+    - $HOME/.yarn-cache
 
 env:
   # we recommend testing LTS's and latest stable release (bonus points to beta/canary)
@@ -26,13 +27,12 @@ matrix:
 
 before_install:
   - npm config set spin false
-  - npm install -g bower
+  - npm install -g bower yarn phantomjs-prebuilt@2
   - bower --version
-  - npm install -g phantomjs-prebuilt
   - phantomjs --version
 
 install:
-  - npm install
+  - yarn --no-lockfile
   - bower install
 
 script:
