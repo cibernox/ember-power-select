@@ -7,7 +7,7 @@ sudo: false
 
 cache:
   directories:
-    - $HOME/.npm
+    - node_modules
     - $HOME/.cache # includes bowers cache
     - $HOME/.yarn-cache
 
@@ -27,12 +27,13 @@ matrix:
 
 before_install:
   - npm config set spin false
-  - npm install -g bower yarn phantomjs-prebuilt@2
+  - npm install -g bower yarn
   - bower --version
+  - yarn global add phantomjs-prebuilt
   - phantomjs --version
 
 install:
-  - yarn --no-lockfile
+  - yarn upgrade
   - bower install
 
 script:
