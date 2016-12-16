@@ -164,9 +164,9 @@ export default Component.extend({
     return concatWithProperty(classes, this.get('dropdownClass'));
   }),
 
-  mustShowSearchMessage: computed('publicAPI.{searchText,resultsCount}', 'search', 'searchMessage', function() {
+  mustShowSearchMessage: computed('publicAPI.{loading,searchText,resultsCount}', 'search', 'searchMessage', function() {
     let publicAPI = this.get('publicAPI');
-    return publicAPI.searchText.length === 0
+    return !publicAPI.loading && publicAPI.searchText.length === 0
       && !!this.get('search') && !!this.get('searchMessage')
       && publicAPI.resultsCount === 0;
   }),

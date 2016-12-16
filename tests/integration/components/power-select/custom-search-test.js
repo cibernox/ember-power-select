@@ -25,7 +25,28 @@ test('When you pass a custom search action instead of options, opening the selec
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search', 'The dropdown shows the "type to seach" message');
+  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search', 'The dropdown shows the "type to search" message');
+});
+
+test('The search text shouldn\'t appear if options are loading', function(assert) {
+  assert.expect(2);
+
+  this.options = new RSVP.Promise(function(resolve) {
+    Ember.run.later(function() {
+      resolve(numbers);
+    }, 100);
+  });
+  this.searchFn = function() {};
+
+  this.render(hbs`
+    {{#power-select options=options search=searchFn onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.notOk(/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message doesn\'t show');
+  assert.ok(/Loading options\.\.\./.test($('.ember-power-select-dropdown').text()), '"Loading options..." message appears');
 });
 
 test('When no options are given but there is a search action, a "type to search" message is rendered', function(assert) {
