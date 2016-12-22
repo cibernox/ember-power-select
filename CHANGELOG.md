@@ -1,5 +1,6 @@
 # Master
 
+# 1.0.1
 - [BUGFIX] The list of options now has `overflow: scroll` instead of `overflow: auto`, which cause
   some issues in firefox for windows
 
