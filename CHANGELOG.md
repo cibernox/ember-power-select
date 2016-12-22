@@ -1,7 +1,9 @@
 # Master
 
-# 1.0.0
+- [BUGFIX] The list of options now has `overflow: scroll` instead of `overflow: auto`, which cause
+  some issues in firefox for windows
 
+# 1.0.0
 - [DOC] Finally 1.0.0. No new features, just stability without stagnation.
 
 # 1.0.0-beta.31

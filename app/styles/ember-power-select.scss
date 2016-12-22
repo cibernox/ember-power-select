@@ -194,7 +194,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   user-select: none;
   -webkit-user-select: none;
   &[role="listbox"] {
-    overflow-y: auto;
+    overflow-y: scroll;
     @if unitless($ember-power-select-line-height) {
       max-height: #{$ember-power-select-number-of-visible-options * $ember-power-select-line-height}em;
     } @else {
