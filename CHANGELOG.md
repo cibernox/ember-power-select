@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Call `registerAPI` with `null` on `willDestroy` to avoid memory leaks
+
 # 1.0.2
 - [BUGFIX] REVERT the `overflow: scroll` change in 1.0.1. It makes all selects show scrollbar even
   if the content doesn't need it.
