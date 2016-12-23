@@ -45,7 +45,7 @@
     "ember-cli-mirage": "0.2.4",
     "ember-cli-qunit": "^3.0.1",
     "ember-cli-release": "1.0.0-beta.2",
-    "ember-cli-sass": "5.5.2",
+    "ember-cli-sass": "^6.0.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-template-lint": "0.4.12",
     "ember-cli-test-loader": "^1.1.0",
