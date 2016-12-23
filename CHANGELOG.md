@@ -1,5 +1,9 @@
 # Master
 
+# 1.0.2
+- [BUGFIX] REVERT the `overflow: scroll` change in 1.0.1. It makes all selects show scrollbar even
+  if the content doesn't need it.
+
 # 1.0.1
 - [BUGFIX] The list of options now has `overflow: scroll` instead of `overflow: auto`, which cause
   some issues in firefox for windows
