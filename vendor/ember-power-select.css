@@ -188,7 +188,8 @@
   user-select: none;
   -webkit-user-select: none; }
   .ember-power-select-options[role="listbox"] {
-    overflow-y: scroll;
+    overflow-y: auto;
+    /* in firefox in windows this can cause a word-break issue. Try `overflow-y: scroll` if that happens */
     max-height: 12.25em; }
 
 .ember-power-select-option {
