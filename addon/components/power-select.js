@@ -105,6 +105,10 @@ export default Component.extend({
     this._super(...arguments);
     this._removeObserversInOptions();
     this._removeObserversInSelected();
+    let action = this.get('registerAPI');
+    if (action) {
+      action(null);
+    }
   },
 
   // CPs
@@ -181,6 +185,9 @@ export default Component.extend({
   // Actions
   actions: {
     registerAPI(dropdown) {
+      if (!dropdown) {
+        return;
+      }
       let publicAPI = assign({}, this.get('publicAPI'), dropdown);
       publicAPI.actions = assign({}, dropdown.actions, this._publicAPIActions);
       this.setProperties({
