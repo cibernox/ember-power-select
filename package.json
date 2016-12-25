@@ -64,7 +64,6 @@
     "liquid-fire": "0.26.7",
     "loader.js": "^4.0.10",
     "memory-scroll": "0.2.0",
-    "node-sass": "^3.10.1",
     "simple-git": "^1.10.0"
   },
   "keywords": [
