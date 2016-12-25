@@ -1,5 +1,6 @@
 # Master
 
+- [CLEANUP] Depend on a newer version of `ember-cli-sass`, and remove `node-sass`.
 - [BUGFIX] Call `registerAPI` with `null` on `willDestroy` to avoid memory leaks
 
 # 1.0.2
