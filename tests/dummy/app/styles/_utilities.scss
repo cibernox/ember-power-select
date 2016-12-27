@@ -2,7 +2,6 @@
 .text-center {
   text-align: center;
 }
-
 // My own placeholders
 %clearfix {
   &::after {
@@ -17,8 +16,8 @@
 }
 %wrapper {
   max-width: 1024px; // not 960px because it's 2015
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: $wrapper-padding;
+  padding-right: $wrapper-padding;
   margin-left: auto;
   margin-right: auto;
 }
