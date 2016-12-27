@@ -9,10 +9,13 @@
 .main-header-logo {
   color: white;
   font-size: 30px;
+  padding: 5px 0;
   display: flex;
+  justify-content: center;
   align-items: center;
   img {
     height: 36px;
+    min-width: 88px;
   }
   .home-link {
     display: flex;
@@ -76,10 +79,6 @@ $almost-white: #fff2f2;
   .main-header-nav {
     padding-right: 0;
     padding-left: 0;
-  }
-  .main-header-logo {
-    display: block;
-    text-align: center;
   }
   .main-header-nav-links {
     justify-content: space-between;
