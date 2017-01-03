@@ -21,7 +21,8 @@ export default Ember.Controller.extend({
       }
       let text = e.target.value;
       if (text.length > 0 && this.get('cities').indexOf(text) === -1) {
-        this.get('selectedCities').pushObject(text);
+        let cities = this.get('selectedCities');
+        this.set('selectedCities', cities.concat([text]));
       }
     },
 
