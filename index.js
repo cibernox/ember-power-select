@@ -4,13 +4,13 @@
 module.exports = {
   name: 'ember-power-select',
 
-  included: function(appOrAddon) {
-    var app = appOrAddon.app || appOrAddon;
+  included(appOrAddon) {
+    let app = appOrAddon.app || appOrAddon;
     if (!app.__emberPowerSelectIncludedInvoked) {
       app.__emberPowerSelectIncludedInvoked = true;
 
-      var options = typeof app.options === 'object' ? app.options : {};
-      var addonConfig = options['ember-power-select'] || {};
+      let options = typeof app.options === 'object' ? app.options : {};
+      let addonConfig = options['ember-power-select'] || {};
 
       // Since ember-power-select styles already `@import` styles of ember-basic-dropdown,
       // this flag tells to ember-basic-dropdown to skip importing its styles provided
@@ -24,7 +24,7 @@ module.exports = {
       // Don't include the precompiled css file if the user uses ember-cli-sass
       if (!app.registry.availablePlugins['ember-cli-sass']) {
         if (addonConfig.theme) {
-          app.import('vendor/ember-power-select-'+addonConfig.theme+'.css');
+          app.import(`vendor/ember-power-select-${addonConfig.theme}.css`);
         } else if (addonConfig.theme !== false) {
           app.import('vendor/ember-power-select.css');
         }
@@ -32,10 +32,8 @@ module.exports = {
     }
   },
 
-  contentFor: function(type, config) {
-    var emberBasicDropdown = this.addons.filter(function(addon) {
-      return addon.name === 'ember-basic-dropdown';
-    })[0]
+  contentFor(type, config) {
+    let emberBasicDropdown = this.addons.find((a) => a.name === 'ember-basic-dropdown');
     return emberBasicDropdown.contentFor(type, config);
   }
 };
