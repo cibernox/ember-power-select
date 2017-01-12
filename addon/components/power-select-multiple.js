@@ -2,12 +2,14 @@ import Component from 'ember-component';
 import computed from 'ember-computed';
 import layout from '../templates/components/power-select-multiple';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+import $ from 'jquery';
 
 export default Component.extend({
   layout,
   // Config
   triggerComponent: fallbackIfUndefined('power-select-multiple/trigger'),
   beforeOptionsComponent: fallbackIfUndefined(null),
+  selectedItemsContainerSelector: fallbackIfUndefined(null),
 
   // CPs
   concatenatedTriggerClass: computed('triggerClass', function() {
@@ -37,6 +39,12 @@ export default Component.extend({
       return this.get('tabindex');
     }
   }),
+
+  didInsertElement() {
+    if (this.get('selectedItemsContainerSelector')) {
+      $('ul.ember-power-select-multiple-options').appendTo(this.get('selectedItemsContainerSelector'));
+    }
+  },
 
   // Actions
   actions: {

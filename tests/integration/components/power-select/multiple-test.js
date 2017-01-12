@@ -782,3 +782,13 @@ test('Multiple selects honor the `defaultHighlighted` option', function(assert) 
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'four', 'the given defaultHighlighted element is highlighted instead of the first, as usual');
 });
+
+test('The selected item list can be moved to another element via CSS selector', function(assert) {
+  this.render(hbs`
+    <div id="target-div"></div>
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) selectedItemsContainerSelector="#target-div"}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+  assert.ok($('#target-div ul.ember-power-select-multiple-options').length === 1, 'ul containing selected items is found inside element found by target selector');
+});
