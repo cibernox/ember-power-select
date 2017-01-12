@@ -3,9 +3,9 @@ import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseDown, nativeMouseUp } from '../../../helpers/ember-power-select';
-import { numbers, countries } from '../constants';
+import { numbers, names, countries } from '../constants';
 
-const { RSVP } = Ember;
+const { RSVP, Object: eObject, get } = Ember;
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Multiple)', {
   integration: true
@@ -781,4 +781,32 @@ test('Multiple selects honor the `defaultHighlighted` option', function(assert) 
 
   clickTrigger();
   assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'four', 'the given defaultHighlighted element is highlighted instead of the first, as usual');
+});
+
+test('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', function(assert) {
+  let User = eObject.extend({
+    isEqual(other) {
+      return get(this, 'name') === get(other, 'name');
+    }
+  });
+
+  this.search = (term) => {
+    return names.filter((n) => n.indexOf(term) > -1).map((name) => User.create({ name }));
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple
+      selected=selected
+      onchange=(action (mut selected))
+      search=search as |user|}}
+      {{user.name}}
+    {{/power-select-multiple}}
+  `);
+
+  typeInSearch('M');
+  nativeMouseUp('.ember-power-select-option:eq(1)');
+  typeInSearch('Mi');
+  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-selected'), 'true', 'The item in the list is marked as selected');
+  nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again should remove it
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 0);
 });

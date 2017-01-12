@@ -1,7 +1,10 @@
+import Ember from 'ember';
 import Component from 'ember-component';
 import computed from 'ember-computed';
 import layout from '../templates/components/power-select-multiple';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+
+const { isEqual } = Ember;
 
 export default Component.extend({
   layout,
@@ -81,7 +84,13 @@ export default Component.extend({
 
     buildSelection(option, select) {
       let newSelection = (select.selected || []).slice(0);
-      let idx = newSelection.indexOf(option);
+      let idx = -1;
+      for (let i = 0; i < newSelection.length; i++) {
+        if (isEqual(newSelection[i], option)) {
+          idx = i;
+          break;
+        }
+      }
       if (idx > -1) {
         newSelection.splice(idx, 1);
       } else {
