@@ -10,7 +10,11 @@ export function emberPowerSelectIsSelected([option, selected]/* , hash*/) {
     return false;
   }
   if (isEmberArray(selected)) {
-    return !!selected.find((e) => isEqual(e, option));
+    for (let i = 0; i < selected.length; i++) {
+      if (isEqual(selected[i], option)) {
+        return true;
+      }
+    }
   } else {
     return isEqual(option, selected);
   }
