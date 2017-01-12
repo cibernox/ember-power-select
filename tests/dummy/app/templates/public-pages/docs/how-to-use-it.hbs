@@ -43,8 +43,15 @@
 
 <ul>
   <li>
-    The component compares the selected option with the options in the collection by equality, so
-    when working with POJOs bear in mind that <code>{ foo: 'bar' } === { foo: 'bar' }</code> is false.
+    The component compares options using <code>Ember.isEqual</code>.
+    With primitive values like strings or numbers it works exactly as <code>===</code>.
+    With dates, although in JS <code>new Date(2017, 5, 5) !== new Date(2017, 5, 5)</code>,
+    in Ember Power Select they will be considered the same because <code>Ember.isEqual(new Date(2017, 5, 5), new Date(2017, 5, 5))) === true</code>.
+    <p>
+      When comparing objects, remember that in JS objects are compared by reference, so
+      <code>{ foo: 'bar' } !== { foo: 'bar' }</code>. However if you define on your objects
+      an <code>isEqual(other) {}</code> function, that will be used instead of a simple <code>===</code>.
+    </p>
   </li>
   <li>
     Updates in the selected element will update the selected value in the component as expected.
