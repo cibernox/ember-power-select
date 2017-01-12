@@ -2,15 +2,15 @@
 
 <p>
   This component is built using <em>The Ember 2 Way ™</em> but also with a focus in composition and composability.
-  It also a showcase of how I think Ember components should be architectured for maximize its reusablity.
+  It is also a showcase of how I think Ember components should be architectured to maximize their reusablity.
 </p>
 
 <h3>The Ember 2 Way ™</h3>
 
 <p>
-  In plain English, this means this component sticks to some design guidelines also known as DDAU (data down - actions up).
+  In plain English, it means that this component follows the "data down - actions up" design guidelines also known as DDAU.
   <ul>
-    <li>No double binding. None of the given properties gets silently mutated.</li>
+    <li>No two way binding. None of the given properties get silently mutated.</li>
     <li>Changes are propagated through actions. The user must handle that action and decide what to do.</li>
   </ul>
 </p>
@@ -18,7 +18,7 @@
 <h3>Built with composition</h3>
 
 <p>
-  Ember Power Select is built by combining existing addons each one of them focused on one simple task
+  Ember Power Select is built by combining existing addons. Each one of them focused on one simple task
   to create a complex piece of UI, but at the same time hides that fact and exposes itself as a
   single item.
   <br>
@@ -47,9 +47,9 @@
 
 <p>
   Ember Power Select is built as as a simple skeleton that exposes some "holes" to be filled with
-  more components to get the total behavior. By default, those "holes" are filled with components
-  that provide sensible defaults, but if any of the components rendered in those holes doesn't behave
-  exactly as you want it to behave, you can replace it by your own component.
+  more components to get the complete behavior. By default, those "holes" are filled with components
+  that provide sensible defaults, but if any of the components rendered in those holes do not behave
+  exactly as you want, you can replace them with your own.
 </p>
 
 <p>
@@ -69,8 +69,8 @@
 <h3>Leave the last word to the end user</h3>
 
 <p>
-  Actions exposed by the component take as little for granted as possible, and is up to the user to
-  decide what to do on each.<br>
+  Actions exposed by the component take as little for granted as possible, and is up to you to
+  decide what to do with each.<br>
   For that, this component's public API exposes actions like <code>onfocus</code>, <code>onchange</code>, <code>onkeydown</code>,
   <code>onopen</code> and <code>onclose</code> that allow you to decide what to do. <br>
   All those options receive the DOM event that triggered the action (if any) and the component's public
@@ -80,7 +80,7 @@
 </p>
 
 <p>
-  You can see a extensive list of all options of the component in the next section.
+  You can see an extensive list of all options of the component in the next section.
 </p>
 
 <div class="doc-page-nav">
