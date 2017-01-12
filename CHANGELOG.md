@@ -1,5 +1,10 @@
 # Master
 
+# 1.1.0
+- [ENHANCEMENT] Compare elemets using `Ember.isEqual` instead of `===`. This gaves use better
+  support for dates and allows users to define `isEqual` methods on their objects when keeping
+  a constant reference is hard.
+
 # 1.0.3
 - [CLEANUP] Depend on a newer version of `ember-cli-sass`, and remove `node-sass`.
 - [BUGFIX] Call `registerAPI` with `null` on `willDestroy` to avoid memory leaks
