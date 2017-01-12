@@ -10,7 +10,7 @@ import {
   countries
 } from '../constants';
 
-const { RSVP } = Ember;
+const { RSVP, Object: eObject, get } = Ember;
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true
@@ -1114,4 +1114,40 @@ test('the item that is highlighted by default can be customized passing a functi
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
   assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'five', 'the given element is highlighted instead of the first, as usual');
+});
+
+test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', function(assert) {
+  let User = eObject.extend({
+    isEqual(other) {
+      return get(this, 'name') === get(other, 'name');
+    }
+  });
+
+  this.search = (term) => {
+    return names.filter((n) => n.indexOf(term) > -1).map((name) => User.create({ name }));
+  };
+
+  let onChangeInvocationsCount = 0;
+  this.onChance = (selected) => {
+    onChangeInvocationsCount++;
+    this.set('selected', selected);
+  };
+
+  this.render(hbs`
+    {{#power-select
+      selected=selected
+      onchange=onChance
+      search=search as |user|}}
+      {{user.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  typeInSearch('M');
+  nativeMouseUp('.ember-power-select-option:eq(1)');
+  clickTrigger();
+  typeInSearch('i');
+  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-selected'), 'true', 'The item in the list is marked as selected');
+  nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again
+  assert.equal(onChangeInvocationsCount, 1);
 });

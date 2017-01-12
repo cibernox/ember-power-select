@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Component from 'ember-component';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
@@ -18,6 +19,8 @@ import {
   advanceSelectableOption
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
+
+const { isEqual } = Ember;
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
 const assign = Object.assign || function EmberAssign(original, ...args) {
@@ -248,7 +251,7 @@ export default Component.extend({
 
     select(selected /* , e */) {
       let publicAPI = this.get('publicAPI');
-      if (publicAPI.selected !== selected) {
+      if (!isEqual(publicAPI.selected, selected)) {
         this.get('onchange')(selected, publicAPI);
       }
     },
