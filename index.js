@@ -21,8 +21,11 @@ module.exports = {
 
       this._super.included.apply(this, arguments);
 
-      // Don't include the precompiled css file if the user uses ember-cli-sass
-      if (!app.registry.availablePlugins['ember-cli-sass']) {
+      let hasSass = !!app.registry.availablePlugins['ember-cli-sass'];
+      let hasLess = !!app.registry.availablePlugins['ember-cli-less'];
+
+      // Don't include the precompiled css file if the user uses a supported CSS preprocessor
+      if (!hasSass && !hasLess) {
         if (addonConfig.theme) {
           app.import(`vendor/ember-power-select-${addonConfig.theme}.css`);
         } else if (addonConfig.theme !== false) {
