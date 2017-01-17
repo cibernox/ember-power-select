@@ -1,5 +1,9 @@
 # Master
 
+# 1.2.0
+- [INTERNAL] Update to Ember Basic Dropdown 0.20. This will break ember-paper because it uses
+  private api, but will be fixed shortly.
+
 # 1.1.0
 - [ENHANCEMENT] Compare elemets using `Ember.isEqual` instead of `===`. This gaves use better
   support for dates and allows users to define `isEqual` methods on their objects when keeping
