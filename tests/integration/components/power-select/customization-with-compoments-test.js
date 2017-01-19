@@ -62,6 +62,24 @@ test('the list of options can be customized using optionsComponent', function(as
   assert.ok(/3\. Russia/.test(text), 'The component has access to the options');
 });
 
+test('the `optionsComponent` receives the `extra` hash', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#power-select options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) extra=(hash field='code') as |country|}}
+      {{country.code}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  let text = $('.ember-power-select-options').text().trim();
+  assert.ok(/Countries:/.test(text), 'The given component is rendered');
+  assert.ok(/3\. RU/.test(text), 'The component uses the field in the extra has to render the options');
+});
+
 test('the content before the list can be customized passing `beforeOptionsComponent`', function(assert) {
   assert.expect(2);
 
