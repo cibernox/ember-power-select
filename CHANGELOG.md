@@ -1,5 +1,9 @@
 # Master
 
+# 1.2.1
+- [BUGFIX] Properly pass the `extra` option to the `optionsComponent`. It used to receive it but
+  somehow it was removed by mistake during the 1.0.0-beta cycle.
+
 # 1.2.0
 - [INTERNAL] Update to Ember Basic Dropdown 0.20. This will break ember-paper because it uses
   private api, but will be fixed shortly.
