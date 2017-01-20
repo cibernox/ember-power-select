@@ -91,6 +91,13 @@ module.exports = {
       npm: {
         devDependencies: {}
       }
+    },
+    {
+      name: 'node-tests',
+      command: 'npm run nodetest',
+      bower: {
+        dependencies: {}
+      }
     }
   ]
 };
