@@ -1,5 +1,6 @@
 # Master
 
+# 1.4.0
 - [ENHANCEMENT] Added new `placeholderComponent` option. By default is used in single selects only.
 
 # 1.3.0
