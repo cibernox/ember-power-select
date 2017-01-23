@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Added new `placeholderComponent` option. By default is used in single selects only.
+
 # 1.3.0
 - [ENHANCEMENT] Added LESS support, on pair with the SASS one.
 - [BUGFIX] If the addon is installed in the presence of an `app.scss` file, it will automatically

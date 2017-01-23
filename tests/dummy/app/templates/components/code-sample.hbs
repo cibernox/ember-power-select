@@ -2,6 +2,9 @@
   {{#if hbs}}
     <div class="code-sample-tab {{if (eq activeTab "hbs") 'active'}}" onclick={{action (mut activeTab) "hbs"}}>Template</div>
   {{/if}}
+  {{#if hbs2}}
+    <div class="code-sample-tab {{if (eq activeTab "hbs2") 'active'}}" onclick={{action (mut activeTab) "hbs2"}}>Template 2</div>
+  {{/if}}
   {{#if js}}
     <div class="code-sample-tab {{if (eq activeTab "js") 'active'}}" onclick={{action (mut activeTab) "js"}}>Javascript</div>
   {{/if}}
@@ -14,6 +17,9 @@
 </nav>
 {{#if hbs}}
   {{code-snippet  name=hbs classNames="code-sample-snippet" class=(if (eq activeTab 'hbs') 'active')}}
+{{/if}}
+{{#if hbs2}}
+  {{code-snippet  name=hbs2 classNames="code-sample-snippet" class=(if (eq activeTab 'hbs2') 'active')}}
 {{/if}}
 {{#if js}}
   {{code-snippet  name=js classNames="code-sample-snippet" class=(if (eq activeTab 'js') 'active')}}

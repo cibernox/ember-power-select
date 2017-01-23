@@ -54,6 +54,22 @@ Take into account that in the multiple selects with search enabled, the trigger 
 and you should use the <code>searchPlaceholder</code> option instead. Check <a href="{{href-to 'public-pages.docs.the-search'}}">The search</a>
 section for more info.
 
+<h3>Set an complex placeholder</h3>
+
+<p>
+  Sometimes a simple string as placeholder is not enough and you want bold text, icons and such. In
+  that case you can pass a <code>placeholderComponent</code>, on which you can do pretty much anything.
+</p>
+
+{{#code-sample hbs="the-trigger-4.hbs" hbs2="the-trigger-4-hbs2.hbs" js="the-trigger-4-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-sample}}
+
+<p>
+  You can pass both <code>placeholderComponent</code> and <code>placeholder</code>. Inside
+  your component the placeholder text will be available.
+</p>
+
 <h3>Clear button</h3>
 
 <p>
@@ -62,7 +78,7 @@ section for more info.
   <strong>Please note that this option has no effect in  </strong><code>\{{power-select-multiple}}</code>
 </p>
 
-{{#code-sample hbs="the-trigger-4.hbs" js="the-trigger-4-js.js" as |partialName|}}
+{{#code-sample hbs="the-trigger-5.hbs" js="the-trigger-5-js.js" as |partialName|}}
   {{partial partialName}}
 {{/code-sample}}
 

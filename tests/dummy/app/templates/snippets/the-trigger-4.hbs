@@ -1,9 +1,8 @@
 {{#power-select
   options=names
-  selected=name
-  allowClear=true
-  onchange=(action (mut name))
-  as |name|
-}}
+  selected=aName
+  placeholderComponent="weird-placeholder"
+  onchange=(action (mut aName))
+  as |name|}}
   {{name}}
 {{/power-select}}
