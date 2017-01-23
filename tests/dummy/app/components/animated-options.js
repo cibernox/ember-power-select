@@ -1,23 +1,28 @@
 import Ember from 'ember';
+import OptionsComponent from 'ember-power-select/components/power-select/options';
 
-export default Ember.Component.extend({
-  didReceiveAttrs({ oldAttrs, newAttrs }) {
+export default OptionsComponent.extend({
+  animationRules: Ember.computed(function() {
+    return function() {
+      this.transition(
+        this.toValue(function(newOptions, oldOptions) {
+          return oldOptions === safeGet(newOptions, 0, 'parentLevel', 'options');
+        }),
+        this.use('toLeft'),
+        this.reverse('toRight')
+      );
+    };
+  }),
+
+  didReceiveAttrs() {
     this._super(...arguments);
-    if (!oldAttrs || !oldAttrs.options || !newAttrs.options || oldAttrs.options === newAttrs.options) {
-      return;
-    }
-    if (newAttrs.options.fromSearch) {
-      this.set('animation', false);
-      this.set('enableGrowth', false);
-    } else {
-      this.set('enableGrowth', true);
-      const parentLevel = oldAttrs.options[0] && oldAttrs.options[0].parentLevel;
-      const goingBack = !!parentLevel && parentLevel.options === newAttrs.options;
-      if (goingBack) {
-        this.set('animation', 'toRight');
-      } else {
-        this.set('animation', 'toLeft');
-      }
-    }
+    this.set('enableGrowth', !this.get('options.fromSearch'));
   }
 });
+
+function safeGet(base, ...keys) {
+  while (base && keys.length > 0) {
+    base = base[keys.shift()];
+  }
+  return base;
+}

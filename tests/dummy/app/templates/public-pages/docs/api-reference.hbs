@@ -1,5 +1,7 @@
 <h1 class="doc-page-title">API reference</h1>
 
+
+<h3 class="doc-page-title">Component's options</h3>
 <table>
   <thead>
     <tr>
@@ -10,14 +12,39 @@
   </thead>
   <tbody>
     <tr>
+      <td>ariaDescribedBy</td>
+      <td><code>string</code></td>
+      <td>Sets <code>aria-describedby</code> on the component</td>
+    </tr>
+    <tr>
+      <td>ariaInvalid</td>
+      <td><code>string</code></td>
+      <td>Sets <code>aria-invalid</code> on the component</td>
+    </tr>
+    <tr>
+      <td>ariaLabel</td>
+      <td><code>string</code></td>
+      <td>Sets <code>aria-label</code> on the component</td>
+    </tr>
+    <tr>
+      <td>ariaLabelledBy</td>
+      <td><code>string</code></td>
+      <td>Sets <code>aria-labelledby</code> on the component</td>
+    </tr>
+    <tr>
       <td>options</td>
       <td><code>collection</code></td>
-      <td>Colletion of options to display in the component</td>
+      <td>Collection of options to display in the component</td>
     </tr>
     <tr>
       <td>selected</td>
       <td><code>any or array</code></td>
       <td>The selected option (or collection of options in multiple mode)</td>
+    </tr>
+    <tr>
+      <td>defaultHighlighted</td>
+      <td><code>any or function</code></td>
+      <td>By default when the select opens, the highlighted element is the selected one, or the first if none. If you want to change this behaviour, pass an option or a function that receives the publicAPI and resolves to the highlighted option.</td>
     </tr>
     <tr>
       <td>onchange</td>
@@ -30,9 +57,22 @@
       <td>The function to be invoked when the user presses a key being the component or the inputs inside it focused</td>
     </tr>
     <tr>
+      <td>oninput</td>
+      <td><code>function</code></td>
+      <td>
+        The function to be invoked when the user changes the text in any any search input of the component.
+        If the user returns <code>false</code> the default behaviour (filter/search) is prevented.
+      </td>
+    </tr>
+    <tr>
       <td>onfocus</td>
       <td><code>function</code></td>
-      <td>The function to be invoked when component gains the focus</td>
+      <td>The function to be invoked when component or any of its subitems gains the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
+    </tr>
+    <tr>
+      <td>onblur</td>
+      <td><code>function</code></td>
+      <td>The function to be invoked when component or any of its subitems looses the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
     </tr>
     <tr>
       <td>onopen</td>
@@ -84,13 +124,18 @@
       <td><code>string</code></td>
       <td>
         Message shown in the list of options while the options are still not resolved,
-        tipically after a search but also when <code>options</code> is a promise.
+        typically after a search but also when <code>options</code> is a promise.
       </td>
     </tr>
     <tr>
       <td>noMatchesMessage</td>
       <td><code>string</code></td>
       <td>Message shown when a search doesn't find any matching result.</td>
+    </tr>
+    <tr>
+      <td>searchMessage</td>
+      <td><code>string</code></td>
+      <td>Message shown in options list when no search has been entered and there are no options.</td>
     </tr>
     <tr>
       <td>triggerComponent</td>
@@ -103,6 +148,16 @@
         <td>The component to render to customize just the selected item of the trigger</td>
     </tr>
     <tr>
+      <td>afterOptionsComponent</td>
+      <td><code>string/contextua-component</code></td>
+      <td>The component rendered after the list of options. It is empty by default in both single and multiple selects</td>
+    </tr>
+    <tr>
+      <td>beforeOptionsComponent</td>
+      <td><code>string/contextua-component</code></td>
+      <td>The component rendered before the list of options. In single selects defaults to the searchbox. In multiple select defaults to nothing</td>
+    </tr>
+    <tr>
       <td>optionsComponent</td>
       <td><code>string</code></td>
       <td>The component to render instead of the default one inside the list of options</td>
@@ -110,7 +165,18 @@
     <tr>
       <td>renderInPlace</td>
       <td><code>boolean</code></td>
-      <td>When truthy, the list of options will be rendered in place instead of being attaches to the root of the body and positioned with javascript</td>
+      <td>
+        When truthy, the list of options will be rendered in place instead of being attaches to the root of the body and positioned with javascript.
+        Enabling this option also adds a wrapper div around the trigger and the content with class <code>.ember-power-select</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>closeOnSelect</td>
+      <td><code>boolean</code></td>
+      <td>
+        Defaults to true. When false, the component won't be closed after the user <em>chooses</em>
+        an option, either with the mouse/keyboard or using the `choose` action in the publicAPI.
+      </td>
     </tr>
     <tr>
       <td>allowClear</td>
@@ -127,10 +193,20 @@
       </td>
     </tr>
     <tr>
+      <td>horizontalPosition</td>
+      <td><code>string</code></td>
+      <td>
+        In the case when trigger is narrower than dropdown. By default is <code>"auto"</code>, meaning that will
+        position the list depending on the side of the trigger. Possible values are
+        <code>"left"</code> and <code>"right"</code>.
+      </td>
+    </tr>
+    <tr>
       <td>class</td>
       <td><code>string</code></td>
       <td>
-        The CSS class of the component.
+        The CSS class of the component. The component by default is tagless, so this won't take
+        any effect unless the user specifies `tagName=div` too.
       </td>
     </tr>
     <tr>
@@ -170,8 +246,51 @@
         The id of the element used as target for the dropdown's content, when not rendered in place.
       </td>
     </tr>
+    <tr>
+      <td>tabindex</td>
+      <td><code>string</code></td>
+      <td>The tabindex of the trigger</td>
+    </tr>
   </tbody>
 </table>
+
+<h3 class="doc-page-title">Public API's methods and actions</h3>
+
+<p>
+  All actions, subcomponents and blocks of Ember Power Select receive an object
+  containing the public API of the component. That object contains (some of) the state of the
+  component and some actions to interact with it.
+</p>
+<p>
+  <strong>Properties of this object are read-only</strong>. The only way of interacting with the
+  component through this public API object is using the actions.
+</p>
+<pre>
+{
+  uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form `ember1234`.
+  options: &lt;array[T]&gt;,            // Contains the regular array with the resolved collection of options.
+  results: &lt;array[T]&gt;,            // Contains the regular array with the active set of results.
+  resultsCount: &lt;number&gt;,         // Contains the number of results incuding those nested/disabled
+  selected: &lt;T&gt; or &lt;array[T]&gt;,    // Contains the resolved selected option (or options in multiple selects)
+  highlighted: &lt;T&gt;,               // Contains the currently highlighted option (if any)
+  searchText: &lt;string&gt;,           // Contains the text of the current search
+  lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match `searchText`. In async searches, it will match it if the current search is fulfilled
+  loading: &lt;boolean&gt;,             // Truthy if there is a pending promise that will update the results
+  isActive: &lt;boolean&gt;,            // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+  disabled: &lt;boolean&gt;,            // Truthy if the component received `disabled=true`
+  actions: {
+    open() { ... },               // Opens the select
+    close() { ... },              // Closes the select
+    toggle() { ... },             // Toggles the select
+    reposition() { ... },         // Repositions the dropdown (noop if renderInPlace=true)
+    search(term) { ... }          // Performs a search
+    highlight(option) { ... }     // Highlights the given option (if it's not disabled)
+    select(option) { ... }        // Selects the given option (if it's not disabled)
+    choose(option) { ... }        // Chooses the given options if it's not disabled (slight different than `select`)
+    scrollTo(option) { ... }      // Scrolls the given option into the viewport
+  }
+}
+</pre>
 
 <div class="doc-page-nav">
   {{#link-to 'public-pages.docs.architecture' class="doc-page-nav-link-prev"}}&lt; Architecture{{/link-to}}

@@ -1,413 +1,605 @@
 import Ember from 'ember';
+import Component from 'ember-component';
 import layout from '../templates/components/power-select';
-import { defaultMatcher, indexOfOption, optionAtIndex, filterOptions, countOptions } from '../utils/group-utils';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+import { assert } from 'ember-metal/utils';
+import { isBlank } from 'ember-utils';
+import { isEmberArray } from 'ember-array/utils';
+import computed from 'ember-computed';
+import get from 'ember-metal/get';
+import set from 'ember-metal/set';
+import { scheduleOnce } from 'ember-runloop';
+import {
+  defaultMatcher,
+  indexOfOption,
+  optionAtIndex,
+  filterOptions,
+  countOptions,
+  defaultHighlighted,
+  advanceSelectableOption
+} from '../utils/group-utils';
+import { task, timeout } from 'ember-concurrency';
 
-const { computed, run, get, isBlank } = Ember;
-const EventSender = Ember.Object.extend(Ember.Evented);
+const { isEqual } = Ember;
 
-export default Ember.Component.extend({
+// Copied from Ember. It shouldn't be necessary in Ember 2.5+
+const assign = Object.assign || function EmberAssign(original, ...args) {
+  for (let i = 0; i < args.length; i++) {
+    let arg = args[i];
+    if (!arg) {
+      continue;
+    }
+
+    let updates = Object.keys(arg);
+
+    for (let i = 0; i < updates.length; i++) {
+      let prop = updates[i];
+      original[prop] = arg[prop];
+    }
+  }
+
+  return original;
+};
+
+function concatWithProperty(strings, property) {
+  if (property) {
+    strings.push(property);
+  }
+  return strings.join(' ');
+}
+
+function toPlainArray(collection) {
+  return collection.toArray ? collection.toArray() : collection;
+}
+
+const initialState = {
+  options: [],              // Contains the resolved collection of options
+  results: [],              // Contains the active set of results
+  resultsCount: 0,          // Contains the number of results incuding those nested/disabled
+  selected: undefined,      // Contains the resolved selected option
+  highlighted: undefined,   // Contains the currently highlighted option (if any)
+  searchText: '',           // Contains the text of the current search
+  lastSearchedText: '',     // Contains the text of the last finished search
+  loading: false,           // Truthy if there is a pending promise that will update the results
+  isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+  // Private API (for now)
+  _expirableSearchText: ''
+};
+
+export default Component.extend({
   // HTML
   layout,
-  tagName: fallbackIfUndefined(''),
+  tagName: '',
 
-  // Config
-  disabled: fallbackIfUndefined(false),
-  placeholder: fallbackIfUndefined(null),
-  placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
+  // Options
+  searchEnabled: fallbackIfUndefined(true),
+  matchTriggerWidth: fallbackIfUndefined(true),
+  matcher: fallbackIfUndefined(defaultMatcher),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
-  verticalPosition: fallbackIfUndefined('auto'),
-  matcher: fallbackIfUndefined(defaultMatcher),
-  searchField: fallbackIfUndefined(null),
-  search: fallbackIfUndefined(null),
+  searchMessage: fallbackIfUndefined('Type to search'),
   closeOnSelect: fallbackIfUndefined(true),
-  dropdownClass: fallbackIfUndefined(null),
-  triggerClass: fallbackIfUndefined(null),
-  dir: fallbackIfUndefined(null),
-  initiallyOpened: fallbackIfUndefined(false),
-  searchEnabled: fallbackIfUndefined(true),
-  searchMessage: fallbackIfUndefined("Type to search"),
-  searchPlaceholder: fallbackIfUndefined(null),
-  allowClear: fallbackIfUndefined(false),
-  triggerComponent: fallbackIfUndefined('power-select/trigger'),
-  selectedItemComponent: fallbackIfUndefined(null),
-  optionsComponent: fallbackIfUndefined('power-select/options'),
-  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
-  afterOptionsComponent: fallbackIfUndefined(null),
-  matchTriggerWidth: fallbackIfUndefined(true),
+  defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
 
-  // Attrs
-  searchText: '',
-  lastSearchedText: '',
-  expirableSearchText: '',
-  activeSearch: null,
-  openingEvent: null,
-  loading: false,
-  previousResults: null,
+  afterOptionsComponent: fallbackIfUndefined(null),
+  beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
+  optionsComponent: fallbackIfUndefined('power-select/options'),
+  selectedItemComponent: fallbackIfUndefined(null),
+  triggerComponent: fallbackIfUndefined('power-select/trigger'),
+  searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
+  placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
+
+  // Private state
+  publicAPI: initialState,
 
   // Lifecycle hooks
-  didInitAttrs() {
+  init() {
     this._super(...arguments);
-    Ember.assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
+    this._publicAPIActions = {
+      search: (...args) => this.send('search', ...args),
+      highlight: (...args) => this.send('highlight', ...args),
+      select: (...args) => this.send('select', ...args),
+      choose: (...args) => this.send('choose', ...args),
+      scrollTo: (...args) => scheduleOnce('afterRender', this, this.send, 'scrollTo', ...args)
+    };
+    assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
   },
 
   willDestroy() {
     this._super(...arguments);
-    this.activeSearch = null;
-    run.cancel(this.expirableSearchDebounceId);
+    this._removeObserversInOptions();
+    this._removeObserversInSelected();
+    let action = this.get('registerAPI');
+    if (action) {
+      action(null);
+    }
   },
 
   // CPs
-  triggerId: computed(function() {
-    return `ember-power-select-trigger-${this.elementId}`;
-  }),
-
-  optionsId: computed(function() {
-    return `ember-power-select-options-${this.elementId}`;
-  }),
-
-  concatenatedClasses: computed('class', function() {
-    const classes = ['ember-power-select'];
-    if (this.get('class')) { classes.push(this.get('class')); }
-    return classes.join(' ');
-  }),
-
-  concatenatedTriggerClasses: computed('triggerClass', function() {
-    let classes = ['ember-power-select-trigger'];
-    if (this.get('triggerClass')) {
-      classes.push(this.get('triggerClass'));
-    }
-    return classes.join(' ');
-  }),
-
-  concatenatedDropdownClasses: computed('dropdownClass', function() {
-    let classes = ['ember-power-select-dropdown', `ember-power-select-dropdown-${this.elementId}`];
-    if (this.get('dropdownClass')) {
-      classes.push(this.get('dropdownClass'));
-    }
-    return classes.join(' ');
-  }),
-
-  mustShowSearchMessage: computed('searchText', 'search', 'searchMessage', 'results.length', function(){
-    return this.get('searchText.length') === 0 && !!this.get('search') && !!this.get('searchMessage') && this.get('results.length') === 0;
-  }),
-
-  mustShowNoMessages: computed('results.length', 'loading', 'search', 'lastSearchedText', function() {
-    return !this.get('loading') && this.get('results.length') === 0 && (!this.get('search') || this.get('lastSearchedText.length') > 0);
-  }),
-
-  results: computed('options.[]', {
+  selected: computed({
     get() {
-      let options = this.get('options') || [];
-      let searchAction = this.get('search');
-      if (options.then) {
-        this.set('loading', true);
-        options.then(results => {
-          if (this.get('isDestroyed')) { return; }
-          this.set('results', results);
-        });
-        return this.previousResults || [];
-      }
-      let newResults = searchAction ? options : this.filter(options, this.get('searchText'));
-      this.setProperties({ loading: false, currentlyHighlighted: undefined });
-      this.previousResults = newResults;
-      return newResults;
+      return null;
     },
-    set(_, newResults) {
-      this.previousResults = newResults;
-      this.setProperties({ loading: false, currentlyHighlighted: undefined });
-      return newResults;
+    set(_, selected) {
+      if (selected && selected.then) {
+        this.get('_updateSelectedTask').perform(selected);
+      } else {
+        scheduleOnce('actions', this, this.updateSelection, selected);
+      }
+      return selected;
+    }
+  }),
+
+  options: computed({
+    get() {
+      return [];
+    },
+    set(_, options, oldOptions) {
+      if (options === oldOptions) {
+        return options;
+      }
+      if (options && options.then) {
+        this.get('_updateOptionsTask').perform(options);
+      } else {
+        scheduleOnce('actions', this, this.updateOptions, options);
+      }
+      return options;
     }
   }),
 
   optionMatcher: computed('searchField', 'matcher', function() {
     let { matcher, searchField } = this.getProperties('matcher', 'searchField');
-    if (searchField) {
+    if (searchField && matcher === defaultMatcher) {
       return (option, text) => matcher(get(option, searchField), text);
     } else {
       return (option, text) => matcher(option, text);
     }
   }),
 
-  highlighted: computed('results.[]', 'currentlyHighlighted', 'selected', function() {
-    return this.get('currentlyHighlighted') || this.defaultHighlighted();
-  }),
-
-  resultsLength: computed('results.[]', function() {
-    return countOptions(this.get('results'));
-  }),
-
-  eventSender: computed(function() {
-    return EventSender.create();
-  }),
-
-  publicAPI: computed('registeredDropdown.isOpen', 'highlighted', 'searchText', function() {
-    let dropdown = this.get('registeredDropdown');
-    if (dropdown) {
-      let ownActions = {
-        search: (term, e) => this.send('search', dropdown, term, e),
-        highlight: (option) => this.send('highlight', dropdown, option),
-        select: (selected, e) => this.send('select', dropdown, selected, e),
-        choose: (selected, e) => this.send('choose', dropdown, selected, e),
-        handleKeydown: (e) => this.send('handleKeydown', dropdown, e)
-      };
-      return {
-        isOpen: dropdown.isOpen,
-        highlighted: this.get('highlighted'),
-        searchText: this.get('searchText'),
-        actions: Ember.merge(ownActions, dropdown.actions)
-      };
+  concatenatedTriggerClasses: computed('triggerClass', 'publicAPI.isActive', function() {
+    let classes = ['ember-power-select-trigger'];
+    if (this.get('publicAPI.isActive')) {
+      classes.push('ember-power-select-trigger--active');
     }
-    return {};
+    return concatWithProperty(classes, this.get('triggerClass'));
+  }),
+
+  concatenatedDropdownClasses: computed('dropdownClass', 'publicAPI.isActive', function() {
+    let classes = ['ember-power-select-dropdown'];
+    if (this.get('publicAPI.isActive')) {
+      classes.push('ember-power-select-dropdown--active');
+    }
+    return concatWithProperty(classes, this.get('dropdownClass'));
+  }),
+
+  mustShowSearchMessage: computed('publicAPI.{loading,searchText,resultsCount}', 'search', 'searchMessage', function() {
+    let publicAPI = this.get('publicAPI');
+    return !publicAPI.loading && publicAPI.searchText.length === 0
+      && !!this.get('search') && !!this.get('searchMessage')
+      && publicAPI.resultsCount === 0;
+  }),
+
+  mustShowNoMessages: computed('search', 'publicAPI.{lastSearchedText,resultsCount,loading}', function() {
+    let publicAPI = this.get('publicAPI');
+    return !publicAPI.loading
+      && publicAPI.resultsCount === 0
+      && (!this.get('search') || publicAPI.lastSearchedText.length > 0);
   }),
 
   // Actions
   actions: {
-    highlight(dropdown, option) {
-      this._doHighlight(dropdown, option);
-    },
-
-    search(dropdown, term /*, e */) {
-      this._doSearch(dropdown, term);
-    },
-
-    handleInput(e) {
-      let term = e.target.value;
-      let action = this.get('oninput');
-      if (action) {
-        let returnValue = action(e.target.value, this.get('publicAPI'), e);
-        if (returnValue === false) { return; }
+    registerAPI(dropdown) {
+      if (!dropdown) {
+        return;
       }
-      this.send('search', this.get('registeredDropdown'), term, e);
+      let publicAPI = assign({}, this.get('publicAPI'), dropdown);
+      publicAPI.actions = assign({}, dropdown.actions, this._publicAPIActions);
+      this.setProperties({
+        publicAPI,
+        optionsId: `ember-power-select-options-${publicAPI.uniqueId}`
+      });
+      let action = this.get('registerAPI');
+      if (action) {
+        action(publicAPI);
+      }
     },
 
-    select(dropdown, selected, e) {
-      this._doSelect(dropdown, selected, e);
-    },
-
-    choose(dropdown, selection, e) {
-      if (e && e.clientY) {
-        let openingEvent = this.get('openingEvent');
-        if (openingEvent && openingEvent.clientY) {
-          if (Math.abs(openingEvent.clientY - e.clientY) < 2) { return; }
+    onOpen(_, e) {
+      let action = this.get('onopen');
+      if (action && action(this.get('publicAPI'), e) === false) {
+        return false;
+      }
+      if (e) {
+        this.openingEvent = e;
+        if (e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
+          e.preventDefault();
         }
       }
-      this.send('select', dropdown, this.get('buildSelection')(selection), e);
+      this.resetHighlighted();
+    },
+
+    onClose(_, e) {
+      let action = this.get('onclose');
+      if (action && action(this.get('publicAPI'), e) === false) {
+        return false;
+      }
+      if (e) {
+        this.openingEvent = null;
+      }
+      this.updateState({ highlighted: undefined });
+    },
+
+    onInput(e) {
+      let term = e.target.value;
+      let action = this.get('oninput');
+      let publicAPI = this.get('publicAPI');
+      let correctedTerm;
+      if (action) {
+        correctedTerm = action(e.target.value, publicAPI, e);
+        if (correctedTerm === false) {
+          return;
+        }
+      }
+      publicAPI.actions.search(typeof correctedTerm === 'string' ? correctedTerm : term);
+    },
+
+    highlight(option /* , e */) {
+      if (option && get(option, 'disabled')) {
+        return;
+      }
+      this.updateState({ highlighted: option });
+    },
+
+    select(selected /* , e */) {
+      let publicAPI = this.get('publicAPI');
+      if (!isEqual(publicAPI.selected, selected)) {
+        this.get('onchange')(selected, publicAPI);
+      }
+    },
+
+    search(term) {
+      if (isBlank(term)) {
+        this._resetSearch();
+      } else if (this.get('search')) {
+        this._performSearch(term);
+      } else {
+        this._performFilter(term);
+      }
+    },
+
+    choose(selected, e) {
+      if (e && e.clientY) {
+        if (this.openingEvent && this.openingEvent.clientY) {
+          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
+            return;
+          }
+        }
+      }
+      let publicAPI = this.get('publicAPI');
+      publicAPI.actions.select(this.get('buildSelection')(selected, publicAPI), e);
       if (this.get('closeOnSelect')) {
-        dropdown.actions.close(e);
+        publicAPI.actions.close(e);
+        return false;
       }
     },
 
-
-    handleKeydown(dropdown, e) {
-      const onkeydown = this.get('onkeydown');
-      if (onkeydown) { onkeydown(this.get('publicAPI'), e); }
-      if (e.defaultPrevented) { return; }
-      if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
-        this._handleKeyUpDown(dropdown, e);
-      } else if (e.keyCode === 13) {  // ENTER
-        this._handleKeyEnter(dropdown, e);
-      } else if (e.keyCode === 9) {   //Tab
-        this._handleKeyTab(dropdown, e);
-      } else if (e.keyCode === 27) {  // ESC
-        this._handleKeyESC(dropdown, e);
-      } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE
-        this._handleTriggerTyping(dropdown, e);
+    // keydowns handled by the trigger provided by ember-basic-dropdown
+    onTriggerKeydown(_, e) {
+      let onkeydown = this.get('onkeydown');
+      if (onkeydown && onkeydown(this.get('publicAPI'), e) === false) {
+        return false;
+      }
+      if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
+        this.get('triggerTypingTask').perform(e);
+      } else if (e.keyCode === 32) {  // Space
+        return this._handleKeySpace(e);
+      } else {
+        return this._routeKeydown(e);
       }
     },
 
-    handleFocus(dropdown, event) {
-      const action = this.get('onfocus');
+    // keydowns handled by inputs inside the component
+    onKeydown(e) {
+      let onkeydown = this.get('onkeydown');
+      if (onkeydown && onkeydown(this.get('publicAPI'), e) === false) {
+        return false;
+      }
+      return this._routeKeydown(e);
+    },
+
+    scrollTo(option /* , e */) {
+      if (!self.document || !option) {
+        return;
+      }
+      let publicAPI = this.get('publicAPI');
+      let optionsList = self.document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
+      if (!optionsList) {
+        return;
+      }
+      let index = indexOfOption(publicAPI.results, option);
+      if (index === -1) {
+        return;
+      }
+      let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
+      let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+      let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+      if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+        optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+      } else if (optionTopScroll < optionsList.scrollTop) {
+        optionsList.scrollTop = optionTopScroll;
+      }
+    },
+
+    onTriggerFocus(_, event) {
+      this.send('activate');
+      let action = this.get('onfocus');
       if (action) {
         action(this.get('publicAPI'), event);
       }
-      this.get('eventSender').trigger('focus');
     },
 
-    // It is not evident what is going on here, so I'll explain why.
-    //
-    // As of this writting, Ember doesn allow to yield data to the "inverse" block.
-    // Because of that, elements of this component rendered in the trigger can't receive the
-    // yielded object contaning the public API of the ember-basic-dropdown, with actions for open,
-    // close and toggle.
-    //
-    // The only possible workaround for this is to on initialization inject a similar object
-    // to the one yielded and store it to make it available in the entire component.
-    //
-    // This this limitation on ember should be fixed soon, this is temporary. Because of that this
-    // object will be passed to the action from the inverse block like if it was yielded.
-    //
-    registerDropdown(dropdown) {
-      this.set('registeredDropdown', dropdown);
+    onFocus(event) {
+      this.send('activate');
+      let action = this.get('onfocus');
+      if (action) {
+        action(this.get('publicAPI'), event);
+      }
     },
 
-    handleOpen(dropdown, e) {
-      const action = this.get('onopen');
-      if (action) { action(this.get('publicAPI'), e); }
-      if (e) { this.set('openingEvent', e); }
-      run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
+    onTriggerBlur(_, event) {
+      this.send('deactivate');
+      let action = this.get('onblur');
+      if (action) {
+        action(this.get('publicAPI'), event);
+      }
     },
 
-    handleClose(dropdown, e) {
-      const action = this.get('onclose');
-      if (action) { action(this.get('publicAPI'), e); }
-      if (e) { this.set('openingEvent', null); }
-      this.send('highlight', dropdown, null, e);
+    onBlur(event) {
+      this.send('deactivate');
+      let action = this.get('onblur');
+      if (action) {
+        action(this.get('publicAPI'), event);
+      }
+    },
+
+    activate() {
+      this.updateState({ isActive: true });
+    },
+
+    deactivate() {
+      this.updateState({ isActive: false });
     }
   },
 
-  _handleKeyUpDown(dropdown, e) {
-    if (dropdown.isOpen) {
-      e.preventDefault();
-      const newHighlighted = this.advanceSelectableOption(this.get('highlighted'), e.keyCode === 40 ? 1 : -1);
-      this.send('highlight', dropdown, newHighlighted, e);
-    } else {
-      dropdown.actions.open(e);
-    }
-  },
-
-  _handleKeyEnter(dropdown, e) {
-    if (dropdown.isOpen) {
-      this.send('choose', dropdown, this.get('highlighted'), e);
-    }
-  },
-
-  _handleKeyTab(dropdown, e) {
-    dropdown.actions.close(e);
-  },
-
-  _handleKeyESC(dropdown, e) {
-    dropdown.actions.close(e);
-  },
-
-  // Methods
-  scrollIfHighlightedIsOutOfViewport() {
-    if (!self.document) { return; }
-    const optionsList = document.querySelector('.ember-power-select-options');
-    if (!optionsList) { return; }
-    const highlightedOption = optionsList.querySelector('.ember-power-select-option[aria-current="true"]');
-    if (!highlightedOption) { return; }
-    const optionTopScroll = highlightedOption.offsetTop - optionsList.offsetTop;
-    const optionBottomScroll = optionTopScroll + highlightedOption.offsetHeight;
-    if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
-      optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
-    } else if (optionTopScroll < optionsList.scrollTop) {
-      optionsList.scrollTop = optionTopScroll;
-    }
-  },
-
-  indexOfOption(option) {
-    return indexOfOption(this.get('results'), option);
-  },
-
-  optionAtIndex(index) {
-    return optionAtIndex(this.get('results'), index);
-  },
-
-  advanceSelectableOption(activeHighlighted, step) {
-    let resultsLength = this.get('resultsLength');
-    let startIndex = Math.min(Math.max(this.indexOfOption(activeHighlighted) + step, 0), resultsLength - 1);
-    let nextOption = this.optionAtIndex(startIndex);
-    while (nextOption && get(nextOption, 'disabled')) {
-      nextOption = this.optionAtIndex(startIndex += step);
-    }
-    return nextOption;
-  },
-
-  filter(options, term) {
-    return filterOptions(options || [], term, this.get('optionMatcher'));
-  },
-
-  defaultHighlighted() {
-    const selected = this.get('selected');
-    if (!selected || this.indexOfOption(selected) === -1) {
-      return this.optionAtIndex(0);
-    }
-    return selected;
-  },
-
-  buildSelection(option) {
-    return option;
-  },
-
-  _doSelect(dropdown, selected, e) {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (this.get('selected') !== selected) {
-      this.get('onchange')(selected, this.get('publicAPI'));
-    }
-  },
-
-  _doHighlight(dropdown, option) {
-    if (option && get(option, 'disabled')) { return; }
-    run.scheduleOnce('afterRender', this, this.scrollIfHighlightedIsOutOfViewport);
-    this.set('currentlyHighlighted', option);
-  },
-
-  _doSearch(dropdown, term) {
-    if (isBlank(term)) {
-      this._resetSearch();
-    } else {
-      let searchAction = this.get('search');
-      if (searchAction) {
-        this._performSearch(searchAction, term);
-      } else {
-        let options = this.get('options');
-        if (options.then) {
-          options.then((data) => {
-            this.setProperties({ results: this.filter(data, term), searchText: term, lastSearchedText: term });
-          });
+  // Tasks
+  triggerTypingTask: task(function* (e) {
+    let publicAPI = this.get('publicAPI');
+    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
+    this.updateState({ _expirableSearchText: term });
+    let matches = this.filter(publicAPI.options, term, true);
+    if (get(matches, 'length') > 0) {
+      let firstMatch = optionAtIndex(matches, 0);
+      if (firstMatch !== undefined) {
+        if (publicAPI.isOpen) {
+          publicAPI.actions.highlight(firstMatch.option, e);
+          publicAPI.actions.scrollTo(firstMatch.option, e);
         } else {
-          this.setProperties({ results: this.filter(options, term), searchText: term, lastSearchedText: term });
+          publicAPI.actions.select(firstMatch.option, e);
         }
       }
     }
+    yield timeout(1000);
+    this.updateState({ _expirableSearchText: '' });
+  }).restartable(),
+
+  _updateSelectedTask: task(function* (selectionPromise) {
+    let selection = yield selectionPromise;
+    this.updateSelection(selection);
+  }).restartable(),
+
+  _updateOptionsTask: task(function* (optionsPromise) {
+    this.updateState({ loading: true });
+    try {
+      let options = yield optionsPromise;
+      this.updateOptions(options);
+    } finally {
+      this.updateState({ loading: false });
+    }
+  }).restartable(),
+
+  handleAsyncSearchTask: task(function* (term, searchThenable) {
+    try {
+      this.updateState({ loading: true });
+      let results = yield searchThenable;
+      let resultsArray = toPlainArray(results);
+      this.updateState({
+        results: resultsArray,
+        lastSearchedText: term,
+        resultsCount: countOptions(results),
+        loading: false
+      });
+      this.resetHighlighted();
+    } catch(e) {
+      this.updateState({ lastSearchedText: term, loading: false });
+    } finally {
+      if (typeof searchThenable.cancel === 'function') {
+        searchThenable.cancel();
+      }
+    }
+  }).restartable(),
+
+  // Methods
+  filter(options, term, skipDisabled = false) {
+    return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
+  },
+
+  updateOptions(options) {
+    this._removeObserversInOptions();
+    if (!options) {
+      return;
+    }
+    if (options && options.addObserver) {
+      options.addObserver('[]', this, this._updateOptionsAndResults);
+      this._observedOptions = options;
+    }
+    this._updateOptionsAndResults(options);
+  },
+
+  updateSelection(selection) {
+    this._removeObserversInSelected();
+    if (isEmberArray(selection)) {
+      if (selection && selection.addObserver) {
+        selection.addObserver('[]', this, this._updateSelectedArray);
+        this._observedSelected = selection;
+      }
+      this._updateSelectedArray(selection);
+    } else if (selection !== this.get('publicAPI').selected) {
+      this.updateState({ selected: selection, highlighted: selection });
+    }
+  },
+
+  resetHighlighted() {
+    let publicAPI = this.get('publicAPI');
+    let defaultHightlighted = this.get('defaultHighlighted');
+    let highlighted;
+    if (typeof defaultHightlighted === 'function') {
+      highlighted = defaultHightlighted(publicAPI);
+    } else {
+      highlighted = defaultHightlighted;
+    }
+    this.updateState({ highlighted });
+  },
+
+  buildSelection(option /* , select */) {
+    return option;
+  },
+
+  _updateOptionsAndResults(opts) {
+    if (get(this, 'isDestroyed')) {
+      return;
+    }
+    let options = toPlainArray(opts);
+    let publicAPI;
+    if (this.get('search')) { // external search
+      publicAPI = this.updateState({ options, results: options, resultsCount: countOptions(options), loading: false });
+    } else { // filter
+      publicAPI = this.get('publicAPI');
+      let results = isBlank(publicAPI.searchText) ? options : this.filter(options, publicAPI.searchText);
+      publicAPI = this.updateState({ results, options, resultsCount: countOptions(results), loading: false });
+    }
+    if (publicAPI.isOpen) {
+      this.resetHighlighted();
+    }
+  },
+
+  _updateSelectedArray(selection) {
+    if (get(this, 'isDestroyed')) {
+      return;
+    }
+    this.updateState({ selected: toPlainArray(selection) });
   },
 
   _resetSearch() {
-    let options = this.get('options') || [];
-    this.activeSearch = null;
-    if (options.then) {
-      options.then((data) => {
-        this.setProperties({ results: data, searchText: '', lastSearchedText: '', loading: false });
-      });
-    } else {
-      this.setProperties({ results: options, searchText: '', lastSearchedText: '', loading: false });
-    }
+    let results = this.get('publicAPI').options;
+    this.get('handleAsyncSearchTask').cancelAll();
+    this.updateState({
+      results,
+      searchText: '',
+      lastSearchedText: '',
+      resultsCount: countOptions(results),
+      loading: false
+    });
   },
 
-  _performSearch(searchAction, term) {
-    this.set('searchText', term);
-    let search = searchAction(term, this.get('publicAPI'));
+  _performFilter(term) {
+    let results = this.filter(this.get('publicAPI').options, term);
+    this.updateState({ results, searchText: term, lastSearchedText: term, resultsCount: countOptions(results) });
+    this.resetHighlighted();
+  },
+
+  _performSearch(term) {
+    let searchAction = this.get('search');
+    let publicAPI = this.updateState({ searchText: term });
+    let search = searchAction(term, publicAPI);
     if (!search) {
-      this.setProperties({ lastSearchedText: term });
+      publicAPI = this.updateState({ lastSearchedText: term });
     } else if (search.then) {
-      this.activeSearch = search;
-      this.setProperties({ loading: true });
-      search.then((results) => {
-        if (this.activeSearch === search) { this.setProperties({ results, lastSearchedText: term }); }
-      }, () => {
-        if (this.activeSearch === search) { this.set('lastSearchedText', term); }
-      });
+      this.get('handleAsyncSearchTask').perform(term, search);
     } else {
-      this.setProperties({ results: search, lastSearchedText: term });
+      let resultsArray = toPlainArray(search);
+      this.updateState({ results: resultsArray, lastSearchedText: term, resultsCount: countOptions(resultsArray) });
+      this.resetHighlighted();
     }
   },
 
-  _handleTriggerTyping(dropdown, e) {
-    let term = this.get('expirableSearchText') + String.fromCharCode(e.keyCode);
-    this.set('expirableSearchText', term);
-    this.expirableSearchDebounceId = run.debounce(this, 'set', 'expirableSearchText', '', 1000);
-    let firstMatch = this.filter(this.get('results'), term)[0]; // TODO: match only words starting with this substr?
-    if (firstMatch !== undefined) {
-      if (dropdown.isOpen) {
-        this._doHighlight(dropdown, firstMatch, e);
-      } else {
-        this._doSelect(dropdown, firstMatch, e);
-      }
+  _routeKeydown(e) {
+    if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+      return this._handleKeyUpDown(e);
+    } else if (e.keyCode === 13) {  // ENTER
+      return this._handleKeyEnter(e);
+    } else if (e.keyCode === 9) {   // Tab
+      return this._handleKeyTab(e);
+    } else if (e.keyCode === 27) {  // ESC
+      return this._handleKeyESC(e);
     }
+  },
+
+  _handleKeyUpDown(e) {
+    let publicAPI = this.get('publicAPI');
+    if (publicAPI.isOpen) {
+      e.preventDefault();
+      e.stopPropagation();
+      let step = e.keyCode === 40 ? 1 : -1;
+      let newHighlighted = advanceSelectableOption(publicAPI.results, publicAPI.highlighted, step);
+      publicAPI.actions.highlight(newHighlighted, e);
+      publicAPI.actions.scrollTo(newHighlighted);
+    } else {
+      publicAPI.actions.open(e);
+    }
+  },
+
+  _handleKeyEnter(e) {
+    let publicAPI = this.get('publicAPI');
+    if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
+      publicAPI.actions.choose(publicAPI.highlighted, e);
+      return false;
+    }
+  },
+
+  _handleKeySpace(e) {
+    let publicAPI = this.get('publicAPI');
+    if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
+      publicAPI.actions.choose(publicAPI.highlighted, e);
+      return false;
+    }
+  },
+
+  _handleKeyTab(e) {
+    this.get('publicAPI').actions.close(e);
+  },
+
+  _handleKeyESC(e) {
+    this.get('publicAPI').actions.close(e);
+  },
+
+  _removeObserversInOptions() {
+    if (this._observedOptions) {
+      this._observedOptions.removeObserver('[]', this, this._updateOptionsAndResults);
+    }
+  },
+
+  _removeObserversInSelected() {
+    if (this._observedSelected) {
+      this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
+    }
+  },
+
+  updateState(changes) {
+    let newState = set(this, 'publicAPI', assign({}, this.get('publicAPI'), changes));
+    let registerAPI = this.get('registerAPI');
+    if (registerAPI) {
+      registerAPI(newState);
+    }
+    return newState;
   }
 });

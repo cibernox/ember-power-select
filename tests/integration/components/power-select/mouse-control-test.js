@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
@@ -74,7 +75,7 @@ test('Doing mousedown the clear button removes the selection but does not open t
     assert.ok(dropdown.actions.close, 'The onchange action was called with the dropdown object as second argument');
     this.set('selected', selected);
   };
-  this.selected = "three";
+  this.selected = 'three';
   this.render(hbs`
     {{#power-select options=numbers selected=selected allowClear=true onchange=onChange as |option|}}
       {{option}}
@@ -178,5 +179,23 @@ test('Mouse-overing on a wrapped option should select it', function(assert) {
     $('.special-class:eq(3)')[0].dispatchEvent(event);
   });
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The fourth element is highlighted');
+});
+
+test('Mouse-overing the list itself doesn\'t crashes the app', function(assert) {
+  assert.expect(0); // NOTE: The fact that this tests runs without errors is the prove that it works
+
+  this.numbers = numbers;
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <span class="special-class">{{option}}</span>
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  Ember.run(() => {
+    let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
+    $('ul')[0].dispatchEvent(event);
+  });
 });
 

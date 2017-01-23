@@ -1,24 +1,63 @@
 <h3>Helpers testing</h3>
-{{#power-select class="select-choose" options=numbers selected=selected onchange=(action (mut selected)) as |num|}}
-  {{num}}
-{{/power-select}}
+<div class="select-choose">
+  {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>
 
-{{#power-select class="select-choose-onopen" onopen=(action "onOpenHandle") options=optionz selected=selected onchange=(action (mut selected)) searchEnabled=false as |num|}}
-  {{num}}
-{{/power-select}}
+<div class="select-choose-onopen">
+  {{#power-select onopen=(action "onOpenHandle") options=optionz selected=selected onchange=(action (mut selected)) allowClear=true searchEnabled=false as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>
 
-{{#power-select-multiple class="select-choose-onopen-multiple" onopen=(action "onOpenHandle") options=optionz selected=selected2 onchange=(action (mut selected2)) searchEnabled=false as |num|}}
-  {{num}}
-{{/power-select-multiple}}
+<div class="select-choose-onopen-multiple">
+  {{#power-select-multiple onopen=(action "onOpenHandle") options=optionz selected=selected2 onchange=(action (mut selected2)) searchEnabled=false as |num|}}
+    {{num}}
+  {{/power-select-multiple}}
+</div>
+
+<div>
+  {{#power-select triggerClass="select-with-class-in-trigger" options=numbers selected=selected onchange=(action (mut selected)) as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>
 
 {{#if selected}}
   <span class="select-choose-target">You've selected: {{selected}}</span>
 {{/if}}
 
-{{#power-select class="select-async" selected=selected onchange=(action (mut selected)) search=(action "searchAsync") as |num|}}
-  {{num}}
-{{/power-select}}
+<div class="select-async">
+  {{#power-select selected=selected onchange=(action (mut selected)) search=(action "searchAsync") as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>
 
-{{#power-select-multiple class="select-multiple" options=numbers selected=selectedList onchange=(action (mut selectedList)) as |num|}}
-  {{num}}
-{{/power-select-multiple}}
+<div class="select-multiple">
+  {{#power-select-multiple options=numbers selected=selectedList onchange=(action (mut selectedList)) as |num|}}
+    {{num}}
+  {{/power-select-multiple}}
+</div>
+
+<div id="select-multiple-async">
+  {{#power-select-multiple options=numbers selected=asyncSelectedList onchange=(action "onChangeAsync" 'asyncSelectedList') as |num|}}
+    {{num}}
+  {{/power-select-multiple}}
+</div>
+
+<div class="select-deselect-async">
+  {{#power-select options=numbers selected=asyncSelected onchange=(action "onChangeAsync" 'asyncSelected') allowClear=true as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>
+
+<h3>Customized component</h3>
+<div class="select-custom-search">
+  {{#power-select selected=selected3
+    onchange=(action (mut selected3))
+    search=(action "searchAsync")
+    beforeOptionsComponent=null
+    triggerComponent="custom-trigger-with-search" as |num|}}
+    {{num}}
+  {{/power-select}}
+</div>

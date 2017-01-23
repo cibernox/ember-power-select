@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseDown, nativeMouseUp } from '../../../helpers/ember-power-select';
-import { numbers, countries } from '../constants';
+import { numbers, names, countries } from '../constants';
 
-const { RSVP } = Ember;
+const { RSVP, Object: eObject, get } = Ember;
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Multiple)', {
   integration: true
@@ -181,7 +182,7 @@ test('The filtering specifying a searchkey works in multiple model', function(as
     { name: 'João',   surname: 'Jin' },
     { name: 'Miguel', surname: 'Camba' },
     { name: 'Marta',  surname: 'Stinson' },
-    { name: 'Lisa',   surname: 'Simpson' },
+    { name: 'Lisa',   surname: 'Simpson' }
   ];
 
   this.render(hbs`
@@ -220,7 +221,7 @@ test('The filtering specifying a custom matcher works in multiple model', functi
 
   clickTrigger();
   typeInSearch('on');
-  assert.equal($('.ember-power-select-option').text().trim(), "No results found", 'No number ends in "on"');
+  assert.equal($('.ember-power-select-option').text().trim(), 'No results found', 'No number ends in "on"');
   typeInSearch('teen');
   assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
 });
@@ -232,7 +233,7 @@ test('The search using a custom action works int multiple mode', function(assert
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -244,7 +245,7 @@ test('The search using a custom action works int multiple mode', function(assert
   `);
 
   clickTrigger();
-  typeInSearch("teen");
+  typeInSearch('teen');
 
   setTimeout(function() {
     assert.equal($('.ember-power-select-option').length, 7);
@@ -514,6 +515,22 @@ test('The placeholder is only visible when no options are selected', function(as
   assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('placeholder'), '', 'The placeholder is gone');
 });
 
+test('The placeholder is visible when no options are selected and search is disabled', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple searchEnabled=false options=numbers selected=foo onchange=(action (mut foo)) placeholder="Select stuff here" as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-placeholder').text(), 'Select stuff here', 'There is a placeholder');
+  clickTrigger();
+  nativeMouseUp('.ember-power-select-option:eq(1)');
+  assert.equal(this.$('.ember-power-select-placeholder').text(), '', 'The placeholder is gone');
+});
+
 test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', function(assert) {
   assert.expect(3);
 
@@ -587,7 +604,7 @@ test('Typing in the input opens the component and filters the options also with 
   this.search = (term) => {
     return new RSVP.Promise(function(resolve) {
       Ember.run.later(function() {
-        resolve(numbers.filter(str => str.indexOf(term) > -1));
+        resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
   };
@@ -607,12 +624,12 @@ test('Typing in the input opens the component and filters the options also with 
   }, 150);
 });
 
-test('The search term is yielded as second argument in multiple selects', function(assert) {
+test('The publicAPI is yielded as second argument in multiple selects', function(assert) {
   assert.expect(2);
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option term|}}
-      {{term}}:{{option}}
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option select|}}
+      {{select.lastSearchedText}}:{{option}}
     {{/power-select-multiple}}
   `);
 
@@ -622,7 +639,7 @@ test('The search term is yielded as second argument in multiple selects', functi
   nativeMouseUp('.ember-power-select-option:eq(0)');
   clickTrigger();
   typeInSearch('thr');
-  assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the search term');
+  assert.ok(/thr:two/.test($('.ember-power-select-trigger').text().trim()), 'The trigger also receives the public API');
 });
 
 test('The search input is cleared when the component is closed', function(assert) {
@@ -692,4 +709,104 @@ test('The component works when the array of selected elements is mutated in plac
   Ember.run(() => this.get('selected').pushObject(numbers[3]));
   nativeMouseUp('.ember-power-select-option:eq(0)');
   assert.equal(this.$('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
+});
+
+test('When the input inside the multiple select gets focused, the trigger and the dropdown gain special `--active` classes', function(assert) {
+  assert.expect(4);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The trigger does not have the class');
+  assert.ok(!$('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--active'), 'The dropdown does not have the class');
+  clickTrigger();
+  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The trigger has the class');
+  assert.ok($('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--active'), 'The dropdown has the class');
+});
+
+test('When the power select multiple uses the default component and the search is enabled, the trigger has `tabindex=-1`', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '-1', 'The trigger has tabindex=-1');
+});
+
+test('When the power select multiple uses the default component and the search is disabled, the trigger has `tabindex=0`', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) searchEnabled=false as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '0', 'The trigger has tabindex=0');
+});
+
+test('When the power select multiple uses the default component and the search is enabled, and the component receives an specific tabindex, the trigger has tabindex=-1, and the tabindex is applied to the searchbox inside', function(assert) {
+  assert.expect(2);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) tabindex=3 as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), '-1', 'The trigger has tabindex=1');
+  assert.equal(this.$('.ember-power-select-trigger-multiple-input').attr('tabindex'), '3', 'The searchbox has tabindex=3');
+});
+
+test('Multiple selects honor the `defaultHighlighted` option', function(assert) {
+  assert.expect(1);
+
+  this.numbers = numbers;
+  this.defaultHighlighted = numbers[3];
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) defaultHighlighted=defaultHighlighted as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'four', 'the given defaultHighlighted element is highlighted instead of the first, as usual');
+});
+
+test('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', function(assert) {
+  let User = eObject.extend({
+    isEqual(other) {
+      return get(this, 'name') === get(other, 'name');
+    }
+  });
+
+  this.search = (term) => {
+    return names.filter((n) => n.indexOf(term) > -1).map((name) => User.create({ name }));
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple
+      selected=selected
+      onchange=(action (mut selected))
+      search=search as |user|}}
+      {{user.name}}
+    {{/power-select-multiple}}
+  `);
+
+  typeInSearch('M');
+  nativeMouseUp('.ember-power-select-option:eq(1)');
+  typeInSearch('Mi');
+  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-selected'), 'true', 'The item in the list is marked as selected');
+  nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again should remove it
+  assert.equal(this.$('.ember-power-select-multiple-option').length, 0);
 });

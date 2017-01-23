@@ -1,0 +1,9 @@
+{{#power-select
+  options=countries
+  selected=country
+  searchField='name'
+  onchange=(action (mut country))
+  as |country|
+}}
+  {{country.name}}
+{{/power-select}}

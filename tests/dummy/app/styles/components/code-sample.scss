@@ -23,10 +23,8 @@
 .code-sample-snippet {
   margin-bottom: 0;
   background-color: #f9f9f9;
+  padding: 1rem;
   &:not(.active) {
     display: none;
-  }
-  &.result {
-    padding: 1rem;
   }
 }

@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { get } = Ember;
+import { A } from 'ember-array/utils';
+import get from 'ember-metal/get';
 
 export function isGroup(entry) {
   return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');
@@ -9,12 +8,11 @@ export function isGroup(entry) {
 export function countOptions(collection) {
   let counter = 0;
   (function walk(collection) {
-    if (!collection) { return null; }
-    if (!collection.objectAt) {
-      collection = Ember.A(collection);
+    if (!collection) {
+      return null;
     }
     for (let i = 0; i < get(collection, 'length'); i++) {
-      let entry = collection.objectAt(i);
+      let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
       if (isGroup(entry)) {
         walk(get(entry, 'options'));
       } else {
@@ -28,15 +26,16 @@ export function countOptions(collection) {
 export function indexOfOption(collection, option) {
   let index = 0;
   return (function walk(collection) {
-    if (!collection) { return null; }
-    if (!collection.objectAt) {
-      collection = Ember.A(collection);
+    if (!collection) {
+      return null;
     }
     for (let i = 0; i < get(collection, 'length'); i++) {
-      let entry = collection.objectAt(i);
+      let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
       if (isGroup(entry)) {
         let result = walk(get(entry, 'options'));
-        if (result > -1) { return result; }
+        if (result > -1) {
+          return result;
+        }
       } else if (entry === option) {
         return index;
       } else {
@@ -49,58 +48,71 @@ export function indexOfOption(collection, option) {
 
 export function optionAtIndex(originalCollection, index) {
   let counter = 0;
-  return (function walk(collection) {
-    if (!collection) { return null; }
-    if (!collection.objectAt) {
-      collection = Ember.A(collection);
+  return (function walk(collection, ancestorIsDisabled) {
+    if (!collection || index < 0) {
+      return { disabled: false, option: undefined };
     }
     let localCounter = 0;
-    const length = get(collection, 'length');
+    let length = get(collection, 'length');
     while (counter <= index && localCounter < length) {
-      let entry = collection.objectAt(localCounter);
+      let entry = collection.objectAt ? collection.objectAt(localCounter) : collection[localCounter];
       if (isGroup(entry)) {
-        let found = walk(get(entry, 'options'));
-        if (found) { return found; }
+        let found = walk(get(entry, 'options'), ancestorIsDisabled || !!get(entry, 'disabled'));
+        if (found) {
+          return found;
+        }
       } else if (counter === index) {
-        return entry;
+        return { disabled: ancestorIsDisabled || !!get(entry, 'disabled'), option: entry };
       } else {
         counter++;
       }
       localCounter++;
     }
-  })(originalCollection);
+  })(originalCollection, false) || { disabled: false, option: undefined };
 }
-let deprecatedMatchers = {};
-export function filterOptions(options, text, matcher) {
-  const sanitizedOptions =  options.objectAt ? options : Ember.A(options);
-  const opts = Ember.A();
-  const length = get(options, 'length');
+
+export function filterOptions(options, text, matcher, skipDisabled = false) {
+  let opts = A();
+  let length = get(options, 'length');
   for (let i = 0; i < length; i++) {
-    let entry = sanitizedOptions.objectAt(i);
-    if (isGroup(entry)) {
-      let suboptions = filterOptions(get(entry, 'options'), text, matcher);
-      if (get(suboptions, 'length') > 0) {
-        opts.push({ groupName: entry.groupName, options: suboptions });
-      }
-    } else {
-      let matchResult = matcher(entry, text);
-      if (typeof matchResult === 'number') {
-        if (matchResult >= 0) { opts.push(entry); }
-      } else if (matchResult) {
-        let matcherToString = matcher.toString();
-        if (!deprecatedMatchers[matcherToString]) {
-          deprecatedMatchers[matcherToString] = true;
-          Ember.deprecate(
-            `Your custom matcher returned ${matchResult}. This is deprecated, custom matchers must return a number. Return any negative number when there was no match and return 0+ for positive matches. This will allow EPS to prioritize results`,
-            false,
-            { id: 'ember-power-select-matcher-return-number', until: '0.10' }
-          );
+    let entry = options.objectAt ? options.objectAt(i) : options[i];
+    if (!skipDisabled || !get(entry, 'disabled')) {
+      if (isGroup(entry)) {
+        let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
+        if (get(suboptions, 'length') > 0) {
+          let groupCopy = { groupName: entry.groupName, options: suboptions };
+          if (entry.hasOwnProperty('disabled')) {
+            groupCopy.disabled = entry.disabled;
+          }
+          opts.push(groupCopy);
         }
+      } else if (matcher(entry, text) >= 0) {
         opts.push(entry);
       }
     }
   }
   return opts;
+}
+
+export function defaultHighlighted(select) {
+  let { results, highlighted, selected } = select;
+  let option = highlighted || selected;
+  if (option === undefined || indexOfOption(results, option) === -1) {
+    return advanceSelectableOption(results, option, 1);
+  }
+  return option;
+}
+
+export function advanceSelectableOption(options, currentOption, step) {
+  let resultsLength = countOptions(options);
+  let startIndex = Math.min(Math.max(indexOfOption(options, currentOption) + step, 0), resultsLength - 1);
+  let { disabled, option } = optionAtIndex(options, startIndex);
+  while (option && disabled) {
+    let next = optionAtIndex(options, startIndex += step);
+    disabled = next.disabled;
+    option = next.option;
+  }
+  return option;
 }
 
 const DIACRITICS = {

@@ -1,5 +1,360 @@
 # Master
 
+# 1.3.0
+- [ENHANCEMENT] Added LESS support, on pair with the SASS one.
+- [BUGFIX] If the addon is installed in the presence of an `app.scss` file, it will automatically
+  append `@import 'ember-power-select';` to it instead of replacing it.
+
+# 1.2.1
+- [BUGFIX] Properly pass the `extra` option to the `optionsComponent`. It used to receive it but
+  somehow it was removed by mistake during the 1.0.0-beta cycle.
+
+# 1.2.0
+- [INTERNAL] Update to Ember Basic Dropdown 0.20. This will break ember-paper because it uses
+  private api, but will be fixed shortly.
+
+# 1.1.0
+- [ENHANCEMENT] Compare elemets using `Ember.isEqual` instead of `===`. This gaves use better
+  support for dates and allows users to define `isEqual` methods on their objects when keeping
+  a constant reference is hard.
+
+# 1.0.3
+- [CLEANUP] Depend on a newer version of `ember-cli-sass`, and remove `node-sass`.
+- [BUGFIX] Call `registerAPI` with `null` on `willDestroy` to avoid memory leaks
+
+# 1.0.2
+- [BUGFIX] REVERT the `overflow: scroll` change in 1.0.1. It makes all selects show scrollbar even
+  if the content doesn't need it.
+
+# 1.0.1
+- [BUGFIX] The list of options now has `overflow: scroll` instead of `overflow: auto`, which cause
+  some issues in firefox for windows
+
+# 1.0.0
+- [DOC] Finally 1.0.0. No new features, just stability without stagnation.
+
+# 1.0.0-beta.31
+- [BUGFIX] Fix double render error in glimmer2
+- [BUGFIX] Ensure that options are not considered a group when they have `groupName` but lack of an `options` property.
+- [BUGFIX] The clear button is now activate in touchstart, fixing a bug where in iOS the button was effectively unoperative.
+
+# 1.0.0-beta.30
+- [BUGFIX] Update version of ember-basic-dropdown, which fixes several positioning issues involving pages
+  with horizontal scroll.
+
+# 1.0.0-beta.29
+- [BUGFIX] Improve default bootstrap theme.
+- [NOOP] Republish, since something weird happened while publishing beta.28
+
+# 1.0.0-beta.28
+- [BUGFIX] Fix helpers that fire events in IE11.
+
+# 1.0.0-beta.27
+- [INTERNAL] Update to ember-basic-dropdown 0.17. This version has a breaking change that does not affect ember-power-select,
+  but might (unlikely) affect people using ember-basic-dropdown directly.
+
+# 1.0.0-beta.26
+- [ENHANCEMENT] Define bootstrap and material themes variables with `!default` so they also can be overriden.
+
+# 1.0.0-beta.25
+- [BUGFIX] Ensure EPS depends on a bug-free version of ember-concurrency. Versions from 0.7.11 to 0.7.14 produced a memory leak.
+
+# 1.0.0-beta.24
+- [ENHANCEMENT] Return an string from the `oninput` action uses that string in the search instead of the original one.
+
+# 1.0.0-beta.23
+- [ENHANCEMENT] Add a `defaultHighlighted` option that can be used to customize what item is highlighted by default with the component is opened.
+  It can either be a value, or a function that gets called with the select and returns that value.
+- [ENHANCEMENT] Add `onblur` event for symmetry with `onfocus`, and also clarify that both are fired for any element of
+  the select gaining the focus, so the `event.target` should be used to disambiguate the origin.
+- [BUGFIX] Fix SHIFT+TAB in multiple select: In multiple selects with search enabled that use the default component,
+  the tabindex is applied to the searchbox, and the trigger has -1.
+
+# 1.0.0-beta.22
+- [ENHANCEMENT] Added a material-design theme!
+- [INTERNAL] Internal refactor to leverage ember-concurrency. OMG, this is so much better!
+
+# 1.0.0-beta.21
+- [ENHANCEMENT] Add support for cancellables (p.e ember-concurrecy tasks) in the search action.
+- [DOCS] Use `ember-code-snippet` to finally have proper syntax highlighting in DOCs. Now snippets are also
+  evaluated as partials, which servers as an insurance policy agains typos.
+- [INTERNAL] Switch from JSHint to ESLint + `eslint-plugin-ember-suave` for better code uniformity.
+- [ENHANCEMENT] The `selectChoose` and `selectSearch` helpers now throw explicative errors when something goes wrong.
+- [ENHANCEMENT] The `selectChoose` helper now also allows to receive a CSS selector as second argument (instead of
+  the text value of the option). This makes easier for selects with complex HTML inside their options
+  to be interacted with.
+- [DOCS] Add not explaining that automatic animation detection doesn't work with CSS transitions,
+  only with CSS animations.
+
+# 1.0.0-beta.20
+- [TESTING] Ensure the addon is tested in 2.4LTS
+- [BUGFIX] Fix bug in versions of Ember <= 2.6
+- [INTERNAL] Update to ember-cli 2.9
+
+# 1.0.0-beta.19
+- [BUGFIX] Update EBD to fix a bug. This prevents open/close actions to be invoked in a destroyed component.
+
+# 1.0.0-beta.17
+- [BUGFIX] Widewalk a bug with `Ember.A` in fastboot. See https://github.com/ember-fastboot/ember-cli-fastboot/issues/251
+- [INTERNAL] Upgrade to 2.8 family.
+
+# 1.0.0-beta.15
+- [BUGFIX] Fix bad memory leak in multiple selects. Probably messing with people's app in testing.
+- [BUGFIX] Avoid polluting styles of ember-basic-dropdown.
+
+# 1.0.0-beta.14
+- [BUGFIX] Ensure scrolling to the selected option works if another select is still on the page being animated out.
+- [BUGFIX] A disabled select won't have tabindex at all (it used to have -1)
+- [BUGFIX] If `tabindex=false`, the component won't have tabindex (it used to have -1)
+
+# 1.0.0-beta.13
+- [ENHANCEMENT] Acceptance helpers `selectChose` and `selectSearch` now work both passing the css
+  selector of an ancestor of the trigger (as usual) or passing the selector of the trigger itself (new behaviour).
+- [BREAKING] The `select.uniqueId` should is of the shape `ember1234` to it can safely be used for
+  construct DOM ids (which can't start with number according to the spec).
+
+# 1.0.0-beta.12
+- [BUGFIX] Component corrently closes when clicked outside of the boundary of the application (in apps not attached to the body but to some internal element).
+
+# 1.0.0-beta.11
+- [BREAKING] The `select._id` property of the publicAPI has been promoted to public API and renamed as `select.uniqueId`.
+- [ENHANCEMENT] Multiple selects without a search can have a placeholder now.
+
+# 1.0.0-beta.10
+- [BUGFIX] Avoid messing with the scroll when the select contains an input with autofocus in the content.
+  Fixed in EBD by making the first reposition use a fastpath.
+
+# 1.0.0-beta.9
+- [BUGFIX] Fix problem when a select is disabled and then re-enabled (the bug was in EBD).
+
+# 1.0.0-beta.8
+- [BUGFIX] Depend on a version of EPS that doesn't rely on `ember-cli-shims` 0.1.3.
+
+# 1.0.0-beta.7
+- [BUGFIX] Having more than one component with `renderInPlace=true` attempted to register views with id null.
+  Fixed in EBD 0.13.0-beta.2
+
+# 1.0.0-beta.6
+- [ENHANCEMENT/BREAKING] IMMUTABLE API! This is a big step towards 1.0.0 final. Now the public API
+  received by all actions and subcomponents is immutable. That means that any change of any property
+  creates a new publicAPI object. That means in practice that sub-components can rely on `didReceiveAttrs`
+  to be notified when any state of the parent component changes.
+  This also means that utilities like time-travel debugging are close to be possible.
+
+# 1.0.0-beta.5
+- [BUGFIX] Reset highlighted element when options change, regardless of of the search is sync or async
+
+# 1.0.0-beta.4
+- [BUGFIX] Don't assume that `action.open` will receive an event.
+
+# 1.0.0-beta.3
+- [BUGFIX] Pressing up/down arrown on selects without a search wasn't default prevented and the page scrolled.
+- [ENHANCEMENT] Setting `theme` to false in the addon config entirely disables the styles.
+- [ENHANCEMENT] Added optional `autofocus` property to `before-options` component of single selects
+  to prevent autofocusing of the search box, when the dropdown is opened.
+
+# 1.0.0-beta.2
+- [ENHANCEMENT] Input placeholders have no opacity now, to be consistent with span-based placeholder.
+
+# 1.0.0-beta.1
+- [ENHANCEMENT] The color of the placeholder has been unified when it's an element and when it's a
+  placeholder inside an input.
+- [BREAKING] The trigger now has no padding on the left. It's the content inside the one that has
+  margin on the left now. This may be breaking for people customizing the triggerComponent.
+
+# 1.0.0-beta.0
+- No changes since alpha.15
+
+# 1.0.0-alpha.15
+- [BUGFIX] Prevent accidental reset of attributes when options are replaced with the same options
+
+# 1.0.0-alpha.13
+- [ENHANCEMENT] Close select automatically if it gets disabled while it's open.
+
+# 1.0.0-alpha.12
+- [BUGFIX] The `registerAPI` must be called on multiple selects too.
+
+# 1.0.0-alpha.11
+- [BUGFIX] Update to EBD 0.12.0-beta.21 which allows to nest dropdowns up to 2 levels.
+
+# 1.0.0-alpha.10
+- [BUGFIX] Update to EBD 0.12.0-beta.20 which fixes enter animations.
+
+# 1.0.0-alpha.9
+- [BUGFIX] Fix `searchPlaceholder` config option broken in 1.0.0
+- [BUGFIX] Allow to render the component in an alternative wormhole destination passing `destination=foo`.
+  It broke in 1.0.0. Added test to prevent regression.
+
+# 1.0.0-alpha.8
+- [BUGFIX] ENTER/SPACE when no option is highlighted doesn’t selects undefined
+
+# 1.0.0-alpha.7
+- [BUGFIX] Ensure `select.selected` is always an array in multiple selects, not undefined/null.
+- [BUGFIX] Fix search box width calculation
+
+# 1.0.0-alpha.6
+- [BUGFIX] Update EBD to beta.18 to fix positioning bug when rendered in place
+- [BUGFIX/BREAKING] After some bikesheding, consensus was that despite of the spacebar being commonly
+  used by selects to choose the highlighted option, pressing `SPACE` while the focused element is a
+  searchbox is usually expected to add a space to the search term, not perform a selection, so that
+  behaviour has been removed.
+  If the spacebar is pressed on selects without a searchbox, then it works as native selects.
+- [INTERNAL] Simplify keydown management.
+- [BUGFIX] Calling preventDefault over the event of the `keydown` action does not prevent the component's
+  behaviour. Returning false does.
+
+# 1.0.0-alpha.5
+- [BUGFIX] The component properly reacts to changes in the value of the `disabled` property.
+
+# 1.0.0-alpha.4
+- [INTERNAL] Stop relying in `this.elementId` and remove depreaction for using a CP for the `tagName` property.
+- [BUGFIX] Fix styles of selects that are rendered in place so they are full width.
+
+# 1.0.0-alpha.3
+- [BUGFIX] `onkeydown` in multiple selects is also called for keypresses in the A-Z range.
+- [ENHANCEMENT] Add a `registerAPI` public action than can be used to store a reference to the public
+  API of the component from the outside.
+
+# 1.0.0-alpha.2
+- [ENHANCEMENT] Make `disabled` part of the public API
+- [BUGFIX] Fixed a lot of bugs, some related to changes in Ember 2.7, and others.
+
+# 1.0.0-alpha.1
+- [BUGFIX] Fix positioning of the status icon.
+- [BUGFIX] Update to EBD to fix position classes being wiped on rerenders.
+
+# 1.0.0-alpha.0
+
+- [NO CHANGES] After some though I'm more or less ready to commit to stablility for both the component's
+  options and the "publicAPI" object that is passes/yielded as second argument in many places. Maybe
+  the API surface can adjust a little bit as @miguelcobain stresses it to be used inside ember-paper,
+  but I expect changes, if any, to be additive. In any case, this is an alpha version.
+
+# 0.11.0-beta.2
+- [INTERNAL] Huge refactor to centralize (most) state inside the public API object. tl;dr; The
+  component inside is totally new.
+- [INTERNAL] Use fine-grained imports from ember-cli-shims. It expects ember-cli-shims >= 0.1.1.
+- [BREAKING] The options received by internal subcomponents has changed (simplified) because most
+  of the state has been centralized in the public API object (named `select` inside alls sub components).
+- [BREAKING] The second argument yielded to the block is now the public API instead of the search term.
+  This gives more flexibility to the user. To retaing old behaviour just change `|opt term|}} {{term}}` by
+  `|opt select|}} {{select.lastSearchedText}}`
+- [BREAKING] The `--focus-inside` class has been replaced by an `--active` class, which is more meaningful.
+
+# 0.11.0-beta.1
+- [INTERNAL] Update EBD to fix scroll problem cause by the dropdown being too slow to reposition
+- [INTERNAL] Use a regular input for the search. Now that the component is 2.3.1+, no hacks are needed.
+
+# 0.11.0-beta.0
+
+- [BREAKING] Dropped support for old versions of Ember. Now only 2.3.1+
+- [BREAKING] Huge internal refactor to migrate to the new Ember Basic Dropdown. The public API
+  of the component is exactly the same in theory. However the component is now tagless, so there is
+  no `.ember-power-select` wrapper around the trigger.
+  Also some classes might have changed that can affect people customizing the styles. A more detailed
+  entry will be added to the docs.
+
+# 0.10.10
+- [BUGFIX] Fix filtering/selection by typing when the trigger is focused and the options are groups.
+- [CLEANUP] Remove deprecated behaviour: Return a boolean from custom matches is not longer allowed.
+- [BUGFIX] Fix IE9/10 bug because `element.dataset` doesn't work :facepalm:
+
+# 0.10.9
+- [INTERNAL] Add `ember-cli-template-lint`.
+- [BUGFIX] Make removeMultipleOption and clearSelected async friendly
+- [INTERNAL] Add a class to the search input of single selects so the CSS hierarchy is flat.
+- [ENHANCEMENT] Make `typeInSearch` helper less dependent on the actual markup of the component.
+
+# 0.10.8
+- Nothing relevant.
+
+# 0.10.7
+- [BUGFIX] Update `ember-text-measurer` to 0.3.0 and properly move it to runtime dependencies.
+- [BUGFIX] Ensure `ember-power-select` runs before `ember-cli-sri`.
+
+# 0.10.6
+- [BUGFIX] Perform pixel-perfect text measurements using `ember-text-measurer` instead of using the
+  naive `0.5em * numberOfChars` that yields to imperfect results.
+- [BUGFIX] Calling `preventDefault` on the events that trigger an open or a close no longer prevent
+  the component's default behaviour. Only `return false` can do that.
+
+# 0.10.5
+- [BUGFIX] Depend on EBS ^0.11.5 to fix issue with touch devices.
+- [BUGFIX] Depend on EBS ^0.11.4 to fix some issues with IE9
+- [ENHANCEMENT] If a group is disabled, its options (or the options of nested groups) are automatically
+  considered disabled too.
+
+# 0.10.4
+- [ENHANCEMENT] Groups can contain disabled=true property that will add aria-disabled="true" to the group.
+- [BUGFIX] Select doesn't scroll to make the selection visible on open. Regression introduced in 0.10.0.
+- [BUGFIX] Highlight and scrolling has been decouple, so now highlighting a partially hidden option
+  with the mouse not longer triggers a scroll on the list, which was wrong behaviour.
+  However, using the arrow keys still scrolls the list is necessary.
+- [BUGFIX] Ensure customMatchers receive always receive the entire option, even when used in conjunction
+  with `searchField` option.
+- [ENHANCEMENT] The option containing the loading message has a a distinctive `.ember-power-select-option--loading-message`
+  class.
+
+# 0.10.3
+- [ENHANCEMENT] The `selectChoose` helper is less dependent on the class names of the input, and will
+  *probably* work with any markup as long as the searchbox has `[type=search]`.
+- [BUGFIX] Fixed bug selecting options with touch events.
+
+# 0.10.2
+- [BUGFIX] The highlighted element can be selected with the spacebar when the trigger is focused.
+- [BUGFIX] The component can and closed with the spacebar while the trigger is focused.
+
+# 0.10.1
+- [ENHANCEMENT] Allow trigger the `onfocus` action from within the trigger component.
+
+# 0.10.0
+
+- No changes since beta.13
+
+# 0.10.0-beta.13
+- [BUGFIX] Ensure that returning `false` from the `onkeydown` action prevents the default behaviour
+  even when that default behaviour is handled by ember-basic-dropdown.
+
+# 0.10.0-beta.12
+
+- I don't remember, but nothing important :D
+
+# 0.10.0-beta.11
+- [BREAKING] `e.preventDefault()` no longer affects the behaviour of the component, just prevents
+  the native browser behaviour. Return `false` instead.
+- [BUGFIX/BREAKING] `onopen`/`onclose` actions are called **before** the component is opens/closes,
+  giving the user the change to prevent that from happening by returning false.
+- [BUGFIX] `select.actions.select` doesn't call `stopPropagation` or `preventDefault` in the given
+  event anymore. It's not it's responsability.
+- [INTERNAL] Update Ember-basic-dropdown to 0.9.5-beta.14. PublicAPI should be the same, but
+  internal have been simplified and responsibilities better divided across components. Nothing should
+  break, but given the size of the changes ¯\_(ツ)_/¯
+- [BUGFIX] The trigger of the single select applies overflow if the content is too long
+
+# 0.10.0-beta.9
+- [FEATURE] Selects can now be nested inside other dropdowns.
+- [FEATURE] Allow to pass WAI-ARIA states (ariaDescribedBy, ariaInvalid, ariaLabel, ariaLabelledBy and required)
+
+# 0.10.0-beta.8
+- [BUGFIX] Avoid highlight disabled options when they are the first option after a search. Instead,
+  highlight the first non-disabled option in the list. When all results are disabled, nothing gets
+  highlighted.
+- [ENHANCEMENT] Add a class to the component when an element inside has the focus. This allows to
+  style the component not only when the component itself is focused but when an input inside
+  is, which was previously impossible.
+- [BUGFIX] Allow to pass `horizontalPosition` to customize to which edge of the trigger
+  the dropdown is anchored to.
+
+# 0.10.0-beta.7
+- [FEATURE] The `selected` option can now also be a promise. When it's a promise, the component
+  won't have any selection (the trigger will be empty, no option of the list will be
+  highlighted) until that promise resolves. Once it resolves, the trigger and the highlighted
+  option will update.
+- [BUGFIX] Fixed bug after event-delegation refactor where mouseovering the list itself
+  (which happens when options are disabled) throwed an error.
+- [BUGFIX] Disabled select shouldn't be clearable even if `allowClear=true`.
+- [BUGFIX] In multiple selects when test in the searchbox was too long the text overflowed the trigger.
+
 # 0.10.0-beta.5
 - [REMOVE FEATURE] The `opened` property (the only using double bindings instead of DDAU) has been
   removed. It was the cause of some errors due to race conditions in the bindings propagation.
@@ -23,7 +378,7 @@
 - [ENHANCEMENT] Improve accuracy `selectChoose`. Before `selectChoose('.my-select', 'User')` might,
   erroneously, select the option containing the text `User team` if it was before than `User` in the
   list. Now if there is more than one option containing the given text it but the content of
-  one of the options is *identical*, then that one is choosen. If none is identical, the first one.
+  one of the options is *identical*, then that one is chosen. If none is identical, the first one.
 
 # 0.10.0-beta.1
 - [BUGFIX] Fix bug with the new delegation methods when the list of options was not an Ember.A()
@@ -55,7 +410,7 @@
 - [BUGFIX] The the public API received by the `search` action now has the searchText up to date
   with the value entered by the user.
 - [BUGFIX] Acceptance tests helpers are now async inside. They used to be fully async before 0.9.2.
-- [ENHANCEMENT] Pass the public API of the componet as second argument to the search action, as it is
+- [ENHANCEMENT] Pass the public API of the component as second argument to the search action, as it is
   the case with the rest of the public actions.
 
 # 0.9.2
@@ -130,7 +485,7 @@
   People explicitly targeting this class in they styles will need to update.
 - [BREAKING] **Warning**. Classes ending in `--disabled`, `--highlighted` and `--selected` have been
   replaced by aria attributes `[aria-disabled="true"]`, `[aria-current="true"]` and `[aria-selected="true"]`
-  respectively. Those attributes are needed for a11y and the recomendation is to style based on them
+  respectively. Those attributes are needed for a11y and the recommendation is to style based on them
   instead of classes.
   Styles have been updated accordingly, so people using them and customizing the appearance using the
   sass variables won't notice anything, but people that relied on those classes for overriding styles

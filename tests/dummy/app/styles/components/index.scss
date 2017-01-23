@@ -76,7 +76,12 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
   border: 1px solid $brand-color;
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 0.5rem 2rem;
   display: inline-block;
+}
+
+// Getting started area
+.get-started {
+  flex-grow: 1;
 }

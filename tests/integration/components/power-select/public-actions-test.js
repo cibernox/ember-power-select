@@ -1,29 +1,47 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 
+const { run } = Ember;
+
+function assertPublicAPIShape(assert, select) {
+  assert.equal(typeof select.uniqueId, 'string', 'select.uniqueId is a string');
+  assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
+  assert.equal(typeof select.disabled, 'boolean', 'select.disabled is a boolean');
+  assert.equal(typeof select.isActive, 'boolean', 'select.isActive is a boolean');
+  assert.equal(typeof select.loading, 'boolean', 'select.loading is a boolean');
+  assert.ok(select.options instanceof Array, 'select.options is an array');
+  assert.ok(select.results instanceof Array, 'select.results is an array');
+  assert.equal(typeof select.resultsCount, 'number', 'select.resultsCount is a number');
+  assert.ok(select.hasOwnProperty('selected'));
+  assert.ok(select.hasOwnProperty('highlighted'));
+  assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
+  assert.equal(typeof select.lastSearchedText, 'string', 'select.lastSearchedText is a string');
+  assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
+  assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
+  assert.equal(typeof select.actions.toggle, 'function', 'select.actions.toggle is a function');
+  assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
+  assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
+  assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
+  assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+  assert.equal(typeof select.actions.choose, 'function', 'select.actions.choose is a function');
+  assert.equal(typeof select.actions.scrollTo, 'function', 'select.actions.scrollTo is a function');
+}
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Public actions)', {
   integration: true
 });
 
 test('The search action of single selects action receives the search term and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleSearch = (term, select) => {
     assert.equal(term, 'el', 'The search term is received as 1st argument');
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
   };
 
   this.render(hbs`
@@ -37,20 +55,12 @@ test('The search action of single selects action receives the search term and th
 });
 
 test('The search action of multiple selects action receives the search term and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleSearch = (term, select) => {
     assert.equal(term, 'el', 'The search term is received as 1st argument');
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
   };
 
   this.render(hbs`
@@ -64,20 +74,12 @@ test('The search action of multiple selects action receives the search term and 
 });
 
 test('The onchange of single selects action receives the selection and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
     assert.equal(selected, 'one', 'The first option is the selected');
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
   };
 
   this.render(hbs`
@@ -91,20 +93,12 @@ test('The onchange of single selects action receives the selection and the publi
 });
 
 test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
-  assert.expect(10);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleChange = (selected, select) => {
     assert.equal(selected, 'one', 'The first option is the selected');
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
   };
 
   this.render(hbs`
@@ -117,20 +111,12 @@ test('The onchange of multiple selects action receives the selection and the pub
   nativeMouseUp('.ember-power-select-option:eq(0)');
 });
 
-test('The onkeydown of single selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(10);
+test('The onkeydown of single selects action receives the public API and the keydown event when fired on the searchbox', function(assert) {
+  assert.expect(44);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -141,7 +127,9 @@ test('The onkeydown of single selects action receives the public API and the key
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search input')[0], 13);
+  let input = $('.ember-power-select-search-input')[0];
+  triggerKeydown(input, 13);
+  triggerKeydown(input, 65);
 });
 
 test('The onkeydown can be used to easily allow to select on tab', function(assert) {
@@ -170,19 +158,11 @@ test('The onkeydown can be used to easily allow to select on tab', function(asse
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
-  assert.expect(10);
+  assert.expect(44);
 
   this.numbers = numbers;
   this.onKeyDown = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -193,23 +173,61 @@ test('The onkeydown of multiple selects action receives the public API and the k
   `);
 
   clickTrigger();
+  let input = $('.ember-power-select-trigger-multiple-input')[0];
+  triggerKeydown(input, 13);
+  triggerKeydown(input, 65);
+});
+
+test('returning false from the `onkeydown` action prevents the default behaviour in single selects', function(assert) {
+  assert.expect(48);
+
+  this.numbers = numbers;
+  this.handleKeyDown = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) onkeydown=handleKeyDown as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  triggerKeydown($('.ember-power-select-trigger')[0], 13);
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is still closed');
+  triggerKeydown($('.ember-power-select-trigger')[0], 84); // 't'
+  assert.notEqual($('.ember-power-select-trigger').text().trim(), 'two', 'nothing was selected');
+});
+
+test('returning false from the `onkeydown` action prevents the default behaviour in multiple selects', function(assert) {
+  assert.expect(24);
+
+  this.numbers = numbers;
+  this.handleKeyDown = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) onkeydown=handleKeyDown as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
   triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13);
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is still closed');
 });
 
 test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
-  assert.expect(10);
+  assert.expect(22);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -219,23 +237,15 @@ test('The onfocus of single selects action receives the public API and the focus
     {{/power-select}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => this.$('.ember-power-select-trigger').focus());
 });
 
 test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
-  assert.expect(10);
+  assert.expect(44);
 
   this.numbers = numbers;
   this.handleFocus = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -245,23 +255,94 @@ test('The onfocus of multiple selects action receives the public API and the foc
     {{/power-select-multiple}}
   `);
 
-  Ember.run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => this.$('.ember-power-select-trigger').focus());
 });
 
-test('the `onopen` action is invoked when the dropdown opens', function(assert) {
-  assert.expect(11);
+test('The onfocus of multiple selects also gets called when the thing getting the focus is the searbox', function(assert) {
+  assert.expect(22);
+
+  this.numbers = numbers;
+  this.handleFocus = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onfocus=handleFocus onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  run(() => this.$('.ember-power-select-trigger-multiple-input').focus());
+});
+
+test('The onblur of single selects action receives the public API and the event', function(assert) {
+  assert.expect(22);
+
+  this.numbers = numbers;
+  this.handleBlur = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+    <input type="text" id="other-element"/>
+  `);
+
+  run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => this.$('#other-element').focus());
+});
+
+test('The onblur of multiple selects action receives the public API and the focus event', function(assert) {
+  assert.expect(22);
+
+  this.numbers = numbers;
+  this.handleBlur = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+    <input type="text" id="other-element"/>
+  `);
+
+  run(() => this.$('.ember-power-select-trigger-multiple-input').focus());
+  run(() => this.$('#other-element').focus());
+});
+
+test('The onblur of multiple selects also gets called when the thing getting the focus is the searbox', function(assert) {
+  assert.expect(22);
+
+  this.numbers = numbers;
+  this.handleBlur = (select, e) => {
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      {{number}}
+    {{/power-select}}
+    <input type="text" id="other-element"/>
+  `);
+
+  clickTrigger();
+  run(() => this.$('#other-element').focus());
+});
+
+test('the `onopen` action is invoked just before the dropdown opens', function(assert) {
+  assert.expect(24);
 
   this.numbers = numbers;
   this.handleOpen = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -275,21 +356,55 @@ test('the `onopen` action is invoked when the dropdown opens', function(assert) 
   assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is opened');
 });
 
-test('the `onclose` action is invoked when the dropdown closes', function(assert) {
-  assert.expect(12);
+test('returning false from the `onopen` action prevents the single select from opening', function(assert) {
+  assert.expect(24);
+
+  this.numbers = numbers;
+  this.handleOpen = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+});
+
+test('returning false from the `onopen` action prevents the multiple select from opening', function(assert) {
+  assert.expect(24);
+
+  this.numbers = numbers;
+  this.handleOpen = (select, e) => {
+    assert.equal(select.isOpen, false, 'select.isOpen is still false');
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+});
+
+test('the `onclose` action is invoked just before the dropdown closes', function(assert) {
+  assert.expect(24);
 
   this.numbers = numbers;
   this.handleClose = (select, e) => {
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
-    assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
-    assert.equal(typeof select.actions.choose, 'function', 'select.actions.choose is a function');
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The second argument is an event');
   };
 
@@ -304,21 +419,60 @@ test('the `onclose` action is invoked when the dropdown closes', function(assert
   assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is closed');
 });
 
+test('returning false from the `onclose` action prevents the single select from closing', function(assert) {
+  assert.expect(25);
+
+  this.numbers = numbers;
+  this.handleClose = (select, e) => {
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
+});
+
+test('returning false from the `onclose` action prevents the multiple select from closing', function(assert) {
+  assert.expect(25);
+
+  this.numbers = numbers;
+  this.handleClose = (select, e) => {
+    assert.equal(select.isOpen, true, 'select.isOpen is still true');
+    assertPublicAPIShape(assert, select);
+    assert.ok(e instanceof window.Event, 'The second argument is an event');
+    return false;
+  };
+
+  this.render(hbs`
+    {{#power-select-multiple options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  clickTrigger();
+  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
+});
+
 test('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', function(assert) {
-  assert.expect(15);
+  assert.expect(28);
 
   this.numbers = numbers;
   this.handleInput = (value, select, e) => {
     assert.equal(value, 'tw', 'The first argument is the value of the input');
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(select.searchText, '', 'select.searchText is still empty');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The third argument is an event');
   };
 
@@ -337,20 +491,13 @@ test('the `oninput` action is invoked when the user modifies the text of the sea
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', function(assert) {
-  assert.expect(15);
+  assert.expect(28);
 
   this.numbers = numbers;
   this.handleInput = (value, select, e) => {
     assert.equal(value, 'tw', 'The first argument is the value of the input');
-    assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-    assert.equal(typeof select.highlighted, 'string', 'select.highlighted is a string');
     assert.equal(select.searchText, '', 'select.searchText is still empty');
-    assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
-    assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
-    assert.equal(typeof select.actions.reposition, 'function', 'select.actions.reposition is a function');
-    assert.equal(typeof select.actions.search, 'function', 'select.actions.search is a function');
-    assert.equal(typeof select.actions.highlight, 'function', 'select.actions.highlight is a function');
-    assert.equal(typeof select.actions.select, 'function', 'select.actions.select is a function');
+    assertPublicAPIShape(assert, select);
     assert.ok(e instanceof window.Event, 'The third argument is an event');
   };
 
@@ -372,7 +519,7 @@ test('if the `oninput` action of single selects returns false the search is canc
   assert.expect(1);
 
   this.numbers = numbers;
-  this.handleInput = (/*value, select, e*/) => {
+  this.handleInput = (/* value, select, e */) => {
     return false;
   };
 
@@ -391,7 +538,7 @@ test('if `oninput` action of multiple selects returns false the search is cancel
   assert.expect(1);
 
   this.numbers = numbers;
-  this.handleInput = (/*value, select, e*/) => {
+  this.handleInput = (/* value, select, e */) => {
     return false;
   };
 
@@ -404,29 +551,6 @@ test('if `oninput` action of multiple selects returns false the search is cancel
   clickTrigger();
   typeInSearch('tw');
   assert.equal($('.ember-power-select-option').length, 20, 'There is the same options than before');
-});
-
-test('the `search` action of the public api passed to the public actions works as expected', function(assert) {
-  assert.expect(6);
-
-  this.handleSearch = (term) => {
-    assert.equal(term, 'abc', 'The search term receives `abc`');
-    return ['foo', 'bar', 'baz'];
-  };
-  this.handleOpen = (select) => {
-    select.actions.search('abc');
-  };
-  this.render(hbs`
-    {{#power-select onchange=(action (mut foo)) onopen=handleOpen search=handleSearch as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  clickTrigger();
-  assert.equal($('.ember-power-select-search input')[0].value, 'abc');
-  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'foo');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'bar');
-  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'baz');
 });
 
 test('the `highlight` action of the public api passed to the public actions works as expected', function(assert) {
@@ -461,7 +585,7 @@ test('The programmer can use the received public API to perform searches in sing
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-search input')[0].value, 'hello', 'The search text contains the searched string');
+  assert.equal($('.ember-power-select-search-input')[0].value, 'hello', 'The search text contains the searched string');
 });
 
 test('The programmer can use the received public API to perform searches in mutiple selects', function(assert) {
@@ -500,4 +624,32 @@ test('The search action of multiple selects has the searchText set to the up-to-
 
   clickTrigger();
   typeInSearch('el');
+});
+
+test('The single component invokes the `registerAPI` action with the public API object', function(assert) {
+  this.numbers = numbers;
+  this.storeAPI = function(select) {
+    if (select) {
+      assertPublicAPIShape(assert, select);
+    }
+  };
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+});
+
+test('The multiple component invokes the `registerAPI` action with the public API object', function(assert) {
+  this.numbers = numbers;
+  this.storeAPI = function(select) {
+    if (select) {
+      assertPublicAPIShape(assert, select);
+    }
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
 });

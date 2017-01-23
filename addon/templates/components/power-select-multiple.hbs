@@ -1,88 +1,105 @@
 {{#if (hasBlock "inverse")}}
   {{#power-select
-      options=options
-      selected=selected
-      onchange=onchange
-      onkeydown=(action "handleKeydown")
-      onfocus=(action "handleFocus")
-      onopen=(action "handleOpen")
-      buildSelection=(action "buildSelection")
-      onclose=onclose
-      disabled=disabled
-      placeholder=placeholder
-      searchEnabled=searchEnabled
-      searchPlaceholder=searchPlaceholder
-      loadingMessage=loadingMessage
-      noMatchesMessage=noMatchesMessage
-      searchMessage=searchMessage
-      triggerComponent=triggerComponent
-      selectedItemComponent=selectedItemComponent
-      beforeOptionsComponent=beforeOptionsComponent
-      optionsComponent=optionsComponent
-      afterOptionsComponent=afterOptionsComponent
-      matchTriggerWidth=matchTriggerWidth
-      matcher=matcher
-      searchField=searchField
-      renderInPlace=renderInPlace
-      oninput=oninput
-      search=search
-      allowClear=allowClear
-      verticalPosition=verticalPosition
-      closeOnSelect=closeOnSelect
-      initiallyOpened=initiallyOpened
-      tabindex=tabindex
-      destination=destination
-      dir=dir
-      class=class
-      triggerClass=concatenatedTriggerClass
-      dropdownClass=dropdownClass
-      extra=extra
-      as |option term|}}
-      {{yield option term}}
-    {{else}}
-      {{yield to="inverse"}}
+    afterOptionsComponent=afterOptionsComponent
+    allowClear=allowClear
+    ariaDescribedBy=ariaDescribedBy
+    ariaInvalid=ariaInvalid
+    ariaLabel=ariaLabel
+    ariaLabelledBy=ariaLabelledBy
+    beforeOptionsComponent=beforeOptionsComponent
+    buildSelection=(action "buildSelection")
+    class=class
+    closeOnSelect=closeOnSelect
+    defaultHighlighted=defaultHighlighted
+    destination=destination
+    dir=dir
+    disabled=disabled
+    dropdownClass=dropdownClass
+    extra=extra
+    horizontalPosition=horizontalPosition
+    initiallyOpened=initiallyOpened
+    loadingMessage=loadingMessage
+    matcher=matcher
+    matchTriggerWidth=matchTriggerWidth
+    noMatchesMessage=noMatchesMessage
+    onblur=onblur
+    onchange=onchange
+    onclose=onclose
+    onfocus=(action "handleFocus")
+    oninput=oninput
+    onkeydown=(action "handleKeydown")
+    onopen=(action "handleOpen")
+    options=options
+    optionsComponent=optionsComponent
+    placeholder=placeholder
+    registerAPI=(readonly registerAPI)
+    renderInPlace=renderInPlace
+    required=required
+    search=search
+    searchEnabled=searchEnabled
+    searchField=searchField
+    searchMessage=searchMessage
+    searchPlaceholder=searchPlaceholder
+    selected=selected
+    selectedItemComponent=selectedItemComponent
+    tabindex=computedTabIndex
+    triggerClass=concatenatedTriggerClass
+    triggerComponent=(component triggerComponent tabindex=tabindex)
+    verticalPosition=verticalPosition
+    as |option select|}}
+    {{yield option select}}
+  {{else}}
+    {{yield to="inverse"}}
   {{/power-select}}
 {{else}}
   {{#power-select
-      options=options
-      selected=selected
-      onchange=onchange
-      onkeydown=(action "handleKeydown")
-      onfocus=(action "handleFocus")
-      onopen=(action "handleOpen")
-      buildSelection=(action "buildSelection")
-      onclose=onclose
-      disabled=disabled
-      placeholder=placeholder
-      searchEnabled=searchEnabled
-      searchPlaceholder=searchPlaceholder
-      loadingMessage=loadingMessage
-      noMatchesMessage=noMatchesMessage
-      searchMessage=searchMessage
-      triggerComponent=triggerComponent
-      selectedItemComponent=selectedItemComponent
-      beforeOptionsComponent=beforeOptionsComponent
-      optionsComponent=optionsComponent
-      afterOptionsComponent=afterOptionsComponent
-      matchTriggerWidth=matchTriggerWidth
-      matcher=matcher
-      searchField=searchField
-      renderInPlace=renderInPlace
-      oninput=oninput
-      search=search
-      allowClear=allowClear
-      verticalPosition=verticalPosition
-      closeOnSelect=closeOnSelect
-      initiallyOpened=initiallyOpened
-      tabindex=tabindex
-      destination=destination
-      dir=dir
-      class=class
-      triggerClass=concatenatedTriggerClass
-      dropdownClass=dropdownClass
-      extra=extra
-      as |option term|}}
-      {{yield option term}}
+    afterOptionsComponent=afterOptionsComponent
+    allowClear=allowClear
+    ariaDescribedBy=ariaDescribedBy
+    ariaInvalid=ariaInvalid
+    ariaLabel=ariaLabel
+    ariaLabelledBy=ariaLabelledBy
+    beforeOptionsComponent=beforeOptionsComponent
+    buildSelection=(action "buildSelection")
+    class=class
+    closeOnSelect=closeOnSelect
+    defaultHighlighted=defaultHighlighted
+    destination=destination
+    dir=dir
+    disabled=disabled
+    dropdownClass=dropdownClass
+    extra=extra
+    horizontalPosition=horizontalPosition
+    initiallyOpened=initiallyOpened
+    loadingMessage=loadingMessage
+    matcher=matcher
+    matchTriggerWidth=matchTriggerWidth
+    noMatchesMessage=noMatchesMessage
+    onblur=onblur
+    onchange=onchange
+    onclose=onclose
+    onfocus=(action "handleFocus")
+    oninput=oninput
+    onkeydown=(action "handleKeydown")
+    onopen=(action "handleOpen")
+    options=options
+    optionsComponent=optionsComponent
+    placeholder=placeholder
+    registerAPI=(readonly registerAPI)
+    renderInPlace=renderInPlace
+    required=required
+    search=search
+    searchEnabled=searchEnabled
+    searchField=searchField
+    searchMessage=searchMessage
+    searchPlaceholder=searchPlaceholder
+    selected=selected
+    selectedItemComponent=selectedItemComponent
+    tabindex=computedTabIndex
+    triggerClass=concatenatedTriggerClass
+    triggerComponent=(component triggerComponent tabindex=tabindex)
+    verticalPosition=verticalPosition
+    as |option select|}}
+    {{yield option select}}
   {{/power-select}}
 {{/if}}
-

@@ -19,49 +19,8 @@
   Let's see the result:
 </p>
 
-
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#navigable-
-      select options=groupedNumbers
-      selected=selectedNumber
-      onchange=(action (mut selectedNumber))
-      as |option|
-    }}
-      \{{option}}
-    \{{/navigable-select}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    const groupedNumbers = [
-      { groupName: "Smalls", options: ["one", "two", "three"] },
-      { groupName: "Mediums", options: ["four", "five", "six"] },
-      { groupName: "Bigs", options: [
-          { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
-          { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
-          "thirteen"
-        ]
-      },
-      "one hundred",
-      "one thousand"
-    ];
-
-    export default Ember.Controller.extend({
-      groupedNumbers: groupedNumbers,
-      selectedNumber: null
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    <div style="max-width: 250px;">
-      {{#navigable-select
-        options=groupedNumbers
-        selected=selectedNumber
-        onchange=(action (mut selectedNumber))
-        as |option|
-      }}
-        {{option}}
-      {{/navigable-select}}
-    </div>
-  </div>
+{{#code-sample hbs="navigable-select-1.hbs" js="navigable-select-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>
@@ -131,25 +90,7 @@
   groups "levels".
 </p>
 
-<pre>
-  \{{#power-
-    select options=currentOptions
-    selected=selected
-    closeOnSelect=false
-    onchange=(action "onchange")
-    optionsComponent='animated-options'
-    search=(action "search")
-    as |levelOrOption|
-  }}
-    \{{#if levelOrOption.parentLevel}}
-      &lt;strong&gt;&lt; Back&lt;/strong&gt;
-    \{{else if levelOrOption.levelName}}
-      &lt;strong&gt;\{{levelOrOption.levelName}} &gt;&lt;/strong&gt;
-    \{{else}}
-      \{{levelOrOption}}
-    \{{/if}}
-  \{{/power-select}}
-</pre>
+{{code-snippet name="navigable-select-2.hbs"}}
 
 <p>
   In the block we need to distinguish between 3 possible situations. The yielded object can be
@@ -161,39 +102,7 @@
   seems perfect because it will update if the options change.
 </p>
 
-<pre>
-  import Ember from 'ember';
-  const { get, computed } = Ember;
-
-  export default Ember.Component.extend({
-    transformedOptions: computed('options', function() {
-      return (function walker(options, parentLevel = null) {
-        let results = [];
-        let len = get(options, 'length');
-        parentLevel = parentLevel || { root: true };
-
-        for (let i = 0; i &lt; len; i++) {
-          let opt = get(options, `${i}`);
-          let groupName = get(opt, 'groupName');
-
-          if (groupName) {
-            let level = { levelName: groupName };
-            let optionsWithBack = [{ parentLevel }, ...get(opt, 'options')];
-            level.options = walker(optionsWithBack, level);
-            results.push(level);
-          } else {
-            results.push(opt);
-          }
-        }
-
-        parentLevel.options = results;
-        return results;
-      })(this.get('options'));
-    }),
-
-    currentOptions: computed.oneWay('transformedOptions'),
-  });
-</pre>
+{{code-snippet name="navigable-select-2-js.js"}}
 
 <p>
   This tail-recursive solution is not straightforward, but in exchange it supports any depth level.
@@ -210,62 +119,7 @@
   The default list doesn't work for us, we need to create that "animated-options".
 </p>
 
-{{#code-sample tabs=tabsNoExample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-  \{{#liquid-bind options use=animation enableGrowth=enableGrowth as |currentOptions|}}
-    \{{#each currentOptions as |opt|}}
-      &lt;li class="ember-power-select-option"
-        aria-selected={{ember-power-select-is-selected opt selected}}
-        aria-disabled={{opt.disabled}}
-        aria-current={{eq opt highlighted}}
-        onclick=\{{action select opt dropdown}}
-        onmouseover=\{{action highlight opt}}&gt;
-        \{{yield opt}}
-      &lt;/li&gt;
-    \{{/each}}
-  \{{/liquid-bind}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-  export default Ember.Component.extend({
-    didReceiveAttrs({ oldAttrs, newAttrs }) {
-      this._super(...arguments);
-      if (!oldAttrs || !oldAttrs.options || !newAttrs.options || oldAttrs.options === newAttrs.options) {
-        return;
-      }
-
-      if (newAttrs.options.fromSearch) {
-        this.set('animation', false);
-        this.set('enableGrowth', false);
-      } else {
-        this.set('enableGrowth', true);
-        const parentLevel = oldAttrs.options[0] && oldAttrs.options[0].parentLevel;
-        const goingBack = !!parentLevel && parentLevel.options === newAttrs.options;
-
-        if (goingBack) {
-          this.set('animation', 'toRight');
-        } else {
-          this.set('animation', 'toLeft');
-        }
-      }
-    }
-  });
-  </pre>
-{{/code-sample}}
-
-<pre>
-{{#liquid-bind options use=animation enableGrowth=enableGrowth as |currentOptions|}}
-  {{#each currentOptions as |opt|}}
-    <li class="ember-power-select-option"
-      aria-selected={{ember-power-select-is-selected opt selected}}
-      aria-disabled={{opt.disabled}}
-      aria-current={{eq opt highlighted}}
-      onclick={{action select opt dropdown}}
-      onmouseover={{action highlight opt}}>
-      {{yield opt}}
-    </li>
-  {{/each}}
-{{/liquid-bind}}
-</pre>
+{{code-sample hbs="navigable-select-3.hbs" js="navigable-select-3-js.js" showResult=false}}
 
 <p>
   The template uses liquid-fire's <code>liquid-bind</code> component to animate when we swap the list
@@ -278,36 +132,7 @@
   isn't a leaf node and provide custom search that we like:
 </p>
 
-<pre>
-  actions: {
-    onchange(levelOrOption, dropdown) {
-      if (get(levelOrOption, 'levelName')) {
-        this.set('currentOptions', get(levelOrOption, 'options'));
-      } else if (levelOrOption.parentLevel) {
-        this.set('currentOptions', levelOrOption.parentLevel.options);
-      } else {
-        this.get('onchange')(levelOrOption);
-        dropdown.actions.close();
-        this.set('currentOptions', this.get('transformedOptions'));
-      }
-    },
-
-    search(term) {
-      const normalizedTerm = term.toLowerCase();
-      const results = this.get('currentOptions').filter(o => {
-        if (o.parentLevel) {
-          return normalizedTerm === '';
-        } else if (get(o, 'levelName')) {
-          return get(o, 'levelName').toLowerCase().indexOf(normalizedTerm) > -1;
-        } else {
-          return o.toLowerCase().indexOf(normalizedTerm) > -1;
-        }
-      });
-      results.fromSearch = true;d
-      return results;
-    }
-  }
-</pre>
+{{code-snippet name="navigable-select-4-js.js"}}
 
 <p>
   Check the full picture in github:

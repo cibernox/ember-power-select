@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 import Ember from 'ember';
 
 const numbers = [
@@ -322,7 +323,7 @@ const moarNumbers = [
   'two hundred and ninety six',
   'two hundred and ninety seven',
   'two hundred and ninety eight',
-  'two hundred and ninety nine',
+  'two hundred and ninety nine'
 ];
 
 const countries = [
@@ -332,7 +333,7 @@ const countries = [
   { name: 'Russia',         code: 'RU', population: 146588880 },
   { name: 'Latvia',         code: 'LV', population: 1978300 },
   { name: 'Brazil',         code: 'BR', population: 204921000 },
-  { name: 'United Kingdom', code: 'GB', population: 64596752 },
+  { name: 'United Kingdom', code: 'GB', population: 64596752 }
 ];
 
 const contriesWithDisabled = [
@@ -342,16 +343,16 @@ const contriesWithDisabled = [
   { name: 'Russia',         code: 'RU', population: 146588880, disabled: true },
   { name: 'Latvia',         code: 'LV', population: 1978300 },
   { name: 'Brazil',         code: 'BR', population: 204921000, disabled: true },
-  { name: 'United Kingdom', code: 'GB', population: 64596752 },
+  { name: 'United Kingdom', code: 'GB', population: 64596752 }
 ];
 
 const names = [
-  "María",
-  "Søren Larsen",
-  "João",
-  "Miguel",
-  "Marta",
-  "Lisa"
+  'María',
+  'Søren Larsen',
+  'João',
+  'Miguel',
+  'Marta',
+  'Lisa'
 ];
 
 const searchTypes = [
@@ -363,12 +364,13 @@ const searchTypes = [
   { label: 'FooBar' },
   { label: 'Tomster' },
   { label: 'Aretha' },
-  { label: 'Franklin' },
+  { label: 'Franklin' }
 ];
 
 export default Ember.Controller.extend({
-  names: names,
+  names,
   simpleOptions: numbers,
+  defaultHighlightedExample: numbers[3],
   moarNumbers,
   simpleSelected: 'six',
 
@@ -379,20 +381,23 @@ export default Ember.Controller.extend({
 
   complexOptionsWithDisabled: contriesWithDisabled,
 
-  multipleSelection: ['one','two','three','four','five','six','seven','eight','nine','ten','eleven'],
+  multipleSelection: ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven'],
   emptyMultipleSelection: [],
 
+  optionOfGroup: null,
   groupedOptions: [
-    { groupName: "Smalls", options: ["one", "two", "three"] },
-    { groupName: "Mediums", options: ["four", "five", "six"] },
-    { groupName: "Bigs", options: [
-        { groupName: "Fairly big", options: ["seven", "eight", "nine"] },
-        { groupName: "Really big", options: [ "ten", "eleven", "twelve" ] },
-        "thirteen"
+    { groupName: 'Smalls', disabled: true, options: ['one', 'two', 'three'] },
+    { groupName: 'Mediums', disabled: true, options: ['four', 'five', 'six'] },
+    {
+      groupName: 'Bigs',
+      options: [
+        { groupName: 'Fairly big', options: ['seven', 'eight', 'nine'] },
+        { groupName: 'Really big', options: ['ten', 'eleven', 'twelve'] },
+        'thirteen'
       ]
     },
-    "one hundred",
-    "one thousand"
+    'one hundred',
+    'one thousand'
   ],
 
   actions: {
@@ -405,18 +410,18 @@ export default Ember.Controller.extend({
     },
 
     debugSelection(option) {
-      console.debug("I've selected", option);
+      console.debug('I\'ve selected', option);
     },
 
     search(term) {
-      var length = term.length;
-      return numbers.filter(str => str.length === length); // returns the numbers with the same length than the current
+      let length = term.length;
+      return numbers.filter((str) => str.length === length); // returns the numbers with the same length than the current
     },
 
     asyncSearch(term) {
       return new Ember.RSVP.Promise(function(resolve) {
         Ember.run.later(function() {
-          resolve(numbers.filter(str => str.indexOf(term) > -1));
+          resolve(numbers.filter((str) => str.indexOf(term) > -1));
         }, 1500);
       });
     },
@@ -440,6 +445,6 @@ export default Ember.Controller.extend({
   },
 
   // Flexbox issue
-  searchTypes: searchTypes,
+  searchTypes,
   searchKey: searchTypes[0]
 });

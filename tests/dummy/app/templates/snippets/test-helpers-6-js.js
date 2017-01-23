@@ -1,0 +1,3 @@
+selectChoose('.city-selector', 'new');
+// ...
+clearSelected('.city-selector', 'new');

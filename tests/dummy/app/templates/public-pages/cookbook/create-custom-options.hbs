@@ -25,51 +25,19 @@
   to select a new set of results.
 </p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet template {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select-multiple options=options selected=selected
-      onchange=(action (mut selected))
-      onkeydown=(action "createOnEnter")
-      as |number|}}
-      \{{number}}
-    \{{/power-select-multiple}}
-  </pre>
-  <pre class="code-sample-snippet javascript {{if (eq component.activeTab 'javascript') 'active'}}">
-    import Ember from 'ember';
-
-    export default Ember.Controller.extend({
-      options: Ember.A(['Barcelona', 'London', 'New York', 'Porto']),
-      selected: [],
-
-      actions: {
-        createOnEnter(select, e) {
-          if (e.keyCode === 13 && select.isOpen &&
-            !select.highlighted && !Ember.isBlank(select.searchText)) {
-
-            let selected = this.get('selected');
-            if (!selected.includes(select.searchText)) {
-              this.get('options').pushObject(select.searchText);
-              select.actions.choose(select.searchText);
-            }
-          }
-        }
-      }
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    <div style="margin: 0 auto; max-width: 250px;">
-      {{#power-select-multiple options=options selected=selected
-        onchange=(action (mut selected))
-        onkeydown=(action "createOnEnter")
-        as |number|}}
-        {{number}}
-      {{/power-select-multiple}}
-    </div>
-  </div>
+{{#code-sample hbs="create-custom-options-1.hbs" js="create-custom-options-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>
   <i>Et voilà</i>, you've created a component that allows you to create custom tags.
+</p>
+
+<p>
+  For the sake of completeness, this example takes a naive approach that doesn't cover all
+  edge cases. By example, it isn't possible to create a tag named "York" above because it
+  would match "New York". Check the <a href="https://github.com/cibernox/ember-power-select-with-create">ember-power-select-with-create</a>
+  addon for a more complete solution.
 </p>
 
 <div class="doc-page-nav">

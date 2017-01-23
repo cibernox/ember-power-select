@@ -1,6 +1,28 @@
 <nav class="code-sample-tabs">
-  {{#each tabs as |tab|}}
-    <div class="code-sample-tab {{if (eq activeTab tab) 'active'}}" onclick={{action (mut activeTab) tab}}>{{tab}}</div>
-  {{/each}}
+  {{#if hbs}}
+    <div class="code-sample-tab {{if (eq activeTab "hbs") 'active'}}" onclick={{action (mut activeTab) "hbs"}}>Template</div>
+  {{/if}}
+  {{#if js}}
+    <div class="code-sample-tab {{if (eq activeTab "js") 'active'}}" onclick={{action (mut activeTab) "js"}}>Javascript</div>
+  {{/if}}
+  {{#if css}}
+    <div class="code-sample-tab {{if (eq activeTab "css") 'active'}}" onclick={{action (mut activeTab) "css"}}>CSS</div>
+  {{/if}}
+  {{#if showResult}}
+    <div class="code-sample-tab {{if (eq activeTab "result") 'active'}}" onclick={{action (mut activeTab) "result"}}>Result</div>
+  {{/if}}
 </nav>
-{{yield this}}
+{{#if hbs}}
+  {{code-snippet  name=hbs classNames="code-sample-snippet" class=(if (eq activeTab 'hbs') 'active')}}
+{{/if}}
+{{#if js}}
+  {{code-snippet  name=js classNames="code-sample-snippet" class=(if (eq activeTab 'js') 'active')}}
+{{/if}}
+{{#if css}}
+  {{code-snippet  name=css classNames="code-sample-snippet" class=(if (eq activeTab 'css') 'active')}}
+{{/if}}
+{{#if (and showResult hasBlock)}}
+  <div class="code-sample-snippet result {{if (eq activeTab 'result') 'active'}}">
+    {{yield partialName}}
+  </div>
+{{/if}}

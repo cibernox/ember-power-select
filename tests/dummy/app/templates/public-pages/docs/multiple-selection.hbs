@@ -6,34 +6,8 @@
 
 <p>Apart from the different name, the options are identical</p>
 
-{{#code-sample as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
-    \{{#power-select-multiple
-      options=names
-      selected=name
-      placeholder="Select some names..."
-      onchange=(action (mut name))
-      as |name|
-    }}
-      \{{name}}
-    \{{/power-select-multiple}}
-  </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
-      names: ['Stefan', 'Miguel', 'Tomster', 'Pluto']
-    });
-  </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
-    {{#power-select-multiple
-      options=names
-      selected=name
-      placeholder="Select some names..."
-      onchange=(action (mut name))
-      as |name|
-    }}
-      {{name}}
-    {{/power-select-multiple}}
-  </div>
+{{#code-sample hbs="multiple-selection-1.hbs" js="multiple-selection-1-js.js" as |partialName|}}
+  {{partial partialName}}
 {{/code-sample}}
 
 <p>

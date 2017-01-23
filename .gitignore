@@ -14,11 +14,9 @@
 /connect.lock
 /coverage/*
 /libpeerconnection.log
-npm-debug.log
+npm-debug.log*
 testem.log
 coverage.json
 .divshot-cache
 .pagefrontrc
-.thoughts.md
 .env.deploy.*
-.elasticbeanstalk

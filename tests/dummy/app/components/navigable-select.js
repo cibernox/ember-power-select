@@ -7,6 +7,12 @@ export default Ember.Component.extend({
   transformedOptions: computed('options', function() {
     return (function walker(options, parentLevel = null) {
       let results = Ember.A();
+
+      // this is necessary because power-select calls `toArray`, which
+      // makes a copy and breaks our ability to compare parentLevel
+      // via `===`.
+      results.toArray = () => results;
+
       let len = get(options, 'length');
       parentLevel = parentLevel || { root: true };
       for (let i = 0; i < len; i++) {
@@ -43,8 +49,8 @@ export default Ember.Component.extend({
     },
 
     search(term) {
-      const normalizedTerm = term.toLowerCase();
-      const results = this.get('currentOptions').filter(o => {
+      let normalizedTerm = term.toLowerCase();
+      let results = this.get('currentOptions').filter((o) => {
         if (o.parentLevel) {
           return normalizedTerm === '';
         } else if (get(o, 'levelName')) {

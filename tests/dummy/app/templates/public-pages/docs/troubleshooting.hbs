@@ -11,13 +11,13 @@
 </p>
 
 <p>
-  However if you want to render a select inside a model, that is a situation you can predict and
+  However if you want to render a select inside a modal, that is a situation you can predict and
   design for. There is two possible solutions:
 </p>
 
 <ol>
   <li>
-    Add a specific class to the select (p.e. <code>class="in-modal"</code>) will make the dropdown
+    Add a specific class to the select (p.e. <code>dropdownClass="in-modal-dropdown"</code>) will make the dropdown
     to have the class <code>"in-modal-dropdown"</code>. You can increase the z-index of this kind
     of selects.
   </li>
@@ -43,29 +43,6 @@
   <code>&lt;div id="ember-basic-dropdown-wormhole"&gt;&lt;/div&gt;</code> manually in your
   <code>application.hbs</code>.
 </p>
-
-<h3>I keep getting <code>\{{power-select}} requires an `onchange` function</code></h3>
-
-<p>
-  Check if you're using Ember 1.13.9+.
-</p>
-
-<h3>In acceptance tests the <code>fillIn</code> helper doesn't work</h3>
-
-<p>
-  This is due to a bug in the <code>fillIn</code> helper that fixed in Ember 2.0. Until you update your app
-  to 2.0+ you must trigger an <code>input</code> event after the filling the search box.
-
-  <pre>
-    fillIn('.ember-power-select-search input', 'foo');
-    triggerEvent('.ember-power-select-search input', 'input');
-
-    andThen(() => {
-      // Do your assertions
-    });
-  </pre>
-</p>
-
 
 <div class="doc-page-nav">
   {{#link-to 'public-pages.docs.test-helpers' class="doc-page-nav-link-prev"}}&lt; Test helpers{{/link-to}}

@@ -1,8 +1,12 @@
-import Ember from 'ember';
+import computed from 'ember-computed';
 
 export default function computedFallbackIfUndefined(fallback) {
-  return Ember.computed({
-    get() { return fallback; },
-    set(_, v) { return v === undefined ? fallback : v; }
+  return computed({
+    get() {
+      return fallback;
+    },
+    set(_, v) {
+      return v === undefined ? fallback : v;
+    }
   });
 }

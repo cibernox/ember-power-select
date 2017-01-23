@@ -1,13 +1,8 @@
 <section class="legacy-demo">
   <input type="text" value="sample input">
-  <h2 id="title">Welcome to the demo of ember-power-select (provisional name)</h2>
+  <h2 id="title">Select with 300 items</h2>
 
-{{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
-  {{option}}
-{{/power-select}}
-
-{{!--
-  <h4>Select of strings with value tracking</h4>
+{{!--   <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
@@ -18,17 +13,23 @@
   {{/power-select}}
 
   <h4>Multiple with search</h4>
-  {{#power-select-multiple options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
+  {{#power-select-multiple
+    options=(readonly simpleOptions)
+    selected=(readonly someNumbers)
+    onchange=(action (mut someNumbers)) as |option|}}
     {{option}}
   {{/power-select-multiple}}
 
   <h4>Multiple without search</h4>
-  {{#power-select-multiple searchEnabled=false options=(readonly simpleOptions) selected=(readonly someNumbers) onchange=(action (mut someNumbers)) as |option|}}
+  {{#power-select-multiple
+    options=(readonly simpleOptions)
+    selected=(readonly someNumbers)
+    searchEnabled=false
+    onchange=(action (mut someNumbers)) as |option|}}
     {{option}}
   {{/power-select-multiple}}
 
-
-{{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
+  {{#power-select-multiple options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' as |country|}}
     {{country.name}}
   {{/power-select-multiple}}
 
@@ -47,12 +48,12 @@
     {{option}}
   {{/power-select}}
 
-  <h4>Select of strings with value tracking</h4>
+  <h4>Select of strings with value tracking</h4> --}}
   {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
 
-  <h4>Diacritics search</h4>
+  {{!-- <h4>Diacritics search</h4>
   {{#power-select options=(readonly names) selected=diacriticName onchange=(action (mut diacriticName)) as |option|}}
     {{option}}
   {{/power-select}}
@@ -185,6 +186,11 @@
     {{country.name}}
   {{/power-select-multiple}}
 
+  <h4>Multiple selects without a search can have a placeholder</h4>
+  {{#power-select-multiple searchEnabled=false options=complexOptions selected=choosenCountry onchange=(action (mut choosenCountry)) searchField='name' placeholder="Choose a place!!" as |country|}}
+    {{country.name}}
+  {{/power-select-multiple}}
+
   <h4>Right to left styles</h4>
   {{#power-select options=(readonly complexOptions) dir="rtl" selected=(readonly complexSelected) allowClear=true onchange=(action (mut complexSelected)) as |option|}}
     {{option.code}}: {{option.name}}
@@ -208,6 +214,11 @@
       {{opt}}
     {{/power-select}}
   </div>
+
+  <h4>Customized defaultHighlighted</h4>
+  {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) defaultHighlighted=defaultHighlightedExample as |option|}}
+    {{option}}
+  {{/power-select}}
  --}}
   <br>
   <br>
@@ -247,6 +258,30 @@
   <br>
   <br>
   <br>
+  <br>  <br>
   <br>
-
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
 </section>

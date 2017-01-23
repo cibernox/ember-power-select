@@ -26,19 +26,27 @@ const numbers = [
 export default Ember.Controller.extend({
   numbers,
   selectedList: [],
+  asyncSelectedList: [],
   optionz: [],
   // Actions
   actions: {
     searchAsync(term) {
       return new Ember.RSVP.Promise(function(resolve) {
         Ember.run.later(function() {
-          resolve(numbers.filter(n => n.indexOf(term) > -1));
+          resolve(numbers.filter((n) => n.indexOf(term) > -1));
         }, 100);
       });
     },
-    onOpenHandle(){
+
+    onOpenHandle() {
       Ember.run.later(() => {
         this.set('optionz', numbers);
+      }, 100);
+    },
+
+    onChangeAsync(key, selected) {
+      Ember.run.later(() => {
+        this.set(key, selected);
       }, 100);
     }
   }

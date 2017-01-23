@@ -1,22 +1,22 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
+  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto', 'Robert', 'Alex', 'Lauren', 'Geoffrey', 'Ricardo', 'Jamie'],
   diacritics: [
-    "María",
-    "Søren Larsen",
-    "João",
-    "Saša Jurić",
-    "Íñigo"
+    'María',
+    'Søren Larsen',
+    'João',
+    'Saša Jurić',
+    'Íñigo'
   ],
   countries: [
     { name: 'United States' },
-    { name: 'Spain', },
+    { name: 'Spain' },
     { name: 'Portugal' },
     { name: 'Russia' },
     { name: 'Latvia' },
     { name: 'Brazil' },
-    { name: 'United Kingdom' },
+    { name: 'United Kingdom' }
   ],
   people: [
     { name: 'María',  surname: 'Murray' },
@@ -24,10 +24,10 @@ export default Ember.Controller.extend({
     { name: 'João',   surname: 'Jin' },
     { name: 'Miguel', surname: 'Camba' },
     { name: 'Marta',  surname: 'Stinson' },
-    { name: 'Lisa',   surname: 'Simpson' },
+    { name: 'Lisa',   surname: 'Simpson' }
   ],
 
   myMatcher(person, term) {
-    return (person.name + ' ' + person.surname).indexOf(term);
+    return `${person.name} ${person.surname}`.indexOf(term);
   }
 });
