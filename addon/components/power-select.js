@@ -87,6 +87,7 @@ export default Component.extend({
   selectedItemComponent: fallbackIfUndefined(null),
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
+  placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
 
   // Private state
   publicAPI: initialState,

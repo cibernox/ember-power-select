@@ -183,3 +183,26 @@ test('the search message can be customized passing `searchMessageComponent`', fu
   clickTrigger();
   assert.equal($('.ember-power-select-dropdown #custom-search-message-p-tag').length, 1, 'The custom component is rendered instead of the usual message');
 });
+
+test('placeholder can be customized using placeholderComponent', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+
+  this.render(hbs`
+    {{#power-select
+      options=countries
+      placeholder="test"
+      placeholderComponent="custom-placeholder"
+      onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  assert.equal($('.ember-power-select-placeholder').length, 1, 'The placeholder appears.');
+  assert.equal(
+    $('.ember-power-select-placeholder').text().trim(),
+    'This is a very bold placeholder',
+    'The placeholder content is equal.'
+   );
+});

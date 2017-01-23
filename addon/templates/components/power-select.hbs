@@ -30,6 +30,7 @@
       onBlur=(action "onBlur")
       onInput=(action "onInput")
       placeholder=(readonly placeholder)
+      placeholderComponent=(readonly placeholderComponent)
       onKeydown=(action "onKeydown")
       searchEnabled=(readonly searchEnabled)
       searchField=(readonly searchField)
@@ -38,7 +39,6 @@
       as |opt term|}}
       {{yield opt term}}
     {{/component}}
-
   {{/dropdown.trigger}}
 
   {{#dropdown.content
