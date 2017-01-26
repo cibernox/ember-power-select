@@ -1,5 +1,8 @@
 # Master
 
+# 1.4.2
+- [BUGFIX] Fix wrong rgba color in LESS stylesheets of bootstrap theme
+
 # 1.4.1
 - [ENHANCEMENT] The id of the trigger can be customize now with `triggerId="foo"`. Useful to relate
   selects with `<label>` tags.
