@@ -1,5 +1,8 @@
 # Master
 
+- [ENHANCEMENT] The id of the trigger can be customize now with `triggerId="foo"`. Useful to relate
+  selects with `<label>` tags.
+
 # 1.4.0
 - [ENHANCEMENT] Added new `placeholderComponent` option. By default is used in single selects only.
 

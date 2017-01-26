@@ -775,18 +775,6 @@ test('BUGFIX: The highlighted element is reset when multiple selects are closed'
   assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted again');
 });
 
-test('The trigger of the select has a id derived from the element id of the component', function(assert) {
-  assert.expect(1);
-
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  assert.ok(/^ember-basic-dropdown-trigger-ember\d+$/.test(this.$('.ember-power-select-trigger').attr('id')), 'The trigger has the proper id');
-});
-
 test('If the passed options is a promise that is resolved, searching should filter the results from a promise', function(assert) {
   let done = assert.async();
   assert.expect(5);
