@@ -1,19 +1,11 @@
 /* eslint-env node */
 'use strict';
 
-function lookupApp(appOrAddon) {
-  if (appOrAddon.app) {
-    return appOrAddon.app || appOrAddon;
-  } else if (appOrAddon.parent){
-    return appOrAddon.parent.app;
-  }
-}
-
 module.exports = {
   name: 'ember-power-select',
 
   included(appOrAddon) {
-    let app = lookupApp(appOrAddon);
+    let app = this._lookupApp(appOrAddon);
     if (!app.__emberPowerSelectIncludedInvoked) {
       app.__emberPowerSelectIncludedInvoked = true;
 
@@ -46,5 +38,13 @@ module.exports = {
   contentFor(type, config) {
     let emberBasicDropdown = this.addons.find((a) => a.name === 'ember-basic-dropdown');
     return emberBasicDropdown.contentFor(type, config);
+  },
+
+  _lookupApp: function(appOrAddon) {
+    let app = appOrAddon || appOrAddon.app;
+    while (appOrAddon.parent) {
+      app = appOrAddon.parent.app;
+    }
+    return app;
   }
 };
