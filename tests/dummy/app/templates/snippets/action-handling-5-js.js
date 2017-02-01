@@ -16,6 +16,9 @@ export default Ember.Controller.extend({
   // Methods
   focusComesFromOutside(e) {
     let blurredEl = e.relatedTarget;
-    return !blurredEl || !blurredEl.classList.contains('ember-power-select-search-input');
+    if (Ember.isBlank(blurredEl)) {
+      return false;
+    }
+    return !blurredEl.classList.contains('ember-power-select-search-input');
   }
 });
