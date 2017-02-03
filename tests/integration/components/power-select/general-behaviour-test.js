@@ -1156,6 +1156,5 @@ test('The third yielded argument in single selects is whether the display is in 
   clickTrigger();
   assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'two', 'Options are not in the trigger display');
   nativeMouseUp('.ember-power-select-option:eq(1)');
-  clickTrigger();
   assert.equal($('.ember-power-select-trigger').text().trim(), 'Displays in trigger: two', 'The trigger display is properly informed of its state');
 });
