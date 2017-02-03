@@ -1139,3 +1139,23 @@ test('If the options of a single select implement `isEqual`, that option is used
   nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again
   assert.equal(onChangeInvocationsCount, 1);
 });
+
+test('The third yielded argument in single selects is whether the display is in the trigger or dropdown', function(assert) {
+  assert.expect(2);
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option select triggerDisplay|}}
+      {{#if triggerDisplay}}
+        Displays in trigger: {{option}}
+      {{else}}
+        {{option}}
+      {{/if}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'two', 'Options are not in the trigger display');
+  nativeMouseUp('.ember-power-select-option:eq(1)');
+  clickTrigger();
+  assert.equal($('.ember-power-select-trigger').text().trim(), 'Displays in trigger: two', 'The trigger display is properly informed of its state');
+});
