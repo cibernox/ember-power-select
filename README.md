@@ -75,6 +75,8 @@ to interact with the component in acceptance tests.
 ## Contributing
 
 Any contribution is welcome. Please read our [guidelines](CONTRIBUTING.md).
+However, if your contribution involves adding a new feature, please open an issue before to
+share your plan and agree the details of the feature before starting implementing it.
 
 ## Troubleshooting
 
