@@ -13,10 +13,10 @@ function typeText(selector, text) {
 }
 
 function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
-  let event;
+  let event, target;
   try {
     event = new window.Event(eventType, { bubbles: true, cancelable: true, view: window });
-  } catch (e) {
+  } catch(e) {
     // fix IE11: "Object doesn't support this action"
     event = document.createEvent('Event');
     let bubbles = true;
@@ -25,7 +25,6 @@ function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
   }
 
   Object.keys(options).forEach((key) => event[key] = options[key]);
-  let target;
   if (typeof selectorOrDomElement === 'string') {
     target = $(selectorOrDomElement)[0];
   } else {
@@ -123,10 +122,10 @@ export default function() {
       throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but no select was found using selector "${cssPath}"`);
     }
 
-    let contentId = `${$trigger.attr('aria-controls')}`;
-    let $content = find(`#${contentId}`)
+    let contentId = `${$trigger.attr('aria-owns')}`;
+    let $content = find(`#${contentId}`);
     // If the dropdown is closed, open it
-    if ($content.length === 0) {
+    if ($content.length === 0 || $content.hasClass('ember-basic-dropdown-content-placeholder')) {
       nativeMouseDown($trigger.get(0));
       wait();
     }
@@ -163,15 +162,16 @@ export default function() {
       throw new Error(`You called "selectSearch('${cssPath}', '${value}')" but no select was found using selector "${cssPath}"`);
     }
 
-    let contentId = `${$trigger.attr('aria-controls')}`;
+    let contentId = `${$trigger.attr('aria-owns')}`;
     let isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
-    let dropdownIsClosed = $(`#${contentId}`).length === 0;
+    let $content = $(`#${contentId}`);
+    let dropdownIsClosed = $content.length === 0 || $content.hasClass('ember-basic-dropdown-content-placeholder');
     if (dropdownIsClosed) {
       nativeMouseDown(triggerPath);
       wait();
     }
-    let isDefaultSingleSelect = $(`.ember-power-select-search-input`).length > 0;
+    let isDefaultSingleSelect = $('.ember-power-select-search-input').length > 0;
 
     if (isMultipleSelect) {
       fillIn(`${triggerPath} .ember-power-select-trigger-multiple-input`, value);
@@ -189,22 +189,22 @@ export default function() {
   });
 
   Test.registerAsyncHelper('removeMultipleOption', function(app, cssPath, value) {
-    const elem = find(`${cssPath} .ember-power-select-multiple-options > li:contains(${value}) > .ember-power-select-multiple-remove-btn`).get(0);
+    let elem = find(`${cssPath} .ember-power-select-multiple-options > li:contains(${value}) > .ember-power-select-multiple-remove-btn`).get(0);
     try {
       nativeMouseDown(elem);
       wait();
-    } catch (e) {
+    } catch(e) {
       console.warn('css path to remove btn not found');
       throw e;
     }
   });
 
   Test.registerAsyncHelper('clearSelected', function(app, cssPath) {
-    const elem = find(`${cssPath} .ember-power-select-clear-btn`).get(0);
+    let elem = find(`${cssPath} .ember-power-select-clear-btn`).get(0);
     try {
       nativeMouseDown(elem);
       wait();
-    } catch (e) {
+    } catch(e) {
       console.warn('css path to clear btn not found');
       throw e;
     }
