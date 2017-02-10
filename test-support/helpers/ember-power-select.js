@@ -59,9 +59,24 @@ export function triggerKeydown(domElement, k) {
   });
 }
 
-export function typeInSearch(text) {
+export function typeInSearch(scopeOrText, text) {
+  let scope = '';
+
+  if (typeof text === 'undefined') {
+    text = scopeOrText;
+  } else {
+    scope = scopeOrText;
+  }
+
+  let selectors = [
+    '.ember-power-select-search-input',
+    '.ember-power-select-search input',
+    '.ember-power-select-trigger-multiple-input',
+    'input[type="search"]'
+  ].map((selector) => `${scope} ${selector}`).join(', ');
+
   run(() => {
-    typeText('.ember-power-select-search-input, .ember-power-select-search input, .ember-power-select-trigger-multiple-input, input[type="search"]', text);
+    typeText(selectors, text);
   });
 }
 
