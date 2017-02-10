@@ -1,5 +1,12 @@
 # Master
 
+# 1.5.0-beta.0
+- [ENHANCEMENT/BREAKING-ISH] `ember-basic-dropdown` has improved the experience with A11y 
+  for screen readings. Some `aria-*` have changed and there is an invisible div that wasn't 
+  there before. EPS doens't rely on those attributes and it's unlikely that this will 
+  break for anyone, but just in case I'll bump a minor version number and keep it in 
+  beta for some days.
+
 # 1.4.3
 - [ENHANCEMENT] `typeInSearch` integration test helper now accepts an options scope to 
   target specific selects when there is more than one in the screen.
