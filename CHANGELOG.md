@@ -1,5 +1,9 @@
 # Master
 
+# 1.4.3
+- [ENHANCEMENT] `typeInSearch` integration test helper now accepts an options scope to 
+  target specific selects when there is more than one in the screen.
+
 # 1.4.2
 - [BUGFIX] Fix wrong rgba color in LESS stylesheets of bootstrap theme
 
