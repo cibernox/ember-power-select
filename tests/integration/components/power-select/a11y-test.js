@@ -167,8 +167,8 @@ test('Multiple-select: Options with a disabled field have `aria-disabled=true`',
   assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
 });
 
-test('Single-select: The trigger has `role=button`, `aria-haspopup=true` and `aria-controls=<id-of-dropdown>`', function(assert) {
-  assert.expect(3);
+test('Single-select: The trigger has `role=button` and `aria-owns=<id-of-dropdown>`', function(assert) {
+  assert.expect(2);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -180,12 +180,11 @@ test('Single-select: The trigger has `role=button`, `aria-haspopup=true` and `ar
   clickTrigger();
   let $trigger = this.$('.ember-power-select-trigger');
   assert.equal($trigger.attr('role'), 'button', 'The trigger has role button');
-  assert.ok(['true', ''].indexOf($trigger.attr('aria-haspopup')) > -1, 'aria-haspopup is true');
-  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test($trigger.attr('aria-controls')), 'aria-controls point to the dropdown');
+  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test($trigger.attr('aria-owns')), 'aria-owns point to the dropdown');
 });
 
-test('Multiple-select: The trigger has `role=button`, `aria-haspopup=true` and `aria-controls=<id-of-dropdown>`', function(assert) {
-  assert.expect(3);
+test('Multiple-select: The trigger has `role=button` and `aria-owns=<id-of-dropdown>`', function(assert) {
+  assert.expect(2);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -197,12 +196,11 @@ test('Multiple-select: The trigger has `role=button`, `aria-haspopup=true` and `
   clickTrigger();
   let $trigger = this.$('.ember-power-select-trigger');
   assert.equal($trigger.attr('role'), 'button', 'The trigger has role button');
-  assert.ok(['true', ''].indexOf($trigger.attr('aria-haspopup')) > -1, 'aria-haspopup is true');
-  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test($trigger.attr('aria-controls')), 'aria-controls point to the dropdown');
+  assert.ok(/^ember-basic-dropdown-content-ember\d+$/.test($trigger.attr('aria-owns')), 'aria-owns point to the dropdown');
 });
 
-test('Single-select: The trigger attributes `aria-expanded` and `aria-pressed` that are true when the dropdown is opened', function(assert) {
-  assert.expect(4);
+test('Single-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', function(assert) {
+  assert.expect(2);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -213,14 +211,12 @@ test('Single-select: The trigger attributes `aria-expanded` and `aria-pressed` t
 
   let $trigger = this.$('.ember-power-select-trigger');
   assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')) > -1, 'Not expanded');
-  assert.ok(['false', undefined].indexOf($trigger.attr('aria-pressed')) > -1, 'Not pressed');
   clickTrigger();
   assert.ok(['true', ''].indexOf($trigger.attr('aria-expanded')) > -1, 'Expanded');
-  assert.ok(['true', ''].indexOf($trigger.attr('aria-pressed')) > -1, 'Pressed');
 });
 
-test('Multiple-select: The trigger attributes `aria-expanded` and `aria-pressed` that are true when the dropdown is opened', function(assert) {
-  assert.expect(4);
+test('Multiple-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', function(assert) {
+  assert.expect(2);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -231,10 +227,8 @@ test('Multiple-select: The trigger attributes `aria-expanded` and `aria-pressed`
 
   let $trigger = this.$('.ember-power-select-trigger');
   assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')) > -1, 'Not expanded');
-  assert.ok(['false', undefined].indexOf($trigger.attr('aria-pressed')) > -1, 'Not pressed');
   clickTrigger();
   assert.ok(['true', ''].indexOf($trigger.attr('aria-expanded')) > -1, 'Expanded');
-  assert.ok(['true', ''].indexOf($trigger.attr('aria-pressed')) > -1, 'Pressed');
 });
 
 test('Single-select: The listbox has a unique id`', function(assert) {
