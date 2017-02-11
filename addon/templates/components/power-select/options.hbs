@@ -22,6 +22,7 @@
       aria-selected="{{ember-power-select-is-selected opt select.selected}}"
       aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
       aria-current="{{eq opt select.highlighted}}"
+      id="{{select.uniqueId}}-{{groupIndex}}{{index}}"
       data-option-index="{{groupIndex}}{{index}}"
       role="option">
       {{yield opt select}}

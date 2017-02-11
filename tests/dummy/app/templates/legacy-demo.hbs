@@ -87,12 +87,13 @@
   {{#power-select-multiple options=(readonly simpleOptions) selected=emptyMultipleSelection onchange=(action (mut multipleSelection)) search=(action 'asyncSearch') as |option|}}
     {{option}}
   {{/power-select-multiple}}
-
+--}}
   <h4>Select multiple</h4>
   {{#power-select-multiple options=(readonly simpleOptions) selected=multipleSelection onchange=(action (mut multipleSelection)) as |option|}}
     {{option}}
   {{/power-select-multiple}}
 
+{{!--
   <p>Selected numbers: {{#each multipleSelection as |number|}}{{number}}, {{/each}}</p>
 
   <h4>Select multiple with placeholder</h4>
