@@ -820,6 +820,7 @@ test('placeholder can be customized using placeholderComponent', function(assert
     {{#power-select-multiple
       options=countries
       placeholder="test"
+      searchEnabled=false
       placeholderComponent="custom-placeholder"
       onchange=(action (mut foo)) as |country|}}
       {{country.name}}

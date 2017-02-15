@@ -16,7 +16,7 @@
       {{/if}}
     </li>
   {{else}}
-    {{#if (not-eq placeholder maybePlaceholder)}}
+    {{#if (and placeholder (not searchEnabled))}}
       {{component placeholderComponent placeholder=placeholder}}
     {{/if}}
   {{/each}}
