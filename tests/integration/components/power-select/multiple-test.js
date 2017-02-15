@@ -810,3 +810,26 @@ test('If the options of a multiple select implement `isEqual`, that option is us
   nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again should remove it
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0);
 });
+
+test('placeholder can be customized using placeholderComponent', function(assert) {
+  assert.expect(2);
+
+  this.countries = countries;
+
+  this.render(hbs`
+    {{#power-select-multiple
+      options=countries
+      placeholder="test"
+      placeholderComponent="custom-placeholder"
+      onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select-multiple}}
+  `);
+
+  assert.equal($('.ember-power-select-placeholder').length, 1, 'The placeholder appears.');
+  assert.equal(
+    $('.ember-power-select-placeholder').text().trim(),
+    'This is a very bold placeholder',
+    'The placeholder content is equal.'
+   );
+});
