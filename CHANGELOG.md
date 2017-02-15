@@ -6,6 +6,8 @@
   there before. EPS doens't rely on those attributes and it's unlikely that this will 
   break for anyone, but just in case I'll bump a minor version number and keep it in 
   beta for some days.
+- [ENHANCEMENT] Providing a custom `placeholderComponent` is available for
+  `power-select-multiple` too now.
 
 # 1.4.3
 - [ENHANCEMENT] `typeInSearch` integration test helper now accepts an options scope to 
