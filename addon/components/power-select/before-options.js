@@ -1,4 +1,5 @@
 import Component from 'ember-component';
+import { or } from 'ember-computed';
 import { scheduleOnce } from 'ember-runloop';
 import layout from '../../templates/components/power-select/before-options';
 
@@ -6,6 +7,8 @@ export default Component.extend({
   tagName: '',
   layout,
   autofocus: true,
+
+  internalSearchEnabled: or('searchEnabled', 'externalSearchEnabled'),
 
   // Lifecycle hooks
   didInsertElement() {
@@ -18,7 +21,7 @@ export default Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    if (this.get('searchEnabled')) {
+    if (this.get('internalSearchEnabled')) {
       scheduleOnce('actions', this, this.get('select').actions.search, '');
     }
   },
