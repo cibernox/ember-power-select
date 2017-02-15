@@ -50,7 +50,7 @@
       listboxId=(readonly optionsId)
       onInput=(action "onInput")
       onKeydown=(action "onKeydown")
-      externalSearchEnabled=(readonly searchEnabled)
+      searchEnabled=(ember-power-select-override-option searchEnabled beforeOptionsComponent 'searchEnabled')
       onFocus=(action "onFocus")
       onBlur=(action "onBlur")
       searchPlaceholder=(readonly searchPlaceholder)
