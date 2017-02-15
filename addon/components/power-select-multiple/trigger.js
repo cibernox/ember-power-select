@@ -70,10 +70,7 @@ export default Component.extend({
   }),
 
   maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
-    let component = this.get('placeholderComponent');
-    let hasCustomPlaceholder = component !== 'power-select/placeholder';
-
-    if (isIE || hasCustomPlaceholder) {
+    if (isIE) {
       return null;
     }
     let select = this.get('select');
