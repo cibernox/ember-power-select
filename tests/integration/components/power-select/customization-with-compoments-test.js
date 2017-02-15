@@ -97,6 +97,52 @@ test('the content before the list can be customized passing `beforeOptionsCompon
   assert.equal($('.ember-power-select-search-input').length, 0, 'The search input is not visible');
 });
 
+test('`beforeOptionsComponent` receives parent attributes', function(assert) {
+  assert.expect(1);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#power-select
+       options=countries
+         selected=country
+         searchEnabled=false
+         beforeOptionsComponent=(component "power-select/before-options")
+         onchange=(action (mut foo))
+         as |country|}}
+
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-search').length, 0, 'beforeOptions component does not render with disalbed search on power-select');
+});
+
+test('`beforeOptionsComponent` can override parent attributes', function(assert) {
+  assert.expect(1);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#power-select
+       options=countries
+         selected=country
+         searchEnabled=false
+         beforeOptionsComponent=(component "power-select/before-options" searchEnabled=true)
+         onchange=(action (mut foo))
+         as |country|}}
+
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal($('.ember-power-select-search').length, 1, 'beforeOptions component renders despite disalbed search on power-select');
+});
+
 test('the content after the list can be customized passing `afterOptionsComponent`', function(assert) {
   assert.expect(2);
 
