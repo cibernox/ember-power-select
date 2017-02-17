@@ -16,7 +16,7 @@
       {{/if}}
     </li>
   {{else}}
-    {{#if (and placeholder (not searchEnabled))}}
+    {{#if _placeholderAndSearchDisabled}}
       <span class="ember-power-select-placeholder">{{placeholder}}</span>
     {{/if}}
   {{/each}}
