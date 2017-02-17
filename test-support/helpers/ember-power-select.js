@@ -1,17 +1,9 @@
 import $ from 'jquery';
 import run from 'ember-runloop';
 import Test from 'ember-test';
+import { click, fillIn } from 'ember-native-dom-helpers/test-support/helpers';
 
 // Helpers for integration tests
-
-function typeText(selector, text) {
-  let $selector = $($(selector).get(0)); // Only interact with the first result
-  $selector.val(text);
-  let event = document.createEvent('Events');
-  event.initEvent('input', true, true);
-  $selector[0].dispatchEvent(event);
-}
-
 function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
   let event, target;
   try {
@@ -74,9 +66,7 @@ export function typeInSearch(scopeOrText, text) {
     'input[type="search"]'
   ].map((selector) => `${scope} ${selector}`).join(', ');
 
-  run(() => {
-    typeText(selectors, text);
-  });
+  return fillIn(selectors, text);
 }
 
 export function clickTrigger(scope, options = {}) {
@@ -84,7 +74,7 @@ export function clickTrigger(scope, options = {}) {
   if (scope) {
     selector = `${scope} ${selector}`;
   }
-  nativeMouseDown(selector, options);
+  return click(selector, options);
 }
 
 export function nativeTouch(selectorOrDomElement) {
