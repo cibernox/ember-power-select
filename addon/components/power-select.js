@@ -186,6 +186,11 @@ export default Component.extend({
       && (!this.get('search') || publicAPI.lastSearchedText.length > 0);
   }),
 
+  highlightedId: computed('publicAPI.highlighted', function() {
+    let { highlighted, results, uniqueId } = this.get('publicAPI');
+    return `${uniqueId}-${indexOfOption(results, highlighted)}`;
+  }),
+
   // Actions
   actions: {
     registerAPI(dropdown) {

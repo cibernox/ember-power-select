@@ -4,8 +4,9 @@
       autocorrect="off" autocapitalize="off"
       spellcheck="false" role="combobox"
       class="ember-power-select-search-input"
+      aria-activedescendant={{highlightedId}}
       value={{select.searchText}}
-      aria-controls={{listboxId}}
+      aria-owns={{listboxId}}
       placeholder={{searchPlaceholder}}
       oninput={{onInput}}
       onfocus={{onFocus}}

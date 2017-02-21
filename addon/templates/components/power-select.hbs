@@ -11,12 +11,15 @@
   as |dropdown|}}
 
   {{#dropdown.trigger
+    role="combobox"
     ariaDescribedBy=(readonly ariaDescribedBy)
     ariaInvalid=(readonly ariaInvalid)
     ariaLabel=(readonly ariaLabel)
     ariaLabelledBy=(readonly ariaLabelledBy)
     ariaRequired=(readonly required)
     class=(readonly concatenatedTriggerClasses)
+    aria-autocomplete="list"
+    aria-activedescendant=highlightedId
     id=(readonly triggerId)
     onKeyDown=(action "onTriggerKeydown")
     onFocus=(action "onTriggerFocus")
@@ -53,6 +56,7 @@
       searchEnabled=(readonly searchEnabled)
       onFocus=(action "onFocus")
       onBlur=(action "onBlur")
+      highlightedId=highlightedId
       searchPlaceholder=(readonly searchPlaceholder)
       select=(readonly publicAPI)}}
     {{#if mustShowSearchMessage}}
