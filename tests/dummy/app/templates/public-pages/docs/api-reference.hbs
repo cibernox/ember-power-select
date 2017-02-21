@@ -12,6 +12,16 @@
   </thead>
   <tbody>
     <tr>
+      <td>afterOptionsComponent</td>
+      <td><code>string/contextua-component</code></td>
+      <td>The component rendered after the list of options. It is empty by default in both single and multiple selects</td>
+    </tr>
+    <tr>
+      <td>allowClear</td>
+      <td><code>boolean</code></td>
+      <td>When truthy, single selects allow to nullify the selection</td>
+    </tr>
+    <tr>
       <td>ariaDescribedBy</td>
       <td><code>string</code></td>
       <td>Sets <code>aria-describedby</code> on the component</td>
@@ -32,14 +42,30 @@
       <td>Sets <code>aria-labelledby</code> on the component</td>
     </tr>
     <tr>
-      <td>options</td>
-      <td><code>collection</code></td>
-      <td>Collection of options to display in the component</td>
+      <td>beforeOptionsComponent</td>
+      <td><code>string/contextua-component</code></td>
+      <td>The component rendered before the list of options. In single selects defaults to the searchbox. In multiple select defaults to nothing</td>
     </tr>
     <tr>
-      <td>selected</td>
-      <td><code>any or array</code></td>
-      <td>The selected option (or collection of options in multiple mode)</td>
+      <td>buildSelection</td>
+      <td><code>function</code></td>
+      <td>The function to be invoked when the user selects an option. Should return either the `option` or `null`. This is used internally by `PowerSelectMultiple` to construct a new array of options, but can be used for unselecting a single option by returning `null` to the `onchange` event.</td>
+    </tr>
+    <tr>
+      <td>class</td>
+      <td><code>string</code></td>
+      <td>
+        The CSS class of the component. The component by default is tagless, so this won't take
+        any effect unless the user specifies `tagName=div` too.
+      </td>
+    </tr>
+    <tr>
+      <td>closeOnSelect</td>
+      <td><code>boolean</code></td>
+      <td>
+        Defaults to true. When false, the component won't be closed after the user <em>chooses</em>
+        an option, either with the mouse/keyboard or using the `choose` action in the publicAPI.
+      </td>
     </tr>
     <tr>
       <td>defaultHighlighted</td>
@@ -47,14 +73,88 @@
       <td>By default when the select opens, the highlighted element is the selected one, or the first if none. If you want to change this behaviour, pass an option or a function that receives the publicAPI and resolves to the highlighted option.</td>
     </tr>
     <tr>
+      <td>destination</td>
+      <td><code>'ember-basic-dropdown-wormhole'</code></td>
+      <td>
+        The id of the element used as target for the dropdown's content, when not rendered in place.
+      </td>
+    </tr>
+    <tr>
+      <td>disabled</td>
+      <td><code>boolean</code></td>
+      <td>When truthy the component cannot be interacted</td>
+    </tr>
+    <tr>
+      <td>dropdownClass</td>
+      <td><code>string</code></td>
+      <td>Class to be applied to the dropdown only</td>
+    </tr>
+    <tr>
+      <td>extra</td>
+      <td><code>object</code></td>
+      <td>Object to store any arbitrary configuration meant to be used by custom components</td>
+    </tr>
+    <tr>
+      <td>horizontalPosition</td>
+      <td><code>string</code></td>
+      <td>
+        In the case when trigger is narrower than dropdown. By default is <code>"auto"</code>, meaning that will
+        position the list depending on the side of the trigger. Possible values are
+        <code>"left"</code> and <code>"right"</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>initiallyOpened</td>
+      <td><code>boolean</code></td>
+      <td>
+        Boolean property that controls if the component is rendered initially in the open state. It
+        won't mutate if the component is opened/closed. It won't close/open the component when mutated either.
+      </td>
+    </tr>
+    <tr>
+      <td>loadingMessage</td>
+      <td><code>string</code></td>
+      <td>
+        Message shown in the list of options while the options are still not resolved,
+        typically after a search but also when <code>options</code> is a promise.
+      </td>
+    </tr>
+    <tr>
+      <td>matcher</td>
+      <td><code>function</code></td>
+      <td>The <code>function(option, searchTerm)</code> used to filter results. The default one will compare ignoring diacritics</td>
+    </tr>
+    <tr>
+      <td>matchTriggerWidth</td>
+      <td><code>boolean (defaults to true)</code></td>
+      <td>
+        When enabled (and it's enabled by default) the dropdown with match the width of the trigger.
+      </td>
+    </tr>
+    <tr>
+      <td>noMatchesMessage</td>
+      <td><code>string</code></td>
+      <td>Message shown when a search doesn't find any matching result.</td>
+    </tr>
+    <tr>
+      <td>onblur</td>
+      <td><code>function</code></td>
+      <td>The function to be invoked when component or any of its subitems looses the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
+    </tr>
+    <tr>
       <td>onchange</td>
       <td><code>function</code></td>
       <td>The function to be invoked when the user selects or unselects an option</td>
     </tr>
     <tr>
-      <td>onkeydown</td>
+      <td>onclose</td>
       <td><code>function</code></td>
-      <td>The function to be invoked when the user presses a key being the component or the inputs inside it focused</td>
+      <td>The function to be invoked when component is closed</td>
+    </tr>
+    <tr>
+      <td>onfocus</td>
+      <td><code>function</code></td>
+      <td>The function to be invoked when component or any of its subitems gains the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
     </tr>
     <tr>
       <td>oninput</td>
@@ -65,14 +165,9 @@
       </td>
     </tr>
     <tr>
-      <td>onfocus</td>
+      <td>onkeydown</td>
       <td><code>function</code></td>
-      <td>The function to be invoked when component or any of its subitems gains the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
-    </tr>
-    <tr>
-      <td>onblur</td>
-      <td><code>function</code></td>
-      <td>The function to be invoked when component or any of its subitems looses the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
+      <td>The function to be invoked when the user presses a key being the component or the inputs inside it focused</td>
     </tr>
     <tr>
       <td>onopen</td>
@@ -80,19 +175,14 @@
       <td>The function to be invoked when component is opened</td>
     </tr>
     <tr>
-      <td>onclose</td>
-      <td><code>function</code></td>
-      <td>The function to be invoked when component is closed</td>
+      <td>options</td>
+      <td><code>collection</code></td>
+      <td>Collection of options to display in the component</td>
     </tr>
     <tr>
-      <td>search</td>
-      <td><code>function</code></td>
-      <td>The <code>function(searchTerm)</code> to invoke when the user uses the search input.</td>
-    </tr>
-    <tr>
-      <td>disabled</td>
-      <td><code>boolean</code></td>
-      <td>When truthy the component cannot be interacted</td>
+      <td>optionsComponent</td>
+      <td><code>string</code></td>
+      <td>The component to render instead of the default one inside the list of options</td>
     </tr>
     <tr>
       <td>placeholder</td>
@@ -105,69 +195,6 @@
       <td>Component to be rendered as placeholder. It can be used along with <code>placeholder</code> and has access to it</td>
     </tr>
     <tr>
-      <td>searchEnabled</td>
-      <td><code>boolean</code></td>
-      <td>When falsey, hides the search in single selects</td>
-    </tr>
-    <tr>
-      <td>searchPlaceholder</td>
-      <td><code>string</code></td>
-      <td>Placeholder of the search box</td>
-    </tr>
-    <tr>
-      <td>searchField</td>
-      <td><code>string</code></td>
-      <td>When the options are objects and no custom matches function is provided, this option tells the component what property of the options should the default matches use to filter</td>
-    </tr>
-    <tr>
-      <td>matcher</td>
-      <td><code>function</code></td>
-      <td>The <code>function(option, searchTerm)</code> used to filter results. The default one will compare ignoring diacritics</td>
-    </tr>
-    <tr>
-      <td>loadingMessage</td>
-      <td><code>string</code></td>
-      <td>
-        Message shown in the list of options while the options are still not resolved,
-        typically after a search but also when <code>options</code> is a promise.
-      </td>
-    </tr>
-    <tr>
-      <td>noMatchesMessage</td>
-      <td><code>string</code></td>
-      <td>Message shown when a search doesn't find any matching result.</td>
-    </tr>
-    <tr>
-      <td>searchMessage</td>
-      <td><code>string</code></td>
-      <td>Message shown in options list when no search has been entered and there are no options.</td>
-    </tr>
-    <tr>
-      <td>triggerComponent</td>
-      <td><code>string</code></td>
-      <td>The component to render instead of the default one inside the trigger</td>
-    </tr>
-    <tr>
-        <td>selectedItemComponent</td>
-        <td><code>string</code></td>
-        <td>The component to render to customize just the selected item of the trigger</td>
-    </tr>
-    <tr>
-      <td>afterOptionsComponent</td>
-      <td><code>string/contextua-component</code></td>
-      <td>The component rendered after the list of options. It is empty by default in both single and multiple selects</td>
-    </tr>
-    <tr>
-      <td>beforeOptionsComponent</td>
-      <td><code>string/contextua-component</code></td>
-      <td>The component rendered before the list of options. In single selects defaults to the searchbox. In multiple select defaults to nothing</td>
-    </tr>
-    <tr>
-      <td>optionsComponent</td>
-      <td><code>string</code></td>
-      <td>The component to render instead of the default one inside the list of options</td>
-    </tr>
-    <tr>
       <td>renderInPlace</td>
       <td><code>boolean</code></td>
       <td>
@@ -176,17 +203,59 @@
       </td>
     </tr>
     <tr>
-      <td>closeOnSelect</td>
-      <td><code>boolean</code></td>
-      <td>
-        Defaults to true. When false, the component won't be closed after the user <em>chooses</em>
-        an option, either with the mouse/keyboard or using the `choose` action in the publicAPI.
-      </td>
+      <td>search</td>
+      <td><code>function</code></td>
+      <td>The <code>function(searchTerm)</code> to invoke when the user uses the search input.</td>
     </tr>
     <tr>
-      <td>allowClear</td>
+      <td>searchEnabled</td>
       <td><code>boolean</code></td>
-      <td>When truthy, single selects allow to nullify the selection</td>
+      <td>When falsey, hides the search in single selects</td>
+    </tr>
+    <tr>
+      <td>searchField</td>
+      <td><code>string</code></td>
+      <td>When the options are objects and no custom matches function is provided, this option tells the component what property of the options should the default matches use to filter</td>
+    </tr>
+    <tr>
+      <td>searchMessage</td>
+      <td><code>string</code></td>
+      <td>Message shown in options list when no search has been entered and there are no options.</td>
+    </tr>
+    <tr>
+      <td>searchPlaceholder</td>
+      <td><code>string</code></td>
+      <td>Placeholder of the search box</td>
+    </tr>
+    <tr>
+      <td>selected</td>
+      <td><code>any or array</code></td>
+      <td>The selected option (or collection of options in multiple mode)</td>
+    </tr>
+    <tr>
+      <td>selectedItemComponent</td>
+      <td><code>string</code></td>
+      <td>The component to render to customize just the selected item of the trigger</td>
+    </tr>
+    <tr>
+      <td>tabindex</td>
+      <td><code>string</code></td>
+      <td>The tabindex of the trigger</td>
+    </tr>
+    <tr>
+      <td>triggerClass</td>
+      <td><code>string</code></td>
+      <td>Class to be applied to the trigger only</td>
+    </tr>
+    <tr>
+      <td>triggerComponent</td>
+      <td><code>string</code></td>
+      <td>The component to render instead of the default one inside the trigger</td>
+    </tr>
+    <tr>
+      <td>triggerId</td>
+      <td><code>string</code></td>
+      <td>The id to be applied to the trigger. Useful link the select to a <code>&lt;label&gt;</code> tag</td>
     </tr>
     <tr>
       <td>verticalPosition</td>
@@ -196,70 +265,6 @@
         position the list depending on the space available around the trigger. The other possible values are
         <code>"above"</code> and <code>"below"</code>.
       </td>
-    </tr>
-    <tr>
-      <td>horizontalPosition</td>
-      <td><code>string</code></td>
-      <td>
-        In the case when trigger is narrower than dropdown. By default is <code>"auto"</code>, meaning that will
-        position the list depending on the side of the trigger. Possible values are
-        <code>"left"</code> and <code>"right"</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>class</td>
-      <td><code>string</code></td>
-      <td>
-        The CSS class of the component. The component by default is tagless, so this won't take
-        any effect unless the user specifies `tagName=div` too.
-      </td>
-    </tr>
-    <tr>
-      <td>triggerClass</td>
-      <td><code>string</code></td>
-      <td>Class to be applied to the trigger only</td>
-    </tr>
-    <tr>
-      <td>dropdownClass</td>
-      <td><code>string</code></td>
-      <td>Class to be applied to the dropdown only</td>
-    </tr>
-    <tr>
-      <td>triggerId</td>
-      <td><code>string</code></td>
-      <td>The id to be applied to the trigger. Useful link the select to a <code>&lt;label&gt;</code> tag</td>
-    </tr>
-    <tr>
-      <td>extra</td>
-      <td><code>object</code></td>
-      <td>Object to store any arbitrary configuration meant to be used by custom components</td>
-    </tr>
-    <tr>
-      <td>initiallyOpened</td>
-      <td><code>boolean</code></td>
-      <td>
-        Boolean property that controls if the component is rendered initially in the open state. It
-        won't mutate if the component is opened/closed. It won't close/open the component when mutated either.
-      </td>
-    </tr>
-    <tr>
-      <td>matchTriggerWidth</td>
-      <td><code>boolean (defaults to true)</code></td>
-      <td>
-        When enabled (and it's enabled by default) the dropdown with match the width of the trigger.
-      </td>
-    </tr>
-    <tr>
-      <td>destination</td>
-      <td><code>'ember-basic-dropdown-wormhole'</code></td>
-      <td>
-        The id of the element used as target for the dropdown's content, when not rendered in place.
-      </td>
-    </tr>
-    <tr>
-      <td>tabindex</td>
-      <td><code>string</code></td>
-      <td>The tabindex of the trigger</td>
     </tr>
   </tbody>
 </table>
@@ -277,27 +282,27 @@
 </p>
 <pre>
 {
-  uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form `ember1234`.
+  disabled: &lt;boolean&gt;,            // Truthy if the component received `disabled=true`
+  highlighted: &lt;T&gt;,               // Contains the currently highlighted option (if any)
+  isActive: &lt;boolean&gt;,            // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+  lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match `searchText`. In async searches, it will match it if the current search is fulfilled
+  loading: &lt;boolean&gt;,             // Truthy if there is a pending promise that will update the results
   options: &lt;array[T]&gt;,            // Contains the regular array with the resolved collection of options.
   results: &lt;array[T]&gt;,            // Contains the regular array with the active set of results.
   resultsCount: &lt;number&gt;,         // Contains the number of results incuding those nested/disabled
-  selected: &lt;T&gt; or &lt;array[T]&gt;,    // Contains the resolved selected option (or options in multiple selects)
-  highlighted: &lt;T&gt;,               // Contains the currently highlighted option (if any)
   searchText: &lt;string&gt;,           // Contains the text of the current search
-  lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match `searchText`. In async searches, it will match it if the current search is fulfilled
-  loading: &lt;boolean&gt;,             // Truthy if there is a pending promise that will update the results
-  isActive: &lt;boolean&gt;,            // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
-  disabled: &lt;boolean&gt;,            // Truthy if the component received `disabled=true`
+  selected: &lt;T&gt; or &lt;array[T]&gt;,    // Contains the resolved selected option (or options in multiple selects)
+  uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form `ember1234`.
   actions: {
-    open() { ... },               // Opens the select
+    choose(option) { ... },       // Chooses the given options if it's not disabled (slight different than `select`)
     close() { ... },              // Closes the select
-    toggle() { ... },             // Toggles the select
+    highlight(option) { ... },    // Highlights the given option (if it's not disabled)
+    open() { ... },               // Opens the select
     reposition() { ... },         // Repositions the dropdown (noop if renderInPlace=true)
-    search(term) { ... }          // Performs a search
-    highlight(option) { ... }     // Highlights the given option (if it's not disabled)
-    select(option) { ... }        // Selects the given option (if it's not disabled)
-    choose(option) { ... }        // Chooses the given options if it's not disabled (slight different than `select`)
-    scrollTo(option) { ... }      // Scrolls the given option into the viewport
+    scrollTo(option) { ... },     // Scrolls the given option into the viewport
+    search(term) { ... },         // Performs a search
+    select(option) { ... },       // Selects the given option (if it's not disabled)
+    toggle() { ... }              // Toggles the select
   }
 }
 </pre>
