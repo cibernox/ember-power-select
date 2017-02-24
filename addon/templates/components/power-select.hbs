@@ -44,6 +44,7 @@
   {{/dropdown.trigger}}
 
   {{#dropdown.content
+    _contentTagName=_contentTagName
     class=(readonly concatenatedDropdownClasses)
     to=(readonly destination)}}
     {{component beforeOptionsComponent
