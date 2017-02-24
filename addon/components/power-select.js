@@ -89,6 +89,8 @@ export default Component.extend({
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
   placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
 
+  _triggerTagName: fallbackIfUndefined('div'),
+
   // Private state
   publicAPI: initialState,
 
