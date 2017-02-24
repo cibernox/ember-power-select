@@ -1,4 +1,6 @@
 # Master
+- [ENHANCEMENT] Providing a custom `placeholderComponent` is available for
+  `power-select-multiple` too now.
 
 # 1.5.0-beta.0
 - [ENHANCEMENT/BREAKING-ISH] `ember-basic-dropdown` has improved the experience with A11y 
