@@ -90,6 +90,7 @@ export default Component.extend({
   placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
 
   _triggerTagName: fallbackIfUndefined('div'),
+  _contentTagName: fallbackIfUndefined('div'),
 
   // Private state
   publicAPI: initialState,
