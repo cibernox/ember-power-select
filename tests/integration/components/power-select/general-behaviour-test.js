@@ -1139,3 +1139,48 @@ test('If the options of a single select implement `isEqual`, that option is used
   nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again
   assert.equal(onChangeInvocationsCount, 1);
 });
+
+test('If the select receives a `calculatePosition` option, it uses it to calculate the position of the floating content', function(assert) {
+  this.numbers = numbers;
+  this.renderInPlace = false;
+  this.calculatePosition = function(_, _2, { renderInPlace }) {
+    if (renderInPlace) {
+      return {
+        horizontalPosition: 'left',
+        verticalPosition: 'below',
+        style: {
+          top: 333,
+          right: 444
+        }
+      };
+    } else {
+      return {
+        horizontalPosition: 'right',
+        verticalPosition: 'above',
+        style: {
+          top: 111,
+          right: 222
+        }
+      };
+    }
+  };
+  this.render(hbs`
+    {{#power-select options=numbers renderInPlace=renderInPlace selected=selected onchange=(action (mut selected)) calculatePosition=calculatePosition as |num|}}
+     {{num}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  let $dropdownContent = $('.ember-power-select-dropdown');
+  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--above'), 'The dropdown is above');
+  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--right'), 'The dropdown is in the right');
+  assert.equal($dropdownContent.attr('style'), 'top: 111px;right: 222px;', 'The style attribute is the expected one');
+  clickTrigger();
+
+  run(() => this.set('renderInPlace', true));
+  clickTrigger();
+  $dropdownContent = $('.ember-power-select-dropdown');
+  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--below'), 'The dropdown is below');
+  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--left'), 'The dropdown is in the left');
+  assert.equal($dropdownContent.attr('style'), 'top: 333px;right: 444px;', 'The style attribute is the expected one');
+});

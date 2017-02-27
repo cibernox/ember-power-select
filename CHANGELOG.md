@@ -1,5 +1,9 @@
 # Master
 
+- [ENHANCEMENT] Allow to pass a `calculatePosition` function that allows to customize
+  how the content is placed and resized. This option has been available in EBD for a long
+  time, but now EPS allows it too.
+
 # 1.5.0-beta.1
 - [ENHANCEMENT] Now the selected option in the trigger of multiple select have the
   `ember-power-select-multiple-option--disabled` class if that option is disabled. This
