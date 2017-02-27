@@ -1,5 +1,6 @@
 # Master
 
+# 1.5.0-beta.2
 - [ENHANCEMENT] Allow to pass a `calculatePosition` function that allows to customize
   how the content is placed and resized. This option has been available in EBD for a long
   time, but now EPS allows it too.
