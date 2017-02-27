@@ -39,7 +39,7 @@
       select=(readonly publicAPI)
       selectedItemComponent=(readonly selectedItemComponent)
       as |opt term|}}
-      {{yield opt term}}
+      {{yield opt term true}}
     {{/component}}
   {{/dropdown.trigger}}
 
@@ -83,7 +83,7 @@
         optionsComponent=(readonly optionsComponent)
         select=(readonly publicAPI)
         as |option term|}}
-        {{yield option term}}
+        {{yield option term false}}
       {{/component}}
     {{/if}}
     {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
