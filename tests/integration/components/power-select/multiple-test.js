@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseDown, nativeMouseUp } from '../../../helpers/ember-power-select';
-import { numbers, names, countries } from '../constants';
+import { numbers, names, countries, countriesWithDisabled } from '../constants';
 
 const { RSVP, Object: eObject, get } = Ember;
 
@@ -809,4 +809,26 @@ test('If the options of a multiple select implement `isEqual`, that option is us
   assert.equal($('.ember-power-select-option:eq(0)').attr('aria-selected'), 'true', 'The item in the list is marked as selected');
   nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again should remove it
   assert.equal(this.$('.ember-power-select-multiple-option').length, 0);
+});
+
+test('When there is an option which is disabled the css class "ember-power-select-multiple-option--disabled" should be added', function(assert) {
+  assert.expect(2);
+
+  this.countriesWithDisabled = countriesWithDisabled;
+  let countriesWithDisabledLength = this.countriesWithDisabled.length;
+  let disabledNumCountries = 0;
+  for (let i = 0; i < countriesWithDisabledLength; i++) {
+    if (this.countriesWithDisabled[i].disabled) {
+      disabledNumCountries++;
+    }
+  }
+
+  assert.notEqual(disabledNumCountries, 0, 'There is at least one disabled option');
+  this.foo = countriesWithDisabled;
+  this.render(hbs`
+    {{#power-select-multiple options=countriesWithDisabled selected=foo onchange=(action (mut foo)) as |option|}}
+      {{option}}
+    {{/power-select-multiple}}
+  `);
+  assert.equal(this.$('.ember-power-select-multiple-options .ember-power-select-multiple-option--disabled').length, disabledNumCountries, 'The class "ember-power-select-multiple-option--disabled" is added to disabled options');
 });
