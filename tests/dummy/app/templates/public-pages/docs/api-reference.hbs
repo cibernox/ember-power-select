@@ -52,6 +52,14 @@
       <td>The function to be invoked when the user selects an option. Should return either the `option` or `null`. This is used internally by `PowerSelectMultiple` to construct a new array of options, but can be used for unselecting a single option by returning `null` to the `onchange` event.</td>
     </tr>
     <tr>
+      <td>calculatePosition</td>
+      <td><code>Function</code></td>
+      <td>
+        A function that allows to customize the position and dimmension of the select's
+        content. For more info check https://www.ember-basic-dropdown.com/docs/position
+      </td>
+    </tr>
+    <tr>
       <td>class</td>
       <td><code>string</code></td>
       <td>
