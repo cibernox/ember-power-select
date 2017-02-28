@@ -1847,13 +1847,13 @@ ember-ajax@^2.4.1:
   dependencies:
     ember-cli-babel "^5.1.5"
 
-ember-basic-dropdown@^0.30.0:
-  version "0.30.0"
-  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.30.0.tgz#d078576df3702a3cbee5586cb8e0348331ec1111"
+ember-basic-dropdown@^0.30.2:
+  version "0.30.2"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.30.2.tgz#179561add86dda942215c73dd9875f4a83419052"
   dependencies:
     ember-cli-babel "^5.1.10"
     ember-cli-htmlbars "^1.1.1"
-    ember-native-dom-helpers "^0.2.0"
+    ember-native-dom-helpers "^0.3.0"
     ember-wormhole "^0.5.1"
 
 ember-cli-app-version@^2.0.0:
@@ -2464,9 +2464,9 @@ ember-maybe-import-regenerator@^0.1.4:
     ember-cli-babel "^5.1.6"
     regenerator-runtime "^0.9.5"
 
-ember-native-dom-helpers@^0.2.0:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.2.1.tgz#c7ba66fc2d50cf5b43e0fdd56327fb86951c797f"
+ember-native-dom-helpers@0.3.0, ember-native-dom-helpers@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.3.0.tgz#4a3d4ec7c0d169cada79f7b3090a9e680c978af2"
   dependencies:
     ember-cli-babel "^5.1.7"
 
