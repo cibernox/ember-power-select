@@ -10,7 +10,8 @@
 @import 'components/side-nav';
 @import 'components/docs';
 @import 'components/cookbook';
-@import 'components/code-sample';
+@import 'ember-code-example';
+@include ember-code-example($brand-color);
 
 // Legacy demo
 @import 'ember-power-select';

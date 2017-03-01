@@ -29,9 +29,9 @@
 </p>
 
 
-{{#code-sample hbs="action-handling-1.hbs" js="action-handling-1-js.js" as |partialName|}}
+{{#code-example hbs="action-handling-1.hbs" js="action-handling-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   That gives you the freedom of doing whatever suits your need when the user selects a value. <br>
@@ -39,9 +39,9 @@
   <code>mut</code> helper.
 </p>
 
-{{#code-sample hbs="action-handling-2.hbs" js="action-handling-2-js.js" as |partialName|}}
+{{#code-example hbs="action-handling-2.hbs" js="action-handling-2-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   It might seem a bit more verbose at first for this, the simplest use case possible, but
@@ -71,9 +71,9 @@
   user introduced free text.
 </p>
 
-{{#code-sample hbs="action-handling-3.hbs" js="action-handling-3-js.js" as |partialName|}}
+{{#code-example hbs="action-handling-3.hbs" js="action-handling-3-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <h3><code>oninput</code> Actions</h3>
 
@@ -93,9 +93,9 @@
   Let's create a select that searches only if the length of the search is bigger than 3 chars.
 </p>
 
-{{#code-sample hbs="action-handling-4.hbs" js="action-handling-4-js.js" as |partialName|}}
+{{#code-example hbs="action-handling-4.hbs" js="action-handling-4-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <h3><code>onfocus/onblur</code> Actions</h3>
 
@@ -108,9 +108,9 @@
   perhaps the most straightforward use case is to automatically open the component on focus.
 </p>
 
-{{#code-sample hbs="action-handling-5.hbs" js="action-handling-5-js.js" as |partialName|}}
+{{#code-example hbs="action-handling-5.hbs" js="action-handling-5-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   Note that this action will be fired when the component or another element inside, like the searchboxes, gain the focus,
@@ -132,9 +132,9 @@
   want to show a useless example: The select components for spies!
 </p>
 
-{{#code-sample hbs="action-handling-6.hbs" js="action-handling-6-js.js" as |partialName|}}
+{{#code-example hbs="action-handling-6.hbs" js="action-handling-6-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   Another neat trick is that you can prevent the component from open/close if you return <code>false</code>
@@ -143,9 +143,9 @@
   the styles of the component.
 </p>
 
-{{#code-sample hbs="action-handling-7.hbs" js="action-handling-7-js.js" as |partialName|}}
+{{#code-example hbs="action-handling-7.hbs" js="action-handling-7-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   Have I mentioned that your can also render groups?

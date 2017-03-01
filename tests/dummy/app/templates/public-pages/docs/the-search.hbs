@@ -9,9 +9,9 @@
   <code>Søren</code> and so on.
 </p>
 
-{{#code-sample hbs="the-search-1.hbs" js="the-search-1-js.js" as |partialName|}}
+{{#code-example hbs="the-search-1.hbs" js="the-search-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   Also (only in single selects) this component supports searching and highlighting even when
@@ -20,9 +20,9 @@
 
 <p>Try focusing the next component and typing, while it's opened and also while it's closed.</p>
 
-{{#code-sample hbs="the-search-2.hbs" js="the-search-2-js.js" as |partialName|}}
+{{#code-example hbs="the-search-2.hbs" js="the-search-2-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <h3>Customize the search field</h3>
 
@@ -31,9 +31,9 @@
   objects you need to tell the component what field it should match against using the <code>searchField</code> option.
 </p>
 
-{{#code-sample hbs="the-search-3.hbs" js="the-search-3-js.js" as |partialName|}}
+{{#code-example hbs="the-search-3.hbs" js="the-search-3-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   This field is also used when the user types over a select without searchbox that has
@@ -48,9 +48,9 @@
   <code>autofocus</code> parameter to the default <code>beforeOptions</code> component.
 </p>
 
-{{#code-sample hbs="the-search-4.hbs" js="the-search-4-js.js" as |partialName|}}
+{{#code-example hbs="the-search-4.hbs" js="the-search-4-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 <h3>Pass a custom matcher</h3>
 
 <p>
@@ -60,9 +60,9 @@
   inside as long as it returns <code>-1</code> if it doesn't match and a positive number if it does.
 </p>
 
-{{#code-sample hbs="the-search-5.hbs" js="the-search-5-js.js" as |partialName|}}
+{{#code-example hbs="the-search-5.hbs" js="the-search-5-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   This field is also used when the user types over a select without searchbox that has
@@ -78,9 +78,9 @@
   API contains <code>searchText</code> and <code>lastSearchedText</code>.
 </p>
 
-{{#code-sample hbs="the-search-6.hbs" js="the-search-6-js.js" as |partialName|}}
+{{#code-example hbs="the-search-6.hbs" js="the-search-6-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   There is a few things to be aware of this search term:
@@ -106,9 +106,9 @@
 
 <p>Pass <code>searchPlaceholder="Type your name"</code> to show a placeholder in the search box</p>
 
-{{#code-sample hbs="the-search-7.hbs" js="the-search-7-js.js" as |partialName|}}
+{{#code-example hbs="the-search-7.hbs" js="the-search-7-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 In the default multiple select without searchbox you can use the <code>placeholder</code> property
 to have put text in the trigger.
@@ -120,9 +120,9 @@ to have put text in the trigger.
   This works with both the single and multiple select.
 </p>
 
-{{#code-sample hbs="the-search-8.hbs" js="the-search-8-js.js" as |partialName|}}
+{{#code-example hbs="the-search-8.hbs" js="the-search-8-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <div class="doc-page-nav">
   <a href="{{href-to 'public-pages.docs.the-list'}}" class="doc-page-nav-link-prev">&lt; The list</a>
