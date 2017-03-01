@@ -6,6 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers, countries } from '../constants';
+import { find, findAll } from 'ember-native-dom-helpers/test-support/helpers';
 
 const { RSVP } = Ember;
 
@@ -25,7 +26,7 @@ test('When you pass a custom search action instead of options, opening the selec
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search', 'The dropdown shows the "type to search" message');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search', 'The dropdown shows the "type to search" message');
 });
 
 test('The search text shouldn\'t appear if options are loading', function(assert) {
@@ -45,8 +46,8 @@ test('The search text shouldn\'t appear if options are loading', function(assert
   `);
 
   clickTrigger();
-  assert.notOk(/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message doesn\'t show');
-  assert.ok(/Loading options\.\.\./.test($('.ember-power-select-dropdown').text()), '"Loading options..." message appears');
+  assert.notOk(/Type to search/.test(find('.ember-power-select-dropdown').textContent), 'The type to search message doesn\'t show');
+  assert.ok(/Loading options\.\.\./.test(find('.ember-power-select-dropdown').textContent), '"Loading options..." message appears');
 });
 
 test('When no options are given but there is a search action, a "type to search" message is rendered', function(assert) {
@@ -60,8 +61,8 @@ test('When no options are given but there is a search action, a "type to search"
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
-  assert.ok($('.ember-power-select-option').hasClass('ember-power-select-option--search-message'), 'The option with the search message has a special class');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search');
+  assert.ok(find('.ember-power-select-option').classList.contains('ember-power-select-option--search-message'), 'The option with the search message has a special class');
 });
 
 test('The "type to search" message can be customized passing `searchMessage=something`', function(assert) {
@@ -75,7 +76,7 @@ test('The "type to search" message can be customized passing `searchMessage=some
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Type the name of the thing');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type the name of the thing');
 });
 
 test('The search function can return an array and those options get rendered', function(assert) {
@@ -93,7 +94,7 @@ test('The search function can return an array and those options get rendered', f
 
   clickTrigger();
   typeInSearch('teen');
-  assert.equal($('.ember-power-select-option').length, 7);
+  assert.equal(findAll('.ember-power-select-option').length, 7);
 });
 
 test('The search function can return a promise that resolves to an array and those options get rendered', function(assert) {
@@ -117,7 +118,7 @@ test('The search function can return a promise that resolves to an array and tho
   typeInSearch('teen');
 
   return wait().then(function() {
-    assert.equal($('.ember-power-select-option').length, 7);
+    assert.equal(findAll('.ember-power-select-option').length, 7);
   });
 });
 
@@ -139,10 +140,10 @@ test('While the async search is being performed the "Type to search" dissapears 
   `);
 
   clickTrigger();
-  assert.ok(/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message is displayed');
+  assert.ok(/Type to search/.test(find('.ember-power-select-dropdown').textContent), 'The type to search message is displayed');
   typeInSearch('teen');
-  assert.ok(!/Type to search/.test($('.ember-power-select-dropdown').text()), 'The type to search message dissapeared');
-  assert.ok(/Loading options\.\.\./.test($('.ember-power-select-dropdown').text()), '"Loading options..." message appears');
+  assert.ok(!/Type to search/.test(find('.ember-power-select-dropdown').textContent), 'The type to search message dissapeared');
+  assert.ok(/Loading options\.\.\./.test(find('.ember-power-select-dropdown').textContent), '"Loading options..." message appears');
   return wait();
 });
 
@@ -166,7 +167,7 @@ test('When the search resolves to an empty array then the "No results found" mes
   clickTrigger();
   typeInSearch('teen');
   return wait().then(function() {
-    assert.ok(/No results found/.test($('.ember-power-select-option').text()), 'The default "No results" message renders');
+    assert.ok(/No results found/.test(find('.ember-power-select-option').textContent), 'The default "No results" message renders');
   });
 });
 
@@ -190,7 +191,7 @@ test('When the search resolves to an empty array then the custom "No results" me
   clickTrigger();
   typeInSearch('teen');
   return wait().then(function() {
-    assert.ok(/Meec\. Try again/.test($('.ember-power-select-option').text()), 'The customized "No results" message renders');
+    assert.ok(/Meec\. Try again/.test(find('.ember-power-select-option').textContent), 'The customized "No results" message renders');
   });
 });
 
@@ -216,7 +217,7 @@ test('When the search resolves to an empty array then the custom alternate block
   clickTrigger();
   typeInSearch('teen');
   return wait().then(function() {
-    assert.equal($('.ember-power-select-dropdown .foo-bar').length, 1, 'The alternate block message gets rendered');
+    assert.ok(find('.ember-power-select-dropdown .foo-bar'), 'The alternate block message gets rendered');
   });
 });
 
