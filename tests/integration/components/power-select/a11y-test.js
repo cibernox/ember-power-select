@@ -84,7 +84,7 @@ test('Single-select: The selected option has `aria-selected=true` and the rest `
 
   clickTrigger();
   assert.equal($('.ember-power-select-option:contains("two")').attr('aria-selected'), 'true', 'the selected option has aria-selected=true');
-  assert.equal($('.ember-power-select-option[aria-selected="false"]').length, numbers.length - 1, 'All other options have aria-selected=false');
+  assert.equal(findAll('.ember-power-select-option[aria-selected="false"]').length, numbers.length - 1, 'All other options have aria-selected=false');
 });
 
 test('Multiple-select: The selected options have `aria-selected=true` and the rest `aria-selected=false`', function(assert) {
@@ -101,7 +101,7 @@ test('Multiple-select: The selected options have `aria-selected=true` and the re
   clickTrigger();
   assert.equal($('.ember-power-select-option:contains("two")').attr('aria-selected'), 'true', 'the first selected option has aria-selected=true');
   assert.equal($('.ember-power-select-option:contains("four")').attr('aria-selected'), 'true', 'the second selected option has aria-selected=true');
-  assert.equal($('.ember-power-select-option[aria-selected="false"]').length, numbers.length - 2, 'All other options have aria-selected=false');
+  assert.equal(findAll('.ember-power-select-option[aria-selected="false"]').length, numbers.length - 2, 'All other options have aria-selected=false');
 });
 
 test('Single-select: The highlighted option has `aria-current=true` and the rest not have `aria-current`', function(assert) {
@@ -116,7 +116,7 @@ test('Single-select: The highlighted option has `aria-current=true` and the rest
 
   clickTrigger();
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'true', 'the highlighted option has aria-current=true');
-  assert.equal($('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
+  assert.equal(findAll('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
   keyEvent('.ember-power-select-search-input', 'keydown', 40);
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'false', 'the first option has now aria-current=false');
   assert.equal($('.ember-power-select-option:contains("two")').attr('aria-current'), 'true', 'the second option has now aria-current=false');
@@ -134,7 +134,7 @@ test('Multiple-select: The highlighted option has `aria-current=true` and the re
 
   clickTrigger();
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'true', 'the highlighted option has aria-current=true');
-  assert.equal($('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
+  assert.equal(findAll('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
   keyEvent('.ember-power-select-search-input', 'keydown', 40);
   assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'false', 'the first option has now aria-current=false');
   assert.equal($('.ember-power-select-option:contains("two")').attr('aria-current'), 'true', 'the second option has now aria-current=false');
@@ -151,7 +151,7 @@ test('Single-select: Options with a disabled field have `aria-disabled=true`', f
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
+  assert.equal(findAll('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
 });
 
 test('Multiple-select: Options with a disabled field have `aria-disabled=true`', function(assert) {
@@ -165,7 +165,7 @@ test('Multiple-select: Options with a disabled field have `aria-disabled=true`',
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
+  assert.equal(findAll('.ember-power-select-option[aria-disabled=true]').length, 3, 'Three of them are disabled');
 });
 
 test('Single-select: The trigger has `role=button` and `aria-owns=<id-of-dropdown>`', function(assert) {
@@ -210,10 +210,10 @@ test('Single-select: The trigger attribute `aria-expanded` is true when the drop
     {{/power-select}}
   `);
 
-  let $trigger = this.$('.ember-power-select-trigger');
-  assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')) > -1, 'Not expanded');
+  let trigger = find('.ember-power-select-trigger');
+  assert.notOk(trigger.attributes['aria-expanded'], 'Not expanded');
   clickTrigger();
-  assert.ok(['true', ''].indexOf($trigger.attr('aria-expanded')) > -1, 'Expanded');
+  assert.ok(trigger.attributes['aria-expanded'], 'Expanded');
 });
 
 test('Multiple-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', function(assert) {
@@ -226,10 +226,10 @@ test('Multiple-select: The trigger attribute `aria-expanded` is true when the dr
     {{/power-select-multiple}}
   `);
 
-  let $trigger = this.$('.ember-power-select-trigger');
-  assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')) > -1, 'Not expanded');
+  let trigger = find('.ember-power-select-trigger');
+  assert.notOk(trigger.attributes['aria-expanded'], 'Not expanded');
   clickTrigger();
-  assert.ok(['true', ''].indexOf($trigger.attr('aria-expanded')) > -1, 'Expanded');
+  assert.ok(trigger.attributes['aria-expanded'], 'Expanded');
 });
 
 test('Single-select: The listbox has a unique id`', function(assert) {
@@ -243,7 +243,7 @@ test('Single-select: The listbox has a unique id`', function(assert) {
   `);
 
   clickTrigger();
-  assert.ok(/^ember-power-select-options-ember\d+$/.test($('.ember-power-select-options').attr('id')), 'The search has a unique id');
+  assert.ok(/^ember-power-select-options-ember\d+$/.test(find('.ember-power-select-options').id), 'The search has a unique id');
 });
 
 test('Multiple-select: The listbox has a unique id`', function(assert) {
@@ -329,12 +329,12 @@ test('Multiple-select: The selected elements are <li>s inside an <ul>, and have 
     {{/power-select-multiple}}
   `);
 
-  this.$('.ember-power-select-multiple-option').toArray().forEach(function(e) {
+  [].slice.call(findAll('.ember-power-select-multiple-option')).forEach((e) => {
     assert.equal(e.tagName, 'LI', 'The element is a list item');
     assert.equal(e.parentElement.tagName, 'UL', 'The parent element is a list');
     let closeButton = e.querySelector('.ember-power-select-multiple-remove-btn');
-    assert.equal($(closeButton).attr('role'), 'button', 'The role of the close button is "button"');
-    assert.equal($(closeButton).attr('aria-label'), 'remove element', 'The close button has a helpful aria label');
+    assert.equal(closeButton.attributes.role.value, 'button', 'The role of the close button is "button"');
+    assert.equal(closeButton.attributes['aria-label'].value, 'remove element', 'The close button has a helpful aria label');
   });
 });
 
