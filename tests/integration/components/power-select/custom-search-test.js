@@ -1,12 +1,11 @@
 import Ember from 'ember';
-import $ from 'jquery';
 import { task, timeout } from 'ember-concurrency';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers, countries } from '../constants';
-import { find, findAll } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, click } from 'ember-native-dom-helpers/test-support/helpers';
 
 const { RSVP } = Ember;
 
@@ -275,7 +274,7 @@ test('On an empty select, when the search resolves, the first element is highlig
   typeInSearch('teen');
 
   return wait().then(function() {
-    assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
+    assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first result is highlighted');
   });
 });
 
@@ -299,11 +298,11 @@ test('On an select with a selected value, if after a search this value is not am
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option:eq(2)').attr('aria-current'), 'true', 'The 3rd result is highlighted');
+  assert.equal(findAll('.ember-power-select-option')[2].attributes['aria-current'].value, 'true', 'The 3rd result is highlighted');
   typeInSearch('teen');
 
   return wait().then(function() {
-    assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first result is highlighted');
+    assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first result is highlighted');
   });
 });
 
@@ -322,16 +321,14 @@ test('Closing a component with a custom search cleans the search box and the res
 
   clickTrigger();
   typeInSearch('teen');
-  assert.equal($('.ember-power-select-option').length, 7, 'Results are filtered');
-  assert.equal($('.ember-power-select-search-input').val(), 'teen');
-  Ember.run(() => {
-    let event = new window.Event('mousedown');
-    this.$('#different-node')[0].dispatchEvent(event);
-  });
+  assert.equal(findAll('.ember-power-select-option').length, 7, 'Results are filtered');
+  assert.equal(find('.ember-power-select-search-input').value, 'teen');
+  click('#different-node');
+
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 1, 'Results have been cleared');
-  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
-  assert.equal($('.ember-power-select-search-input').val(), '', 'The searchbox was cleared');
+  assert.equal(findAll('.ember-power-select-option').length, 1, 'Results have been cleared');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search');
+  assert.equal(find('.ember-power-select-search-input').value, '', 'The searchbox was cleared');
 });
 
 test('When received both options and search, those options are shown when the dropdown opens before the first search is performed', function(assert) {
@@ -354,12 +351,12 @@ test('When received both options and search, those options are shown when the dr
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
+  assert.equal(findAll('.ember-power-select-option').length, 20, 'All the options are shown');
   typeInSearch('teen');
-  assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown and also the loading message');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...');
+  assert.equal(findAll('.ember-power-select-option').length, 21, 'All the options are shown and also the loading message');
+  assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...');
   return wait().then(function() {
-    assert.equal($('.ember-power-select-option').length, 7, 'All the options are shown but no the loading message');
+    assert.equal(findAll('.ember-power-select-option').length, 7, 'All the options are shown but no the loading message');
   });
 });
 
@@ -381,11 +378,11 @@ test('Don\'t return from the search action and update the options instead also w
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
+  assert.equal(findAll('.ember-power-select-option').length, 20, 'All the options are shown');
   typeInSearch('teen');
 
   return wait().then(function() {
-    assert.equal($('.ember-power-select-option').length, 7);
+    assert.equal(findAll('.ember-power-select-option').length, 7);
   });
 });
 
@@ -413,31 +410,31 @@ test('Setting the options to a promise from the custom search function works (an
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 20, 'All the options are shown');
+  assert.equal(findAll('.ember-power-select-option').length, 20, 'All the options are shown');
   typeInSearch('teen');
-  assert.equal($('.ember-power-select-option').length, 21, 'All the options are shown plus the loading message');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
+  assert.equal(findAll('.ember-power-select-option').length, 21, 'All the options are shown plus the loading message');
+  assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'The loading message is shown');
 
   setTimeout(function() {
     assert.equal(searchCalls, 1, 'The search was called only once');
-    assert.equal($('.ember-power-select-option').length, 7);
+    assert.equal(findAll('.ember-power-select-option').length, 7);
     typeInSearch('seven');
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
-    assert.equal($('.ember-power-select-option').length, 8);
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'The loading message is shown');
+    assert.equal(findAll('.ember-power-select-option').length, 8);
   }, 40);
 
   setTimeout(function() {
     assert.equal(searchCalls, 2, 'The search was called only twice');
-    assert.equal($('.ember-power-select-option').length, 8);
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'It is still searching the previous result');
+    assert.equal(findAll('.ember-power-select-option').length, 8);
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'It is still searching the previous result');
     typeInSearch('four');
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'The loading message is shown');
-    assert.equal($('.ember-power-select-option').length, 8);
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'The loading message is shown');
+    assert.equal(findAll('.ember-power-select-option').length, 8);
   }, 60);
 
   setTimeout(function() {
     assert.equal(searchCalls, 3, 'The search was called only three times');
-    assert.equal($('.ember-power-select-option').length, 2);
+    assert.equal(findAll('.ember-power-select-option').length, 2);
     done();
   }, 300);
 });
@@ -469,8 +466,8 @@ test('If you delete the last char of the input before the previous promise resol
     typeInSearch('');
   }, 200);
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option').length, numbers.length, 'All the options are displayed after clearing the search');
-    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'two:', 'The results are the original options');
+    assert.equal(findAll('.ember-power-select-option').length, numbers.length, 'All the options are displayed after clearing the search');
+    assert.equal(findAll('.ember-power-select-option')[1].textContent.trim(), 'two:', 'The results are the original options');
     done();
   }, 300);
 });
@@ -496,10 +493,10 @@ test('The lastSearchedText of the yielded publicAPI in single selects is updated
   clickTrigger();
   typeInSearch('teen');
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the lastSearchedText have updated');
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'thirteen:teen', 'The results and the lastSearchedText have updated');
     typeInSearch('four');
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
-    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the lastSearchedText are still the same because the search has not finished yet');
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'There is a search going on');
+    assert.equal(findAll('.ember-power-select-option')[1].textContent.trim(), 'thirteen:teen', 'The results and the lastSearchedText are still the same because the search has not finished yet');
     done();
   }, 150);
 });
@@ -525,10 +522,10 @@ test('The lastSearchedText of the yielded publicAPI in multiple selects is updat
   clickTrigger();
   typeInSearch('teen');
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
     typeInSearch('four');
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Loading options...', 'There is a search going on');
-    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'There is a search going on');
+    assert.equal(findAll('.ember-power-select-option')[1].textContent.trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
     done();
   }, 150);
 });
@@ -578,11 +575,11 @@ test('BUGFIX: When the given options are a promise and a search function is prov
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options');
+  assert.equal(findAll('.ember-power-select-option').length, 20, 'There is 20 options');
   typeInSearch('teen');
-  assert.equal($('.ember-power-select-option').length, 7, 'There is 7 options');
+  assert.equal(findAll('.ember-power-select-option').length, 7, 'There is 7 options');
   typeInSearch('');
-  assert.equal($('.ember-power-select-option').length, 20, 'There is 20 options again§');
+  assert.equal(findAll('.ember-power-select-option').length, 20, 'There is 20 options again§');
 });
 
 test('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', function(assert) {
