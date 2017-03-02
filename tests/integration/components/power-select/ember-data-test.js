@@ -1,12 +1,11 @@
 import Ember from 'ember';
-import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { startMirage } from '../../../../initializers/ember-cli-mirage';
 import emberDataInitializer from '../../../../initializers/ember-data';
-import { nativeMouseDown } from '../../../helpers/ember-power-select';
+import { find, findAll, click } from 'ember-native-dom-helpers/test-support/helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Ember-data integration)', {
   integration: true,
@@ -33,12 +32,12 @@ test('Passing as options of a `store.findAll` works', function(assert) {
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Loading options...', 'The loading message appears while the promise is pending');
 
   return wait().then(function() {
-    assert.equal($('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
+    assert.equal(findAll('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
     typeInSearch('2');
-    assert.equal($('.ember-power-select-option').length, 1, 'Filtering works');
+    assert.equal(findAll('.ember-power-select-option').length, 1, 'Filtering works');
   });
 });
 
@@ -52,12 +51,12 @@ test('Passing as options the result of `store.query` works', function(assert) {
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Loading options...', 'The loading message appears while the promise is pending');
 
   return wait().then(function() {
-    assert.equal($('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
+    assert.equal(findAll('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
     typeInSearch('2');
-    assert.equal($('.ember-power-select-option').length, 1, 'Filtering works');
+    assert.equal(findAll('.ember-power-select-option').length, 1, 'Filtering works');
   });
 });
 
@@ -71,9 +70,9 @@ test('Delete an item in a multiple selection', function(assert) {
   `);
 
   return wait().then(function() {
-    nativeMouseDown('.ember-power-select-multiple-remove-btn:eq(0)');
+    click('.ember-power-select-multiple-remove-btn');
     return wait().then(function() {
-      assert.equal($('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
+      assert.equal(findAll('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
     });
   });
 });
@@ -95,14 +94,14 @@ test('The `selected` option can be an async belongsTo', function(assert) {
       `);
 
       clickTrigger();
-      assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'Pet 0', 'The first element is highlighted');
-      assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
-      assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+      assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Pet 0', 'The first element is highlighted');
+      assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
+      assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
 
       setTimeout(function() {
-        assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'Pet 3', 'The 4th element is highlighted');
-        assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'Pet 3', 'The 4th element is highlighted');
-        assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'Pet 3', 'The trigger has the proper content');
+        assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Pet 3', 'The 4th element is highlighted');
+        assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'Pet 3', 'The 4th element is highlighted');
+        assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Pet 3', 'The trigger has the proper content');
         done();
       }, 10);
     });
