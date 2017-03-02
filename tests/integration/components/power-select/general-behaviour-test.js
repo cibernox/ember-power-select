@@ -9,7 +9,7 @@ import {
   names,
   countries
 } from '../constants';
-import { find, findAll } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers/test-support/helpers';
 
 const { RSVP, Object: eObject, get } = Ember;
 
@@ -278,12 +278,12 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
     {{/power-select}}
   `);
 
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  nativeMouseUp('.ember-power-select-option:eq(3)');
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+  click(findAll('.ember-power-select-option')[3]);
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', '"four" has been selected');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
 });
 
 test('If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option with the with the keyboard', function(assert) {
@@ -296,12 +296,12 @@ test('If the user passes `closeOnSelect=false` the dropdown remains visible afte
     {{/power-select}}
   `);
 
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  triggerKeydown($('.ember-power-select-search-input')[0], 13);
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'one', '"one" has been selected');
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+  keyEvent('.ember-power-select-search-input', 'keydown', 13);
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'one', '"one" has been selected');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
 });
 
 test('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', function(assert) {
@@ -325,8 +325,8 @@ test('If the content of the options is refreshed (starting with empty array prox
   typeInSearch('o');
 
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown after proxy is updated');
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
+    assert.equal(findAll('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown after proxy is updated');
+    assert.equal(find('.ember-power-select-option').textContent.trim(), 'one');
     done();
   }, 150);
 });
@@ -350,15 +350,15 @@ test('If the content of the options is updated (starting with populated array pr
 
   clickTrigger();
 
-  assert.equal($('.ember-power-select-option').length, 1, 'The dropdown is opened and results shown with initial proxy contents');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
+  assert.ok(find('.ember-power-select-option'), 'The dropdown is opened and results shown with initial proxy contents');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'one');
 
   typeInSearch('o');
 
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option').length, 2, 'The dropdown is opened and results shown after proxy is updated');
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
-    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'owner');
+    assert.equal(findAll('.ember-power-select-option').length, 2, 'The dropdown is opened and results shown after proxy is updated');
+    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'one');
+    assert.equal(findAll('.ember-power-select-option')[1].textContent.trim(), 'owner');
     done();
   }, 150);
 });
@@ -373,10 +373,10 @@ test('If the content of the selected is refreshed while opened the first element
     {{/power-select}}
   `);
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search-input')[0], 40);
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The second options is highlighted');
+  keyEvent('.ember-power-select-search-input', 'keydown', 40);
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'two', 'The second options is highlighted');
   run(() => this.set('numbers', ['foo', 'bar', 'baz']));
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'foo', 'The first element is highlighted');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'foo', 'The first element is highlighted');
 });
 
 test('If the user passes `dropdownClass` the dropdown content should have that class', function(assert) {
@@ -389,7 +389,7 @@ test('If the user passes `dropdownClass` the dropdown content should have that c
     {{/power-select}}
   `);
   clickTrigger();
-  assert.ok($('.ember-power-select-dropdown').hasClass('this-is-a-test-class'), 'dropdownClass can be customized');
+  assert.ok(find('.ember-power-select-dropdown').classList.contains('this-is-a-test-class'), 'dropdownClass can be customized');
 });
 
 test('The filtering is reverted after closing the select', function(assert) {
@@ -404,13 +404,10 @@ test('The filtering is reverted after closing the select', function(assert) {
 
   clickTrigger();
   typeInSearch('th');
-  assert.equal($('.ember-power-select-option').length, 2, 'the dropdown has filtered the results');
-  run(() => {
-    let event = new window.Event('mousedown');
-    this.$('#outside-div')[0].dispatchEvent(event);
-  });
+  assert.equal(findAll('.ember-power-select-option').length, 2, 'the dropdown has filtered the results');
+  triggerEvent('#outside-div', 'mousedown');
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
+  assert.equal(findAll('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
 });
 
 test('The publicAPI is yielded as second argument in single selects', function(assert) {
@@ -424,11 +421,11 @@ test('The publicAPI is yielded as second argument in single selects', function(a
 
   clickTrigger();
   typeInSearch('tw');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'tw:two', 'Each option receives the public API');
-  nativeMouseUp('.ember-power-select-option:eq(0)');
+  assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'tw:two', 'Each option receives the public API');
+  click(findAll('.ember-power-select-option')[0]);
   clickTrigger();
   typeInSearch('thr');
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'thr:two', 'The trigger also receives the public API');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'thr:two', 'The trigger also receives the public API');
 });
 
 test('If there is no search action and the options is empty the select shows the default "no options" message', function(assert) {
@@ -439,9 +436,9 @@ test('If there is no search action and the options is empty the select shows the
     {{/power-select}}
   `);
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 1);
-  assert.equal($('.ember-power-select-option').text().trim(), 'No results found');
-  assert.ok($('.ember-power-select-option').hasClass('ember-power-select-option--no-matches-message'), 'The row has a special class to differentiate it from regular options');
+  assert.equal(findAll('.ember-power-select-option').length, 1);
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
+  assert.ok(find('.ember-power-select-option').classList.contains('ember-power-select-option--no-matches-message'), 'The row has a special class to differentiate it from regular options');
 });
 
 test('If there is a search action and the options is empty it shows the `searchMessage`, and if after searching there is no results, it shows the `noResults` message', function(assert) {
@@ -453,11 +450,11 @@ test('If there is a search action and the options is empty it shows the `searchM
     {{/power-select}}
   `);
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 1);
-  assert.equal($('.ember-power-select-option').text().trim(), 'Type to search');
+  assert.equal(findAll('.ember-power-select-option').length, 1);
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search');
   typeInSearch('foo');
-  assert.equal($('.ember-power-select-option').length, 1);
-  assert.equal($('.ember-power-select-option').text().trim(), 'No results found');
+  assert.equal(findAll('.ember-power-select-option').length, 1);
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
 });
 
 test('The default "no options" message can be customized passing `noMatchesMessage="other message"`', function(assert) {
@@ -468,8 +465,8 @@ test('The default "no options" message can be customized passing `noMatchesMessa
     {{/power-select}}
   `);
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 1);
-  assert.equal($('.ember-power-select-option').text().trim(), 'Nope');
+  assert.equal(findAll('.ember-power-select-option').length, 1);
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Nope');
 });
 
 test('If there is a search action, the options are empty and the `seachMessage` in intentionally empty, it doesn\'t show anything, and if you seach and there is no results it shows the `noResultsMessage`', function(assert) {
@@ -481,10 +478,10 @@ test('If there is a search action, the options are empty and the `seachMessage` 
     {{/power-select}}
   `);
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 0);
+  assert.equal(findAll('.ember-power-select-option').length, 0);
   typeInSearch('foo');
-  assert.equal($('.ember-power-select-option').length, 1);
-  assert.equal($('.ember-power-select-option').text().trim(), 'No results found');
+  assert.equal(findAll('.ember-power-select-option').length, 1);
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
 });
 
 test('The content of the dropdown when there are no options can be completely customized using the inverse block', function(assert) {
@@ -497,8 +494,8 @@ test('The content of the dropdown when there are no options can be completely cu
     {{/power-select}}
   `);
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 0, 'No list elements, just the given alternate block');
-  assert.equal($('.empty-option-foo').length, 1);
+  assert.notOk(find('.ember-power-select-option'), 'No list elements, just the given alternate block');
+  assert.ok(find('.empty-option-foo'));
 });
 
 test('When no `selected` is provided, the first item in the dropdown is highlighted', function(assert) {
@@ -512,9 +509,9 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
-  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first one to be precise');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+  assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
+  assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first one to be precise');
 });
 
 test('When `selected` option is provided, it appears in the trigger yielded with the same block as the options', function(assert) {
