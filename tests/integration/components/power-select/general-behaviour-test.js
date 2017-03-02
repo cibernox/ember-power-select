@@ -9,6 +9,7 @@ import {
   names,
   countries
 } from '../constants';
+import { find, findAll } from 'ember-native-dom-helpers/test-support/helpers';
 
 const { RSVP, Object: eObject, get } = Ember;
 
@@ -26,10 +27,10 @@ test('Click in the trigger of a closed select opens the dropdown', function(asse
     {{/power-select}}
   `);
 
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
 });
 
 test('Click in the trigger of an opened select closes the dropdown', function(assert) {
@@ -43,10 +44,10 @@ test('Click in the trigger of an opened select closes the dropdown', function(as
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
 });
 
 test('Search functionality is enabled by default', function(assert) {
@@ -60,7 +61,7 @@ test('Search functionality is enabled by default', function(assert) {
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-search').length, 1, 'The search box is rendered');
+  assert.ok(find('.ember-power-select-search'), 'The search box is rendered');
 });
 
 test('The search functionality can be disabled by passing `searchEnabled=false`', function(assert) {
@@ -74,8 +75,8 @@ test('The search functionality can be disabled by passing `searchEnabled=false`'
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-search').length, 0, 'The search box NOT rendered');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+  assert.notOk(find('.ember-power-select-search'), 'The search box NOT rendered');
 });
 
 test('The search box gain focus automatically when opened', function(assert) {
@@ -89,7 +90,7 @@ test('The search box gain focus automatically when opened', function(assert) {
   `);
 
   clickTrigger();
-  assert.ok($('.ember-power-select-search-input').get(0) === document.activeElement, 'The search box is focused after opening select');
+  assert.ok(find('.ember-power-select-search-input') === document.activeElement, 'The search box is focused after opening select');
 });
 
 test("The search box shouldn't gain focus if autofocus is disabled", function(assert) {
@@ -109,7 +110,7 @@ test("The search box shouldn't gain focus if autofocus is disabled", function(as
   `);
 
   clickTrigger();
-  assert.ok($('.ember-power-select-search-input').get(0) !== document.activeElement, 'The search box is not focused after opening select');
+  assert.ok(find('.ember-power-select-search-input') !== document.activeElement, 'The search box is not focused after opening select');
 });
 
 test('Each option of the select is the result of yielding an item', function(assert) {
@@ -123,10 +124,11 @@ test('Each option of the select is the result of yielding an item', function(ass
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, numbers.length, 'There is as many options in the markup as in the supplied array');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
-  assert.equal($('.ember-power-select-option:eq(9)').text().trim(), 'ten');
-  assert.equal($('.ember-power-select-option:eq(13)').text().trim(), 'fourteen');
+  let options = findAll('.ember-power-select-option');
+  assert.equal(options.length, numbers.length, 'There is as many options in the markup as in the supplied array');
+  assert.equal(options[0].textContent.trim(), 'one');
+  assert.equal(options[9].textContent.trim(), 'ten');
+  assert.equal(options[13].textContent.trim(), 'fourteen');
 });
 
 test('If the passed options is a promise and it\'s not resolved the component shows a Loading message', function(assert) {
@@ -146,11 +148,11 @@ test('If the passed options is a promise and it\'s not resolved the component sh
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
-  assert.ok($('.ember-power-select-option').hasClass('ember-power-select-option--loading-message'), 'The row has a special class to differentiate it from regular options');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'Loading options...', 'The loading message appears while the promise is pending');
+  assert.ok(find('.ember-power-select-option').classList.contains('ember-power-select-option--loading-message'), 'The row has a special class to differentiate it from regular options');
   setTimeout(function() {
-    assert.ok(!/Loading options/.test($('.ember-power-select-option').text()), 'The loading message is gone');
-    assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
+    assert.ok(!/Loading options/.test(find('.ember-power-select-option').textContent), 'The loading message is gone');
+    assert.equal(findAll('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
     done();
   }, 200);
 });
@@ -173,9 +175,9 @@ test('If the passed options is a promise and it\'s not resolved but the `loading
 
   clickTrigger();
 
-  assert.equal($('.ember-power-select-option').length, 0, 'No loading options message is displayed');
+  assert.notOk(find('.ember-power-select-option'), 'No loading options message is displayed');
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
+    assert.equal(findAll('.ember-power-select-option').length, 20, 'The results appear when the promise is resolved');
     done();
   }, 120);
 });
@@ -190,11 +192,11 @@ test('If a placeholder is provided, it shows while no element is selected', func
     {{/power-select}}
   `);
 
-  assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').text().trim(), 'abracadabra', 'The placeholder is rendered when there is no element');
+  assert.equal(find('.ember-power-select-trigger .ember-power-select-placeholder').textContent.trim(), 'abracadabra', 'The placeholder is rendered when there is no element');
   clickTrigger();
   nativeMouseUp('.ember-power-select-option:eq(3)');
-  assert.equal($('.ember-power-select-trigger .ember-power-select-placeholder').length, 0, 'The placeholder is gone');
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', 'The selected item replaced it');
+  assert.notOk(find('.ember-power-select-trigger .ember-power-select-placeholder'), 'The placeholder is gone');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The selected item replaced it');
 });
 
 test('If a `searchPlaceholder` is provided, it shows on the searchbox of single selects while nothing is there', function(assert) {
