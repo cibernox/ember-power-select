@@ -4,6 +4,7 @@ import hbs from 'htmlbars-inline-precompile';
 import run from 'ember-runloop';
 import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
+import { find, findAll, triggerEvent, keyEvent } from 'ember-native-dom-helpers/test-support/helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Disabled)', {
   integration: true
@@ -19,12 +20,12 @@ test('A disabled dropdown doesn\'t responds to mouse/keyboard events', function(
     {{/power-select}}
   `);
 
-  let $trigger = this.$('.ember-power-select-trigger');
-  assert.ok($trigger.attr('aria-disabled'), 'true', 'The trigger has `aria-disabled=true`');
+  let trigger = find('.ember-power-select-trigger');
+  assert.ok(trigger.attributes['aria-disabled'].value, 'true', 'The trigger has `aria-disabled=true`');
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
+  assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
   triggerKeydown($('.ember-power-select-trigger')[0], 13);
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is still closed');
+  assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
 });
 
 test('A disabled dropdown is not focusable, and ignores the passed tabindex ', function(assert) {
@@ -36,7 +37,7 @@ test('A disabled dropdown is not focusable, and ignores the passed tabindex ', f
       {{option}}
     {{/power-select}}
   `);
-  assert.equal(this.$('.ember-power-select-trigger').attr('tabindex'), undefined, 'The trigger has no tabindex so it can\'t be focused');
+  assert.equal(find('.ember-power-select-trigger').attributes.tabindex, undefined, 'The trigger has no tabindex so it can\'t be focused');
 });
 
 test('Disabled options are not highlighted when hovered with the mouse', function(assert) {
@@ -50,8 +51,8 @@ test('Disabled options are not highlighted when hovered with the mouse', functio
   `);
 
   clickTrigger();
-  run(() => $('.ember-power-select-option[aria-disabled="true"]:eq(0)').trigger('mouseover'));
-  assert.equal($('.ember-power-select-option[aria-disabled="true"]:eq(0)').attr('aria-current'), 'false', 'The hovered option was not highlighted because it\'s disabled');
+  triggerEvent('.ember-power-select-option[aria-disabled="true"]', 'mouseover');
+  assert.equal(find('.ember-power-select-option[aria-disabled="true"]').attributes['aria-current'].value, 'false', 'The hovered option was not highlighted because it\'s disabled');
 });
 
 test('Disabled options are skipped when highlighting items with the keyboard', function(assert) {
@@ -65,9 +66,9 @@ test('Disabled options are skipped when highlighting items with the keyboard', f
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search-input')[0], 40);
-  triggerKeydown($('.ember-power-select-search-input')[0], 40);
-  assert.ok($('.ember-power-select-option[aria-current="true"]').text().trim(), 'LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
+  keyEvent('.ember-power-select-search-input', 'keydown', 40);
+  keyEvent('.ember-power-select-search-input', 'keydown', 40);
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
 });
 
 test('When passed `disabled=true`, the input inside the trigger is also disabled', function(assert) {
@@ -80,7 +81,7 @@ test('When passed `disabled=true`, the input inside the trigger is also disabled
     {{/power-select-multiple}}
   `);
 
-  assert.ok(this.$('.ember-power-select-trigger-multiple-input').prop('disabled'), 'The input is disabled');
+  assert.ok(find('.ember-power-select-trigger-multiple-input').disabled, 'The input is disabled');
 });
 
 test('When passed `disabled=true`, the options cannot be removed', function(assert) {
@@ -95,7 +96,7 @@ test('When passed `disabled=true`, the options cannot be removed', function(asse
     {{/power-select-multiple}}
   `);
 
-  assert.equal(this.$('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
+  assert.equal(findAll('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
 });
 
 test('Multiple select: When passed `disabled=prop`, enabling and disabling that property changes the component', function(assert) {
@@ -111,11 +112,11 @@ test('Multiple select: When passed `disabled=prop`, enabling and disabling that 
     {{/power-select-multiple}}
   `);
 
-  let $trigger = this.$('.ember-power-select-trigger');
-  assert.equal($trigger.attr('aria-disabled'), 'true', 'The trigger has `aria-disabled=true`');
+  let trigger = find('.ember-power-select-trigger');
+  assert.equal(trigger.attributes['aria-disabled'].value, 'true', 'The trigger has `aria-disabled=true`');
   this.set('shouldBeDisabled', false);
-  assert.ok(['false', undefined].indexOf($trigger.attr('aria-expanded')));
-  assert.notOk(this.$('.ember-power-select-trigger-multiple-input').prop('disabled'), 'The input is not disabled');
+  assert.notOk(trigger.attributes['aria-expanded']);
+  assert.notOk(find('.ember-power-select-trigger-multiple-input').disabled, 'The input is not disabled');
 });
 
 test('BUGFIX: When after a search the only result is a disabled element, it isn\'t highlighted and cannot be selected', function(assert) {
@@ -130,10 +131,10 @@ test('BUGFIX: When after a search the only result is a disabled element, it isn\
 
   clickTrigger();
   typeInSearch('Br');
-  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 0, 'Nothing is highlighted');
-  triggerKeydown($('.ember-power-select-search-input')[0], 13);
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is closed');
-  assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing was selected');
+  assert.notOk(find('.ember-power-select-option[aria-current="true"]'), 'Nothing is highlighted');
+  keyEvent('.ember-power-select-search-input', 'keydown', 13);
+  assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing was selected');
 });
 
 test('BUGFIX: When after a search there is two results and the first one is a disabled element, the second one is highlighted', function(assert) {
@@ -148,10 +149,10 @@ test('BUGFIX: When after a search there is two results and the first one is a di
 
   clickTrigger();
   typeInSearch('o'); // Finds ["Portugal", "United Kingdom"]
-  assert.equal($('.ember-power-select-option').length, 2, 'There is two results');
-  assert.equal($('.ember-power-select-option[aria-disabled="true"]').length, 1, 'One is disabled');
-  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'United Kingdom', 'The first non-disabled element is highlighted');
+  assert.equal(findAll('.ember-power-select-option').length, 2, 'There is two results');
+  assert.equal(findAll('.ember-power-select-option[aria-disabled="true"]').length, 1, 'One is disabled');
+  assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
+  assert.equal(findAll('.ember-power-select-option[aria-current="true"]')[0].textContent.trim(), 'United Kingdom', 'The first non-disabled element is highlighted');
 });
 
 test('BUGFIX: When searching by pressing keys on a focused & closed select, disabled options are ignored', function(assert) {
