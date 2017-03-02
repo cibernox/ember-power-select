@@ -524,14 +524,14 @@ test('When `selected` option is provided, it appears in the trigger yielded with
     {{/power-select}}
   `);
 
-  assert.equal(this.$().text().trim(), 'three', 'The selected option show in the trigger');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'three', 'The selected option show in the trigger');
 
   this.render(hbs`
     {{#power-select selected="three" options=numbers onchange=(action (mut foo)) as |option|}}
       Selected: {{option}}
     {{/power-select}}
   `);
-  assert.equal(this.$().text().trim(), 'Selected: three', 'The selected option uses the same yielded block as the options');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Selected: three', 'The selected option uses the same yielded block as the options');
 });
 
 test('When `selected` option is provided, it is highlighted when the dropdown opens', function(assert) {
@@ -545,9 +545,9 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   clickTrigger();
-  let $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
-  assert.equal($highlightedOption.length, 1, 'One element is highlighted');
-  assert.equal($highlightedOption.text().trim(), 'three', 'The third option is highlighted');
+  let highlightedOption = find('.ember-power-select-option[aria-current="true"]');
+  assert.ok(highlightedOption, 'One element is highlighted');
+  assert.equal(highlightedOption.textContent.trim(), 'three', 'The third option is highlighted');
 });
 
 test('When `selected` option is provided, that option is marked as `.selected`', function(assert) {
@@ -577,16 +577,19 @@ test('The default search strategy matches disregarding diacritics differences an
 
   clickTrigger();
   typeInSearch('mar');
-  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'María');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta');
+  let options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 2, 'Only 2 results match the search');
+  assert.equal(options[0].textContent.trim(), 'María');
+  assert.equal(options[1].textContent.trim(), 'Marta');
   typeInSearch('mari');
-  assert.equal($('.ember-power-select-option').length, 1, 'Only 1 results match the search');
-  assert.equal($('.ember-power-select-option').text().trim(), 'María');
+  options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 1, 'Only 1 results match the search');
+  assert.equal(options[0].textContent.trim(), 'María');
   typeInSearch('o');
-  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Larsen');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João');
+  options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 2, 'Only 2 results match the search');
+  assert.equal(options[0].textContent.trim(), 'Søren Larsen');
+  assert.equal(options[1].textContent.trim(), 'João');
 });
 
 test('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', function(assert) {
@@ -605,9 +608,9 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 
   clickTrigger();
   typeInSearch('on');
-  assert.equal($('.ember-power-select-option').text().trim(), 'No results found', 'No number ends in "on"');
+  assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found', 'No number ends in "on"');
   typeInSearch('teen');
-  assert.equal($('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
+  assert.equal(findAll('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
 });
 
 test('When no `selected` is provided, the first item in the dropdown is highlighted', function(assert) {
@@ -621,9 +624,9 @@ test('When no `selected` is provided, the first item in the dropdown is highligh
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
-  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-current'), 'true', 'The first one to be precise');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+  assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
+  assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first one to be precise');
 });
 
 test('When a option is provided that options is rendered in the trigger using the same block as the options', function(assert) {
@@ -637,7 +640,7 @@ test('When a option is provided that options is rendered in the trigger using th
     {{/power-select}}
   `);
 
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'ES: Spain', 'The selected country is rendered in the trigger');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'ES: Spain', 'The selected country is rendered in the trigger');
 });
 
 test('When `selected` option is provided, it is highlighted when the dropdown opens', function(assert) {
@@ -652,9 +655,9 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   `);
 
   clickTrigger();
-  let $highlightedOption = $('.ember-power-select-option[aria-current="true"]');
-  assert.equal($highlightedOption.length, 1, 'One element is highlighted');
-  assert.equal($highlightedOption.text().trim(), 'ES: Spain', 'The second option is highlighted');
+  let highlightedOption = find('.ember-power-select-option[aria-current="true"]');
+  assert.ok(highlightedOption, 'One element is highlighted');
+  assert.equal(highlightedOption.textContent.trim(), 'ES: Spain', 'The second option is highlighted');
 });
 
 test('When `selected` option is provided, that option is marked as `.selected`', function(assert) {
@@ -693,16 +696,19 @@ test('The default search strategy matches disregarding diacritics differences an
 
   clickTrigger();
   typeInSearch('mar');
-  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'María Murray');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta Stinson');
+  let options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 2, 'Only 2 results match the search');
+  assert.equal(options[0].textContent.trim(), 'María Murray');
+  assert.equal(options[1].textContent.trim(), 'Marta Stinson');
   typeInSearch('mari');
-  assert.equal($('.ember-power-select-option').length, 1, 'Only 1 results match the search');
-  assert.equal($('.ember-power-select-option').text().trim(), 'María Murray');
+  options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 1, 'Only 1 results match the search');
+  assert.equal(options[0].textContent.trim(), 'María Murray');
   typeInSearch('o');
-  assert.equal($('.ember-power-select-option').length, 2, 'Only 2 results match the search');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'João Jin');
+  options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 2, 'Only 2 results match the search');
+  assert.equal(options[0].textContent.trim(), 'Søren Williams');
+  assert.equal(options[1].textContent.trim(), 'João Jin');
 });
 
 test('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', function(assert) {
@@ -729,10 +735,11 @@ test('You can pass a custom marcher with `matcher=myFn` to customize the search 
 
   clickTrigger();
   typeInSearch('s');
-  assert.equal($('.ember-power-select-option').length, 3, 'Only 3 results match the search');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'Søren Williams');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'Marta Stinson');
-  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'Lisa Simpson');
+  let options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 3, 'Only 3 results match the search');
+  assert.equal(options[0].textContent.trim(), 'Søren Williams');
+  assert.equal(options[1].textContent.trim(), 'Marta Stinson');
+  assert.equal(options[2].textContent.trim(), 'Lisa Simpson');
 });
 
 test('BUGFIX: The highlighted element is reset when single selects are closed', function(assert) {
@@ -747,12 +754,12 @@ test('BUGFIX: The highlighted element is reset when single selects are closed', 
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three', 'The third element is highlighted');
-  triggerKeydown($('.ember-power-select-search-input')[0], 40);
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The forth element is highlighted');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'three', 'The third element is highlighted');
+  keyEvent('.ember-power-select-search-input', 'keydown', 40);
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The forth element is highlighted');
   clickTrigger();
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three', 'The third element is highlighted again');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'three', 'The third element is highlighted again');
 });
 
 test('BUGFIX: The highlighted element is reset when multiple selects are closed', function(assert) {
@@ -766,12 +773,12 @@ test('BUGFIX: The highlighted element is reset when multiple selects are closed'
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
-  triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 40);
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two', 'The second element is highlighted');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
+  keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'two', 'The second element is highlighted');
   clickTrigger();
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted again');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted again');
 });
 
 test('If the passed options is a promise that is resolved, searching should filter the results from a promise', function(assert) {
@@ -794,11 +801,12 @@ test('If the passed options is a promise that is resolved, searching should filt
     clickTrigger();
     typeInSearch('o');
 
-    assert.equal($('.ember-power-select-option').length, 4, 'The dropdown is opened and results shown.');
-    assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'one');
-    assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'two');
-    assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'four');
-    assert.equal($('.ember-power-select-option:eq(3)').text().trim(), 'fourteen');
+    let options = findAll('.ember-power-select-option');
+    assert.equal(options.length, 4, 'The dropdown is opened and results shown.');
+    assert.equal(options[0].textContent.trim(), 'one');
+    assert.equal(options[1].textContent.trim(), 'two');
+    assert.equal(options[2].textContent.trim(), 'four');
+    assert.equal(options[3].textContent.trim(), 'fourteen');
     done();
   }, 150);
 });
@@ -832,9 +840,9 @@ test('If the passed selected element is a pending promise, the first element is 
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
+  assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
 });
 
 test('If the passed selected element is a resolved promise, that element is selected and the trigger contains the proper text', function(assert) {
@@ -850,9 +858,9 @@ test('If the passed selected element is a resolved promise, that element is sele
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is highlighted');
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
+  assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The trigger has the proper content');
 });
 
 test('If the passed selected element is a pending promise that resolves while the select is opened, the highlighted & selected elements get updated, along with the trigger', function(assert) {
@@ -871,14 +879,14 @@ test('If the passed selected element is a pending promise that resolves while th
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
+  assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
 
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
-    assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is highlighted');
-    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
+    assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
+    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The trigger has the proper content');
     done();
   }, 100);
 });
@@ -907,14 +915,14 @@ test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'
   this.set('selected', promise2);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The first element is highlighted');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
+  assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
 
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'five', 'The 5th element is highlighted');
-    assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'five', 'The 5th element is highlighted');
-    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'five', 'The trigger has the proper content');
+    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'five', 'The 5th element is highlighted');
+    assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'five', 'The 5th element is highlighted');
+    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'five', 'The trigger has the proper content');
     done();
   }, 100);
 });
