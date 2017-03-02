@@ -324,12 +324,14 @@ export default Component.extend({
         return;
       }
       let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
-      let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
-      let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
-      if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
-        optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
-      } else if (optionTopScroll < optionsList.scrollTop) {
-        optionsList.scrollTop = optionTopScroll;
+      if (optionElement) {
+        let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+        let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+        if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+          optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+        } else if (optionTopScroll < optionsList.scrollTop) {
+          optionsList.scrollTop = optionTopScroll;
+        }
       }
     },
 

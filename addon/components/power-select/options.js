@@ -2,6 +2,7 @@ import Component from 'ember-component';
 import $ from 'jquery';
 import layout from '../../templates/components/power-select/options';
 import computed from 'ember-computed';
+import { later } from 'ember-runloop';
 
 export default Component.extend({
   isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
@@ -34,7 +35,7 @@ export default Component.extend({
     }
     if (this.get('role') !== 'group') {
       let select = this.get('select');
-      select.actions.scrollTo(select.highlighted);
+      later(() => select.actions.scrollTo(select.highlighted));
     }
   },
 
