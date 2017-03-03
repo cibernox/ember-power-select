@@ -2,7 +2,7 @@ import Ember from 'ember';
 import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, triggerKeydown, clickTrigger, nativeMouseUp } from '../../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import run from 'ember-runloop';
 import {
   numbers,
@@ -194,7 +194,7 @@ test('If a placeholder is provided, it shows while no element is selected', func
 
   assert.equal(find('.ember-power-select-trigger .ember-power-select-placeholder').textContent.trim(), 'abracadabra', 'The placeholder is rendered when there is no element');
   clickTrigger();
-  nativeMouseUp('.ember-power-select-option:eq(3)');
+  click(findAll('.ember-power-select-option')[3]);
   assert.notOk(find('.ember-power-select-trigger .ember-power-select-placeholder'), 'The placeholder is gone');
   assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The selected item replaced it');
 });
@@ -210,7 +210,7 @@ test('If a `searchPlaceholder` is provided, it shows on the searchbox of single 
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-search-input').attr('placeholder'), 'foobar yo!', 'The searchbox has the proper placeholder');
+  assert.equal(find('.ember-power-select-search-input').attributes.placeholder.value, 'foobar yo!', 'The searchbox has the proper placeholder');
 });
 
 test('If the `selected` value changes the select gets updated, but the `onchange` action doesn\'t fire', function(assert) {
@@ -229,10 +229,10 @@ test('If the `selected` value changes the select gets updated, but the `onchange
   `);
 
   run(() => this.set('selected', 'three'));
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'three', 'The `three` element is selected');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'three', 'The `three` element is selected');
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'three', 'The proper option gets highlighed');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'three', 'The proper option gets selected');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'three', 'The proper option gets highlighed');
+  assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'three', 'The proper option gets selected');
 });
 
 test('If the user selects a value and later on the selected value changes from the outside, the components updates too', function(assert) {
@@ -246,12 +246,12 @@ test('If the user selects a value and later on the selected value changes from t
     {{/power-select}}
   `);
 
-  assert.equal($('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected');
   clickTrigger();
-  nativeMouseUp('.ember-power-select-option:eq(3)');
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'four', '"four" has been selected');
+  click(findAll('.ember-power-select-option')[3]);
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', '"four" has been selected');
   run(() => this.set('selected', 'three'));
-  assert.equal($('.ember-power-select-trigger').text().trim(), 'three', '"three" has been selected because a change came from the outside');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'three', '"three" has been selected because a change came from the outside');
 });
 
 test('If the user passes `renderInPlace=true` the dropdown is added below the trigger instead of in the root', function(assert) {
@@ -265,7 +265,7 @@ test('If the user passes `renderInPlace=true` the dropdown is added below the tr
   `);
 
   clickTrigger();
-  assert.equal(this.$('.ember-power-select-dropdown').length, 1, 'The dropdown is inside the component');
+  assert.ok(find('.ember-power-select-dropdown'), 'The dropdown is inside the component');
 });
 
 test('If the user passes `closeOnSelect=false` the dropdown remains visible after selecting an option with the mouse', function(assert) {
@@ -561,8 +561,8 @@ test('When `selected` option is provided, that option is marked as `.selected`',
   `);
 
   clickTrigger();
-  let $selectedOption = $('.ember-power-select-option:contains("three")');
-  assert.equal($selectedOption.attr('aria-selected'), 'true', 'The third option is marked as selected');
+  let selectedOption = findAll('.ember-power-select-option')[2];
+  assert.equal(selectedOption.attributes['aria-selected'].value, 'true', 'The third option is marked as selected');
 });
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {
@@ -660,7 +660,7 @@ test('When `selected` option is provided, it is highlighted when the dropdown op
   assert.equal(highlightedOption.textContent.trim(), 'ES: Spain', 'The second option is highlighted');
 });
 
-test('When `selected` option is provided, that option is marked as `.selected`', function(assert) {
+test('When `selected` option (object) is provided, that option is marked as `.selected`', function(assert) {
   assert.expect(1);
 
   this.countries = countries;
@@ -822,7 +822,7 @@ test('Disabled single selects don\'t have a clear button even if `allowClear` is
     {{/power-select}}
   `);
 
-  assert.equal(this.$('.ember-power-select-clear-btn').length, 0, 'There is no clear button');
+  assert.notOk(find('ember-power-select-clear-btn'), 'There is no clear button');
 });
 
 test('If the passed selected element is a pending promise, the first element is highlighted and the trigger is empty', function(assert) {
@@ -946,17 +946,17 @@ test('When both `selected` and `options` are async, and `selected` resolves befo
 
   clickTrigger();
 
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+  assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
 
   setTimeout(function() {
-    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The trigger has the proper content');
   }, 20);
 
   setTimeout(function() {
-    assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
-    assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is selected');
-    assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
+    assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'four', 'The 4th element is selected');
+    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The trigger has the proper content');
     done();
   }, 220);
 });
@@ -984,18 +984,18 @@ test('When both `selected` and `options` are async, and `selected` resolves befo
 
 //   clickTrigger();
 
-//   assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
-//   assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
+//   assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
+//   assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
 
 //   setTimeout(function() {
-//     assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'The trigger is still empty');
-//     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one', 'The 1st element is highlighted');
+//     assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'The trigger is still empty');
+//     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The 1st element is highlighted');
 //   }, 100);
 
 //   setTimeout(function() {
-//     assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'four', 'The 4th element is highlighted');
-//     assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'four', 'The 4th element is selected');
-//     assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'four', 'The trigger has the proper content');
+//     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
+//     assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'four', 'The 4th element is selected');
+//     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The trigger has the proper content');
 //     done();
 //   }, 350);
 // });
@@ -1010,10 +1010,10 @@ test('When the input inside the select gets focused the entire component gains t
     {{/power-select}}
   `);
 
-  assert.ok(!this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
+  assert.ok(!find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
   clickTrigger();
-  run(() => $('.ember-power-select-search-input').focus());
-  assert.ok(this.$('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active'), 'The select has the class now');
+  run(() => find('.ember-power-select-search-input').focus());
+  assert.ok(find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select has the class now');
 });
 
 test('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', function(assert) {
@@ -1027,8 +1027,8 @@ test('[BUGFIX] When the component opens, if the selected option is not visible t
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'nine');
-  assert.ok($('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'nine');
+  assert.ok(findAll('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
 });
 
 test('The destination where the content is rendered can be customized by passing a `destination=id-of-the-destination`', function(assert) {
@@ -1042,10 +1042,10 @@ test('The destination where the content is rendered can be customized by passing
     <div id="alternative-destination"></div>
   `);
 
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is not rendered');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
 
   clickTrigger();
-  assert.equal($('#alternative-destination .ember-power-select-dropdown').length, 1, 'Dropdown is rendered inside the destination element');
+  assert.ok(find('#alternative-destination .ember-power-select-dropdown'), 'Dropdown is rendered inside the destination element');
 });
 
 test('[BUGFIX] When the component is open and it has a `search` action, if options get updated the highlighted items is reset', function(assert) {
@@ -1061,10 +1061,10 @@ test('[BUGFIX] When the component is open and it has a `search` action, if optio
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-search-input')[0], 40);
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'two');
+  keyEvent('.ember-power-select-search-input', 'keydown', 40);
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'two');
   run(() => this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']));
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
 });
 
 test('the item that is highlighted by default can be customized passing a value to `defaultHighlighted`', function(assert) {
@@ -1079,8 +1079,8 @@ test('the item that is highlighted by default can be customized passing a value 
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'five', 'the given element is highlighted instead of the first, as usual');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+  assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'five', 'the given element is highlighted instead of the first, as usual');
 });
 
 test('the item that is highlighted by default can be customized passing a function to `defaultHighlighted`', function(assert) {
@@ -1107,8 +1107,8 @@ test('the item that is highlighted by default can be customized passing a functi
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is rendered');
-  assert.equal($('.ember-power-select-option[aria-current=true]').text().trim(), 'five', 'the given element is highlighted instead of the first, as usual');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+  assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'five', 'the given element is highlighted instead of the first, as usual');
 });
 
 test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', function(assert) {
@@ -1139,11 +1139,12 @@ test('If the options of a single select implement `isEqual`, that option is used
 
   clickTrigger();
   typeInSearch('M');
-  nativeMouseUp('.ember-power-select-option:eq(1)');
+  click(findAll('.ember-power-select-option')[1]);
   clickTrigger();
   typeInSearch('i');
-  assert.equal($('.ember-power-select-option:eq(0)').attr('aria-selected'), 'true', 'The item in the list is marked as selected');
-  nativeMouseUp('.ember-power-select-option:eq(0)'); // select the same user again
+  let firstOption = findAll('.ember-power-select-option')[0];
+  assert.equal(firstOption.attributes['aria-selected'].value, 'true', 'The item in the list is marked as selected');
+  click(firstOption);
   assert.equal(onChangeInvocationsCount, 1);
 });
 
@@ -1178,16 +1179,16 @@ test('If the select receives a `calculatePosition` option, it uses it to calcula
   `);
 
   clickTrigger();
-  let $dropdownContent = $('.ember-power-select-dropdown');
-  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--above'), 'The dropdown is above');
-  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--right'), 'The dropdown is in the right');
-  assert.equal($dropdownContent.attr('style'), 'top: 111px;right: 222px;', 'The style attribute is the expected one');
+  let dropdownContent = find('.ember-power-select-dropdown');
+  assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--above'), 'The dropdown is above');
+  assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--right'), 'The dropdown is in the right');
+  assert.equal(dropdownContent.attributes.style.value, 'top: 111px;right: 222px;', 'The style attribute is the expected one');
   clickTrigger();
 
   run(() => this.set('renderInPlace', true));
   clickTrigger();
-  $dropdownContent = $('.ember-power-select-dropdown');
-  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--below'), 'The dropdown is below');
-  assert.ok($dropdownContent.hasClass('ember-basic-dropdown-content--left'), 'The dropdown is in the left');
-  assert.equal($dropdownContent.attr('style'), 'top: 333px;right: 444px;', 'The style attribute is the expected one');
+  dropdownContent = find('.ember-power-select-dropdown');
+  assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--below'), 'The dropdown is below');
+  assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--left'), 'The dropdown is in the left');
+  assert.equal(dropdownContent.attributes.style.value, 'top: 333px;right: 444px;', 'The style attribute is the expected one');
 });
