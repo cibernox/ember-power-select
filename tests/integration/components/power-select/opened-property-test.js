@@ -1,7 +1,7 @@
-import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from '../constants';
+import { find } from 'ember-native-dom-helpers/test-support/helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (The opened property)', {
   integration: true
@@ -17,5 +17,5 @@ test('the select can be rendered already opened by passing `initiallyOpened=true
     {{/power-select}}
   `);
 
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is opened');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is opened');
 });

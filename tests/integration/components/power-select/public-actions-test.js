@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
+import { clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
+import { find, findAll, click, keyEvent } from 'ember-native-dom-helpers/test-support/helpers';
 
 const { run } = Ember;
 
@@ -89,7 +89,7 @@ test('The onchange of single selects action receives the selection and the publi
   `);
 
   clickTrigger();
-  nativeMouseUp('.ember-power-select-option:eq(0)');
+  click('.ember-power-select-option');
 });
 
 test('The onchange of multiple selects action receives the selection and the public API', function(assert) {
@@ -108,7 +108,7 @@ test('The onchange of multiple selects action receives the selection and the pub
   `);
 
   clickTrigger();
-  nativeMouseUp('.ember-power-select-option:eq(0)');
+  click('.ember-power-select-option');
 });
 
 test('The onkeydown of single selects action receives the public API and the keydown event when fired on the searchbox', function(assert) {
@@ -127,9 +127,9 @@ test('The onkeydown of single selects action receives the public API and the key
   `);
 
   clickTrigger();
-  let input = $('.ember-power-select-search-input')[0];
-  triggerKeydown(input, 13);
-  triggerKeydown(input, 65);
+  let input = find('.ember-power-select-search-input');
+  keyEvent(input, 'keydown', 13);
+  keyEvent(input, 'keydown', 65);
 });
 
 test('The onkeydown can be used to easily allow to select on tab', function(assert) {
@@ -150,11 +150,12 @@ test('The onkeydown can be used to easily allow to select on tab', function(asse
   `);
 
   clickTrigger();
-  triggerKeydown($('.ember-power-select-trigger')[0], 40);
-  triggerKeydown($('.ember-power-select-trigger')[0], 40);
-  triggerKeydown($('.ember-power-select-trigger')[0], 9);
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'three', 'The highlighted options has been selected');
-  assert.equal($('.ember-power-select-options').length, 0, 'The select is closed');
+  let trigger = find('.ember-power-select-trigger');
+  keyEvent(trigger, 'keydown', 40);
+  keyEvent(trigger, 'keydown', 40);
+  keyEvent(trigger, 'keydown', 9);
+  assert.equal(trigger.textContent.trim(), 'three', 'The highlighted options has been selected');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is opened');
 });
 
 test('The onkeydown of multiple selects action receives the public API and the keydown event', function(assert) {
@@ -173,9 +174,9 @@ test('The onkeydown of multiple selects action receives the public API and the k
   `);
 
   clickTrigger();
-  let input = $('.ember-power-select-trigger-multiple-input')[0];
-  triggerKeydown(input, 13);
-  triggerKeydown(input, 65);
+  let input = find('.ember-power-select-trigger-multiple-input');
+  keyEvent(input, 'keydown', 13);
+  keyEvent(input, 'keydown', 65);
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in single selects', function(assert) {
@@ -195,10 +196,10 @@ test('returning false from the `onkeydown` action prevents the default behaviour
     {{/power-select}}
   `);
 
-  triggerKeydown($('.ember-power-select-trigger')[0], 13);
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is still closed');
-  triggerKeydown($('.ember-power-select-trigger')[0], 84); // 't'
-  assert.notEqual($('.ember-power-select-trigger').text().trim(), 'two', 'nothing was selected');
+  keyEvent('.ember-power-select-trigger', 'keydown', 13);
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is still closed');
+  keyEvent('.ember-power-select-trigger', 'keydown', 84); // 't'
+  assert.notEqual(find('.ember-power-select-trigger').textContent.trim(), 'two', 'nothing was selected');
 });
 
 test('returning false from the `onkeydown` action prevents the default behaviour in multiple selects', function(assert) {
@@ -218,8 +219,8 @@ test('returning false from the `onkeydown` action prevents the default behaviour
     {{/power-select-multiple}}
   `);
 
-  triggerKeydown($('.ember-power-select-trigger-multiple-input')[0], 13);
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is still closed');
+  keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is still closed');
 });
 
 test('The onfocus of single selects action receives the public API and the focus event', function(assert) {
@@ -237,7 +238,7 @@ test('The onfocus of single selects action receives the public API and the focus
     {{/power-select}}
   `);
 
-  run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => find('.ember-power-select-trigger').focus());
 });
 
 test('The onfocus of multiple selects action receives the public API and the focus event', function(assert) {
@@ -255,7 +256,7 @@ test('The onfocus of multiple selects action receives the public API and the foc
     {{/power-select-multiple}}
   `);
 
-  run(() => this.$('.ember-power-select-trigger').focus());
+  run(() => find('.ember-power-select-trigger').focus());
 });
 
 test('The onfocus of multiple selects also gets called when the thing getting the focus is the searbox', function(assert) {
@@ -273,7 +274,7 @@ test('The onfocus of multiple selects also gets called when the thing getting th
     {{/power-select-multiple}}
   `);
 
-  run(() => this.$('.ember-power-select-trigger-multiple-input').focus());
+  run(() => find('.ember-power-select-trigger-multiple-input').focus());
 });
 
 test('The onblur of single selects action receives the public API and the event', function(assert) {
@@ -292,8 +293,8 @@ test('The onblur of single selects action receives the public API and the event'
     <input type="text" id="other-element"/>
   `);
 
-  run(() => this.$('.ember-power-select-trigger').focus());
-  run(() => this.$('#other-element').focus());
+  run(() => find('.ember-power-select-trigger').focus());
+  run(() => find('#other-element').focus());
 });
 
 test('The onblur of multiple selects action receives the public API and the focus event', function(assert) {
@@ -312,8 +313,8 @@ test('The onblur of multiple selects action receives the public API and the focu
     <input type="text" id="other-element"/>
   `);
 
-  run(() => this.$('.ember-power-select-trigger-multiple-input').focus());
-  run(() => this.$('#other-element').focus());
+  run(() => find('.ember-power-select-trigger-multiple-input').focus());
+  run(() => find('#other-element').focus());
 });
 
 test('The onblur of multiple selects also gets called when the thing getting the focus is the searbox', function(assert) {
@@ -333,7 +334,7 @@ test('The onblur of multiple selects also gets called when the thing getting the
   `);
 
   clickTrigger();
-  run(() => this.$('#other-element').focus());
+  run(() => find('#other-element').focus());
 });
 
 test('the `onopen` action is invoked just before the dropdown opens', function(assert) {
@@ -353,7 +354,7 @@ test('the `onopen` action is invoked just before the dropdown opens', function(a
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is opened');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is opened');
 });
 
 test('returning false from the `onopen` action prevents the single select from opening', function(assert) {
@@ -374,7 +375,7 @@ test('returning false from the `onopen` action prevents the single select from o
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown didn\'t open');
 });
 
 test('returning false from the `onopen` action prevents the multiple select from opening', function(assert) {
@@ -395,7 +396,7 @@ test('returning false from the `onopen` action prevents the multiple select from
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown didn\'t open');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown didn\'t open');
 });
 
 test('the `onclose` action is invoked just before the dropdown closes', function(assert) {
@@ -416,7 +417,7 @@ test('the `onclose` action is invoked just before the dropdown closes', function
 
   clickTrigger();
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'Dropdown is closed');
+  assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is closed');
 });
 
 test('returning false from the `onclose` action prevents the single select from closing', function(assert) {
@@ -437,9 +438,9 @@ test('returning false from the `onclose` action prevents the single select from 
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is open');
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown didn\'t close');
 });
 
 test('returning false from the `onclose` action prevents the multiple select from closing', function(assert) {
@@ -460,9 +461,9 @@ test('returning false from the `onclose` action prevents the multiple select fro
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown is open');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is open');
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'Dropdown didn\'t close');
+  assert.ok(find('.ember-power-select-dropdown'), 'Dropdown didn\'t close');
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', function(assert) {
@@ -484,10 +485,11 @@ test('the `oninput` action is invoked when the user modifies the text of the sea
 
   clickTrigger();
   typeInSearch('tw');
-  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'two');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'twelve');
-  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'twenty');
+  let options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 3, 'There is three options');
+  assert.equal(options[0].textContent.trim(), 'two');
+  assert.equal(options[1].textContent.trim(), 'twelve');
+  assert.equal(options[2].textContent.trim(), 'twenty');
 });
 
 test('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', function(assert) {
@@ -509,10 +511,11 @@ test('the `oninput` action is invoked when the user modifies the text of the sea
 
   clickTrigger();
   typeInSearch('tw');
-  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
-  assert.equal($('.ember-power-select-option:eq(0)').text().trim(), 'two');
-  assert.equal($('.ember-power-select-option:eq(1)').text().trim(), 'twelve');
-  assert.equal($('.ember-power-select-option:eq(2)').text().trim(), 'twenty');
+  let options = findAll('.ember-power-select-option');
+  assert.equal(options.length, 3, 'There is three options');
+  assert.equal(options[0].textContent.trim(), 'two');
+  assert.equal(options[1].textContent.trim(), 'twelve');
+  assert.equal(options[2].textContent.trim(), 'twenty');
 });
 
 test('if the `oninput` action of single selects returns false the search is cancelled', function(assert) {
@@ -531,7 +534,7 @@ test('if the `oninput` action of single selects returns false the search is canc
 
   clickTrigger();
   typeInSearch('tw');
-  assert.equal($('.ember-power-select-option').length, 20, 'There is the same options than before');
+  assert.equal(findAll('.ember-power-select-option').length, 20, 'There is the same options than before');
 });
 
 test('if `oninput` action of multiple selects returns false the search is cancelled', function(assert) {
@@ -550,7 +553,7 @@ test('if `oninput` action of multiple selects returns false the search is cancel
 
   clickTrigger();
   typeInSearch('tw');
-  assert.equal($('.ember-power-select-option').length, 20, 'There is the same options than before');
+  assert.equal(findAll('.ember-power-select-option').length, 20, 'There is the same options than before');
 });
 
 test('the `highlight` action of the public api passed to the public actions works as expected', function(assert) {
@@ -565,8 +568,8 @@ test('the `highlight` action of the public api passed to the public actions work
     {{/power-select}}
   `);
   clickTrigger();
-  assert.equal($('.ember-power-select-option').length, 3, 'There is three options');
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'baz', 'The third option is highlighted');
+  assert.equal(findAll('.ember-power-select-option').length, 3, 'There is three options');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'baz', 'The third option is highlighted');
 });
 
 test('The programmer can use the received public API to perform searches in single selects', function(assert) {
@@ -585,7 +588,7 @@ test('The programmer can use the received public API to perform searches in sing
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-search-input')[0].value, 'hello', 'The search text contains the searched string');
+  assert.equal(find('.ember-power-select-search-input').value, 'hello', 'The search text contains the searched string');
 });
 
 test('The programmer can use the received public API to perform searches in mutiple selects', function(assert) {
@@ -604,7 +607,7 @@ test('The programmer can use the received public API to perform searches in muti
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-trigger-multiple-input')[0].value, 'hello', 'The search text contains the searched string');
+  assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'hello', 'The search text contains the searched string');
 });
 
 test('The search action of multiple selects has the searchText set to the up-to-date value', function(assert) {
