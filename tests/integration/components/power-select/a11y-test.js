@@ -1,9 +1,12 @@
-import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';
 import { find, findAll, keyEvent } from 'ember-native-dom-helpers/test-support/helpers';
+
+function findContains(selector, text) {
+  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
+}
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Accesibility)', {
   integration: true
@@ -83,7 +86,7 @@ test('Single-select: The selected option has `aria-selected=true` and the rest `
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option:contains("two")').attr('aria-selected'), 'true', 'the selected option has aria-selected=true');
+  assert.equal(findContains('.ember-power-select-option', 'two').attributes['aria-selected'].value, 'true', 'the selected option has aria-selected=true');
   assert.equal(findAll('.ember-power-select-option[aria-selected="false"]').length, numbers.length - 1, 'All other options have aria-selected=false');
 });
 
@@ -99,8 +102,8 @@ test('Multiple-select: The selected options have `aria-selected=true` and the re
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option:contains("two")').attr('aria-selected'), 'true', 'the first selected option has aria-selected=true');
-  assert.equal($('.ember-power-select-option:contains("four")').attr('aria-selected'), 'true', 'the second selected option has aria-selected=true');
+  assert.equal(findContains('.ember-power-select-option', 'two').attributes['aria-selected'].value, 'true', 'the first selected option has aria-selected=true');
+  assert.equal(findContains('.ember-power-select-option', 'four').attributes['aria-selected'].value, 'true', 'the second selected option has aria-selected=true');
   assert.equal(findAll('.ember-power-select-option[aria-selected="false"]').length, numbers.length - 2, 'All other options have aria-selected=false');
 });
 
@@ -115,11 +118,11 @@ test('Single-select: The highlighted option has `aria-current=true` and the rest
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'true', 'the highlighted option has aria-current=true');
+  assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'true', 'the highlighted option has aria-current=true');
   assert.equal(findAll('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
   keyEvent('.ember-power-select-search-input', 'keydown', 40);
-  assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'false', 'the first option has now aria-current=false');
-  assert.equal($('.ember-power-select-option:contains("two")').attr('aria-current'), 'true', 'the second option has now aria-current=false');
+  assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'false', 'the first option has now aria-current=false');
+  assert.equal(findContains('.ember-power-select-option', 'two').attributes['aria-current'].value, 'true', 'the second option has now aria-current=false');
 });
 
 test('Multiple-select: The highlighted option has `aria-current=true` and the rest `aria-current=false`', function(assert) {
@@ -133,11 +136,11 @@ test('Multiple-select: The highlighted option has `aria-current=true` and the re
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'true', 'the highlighted option has aria-current=true');
+  assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'true', 'the highlighted option has aria-current=true');
   assert.equal(findAll('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
   keyEvent('.ember-power-select-search-input', 'keydown', 40);
-  assert.equal($('.ember-power-select-option:contains("one")').attr('aria-current'), 'false', 'the first option has now aria-current=false');
-  assert.equal($('.ember-power-select-option:contains("two")').attr('aria-current'), 'true', 'the second option has now aria-current=false');
+  assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'false', 'the first option has now aria-current=false');
+  assert.equal(findContains('.ember-power-select-option', 'two').attributes['aria-current'].value, 'true', 'the second option has now aria-current=false');
 });
 
 test('Single-select: Options with a disabled field have `aria-disabled=true`', function(assert) {

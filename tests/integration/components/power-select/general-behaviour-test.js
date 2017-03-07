@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
@@ -12,6 +11,10 @@ import {
 import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers/test-support/helpers';
 
 const { RSVP, Object: eObject, get } = Ember;
+
+function findContains(selector, text) {
+  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
+}
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true
@@ -672,8 +675,8 @@ test('When `selected` option (object) is provided, that option is marked as `.se
   `);
 
   clickTrigger();
-  let $selectedOption = $('.ember-power-select-option:contains("ES: Spain")');
-  assert.equal($selectedOption.attr('aria-selected'), 'true', 'The second option is marked as selected');
+  let selectedOption = findContains('.ember-power-select-option', 'ES: Spain');
+  assert.equal(selectedOption.attributes['aria-selected'].value, 'true', 'The second option is marked as selected');
 });
 
 test('The default search strategy matches disregarding diacritics differences and capitalization', function(assert) {

@@ -246,8 +246,8 @@ test('When the search resolves to an empty array then the custom alternate block
 //   }, 50);
 
 //   setTimeout(function() {
-//     assert.ok(/Loading options/.test($('.ember-power-select-option').text().trim()), 'The loading message is visible');
-//     assert.equal($('.ember-power-select-option').length, 1, 'No results are shown');
+//     assert.ok(/Loading options/.test(find('.ember-power-select-option').textContent.trim()), 'The loading message is visible');
+//     assert.ok(find('.ember-power-select-option'), 'No results are shown');
 //   }, 120);
 
 //   setTimeout(done, 180);

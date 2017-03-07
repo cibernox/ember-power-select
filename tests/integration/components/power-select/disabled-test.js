@@ -1,10 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import $ from 'jquery';
 import hbs from 'htmlbars-inline-precompile';
 import run from 'ember-runloop';
-import { triggerKeydown, clickTrigger, typeInSearch, nativeMouseUp } from '../../../helpers/ember-power-select';
+import { clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
-import { find, findAll, triggerEvent, keyEvent } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, triggerEvent, keyEvent, click } from 'ember-native-dom-helpers/test-support/helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Disabled)', {
   integration: true
@@ -24,7 +23,7 @@ test('A disabled dropdown doesn\'t responds to mouse/keyboard events', function(
   assert.ok(trigger.attributes['aria-disabled'].value, 'true', 'The trigger has `aria-disabled=true`');
   clickTrigger();
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
-  triggerKeydown($('.ember-power-select-trigger')[0], 13);
+  keyEvent('.ember-power-select-trigger', 'keydown', 13);
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
 });
 
@@ -165,11 +164,11 @@ test('BUGFIX: When searching by pressing keys on a focused & closed select, disa
    {{/power-select}}
   `);
 
-  let trigger = this.$('.ember-power-select-trigger')[0];
+  let trigger = find('.ember-power-select-trigger');
   trigger.focus();
-  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is closed');
-  triggerKeydown(trigger, 79); // o
-  assert.equal($('.ember-power-select-dropdown').length, 0,  'The dropdown is still closed');
+  assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is closed');
+  keyEvent(trigger, 'keydown', 79); // o
+  assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
   assert.equal(trigger.textContent.trim(), 'United Kingdom', '"United Kingdom" has been selected');
 });
 
@@ -199,9 +198,9 @@ test('The title of a group can be marked as disabled, and it is still disabled a
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is disabled');
+  assert.equal(findAll('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is disabled');
   typeInSearch('fiv');
-  assert.equal($('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is still disabled');
+  assert.equal(findAll('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is still disabled');
 });
 
 test('If a group is disabled, any options inside cannot be interacted with mouse', function(assert) {
@@ -231,15 +230,12 @@ test('If a group is disabled, any options inside cannot be interacted with mouse
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'No option is selected');
-  run(() => {
-    let event = new window.Event('mouseover', { bubbles: true, cancelable: true, view: window });
-    $('.ember-power-select-option:eq(8)')[0].dispatchEvent(event);
-  });
-  assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'one');
-  nativeMouseUp('.ember-power-select-option:eq(9)');
-  assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'Noting was selected');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
+  assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'No option is selected');
+  triggerEvent(findAll('.ember-power-select-option')[8], 'mouseover');
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
+  click(findAll('.ember-power-select-option')[9]);
+  assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'Noting was selected');
 });
 
 test('If the value of `disabled` changes, the `disabled` property in the publicAPI matches it', function(assert) {
@@ -254,9 +250,9 @@ test('If the value of `disabled` changes, the `disabled` property in the publicA
     {{/power-select}}
   `);
 
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'enabled!', 'The `disabled` attribute in the public API is false');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'enabled!', 'The `disabled` attribute in the public API is false');
   run(() => this.set('isDisabled', true));
-  assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'disabled!', 'The `disabled` attribute in the public API is true');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'disabled!', 'The `disabled` attribute in the public API is true');
 });
 
 test('If a select gets disabled while it\'s open, it closes automatically', function(assert) {
@@ -271,7 +267,7 @@ test('If a select gets disabled while it\'s open, it closes automatically', func
   `);
 
   clickTrigger();
-  assert.equal($('.ember-power-select-dropdown').length, 1, 'The select is open');
+  assert.ok(find('.ember-power-select-dropdown'), 'The select is open');
   run(() => this.set('isDisabled', true));
-  assert.equal($('.ember-power-select-dropdown').length, 0, 'The select is now closed');
+  assert.notOk(find('.ember-power-select-dropdown'), 'The select is now closed');
 });
