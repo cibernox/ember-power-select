@@ -1,12 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from './components/constants';
-import { clickTrigger, typeInSearch } from '../helpers/ember-power-select';
-import { findAll } from 'ember-native-dom-helpers/test-support/helpers';
-
-function findContains(selector, text) {
-  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
-}
+import { clickTrigger, typeInSearch, findContains } from '../helpers/ember-power-select';
 
 moduleForComponent('ember-power-select', 'Integration | Helpers', {
   integration: true

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger, findContains } from '../../../helpers/ember-power-select';
 import run from 'ember-runloop';
 import {
   numbers,
@@ -11,10 +11,6 @@ import {
 import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers/test-support/helpers';
 
 const { RSVP, Object: eObject, get } = Ember;
-
-function findContains(selector, text) {
-  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
-}
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true

@@ -1,12 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
-import { clickTrigger } from '../../../helpers/ember-power-select';
+import { clickTrigger, findContains } from '../../../helpers/ember-power-select';
 import { find, findAll, keyEvent } from 'ember-native-dom-helpers/test-support/helpers';
-
-function findContains(selector, text) {
-  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
-}
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Accesibility)', {
   integration: true
