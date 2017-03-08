@@ -1,5 +1,16 @@
 import Test from 'ember-test';
-import { click, fillIn, keyEvent, triggerEvent } from 'ember-native-dom-helpers/test-support/helpers';
+import { click, fillIn, keyEvent, triggerEvent, findAll } from 'ember-native-dom-helpers/test-support/helpers';
+
+/**
+ * @private
+ * @param {String} selector CSS3 selector of the elements to check the content
+ * @param {String} text Substring that the selected element must contain
+ * @returns HTMLElement The first element that maches the given selector and contains the
+ *                      given text
+ */
+export function findContains(selector, text) {
+  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
+}
 
 export function nativeMouseDown(selectorOrDomElement, options) {
   triggerEvent(selectorOrDomElement, 'mousedown', options);
