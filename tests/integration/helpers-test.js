@@ -1,8 +1,12 @@
-import $ from 'jquery';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from './components/constants';
 import { clickTrigger, typeInSearch } from '../helpers/ember-power-select';
+import { findAll } from 'ember-native-dom-helpers/test-support/helpers';
+
+function findContains(selector, text) {
+  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
+}
 
 moduleForComponent('ember-power-select', 'Integration | Helpers', {
   integration: true
@@ -20,7 +24,7 @@ test('typeInSearch inputs the provided search string', function(assert) {
   clickTrigger();
   typeInSearch('one');
 
-  assert.equal($('.ember-power-select-option:contains("one")').length, 1);
+  assert.ok(findContains('.ember-power-select-option', 'one'));
 });
 
 test('typeInSearch scopes the input to the provided one if the passed arguments are two', function(assert) {
@@ -40,5 +44,5 @@ test('typeInSearch scopes the input to the provided one if the passed arguments 
   clickTrigger('#single-select');
   typeInSearch('#single-select', 'one');
 
-  assert.equal($('#single-select .ember-power-select-option:contains("one")').length, 1);
+  assert.ok(findContains('#single-select .ember-power-select-option', 'one'));
 });
