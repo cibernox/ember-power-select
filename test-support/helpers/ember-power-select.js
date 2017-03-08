@@ -1,53 +1,16 @@
-import $ from 'jquery';
-import run from 'ember-runloop';
 import Test from 'ember-test';
-import { click, fillIn } from 'ember-native-dom-helpers/test-support/helpers';
-
-// Helpers for integration tests
-function fireNativeMouseEvent(eventType, selectorOrDomElement, options = {}) {
-  let event, target;
-  try {
-    event = new window.Event(eventType, { bubbles: true, cancelable: true, view: window });
-  } catch(e) {
-    // fix IE11: "Object doesn't support this action"
-    event = document.createEvent('Event');
-    let bubbles = true;
-    let cancelable = true;
-    event.initEvent(eventType, bubbles, cancelable);
-  }
-
-  Object.keys(options).forEach((key) => event[key] = options[key]);
-  if (typeof selectorOrDomElement === 'string') {
-    target = $(selectorOrDomElement)[0];
-  } else {
-    target = selectorOrDomElement;
-  }
-  run(() => target.dispatchEvent(event));
-}
+import { click, fillIn, keyEvent, triggerEvent } from 'ember-native-dom-helpers/test-support/helpers';
 
 export function nativeMouseDown(selectorOrDomElement, options) {
-  fireNativeMouseEvent('mousedown', selectorOrDomElement, options);
+  triggerEvent(selectorOrDomElement, 'mousedown', options);
 }
 
 export function nativeMouseUp(selectorOrDomElement, options) {
-  fireNativeMouseEvent('mouseup', selectorOrDomElement, options);
+  triggerEvent(selectorOrDomElement, 'mouseup', options);
 }
 
 export function triggerKeydown(domElement, k) {
-  let oEvent = document.createEvent('Events');
-  oEvent.initEvent('keydown', true, true);
-  $.extend(oEvent, {
-    view: window,
-    ctrlKey: false,
-    altKey: false,
-    shiftKey: false,
-    metaKey: false,
-    keyCode: k,
-    charCode: k
-  });
-  run(() => {
-    domElement.dispatchEvent(oEvent);
-  });
+  keyEvent(domElement, 'keydown', k);
 }
 
 export function typeInSearch(scopeOrText, text) {
@@ -78,24 +41,12 @@ export function clickTrigger(scope, options = {}) {
 }
 
 export function nativeTouch(selectorOrDomElement) {
-  let event = new window.Event('touchstart', { bubbles: true, cancelable: true, view: window });
-  let target;
-
-  if (typeof selectorOrDomElement === 'string') {
-    target = $(selectorOrDomElement)[0];
-  } else {
-    target = selectorOrDomElement;
-  }
-  run(() => target.dispatchEvent(event));
-  run(() => {
-    event = new window.Event('touchend', { bubbles: true, cancelable: true, view: window });
-    target.dispatchEvent(event);
-  });
+  triggerEvent(selectorOrDomElement, 'touchstart');
+  triggerEvent(selectorOrDomElement, 'touchend');
 }
 
 export function touchTrigger() {
-  let selector = '.ember-power-select-trigger';
-  nativeTouch(selector);
+  nativeTouch('.ember-power-select-trigger');
 }
 
 // Helpers for acceptance tests
@@ -122,11 +73,11 @@ export default function() {
 
     // Select the option with the given text
     andThen(function() {
-      let potentialTargets = $(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
+      let potentialTargets = find(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
       let target;
       if (potentialTargets.length === 0) {
         // If treating the value as text doesn't gave use any result, let's try if it's a css selector
-        potentialTargets = $(`#${contentId} ${valueOrSelector}`).toArray();
+        potentialTargets = find(`#${contentId} ${valueOrSelector}`).toArray();
       }
       if (potentialTargets.length > 1) {
         target = potentialTargets.filter((t) => t.textContent.trim() === valueOrSelector)[0] || potentialTargets[0];
@@ -153,15 +104,15 @@ export default function() {
     }
 
     let contentId = `${$trigger.attr('aria-owns')}`;
-    let isMultipleSelect = $(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
+    let isMultipleSelect = find(`${cssPath} .ember-power-select-trigger-multiple-input`).length > 0;
 
-    let $content = $(`#${contentId}`);
+    let $content = find(`#${contentId}`);
     let dropdownIsClosed = $content.length === 0 || $content.hasClass('ember-basic-dropdown-content-placeholder');
     if (dropdownIsClosed) {
       nativeMouseDown(triggerPath);
       wait();
     }
-    let isDefaultSingleSelect = $('.ember-power-select-search-input').length > 0;
+    let isDefaultSingleSelect = find('.ember-power-select-search-input').length > 0;
 
     if (isMultipleSelect) {
       fillIn(`${triggerPath} .ember-power-select-trigger-multiple-input`, value);
