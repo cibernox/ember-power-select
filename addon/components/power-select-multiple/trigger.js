@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Component from 'ember-component';
 import layout from '../../templates/components/power-select-multiple/trigger';
 import get from 'ember-metal/get';
-import computed from 'ember-computed';
+import computed, { and, not } from 'ember-computed';
 import service from 'ember-service/inject';
 import { scheduleOnce } from 'ember-runloop';
 import { assert } from 'ember-metal/utils';
@@ -20,6 +20,9 @@ export default Component.extend({
   layout,
   textMeasurer: service(),
   _lastIsOpen: false,
+
+  _searchDisabled: not('searchEnabled'),
+  _placeholderAndSearchDisabled: and('placeholder', '_searchDisabled'),
 
   // Lifecycle hooks
   didInsertElement() {
