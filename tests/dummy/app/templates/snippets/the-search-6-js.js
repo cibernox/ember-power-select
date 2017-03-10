@@ -3,6 +3,6 @@ export default Ember.Controller.extend({
 });
 
 // helpers/highlight-substr.js
-export default Ember.Helper.helper(function([text, termToHighlight]) {
-  return Ember.String.htmlSafe(text.replace(new RegExp(termToHighlight, 'i'), '<b>$&</b>')); // Warning. This is not XSS safe!
-});
+// export default Ember.Helper.helper(function([text, termToHighlight]) {
+//   return Ember.String.htmlSafe(text.replace(new RegExp(termToHighlight, 'i'), '<b>$&</b>')); // Warning. This is not XSS safe!
+// });
