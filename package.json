@@ -63,7 +63,7 @@
     "ember-native-dom-helpers": "^0.3.2",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^2.0.3",
-    "ember-source": "^2.11.0-beta.8",
+    "ember-source": "2.11.3",
     "eslint-plugin-ember-suave": "^1.0.0",
     "liquid-fire": "0.26.7",
     "loader.js": "^4.0.10",
