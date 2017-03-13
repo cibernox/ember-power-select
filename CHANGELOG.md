@@ -1,5 +1,9 @@
 # Master
 
+# 1.6.0-beta.0
+- [INTERNAL/BREAKING??] Update to Babel 6. There is no reason to think this should be
+  breaking, but releasing a beta first, just in case.
+
 # 1.5.0
 
 # 1.5.0-beta.2

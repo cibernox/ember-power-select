@@ -61,6 +61,9 @@
   left: 0;
   pointer-events: none; }
 
+.ember-basic-dropdown-content-wormhole-origin {
+  display: inline; }
+
 .ember-power-select {
   position: relative; }
 
