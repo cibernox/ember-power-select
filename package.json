@@ -79,7 +79,7 @@
     "dropdown"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "^0.30.2",
+    "ember-basic-dropdown": "0.30.2",
     "ember-cli-babel": "^6.0.0-alpha.8",
     "ember-cli-htmlbars": "^1.1.1",
     "ember-concurrency": "^0.7.15",
