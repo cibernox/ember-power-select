@@ -1,5 +1,10 @@
 # Master
 
+# 1.6.1
+- [BUGFIX] Fix double render bug when disabling a component a select. It was caused
+  because several blur events were modifying the same property twice. Now changes
+  to `isActive` are coalesced.
+
 # 1.6.0
 - [INTERNAL] Bump a few internal dependencies and relese babel 6 in stable.
 
