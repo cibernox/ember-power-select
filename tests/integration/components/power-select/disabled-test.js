@@ -271,3 +271,19 @@ test('If a select gets disabled while it\'s open, it closes automatically', func
   run(() => this.set('isDisabled', true));
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is now closed');
 });
+
+test('BUGFIX: A component can be disabled on selection', function(assert) {
+  assert.expect(2);
+  this.numbers = numbers;
+
+  this.render(hbs`
+   {{#power-select options=numbers selected=foo onchange=(action (mut foo)) disabled=foo  as |opt|}}
+     {{opt}}
+   {{/power-select}}
+  `);
+
+  clickTrigger();
+  click(findAll('.ember-power-select-option')[1]);
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'two', 'The option is selected');
+  assert.equal(find('.ember-power-select-trigger').attributes['aria-disabled'].value, 'true');
+});
