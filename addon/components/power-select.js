@@ -366,11 +366,11 @@ export default Component.extend({
     },
 
     activate() {
-      this.updateState({ isActive: true });
+      scheduleOnce('actions', this, 'setIsActive', true);
     },
 
     deactivate() {
-      this.updateState({ isActive: false });
+      scheduleOnce('actions', this, 'setIsActive', false);
     }
   },
 
@@ -432,6 +432,10 @@ export default Component.extend({
   }).restartable(),
 
   // Methods
+  setIsActive(isActive) {
+    this.updateState({ isActive });
+  },
+
   filter(options, term, skipDisabled = false) {
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
   },
