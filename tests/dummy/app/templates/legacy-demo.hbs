@@ -2,6 +2,10 @@
   <input type="text" value="sample input">
   <h2 id="title">Select with 300 items</h2>
 
+{{#power-select options=simpleOptions selected=trick disabled=trick onchange=(action (mut trick)) as |opt|}}
+  {{opt}}
+{{/power-select}}
+
 {{!--   <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly simpleOptions) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
@@ -48,12 +52,12 @@
     {{option}}
   {{/power-select}}
 
-  <h4>Select of strings with value tracking</h4> --}}
+  <h4>Select of strings with value tracking</h4>
   {{#power-select options=(readonly moarNumbers) selected=(readonly simpleSelected) onchange=(action (mut simpleSelected)) as |option|}}
     {{option}}
   {{/power-select}}
 
-  {{!-- <h4>Diacritics search</h4>
+  <h4>Diacritics search</h4>
   {{#power-select options=(readonly names) selected=diacriticName onchange=(action (mut diacriticName)) as |option|}}
     {{option}}
   {{/power-select}}
