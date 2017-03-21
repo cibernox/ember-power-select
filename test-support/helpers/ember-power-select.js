@@ -63,12 +63,16 @@ export function touchTrigger() {
 // Helpers for acceptance tests
 
 export default function() {
-  Test.registerAsyncHelper('selectChoose', function(app, cssPath, valueOrSelector) {
+  function findTrigger(cssPath) {
     let $trigger = find(`${cssPath} .ember-power-select-trigger`);
-
     if ($trigger === undefined || $trigger.length === 0) {
       $trigger = find(cssPath);
     }
+    return $trigger;
+  }
+  
+  Test.registerAsyncHelper('selectChoose', function(app, cssPath, valueOrSelector) {
+    let $trigger = findTrigger(cssPath);
 
     if ($trigger.length === 0) {
       throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but no select was found using selector "${cssPath}"`);
@@ -84,6 +88,10 @@ export default function() {
 
     // Select the option with the given text
     andThen(function() {
+      if (contentId === undefined) { // try to find a fresh contentId
+        $trigger = findTrigger(cssPath);
+        contentId = `${$trigger.attr('aria-owns')}`;
+      }
       let potentialTargets = find(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
       let target;
       if (potentialTargets.length === 0) {
