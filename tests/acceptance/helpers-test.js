@@ -1,5 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { currentURL, find, findAll, click, visit } from 'ember-native-dom-helpers';
 
 moduleForAcceptance('Acceptance | helpers | selectChoose');
 
@@ -12,9 +13,9 @@ test('selectChoose helper opens the select and selects the option with the given
   });
 
   andThen(function() {
-    assert.equal(find('.select-choose .ember-power-select-trigger').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
-    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+    assert.equal(find('.select-choose .ember-power-select-trigger').textContent.trim(), 'three', 'The proper value has been selected');
+    assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
+    assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
   });
 });
 
@@ -31,9 +32,9 @@ test('selectChoose selects the option with the given text on an already opened s
   });
 
   andThen(function() {
-    assert.equal(find('.select-choose .ember-power-select-trigger').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
-    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+    assert.equal(find('.select-choose .ember-power-select-trigger').textContent.trim(), 'three', 'The proper value has been selected');
+    assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
+    assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
   });
 });
 
@@ -44,9 +45,9 @@ test('the selectChoose helper works with an onopen function that fetches data as
     selectChoose('.select-choose-onopen', 'three');
   });
   andThen(function() {
-    assert.equal(find('.select-choose-onopen .ember-power-select-trigger').text().trim().split(' ')[0].trim(), 'three', 'The proper value has been selected');
-    assert.equal(find('.ember-power-select-options').length, 0, 'The select is closed');
-    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+    assert.equal(find('.select-choose-onopen .ember-power-select-trigger').textContent.trim().split(' ')[0].trim(), 'three', 'The proper value has been selected');
+    assert.notOk(find('.ember-power-select-options'), 'The select is closed');
+    assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
   });
 });
 
@@ -57,9 +58,9 @@ test('the selectChoose helper works with an onopen function that fetches data as
     selectChoose('.select-choose-onopen-multiple', 'three');
   });
   andThen(function() {
-    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-multiple-option').length, 1, 'One options has been selected');
-    assert.ok(/three/.test(find('.select-choose-onopen-multiple .ember-power-select-multiple-option:eq(0)').text().trim()), 'The proper value has been selected');
-    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
+    assert.equal(findAll('.select-choose-onopen-multiple .ember-power-select-multiple-option').length, 1, 'One options has been selected');
+    assert.ok(/three/.test(find('.select-choose-onopen-multiple .ember-power-select-multiple-option').textContent.trim()), 'The proper value has been selected');
+    assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
   });
 });
 
@@ -70,9 +71,9 @@ test('the selectChoose helper works when it receives the class of the trigger', 
     selectChoose('.select-with-class-in-trigger', 'three');
   });
   andThen(function() {
-    assert.equal(find('.select-with-class-in-trigger').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
-    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+    assert.equal(find('.select-with-class-in-trigger').textContent.trim(), 'three', 'The proper value has been selected');
+    assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
+    assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
   });
 });
 
@@ -85,9 +86,9 @@ test('the selectChoose helper works when it receives the css selector of the cho
   });
 
   andThen(function() {
-    assert.equal(find('.select-choose').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
-    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+    assert.equal(find('.select-choose').textContent.trim(), 'three', 'The proper value has been selected');
+    assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
+    assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
   });
 });
 
@@ -98,9 +99,9 @@ test('the selectChoose helper works when it receives a wildcard css class', func
     selectChoose('*', 'three');
   });
   andThen(function() {
-    assert.equal(find('.select-choose').text().trim(), 'three', 'The proper value has been selected');
-    assert.equal(find('.ember-power-select-options').length, 0, 'The selectis closed');
-    assert.equal(find('.select-choose-target').text().trim(), 'You\'ve selected: three');
+    assert.equal(find('.select-choose').textContent.trim(), 'three', 'The proper value has been selected');
+    assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
+    assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
   });
 });
 
@@ -140,7 +141,7 @@ test('selectSearch helper searches in the given single select if it is already o
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -154,7 +155,7 @@ test('selectSearch helper searches an opened select if using a wildcard css sele
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -168,7 +169,7 @@ test('selectSearch helper opens and searches select if using a wildcard css sele
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -181,7 +182,7 @@ test('selectSearch helper searches in the given single select, opening it if nee
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -195,7 +196,7 @@ test('selectSearch helper searches in the given multiple select opened', functio
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -208,7 +209,7 @@ test('selectSearch helper searches in the given multiple select closed', functio
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -222,7 +223,7 @@ test('selectSearch helper works even with custom components as long as the input
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -235,7 +236,7 @@ test('the selectSearch helper works when it receives the class of the trigger', 
   });
 
   andThen(function() {
-    assert.equal(find('.ember-power-select-options').text().trim(), 'three');
+    assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
   });
 });
 
@@ -259,17 +260,17 @@ test('removeMultipleOption removes selected option', function(assert) {
   selectChoose('.select-choose-onopen-multiple', 'three');
   selectChoose('.select-choose-onopen-multiple', 'four');
   andThen(function() {
-    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 2, 'Multiple options selected');
+    assert.equal(findAll('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 2, 'Multiple options selected');
   });
 
   removeMultipleOption('.select-choose-onopen-multiple', 'three');
   andThen(function() {
-    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 1, 'One option removed');
+    assert.equal(findAll('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 1, 'One option removed');
   });
 
   removeMultipleOption('.select-choose-onopen-multiple', 'four');
   andThen(function() {
-    assert.equal(find('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 0, 'Last option removed');
+    assert.equal(findAll('.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li').length, 0, 'Last option removed');
   });
 });
 
@@ -279,12 +280,12 @@ test('removeMultipleOption works with async onchange action', function(assert) {
   selectChoose('#select-multiple-async', 'three');
   selectChoose('#select-multiple-async', 'four');
   andThen(function() {
-    assert.equal(find('#select-multiple-async .ember-power-select-multiple-option').length, 2, 'Multiple options selected');
+    assert.equal(findAll('#select-multiple-async .ember-power-select-multiple-option').length, 2, 'Multiple options selected');
   });
 
   removeMultipleOption('#select-multiple-async', 'three');
   andThen(function() {
-    assert.equal(find('#select-multiple-async .ember-power-select-multiple-option').length, 1, 'One option removed');
+    assert.equal(findAll('#select-multiple-async .ember-power-select-multiple-option').length, 1, 'One option removed');
   });
 });
 
@@ -294,18 +295,18 @@ test('clearSelected removes selected option', function(assert) {
   visit('/helpers-testing');
 
   andThen(function() {
-    assert.notOk(find('.select-choose-onopen .ember-power-select-clear-btn').text());
+    assert.notOk(find('.select-choose-onopen .ember-power-select-clear-btn'));
   });
 
   selectChoose('.select-choose-onopen', 'three');
   andThen(function() {
-    assert.ok(find('.select-choose-onopen .ember-power-select-clear-btn').text());
-    assert.ok(find('.select-choose-onopen .ember-power-select-selected-item').text(), 'three', 'The proper value has been selected');
+    assert.ok(find('.select-choose-onopen .ember-power-select-clear-btn'));
+    assert.ok(find('.select-choose-onopen .ember-power-select-selected-item').textContent.trim(), 'three', 'The proper value has been selected');
   });
 
   clearSelected('.select-choose-onopen', 'three');
   andThen(function() {
-    assert.notOk(find('.select-choose-onopen .ember-power-select-clear-btn').text());
+    assert.notOk(find('.select-choose-onopen .ember-power-select-clear-btn'));
   });
 });
 
@@ -313,17 +314,17 @@ test('clearSelected works with async onchange action', function(assert) {
   visit('/helpers-testing');
 
   andThen(function() {
-    assert.notOk(find('.select-deselect-async .ember-power-select-clear-btn').text());
+    assert.notOk(find('.select-deselect-async .ember-power-select-clear-btn'));
   });
 
   selectChoose('.select-deselect-async', 'three');
   andThen(function() {
-    assert.ok(find('.select-deselect-async .ember-power-select-clear-btn').text());
-    assert.ok(find('.select-deselect-async .ember-power-select-selected-item').text(), 'three', 'The proper value has been selected');
+    assert.ok(find('.select-deselect-async .ember-power-select-clear-btn'));
+    assert.ok(find('.select-deselect-async .ember-power-select-selected-item').textContent.trim(), 'three', 'The proper value has been selected');
   });
 
   clearSelected('.select-deselect-async', 'three');
   andThen(function() {
-    assert.notOk(find('.select-deselect-async .ember-power-select-clear-btn').text());
+    assert.notOk(find('.select-deselect-async .ember-power-select-clear-btn'));
   });
 });
