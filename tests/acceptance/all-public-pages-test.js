@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 import Ember from 'ember';
+import { currentURL, find, click, visit } from 'ember-native-dom-helpers';
 
 moduleForAcceptance('Acceptance | All Public Pages');
 
@@ -39,10 +40,10 @@ function keepClickingNext(initialUrl, nextLinkSelector) {
         }
         seenURLs[currentURL()] = true;
         let nextLink = find(nextLinkSelector);
-        if (nextLink.length === 0) {
+        if (!nextLink) {
           resolve(Object.keys(seenURLs));
         } else {
-          click(nextLinkSelector);
+          click(nextLink);
           visitNextPage();
         }
       });

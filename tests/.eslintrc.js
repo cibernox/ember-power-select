@@ -1,9 +1,7 @@
 module.exports = {
-  env: {
-    'embertest': true
-  },
   globals: {
     server: true,
+    andThen: true,
     selectChoose: true,
     selectSearch: true,
     removeMultipleOption: true,
