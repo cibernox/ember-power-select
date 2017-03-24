@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
-import { find, findAll, click, keyEvent } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, click, keyEvent } from 'ember-native-dom-helpers';
 
 const { run } = Ember;
 

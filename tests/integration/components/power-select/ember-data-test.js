@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { startMirage } from '../../../../initializers/ember-cli-mirage';
 import emberDataInitializer from '../../../../initializers/ember-data';
-import { find, findAll, click } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, click } from 'ember-native-dom-helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Ember-data integration)', {
   integration: true,

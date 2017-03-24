@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
 import { clickTrigger, findContains } from '../../../helpers/ember-power-select';
-import { find, findAll, keyEvent } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, keyEvent } from 'ember-native-dom-helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Accesibility)', {
   integration: true

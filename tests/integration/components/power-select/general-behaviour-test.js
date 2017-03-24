@@ -8,7 +8,7 @@ import {
   names,
   countries
 } from '../constants';
-import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers';
 
 const { RSVP, Object: eObject, get } = Ember;
 

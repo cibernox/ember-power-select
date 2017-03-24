@@ -1,5 +1,5 @@
 import Test from 'ember-test';
-import { click, fillIn, keyEvent, triggerEvent, findAll } from 'ember-native-dom-helpers/test-support/helpers';
+import { click, fillIn, keyEvent, triggerEvent, findAll } from 'ember-native-dom-helpers';
 
 /**
  * @private
