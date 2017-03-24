@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
-import { find } from 'ember-native-dom-helpers/test-support/helpers';
+import { find } from 'ember-native-dom-helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using attrs)', {
   integration: true

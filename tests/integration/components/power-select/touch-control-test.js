@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { touchTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
-import { find, findAll, tap } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, tap } from 'ember-native-dom-helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Touch control)', {
   integration: true

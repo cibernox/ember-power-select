@@ -2404,6 +2404,20 @@ ember-cli-babel@^6.0.0-alpha.8, ember-cli-babel@^6.0.0-beta.4:
     clone "^2.0.0"
     ember-cli-version-checker "^1.2.0"
 
+ember-cli-babel@^6.0.0-beta.9:
+  version "6.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.0.0-beta.9.tgz#b597d52f12d4429cd5716b55f749ebf6144b7b16"
+  dependencies:
+    amd-name-resolver "0.0.6"
+    babel-plugin-transform-es2015-modules-amd "^6.24.0"
+    babel-polyfill "^6.16.0"
+    babel-preset-env "^1.2.0"
+    broccoli-babel-transpiler "^6.0.0"
+    broccoli-funnel "^1.0.0"
+    broccoli-source "^1.1.0"
+    clone "^2.0.0"
+    ember-cli-version-checker "^1.2.0"
+
 ember-cli-blueprint-test-helpers@0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/ember-cli-blueprint-test-helpers/-/ember-cli-blueprint-test-helpers-0.14.0.tgz#0b259a6f5ec4d6ab08bb2243c5a66f97c67cda4e"
@@ -2993,11 +3007,18 @@ ember-maybe-import-regenerator@^0.1.4:
     ember-cli-babel "^5.1.6"
     regenerator-runtime "^0.9.5"
 
-ember-native-dom-helpers@^0.3.0, ember-native-dom-helpers@^0.3.2:
+ember-native-dom-helpers@^0.3.0:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.3.2.tgz#3c488ef564481c2b700f353bf2b755e11e31fd7c"
   dependencies:
     ember-cli-babel "^5.1.7"
+
+ember-native-dom-helpers@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.3.4.tgz#7eb7e1c0f3ad212f4c0439a0fc393145d84158f8"
+  dependencies:
+    broccoli-funnel "^1.1.0"
+    ember-cli-babel "^6.0.0-beta.9"
 
 ember-pagefront@0.10.10:
   version "0.10.10"

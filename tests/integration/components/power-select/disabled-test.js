@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import run from 'ember-runloop';
 import { clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
-import { find, findAll, triggerEvent, keyEvent, click } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, triggerEvent, keyEvent, click } from 'ember-native-dom-helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Disabled)', {
   integration: true

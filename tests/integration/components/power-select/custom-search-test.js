@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers, countries } from '../constants';
-import { find, findAll, click } from 'ember-native-dom-helpers/test-support/helpers';
+import { find, findAll, click } from 'ember-native-dom-helpers';
 
 const { RSVP } = Ember;
 
