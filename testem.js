@@ -9,5 +9,10 @@ module.exports = {
   "launch_in_dev": [
     "PhantomJS",
     "Chrome"
-  ]
+  ],
+  "browser_args": {
+    "Chrome": [
+      "--touch-events"
+    ]
+  }
 };

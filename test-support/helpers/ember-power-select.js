@@ -1,6 +1,6 @@
 import Test from 'ember-test';
+import wait from 'ember-test-helpers/wait';
 import { click, fillIn, keyEvent, triggerEvent, findAll } from 'ember-native-dom-helpers';
-
 /**
  * @private
  * @param {String} selector CSS3 selector of the elements to check the content
@@ -63,7 +63,7 @@ export function touchTrigger() {
 // Helpers for acceptance tests
 
 export default function() {
-  Test.registerAsyncHelper('selectChoose', function(app, cssPath, valueOrSelector) {
+  Test.registerAsyncHelper('selectChoose', async function(app, cssPath, valueOrSelector) {
     let $trigger = find(`${cssPath} .ember-power-select-trigger`);
 
     if ($trigger === undefined || $trigger.length === 0) {
@@ -78,31 +78,30 @@ export default function() {
     let $content = find(`#${contentId}`);
     // If the dropdown is closed, open it
     if ($content.length === 0 || $content.hasClass('ember-basic-dropdown-content-placeholder')) {
-      nativeMouseDown($trigger.get(0));
-      wait();
+      await click($trigger.get(0));
+      await wait();
     }
 
     // Select the option with the given text
-    andThen(function() {
-      let potentialTargets = find(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
-      let target;
-      if (potentialTargets.length === 0) {
-        // If treating the value as text doesn't gave use any result, let's try if it's a css selector
-        potentialTargets = find(`#${contentId} ${valueOrSelector}`).toArray();
-      }
-      if (potentialTargets.length > 1) {
-        target = potentialTargets.filter((t) => t.textContent.trim() === valueOrSelector)[0] || potentialTargets[0];
-      } else {
-        target = potentialTargets[0];
-      }
-      if (!target) {
-        throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`);
-      }
-      nativeMouseUp(target);
-    });
+    let potentialTargets = find(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
+    let target;
+    if (potentialTargets.length === 0) {
+      // If treating the value as text doesn't gave use any result, let's try if it's a css selector
+      potentialTargets = find(`#${contentId} ${valueOrSelector}`).toArray();
+    }
+    if (potentialTargets.length > 1) {
+      target = potentialTargets.filter((t) => t.textContent.trim() === valueOrSelector)[0] || potentialTargets[0];
+    } else {
+      target = potentialTargets[0];
+    }
+    if (!target) {
+      throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`);
+    }
+    await click(target);
+    return wait();
   });
 
-  Test.registerAsyncHelper('selectSearch', function(app, cssPath, value) {
+  Test.registerAsyncHelper('selectSearch', async function(app, cssPath, value) {
     let triggerPath = `${cssPath} .ember-power-select-trigger`;
     let $trigger = find(triggerPath);
     if ($trigger === undefined || $trigger.length === 0) {
@@ -120,42 +119,42 @@ export default function() {
     let $content = find(`#${contentId}`);
     let dropdownIsClosed = $content.length === 0 || $content.hasClass('ember-basic-dropdown-content-placeholder');
     if (dropdownIsClosed) {
-      nativeMouseDown(triggerPath);
-      wait();
+      await click(triggerPath);
+      await wait();
     }
     let isDefaultSingleSelect = find('.ember-power-select-search-input').length > 0;
 
     if (isMultipleSelect) {
-      fillIn(`${triggerPath} .ember-power-select-trigger-multiple-input`, value);
+      await fillIn(`${triggerPath} .ember-power-select-trigger-multiple-input`, value);
     } else if (isDefaultSingleSelect) {
-      fillIn('.ember-power-select-search-input', value);
+      await fillIn('.ember-power-select-search-input', value);
     } else { // It's probably a customized version
       let inputIsInTrigger = !!find(`${cssPath} .ember-power-select-trigger input[type=search]`)[0];
       if (inputIsInTrigger) {
-        fillIn(`${triggerPath} input[type=search]`, value);
+        await fillIn(`${triggerPath} input[type=search]`, value);
       } else {
-        fillIn(`#${contentId} .ember-power-select-search-input[type=search]`, 'input');
+        await fillIn(`#${contentId} .ember-power-select-search-input[type=search]`, 'input');
       }
     }
-
+    return wait();
   });
 
-  Test.registerAsyncHelper('removeMultipleOption', function(app, cssPath, value) {
+  Test.registerAsyncHelper('removeMultipleOption', async function(app, cssPath, value) {
     let elem = find(`${cssPath} .ember-power-select-multiple-options > li:contains(${value}) > .ember-power-select-multiple-remove-btn`).get(0);
     try {
-      nativeMouseDown(elem);
-      wait();
+      await click(elem);
+      return wait();
     } catch(e) {
       console.warn('css path to remove btn not found');
       throw e;
     }
   });
 
-  Test.registerAsyncHelper('clearSelected', function(app, cssPath) {
+  Test.registerAsyncHelper('clearSelected', async function(app, cssPath) {
     let elem = find(`${cssPath} .ember-power-select-clear-btn`).get(0);
     try {
-      nativeMouseDown(elem);
-      wait();
+      await click(elem);
+      return wait();
     } catch(e) {
       console.warn('css path to clear btn not found');
       throw e;
