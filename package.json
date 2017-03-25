@@ -60,6 +60,7 @@
     "ember-fastboot-test-helpers": "0.1.1",
     "ember-href-to": "1.11.2",
     "ember-load-initializers": "^0.6.0",
+    "ember-maybe-import-regenerator": "^0.1.5",
     "ember-native-dom-helpers": "^0.3.5",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^3.0.0",
