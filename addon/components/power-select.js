@@ -84,6 +84,7 @@ export default Component.extend({
   afterOptionsComponent: fallbackIfUndefined(null),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   optionsComponent: fallbackIfUndefined('power-select/options'),
+  groupComponent: fallbackIfUndefined('power-select/power-select-group'),
   selectedItemComponent: fallbackIfUndefined(null),
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),

@@ -5,18 +5,29 @@
 {{/if}}
 {{#each options as |opt index|}}
   {{#if (ember-power-select-is-group opt)}}
-    <li class="ember-power-select-group" aria-disabled={{ember-power-select-true-string-if-present opt.disabled}} role="option">
-      <span class="ember-power-select-group-name">{{opt.groupName}}</span>
-      {{#component optionsComponent
-        options=(readonly opt.options)
-        select=(readonly select)
-        groupIndex=(concat groupIndex index ".")
-        optionsComponent=(readonly optionsComponent)
-        role="group"
-        class="ember-power-select-options" as |option|}}
-        {{yield option select}}
-      {{/component}}
-    </li>
+    {{#with
+      (hash
+        group=(component groupComponent
+          groupName=(readonly opt.groupName)
+          disabled=(readonly opt.disabled)
+        )
+        options=(component optionsComponent
+          options=(readonly opt.options)
+          select=(readonly select)
+          groupIndex=(concat groupIndex index ".")
+          optionsComponent=optionsComponent
+          groupComponent=groupComponent
+          role="group"
+          class="ember-power-select-options"
+        )
+      )
+      as |groupWithOptions|}}
+      {{#groupWithOptions.group}}
+        {{#groupWithOptions.options as |option|}}
+          {{yield option select}}
+        {{/groupWithOptions.options}}
+      {{/groupWithOptions.group}}
+    {{/with}}
   {{else}}
     <li class="ember-power-select-option"
       aria-selected="{{ember-power-select-is-selected opt select.selected}}"

@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
+import { groupedNumbers } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';
 import { find, click } from 'ember-native-dom-helpers';
 
@@ -204,4 +205,25 @@ test('placeholder can be customized using placeholderComponent', function(assert
     'This is a very bold placeholder',
     'The placeholder content is equal.'
    );
+});
+
+test('group component can be customized using groupComponent', function(assert) {
+  assert.expect(3);
+  this.groupedNumbers = groupedNumbers;
+
+  this.render(hbs`
+    {{#power-select options=groupedNumbers groupComponent='collapsible-group' onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.ok(find('.ember-power-select-group-name.collapsible'), 'class .collapsible comes from custom component');
+
+  click('.ember-power-select-group-name.collapsible');
+  assert.ok(find('.ember-power-select-group-name.collapsible.is-collapsed'), 'class .is-collapsed is toggled when clicked');
+
+  click('.ember-power-select-group-name.collapsible');
+  assert.ok(find('.ember-power-select-group-name.collapsible:not(.is-collapsed)'), 'class .is-collapsed is toggled when clicked');
+
 });

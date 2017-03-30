@@ -68,3 +68,11 @@
     border-bottom: 1px solid red;
   }
 }
+
+.ember-power-select-group-name.collapsible {
+  cursor: pointer;
+}
+
+.is-collapsed {
+  color: red;
+}
