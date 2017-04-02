@@ -2368,7 +2368,7 @@ ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.10, ember-cli-babel@^5.1.3, ember-c
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^6.0.0-alpha.8, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.9:
+ember-cli-babel@^6.0.0-alpha.8, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.5, ember-cli-babel@^6.0.0-beta.9:
   version "6.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.0.0-beta.9.tgz#b597d52f12d4429cd5716b55f749ebf6144b7b16"
   dependencies:
@@ -2856,13 +2856,13 @@ ember-code-snippet@1.8.1:
     glob "^4.0.4"
     highlight.js "^9.5.0"
 
-ember-concurrency@^0.7.15:
-  version "0.7.19"
-  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.7.19.tgz#095f2ede1b56ab068958cac5b55e77b9de67e1c6"
+ember-concurrency@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.1.tgz#28f4e05d1afe15f9d8611f37a87a59ce8c21a331"
   dependencies:
-    ember-cli-babel "^5.1.5"
+    ember-cli-babel "^6.0.0-beta.5"
     ember-getowner-polyfill "^1.1.0"
-    ember-maybe-import-regenerator "^0.1.4"
+    ember-maybe-import-regenerator "^0.1.5"
 
 ember-data@^2.12.0:
   version "2.12.1"
@@ -2965,9 +2965,18 @@ ember-lodash@^4.0:
     ember-cli-babel "^5.1.7"
     lodash-es "^4.17.4"
 
-ember-maybe-import-regenerator@^0.1.4, ember-maybe-import-regenerator@^0.1.5:
+ember-maybe-import-regenerator@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.5.tgz#9f488a6406a04478dfd5784f2defa56f06b08288"
+  dependencies:
+    broccoli-funnel "^1.0.1"
+    broccoli-merge-trees "^1.0.0"
+    ember-cli-babel "^6.0.0-beta.4"
+    regenerator-runtime "^0.9.5"
+
+ember-maybe-import-regenerator@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.6.tgz#35d41828afa6d6a59bc0da3ce47f34c573d776ca"
   dependencies:
     broccoli-funnel "^1.0.1"
     broccoli-merge-trees "^1.0.0"

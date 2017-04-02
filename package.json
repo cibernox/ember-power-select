@@ -60,7 +60,7 @@
     "ember-fastboot-test-helpers": "0.1.1",
     "ember-href-to": "1.11.2",
     "ember-load-initializers": "^0.6.0",
-    "ember-maybe-import-regenerator": "^0.1.5",
+    "ember-maybe-import-regenerator": "^0.1.6",
     "ember-native-dom-helpers": "^0.3.5",
     "ember-pagefront": "0.10.10",
     "ember-resolver": "^3.0.0",
@@ -83,7 +83,7 @@
     "ember-basic-dropdown": "^0.31.0",
     "ember-cli-babel": "^6.0.0-beta.9",
     "ember-cli-htmlbars": "^1.1.1",
-    "ember-concurrency": "^0.7.15",
+    "ember-concurrency": "^0.8.1",
     "ember-text-measurer": "^0.3.3",
     "ember-truth-helpers": "^1.3.0"
   },
