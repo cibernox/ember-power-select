@@ -10,6 +10,8 @@
         group=(component groupComponent
           groupName=(readonly opt.groupName)
           disabled=(readonly opt.disabled)
+          select=(readonly select)
+          extra=(readonly extra)
         )
         options=(component optionsComponent
           options=(readonly opt.options)
@@ -17,6 +19,7 @@
           groupIndex=(concat groupIndex index ".")
           optionsComponent=optionsComponent
           groupComponent=groupComponent
+          extra=(readonly extra)
           role="group"
           class="ember-power-select-options"
         )
