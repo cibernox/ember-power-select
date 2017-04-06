@@ -220,7 +220,7 @@ test('groupComponent can be overridden', function(assert) {
   }));
 
   this.render(hbs`
-    {{#power-select options=groupedNumbers groupComponent='custom-group-component' as |country|}}
+    {{#power-select options=groupedNumbers groupComponent='custom-group-component' onchange=(action (mut foo)) as |country|}}
       {{country.name}}
     {{/power-select}}
   `);
@@ -234,7 +234,7 @@ test('groupComponent has extension points', function(assert) {
   this.groupedNumbers = groupedNumbers;
   let numberOfGroups = 5; // number of groups in groupedNumbers
   assert.expect(4 * numberOfGroups + 1);
-  
+
   let extra = { foo: 'bar' };
   this.extra = extra;
 
@@ -252,7 +252,7 @@ test('groupComponent has extension points', function(assert) {
   }));
 
   this.render(hbs`
-    {{#power-select options=groupedNumbers extra=extra as |country|}}
+    {{#power-select options=groupedNumbers extra=extra onchange=(action (mut foo)) as |country|}}
       {{country.name}}
     {{/power-select}}
   `);
