@@ -1,6 +1,6 @@
 <li class="ember-power-select-group" aria-disabled={{ember-power-select-true-string-if-present disabled}} role="option">
   <span class="ember-power-select-group-name collapsible {{if collapsed 'is-collapsed'}}" onclick={{toggle 'collapsed' this}}>{{groupName}}</span>
-  {{#unless collapsed}}
+  <div class="{{if collapsed 'hide-options'}}">
     {{yield}}
-  {{/unless}}
+  </div>
 </li>
