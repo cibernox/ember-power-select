@@ -3,5 +3,7 @@ import layout from '../../templates/components/power-select/power-select-group';
 
 export default Component.extend({
   layout,
-  tagName: ''
+  tagName: '',
+  disabled: computed.reads('group.disabled'),
+  groupName: computed.reads('group.groupName')
 });

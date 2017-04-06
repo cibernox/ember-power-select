@@ -5,32 +5,23 @@
 {{/if}}
 {{#each options as |opt index|}}
   {{#if (ember-power-select-is-group opt)}}
-    {{#with
-      (hash
-        group=(component groupComponent
-          groupName=(readonly opt.groupName)
-          disabled=(readonly opt.disabled)
-          select=(readonly select)
-          extra=(readonly extra)
-        )
-        options=(component optionsComponent
-          options=(readonly opt.options)
-          select=(readonly select)
-          groupIndex=(concat groupIndex index ".")
-          optionsComponent=optionsComponent
-          groupComponent=groupComponent
-          extra=(readonly extra)
-          role="group"
-          class="ember-power-select-options"
-        )
-      )
-      as |groupWithOptions|}}
-      {{#groupWithOptions.group}}
-        {{#groupWithOptions.options as |option|}}
-          {{yield option select}}
-        {{/groupWithOptions.options}}
-      {{/groupWithOptions.group}}
-    {{/with}}
+    {{#component groupComponent
+        group=(readonly opt)
+        select=(readonly select)
+        extra=(readonly extra)
+      }}
+      {{#component optionsComponent
+        options=(readonly opt.options)
+        select=(readonly select)
+        groupIndex=(concat groupIndex index ".")
+        optionsComponent=(readonly optionsComponent)
+        groupComponent=(readonly groupComponent)
+        extra=(readonly extra)
+        role="group"
+        class="ember-power-select-options" as |option|}}
+        {{yield option select}}
+      {{/component}}
+    {{/component}}
   {{else}}
     <li class="ember-power-select-option"
       aria-selected="{{ember-power-select-is-selected opt select.selected}}"
