@@ -1,8 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
+import { groupedNumbers } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';
-import { find, click } from 'ember-native-dom-helpers';
+import { find, findAll, click } from 'ember-native-dom-helpers';
+import get from 'ember-metal/get';
+import getOwner from 'ember-owner/get';
+import { isPresent } from 'ember-utils';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
   integration: true
@@ -203,5 +207,54 @@ test('placeholder can be customized using placeholderComponent', function(assert
     find('.ember-power-select-placeholder').textContent.trim(),
     'This is a very bold placeholder',
     'The placeholder content is equal.'
-   );
+  );
+});
+
+test('groupComponent can be overridden', function(assert) {
+  this.groupedNumbers = groupedNumbers;
+  let numberOfGroups = 5; // number of groups in groupedNumber;
+
+  let PowerSelectGroupComponent = get(getOwner(this).factoryFor('component:power-select/power-select-group'), 'class');
+  this.register('component:custom-group-component', PowerSelectGroupComponent.extend({
+    layout: hbs`<div class="custom-component">{{yield}}</div>`
+  }));
+
+  this.render(hbs`
+    {{#power-select options=groupedNumbers groupComponent='custom-group-component' onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+
+  assert.equal(findAll('.ember-power-select-options .custom-component').length, numberOfGroups);
+});
+
+test('groupComponent has extension points', function(assert) {
+  this.groupedNumbers = groupedNumbers;
+  let numberOfGroups = 5; // number of groups in groupedNumbers
+  assert.expect(4 * numberOfGroups + 1);
+
+  let extra = { foo: 'bar' };
+  this.extra = extra;
+  let PowerSelectGroupComponent = get(getOwner(this).factoryFor('component:power-select/power-select-group'), 'class');
+  assert.ok(PowerSelectGroupComponent, 'component:custom-group-component must be defined');
+
+  this.register('component:custom-group-component', PowerSelectGroupComponent.extend({
+    init() {
+      this._super(...arguments);
+      assert.ok(isPresent(this.get('select')));
+      assert.ok(isPresent(this.get('group.groupName')));
+      assert.ok(isPresent(this.get('group.options')));
+      assert.equal(this.get('extra'), extra);
+    }
+  }));
+
+  this.render(hbs`
+    {{#power-select options=groupedNumbers groupComponent='custom-group-component' extra=extra onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
 });
