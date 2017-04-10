@@ -78,20 +78,6 @@ test('The search functionality can be disabled by passing `searchEnabled=false`'
   assert.notOk(find('.ember-power-select-search'), 'The search box NOT rendered');
 });
 
-test('The search box gain focus automatically when opened', function(assert) {
-  assert.expect(1);
-
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-
-  clickTrigger();
-  assert.ok(find('.ember-power-select-search-input') === document.activeElement, 'The search box is focused after opening select');
-});
-
 test("The search box shouldn't gain focus if autofocus is disabled", function(assert) {
   assert.expect(1);
 
