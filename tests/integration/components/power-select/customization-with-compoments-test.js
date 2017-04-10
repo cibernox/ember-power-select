@@ -237,11 +237,10 @@ test('groupComponent has extension points', function(assert) {
 
   let extra = { foo: 'bar' };
   this.extra = extra;
-
   let PowerSelectGroupComponent = get(getOwner(this).factoryFor('component:power-select/power-select-group'), 'class');
-  assert.ok(PowerSelectGroupComponent, 'power-select/power-select-group must be defined');
+  assert.ok(PowerSelectGroupComponent, 'component:custom-group-component must be defined');
 
-  this.register('component:power-select/power-select-group', PowerSelectGroupComponent.extend({
+  this.register('component:custom-group-component', PowerSelectGroupComponent.extend({
     init() {
       this._super(...arguments);
       assert.ok(isPresent(this.get('select')));
@@ -252,7 +251,7 @@ test('groupComponent has extension points', function(assert) {
   }));
 
   this.render(hbs`
-    {{#power-select options=groupedNumbers extra=extra onchange=(action (mut foo)) as |country|}}
+    {{#power-select options=groupedNumbers groupComponent='custom-group-component' extra=extra onchange=(action (mut foo)) as |country|}}
       {{country.name}}
     {{/power-select}}
   `);
