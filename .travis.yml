@@ -3,7 +3,13 @@ language: node_js
 node_js:
   - "7"
 
+dist: trusty
 sudo: false
+
+addons:
+  apt:
+    packages:
+      - google-chrome-stable
 
 cache:
   yarn: true
