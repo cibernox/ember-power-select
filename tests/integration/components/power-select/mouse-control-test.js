@@ -90,7 +90,7 @@ test('Clicking anywhere outside the select while opened closes the component and
 
   this.numbers = numbers;
   this.render(hbs`
-    <div id="other-thing">Foo</div>
+    <input type="text" id="other-thing">
     {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/power-select}}

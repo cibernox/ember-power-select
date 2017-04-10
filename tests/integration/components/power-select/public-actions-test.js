@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
-import { find, findAll, click, keyEvent } from 'ember-native-dom-helpers';
+import { find, findAll, click, keyEvent, focus } from 'ember-native-dom-helpers';
 
 const { run } = Ember;
 
@@ -318,8 +318,6 @@ test('The onblur of multiple selects action receives the public API and the focu
 });
 
 test('The onblur of multiple selects also gets called when the thing getting the focus is the searbox', function(assert) {
-  assert.expect(22);
-
   this.numbers = numbers;
   this.handleBlur = (select, e) => {
     assertPublicAPIShape(assert, select);
@@ -334,7 +332,7 @@ test('The onblur of multiple selects also gets called when the thing getting the
   `);
 
   clickTrigger();
-  run(() => find('#other-element').focus());
+  focus('#other-element');
 });
 
 test('the `onopen` action is invoked just before the dropdown opens', function(assert) {
