@@ -120,7 +120,7 @@ export default function() {
     let $content = find(`#${contentId}`);
     let dropdownIsClosed = $content.length === 0 || $content.hasClass('ember-basic-dropdown-content-placeholder');
     if (dropdownIsClosed) {
-      nativeMouseDown(triggerPath);
+      nativeMouseDown($trigger.get(0));
       wait();
     }
     let isDefaultSingleSelect = find('.ember-power-select-search-input').length > 0;
