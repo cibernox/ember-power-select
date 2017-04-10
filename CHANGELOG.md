@@ -1,5 +1,9 @@
 # Master
 
+- [INTERNAL] Fully refactor to use `ember-native-dom-helpers` both in acceptance and integration.
+- [ENHANCEMENT] The component should work without jQuery. It isn't tested yet tho since
+  ember-data doesn't work without it. Added an `Element.closest` polyfill for it.
+
 # 1.6.1
 - [BUGFIX] Fix double render bug when disabling a component a select. It was caused
   because several blur events were modifying the same property twice. Now changes
