@@ -1,5 +1,6 @@
 # Master
 
+# 1.7.0
 - [ENCHANCEMENT] Remove jQuery totally. Saved 29.28KB (min + gzip) on the docs.
 - [ENHANCEMENT] Acceptance helpers do not use jQuery, so can be used in apps without jQuery. The
   addon itself it tested without jQuery to ensure it remains jQuery free.
