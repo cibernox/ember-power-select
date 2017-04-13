@@ -1,5 +1,11 @@
 # Master
 
+- [ENCHANCEMENT] Remove jQuery totally. Saved 29.28KB (min + gzip) on the docs.
+- [ENHANCEMENT] Acceptance helpers do not use jQuery, so can be used in apps without jQuery. The
+  addon itself it tested without jQuery to ensure it remains jQuery free.
+- [DEPRECATION] Passing selectors with `:eq()` is supported but deprecated.
+- [ENHANCEMENT] Added a third numeric option to the `selectChoose` helper to select the
+  nth element that matches the given selector. E.g: `selectChoose('.language-select', '.power-select-option', 3)`.
 - [INTERNAL] Fully refactor to use `ember-native-dom-helpers` both in acceptance and integration.
 - [ENHANCEMENT] The component should work without jQuery. It isn't tested yet tho since
   ember-data doesn't work without it. Added an `Element.closest` polyfill for it.
