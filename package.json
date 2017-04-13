@@ -69,7 +69,7 @@
     "eslint-plugin-ember-suave": "^1.0.0",
     "liquid-fire": "0.26.7",
     "loader.js": "^4.2.3",
-    "memory-scroll": "cibernox/memory-scroll#dont-rely-on-jquery",
+    "memory-scroll": "0.9.0",
     "mocha": "2.5.3",
     "simple-git": "^1.10.0"
   },

@@ -5499,9 +5499,9 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748
 
-memory-scroll@cibernox/memory-scroll#dont-rely-on-jquery:
-  version "0.0.0"
-  resolved "0f3f715ddef40f5115655d6e0b7819110c147370#86f105c851b5be9c56e66caa5b932dc19b74c853"
+memory-scroll@0.9.0:
+  version "0.9.0"
+  resolved memory-scroll-0.9.0.tgz#e4920881db541558928820f95d7ee031cf481e68
   dependencies:
     ember-cli-babel "^5.1.6"
 
