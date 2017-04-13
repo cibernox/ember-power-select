@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
-const { run, isBlank, inject } = Ember;
+import fetch from 'fetch';
+const { run, isBlank } = Ember;
 
 export default Ember.Controller.extend({
-  ajax: inject.service(),
-
   actions: {
     searchRepo(term) {
       return new Ember.RSVP.Promise((resolve, reject) => {
@@ -16,7 +15,7 @@ export default Ember.Controller.extend({
   searchRepo: task(function* (term) {
     yield timeout(600);
     let url = `https://api.github.com/search/repositories?q=${term}`;
-    return this.get('ajax').request(url).then((json) => json.items);
+    return fetch(url).then((resp) => resp.json()).then((json) => json.items);
   }),
 
   _performSearch(term, resolve, reject) {
@@ -24,7 +23,7 @@ export default Ember.Controller.extend({
       return resolve([]);
     }
     let url = `https://api.github.com/search/repositories?q=${term}`;
-    this.get('ajax').request(url)
+    fetch(url).then((resp) => resp.json())
       .then((json) => resolve(json.items), reject);
   }
 });
