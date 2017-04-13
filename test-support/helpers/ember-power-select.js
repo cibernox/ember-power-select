@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import Test from 'ember-test';
 import wait from 'ember-test-helpers/wait';
 import { click, fillIn, keyEvent, triggerEvent, find, findAll } from 'ember-native-dom-helpers';
@@ -63,7 +64,7 @@ export function touchTrigger() {
 // Helpers for acceptance tests
 
 export default function() {
-  Test.registerAsyncHelper('selectChoose', async function(app, cssPath, valueOrSelector) {
+  Test.registerAsyncHelper('selectChoose', async function(app, cssPath, valueOrSelector, optionIndex) {
     let trigger = find(`${cssPath} .ember-power-select-trigger`);
 
     if (!trigger) {
@@ -83,11 +84,25 @@ export default function() {
     }
 
     // Select the option with the given text
-    let potentialTargets = findAll(`#${contentId} .ember-power-select-option:contains("${valueOrSelector}")`).toArray();
+    let options = [].slice.apply(findAll(`#${contentId} .ember-power-select-option`));
+    let potentialTargets = options.filter((opt) => opt.textContent.indexOf(valueOrSelector) > -1);
     let target;
     if (potentialTargets.length === 0) {
       // If treating the value as text doesn't gave use any result, let's try if it's a css selector
-      potentialTargets = findAll(`#${contentId} ${valueOrSelector}`).toArray();
+      let matchEq = valueOrSelector.slice(-6).match(/:eq\((\d+)\)/);
+      if (matchEq) {
+        let index = parseInt(matchEq[1], 10);
+        let option = findAll(`#${contentId} ${valueOrSelector.slice(0, -6)}`)[index];
+        Ember.deprecate('Passing selectors with the `:eq()` pseudoselector is deprecated. If you want to select the nth option, pass a number as a third argument. E.g `selectChoose(".language-select", ".ember-power-select-option", 3)`', true, {
+          id: 'select-choose-no-eq-pseudoselector',
+          until: '1.8.0'
+        });
+        if (option) {
+          potentialTargets = [option];
+        }
+      } else {
+        potentialTargets = findAll(`#${contentId} ${valueOrSelector}`);
+      }
     }
     if (potentialTargets.length > 1) {
       target = potentialTargets.filter((t) => t.textContent.trim() === valueOrSelector)[0] || potentialTargets[0];
@@ -140,7 +155,12 @@ export default function() {
   });
 
   Test.registerAsyncHelper('removeMultipleOption', async function(app, cssPath, value) {
-    let elem = find(`${cssPath} .ember-power-select-multiple-options > li:contains(${value}) > .ember-power-select-multiple-remove-btn`).get(0);
+    let elem;
+    let items = [].slice.apply(findAll(`${cssPath} .ember-power-select-multiple-options > li`));
+    let item = items.find((el) => el.textContent.indexOf(value) > -1);
+    if (item) {
+      elem = find('.ember-power-select-multiple-remove-btn', item);
+    }
     try {
       await click(elem);
       return wait();
@@ -151,7 +171,7 @@ export default function() {
   });
 
   Test.registerAsyncHelper('clearSelected', async function(app, cssPath) {
-    let elem = find(`${cssPath} .ember-power-select-clear-btn`).get(0);
+    let elem = find(`${cssPath} .ember-power-select-clear-btn`);
     try {
       await click(elem);
       return wait();

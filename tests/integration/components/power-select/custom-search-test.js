@@ -817,7 +817,7 @@ test('If a multiple select is closed while a search is still ongoing and the sea
 
   this.obj = Ember.Object.extend({
     searchTask: task(function* (term) {
-      yield timeout(100);
+      yield timeout(150);
       assert.ok(false, 'This task should not have been executed this far');
       return numbers.filter((str) => str.indexOf(term) > -1);
     })
@@ -838,6 +838,6 @@ test('If a multiple select is closed while a search is still ongoing and the sea
 
   setTimeout(function() {
     done();
-  }, 150);
+  }, 250);
 });
 
