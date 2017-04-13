@@ -12,7 +12,6 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   beforeEach() {
     let owner = Ember.getOwner(this);
     this.server = startMirage({ environment: 'test', modulePrefix: 'dummy' });
-
     emberDataInitializer.initialize(owner);
     this.store = owner.lookup('service:store');
   },
@@ -78,6 +77,7 @@ test('Delete an item in a multiple selection', function(assert) {
 });
 
 test('The `selected` option can be an async belongsTo', function(assert) {
+  server.logging = true;
   let done = assert.async();
   assert.expect(6);
 
@@ -103,7 +103,7 @@ test('The `selected` option can be an async belongsTo', function(assert) {
         assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'Pet 3', 'The 4th element is highlighted');
         assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Pet 3', 'The trigger has the proper content');
         done();
-      }, 10);
+      }, 30);
     });
   });
 });
