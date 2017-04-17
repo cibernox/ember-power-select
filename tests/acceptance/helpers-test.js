@@ -77,6 +77,26 @@ test('the selectChoose helper works when it receives a wildcard css class', asyn
   assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
 });
 
+test('the selectChoose helper works when it receives a HTMLElement as first argument', async function(assert) {
+  await visit('/helpers-testing');
+  assert.equal(currentURL(), '/helpers-testing');
+
+  await selectChoose(find('.select-with-class-in-trigger'), 'three');
+  assert.equal(find('.select-choose').textContent.trim(), 'three', 'The proper value has been selected');
+  assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
+  assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
+});
+
+test('the selectChoose helper can receive a number as third argument to select the :nth option', async function(assert) {
+  await visit('/helpers-testing');
+  assert.equal(currentURL(), '/helpers-testing');
+
+  await selectChoose(find('.select-with-class-in-trigger'), '.ember-power-select-option', 2);
+  assert.equal(find('.select-choose').textContent.trim(), 'three', 'The proper value has been selected');
+  assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
+  assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
+});
+
 test('selectChoose helper throws an explicative error when no select is found in the given scope', async function(assert) {
   assert.expect(2);
   await visit('/helpers-testing');
@@ -154,11 +174,19 @@ test('selectSearch helper searches in the given multiple select closed', async f
   assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
 });
 
-test('selectSearch helper works even with custom components as long as the input has [type=searcg]', async function(assert) {
+test('selectSearch helper works even with custom components as long as the input has [type=search]', async function(assert) {
   await visit('/helpers-testing');
   assert.equal(currentURL(), '/helpers-testing');
   await click('.select-custom-search .ember-power-select-trigger');
   await selectSearch('.select-custom-search', 'three');
+  assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
+});
+
+test('selectSearch helper can receive the HTMLElement of the trigger as first arguments', async function(assert) {
+  await visit('/helpers-testing');
+  assert.equal(currentURL(), '/helpers-testing');
+
+  await selectSearch(find('.select-multiple .ember-power-select-trigger'), 'three');
   assert.equal(find('.ember-power-select-options').textContent.trim(), 'three');
 });
 
