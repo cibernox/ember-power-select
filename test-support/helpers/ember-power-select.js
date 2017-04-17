@@ -64,15 +64,20 @@ export function touchTrigger() {
 // Helpers for acceptance tests
 
 export default function() {
-  Test.registerAsyncHelper('selectChoose', async function(app, cssPath, valueOrSelector, optionIndex) {
-    let trigger = find(`${cssPath} .ember-power-select-trigger`);
+  Test.registerAsyncHelper('selectChoose', async function(_, cssPathOrTrigger, valueOrSelector, optionIndex) {
+    let trigger, target;
+    if (cssPathOrTrigger instanceof HTMLElement) {
+      trigger = cssPathOrTrigger;
+    } else {
+      trigger = find(`${cssPathOrTrigger} .ember-power-select-trigger`);
 
-    if (!trigger) {
-      trigger = find(cssPath);
-    }
+      if (!trigger) {
+        trigger = find(cssPathOrTrigger);
+      }
 
-    if (!trigger) {
-      throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but no select was found using selector "${cssPath}"`);
+      if (!trigger) {
+        throw new Error(`You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but no select was found using selector "${cssPathOrTrigger}"`);
+      }
     }
 
     let contentId = `${trigger.attributes['aria-owns'].value}`;
@@ -86,7 +91,6 @@ export default function() {
     // Select the option with the given text
     let options = [].slice.apply(findAll(`#${contentId} .ember-power-select-option`));
     let potentialTargets = options.filter((opt) => opt.textContent.indexOf(valueOrSelector) > -1);
-    let target;
     if (potentialTargets.length === 0) {
       // If treating the value as text doesn't gave use any result, let's try if it's a css selector
       let matchEq = valueOrSelector.slice(-6).match(/:eq\((\d+)\)/);
@@ -105,48 +109,58 @@ export default function() {
       }
     }
     if (potentialTargets.length > 1) {
-      target = potentialTargets.filter((t) => t.textContent.trim() === valueOrSelector)[0] || potentialTargets[0];
+      let filteredTargets = [].slice.apply(potentialTargets).filter((t) => t.textContent.trim() === valueOrSelector);
+      if (optionIndex === undefined) {
+        target = filteredTargets[0] || potentialTargets[0];
+      } else {
+        target = filteredTargets[optionIndex] || potentialTargets[optionIndex];
+      }
     } else {
       target = potentialTargets[0];
     }
     if (!target) {
-      throw new Error(`You called "selectChoose('${cssPath}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`);
+      throw new Error(`You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`);
     }
     await click(target);
     return wait();
   });
 
-  Test.registerAsyncHelper('selectSearch', async function(app, cssPath, value) {
-    let triggerPath = `${cssPath} .ember-power-select-trigger`;
-    let trigger = find(triggerPath);
-    if (!trigger) {
-      triggerPath = cssPath;
+  Test.registerAsyncHelper('selectSearch', async function(app, cssPathOrTrigger, value) {
+    let trigger;
+    if (cssPathOrTrigger instanceof HTMLElement) {
+      trigger = cssPathOrTrigger;
+    } else {
+      let triggerPath = `${cssPathOrTrigger} .ember-power-select-trigger`;
       trigger = find(triggerPath);
-    }
+      if (!trigger) {
+        triggerPath = cssPathOrTrigger;
+        trigger = find(triggerPath);
+      }
 
-    if (!trigger) {
-      throw new Error(`You called "selectSearch('${cssPath}', '${value}')" but no select was found using selector "${cssPath}"`);
+      if (!trigger) {
+        throw new Error(`You called "selectSearch('${cssPathOrTrigger}', '${value}')" but no select was found using selector "${cssPathOrTrigger}"`);
+      }
     }
 
     let contentId = `${trigger.attributes['aria-owns'].value}`;
-    let isMultipleSelect = !!find(`${cssPath} .ember-power-select-trigger-multiple-input`);
+    let isMultipleSelect = !!find('.ember-power-select-trigger-multiple-input', trigger);
 
     let content = find(`#${contentId}`);
     let dropdownIsClosed = !content || content.classList.contains('ember-basic-dropdown-content-placeholder');
     if (dropdownIsClosed) {
-      await click(triggerPath);
+      await click(trigger);
       await wait();
     }
     let isDefaultSingleSelect = !!find('.ember-power-select-search-input');
 
     if (isMultipleSelect) {
-      await fillIn(`${triggerPath} .ember-power-select-trigger-multiple-input`, value);
+      await fillIn(find('.ember-power-select-trigger-multiple-input', trigger), value);
     } else if (isDefaultSingleSelect) {
       await fillIn('.ember-power-select-search-input', value);
     } else { // It's probably a customized version
-      let inputIsInTrigger = !!find(`${cssPath} .ember-power-select-trigger input[type=search]`);
+      let inputIsInTrigger = !!find('.ember-power-select-trigger input[type=search]', trigger);
       if (inputIsInTrigger) {
-        await fillIn(`${triggerPath} input[type=search]`, value);
+        await fillIn(find('input[type=search]', trigger), value);
       } else {
         await fillIn(`#${contentId} .ember-power-select-search-input[type=search]`, 'input');
       }
