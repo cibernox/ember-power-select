@@ -1,7 +1,11 @@
 # Master
 
+# 1.7.1
+- [ENHANCEMENT] `selectChoose` and `selectSearch` now accept the HTMLElement of the trigger
+  instead of the string with the CSS selector as first arguments.
+
 # 1.7.0
-- [ENCHANCEMENT] Remove jQuery totally. Saved 29.28KB (min + gzip) on the docs.
+- [ENHANCEMENT] Remove jQuery totally. Saved 29.28KB (min + gzip) on the docs.
 - [ENHANCEMENT] Acceptance helpers do not use jQuery, so can be used in apps without jQuery. The
   addon itself it tested without jQuery to ensure it remains jQuery free.
 - [DEPRECATION] Passing selectors with `:eq()` is supported but deprecated.
