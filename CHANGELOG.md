@@ -1,5 +1,9 @@
 # Master
 
+# 1.7.2
+- [BUGFIX] Fix page scroll when component is opened after refactor to remove jQuery. Fixed
+  by bumping the version of ember-basic-dropdown.
+
 # 1.7.1
 - [ENHANCEMENT] `selectChoose` and `selectSearch` now accept the HTMLElement of the trigger
   instead of the string with the CSS selector as first arguments.
