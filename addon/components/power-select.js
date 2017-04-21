@@ -325,7 +325,7 @@ export default Component.extend({
         return;
       }
       let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
-      if(!optionElement) {
+      if (!optionElement) {
         return;
       }
       let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
