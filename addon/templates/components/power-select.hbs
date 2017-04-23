@@ -1,6 +1,7 @@
 {{#basic-dropdown
   horizontalPosition=(readonly horizontalPosition)
   calculatePosition=calculatePosition
+  destination=(readonly destination)
   initiallyOpened=(readonly initiallyOpened)
   matchTriggerWidth=(readonly matchTriggerWidth)
   onClose=(action "onClose")
@@ -44,10 +45,7 @@
     {{/component}}
   {{/dropdown.trigger}}
 
-  {{#dropdown.content
-    _contentTagName=_contentTagName
-    class=(readonly concatenatedDropdownClasses)
-    to=(readonly destination)}}
+  {{#dropdown.content _contentTagName=_contentTagName class=(readonly concatenatedDropdownClasses)}}
     {{component beforeOptionsComponent
       extra=(readonly extra)
       listboxId=(readonly optionsId)

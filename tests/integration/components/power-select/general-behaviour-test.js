@@ -1136,7 +1136,7 @@ test('If the options of a single select implement `isEqual`, that option is used
 test('If the select receives a `calculatePosition` option, it uses it to calculate the position of the floating content', function(assert) {
   this.numbers = numbers;
   this.renderInPlace = false;
-  this.calculatePosition = function(_, _2, { renderInPlace }) {
+  this.calculatePosition = function(_, _2, _3, { renderInPlace }) {
     if (renderInPlace) {
       return {
         horizontalPosition: 'left',
