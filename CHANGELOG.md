@@ -1,5 +1,9 @@
 # Master
 
+# 1.8.0
+- [ENHANCEMENT] Update to EBD 0.32, which allows the select to work when nested inside
+  elements with scroll. It also fixes positioning when the body is not not positioned at 0,0
+
 # 1.7.2
 - [BUGFIX] Fix page scroll when component is opened after refactor to remove jQuery. Fixed
   by bumping the version of ember-basic-dropdown.
