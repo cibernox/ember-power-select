@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] The HTMLElement passed to `selectChoose` can now be an ancestor of the trigger instead of only the trigger itself. This was made for consistency with the behaviour of the helper when it receives a CSS selector instead of an element.
+
 # 1.8.0
 - [ENHANCEMENT] Update to EBD 0.32, which allows the select to work when nested inside
   elements with scroll. It also fixes positioning when the body is not not positioned at 0,0
