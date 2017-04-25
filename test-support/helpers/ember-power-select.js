@@ -67,7 +67,11 @@ export default function() {
   Test.registerAsyncHelper('selectChoose', async function(_, cssPathOrTrigger, valueOrSelector, optionIndex) {
     let trigger, target;
     if (cssPathOrTrigger instanceof HTMLElement) {
-      trigger = cssPathOrTrigger;
+      if (cssPathOrTrigger.classList.contains('ember-power-select-trigger')) {
+        trigger = cssPathOrTrigger;
+      } else {
+        trigger = find('.ember-power-select-trigger', cssPathOrTrigger);
+      }
     } else {
       trigger = find(`${cssPathOrTrigger} .ember-power-select-trigger`);
 
