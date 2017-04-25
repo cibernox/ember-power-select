@@ -1,5 +1,6 @@
 # Master
 
+# 1.8.1
 - [ENHANCEMENT] The HTMLElement passed to `selectChoose` can now be an ancestor of the trigger instead of only the trigger itself. This was made for consistency with the behaviour of the helper when it receives a CSS selector instead of an element.
 
 # 1.8.0
