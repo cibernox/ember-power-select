@@ -1,5 +1,6 @@
 # Master
 
+# 1.8.2
 - [ENHANCEMENT] Allow developers to pass a function to customize how the select should scroll
   to display an element of the list outside the viewport. Pass `scrollTo=scrollTo`. It receives
   `option, select, event`.
