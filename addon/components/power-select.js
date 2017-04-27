@@ -239,7 +239,7 @@ export default Component.extend({
       let publicAPI = this.get('publicAPI');
       let correctedTerm;
       if (action) {
-        correctedTerm = action(e.target.value, publicAPI, e);
+        correctedTerm = action(term, publicAPI, e);
         if (correctedTerm === false) {
           return;
         }
