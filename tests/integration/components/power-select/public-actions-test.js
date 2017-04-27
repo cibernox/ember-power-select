@@ -654,3 +654,42 @@ test('The multiple component invokes the `registerAPI` action with the public AP
     {{/power-select-multiple}}
   `);
 });
+
+test('The given `scrollTo` function is invoken when a single select wants to scroll to an element', function(assert) {
+  assert.expect(22);
+  this.numbers = numbers;
+  this.storeAPI = (select) => {
+    this.selectAPI = select;
+  };
+  this.scrollTo = (opt, select) => {
+    assert.equal(opt, 'three', 'It receives the element we want to scroll to as first argument');
+    assertPublicAPIShape(assert, select);
+  };
+  this.render(hbs`
+    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI scrollTo=scrollTo as |number|}}
+      {{number}}
+    {{/power-select}}
+  `);
+
+  run(() => this.selectAPI.actions.scrollTo('three'));
+});
+
+test('The given `scrollTo` function is invoken when a multiple select wants to scroll to an element', function(assert) {
+  assert.expect(22);
+  this.numbers = numbers;
+  this.storeAPI = (select) => {
+    this.selectAPI = select;
+  };
+  this.scrollTo = (opt, select) => {
+    assert.equal(opt, 'three', 'It receives the element we want to scroll to as first argument');
+    assertPublicAPIShape(assert, select);
+  };
+  this.render(hbs`
+    {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI scrollTo=scrollTo as |number|}}
+      {{number}}
+    {{/power-select-multiple}}
+  `);
+
+  run(() => this.selectAPI.actions.scrollTo('three'));
+});
+

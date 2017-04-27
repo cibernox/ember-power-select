@@ -1,5 +1,9 @@
 # Master
 
+- [ENHANCEMENT] Allow developers to pass a function to customize how the select should scroll
+  to display an element of the list outside the viewport. Pass `scrollTo=scrollTo`. It receives
+  `option, select, event`.
+
 # 1.8.1
 - [ENHANCEMENT] The HTMLElement passed to `selectChoose` can now be an ancestor of the trigger instead of only the trigger itself. This was made for consistency with the behaviour of the helper when it receives a CSS selector instead of an element.
 

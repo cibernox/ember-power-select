@@ -3101,9 +3101,9 @@ ember-fastboot-test-helpers@0.1.1:
     request "^2.69.0"
     rsvp "^3.0.16"
 
-ember-fetch@cibernox/ember-fetch#make-it-wait:
+ember-fetch@rwjblue/ember-fetch#patch-1:
   version "1.4.0"
-  resolved "https://codeload.github.com/cibernox/ember-fetch/tar.gz/426e4818d2706e964a9be868bed15a1a435b2249"
+  resolved "https://codeload.github.com/rwjblue/ember-fetch/tar.gz/5d014d54f3c5ebedea3ee5eec3815ea346daeeaf"
   dependencies:
     broccoli-funnel "^1.0.7"
     broccoli-stew "^1.2.0"
