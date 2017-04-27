@@ -311,11 +311,15 @@ export default Component.extend({
       return this._routeKeydown(e);
     },
 
-    scrollTo(option /* , e */) {
+    scrollTo(option, ...rest) {
       if (!self.document || !option) {
         return;
       }
       let publicAPI = this.get('publicAPI');
+      let userDefinedScrollTo = this.get('scrollTo');
+      if (userDefinedScrollTo) {
+        return userDefinedScrollTo(option, publicAPI, ...rest);
+      }
       let optionsList = self.document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
       if (!optionsList) {
         return;

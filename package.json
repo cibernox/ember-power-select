@@ -57,7 +57,7 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^2.0.0",
     "ember-fastboot-test-helpers": "0.1.1",
-    "ember-fetch": "cibernox/ember-fetch#make-it-wait",
+    "ember-fetch": "rwjblue/ember-fetch#patch-1",
     "ember-href-to": "1.12.0",
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
