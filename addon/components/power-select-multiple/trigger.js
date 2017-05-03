@@ -5,7 +5,7 @@ import get from 'ember-metal/get';
 import computed from 'ember-computed';
 import service from 'ember-service/inject';
 import { scheduleOnce } from 'ember-runloop';
-import { assert } from 'ember-metal/utils';
+import { assert } from '@ember/debug';
 import { isBlank } from 'ember-utils';
 import { htmlSafe } from 'ember-string';
 

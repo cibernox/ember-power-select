@@ -1,5 +1,8 @@
 # Master
 
+- [INTERNAL] Use new `assert` helper provided by ember-cli-babel 6.1 that are automatically
+  removed in production.
+
 # 1.8.2
 - [ENHANCEMENT] Allow developers to pass a function to customize how the select should scroll
   to display an element of the list outside the viewport. Pass `scrollTo=scrollTo`. It receives
