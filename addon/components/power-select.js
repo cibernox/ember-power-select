@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Component from 'ember-component';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
-import { assert } from 'ember-metal/utils';
+import { assert } from '@ember/debug';
 import { isBlank } from 'ember-utils';
 import { isEmberArray } from 'ember-array/utils';
 import computed from 'ember-computed';
