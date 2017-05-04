@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Update `ember-basic-dropdown` to `^0.32.5` so it uses `ember-cli-babel` 6.1 and
+  `ember-native-dom-helpers` 0.4.0
 - [INTERNAL] Use new `assert` helper provided by ember-cli-babel 6.1 that are automatically
   removed in production.
 

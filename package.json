@@ -62,7 +62,7 @@
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-native-dom-event-dispatcher": "^0.6.0",
-    "ember-native-dom-helpers": "^0.3.9",
+    "ember-native-dom-helpers": "^0.4.0",
     "ember-pagefront": "0.10.10",
     "ember-qunit-assert-helpers": "^0.1.3",
     "ember-resolver": "^4.0.0",
@@ -82,7 +82,7 @@
     "dropdown"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "^0.32.0",
+    "ember-basic-dropdown": "^0.32.5",
     "ember-cli-babel": "^6.1.0",
     "ember-cli-htmlbars": "^1.1.1",
     "ember-concurrency": "^0.8.1",
