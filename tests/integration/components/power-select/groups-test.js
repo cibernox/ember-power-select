@@ -3,8 +3,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { groupedNumbers } from '../constants';
 import { find, findAll, click } from 'ember-native-dom-helpers';
-import DS from 'ember-data';
-import RSVP from 'rsvp';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Groups)', {
   integration: true
@@ -110,22 +108,4 @@ test('Clicking on the title of a group doesn\'t performs any action nor closes t
   clickTrigger();
   click(findAll('.ember-power-select-group-name')[1]);
   assert.ok(find('.ember-power-select-dropdown'), 'The select is still opened');
-});
-
-test('it works if the options of a group is an array-proxy', function(assert) {
-  let smallOptions = DS.PromiseArray.create({
-    promise: RSVP.resolve(['one', 'two', 'three'])
-  });
-  this.groupedNumbers = [
-    { groupName: 'Smalls', options: smallOptions  },
-    { groupName: 'Mediums', options: ['four', 'five', 'six'] }
-  ];
-
-  this.render(hbs`
-    {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
-  clickTrigger();
-  debugger;
 });

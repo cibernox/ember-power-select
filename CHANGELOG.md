@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Add an assertion in dev/test to warn the user that having promises inside
+  groups is not supported.
 - [ENHANCEMENT] Update `ember-basic-dropdown` to `^0.32.5` so it uses `ember-cli-babel` 6.1 and
   `ember-native-dom-helpers` 0.4.0
 - [INTERNAL] Use new `assert` helper provided by ember-cli-babel 6.1 that are automatically
