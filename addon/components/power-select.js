@@ -3,6 +3,7 @@ import Component from 'ember-component';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import { assert } from '@ember/debug';
+import { DEBUG } from '@glimmer/env';
 import { isBlank } from 'ember-utils';
 import { isEmberArray } from 'ember-array/utils';
 import computed from 'ember-computed';
@@ -452,6 +453,19 @@ export default Component.extend({
     this._removeObserversInOptions();
     if (!options) {
       return;
+    }
+    if (DEBUG) {
+      (function walk(collection) {
+        for (let i = 0; i < get(collection, 'length'); i++) {
+          let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
+          let subOptions = get(entry, 'options');
+          let isGroup = !!get(entry, 'groupName') && !!subOptions;
+          if (isGroup) {
+            assert('ember-power-select doesn\'t support promises inside groups. Please, resolve those promises and turn them into arrays before passing them to ember-power-select', !subOptions.then);
+            walk(subOptions);
+          }
+        }
+      })(options);
     }
     if (options && options.addObserver) {
       options.addObserver('[]', this, this._updateOptionsAndResults);
