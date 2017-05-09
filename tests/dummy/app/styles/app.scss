@@ -252,6 +252,7 @@
     -webkit-user-select: none; }
     .ember-power-select-options[role="listbox"] {
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       max-height: 14em; }
 
   .ember-power-select-option {
