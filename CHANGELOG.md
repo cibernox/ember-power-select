@@ -1,5 +1,6 @@
 # Master
 
+# 1.8.4
 - [ENHANCEMENT] Allow to use `selectChoose` in integration.
 
 # 1.8.3
