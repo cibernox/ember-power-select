@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Allow to use `selectChoose` in integration.
+
 # 1.8.3
 - [BUGFIX] Improve smoothness of the scroll of the list of options in iOS devices.
 - [ENHANCEMENT] Add an assertion in dev/test to warn the user that having promises inside
