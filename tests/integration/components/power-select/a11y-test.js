@@ -22,7 +22,7 @@ test('Single-select: The top-level options list have `role=listbox` and nested l
   let rootLevelOptionsList = find('.ember-power-select-dropdown > .ember-power-select-options');
   assert.equal(rootLevelOptionsList.attributes.role.value, 'listbox', 'The top-level list has `role=listbox`');
   let nestedOptionList = findAll('.ember-power-select-options .ember-power-select-options');
-  [].slice.call(nestedOptionList).forEach((e) => assert.equal(e.attributes.role.value, 'group'));
+  Array.from(nestedOptionList).forEach((e) => assert.equal(e.attributes.role.value, 'group'));
 });
 
 test('Multiple-select: The top-level options list have `role=listbox` and nested lists have `role=group`', function(assert) {
@@ -39,7 +39,7 @@ test('Multiple-select: The top-level options list have `role=listbox` and nested
   let rootLevelOptionsList = find('.ember-power-select-dropdown > .ember-power-select-options');
   assert.equal(rootLevelOptionsList.attributes.role.value, 'listbox', 'The top-level list has `role=listbox`');
   let nestedOptionList = findAll('.ember-power-select-options .ember-power-select-options');
-  [].slice.call(nestedOptionList).forEach((e) => assert.equal(e.attributes.role.value, 'group'));
+  Array.from(nestedOptionList).forEach((e) => assert.equal(e.attributes.role.value, 'group'));
 });
 
 test('Single-select: All options have `role=option`', function(assert) {
@@ -53,7 +53,7 @@ test('Single-select: All options have `role=option`', function(assert) {
   `);
 
   clickTrigger();
-  [].slice.call(findAll('.ember-power-select-option')).forEach((e) => assert.equal(e.attributes.role.value, 'option'));
+  Array.from(findAll('.ember-power-select-option')).forEach((e) => assert.equal(e.attributes.role.value, 'option'));
 });
 
 test('Multiple-select: All options have `role=option`', function(assert) {
@@ -67,7 +67,7 @@ test('Multiple-select: All options have `role=option`', function(assert) {
   `);
 
   clickTrigger();
-  [].slice.call(findAll('.ember-power-select-option')).forEach((e) => assert.equal(e.attributes.role.value, 'option'));
+  Array.from(findAll('.ember-power-select-option')).forEach((e) => assert.equal(e.attributes.role.value, 'option'));
 });
 
 test('Single-select: The selected option has `aria-selected=true` and the rest `aria-selected=false`', function(assert) {
