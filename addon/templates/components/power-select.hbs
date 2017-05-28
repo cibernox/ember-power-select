@@ -59,21 +59,20 @@
   {{#select.dropdown.content}}
     {{select.before-options}}
     {{select.search-message}}
-    {{#if mustShowNoMessages}}
+    {{#select.no-matches-message as |matches|}}
       {{#if (hasBlock "inverse")}}
         {{yield to="inverse"}}
-      {{else if noMatchesMessage}}
+      {{else if matches.no-matches-message}}
         <ul class="ember-power-select-options" role="listbox">
           <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
-            {{noMatchesMessage}}
+            {{matches.no-matches-message}}
           </li>
         </ul>
       {{/if}}
-    {{else}}
-      {{#select.options as |opt term|}}
-        {{yield opt term}}
-      {{/select.options}}
-    {{/if}}
+    {{/select.no-matches-message}}
+    {{#select.options as |opt term|}}
+      {{yield opt term}}
+    {{/select.options}}
     {{select.after-options select=(readonly publicAPI) extra=(readonly extra)}}
   {{/select.dropdown.content}}
 {{/basic-power-select}}

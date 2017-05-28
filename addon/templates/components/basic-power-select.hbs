@@ -44,7 +44,7 @@ as |dropdown|}}
         searchPlaceholder=(readonly searchPlaceholder)
         select=(readonly publicAPI)
       ))
-      options=(component optionsComponent
+      options=(if (not (or mustShowSearchMessage mustShowNoMessages)) (component optionsComponent
         class="ember-power-select-options"
         extra=(readonly extra)
         groupIndex=""
@@ -54,12 +54,15 @@ as |dropdown|}}
         optionsComponent=(readonly optionsComponent)
         groupComponent=(readonly groupComponent)
         select=(readonly publicAPI)
-      )
+      ))
       placeholder=(component 'power-select/placeholder')
       power-select-group=(component 'power-select/power-select-group')
       search-message=(if mustShowSearchMessage (component searchMessageComponent
         searchMessage=(readonly searchMessage)
         select=(readonly publicAPI)
+      ))
+      no-matches-message=(if mustShowNoMessages (component 'power-select/no-matches-message'
+        noMatchesMessage=noMatchesMessage
       ))
       trigger=(component triggerComponent
         allowClear=(readonly allowClear)
@@ -80,6 +83,7 @@ as |dropdown|}}
       after-options=(if afterOptionsComponent (component afterOptionsComponent
         select=(readonly publicAPI) extra=(readonly extra)
       ))
+
     )
   }}
 {{/basic-dropdown}}

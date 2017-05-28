@@ -1,6 +1,5 @@
 import Component from 'ember-component';
 import layout from '../templates/components/power-select';
-import computed from 'ember-computed';
 
 export default Component.extend({
   layout,
