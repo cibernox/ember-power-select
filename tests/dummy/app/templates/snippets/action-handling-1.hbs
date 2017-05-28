@@ -1,3 +1,20 @@
+{{#basic-power-select
+  selected=destination
+  options=cities
+  onchange=(action "chooseDestination")
+as |select|
+}}
+  {{#select.dropdown.trigger}}
+    {{#select.trigger as |name|}}
+      {{name}} Trigger
+    {{/select.trigger}}
+  {{/select.dropdown.trigger}}
+  {{#select.dropdown.content}}
+    {{#select.options as |name|}}
+      {{name}} Option
+    {{/select.options}}
+  {{/select.dropdown.content}}
+{{/basic-power-select}}
 {{#power-select
   selected=destination
   options=cities

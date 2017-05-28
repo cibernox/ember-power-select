@@ -1,18 +1,16 @@
-{{#basic-dropdown
+{{#basic-power-select
+  onchange=(action onchange)
   horizontalPosition=(readonly horizontalPosition)
   calculatePosition=calculatePosition
   destination=(readonly destination)
   initiallyOpened=(readonly initiallyOpened)
   matchTriggerWidth=(readonly matchTriggerWidth)
-  onClose=(action "onClose")
-  onOpen=(action "onOpen")
-  registerAPI=(action "registerAPI")
   renderInPlace=(readonly renderInPlace)
   verticalPosition=(readonly verticalPosition)
   disabled=(readonly disabled)
-  as |dropdown|}}
-
-  {{#dropdown.trigger
+  as |select|
+}}
+  {{#select.dropdown.trigger
     tagName=(readonly _triggerTagName)
     ariaDescribedBy=(readonly ariaDescribedBy)
     ariaInvalid=(readonly ariaInvalid)
@@ -21,41 +19,31 @@
     ariaRequired=(readonly required)
     class=(readonly concatenatedTriggerClasses)
     id=(readonly triggerId)
-    onKeyDown=(action "onTriggerKeydown")
-    onFocus=(action "onTriggerFocus")
-    onBlur=(action "onTriggerBlur")
-    tabindex=(readonly tabindex)}}
-    {{#component triggerComponent
+    tabindex=(readonly tabindex)
+  }}
+    {{#select.trigger
       allowClear=(readonly allowClear)
       buildSelection=(readonly buildSelection)
       extra=(readonly extra)
       listboxId=(readonly optionsId)
-      onFocus=(action "onFocus")
-      onBlur=(action "onBlur")
-      onInput=(action "onInput")
       placeholder=(readonly placeholder)
       placeholderComponent=(readonly placeholderComponent)
-      onKeydown=(action "onKeydown")
       searchEnabled=(readonly searchEnabled)
       searchField=(readonly searchField)
       select=(readonly publicAPI)
       selectedItemComponent=(readonly selectedItemComponent)
-      as |opt term|}}
+    as |opt term|}}
       {{yield opt term}}
-    {{/component}}
-  {{/dropdown.trigger}}
-
-  {{#dropdown.content _contentTagName=_contentTagName class=(readonly concatenatedDropdownClasses)}}
-    {{component beforeOptionsComponent
+    {{/select.trigger}}
+  {{/select.dropdown.trigger}}
+  {{#select.dropdown.content}}
+    {{select.before-options
       extra=(readonly extra)
       listboxId=(readonly optionsId)
-      onInput=(action "onInput")
-      onKeydown=(action "onKeydown")
       searchEnabled=(readonly searchEnabled)
-      onFocus=(action "onFocus")
-      onBlur=(action "onBlur")
       searchPlaceholder=(readonly searchPlaceholder)
-      select=(readonly publicAPI)}}
+      select=(readonly publicAPI)
+    }}
     {{#if mustShowSearchMessage}}
       {{component searchMessageComponent
         searchMessage=(readonly searchMessage)
@@ -72,7 +60,7 @@
         </ul>
       {{/if}}
     {{else}}
-      {{#component optionsComponent
+      {{#select.options
         class="ember-power-select-options"
         extra=(readonly extra)
         groupIndex=""
@@ -82,10 +70,11 @@
         optionsComponent=(readonly optionsComponent)
         groupComponent=(readonly groupComponent)
         select=(readonly publicAPI)
-        as |option term|}}
-        {{yield option term}}
-      {{/component}}
+      as |opt term|}}
+        {{yield opt term}}
+      {{/select.options}}
     {{/if}}
-    {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
-  {{/dropdown.content}}
-{{/basic-dropdown}}
+    {{select.after-options select=(readonly publicAPI) extra=(readonly extra)}}
+
+  {{/select.dropdown.content}}
+{{/basic-power-select}}
