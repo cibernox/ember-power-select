@@ -57,10 +57,10 @@ as |dropdown|}}
       )
       placeholder=(component 'power-select/placeholder')
       power-select-group=(component 'power-select/power-select-group')
-      search-message=(component searchMessageComponent
+      search-message=(if mustShowSearchMessage (component searchMessageComponent
         searchMessage=(readonly searchMessage)
         select=(readonly publicAPI)
-      )
+      ))
       trigger=(component triggerComponent
         allowClear=(readonly allowClear)
         buildSelection=(readonly buildSelection)

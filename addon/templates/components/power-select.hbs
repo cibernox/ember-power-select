@@ -58,12 +58,8 @@
   {{/select.dropdown.trigger}}
   {{#select.dropdown.content}}
     {{select.before-options}}
-    {{#if mustShowSearchMessage}}
-      {{component searchMessageComponent
-        searchMessage=(readonly searchMessage)
-        select=(readonly publicAPI)
-      }}
-    {{else if mustShowNoMessages}}
+    {{select.search-message}}
+    {{#if mustShowNoMessages}}
       {{#if (hasBlock "inverse")}}
         {{yield to="inverse"}}
       {{else if noMatchesMessage}}
