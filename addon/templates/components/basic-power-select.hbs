@@ -77,9 +77,9 @@ as |dropdown|}}
         select=(readonly publicAPI)
         selectedItemComponent=(readonly selectedItemComponent)
       )
-      after-options=(component afterOptionsComponent
+      after-options=(if afterOptionsComponent (component afterOptionsComponent
         select=(readonly publicAPI) extra=(readonly extra)
-      )
+      ))
     )
   }}
 {{/basic-dropdown}}

@@ -1,49 +1,59 @@
 {{#basic-power-select
-  onchange=(action onchange)
-  horizontalPosition=(readonly horizontalPosition)
+  afterOptionsComponent=afterOptionsComponent
+  allowClear=allowClear
+  ariaDescribedBy=ariaDescribedBy
+  ariaInvalid=ariaInvalid
+  ariaLabel=ariaLabel
+  ariaLabelledBy=ariaLabelledBy
+  beforeOptionsComponent=beforeOptionsComponent
   calculatePosition=calculatePosition
-  destination=(readonly destination)
-  initiallyOpened=(readonly initiallyOpened)
-  matchTriggerWidth=(readonly matchTriggerWidth)
-  renderInPlace=(readonly renderInPlace)
-  verticalPosition=(readonly verticalPosition)
-  disabled=(readonly disabled)
+  class=class
+  closeOnSelect=closeOnSelect
+  defaultHighlighted=defaultHighlighted
+  destination=destination
+  disabled=disabled
+  extra=extra
+  groupComponent=groupComponent
+  horizontalPosition=horizontalPosition
+  initiallyOpened=initiallyOpened
+  loadingMessage=loadingMessage
+  matcher=matcher
+  matchTriggerWidth=matchTriggerWidth
+  noMatchesMessage=noMatchesMessage
+  onblur=onblur
+  onchange=onchange
+  onclose=onclose
+  onfocus=onfocus
+  oninput=oninput
+  onkeydown=onkeydown
+  onopen=onopen
+  options=options
+  optionsComponent=optionsComponent
+  placeholder=placeholder
+  placeholderComponent=placeholderComponent
+  renderInPlace=renderInPlace
+  scrollTo=scrollTo
+  search=search
+  searchEnabled=searchEnabled
+  searchField=searchField
+  searchMessage=searchMessage
+  searchPlaceholder=searchPlaceholder
+  selected=selected
+  selectedItemComponent=selectedItemComponent
+  tabindex=tabindex
+  triggerClass=triggerClass
+  triggerId=triggerId
+  verticalPosition=verticalPosition
   as |select|
 }}
-  {{#select.dropdown.trigger
-    tagName=(readonly _triggerTagName)
-    ariaDescribedBy=(readonly ariaDescribedBy)
-    ariaInvalid=(readonly ariaInvalid)
-    ariaLabel=(readonly ariaLabel)
-    ariaLabelledBy=(readonly ariaLabelledBy)
-    ariaRequired=(readonly required)
-    class=(readonly concatenatedTriggerClasses)
-    id=(readonly triggerId)
-    tabindex=(readonly tabindex)
-  }}
+  {{#select.dropdown.trigger}}
     {{#select.trigger
-      allowClear=(readonly allowClear)
-      buildSelection=(readonly buildSelection)
-      extra=(readonly extra)
-      listboxId=(readonly optionsId)
-      placeholder=(readonly placeholder)
-      placeholderComponent=(readonly placeholderComponent)
-      searchEnabled=(readonly searchEnabled)
-      searchField=(readonly searchField)
-      select=(readonly publicAPI)
-      selectedItemComponent=(readonly selectedItemComponent)
     as |opt term|}}
       {{yield opt term}}
     {{/select.trigger}}
   {{/select.dropdown.trigger}}
   {{#select.dropdown.content}}
-    {{select.before-options
-      extra=(readonly extra)
-      listboxId=(readonly optionsId)
-      searchEnabled=(readonly searchEnabled)
-      searchPlaceholder=(readonly searchPlaceholder)
-      select=(readonly publicAPI)
-    }}
+    {{select.before-options}}
     {{#if mustShowSearchMessage}}
       {{component searchMessageComponent
         searchMessage=(readonly searchMessage)
@@ -60,21 +70,10 @@
         </ul>
       {{/if}}
     {{else}}
-      {{#select.options
-        class="ember-power-select-options"
-        extra=(readonly extra)
-        groupIndex=""
-        loadingMessage=(readonly loadingMessage)
-        id=(readonly optionsId)
-        options=(readonly publicAPI.results)
-        optionsComponent=(readonly optionsComponent)
-        groupComponent=(readonly groupComponent)
-        select=(readonly publicAPI)
-      as |opt term|}}
+      {{#select.options as |opt term|}}
         {{yield opt term}}
       {{/select.options}}
     {{/if}}
     {{select.after-options select=(readonly publicAPI) extra=(readonly extra)}}
-
   {{/select.dropdown.content}}
 {{/basic-power-select}}
