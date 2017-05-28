@@ -33,7 +33,7 @@ as |dropdown|}}
           class=(readonly concatenatedDropdownClasses)
         )
       )
-      before-options=(component beforeOptionsComponent
+      before-options=(if beforeOptionsComponent (component beforeOptionsComponent
         extra=(readonly extra)
         listboxId=(readonly optionsId)
         onInput=(action "onInput")
@@ -43,7 +43,7 @@ as |dropdown|}}
         onBlur=(action "onBlur")
         searchPlaceholder=(readonly searchPlaceholder)
         select=(readonly publicAPI)
-      )
+      ))
       options=(component optionsComponent
         class="ember-power-select-options"
         extra=(readonly extra)
