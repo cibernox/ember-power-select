@@ -10,7 +10,6 @@ export default Component.extend({
   layout,
   // Config
   triggerComponent: fallbackIfUndefined('power-select-multiple/trigger'),
-  beforeOptionsComponent: fallbackIfUndefined(null),
 
   // CPs
   concatenatedTriggerClass: computed('triggerClass', function() {
