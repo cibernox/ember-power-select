@@ -11,27 +11,46 @@
   verticalPosition=(readonly verticalPosition)
   disabled=(readonly disabled)
 as |dropdown|}}
+  {{#dropdown.trigger
+    tagName=(readonly _triggerTagName)
+    ariaDescribedBy=(readonly ariaDescribedBy)
+    ariaInvalid=(readonly ariaInvalid)
+    ariaLabel=(readonly ariaLabel)
+    ariaLabelledBy=(readonly ariaLabelledBy)
+    ariaRequired=(readonly required)
+    class=(readonly concatenatedTriggerClasses)
+    id=(readonly triggerId)
+    onKeyDown=(action "onTriggerKeydown")
+    onFocus=(action "onTriggerFocus")
+    onBlur=(action "onTriggerBlur")
+    tabindex=(readonly tabindex)
+  }}
+    {{yield
+      (hash
+        trigger=(component triggerComponent
+          allowClear=(readonly allowClear)
+          buildSelection=(readonly buildSelection)
+          extra=(readonly extra)
+          listboxId=(readonly optionsId)
+          onFocus=(action "onFocus")
+          onBlur=(action "onBlur")
+          onInput=(action "onInput")
+          placeholder=(readonly placeholder)
+          placeholderComponent=(readonly placeholderComponent)
+          onKeydown=(action "onKeydown")
+          searchEnabled=(readonly searchEnabled)
+          searchField=(readonly searchField)
+          select=(readonly publicAPI)
+          selectedItemComponent=(readonly selectedItemComponent)
+        )
+      )
+    }}
+  {{/dropdown.trigger}}
   {{yield
     (hash
-      dropdown=(hash
-        trigger=(component dropdown.trigger
-          tagName=(readonly _triggerTagName)
-          ariaDescribedBy=(readonly ariaDescribedBy)
-          ariaInvalid=(readonly ariaInvalid)
-          ariaLabel=(readonly ariaLabel)
-          ariaLabelledBy=(readonly ariaLabelledBy)
-          ariaRequired=(readonly required)
-          class=(readonly concatenatedTriggerClasses)
-          id=(readonly triggerId)
-          onKeyDown=(action "onTriggerKeydown")
-          onFocus=(action "onTriggerFocus")
-          onBlur=(action "onTriggerBlur")
-          tabindex=(readonly tabindex)
-        )
-        content=(component dropdown.content
-          _contentTagName=_contentTagName
-          class=(readonly concatenatedDropdownClasses)
-        )
+      dropdown=(component dropdown.content
+        _contentTagName=_contentTagName
+        class=(readonly concatenatedDropdownClasses)
       )
       before-options=(if beforeOptionsComponent (component beforeOptionsComponent
         extra=(readonly extra)
@@ -64,22 +83,6 @@ as |dropdown|}}
       no-matches-message=(if mustShowNoMessages (component 'power-select/no-matches-message'
         noMatchesMessage=noMatchesMessage
       ))
-      trigger=(component triggerComponent
-        allowClear=(readonly allowClear)
-        buildSelection=(readonly buildSelection)
-        extra=(readonly extra)
-        listboxId=(readonly optionsId)
-        onFocus=(action "onFocus")
-        onBlur=(action "onBlur")
-        onInput=(action "onInput")
-        placeholder=(readonly placeholder)
-        placeholderComponent=(readonly placeholderComponent)
-        onKeydown=(action "onKeydown")
-        searchEnabled=(readonly searchEnabled)
-        searchField=(readonly searchField)
-        select=(readonly publicAPI)
-        selectedItemComponent=(readonly selectedItemComponent)
-      )
       after-options=(if afterOptionsComponent (component afterOptionsComponent
         select=(readonly publicAPI) extra=(readonly extra)
       ))

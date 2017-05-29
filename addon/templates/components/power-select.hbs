@@ -53,12 +53,10 @@
   verticalPosition=verticalPosition
   as |select|
 }}
-  {{#select.dropdown.trigger}}
-    {{#select.trigger as |opt term|}}
-      {{yield opt term}}
-    {{/select.trigger}}
-  {{/select.dropdown.trigger}}
-  {{#select.dropdown.content}}
+  {{#select.trigger as |opt term|}}
+    {{yield opt term}}
+  {{/select.trigger}}
+  {{#select.dropdown}}
     {{select.before-options}}
     {{select.search-message}}
     {{#select.no-matches-message as |matches|}}
@@ -76,5 +74,5 @@
       {{yield opt term}}
     {{/select.options}}
     {{select.after-options select=(readonly publicAPI) extra=(readonly extra)}}
-  {{/select.dropdown.content}}
+  {{/select.dropdown}}
 {{/basic-power-select}}
