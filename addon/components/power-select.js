@@ -282,7 +282,7 @@ export default Component.extend({
       }
       let publicAPI = this.get('publicAPI');
       publicAPI.actions.select(this.get('buildSelection')(selected, publicAPI), e);
-      if (this.get('closeOnSelect')) {
+      if (!this.get('isDestroyed') && this.get('closeOnSelect')) {
         publicAPI.actions.close(e);
         return false;
       }
