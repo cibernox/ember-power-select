@@ -77,7 +77,6 @@ test('Delete an item in a multiple selection', function(assert) {
 });
 
 test('The `selected` option can be an async belongsTo', function(assert) {
-  server.logging = true;
   let done = assert.async();
   assert.expect(6);
 
