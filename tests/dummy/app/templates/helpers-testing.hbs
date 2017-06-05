@@ -53,11 +53,14 @@
 
 <h3>Customized component</h3>
 <div class="select-custom-search">
-  {{#power-select selected=selected3
+  {{#power-select
+    selected=selected3
     onchange=(action (mut selected3))
     search=(action "searchAsync")
     beforeOptionsComponent=null
-    triggerComponent="custom-trigger-with-search" as |num|}}
+    triggerComponent="custom-trigger-with-search"
+    as |num|
+  }}
     {{num}}
   {{/power-select}}
 </div>
