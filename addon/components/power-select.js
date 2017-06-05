@@ -426,6 +426,7 @@ export default Component.extend({
       let resultsArray = toPlainArray(results);
       this.updateState({
         results: resultsArray,
+        _rawSearchResults: results,
         lastSearchedText: term,
         resultsCount: countOptions(results),
         loading: false
