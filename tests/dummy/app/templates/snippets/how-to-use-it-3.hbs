@@ -1,0 +1,8 @@
+{{#power-select 
+  options=options 
+  selected=(find-by "value" optionValue options) 
+  onchange=(action (mut optionValue) value="value") as |option|}}
+
+  {{option.display}}
+
+{{/power-select}}

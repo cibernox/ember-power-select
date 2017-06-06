@@ -64,6 +64,15 @@
 </ul>
 
 <p>
+  Using a POJO as the `selected` value is not supported by design. If you want to use a list of POJOs as the options
+  then you can use `ember-composable-helpers` to implement this:
+</p>
+
+{{#code-sample hbs="how-to-use-it-3.hbs" as |partialName|}}
+  {{partial partialName}}
+{{/code-sample}}
+
+<p>
   This is the very basic usage of this component, but so far is pretty useless. Since there are no
   two way bindings and the <code>onchange</code> action is empty <strong>nothing happens when you select something.</strong>
 </p>
