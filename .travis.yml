@@ -33,9 +33,6 @@ before_install:
 install:
   - yarn install --no-lockfile
 
-before_script:
-  - sleep 3 # give xvfb some time to star
-
 script:
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
