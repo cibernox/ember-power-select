@@ -1,5 +1,8 @@
 # Master
 
+# 1.8.5
+- [BUGFIX] Fix bug in iOS that prevented taps in items to be selected. Bug was introduced in 1.7.
+
 # 1.8.4
 - [ENHANCEMENT] Allow to use `selectChoose` in integration.
 
