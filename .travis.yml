@@ -4,6 +4,7 @@ node_js:
   - "7"
 
 dist: trusty
+sudo: false
 
 addons:
   chrome: stable
