@@ -74,7 +74,7 @@ export default Component.extend({
     this.element.addEventListener('touchend', (e) => {
       let optionItem = e.target.closest('[data-option-index]');
 
-      if (!optionItem || !(0 in optionItem)) {
+      if (!optionItem) {
         return;
       }
 
@@ -84,7 +84,7 @@ export default Component.extend({
         return;
       }
 
-      let optionIndex = optionItem[0].getAttribute('data-option-index');
+      let optionIndex = optionItem.getAttribute('data-option-index');
       this.get('select.actions.choose')(this._optionFromIndex(optionIndex), e);
     });
   },
