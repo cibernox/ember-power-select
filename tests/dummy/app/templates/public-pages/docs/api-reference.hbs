@@ -303,6 +303,7 @@
   disabled: &lt;boolean&gt;,            // Truthy if the component received `disabled=true`
   highlighted: &lt;T&gt;,               // Contains the currently highlighted option (if any)
   isActive: &lt;boolean&gt;,            // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+  isOpen: &lt;boolean&gt;,              // Truthy if the dropdown is open.
   lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match `searchText`. In async searches, it will match it if the current search is fulfilled
   loading: &lt;boolean&gt;,             // Truthy if there is a pending promise that will update the results
   options: &lt;array[T]&gt;,            // Contains the regular array with the resolved collection of options.
