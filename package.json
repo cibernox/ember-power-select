@@ -40,7 +40,7 @@
     "ember-cli-blueprint-test-helpers": "^0.17.0",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-deploy": "0.5.0",
-    "ember-cli-eslint": "^3.1.0",
+    "ember-cli-eslint": "^4.0.0",
     "ember-cli-htmlbars-inline-precompile": "^0.4.3",
     "ember-cli-inject-live-reload": "^1.6.1",
     "ember-cli-mirage": "^0.3.2",
