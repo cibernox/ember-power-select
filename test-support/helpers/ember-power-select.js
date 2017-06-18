@@ -10,7 +10,7 @@ import { click, fillIn, keyEvent, triggerEvent, find, findAll } from 'ember-nati
  *                      given text
  */
 export function findContains(selector, text) {
-  return [].slice.apply(findAll(selector)).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
+  return findAll(selector).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
 }
 
 export function nativeMouseDown(selectorOrDomElement, options) {
@@ -90,7 +90,7 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
   }
 
   // Select the option with the given text
-  let options = [].slice.apply(findAll(`#${contentId} .ember-power-select-option`));
+  let options = findAll(`#${contentId} .ember-power-select-option`);
   let potentialTargets = options.filter((opt) => opt.textContent.indexOf(valueOrSelector) > -1);
   if (potentialTargets.length === 0) {
     // If treating the value as text doesn't gave use any result, let's try if it's a css selector
@@ -178,7 +178,7 @@ export default function() {
 
   Test.registerAsyncHelper('removeMultipleOption', async function(app, cssPath, value) {
     let elem;
-    let items = [].slice.apply(findAll(`${cssPath} .ember-power-select-multiple-options > li`));
+    let items = findAll(`${cssPath} .ember-power-select-multiple-options > li`);
     let item = items.find((el) => el.textContent.indexOf(value) > -1);
     if (item) {
       elem = find('.ember-power-select-multiple-remove-btn', item);

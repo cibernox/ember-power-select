@@ -70,12 +70,12 @@ test('When filtering, a group title is visible as long as one of it\'s elements 
   `);
   clickTrigger();
   typeInSearch('ve');
-  let groupNames = [].slice.apply(findAll('.ember-power-select-group-name')).map((e) => e.textContent.trim());
-  let optionValues = [].slice.apply(findAll('.ember-power-select-option')).map((e) => e.textContent.trim());
+  let groupNames = findAll('.ember-power-select-group-name').map((e) => e.textContent.trim());
+  let optionValues = findAll('.ember-power-select-option').map((e) => e.textContent.trim());
   assert.deepEqual(groupNames, ['Mediums', 'Bigs', 'Fairly big', 'Really big'], 'Only the groups with matching options are shown');
   assert.deepEqual(optionValues, ['five', 'seven', 'eleven', 'twelve'], 'Only the matching options are shown');
   typeInSearch('lve');
-  groupNames = [].slice.apply(findAll('.ember-power-select-group-name')).map((e) => e.textContent.trim());
+  groupNames = findAll('.ember-power-select-group-name').map((e) => e.textContent.trim());
   assert.deepEqual(groupNames, ['Bigs', 'Really big'], 'With no depth level');
 });
 
@@ -89,7 +89,7 @@ test('Click on an option of a group select selects the option and closes the dro
     {{/power-select}}
   `);
   clickTrigger();
-  let option = [].slice.apply(findAll('.ember-power-select-option')).filter((e) => e.textContent.indexOf('four') > -1)[0];
+  let option = findAll('.ember-power-select-option').find((e) => e.textContent.indexOf('four') > -1);
   click(option);
   assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The clicked option was selected');
   assert.notOk(find('.ember-power-select-options'), 'The dropdown has dissapeared');
