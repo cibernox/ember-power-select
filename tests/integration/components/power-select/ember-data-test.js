@@ -11,13 +11,13 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true,
   beforeEach() {
     let owner = Ember.getOwner(this);
-    this.server = startMirage({ environment: 'test', modulePrefix: 'dummy' });
+    startMirage({ environment: 'test', modulePrefix: 'dummy' });
     emberDataInitializer.initialize(owner);
     this.store = owner.lookup('service:store');
   },
 
   afterEach() {
-    this.server.shutdown();
+    server.shutdown();
   }
 });
 
@@ -72,37 +72,6 @@ test('Delete an item in a multiple selection', function(assert) {
     click('.ember-power-select-multiple-remove-btn');
     return wait().then(function() {
       assert.equal(findAll('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
-    });
-  });
-});
-
-test('The `selected` option can be an async belongsTo', function(assert) {
-  let done = assert.async();
-  assert.expect(6);
-
-  let pets = server.createList('pet', 10);
-  let mainUser = server.create('user', { petIds: pets.map((u) => u.id), bestieId: pets[3].id });
-
-  Ember.run(() => {
-    this.store.findRecord('user', mainUser.id).then((record) => {
-      this.mainUser = record;
-      this.render(hbs`
-        {{#power-select options=mainUser.pets selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}
-          {{option.name}}
-        {{/power-select}}
-      `);
-
-      clickTrigger();
-      assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Pet 0', 'The first element is highlighted');
-      assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
-      assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
-
-      setTimeout(function() {
-        assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Pet 3', 'The 4th element is highlighted');
-        assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'Pet 3', 'The 4th element is highlighted');
-        assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Pet 3', 'The trigger has the proper content');
-        done();
-      }, 30);
     });
   });
 });
