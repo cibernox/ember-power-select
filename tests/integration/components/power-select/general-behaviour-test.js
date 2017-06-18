@@ -1178,3 +1178,30 @@ test('If the select receives a `calculatePosition` option, it uses it to calcula
   assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--left'), 'The dropdown is in the left');
   assert.equal(dropdownContent.attributes.style.value, 'top: 333px;right: 444px;', 'The style attribute is the expected one');
 });
+
+test('The `selected` option can be a thenable', async function(assert) {
+  assert.expect(6);
+  let pets = [{ name: 'Toby' }, { name: 'Rex' }, { name: 'Lucius' }, { name: 'Donatello' }];
+  this.mainUser = {
+    pets,
+    bestie: new RSVP.Promise(function(resolve) {
+      setTimeout(() => resolve(pets[2]), 40);
+    })
+  };
+
+  this.render(hbs`
+    {{#power-select options=mainUser.pets selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}
+      {{option.name}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Toby', 'The first element is highlighted');
+  assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
+
+  await this.mainUser.bestie;
+  assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Lucius', 'The 4th element is highlighted');
+  assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'Lucius', 'The 4th element is highlighted');
+  assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Lucius', 'The trigger has the proper content');
+});
