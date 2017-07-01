@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger } from '../../../helpers/ember-power-select';
@@ -112,7 +113,7 @@ test('Doing mouseup over an option less than 2px in the Y axis of where the mous
       {{option}}
     {{/power-select}}
   `);
-
+  Ember.testing = false;
   clickTrigger(null, { clientY: 123 });
   assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
   triggerEvent(findAll('.ember-power-select-option')[1], 'mouseup', { clientY: 124 });
@@ -120,6 +121,7 @@ test('Doing mouseup over an option less than 2px in the Y axis of where the mous
   triggerEvent(findAll('.ember-power-select-option')[1], 'mouseup', { clientY: 125 });
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed now');
   assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'two', 'The element has been selected');
+  Ember.testing = true;
 });
 
 test('Clicking on a wrapped option should select it', function(assert) {

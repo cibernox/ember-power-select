@@ -273,7 +273,7 @@ export default Component.extend({
     },
 
     choose(selected, e) {
-      if (e && e.clientY) {
+      if (!Ember.testing && e && e.clientY) {
         if (this.openingEvent && this.openingEvent.clientY) {
           if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
             return;
