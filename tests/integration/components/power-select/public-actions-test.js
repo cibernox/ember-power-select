@@ -1,11 +1,9 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 import { find, findAll, click, keyEvent, focus } from 'ember-native-dom-helpers';
-
-const { run } = Ember;
+import { run } from '@ember/runloop';
 
 function assertPublicAPIShape(assert, select) {
   assert.equal(typeof select.uniqueId, 'string', 'select.uniqueId is a string');

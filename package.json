@@ -83,7 +83,7 @@
   ],
   "dependencies": {
     "ember-basic-dropdown": "^0.32.8",
-    "ember-cli-babel": "^6.1.0",
+    "ember-cli-babel": "^6.5.1",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-concurrency": "^0.8.1",
     "ember-text-measurer": "^0.3.3",

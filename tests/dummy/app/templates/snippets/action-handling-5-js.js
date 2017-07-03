@@ -1,5 +1,6 @@
-import Ember from 'ember';
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+import { isBlank } from '@ember/utils';
+export default Controller.extend({
   cities: ['Barcelona', 'London', 'New York', 'Porto'],
   actions: {
     handleFocus(select, e) {
@@ -16,7 +17,7 @@ export default Ember.Controller.extend({
   // Methods
   focusComesFromOutside(e) {
     let blurredEl = e.relatedTarget;
-    if (Ember.isBlank(blurredEl)) {
+    if (isBlank(blurredEl)) {
       return false;
     }
     return !blurredEl.classList.contains('ember-power-select-search-input');

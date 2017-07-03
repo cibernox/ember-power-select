@@ -1,12 +1,14 @@
-import Ember from 'ember';
-import { task, timeout } from 'ember-concurrency';
+import Controller from '@ember/controller';
+import { isBlank } from '@ember/utils';
+import { run } from '@ember/runloop';
 import fetch from 'fetch';
-const { run, isBlank } = Ember;
+import RSVP from 'rsvp';
+import { task, timeout } from 'ember-concurrency';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   actions: {
     searchRepo(term) {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      return new RSVP.Promise((resolve, reject) => {
         run.debounce(this, this._performSearch, term, resolve, reject, 600);
       });
     }

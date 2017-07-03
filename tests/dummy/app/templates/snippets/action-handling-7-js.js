@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   numbers,
   actions: {
     verifyPresence(select /*, e */) {

@@ -1,5 +1,5 @@
-import Component from 'ember-component';
-import { scheduleOnce } from 'ember-runloop';
+import Component from '@ember/component';
+import { scheduleOnce } from '@ember/runloop';
 import layout from '../../templates/components/power-select/before-options';
 
 export default Component.extend({

@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger, findContains } from '../../../helpers/ember-power-select';
-import run from 'ember-runloop';
+import { run } from '@ember/runloop';
 import {
   numbers,
   names,

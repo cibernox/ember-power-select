@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import RSVP from 'rsvp';
 
 function generatePromise() {
-  return new Ember.RSVP.Promise((resolve) => {
+  return new RSVP.Promise((resolve) => {
     setTimeout(() => resolve(['one', 'two', 'three']), 5000);
   });
 }
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   promise: null,
   actions: {
     refreshCollection() {

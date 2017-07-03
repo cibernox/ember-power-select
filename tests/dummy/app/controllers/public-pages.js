@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject } from '@ember/controller';
 
 const options = [
   ['I\'m', 'just', 'a logo'],
@@ -9,11 +11,11 @@ const options = [
   ['Enough.', 'I\'m done', 'with you']
 ];
 
-export default Ember.Controller.extend({
-  applicationController: Ember.inject.controller('application'),
+export default Controller.extend({
+  applicationController: inject('application'),
   mainSelectOptions: options[0],
   mainSelected: 'foo',
-  disabled: Ember.computed('applicationController.currentPath', function() {
+  disabled: computed('applicationController.currentPath', function() {
     return this.get('applicationController.currentPath') !== 'public-pages.index';
   }),
 

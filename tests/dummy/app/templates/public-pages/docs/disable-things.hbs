@@ -20,7 +20,9 @@
     \{{/power-select}}
   </pre>
   <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
-    export default Ember.Controller.extend({
+    import Controller from '@ember/controller';
+
+    export default Controller.extend({
       countries: [
         { name: 'United States'           },
         { name: 'Spain',  disabled: true  },

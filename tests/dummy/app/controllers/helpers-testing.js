@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { later } from '@ember/runloop';
+import RSVP from 'rsvp';
 
 const numbers = [
   'one',
@@ -23,7 +25,7 @@ const numbers = [
   'twenty'
 ];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   numbers,
   selectedList: [],
   asyncSelectedList: [],
@@ -31,21 +33,21 @@ export default Ember.Controller.extend({
   // Actions
   actions: {
     searchAsync(term) {
-      return new Ember.RSVP.Promise(function(resolve) {
-        Ember.run.later(function() {
+      return new RSVP.Promise(function(resolve) {
+        later(function() {
           resolve(numbers.filter((n) => n.indexOf(term) > -1));
         }, 100);
       });
     },
 
     onOpenHandle() {
-      Ember.run.later(() => {
+      later(() => {
         this.set('optionz', numbers);
       }, 100);
     },
 
     onChangeAsync(key, selected) {
-      Ember.run.later(() => {
+      later(() => {
         this.set(key, selected);
       }, 100);
     }
