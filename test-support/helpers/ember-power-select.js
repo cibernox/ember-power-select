@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { deprecate } from '@ember/debug';
 import Test from 'ember-test';
 import wait from 'ember-test-helpers/wait';
 import { click, fillIn, keyEvent, triggerEvent, find, findAll } from 'ember-native-dom-helpers';
+
 /**
  * @private
  * @param {String} selector CSS3 selector of the elements to check the content
@@ -98,7 +99,7 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
     if (matchEq) {
       let index = parseInt(matchEq[1], 10);
       let option = findAll(`#${contentId} ${valueOrSelector.slice(0, -6)}`)[index];
-      Ember.deprecate('Passing selectors with the `:eq()` pseudoselector is deprecated. If you want to select the nth option, pass a number as a third argument. E.g `selectChoose(".language-select", ".ember-power-select-option", 3)`', true, {
+      deprecate('Passing selectors with the `:eq()` pseudoselector is deprecated. If you want to select the nth option, pass a number as a third argument. E.g `selectChoose(".language-select", ".ember-power-select-option", 3)`', true, {
         id: 'select-choose-no-eq-pseudoselector',
         until: '1.8.0'
       });
