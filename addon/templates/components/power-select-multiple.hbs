@@ -51,8 +51,8 @@
     triggerComponent=(component triggerComponent tabindex=tabindex)
     triggerId=triggerId
     verticalPosition=verticalPosition
-    as |option select|}}
-    {{yield option select}}
+    as |option select index|}}
+    {{yield option select index}}
   {{else}}
     {{yield to="inverse"}}
   {{/power-select}}
@@ -109,7 +109,7 @@
     triggerComponent=(component triggerComponent tabindex=tabindex)
     triggerId=triggerId
     verticalPosition=verticalPosition
-    as |option select|}}
-    {{yield option select}}
+    as |option select index|}}
+    {{yield option select index}}
   {{/power-select}}
 {{/if}}
