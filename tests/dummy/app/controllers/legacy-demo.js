@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { later } from '@ember/run';
+import { later } from '@ember/runloop';
 import RSVP from 'rsvp';
 
 const numbers = [

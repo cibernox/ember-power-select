@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { lte } from '@ember/object/computed';
 import { A } from '@ember/array';
-import { later } from '@ember/run';
+import { later } from '@ember/runloop';
 
 const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 

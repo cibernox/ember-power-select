@@ -1,9 +1,8 @@
 import { module } from 'qunit';
-import Ember from 'ember';
 import startApp from '../helpers/start-app';
 import destroyApp from '../helpers/destroy-app';
-
-const { RSVP: { Promise } } = Ember;
+import RSVP from 'rsvp';
+const { Promise } = RSVP;
 
 export default function(name, options = {}) {
   module(name, {

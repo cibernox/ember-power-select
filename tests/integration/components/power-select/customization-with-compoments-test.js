@@ -4,9 +4,9 @@ import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';
 import { find, findAll, click } from 'ember-native-dom-helpers';
-import get from 'ember-metal/get';
-import getOwner from 'ember-owner/get';
-import { isPresent } from 'ember-utils';
+import { get } from '@ember/object';
+import { getOwner } from '@ember/application';
+import { isPresent } from '@ember/utils';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
   integration: true

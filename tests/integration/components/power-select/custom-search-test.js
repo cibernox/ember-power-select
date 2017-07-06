@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import { later } from '@ember/runloop';
 import { task, timeout } from 'ember-concurrency';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
@@ -6,8 +7,7 @@ import wait from 'ember-test-helpers/wait';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers, countries } from '../constants';
 import { find, findAll, click } from 'ember-native-dom-helpers';
-
-const { RSVP } = Ember;
+import RSVP from 'rsvp';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Custom search function)', {
   integration: true
@@ -32,7 +32,7 @@ test('The search text shouldn\'t appear if options are loading', function(assert
   assert.expect(2);
 
   this.options = new RSVP.Promise(function(resolve) {
-    Ember.run.later(function() {
+    later(function() {
       resolve(numbers);
     }, 100);
   });
@@ -101,7 +101,7 @@ test('The search function can return a promise that resolves to an array and tho
 
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
@@ -126,7 +126,7 @@ test('While the async search is being performed the "Type to search" dissapears 
 
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
@@ -151,7 +151,7 @@ test('When the search resolves to an empty array then the "No results found" mes
 
   this.searchFn = function() {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve([]);
       }, 10);
     });
@@ -175,7 +175,7 @@ test('When the search resolves to an empty array then the custom "No results" me
 
   this.searchFn = function() {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve([]);
       }, 10);
     });
@@ -199,7 +199,7 @@ test('When the search resolves to an empty array then the custom alternate block
 
   this.searchFn = function() {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve([]);
       }, 10);
     });
@@ -229,7 +229,7 @@ test('When the search resolves to an empty array then the custom alternate block
 
 //   this.searchFn = function() {
 //     return new RSVP.Promise(function(resolve) {
-//       Ember.run.later(function() { resolve(numbers); }, 100);
+//       later(function() { resolve(numbers); }, 100);
 //     });
 //   };
 
@@ -258,7 +258,7 @@ test('On an empty select, when the search resolves, the first element is highlig
 
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
@@ -285,7 +285,7 @@ test('On an select with a selected value, if after a search this value is not am
   this.selected = numbers[2];
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
@@ -337,7 +337,7 @@ test('When received both options and search, those options are shown when the dr
   this.numbers = numbers;
   this.searchFn = (term) => {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 50);
     });
@@ -365,7 +365,7 @@ test('Don\'t return from the search action and update the options instead also w
 
   this.selectedOptions = numbers;
   this.searchFn = (term) => {
-    Ember.run.later(() => {
+    later(() => {
       this.set('selectedOptions', numbers.filter((str) => str.indexOf(term) > -1));
     }, 20);
   };
@@ -396,7 +396,7 @@ test('Don\'t return from the search action and update the options instead also w
 //   this.searchFn = (term) => {
 //     searchCalls++;
 //     let promise = new RSVP.Promise(function(resolve) {
-//       Ember.run.later(() => {
+//       later(() => {
 //         resolve(numbers.filter((str) => str.indexOf(term) > -1));
 //       }, 30);
 //     });
@@ -602,7 +602,7 @@ test('If the value returned from an async search is cancellable and before it co
   assert.expect(1);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(100);
       assert.equal(term, 'nin', 'The second search gets executed');
@@ -632,7 +632,7 @@ test('If the value returned from an async search is cancellable and before it co
   assert.expect(0);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(100);
       assert.ok(false, 'This task should not have been executed this far');
@@ -662,7 +662,7 @@ test('If a select is destroyed while a search is still ongoing and the search is
   assert.expect(0);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(100);
       assert.ok(false, 'This task should not have been executed this far');
@@ -694,7 +694,7 @@ test('If a select is closed while a search is still ongoing and the search is ca
   assert.expect(0);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(100);
       assert.ok(false, 'This task should not have been executed this far');
@@ -724,7 +724,7 @@ test('If the value returned from an async search of a multiple-select is cancell
   assert.expect(1);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(100);
       assert.equal(term, 'nin', 'The second search gets executed');
@@ -754,7 +754,7 @@ test('If the value returned from an async search of a multiple-select is cancell
   assert.expect(0);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(100);
       assert.ok(false, 'This task should not have been executed this far');
@@ -784,7 +784,7 @@ test('If a multiple select is destroyed while a search is still ongoing and the 
   assert.expect(0);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(100);
       assert.ok(false, 'This task should not have been executed this far');
@@ -816,7 +816,7 @@ test('If a multiple select is closed while a search is still ongoing and the sea
   assert.expect(0);
   let done = assert.async();
 
-  this.obj = Ember.Object.extend({
+  this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
       yield timeout(150);
       assert.ok(false, 'This task should not have been executed this far');

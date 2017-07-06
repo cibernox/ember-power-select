@@ -1,11 +1,13 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
 import { numbers, names, countries, countriesWithDisabled } from '../constants';
 import { find, findAll, click, tap, keyEvent } from 'ember-native-dom-helpers';
-
-const { RSVP, Object: eObject, get } = Ember;
+import RSVP from 'rsvp';
+import EmberObject, { get } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import { run, later } from '@ember/runloop';
+import { A } from '@ember/array';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Multiple)', {
   integration: true
@@ -144,7 +146,7 @@ test('Clicking on an option that is already selected unselects it, closes the se
   this.numbers = numbers;
   this.selectedNumbers = ['four'];
   this.change = (selected) => {
-    assert.ok(Ember.isEmpty(selected), 'No elements are selected');
+    assert.ok(isEmpty(selected), 'No elements are selected');
     this.set('selectedNumbers', selected);
   };
 
@@ -236,7 +238,7 @@ test('The search using a custom action works int multiple mode', function(assert
 
   this.searchFn = function(term) {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
@@ -604,7 +606,7 @@ test('Typing in the input opens the component and filters the options also with 
 
   this.search = (term) => {
     return new RSVP.Promise(function(resolve) {
-      Ember.run.later(function() {
+      later(function() {
         resolve(numbers.filter((str) => str.indexOf(term) > -1));
       }, 100);
     });
@@ -697,14 +699,14 @@ test('The trigger of multiple selects have a special class to distinguish them f
 test('The component works when the array of selected elements is mutated in place instead of replaced', function(assert) {
   assert.expect(1);
   this.numbers = numbers;
-  this.selected = Ember.A();
+  this.selected = A();
   this.render(hbs`
     {{#power-select-multiple options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
       {{option}}
     {{/power-select-multiple}}
   `);
   clickTrigger();
-  Ember.run(() => this.get('selected').pushObject(numbers[3]));
+  run(() => this.get('selected').pushObject(numbers[3]));
   click(findAll('.ember-power-select-option')[0]);
   assert.equal(findAll('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
 });
@@ -781,7 +783,7 @@ test('Multiple selects honor the `defaultHighlighted` option', function(assert) 
 });
 
 test('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', function(assert) {
-  let User = eObject.extend({
+  let User = EmberObject.extend({
     isEqual(other) {
       return get(this, 'name') === get(other, 'name');
     }
