@@ -1,5 +1,5 @@
-import { A } from 'ember-array/utils';
-import get from 'ember-metal/get';
+import { A } from '@ember/array';
+import { get } from '@ember/object';
 
 export function isGroup(entry) {
   return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');

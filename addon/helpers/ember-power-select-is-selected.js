@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import { helper } from 'ember-helper';
-import { isEmberArray } from 'ember-array/utils';
+import { helper } from '@ember/component/helper';
+import { isArray as isEmberArray } from '@ember/array';
 
 const { isEqual } = Ember;
 

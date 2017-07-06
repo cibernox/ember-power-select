@@ -1,9 +1,9 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { find, keyEvent } from 'ember-native-dom-helpers';
+import { run } from '@ember/runloop';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Keyboard control)', {
   integration: true
@@ -227,7 +227,7 @@ test('If the component is focused, pressing ENTER toggles it', function(assert) 
     {{/power-select}}
   `);
 
-  Ember.run(() => find('.ember-power-select-trigger').focus());
+  run(() => find('.ember-power-select-trigger').focus());
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
   keyEvent('.ember-power-select-trigger', 'keydown', 13);
   assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -245,7 +245,7 @@ test('If the single component is focused and has no search, pressing SPACE toggl
     {{/power-select}}
   `);
 
-  Ember.run(() => find('.ember-power-select-trigger').focus());
+  run(() => find('.ember-power-select-trigger').focus());
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
   keyEvent('.ember-power-select-trigger', 'keydown', 32);
   assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -263,7 +263,7 @@ test('If the single component is focused, pressing KEYDOWN opens it', function(a
     {{/power-select}}
   `);
 
-  Ember.run(() => find('.ember-power-select-trigger').focus());
+  run(() => find('.ember-power-select-trigger').focus());
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
   keyEvent('.ember-power-select-trigger', 'keydown', 40);
   assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -279,7 +279,7 @@ test('If the single component is focused, pressing KEYUP opens it', function(ass
     {{/power-select}}
   `);
 
-  Ember.run(() => find('.ember-power-select-trigger').focus());
+  run(() => find('.ember-power-select-trigger').focus());
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
   keyEvent('.ember-power-select-trigger', 'keydown', 38);
   assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');

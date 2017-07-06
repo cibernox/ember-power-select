@@ -1,15 +1,14 @@
 import Ember from 'ember';
-import Component from 'ember-component';
-import layout from '../templates/components/power-select';
-import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
+import { get, set } from '@ember/object';
 import { assert } from '@ember/debug';
 import { DEBUG } from '@glimmer/env';
-import { isBlank } from 'ember-utils';
-import { isEmberArray } from 'ember-array/utils';
-import computed from 'ember-computed';
-import get from 'ember-metal/get';
-import set from 'ember-metal/set';
-import { scheduleOnce } from 'ember-runloop';
+import { isBlank } from '@ember/utils';
+import { isArray as isEmberArray } from '@ember/array';
+import layout from '../templates/components/power-select';
+import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import {
   defaultMatcher,
   indexOfOption,

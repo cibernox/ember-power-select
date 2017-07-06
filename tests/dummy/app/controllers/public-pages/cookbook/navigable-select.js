@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 const groupedNumbers = [
   { groupName: 'Smalls', options: ['one', 'two', 'three'] },
@@ -15,7 +15,7 @@ const groupedNumbers = [
   'one thousand'
 ];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   groupedNumbers,
   selectedNumber: null
 });

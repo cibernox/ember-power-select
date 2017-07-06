@@ -1,13 +1,13 @@
 import Ember from 'ember';
-import Component from 'ember-component';
-import layout from '../../templates/components/power-select-multiple/trigger';
-import get from 'ember-metal/get';
-import computed from 'ember-computed';
-import service from 'ember-service/inject';
-import { scheduleOnce } from 'ember-runloop';
+import Component from '@ember/component';
+import { get } from '@ember/object';
+import { computed } from '@ember/object';
+import { inject } from '@ember/service';
+import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
-import { isBlank } from 'ember-utils';
-import { htmlSafe } from 'ember-string';
+import { isBlank } from '@ember/utils';
+import { htmlSafe } from '@ember/string';
+import layout from '../../templates/components/power-select-multiple/trigger';
 
 const { testing } = Ember;
 
@@ -18,7 +18,7 @@ const isTouchDevice = (testing || !!self.window && 'ontouchstart' in self.window
 export default Component.extend({
   tagName: '',
   layout,
-  textMeasurer: service(),
+  textMeasurer: inject(),
   _lastIsOpen: false,
 
   // Lifecycle hooks

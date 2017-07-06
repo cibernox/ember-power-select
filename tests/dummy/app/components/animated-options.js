@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import OptionsComponent from 'ember-power-select/components/power-select/options';
 
 export default OptionsComponent.extend({
-  animationRules: Ember.computed(function() {
+  animationRules: computed(function() {
     return function() {
       this.transition(
         this.toValue(function(newOptions, oldOptions) {

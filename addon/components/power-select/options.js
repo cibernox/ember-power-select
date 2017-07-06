@@ -1,6 +1,6 @@
-import Component from 'ember-component';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../../templates/components/power-select/options';
-import computed from 'ember-computed';
 
 (function(ElementProto) {
   if (typeof ElementProto.matches !== 'function') {

@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   groupedNumbers: [
     { groupName: 'Smalls', options: ['one', 'two', 'three'] },
     { groupName: 'Mediums', options: ['four', 'five', 'six'] },

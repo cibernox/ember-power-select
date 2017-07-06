@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 const numbers = [
   'one',
@@ -23,7 +23,7 @@ const numbers = [
   'twenty'
 ];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   numbers,
   selectedList: [],
   optionz: []
