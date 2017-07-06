@@ -1,8 +1,6 @@
-import Ember from 'ember';
 import { helper } from '@ember/component/helper';
 import { isArray as isEmberArray } from '@ember/array';
-
-const { isEqual } = Ember;
+import { isEqual } from '@ember/utils';
 
 // TODO: Make it private or scoped to the component
 export function emberPowerSelectIsSelected([option, selected]/* , hash*/) {

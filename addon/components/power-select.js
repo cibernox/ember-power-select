@@ -1,7 +1,7 @@
-import Ember from 'ember';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
+import { isEqual } from '@ember/utils';
 import { get, set } from '@ember/object';
 import { assert } from '@ember/debug';
 import { DEBUG } from '@glimmer/env';
@@ -19,8 +19,6 @@ import {
   advanceSelectableOption
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
-
-const { isEqual } = Ember;
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
 const assign = Object.assign || function EmberAssign(original, ...args) {
