@@ -1,5 +1,8 @@
 # Master
 
+# 1.9.2
+- [BUGFIX] Ensure new import paths work regardless of the babel version on the consumer app
+
 # 1.9.1
 - [INTERNAL] Remove one forgotten use of the old shims
 
