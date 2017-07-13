@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import { computed } from '@ember/object';
@@ -9,11 +8,9 @@ import { isBlank } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/power-select-multiple/trigger';
 
-const { testing } = Ember;
-
 const ua = self.window && self.window.navigator ? self.window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
-const isTouchDevice = (testing || !!self.window && 'ontouchstart' in self.window);
+const isTouchDevice = !!self.window && 'ontouchstart' in self.window;
 
 export default Component.extend({
   tagName: '',
