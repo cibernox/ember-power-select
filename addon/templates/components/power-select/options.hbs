@@ -28,6 +28,7 @@
       aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
       aria-current="{{eq opt select.highlighted}}"
       data-option-index="{{groupIndex}}{{index}}"
+      id="{{select.uniqueId}}-{{groupIndex}}{{index}}"
       role="option">
       {{yield opt select}}
     </li>
