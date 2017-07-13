@@ -23,9 +23,9 @@ export default Component.extend({
     get() {
       return [];
     },
-    set(_, v) {
-      if (v === null || v === undefined) {
-        return [];
+    set(_, v, prevValue) {
+      if (v === null || v === undefined || typeof v !== 'object') {
+        return prevValue?prevValue:[];
       }
       return v;
     }
