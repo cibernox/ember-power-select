@@ -1,5 +1,5 @@
 import { deprecate } from '@ember/debug';
-import Test from 'ember-test';
+import { registerAsyncHelper } from '@ember/test';
 import wait from 'ember-test-helpers/wait';
 import { click, fillIn, keyEvent, triggerEvent, find, findAll } from 'ember-native-dom-helpers';
 
@@ -130,11 +130,11 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
 // Helpers for acceptance tests
 
 export default function() {
-  Test.registerAsyncHelper('selectChoose', function(_, cssPathOrTrigger, valueOrSelector, optionIndex) {
+  registerAsyncHelper('selectChoose', function(_, cssPathOrTrigger, valueOrSelector, optionIndex) {
     return selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex);
   });
 
-  Test.registerAsyncHelper('selectSearch', async function(app, cssPathOrTrigger, value) {
+  registerAsyncHelper('selectSearch', async function(app, cssPathOrTrigger, value) {
     let trigger;
     if (cssPathOrTrigger instanceof HTMLElement) {
       trigger = cssPathOrTrigger;
@@ -177,7 +177,7 @@ export default function() {
     return wait();
   });
 
-  Test.registerAsyncHelper('removeMultipleOption', async function(app, cssPath, value) {
+  registerAsyncHelper('removeMultipleOption', async function(app, cssPath, value) {
     let elem;
     let items = findAll(`${cssPath} .ember-power-select-multiple-options > li`);
     let item = items.find((el) => el.textContent.indexOf(value) > -1);
@@ -193,7 +193,7 @@ export default function() {
     }
   });
 
-  Test.registerAsyncHelper('clearSelected', async function(app, cssPath) {
+  registerAsyncHelper('clearSelected', async function(app, cssPath) {
     let elem = find(`${cssPath} .ember-power-select-clear-btn`);
     try {
       await click(elem);
