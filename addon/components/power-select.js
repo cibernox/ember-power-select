@@ -207,6 +207,11 @@ export default Component.extend({
     return this.get('searchEnabled') ? 'list' : 'none';
   }),
 
+  highlightedId: computed('publicAPI.highlighted', function() {
+    let { highlighted, results, uniqueId } = this.get('publicAPI');
+    return `${uniqueId}-${indexOfOption(results, highlighted)}`;
+  }),
+
   // Actions
   actions: {
     registerAPI(dropdown) {
