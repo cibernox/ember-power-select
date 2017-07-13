@@ -203,6 +203,10 @@ export default Component.extend({
       && (!this.get('search') || publicAPI.lastSearchedText.length > 0);
   }),
 
+  ariaAutocomplete: computed('searchEnabled', function() {
+    return this.get('searchEnabled') ? 'list' : 'none';
+  }),
+
   // Actions
   actions: {
     registerAPI(dropdown) {
