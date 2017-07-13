@@ -1,5 +1,8 @@
 # Master
 
+# 1.9.1
+- [INTERNAL] Remove one forgotten use of the old shims
+
 # 1.9.0
 - [INTERNAL] Do not import the `Ember` global or the old shims anymore. Use the new and definitive import paths.
 - [INTERNAL] Update to a version of `ember-basic-dropdown` that uses the new import paths
