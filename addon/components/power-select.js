@@ -211,6 +211,10 @@ export default Component.extend({
     return `${uniqueId}-${indexOfOption(results, highlighted)}`;
   }),
 
+  resultsCountId: computed('publicAPI.uniqueId', function() {
+    return `ember-power-select-results-count-${this.get('publicAPI.uniqueId')}`;
+  }),
+
   // Actions
   actions: {
     registerAPI(dropdown) {

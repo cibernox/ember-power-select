@@ -63,7 +63,9 @@
       onBlur=(action "onBlur")
       highlightedId=(readonly highlightedId)
       searchPlaceholder=(readonly searchPlaceholder)
-      select=(readonly publicAPI)}}
+      select=(readonly publicAPI)
+      resultsCount=(readonly publicAPI.resultsCount)
+      resultsCountId=(readonly resultsCountId)}}
     {{#if mustShowSearchMessage}}
       {{component searchMessageComponent
         searchMessage=(readonly searchMessage)
