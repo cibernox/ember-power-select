@@ -288,3 +288,11 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
     .ember-power-select-group-name { padding-right: $ember-power-select-option-padding; }
   }
 }
+
+.ember-power-select-visuallyhidden {
+  height: 1px;
+  left: -9999px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
