@@ -165,7 +165,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     assert.dom('.ember-power-select-option[aria-disabled=true]').exists({ count: 3 }, 'Three of them are disabled');
   });
 
-  test('Single-select: The trigger has `role=button` and `aria-owns=<id-of-dropdown>`', async function(assert) {
+  test('Single-select: The trigger has `role=combobox` and `aria-owns=<id-of-dropdown>`', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -176,11 +176,14 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     `);
 
     await clickTrigger();
-    assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The trigger has role button');
-    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns points to the dropdown');
+
+    let trigger = assert.dom('.ember-power-select-trigger');
+
+    assert.dom('.ember-power-select-trigger').hasAttribute('role', 'combobox', 'The trigger has role combobox');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns point to the dropdown');
   });
 
-  test('Multiple-select: The trigger has `role=button` and `aria-owns=<id-of-dropdown>`', async function(assert) {
+  test('Multiple-select: The trigger has `role=combobox` and `aria-owns=<id-of-dropdown>`', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -191,8 +194,8 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     `);
 
     await clickTrigger();
-    assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The trigger has role button');
-    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns points to the dropdown');
+    assert.dom('.ember-power-select-trigger').hasAttribute('role', 'combobox', 'The trigger has role button');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns point to the dropdown');
   });
 
   test('Single-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', async function(assert) {
@@ -253,7 +256,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     assert.dom('.ember-power-select-options').hasAttribute('id', /^ember-power-select-options-ember\d+$/, 'The search has a unique id');
   });
 
-  test('Single-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', async function(assert) {
+  test('Single-select: The searchbox has type `search` and `aria-owns=<id-of-listbox>`', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -265,7 +268,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     await clickTrigger();
     assert.dom('.ember-power-select-search-input').hasAttribute('type', 'search', 'The type of the input is `search`');
-    assert.dom('.ember-power-select-search-input').hasAttribute('aria-controls', /^ember-power-select-options-ember\d+$/, 'The `aria-controls` points to the id of the listbox');
+    assert.dom('.ember-power-select-search-input').hasAttribute('aria-owns', /^ember-power-select-options-ember\d+$/, 'The `aria-owns` points to the id of the listbox');
   });
 
   test('Multiple-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', async function(assert) {
@@ -281,34 +284,6 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     await clickTrigger();
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('type', 'search', 'The type of the input is `search`');
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('aria-controls', /^ember-power-select-options-ember\d+$/, 'The `aria-controls` points to the id of the listbox');
-  });
-
-  test('Single-select: The listbox has `aria-controls=<id-of-the-trigger>`', async function(assert) {
-    assert.expect(1);
-
-    this.numbers = numbers;
-    await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
-        {{option}}
-      {{/power-select}}
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-options').hasAttribute('aria-controls', /^ember-power-select-trigger-ember\d+$/, 'The listbox controls the trigger');
-  });
-
-  test('Multiple-select: The listbox has `aria-controls=<id-of-the-trigger>`', async function(assert) {
-    assert.expect(1);
-
-    this.numbers = numbers;
-    await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
-        {{option}}
-      {{/power-select-multiple}}
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-options').hasAttribute('aria-controls', /^ember-power-select-trigger-ember\d+$/, 'The listbox controls the trigger');
   });
 
   test('Multiple-select: The selected elements are <li>s inside an <ul>, and have an item with `role=button` with `aria-label="remove element"`', async function(assert) {
