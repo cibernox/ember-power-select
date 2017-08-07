@@ -41,7 +41,7 @@ test('Pressing keyup highlights the previous option', function(assert) {
   assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'two', 'The previous options is highlighted now');
 });
 
-test('When you the last option is highlighted, pressing keydown doesn\'t change the highlighted', function(assert) {
+test('When the last option is highlighted, pressing keydown doesn\'t change the highlighted', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -58,7 +58,7 @@ test('When you the last option is highlighted, pressing keydown doesn\'t change 
   assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'twenty', 'The last option is still the highlighted one');
 });
 
-test('When you the first option is highlighted, pressing keyup doesn\'t change the highlighted', function(assert) {
+test('When the first option is highlighted, pressing keyup doesn\'t change the highlighted', function(assert) {
   assert.expect(2);
 
   this.numbers = numbers;
@@ -469,6 +469,24 @@ test('Typing on a closed single select selects the value that matches the string
   keyEvent(trigger, 'keydown', 73); // i
   keyEvent(trigger, 'keydown', 78); // n
   assert.equal(trigger.textContent.trim(), 'nine', '"nine" has been selected');
+  assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
+});
+
+test('Typing with modifier keys on a closed single select does not select the value that matches the string typed so far', function(assert) {
+  assert.expect(3);
+
+  this.numbers = numbers;
+  this.render(hbs`
+    {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = find('.ember-power-select-trigger');
+  trigger.focus();
+  assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
+  keyEvent(trigger, 'keydown', 82, { ctrlKey: true }); // r
+  assert.notEqual(trigger.textContent.trim(), 'three', '"three" is not selected');
   assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
 });
 
