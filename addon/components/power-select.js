@@ -291,6 +291,9 @@ export default Component.extend({
       if (onkeydown && onkeydown(this.get('publicAPI'), e) === false) {
         return false;
       }
+      if (e.ctrlKey || e.metaKey) {
+        return false;
+      }
       if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
         this.get('triggerTypingTask').perform(e);
       } else if (e.keyCode === 32) {  // Space
