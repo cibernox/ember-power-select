@@ -1,5 +1,9 @@
 # Master
 
+# 1.9.3
+- [BUGFIX] Ensure that keys pressed with `ctrl` or `alt` on a focused trigger do not call the autoselection/autohighlighting
+  feature.
+
 # 1.9.2
 - [BUGFIX] Ensure new import paths work regardless of the babel version on the consumer app
 
