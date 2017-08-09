@@ -1,5 +1,9 @@
 # Master
 
+# 1.9.4
+- [BUGFIX] `selectChoose` and `selectSearch` test helpers now make sure that the trigger is scrolled
+  into the viewport before clicking it, as it might cause problems to click in an outside-view item.
+
 # 1.9.3
 - [BUGFIX] Ensure that keys pressed with `ctrl` or `alt` on a focused trigger do not call the autoselection/autohighlighting
   feature.
