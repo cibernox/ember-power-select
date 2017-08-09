@@ -82,6 +82,10 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
     }
   }
 
+  if (trigger.scrollIntoView) {
+    trigger.scrollIntoView();
+  }
+
   let contentId = `${trigger.attributes['aria-owns'].value}`;
   let content = find(`#${contentId}`);
   // If the dropdown is closed, open it
@@ -149,6 +153,10 @@ export default function() {
       if (!trigger) {
         throw new Error(`You called "selectSearch('${cssPathOrTrigger}', '${value}')" but no select was found using selector "${cssPathOrTrigger}"`);
       }
+    }
+
+    if (trigger.scrollIntoView) {
+      trigger.scrollIntoView();
     }
 
     let contentId = `${trigger.attributes['aria-owns'].value}`;
