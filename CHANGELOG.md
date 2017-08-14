@@ -1,5 +1,9 @@
 # Master
 
+# 1.9.5
+- [BUGFIX] Allow the to use the num-pad of the keyboard to highlight/select items while the trigger
+  is focused. Prior to this, only numbers above the keyboard would work.
+
 # 1.9.4
 - [BUGFIX] `selectChoose` and `selectSearch` test helpers now make sure that the trigger is scrolled
   into the viewport before clicking it, as it might cause problems to click in an outside-view item.
