@@ -294,7 +294,8 @@ export default Component.extend({
       if (e.ctrlKey || e.metaKey) {
         return false;
       }
-      if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
+      if ((e.keyCode >= 48 && e.keyCode <= 90) // Keys 0-9, a-z
+        || this._isNumpadKeyEvent(e)) {
         this.get('triggerTypingTask').perform(e);
       } else if (e.keyCode === 32) {  // Space
         return this._handleKeySpace(e);
@@ -386,7 +387,11 @@ export default Component.extend({
   // Tasks
   triggerTypingTask: task(function* (e) {
     let publicAPI = this.get('publicAPI');
-    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
+    let charCode = e.keyCode;
+    if (this._isNumpadKeyEvent(e)) {
+      charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
+    }
+    let term = publicAPI._expirableSearchText + String.fromCharCode(charCode);
     this.updateState({ _expirableSearchText: term });
     let matches = this.filter(publicAPI.options, term, true);
     if (get(matches, 'length') > 0) {
@@ -622,6 +627,10 @@ export default Component.extend({
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
     }
+  },
+
+  _isNumpadKeyEvent(e) {
+    return e.keyCode >= 96 && e.keyCode <= 105;
   },
 
   updateState(changes) {

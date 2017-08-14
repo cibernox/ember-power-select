@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
-import { numbers, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
+import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { find, keyEvent } from 'ember-native-dom-helpers';
 import { run } from '@ember/runloop';
 
@@ -497,7 +497,7 @@ test('Typing with modifier keys on a closed single select does not select the va
 // test('Typing on a closed multiple select with no searchbox does nothing', function(assert) {
 // });
 
-test('Typing on a opened single select highlights the first value that matches the string typed so far, scrolling if needed', function(assert) {
+test('Typing on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', function(assert) {
   assert.expect(6);
 
   this.numbers = numbers;
@@ -520,7 +520,28 @@ test('Typing on a opened single select highlights the first value that matches t
   assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
 });
 
-test('Typing on a opened multiple select highlights the value that matches the string typed so far, scrolling if needed', function(assert) {
+test('Typing from the Numpad on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', function(assert) {
+  assert.expect(6);
+
+  this.numerals = numerals;
+  this.render(hbs`
+    {{#power-select options=numerals selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = find('.ember-power-select-trigger');
+  clickTrigger();
+  assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is open');
+  assert.equal(find('.ember-power-select-options').scrollTop, 0, 'The list is not scrolled');
+  triggerKeydown(trigger, 104); // Numpad 8
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), '853', 'The option containing "853" has been highlighted');
+  assert.ok(find('.ember-power-select-options').scrollTop > 0, 'The list has scrolled');
+  assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
+});
+
+test('Typing on an opened multiple select highlights the value that matches the string typed so far, scrolling if needed', function(assert) {
   assert.expect(6);
 
   this.numbers = numbers;
@@ -591,7 +612,7 @@ test('Type something that doesn\'t give you any result leaves the current select
   assert.equal(trigger.textContent.trim(), 'nine', 'nine is still selected because "ninew" gave no results');
 });
 
-test('Typing on a opened single select highlights the value that matches the string, also when the options are complex, using the `searchField` for that', function(assert) {
+test('Typing on an opened single select highlights the value that matches the string, also when the options are complex, using the `searchField` for that', function(assert) {
   assert.expect(4);
 
   this.countries = countries;
@@ -611,7 +632,7 @@ test('Typing on a opened single select highlights the value that matches the str
   assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
 });
 
-test('Typing on a opened single select containing groups highlights the value that matches the string', function(assert) {
+test('Typing on an opened single select containing groups highlights the value that matches the string', function(assert) {
   assert.expect(4);
 
   this.groupedNumbers = groupedNumbers;
@@ -631,7 +652,7 @@ test('Typing on a opened single select containing groups highlights the value th
   assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
 });
 
-test('Typing on a opened single select highlights skips disabled options', function(assert) {
+test('Typing on an opened single select highlights skips disabled options', function(assert) {
   assert.expect(4);
 
   this.countries = countriesWithDisabled;
@@ -650,7 +671,7 @@ test('Typing on a opened single select highlights skips disabled options', funct
   assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
 });
 
-test('Typing on a opened single select highlights skips disabled groups', function(assert) {
+test('Typing on an opened single select highlights skips disabled groups', function(assert) {
   assert.expect(4);
 
   this.numbers = groupedNumbersWithDisabled;
