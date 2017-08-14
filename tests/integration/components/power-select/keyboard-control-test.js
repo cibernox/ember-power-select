@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
-import { numbers, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
+import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { find, keyEvent } from 'ember-native-dom-helpers';
 import { run } from '@ember/runloop';
 
@@ -516,6 +516,27 @@ test('Typing on a opened single select highlights the first value that matches t
   triggerKeydown(trigger, 78); // n
   assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
   assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'nine', 'The option containing "nine" has been highlighted');
+  assert.ok(find('.ember-power-select-options').scrollTop > 0, 'The list has scrolled');
+  assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
+});
+
+test('Typing from the Numpad on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', function(assert) {
+  assert.expect(6);
+
+  this.numerals = numerals;
+  this.render(hbs`
+    {{#power-select options=numerals selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = find('.ember-power-select-trigger');
+  clickTrigger();
+  assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is open');
+  assert.equal(find('.ember-power-select-options').scrollTop, 0, 'The list is not scrolled');
+  triggerKeydown(trigger, 104); // Numpad 8
+  assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
+  assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), '853', 'The option containing "853" has been highlighted');
   assert.ok(find('.ember-power-select-options').scrollTop > 0, 'The list has scrolled');
   assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
 });
