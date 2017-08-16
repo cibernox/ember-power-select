@@ -1,5 +1,7 @@
 # Master
 
+- [ENHANCEMENT] Add assertion to ensure developers pass a `searchField` option if the options are not plain strings.
+
 # 1.9.5
 - [BUGFIX] Allow the to use the num-pad of the keyboard to highlight/select items while the trigger
   is focused. Prior to this, only numbers above the keyboard would work.
