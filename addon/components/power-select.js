@@ -154,7 +154,10 @@ export default Component.extend({
     if (searchField && matcher === defaultMatcher) {
       return (option, text) => matcher(get(option, searchField), text);
     } else {
-      return (option, text) => matcher(option, text);
+      return (option, text) => {
+        assert('{{power-select}} If you want the default filtering to work on options that are not plain strings, you need to provide `searchField`', matcher !== defaultMatcher || typeof option === 'string');
+        return matcher(option, text);
+      };
     }
   }),
 

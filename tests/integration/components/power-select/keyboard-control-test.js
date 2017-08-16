@@ -804,3 +804,25 @@ test('BUGFIX: If pressing up/down arrow on a multiple select DOES NOT open the s
     done();
   }, 50);
 });
+
+test('If you try to filter options that are objects without providing a `searchField`, an assertion is thrown', function(assert) {
+  assert.expect(2);
+  this.options = [
+    { label: '10', value: 10 },
+    { label: '25', value: 25 },
+    { label: '50', value: 50 },
+    { label: 'All', value: 255 }
+  ];
+  this.selected = this.options[1];
+  this.render(hbs`
+    {{#power-select options=options selected=selected onchange=(action (mut selected)) searchEnabled=false as |option|}}
+      {{option.label}}
+    {{/power-select}}
+  `);
+  let trigger = find('.ember-power-select-trigger');
+  trigger.focus();
+  assert.equal(find('.ember-power-select-selected-item').textContent.trim(), '25');
+  assert.expectAssertion(() => {
+    triggerKeydown(trigger, 67); // c
+  }, '{{power-select}} If you want the default filtering to work on options that are not plain strings, you need to provide `searchField`');
+});
