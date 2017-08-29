@@ -1,5 +1,8 @@
 # Master
 
+# 1.9.6
+- [ENHANCEMENT] Allow `buildSelection` to fallback to the default one when the provided one
+  is undefined.
 - [ENHANCEMENT] Add assertion to ensure developers pass a `searchField` option if the options are not plain strings.
 
 # 1.9.5

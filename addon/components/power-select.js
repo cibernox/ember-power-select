@@ -87,6 +87,9 @@ export default Component.extend({
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
   placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
+  buildSelection: fallbackIfUndefined(function buildSelection(option) {
+    return option;
+  }),
 
   _triggerTagName: fallbackIfUndefined('div'),
   _contentTagName: fallbackIfUndefined('div'),
@@ -506,10 +509,6 @@ export default Component.extend({
       highlighted = defaultHightlighted;
     }
     this.updateState({ highlighted });
-  },
-
-  buildSelection(option /* , select */) {
-    return option;
   },
 
   _updateOptionsAndResults(opts) {
