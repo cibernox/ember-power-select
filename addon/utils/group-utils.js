@@ -61,7 +61,7 @@ export function optionAtIndex(originalCollection, index) {
         if (found) {
           return found;
         }
-      } else if (counter === index) {
+      } else if (entry && counter === index) {
         return { disabled: ancestorIsDisabled || !!get(entry, 'disabled'), option: entry };
       } else {
         counter++;

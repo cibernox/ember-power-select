@@ -1205,3 +1205,22 @@ test('The `selected` option can be a thenable', async function(assert) {
   assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'Lucius', 'The 4th element is highlighted');
   assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Lucius', 'The trigger has the proper content');
 });
+
+test('It works with null options', function(assert) {
+  assert.expect(1);
+  this.options = [null, 'an option'];
+
+  this.render(hbs`
+    {{#power-select options=options onchange=(action (mut selected)) as |option|}}
+      {{#if option}}
+        {{option}}
+      {{else}}
+        none
+      {{/if}}
+    {{/power-select}}
+  `);
+
+  clickTrigger();
+  let options = findAll('.ember-power-select-option');
+  assert.equal(options[0].textContent.trim(), 'none');
+});
