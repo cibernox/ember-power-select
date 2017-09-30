@@ -1,5 +1,8 @@
 # Master
 
+# 1.9.7
+- [ENHANCEMENT] The trigger component also receives the loadingMessage.
+
 # 1.9.6
 - [ENHANCEMENT] Allow `buildSelection` to fallback to the default one when the provided one
   is undefined.
