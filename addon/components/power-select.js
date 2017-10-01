@@ -1,15 +1,14 @@
-import Ember from 'ember';
-import Component from 'ember-component';
-import layout from '../templates/components/power-select';
-import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
+import { isEqual } from '@ember/utils';
+import { get, set } from '@ember/object';
 import { assert } from '@ember/debug';
 import { DEBUG } from '@glimmer/env';
-import { isBlank } from 'ember-utils';
-import { isEmberArray } from 'ember-array/utils';
-import computed from 'ember-computed';
-import get from 'ember-metal/get';
-import set from 'ember-metal/set';
-import { scheduleOnce } from 'ember-runloop';
+import { isBlank } from '@ember/utils';
+import { isArray as isEmberArray } from '@ember/array';
+import layout from '../templates/components/power-select';
+import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import {
   defaultMatcher,
   indexOfOption,
@@ -20,8 +19,6 @@ import {
   advanceSelectableOption
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
-
-const { isEqual } = Ember;
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
 const assign = Object.assign || function EmberAssign(original, ...args) {
@@ -90,6 +87,9 @@ export default Component.extend({
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
   placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
+  buildSelection: fallbackIfUndefined(function buildSelection(option) {
+    return option;
+  }),
 
   _triggerTagName: fallbackIfUndefined('div'),
   _contentTagName: fallbackIfUndefined('div'),
@@ -157,7 +157,10 @@ export default Component.extend({
     if (searchField && matcher === defaultMatcher) {
       return (option, text) => matcher(get(option, searchField), text);
     } else {
-      return (option, text) => matcher(option, text);
+      return (option, text) => {
+        assert('{{power-select}} If you want the default filtering to work on options that are not plain strings, you need to provide `searchField`', matcher !== defaultMatcher || typeof option === 'string');
+        return matcher(option, text);
+      };
     }
   }),
 
@@ -294,7 +297,11 @@ export default Component.extend({
       if (onkeydown && onkeydown(this.get('publicAPI'), e) === false) {
         return false;
       }
-      if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
+      if (e.ctrlKey || e.metaKey) {
+        return false;
+      }
+      if ((e.keyCode >= 48 && e.keyCode <= 90) // Keys 0-9, a-z
+        || this._isNumpadKeyEvent(e)) {
         this.get('triggerTypingTask').perform(e);
       } else if (e.keyCode === 32) {  // Space
         return this._handleKeySpace(e);
@@ -386,7 +393,11 @@ export default Component.extend({
   // Tasks
   triggerTypingTask: task(function* (e) {
     let publicAPI = this.get('publicAPI');
-    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
+    let charCode = e.keyCode;
+    if (this._isNumpadKeyEvent(e)) {
+      charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
+    }
+    let term = publicAPI._expirableSearchText + String.fromCharCode(charCode);
     this.updateState({ _expirableSearchText: term });
     let matches = this.filter(publicAPI.options, term, true);
     if (get(matches, 'length') > 0) {
@@ -498,10 +509,6 @@ export default Component.extend({
       highlighted = defaultHightlighted;
     }
     this.updateState({ highlighted });
-  },
-
-  buildSelection(option /* , select */) {
-    return option;
   },
 
   _updateOptionsAndResults(opts) {
@@ -622,6 +629,10 @@ export default Component.extend({
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
     }
+  },
+
+  _isNumpadKeyEvent(e) {
+    return e.keyCode >= 96 && e.keyCode <= 105;
   },
 
   updateState(changes) {

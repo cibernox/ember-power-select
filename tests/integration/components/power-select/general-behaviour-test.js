@@ -1,16 +1,16 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger, findContains } from '../../../helpers/ember-power-select';
-import run from 'ember-runloop';
+import RSVP from 'rsvp';
+import EmberObject, { get } from '@ember/object';
+import { A } from '@ember/array';
+import { run } from '@ember/runloop';
 import {
   numbers,
   names,
   countries
 } from '../constants';
 import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers';
-
-const { RSVP, Object: eObject, get } = Ember;
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true
@@ -294,7 +294,7 @@ test('If the content of the options is refreshed (starting with empty array prox
   assert.expect(2);
 
   let data = [];
-  this.proxy = Ember.A(data);
+  this.proxy = A(data);
   this.search = () => {
     return new RSVP.Promise(function(resolve) {
       resolve(data);
@@ -321,7 +321,7 @@ test('If the content of the options is updated (starting with populated array pr
   assert.expect(5);
 
   let data = ['one'];
-  this.proxy = Ember.A(data);
+  this.proxy = A(data);
   this.search = () => {
     return new RSVP.Promise(function(resolve) {
       resolve(data);
@@ -1098,7 +1098,7 @@ test('the item that is highlighted by default can be customized passing a functi
 });
 
 test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', function(assert) {
-  let User = eObject.extend({
+  let User = EmberObject.extend({
     isEqual(other) {
       return get(this, 'name') === get(other, 'name');
     }

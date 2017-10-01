@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select",
-  "version": "1.8.5",
+  "version": "1.9.7",
   "description": "The extensible select component built for ember",
   "homepage": "http://www.ember-power-select.com",
   "directories": {
@@ -29,6 +29,7 @@
     "addon/",
     "app/",
     "blueprints/",
+    "addon-test-support/",
     "test-support/",
     "index.js",
     "vendor"
@@ -82,8 +83,8 @@
     "dropdown"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "^0.32.8",
-    "ember-cli-babel": "^6.1.0",
+    "ember-basic-dropdown": "^0.33.1",
+    "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-concurrency": "^0.8.1",
     "ember-text-measurer": "^0.3.3",

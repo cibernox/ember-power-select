@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import run from 'ember-runloop';
+import { run } from '@ember/runloop';
 import { clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
 import { numbers, countriesWithDisabled } from '../constants';
 import { find, findAll, triggerEvent, keyEvent, click } from 'ember-native-dom-helpers';

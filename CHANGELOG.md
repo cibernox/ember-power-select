@@ -1,5 +1,35 @@
 # Master
 
+# 1.9.7
+- [ENHANCEMENT] The trigger component also receives the loadingMessage.
+
+# 1.9.6
+- [ENHANCEMENT] Allow `buildSelection` to fallback to the default one when the provided one
+  is undefined.
+- [ENHANCEMENT] Add assertion to ensure developers pass a `searchField` option if the options are not plain strings.
+
+# 1.9.5
+- [BUGFIX] Allow the to use the num-pad of the keyboard to highlight/select items while the trigger
+  is focused. Prior to this, only numbers above the keyboard would work.
+
+# 1.9.4
+- [BUGFIX] `selectChoose` and `selectSearch` test helpers now make sure that the trigger is scrolled
+  into the viewport before clicking it, as it might cause problems to click in an outside-view item.
+
+# 1.9.3
+- [BUGFIX] Ensure that keys pressed with `ctrl` or `alt` on a focused trigger do not call the autoselection/autohighlighting
+  feature.
+
+# 1.9.2
+- [BUGFIX] Ensure new import paths work regardless of the babel version on the consumer app
+
+# 1.9.1
+- [INTERNAL] Remove one forgotten use of the old shims
+
+# 1.9.0
+- [INTERNAL] Do not import the `Ember` global or the old shims anymore. Use the new and definitive import paths.
+- [INTERNAL] Update to a version of `ember-basic-dropdown` that uses the new import paths
+
 # 1.8.5
 - [BUGFIX] Fix bug in iOS that prevented taps in items to be selected. Bug was introduced in 1.7.
 

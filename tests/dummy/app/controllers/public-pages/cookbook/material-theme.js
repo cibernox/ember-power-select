@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 const countries = [
   { name: 'United States',  flagUrl: '/flags/us.svg' },
@@ -27,7 +27,7 @@ const groupedNumbers = [
   'one thousand'
 ];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   cities,
   countries,
   groupedNumbers,

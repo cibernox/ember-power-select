@@ -1,5 +1,8 @@
 /* eslint no-console: 0 */
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { later } from '@ember/runloop';
+import RSVP from 'rsvp';
 
 const numbers = [
   'one',
@@ -367,7 +370,7 @@ const searchTypes = [
   { label: 'Franklin' }
 ];
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   names,
   simpleOptions: numbers,
   defaultHighlightedExample: numbers[3],
@@ -419,8 +422,8 @@ export default Ember.Controller.extend({
     },
 
     asyncSearch(term) {
-      return new Ember.RSVP.Promise(function(resolve) {
-        Ember.run.later(function() {
+      return new RSVP.Promise(function(resolve) {
+        later(function() {
           resolve(numbers.filter((str) => str.indexOf(term) > -1));
         }, 1500);
       });
@@ -431,8 +434,8 @@ export default Ember.Controller.extend({
     }
   },
 
-  promiseOptions: Ember.computed(function() {
-    return new Ember.RSVP.Promise(function(resolve) {
+  promiseOptions: computed(function() {
+    return new RSVP.Promise(function(resolve) {
       setTimeout(function() {
         console.debug('PromiseOptions resolved!');
         resolve(numbers);

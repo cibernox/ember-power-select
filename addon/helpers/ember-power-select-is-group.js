@@ -1,4 +1,4 @@
-import { helper } from 'ember-helper';
+import { helper } from '@ember/component/helper';
 import { isGroup } from '../utils/group-utils';
 
 export function emberPowerSelectIsGroup([maybeGroup]) {

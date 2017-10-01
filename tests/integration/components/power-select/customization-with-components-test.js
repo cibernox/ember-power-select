@@ -4,9 +4,10 @@ import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from '../../../helpers/ember-power-select';
 import { find, findAll, click } from 'ember-native-dom-helpers';
-import get from 'ember-metal/get';
-import getOwner from 'ember-owner/get';
-import { isPresent } from 'ember-utils';
+import { get } from '@ember/object';
+import Component from '@ember/component';
+import { getOwner } from '@ember/application';
+import { isPresent } from '@ember/utils';
 
 moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Customization using components)', {
   integration: true
@@ -27,7 +28,20 @@ test('selected option can be customized using triggerComponent', function(assert
   assert.notOk(find('.ember-power-select-status-icon'), 'The provided trigger component is not rendered');
   assert.ok(find('.ember-power-select-trigger .icon-flag'), 'The custom flag appears.');
   assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Spain', 'With the country name as the text.');
+});
 
+test('triggerComponent receives loading message', function(assert) {
+  assert.expect(1);
+
+  this.register('component:custom-trigger-component', Component.extend({
+    layout: hbs`<div class="custom-trigger-component">{{loadingMessage}}</div>`
+  }));
+  this.render(hbs`
+    {{#power-select loadingMessage="hmmmm paella" selected=country triggerComponent="custom-trigger-component" onchange=(action (mut foo)) as |country|}}
+      {{option}}
+    {{/power-select}}
+  `);
+  assert.equal(find('.custom-trigger-component').textContent, 'hmmmm paella', 'The loading message is passed to the trigger component');
 });
 
 test('selected item option can be customized using selectedItemComponent', function(assert) {

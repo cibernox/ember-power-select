@@ -1,7 +1,8 @@
-import Ember from 'ember';
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+import { A } from '@ember/array';
+export default Controller.extend({
   cities: ['Barcelona', 'London', 'New York', 'Porto'],
-  selectedCities: Ember.A(),
+  selectedCities: A(),
   actions: {
     handleKeydown(dropdown, e) {
       if (e.keyCode !== 13) { return; }

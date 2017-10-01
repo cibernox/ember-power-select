@@ -1,5 +1,5 @@
-import Ember from 'ember';
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+export default Controller.extend({
   countries: [
     { name: 'United States',  flagUrl: '/flags/us.svg' },
     { name: 'Spain',          flagUrl: '/flags/es.svg' },
