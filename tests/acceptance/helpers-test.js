@@ -4,9 +4,19 @@ import { currentURL, find, findAll, click, visit } from 'ember-native-dom-helper
 
 moduleForAcceptance('Acceptance | helpers | selectChoose');
 
+test('selectChoose helper works even with top container having a margin greater than 2em', async function(assert) {
+  await visit('/helpers-y-axis-validator');
+  await selectChoose('.select-choose', 'Barcelona');
+  assert.equal(find('.select-choose .ember-power-select-selected-item').textContent.trim(), 'Barcelona', 'The proper value has been selected');
+  assert.equal(find('small.selected').textContent.trim(), 'Barcelona');
+  await clearSelected('.select-choose');
+  await selectChoose('.select-choose', 'Porto');
+  assert.equal(find('.select-choose .ember-power-select-selected-item').textContent.trim(), 'Porto', 'The proper value has been selected');
+  assert.equal(find('small.selected').textContent.trim(), 'Porto');
+});
+
 test('selectChoose helper opens the select and selects the option with the given text', async function(assert) {
   await visit('/helpers-testing');
-
   assert.equal(currentURL(), '/helpers-testing');
   await selectChoose('.select-choose', 'three');
 

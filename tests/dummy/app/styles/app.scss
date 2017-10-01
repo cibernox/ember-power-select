@@ -10,6 +10,7 @@
 @import 'components/side-nav';
 @import 'components/docs';
 @import 'components/cookbook';
+@import 'components/y-axis-validator';
 @import 'ember-code-example';
 @include ember-code-example($brand-color);
 
