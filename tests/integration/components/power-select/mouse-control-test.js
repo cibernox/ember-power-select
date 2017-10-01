@@ -104,7 +104,7 @@ test('Clicking anywhere outside the select while opened closes the component and
 });
 
 test('Doing mouseup over an option less than 2px in the Y axis of where the mousedown that opened the component was triggered doesn\'t select the option', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
 
   this.numbers = numbers;
   this.render(hbs`
@@ -112,12 +112,9 @@ test('Doing mouseup over an option less than 2px in the Y axis of where the mous
       {{option}}
     {{/power-select}}
   `);
-
   clickTrigger(null, { clientY: 123 });
   assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
   triggerEvent(findAll('.ember-power-select-option')[1], 'mouseup', { clientY: 124 });
-  assert.ok(find('.ember-power-select-dropdown'), 'The select is still opened');
-  triggerEvent(findAll('.ember-power-select-option')[1], 'mouseup', { clientY: 125 });
   assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed now');
   assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'two', 'The element has been selected');
 });

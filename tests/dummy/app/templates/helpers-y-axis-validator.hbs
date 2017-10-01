@@ -1,0 +1,22 @@
+<section class="y-axis-validator">
+  <div class="bodyScrollX">
+    <div class="bodyContainer">
+      <div class="scrollView">
+        <main>
+          <h3>Selected: <small class="selected">{{destination}}</small></h3>
+          <div class="select-choose">
+            {{#power-select
+              selected=destination
+              options=cities
+              allowClear=true
+              onchange=(action "chooseDestination")
+              as |name|
+            }}
+              {{name}}
+            {{/power-select}}
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>

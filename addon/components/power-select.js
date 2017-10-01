@@ -276,13 +276,6 @@ export default Component.extend({
     },
 
     choose(selected, e) {
-      if (e && e.clientY) {
-        if (this.openingEvent && this.openingEvent.clientY) {
-          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
-            return;
-          }
-        }
-      }
       let publicAPI = this.get('publicAPI');
       publicAPI.actions.select(this.get('buildSelection')(selected, publicAPI), e);
       if (this.get('closeOnSelect')) {

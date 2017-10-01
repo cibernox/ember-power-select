@@ -52,6 +52,7 @@ Router.map(function() {
   // Routes for tests
   this.route('helpers-testing');
   this.route('helpers-testing-single-power-select');
+  this.route('helpers-y-axis-validator');
 
   // Routes for fastboot tests
   this.route('fastboot-test');
