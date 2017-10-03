@@ -108,7 +108,7 @@ test('Doing mouseup over an option less than 2px in the Y axis of where the mous
 
   this.numbers = numbers;
   this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+    {{#power-select options=numbers inTesting=false selected=foo onchange=(action (mut foo)) as |option|}}
       {{option}}
     {{/power-select}}
   `);
