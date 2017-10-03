@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import { isEqual } from '@ember/utils';
 import { get, set } from '@ember/object';
 import { assert } from '@ember/debug';
@@ -121,6 +122,11 @@ export default Component.extend({
   },
 
   // CPs
+  inTesting: computed(function() {
+    let config = getOwner(this).resolveRegistration('config:environment');
+    return config.environment === 'test';
+  }),
+
   selected: computed({
     get() {
       return null;
@@ -276,10 +282,12 @@ export default Component.extend({
     },
 
     choose(selected, e) {
-      if (e && e.clientY) {
-        if (this.openingEvent && this.openingEvent.clientY) {
-          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
-            return;
+      if (!this.get('inTesting')) {
+        if (e && e.clientY) {
+          if (this.openingEvent && this.openingEvent.clientY) {
+            if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
+              return;
+            }
           }
         }
       }
