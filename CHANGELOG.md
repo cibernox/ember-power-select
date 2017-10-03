@@ -1,5 +1,10 @@
 # Master
 
+# 1.9.8
+- [BUGFIX] The Y-axis validation of the click coordinates when opening is disabled in testing because
+  there is some chance that, due to the weird positioning selects can have in testing, it throws false
+  negatives.
+
 # 1.9.7
 - [ENHANCEMENT] The trigger component also receives the loadingMessage.
 
