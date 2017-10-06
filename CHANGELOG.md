@@ -1,5 +1,9 @@
 # Master
 
+# 1.9.9
+- [ENHANCEMENT] If the options is a `PromiseArrayProxy`, the content of the array is set immediately
+  and updated later when the promise resolves.
+
 # 1.9.8
 - [BUGFIX] The Y-axis validation of the click coordinates when opening is disabled in testing because
   there is some chance that, due to the weird positioning selects can have in testing, it throws false
