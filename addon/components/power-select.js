@@ -524,7 +524,7 @@ export default Component.extend({
   },
 
   _updateOptionsAndResults(opts) {
-    if (get(this, 'isDestroyed')) {
+    if (get(this, 'isDestroying')) {
       return;
     }
     let options = toPlainArray(opts);
