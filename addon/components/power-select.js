@@ -8,6 +8,7 @@ import { assert } from '@ember/debug';
 import { DEBUG } from '@glimmer/env';
 import { isBlank } from '@ember/utils';
 import { isArray as isEmberArray } from '@ember/array';
+import ArrayProxy from '@ember/array/proxy';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import {
@@ -429,6 +430,9 @@ export default Component.extend({
   }).restartable(),
 
   _updateOptionsTask: task(function* (optionsPromise) {
+    if (optionsPromise instanceof ArrayProxy) {
+      this.updateOptions(optionsPromise.get('content'));
+    }
     this.updateState({ loading: true });
     try {
       let options = yield optionsPromise;
