@@ -5,10 +5,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
 
 @import 'ember-basic-dropdown';
 
-.ember-power-select {
-  position: relative;
-}
-.ember-power-select *, .ember-power-select-dropdown * {
+.ember-power-select-dropdown * {
   box-sizing: border-box;
 }
 
