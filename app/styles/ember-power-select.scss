@@ -163,8 +163,8 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   color: $ember-power-select-text-color;
 }
 .ember-power-select-dropdown.ember-basic-dropdown-content--above {
-  @if ($ember-power-select-dropdown-margin > 0) {
-    transform: translateY(-#{$ember-power-select-dropdown-margin});
+  @if ($ember-power-select-dropdown-margin != 0) {
+    transform: translateY(calc(-1 * #{$ember-power-select-dropdown-margin}));
   }
   border-top: $ember-power-select-dropdown-top-border;
   border-bottom: $ember-power-select-dropdown-contiguous-border;
@@ -172,7 +172,7 @@ $ember-basic-dropdown-content-background-color: $ember-power-select-background-c
   border-bottom-right-radius: $ember-power-select-opened-border-radius;
 }
 .ember-power-select-dropdown.ember-basic-dropdown-content--below, .ember-power-select-dropdown.ember-basic-dropdown-content--in-place {
-  @if ($ember-power-select-dropdown-margin > 0) {
+  @if ($ember-power-select-dropdown-margin != 0) {
     transform: translateY(#{$ember-power-select-dropdown-margin});
   }
   border-top: $ember-power-select-dropdown-contiguous-border;
