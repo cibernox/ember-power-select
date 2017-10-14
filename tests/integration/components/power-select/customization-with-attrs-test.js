@@ -7,6 +7,21 @@ moduleForComponent('ember-power-select', 'Integration | Component | Ember Power 
   integration: true
 });
 
+test('classNames can be propagated to the child basic-dropdown component', function(assert) {
+  assert.expect(1);
+
+  this.countries = countries;
+  this.country = countries[1]; // Spain
+
+  this.render(hbs`
+    {{#power-select renderInPlace=true classNames="ember-power-select" options=countries selected=country onchange=(action (mut foo)) as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  assert.ok(find('.ember-basic-dropdown.ember-power-select'), 'Class was added.');
+});
+
 test('trigger on single selects can be customized using triggerClass', function(assert) {
   assert.expect(1);
 
