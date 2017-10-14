@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Allow to specify negative margins in Sass variables
+
 # 1.9.9
 - [ENHANCEMENT] If the options is a `PromiseArrayProxy`, the content of the array is set immediately
   and updated later when the promise resolves.
