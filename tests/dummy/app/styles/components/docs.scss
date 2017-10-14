@@ -44,12 +44,6 @@
   }
 }
 
-.ember-power-select.has-error {
-  .ember-power-select-trigger {
-    border: 1px solid red;
-  }
-}
-
 @keyframes shake {
   0%   { transform: translateX(0px); }
   20%   { transform: translateX(-20px); }

@@ -64,10 +64,7 @@
 .ember-basic-dropdown-content-wormhole-origin {
   display: inline; }
 
-.ember-power-select {
-  position: relative; }
-
-.ember-power-select *, .ember-power-select-dropdown * {
+.ember-power-select-dropdown * {
   box-sizing: border-box; }
 
 .ember-power-select-trigger {
