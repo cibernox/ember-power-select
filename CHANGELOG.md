@@ -1,5 +1,9 @@
 # Master
 
+# 1.9.11
+- [ENHANCEMENT] Update `ember-truth-helpers` to ^2.0
+- [ENHANCEMENT] Update `ember-cli-babel` to ^6.8.2
+
 # 1.9.10
 - [ENHANCEMENT] Pass the `placeholder` and the `placeholderComponent` to the `beforeOptionsComponent`,
   to allow more customizations on it.
