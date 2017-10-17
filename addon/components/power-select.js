@@ -265,10 +265,10 @@ export default Component.extend({
       this.updateState({ highlighted: option });
     },
 
-    select(selected /* , e */) {
+    select(selected, e) {
       let publicAPI = this.get('publicAPI');
       if (!isEqual(publicAPI.selected, selected)) {
-        this.get('onchange')(selected, publicAPI);
+        this.get('onchange')(selected, publicAPI, e);
       }
     },
 
@@ -618,6 +618,7 @@ export default Component.extend({
   _handleKeySpace(e) {
     let publicAPI = this.get('publicAPI');
     if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
+      e.preventDefault(); // Prevents scrolling of the page.
       publicAPI.actions.choose(publicAPI.highlighted, e);
       return false;
     }
