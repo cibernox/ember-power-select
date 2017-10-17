@@ -163,13 +163,14 @@ test('Pressing ENTER when there is no highlighted element, closes the dropdown a
   assert.ok(find('.ember-power-select-trigger') === document.activeElement, 'The trigger is focused');
 });
 
-test('Pressing SPACE on a select without a searchbox selects the highlighted element, closes the dropdown and focuses the trigger', function(assert) {
-  assert.expect(5);
+test('Pressing SPACE on a select without a searchbox selects the highlighted element, closes the dropdown and focuses the trigger without scrolling the page', function(assert) {
+  assert.expect(6);
 
   this.numbers = numbers;
-  this.changed = (val, dropdown) => {
+  this.changed = (val, dropdown, e) => {
     assert.equal(val, 'two', 'The onchange action is triggered with the selected value');
     this.set('selected', val);
+    assert.ok(e.defaultPrevented, 'The event has been defaultPrevented to avoid page scroll');
     assert.ok(dropdown.actions.close, 'The action receives the dropdown as second argument');
   };
 
