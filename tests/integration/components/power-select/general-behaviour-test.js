@@ -891,15 +891,15 @@ module(
       assert.expect(6);
 
       let promise1 = new RSVP.Promise(function(resolve) {
-        run.later(resolve, numbers[3], 80);
+        run.later(resolve, numbers[3], 400);
       });
 
       let promise2 = new RSVP.Promise(function(resolve) {
-        run.later(resolve, numbers[4], 20);
+        run.later(resolve, numbers[4], 200);
       });
 
       this.numbers = numbers;
-      this.selected = promise1;
+      run(() => this.set('selected', promise1));
 
       await render(hbs`
         {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
@@ -907,7 +907,7 @@ module(
         {{/power-select}}
       `);
 
-      this.set('selected', promise2);
+      run(() => this.set('selected', promise2));
 
       clickTrigger();
       assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
@@ -919,7 +919,7 @@ module(
         assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'five', 'The 5th element is highlighted');
         assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'five', 'The trigger has the proper content');
         done();
-      }, 100);
+      }, 450);
     });
 
     // This test also fails randomly. Refactor.

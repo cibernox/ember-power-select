@@ -14,7 +14,7 @@ module(
       assert.expect(1);
       this.numbers = numbers;
 
-      assert.expectAssertion(async () => {
+      assert.expectAssertion(async function() {
         await render(hbs`
           {{#power-select options=countries selected=selected as |opt|}}{{opt}}{{/power-select}}
         `);
@@ -31,7 +31,7 @@ module(
       ];
 
       await smallOptions;
-      assert.expectAssertion(async () => {
+      assert.expectAssertion(async function() {
         await render(hbs`
           {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
             {{option}}

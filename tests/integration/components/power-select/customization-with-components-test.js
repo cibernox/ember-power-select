@@ -7,7 +7,6 @@ import { clickTrigger } from '../../../helpers/ember-power-select';
 import { find, findAll, click } from 'ember-native-dom-helpers';
 import { get } from '@ember/object';
 import Component from '@ember/component';
-import { getOwner } from '@ember/application';
 import { isPresent } from '@ember/utils';
 
 module(
@@ -240,7 +239,7 @@ module(
       this.groupedNumbers = groupedNumbers;
       let numberOfGroups = 5; // number of groups in groupedNumber;
 
-      let PowerSelectGroupComponent = get(getOwner(this).factoryFor('component:power-select/power-select-group'), 'class');
+      let PowerSelectGroupComponent = get(this.owner.factoryFor('component:power-select/power-select-group'), 'class');
       this.owner.register('component:custom-group-component', PowerSelectGroupComponent.extend({
         layout: hbs`<div class="custom-component">{{yield}}</div>`
       }));
@@ -263,7 +262,7 @@ module(
 
       let extra = { foo: 'bar' };
       this.extra = extra;
-      let PowerSelectGroupComponent = get(getOwner(this).factoryFor('component:power-select/power-select-group'), 'class');
+      let PowerSelectGroupComponent = get(this.owner.factoryFor('component:power-select/power-select-group'), 'class');
       assert.ok(PowerSelectGroupComponent, 'component:custom-group-component must be defined');
 
       this.owner.register('component:custom-group-component', PowerSelectGroupComponent.extend({
