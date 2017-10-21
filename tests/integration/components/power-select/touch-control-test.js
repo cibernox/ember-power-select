@@ -1,72 +1,76 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest, render } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { touchTrigger } from '../../../helpers/ember-power-select';
 import { numbers } from '../constants';
 import { find, findAll, tap } from 'ember-native-dom-helpers';
 
-moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Touch control)', {
-  integration: true
-});
+module(
+  'Integration | Component | Ember Power Select (Touch control)',
+  function(hooks) {
+    setupRenderingTest(hooks);
 
-test('Touch on trigger should open the dropdown', function(assert) {
-  assert.expect(1);
+    test('Touch on trigger should open the dropdown', async function(assert) {
+      assert.expect(1);
 
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
+      this.numbers = numbers;
+      await render(hbs`
+        {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+          {{option}}
+        {{/power-select}}
+      `);
 
-  touchTrigger();
-  assert.ok(find('.ember-power-select-options'), 'The dropdown is shown');
-});
+      touchTrigger();
+      assert.ok(find('.ember-power-select-options'), 'The dropdown is shown');
+    });
 
-test('Touch on option should select it', function(assert) {
-  assert.expect(1);
+    test('Touch on option should select it', async function(assert) {
+      assert.expect(1);
 
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
+      this.numbers = numbers;
+      await render(hbs`
+        {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+          {{option}}
+        {{/power-select}}
+      `);
 
-  touchTrigger();
+      touchTrigger();
 
-  tap(findAll('.ember-power-select-option')[3]);
+      tap(findAll('.ember-power-select-option')[3]);
 
-  assert.equal(find('.ember-power-select-selected-item').textContent.trim(), 'four');
-});
+      assert.equal(find('.ember-power-select-selected-item').textContent.trim(), 'four');
+    });
 
-test('Touch on custom option should select it', function(assert) {
-  assert.expect(1);
+    test('Touch on custom option should select it', async function(assert) {
+      assert.expect(1);
 
-  this.numbers = numbers;
-  this.render(hbs`
-    {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
-      <div class="super-fancy">{{option}}</div>
-    {{/power-select}}
-  `);
+      this.numbers = numbers;
+      await render(hbs`
+        {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+          <div class="super-fancy">{{option}}</div>
+        {{/power-select}}
+      `);
 
-  touchTrigger();
-  tap(findAll('.super-fancy')[3]);
+      touchTrigger();
+      tap(findAll('.super-fancy')[3]);
 
-  assert.equal(find('.ember-power-select-selected-item').textContent.trim(), 'four');
-});
+      assert.equal(find('.ember-power-select-selected-item').textContent.trim(), 'four');
+    });
 
-test('Touch on clear button should deselect it', function(assert) {
-  assert.expect(1);
+    test('Touch on clear button should deselect it', async function(assert) {
+      assert.expect(1);
 
-  this.numbers = numbers;
-  this.foo = 'one';
-  this.render(hbs`
-    {{#power-select options=numbers selected=foo allowClear=true onchange=(action (mut foo)) as |option|}}
-      {{option}}
-    {{/power-select}}
-  `);
+      this.numbers = numbers;
+      this.foo = 'one';
+      await render(hbs`
+        {{#power-select options=numbers selected=foo allowClear=true onchange=(action (mut foo)) as |option|}}
+          {{option}}
+        {{/power-select}}
+      `);
 
-  tap('.ember-power-select-clear-btn');
+      tap('.ember-power-select-clear-btn');
 
-  assert.notOk(find('.ember-power-select-selected-item'), '');
-});
+      assert.notOk(find('.ember-power-select-selected-item'), '');
+    });
+  }
+);
