@@ -33,7 +33,8 @@ matrix:
   allow_failures:
     - env: EMBER_TRY_SCENARIO=ember-canary
 
-# before_install:
+before_install:
+  - yarn global add bower
 #   - curl -o- -L https://yarnpkg.com/install.sh | bash
 #   - export PATH=$HOME/.yarn/bin:$PATH
 
