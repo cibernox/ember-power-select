@@ -52,6 +52,36 @@ function toPlainArray(collection) {
   return collection.toArray ? collection.toArray() : collection;
 }
 
+/**
+ * Checks if a string is just one character repeated at least once.
+ *
+ * Same as /^(.)\1+$/ but faster.
+ *
+ * @example onlyOneLetterRepeatedAtLeastOnce('aa'); // true
+ * @example onlyOneLetterRepeatedAtLeastOnce('a'); // false
+ * @example onlyOneLetterRepeatedAtLeastOnce('aaaaaa'); // true
+ * @example onlyOneLetterRepeatedAtLeastOnce('aaaaaaaaAaaa'); // false
+ *
+ * @param {String} str to test.
+ */
+function onlyOneLetterRepeatedAtLeastOnce(str) {
+  let { length } = str;
+
+  if (length <= 1) {
+    return false;
+  }
+
+  let char = str.charAt(0);
+
+  for (let i = 1; i < length; i++) {
+    if (str.charAt(i) !== char) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 const initialState = {
   options: [],              // Contains the resolved collection of options
   results: [],              // Contains the active set of results
@@ -408,7 +438,7 @@ export default Component.extend({
     }
     let term = publicAPI._expirableSearchText + String.fromCharCode(charCode);
     this.updateState({ _expirableSearchText: term });
-    let matches = this.filter(publicAPI.options, term, true);
+    let matches = this.filter(publicAPI.options, term, true, publicAPI.isOpen);
     if (get(matches, 'length') > 0) {
       let firstMatch = optionAtIndex(matches, 0);
       if (firstMatch !== undefined) {
@@ -469,8 +499,37 @@ export default Component.extend({
     this.updateState({ isActive });
   },
 
-  filter(options, term, skipDisabled = false) {
-    return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
+  /**
+   * Filter a list of options with the given _term.
+   *
+   * If the select is closed, typing the same character several times will
+   * cycle through the results of filtering the options just by the first
+   *
+   * @param {Array<Any>} options List of options to filter.
+   * @param {String} _term Searched term.
+   * @param {Boolean} skipDisabled The filter needs to skip disabled.
+   * @param {Boolean} isOpen The select is open.
+   */
+  filter(options, _term, skipDisabled = false, isOpen = true) {
+    let offset = 0;
+    let term = _term;
+    let specialClosedCase = !isOpen && onlyOneLetterRepeatedAtLeastOnce(term);
+
+    if (specialClosedCase) {
+      offset = term.length - 1;
+      term = term.charAt(0);
+    }
+
+    let matches = filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
+
+    if (specialClosedCase) {
+      let realOffset = offset % get(matches, 'length');
+      for (let i = 0; i < realOffset; i++) {
+        matches.pushObject(matches.shiftObject());
+      }
+    }
+
+    return matches;
   },
 
   updateOptions(options) {
