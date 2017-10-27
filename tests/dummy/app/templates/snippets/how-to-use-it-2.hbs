@@ -2,7 +2,7 @@
   options=countries
   selected=destination
   onchange=(action "foo")
-  as |country|
-}}
-  <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+  as |country|}}
+  <img src="{{country.flagUrl}}" class="icon-flag" alt="Flag of {{country.name}}">
+  <strong>{{country.name}}</strong>
 {{/power-select}}
