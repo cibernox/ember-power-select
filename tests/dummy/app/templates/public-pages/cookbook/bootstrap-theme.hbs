@@ -27,12 +27,12 @@
 <div class="evenly-splitted">
   <div>
     {{#power-select options=options selected=selectedSingle onchange=(action (mut selectedSingle)) searchField="name" triggerClass="bootstrap-theme-trigger" dropdownClass="bootstrap-theme-dropdown" as |country|}}
-      <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+      <img src="{{country.flagUrl}}" class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
     {{/power-select}}
   </div>
   <div>
     {{#power-select-multiple options=options selected=selectedMultiple onchange=(action (mut selectedMultiple)) searchField="name" triggerClass="bootstrap-theme-trigger" dropdownClass="bootstrap-theme-dropdown" as |country|}}
-      <img src="{{country.flagUrl}}" class="icon-flag"> <strong>{{country.name}}</strong>
+      <img src="{{country.flagUrl}}" class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
     {{/power-select-multiple}}
   </div>
 </div>
