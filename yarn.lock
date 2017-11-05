@@ -2579,7 +2579,7 @@ electron-to-chromium@^1.3.27:
   version "1.3.27"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.27.tgz#78ecb8a399066187bb374eede35d9c70565a803d"
 
-ember-basic-dropdown@^0.33.1:
+ember-basic-dropdown@^0.33.8:
   version "0.33.8"
   resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.33.8.tgz#a82f7eabdf43f626e5cb8534539b7914c05e61fe"
   dependencies:
