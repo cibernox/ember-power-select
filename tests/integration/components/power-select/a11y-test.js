@@ -428,3 +428,22 @@ test('Multiple-select: The trigger element correctly passes through WAI-ARIA rel
   assert.equal(trigger.attributes['aria-describedby'].value, 'ariaDescribedByString', 'aria-describedby set correctly');
   assert.equal(trigger.attributes['aria-labelledby'].value, 'ariaLabelledByString', 'aria-required set correctly');
 });
+
+test('Trigger can have a custom aria-role passing triggerRole', function(assert) {
+  assert.expect(2);
+  let role = 'my-role';
+  this.role = role;
+
+  this.numbers = numbers;
+
+  this.render(hbs`
+    {{#power-select options=countries selected=country onchange=(action (mut foo)) triggerRole=role as |country|}}
+      {{country.name}}
+    {{/power-select}}
+  `);
+
+  assert.equal(find('.ember-power-select-trigger').getAttribute('role'), role, 'The `role` was added.');
+
+  this.set('role', undefined);
+  assert.equal(find('.ember-power-select-trigger').getAttribute('role'), 'button', 'The `role` was defaults to `button`.');
+});
