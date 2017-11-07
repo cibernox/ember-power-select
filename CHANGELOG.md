@@ -1,5 +1,9 @@
 # Master
 
+# 1.10.1
+- [ENHANCEMENT] Add `triggerRole` option to customize the role of the trigger component down in
+  ember-basic-dropdown.
+
 # 1.10.0
 - [UPDATE] Update `ember-basic-dropdown`, which removes compatibility with IE10 (which was very poor to
   begin with)
