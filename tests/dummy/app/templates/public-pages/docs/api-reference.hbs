@@ -208,6 +208,11 @@
       <td>Component to be rendered as placeholder. It can be used along with <code>placeholder</code> and has access to it</td>
     </tr>
     <tr>
+      <td>preventScroll</td>
+      <td><code>boolean (defaults to false)</code></td>
+      <td>Flag that prevents any elements on the page outside the dropdown from scrolling. This matches platform-provided <code>select</code> element behavior. Note that this has no effect when scroll is performed on touch device.</td>
+    </tr>
+    <tr>
       <td>renderInPlace</td>
       <td><code>boolean</code></td>
       <td>
@@ -274,6 +279,11 @@
       <td>triggerId</td>
       <td><code>string</code></td>
       <td>The id to be applied to the trigger. Useful link the select to a <code>&lt;label&gt;</code> tag</td>
+    </tr>
+    <tr>
+      <td>triggerRole</td>
+      <td><code>string</code></td>
+      <td>The aria-role to use on the trigger element. Defaults to <code>'button'</code></td>
     </tr>
     <tr>
       <td>verticalPosition</td>

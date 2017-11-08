@@ -10,7 +10,11 @@ import {
   names,
   countries
 } from '../constants';
+import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+import ArrayProxy from '@ember/array/proxy';
 import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers';
+
+const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 
 moduleForComponent('power-select', 'Integration | Component | Ember Power Select (General behavior)', {
   integration: true
@@ -1204,4 +1208,27 @@ test('The `selected` option can be a thenable', async function(assert) {
   assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Lucius', 'The 4th element is highlighted');
   assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'Lucius', 'The 4th element is highlighted');
   assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'Lucius', 'The trigger has the proper content');
+});
+
+test('If the options change and the new value is PromiseArrayProxy, the content of that proxy is set immediately while the promise resolves', async function(assert) {
+  this.options = ['initial', 'options'];
+  this.refreshCollection = () => {
+    let promise = new RSVP.Promise((resolve) => {
+      setTimeout(() => resolve(['one', 'two', 'three']), 500);
+    });
+    this.set('options', PromiseArrayProxy.create({ content: [], promise }));
+  };
+
+  this.render(hbs`
+    <button id="refresh-collection-btn" onclick={{action refreshCollection}}>Refresh collection</button>
+    <br>
+    {{#power-select options=options selected=selected onchange=(action (mut selected)) as |name|}}
+      {{name}}
+    {{/power-select}}
+  `);
+
+  await click('#refresh-collection-btn');
+  await clickTrigger();
+  assert.equal(findAll('.ember-power-select-option').length, 1);
+  assert.ok(find('.ember-power-select-option').classList.contains('ember-power-select-option--loading-message'));
 });

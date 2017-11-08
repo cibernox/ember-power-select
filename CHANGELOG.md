@@ -1,5 +1,58 @@
 # Master
 
+# 1.10.1
+- [ENHANCEMENT] Add `triggerRole` option to customize the role of the trigger component down in
+  ember-basic-dropdown.
+
+# 1.10.0
+- [UPDATE] Update `ember-basic-dropdown`, which removes compatibility with IE10 (which was very poor to
+  begin with)
+- [ENHANCEMENT] Update `ember-text-measurer` to 0.4.0, which uses the latest babel, allowing consumer
+  apps to drop `ember-cli-shims`.
+- [BUGFIX] Ensure selecting an option by pressing the spacebar on a select without searchbox does not
+  cause a page scroll.
+
+# 1.9.11
+- [ENHANCEMENT] Update `ember-truth-helpers` to ^2.0
+- [ENHANCEMENT] Update `ember-cli-babel` to ^6.8.2
+
+# 1.9.10
+- [ENHANCEMENT] Pass the `placeholder` and the `placeholderComponent` to the `beforeOptionsComponent`,
+  to allow more customizations on it.
+- [BUGFIX] Allow to specify negative margins in Sass variables
+
+# 1.9.9
+- [ENHANCEMENT] If the options is a `PromiseArrayProxy`, the content of the array is set immediately
+  and updated later when the promise resolves.
+
+# 1.9.8
+- [BUGFIX] The Y-axis validation of the click coordinates when opening is disabled in testing because
+  there is some chance that, due to the weird positioning selects can have in testing, it throws false
+  negatives.
+
+# 1.9.7
+- [ENHANCEMENT] The trigger component also receives the loadingMessage.
+
+# 1.9.6
+- [ENHANCEMENT] Allow `buildSelection` to fallback to the default one when the provided one
+  is undefined.
+- [ENHANCEMENT] Add assertion to ensure developers pass a `searchField` option if the options are not plain strings.
+
+# 1.9.5
+- [BUGFIX] Allow the to use the num-pad of the keyboard to highlight/select items while the trigger
+  is focused. Prior to this, only numbers above the keyboard would work.
+
+# 1.9.4
+- [BUGFIX] `selectChoose` and `selectSearch` test helpers now make sure that the trigger is scrolled
+  into the viewport before clicking it, as it might cause problems to click in an outside-view item.
+
+# 1.9.3
+- [BUGFIX] Ensure that keys pressed with `ctrl` or `alt` on a focused trigger do not call the autoselection/autohighlighting
+  feature.
+
+# 1.9.2
+- [BUGFIX] Ensure new import paths work regardless of the babel version on the consumer app
+
 # 1.9.1
 - [INTERNAL] Remove one forgotten use of the old shims
 

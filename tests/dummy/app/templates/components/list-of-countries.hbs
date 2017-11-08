@@ -1,12 +1,12 @@
 <p>Countries:</p>
 <ul>
-  {{#unless extra.field}}
-    {{#each options as |option index|}}
-      <li>{{index}}. {{option.name}}</li>
-    {{/each}}
-  {{else}}
+  {{#if extra.field}}
     {{#each options as |option index|}}
       <li>{{index}}. {{get option extra.field}}</li>
     {{/each}}
-  {{/unless}}
+  {{else}}
+    {{#each options as |option index|}}
+      <li>{{index}}. {{option.name}}</li>
+    {{/each}}
+  {{/if}}
 </ul>

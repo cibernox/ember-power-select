@@ -1,9 +1,11 @@
 {{#basic-dropdown
+  classNames=(readonly classNames)
   horizontalPosition=(readonly horizontalPosition)
   calculatePosition=calculatePosition
   destination=(readonly destination)
   initiallyOpened=(readonly initiallyOpened)
   matchTriggerWidth=(readonly matchTriggerWidth)
+  preventScroll=(readonly preventScroll)
   onClose=(action "onClose")
   onOpen=(action "onOpen")
   registerAPI=(action "registerAPI")
@@ -13,6 +15,7 @@
   as |dropdown|}}
 
   {{#dropdown.trigger
+    role=(readonly triggerRole)
     tagName=(readonly _triggerTagName)
     ariaDescribedBy=(readonly ariaDescribedBy)
     ariaInvalid=(readonly ariaInvalid)
@@ -31,6 +34,7 @@
       buildSelection=(readonly buildSelection)
       extra=(readonly extra)
       listboxId=(readonly optionsId)
+      loadingMessage=(readonly loadingMessage)
       onFocus=(action "onFocus")
       onBlur=(action "onBlur")
       onInput=(action "onInput")
@@ -55,6 +59,8 @@
       searchEnabled=(readonly searchEnabled)
       onFocus=(action "onFocus")
       onBlur=(action "onBlur")
+      placeholder=(readonly placeholder)
+      placeholderComponent=(readonly placeholderComponent)
       searchPlaceholder=(readonly searchPlaceholder)
       select=(readonly publicAPI)}}
     {{#if mustShowSearchMessage}}

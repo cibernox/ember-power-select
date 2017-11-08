@@ -1,12 +1,14 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
+import { getOwner } from '@ember/application';
 import { isEqual } from '@ember/utils';
 import { get, set } from '@ember/object';
 import { assert } from '@ember/debug';
 import { DEBUG } from '@glimmer/env';
 import { isBlank } from '@ember/utils';
 import { isArray as isEmberArray } from '@ember/array';
+import ArrayProxy from '@ember/array/proxy';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import {
@@ -72,6 +74,7 @@ export default Component.extend({
   // Options
   searchEnabled: fallbackIfUndefined(true),
   matchTriggerWidth: fallbackIfUndefined(true),
+  preventScroll: fallbackIfUndefined(false),
   matcher: fallbackIfUndefined(defaultMatcher),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
@@ -87,6 +90,9 @@ export default Component.extend({
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
   placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
+  buildSelection: fallbackIfUndefined(function buildSelection(option) {
+    return option;
+  }),
 
   _triggerTagName: fallbackIfUndefined('div'),
   _contentTagName: fallbackIfUndefined('div'),
@@ -118,6 +124,11 @@ export default Component.extend({
   },
 
   // CPs
+  inTesting: computed(function() {
+    let config = getOwner(this).resolveRegistration('config:environment');
+    return config.environment === 'test';
+  }),
+
   selected: computed({
     get() {
       return null;
@@ -154,7 +165,10 @@ export default Component.extend({
     if (searchField && matcher === defaultMatcher) {
       return (option, text) => matcher(get(option, searchField), text);
     } else {
-      return (option, text) => matcher(option, text);
+      return (option, text) => {
+        assert('{{power-select}} If you want the default filtering to work on options that are not plain strings, you need to provide `searchField`', matcher !== defaultMatcher || typeof option === 'string');
+        return matcher(option, text);
+      };
     }
   }),
 
@@ -252,10 +266,10 @@ export default Component.extend({
       this.updateState({ highlighted: option });
     },
 
-    select(selected /* , e */) {
+    select(selected, e) {
       let publicAPI = this.get('publicAPI');
       if (!isEqual(publicAPI.selected, selected)) {
-        this.get('onchange')(selected, publicAPI);
+        this.get('onchange')(selected, publicAPI, e);
       }
     },
 
@@ -270,10 +284,12 @@ export default Component.extend({
     },
 
     choose(selected, e) {
-      if (e && e.clientY) {
-        if (this.openingEvent && this.openingEvent.clientY) {
-          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
-            return;
+      if (!this.get('inTesting')) {
+        if (e && e.clientY) {
+          if (this.openingEvent && this.openingEvent.clientY) {
+            if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
+              return;
+            }
           }
         }
       }
@@ -291,7 +307,11 @@ export default Component.extend({
       if (onkeydown && onkeydown(this.get('publicAPI'), e) === false) {
         return false;
       }
-      if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
+      if (e.ctrlKey || e.metaKey) {
+        return false;
+      }
+      if ((e.keyCode >= 48 && e.keyCode <= 90) // Keys 0-9, a-z
+        || this._isNumpadKeyEvent(e)) {
         this.get('triggerTypingTask').perform(e);
       } else if (e.keyCode === 32) {  // Space
         return this._handleKeySpace(e);
@@ -383,7 +403,11 @@ export default Component.extend({
   // Tasks
   triggerTypingTask: task(function* (e) {
     let publicAPI = this.get('publicAPI');
-    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
+    let charCode = e.keyCode;
+    if (this._isNumpadKeyEvent(e)) {
+      charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
+    }
+    let term = publicAPI._expirableSearchText + String.fromCharCode(charCode);
     this.updateState({ _expirableSearchText: term });
     let matches = this.filter(publicAPI.options, term, true);
     if (get(matches, 'length') > 0) {
@@ -407,6 +431,9 @@ export default Component.extend({
   }).restartable(),
 
   _updateOptionsTask: task(function* (optionsPromise) {
+    if (optionsPromise instanceof ArrayProxy) {
+      this.updateOptions(optionsPromise.get('content'));
+    }
     this.updateState({ loading: true });
     try {
       let options = yield optionsPromise;
@@ -495,10 +522,6 @@ export default Component.extend({
       highlighted = defaultHightlighted;
     }
     this.updateState({ highlighted });
-  },
-
-  buildSelection(option /* , select */) {
-    return option;
   },
 
   _updateOptionsAndResults(opts) {
@@ -596,6 +619,7 @@ export default Component.extend({
   _handleKeySpace(e) {
     let publicAPI = this.get('publicAPI');
     if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
+      e.preventDefault(); // Prevents scrolling of the page.
       publicAPI.actions.choose(publicAPI.highlighted, e);
       return false;
     }
@@ -619,6 +643,10 @@ export default Component.extend({
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
     }
+  },
+
+  _isNumpadKeyEvent(e) {
+    return e.keyCode >= 96 && e.keyCode <= 105;
   },
 
   updateState(changes) {
