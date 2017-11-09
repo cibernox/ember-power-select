@@ -417,5 +417,5 @@ test('Trigger can have a custom aria-role passing triggerRole', function(assert)
   assert.equal(find('.ember-power-select-trigger').getAttribute('role'), role, 'The `role` was added.');
 
   this.set('role', undefined);
-  assert.equal(find('.ember-power-select-trigger').getAttribute('role'), 'button', 'The `role` was defaults to `button`.');
+  assert.equal(find('.ember-power-select-trigger').getAttribute('role'), 'combobox', 'The `role` was defaults to `combobox`.');
 });
