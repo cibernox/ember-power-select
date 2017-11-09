@@ -650,8 +650,8 @@ export default Component.extend({
   },
 
   updateState(changes) {
-    if(this.isDestroyed) {
-      console.log('tried to set a destroyed ember power select object')
+    if (get(this, 'isDestroyed')) {
+      return;
     } else {
       let newState = set(this, 'publicAPI', assign({}, this.get('publicAPI'), changes));
       let registerAPI = this.get('registerAPI');
