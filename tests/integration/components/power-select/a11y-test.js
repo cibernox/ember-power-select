@@ -405,6 +405,6 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     assert.dom('.ember-power-select-trigger').hasAttribute('role', role, 'The `role` was added.');
     this.set('role', undefined);
-    assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The `role` was defaults to `button`.');
+    assert.dom('.ember-power-select-trigger').hasAttribute('role', 'combobox', 'The `role` was defaults to `combobox`.');
   });
 });
