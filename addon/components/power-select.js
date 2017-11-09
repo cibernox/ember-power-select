@@ -81,6 +81,7 @@ export default Component.extend({
   searchMessage: fallbackIfUndefined('Type to search'),
   closeOnSelect: fallbackIfUndefined(true),
   defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
+  triggerRole: fallbackIfUndefined('combobox'),
 
   afterOptionsComponent: fallbackIfUndefined(null),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
