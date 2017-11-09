@@ -101,16 +101,16 @@ test('the content before the list can be customized passing `beforeOptionsCompon
   assert.expect(4);
 
   this.countries = countries;
-  this.country = countries[1]; // Spain
 
   this.render(hbs`
     {{#power-select
       options=countries
-      selected=country
+      selected=selected
       beforeOptionsComponent="custom-before-options"
       placeholder="inception"
       placeholderComponent=(component "power-select/placeholder")
-      onchange=(action (mut foo)) as |country|}}
+      onchange=(action (mut selected)) as |country|
+    }}
       {{country.name}}
     {{/power-select}}
   `);
@@ -118,9 +118,11 @@ test('the content before the list can be customized passing `beforeOptionsCompon
   clickTrigger();
 
   let element = find('.ember-power-select-dropdown #custom-before-options-p-tag');
+  let placeholderElement = find('.ember-power-select-placeholder');
+
   assert.ok(element, 'The custom component is rendered instead of the usual search bar');
-  assert.equal(element.innerText, 'inception', 'The placeholder attribute is passed through.');
-  assert.ok(find('.ember-power-select-dropdown .ember-power-select-placeholder'), 'The placeholder component is passed through.');
+  assert.equal(placeholderElement.innerText, 'inception', 'The placeholder attribute is passed through.');
+  assert.ok(placeholderElement, 'The placeholder component is passed through.');
   assert.notOk(find('.ember-power-select-search-input'), 'The search input is not visible');
 });
 
