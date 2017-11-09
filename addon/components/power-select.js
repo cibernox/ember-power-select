@@ -650,11 +650,15 @@ export default Component.extend({
   },
 
   updateState(changes) {
-    let newState = set(this, 'publicAPI', assign({}, this.get('publicAPI'), changes));
-    let registerAPI = this.get('registerAPI');
-    if (registerAPI) {
-      registerAPI(newState);
+    if(this.isDestroyed) {
+      console.log('tried to set a destroyed ember power select object')
+    } else {
+      let newState = set(this, 'publicAPI', assign({}, this.get('publicAPI'), changes));
+      let registerAPI = this.get('registerAPI');
+      if (registerAPI) {
+        registerAPI(newState);
+      }
+      return newState;
     }
-    return newState;
   }
 });
