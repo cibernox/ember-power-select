@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from '../../../helpers/ember-power-select';
-import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
+import { names, numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { find, keyEvent } from 'ember-native-dom-helpers';
 import { run } from '@ember/runloop';
 
@@ -470,6 +470,44 @@ test('Typing on a closed single select selects the value that matches the string
   keyEvent(trigger, 'keydown', 73); // i
   keyEvent(trigger, 'keydown', 78); // n
   assert.equal(trigger.textContent.trim(), 'nine', '"nine" has been selected');
+  assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
+});
+
+test('Typing on a closed single select the first character for n times, selects the nth result for the search of the first character', function(assert) {
+  this.names = names;
+  this.render(hbs`
+    {{#power-select options=names selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = find('.ember-power-select-trigger');
+  trigger.focus();
+  assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
+  keyEvent(trigger, 'keydown', 77); // m
+  keyEvent(trigger, 'keydown', 77); // m
+  keyEvent(trigger, 'keydown', 77); // m
+  assert.equal(trigger.textContent.trim(), 'Marta', '"Marta" has been selected');
+  assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
+});
+
+test('Typing on a closed single select the first character for more times than results are available, selects the result for the search of the first character cycling through them', function(assert) {
+  this.names = names;
+  this.render(hbs`
+    {{#power-select options=names selected=selected onchange=(action (mut selected)) as |option|}}
+      {{option}}
+    {{/power-select}}
+  `);
+
+  let trigger = find('.ember-power-select-trigger');
+  trigger.focus();
+  assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
+  keyEvent(trigger, 'keydown', 77); // m
+  keyEvent(trigger, 'keydown', 77); // m
+  keyEvent(trigger, 'keydown', 77); // m
+  keyEvent(trigger, 'keydown', 77); // m
+  keyEvent(trigger, 'keydown', 77); // m
+  assert.equal(trigger.textContent.trim(), 'Miguel', '"Miguel" has been selected');
   assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
 });
 
