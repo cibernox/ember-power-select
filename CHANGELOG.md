@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Fix edge case in which an observer could be fired on a being destroyed (this could probably only
+  happen during tests)
+
 # 1.10.1
 - [ENHANCEMENT] Add `triggerRole` option to customize the role of the trigger component down in
   ember-basic-dropdown.
