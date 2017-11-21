@@ -1,5 +1,8 @@
 # Master
 
+# 1.10.2
+- [ENHANCEMENT] Upgrade to `ember-basic-dropdown` 0.33.10, which supports the `horizontalPosition` property
+  on selects rendered in-place.
 - [BUGFIX] Fix edge case in which an observer could be fired on a being destroyed (this could probably only
   happen during tests)
 
