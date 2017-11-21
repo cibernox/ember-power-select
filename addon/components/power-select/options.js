@@ -26,7 +26,7 @@ export default Component.extend({
   isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
   layout,
   tagName: 'ul',
-  attributeBindings: ['role', 'aria-multiple'],
+  attributeBindings: ['role', 'aria-multiselectable'],
   role: 'listbox',
 
   // Lifecycle hooks
@@ -58,7 +58,7 @@ export default Component.extend({
   },
 
   // CPs
-  'aria-multiple': computed(function() {
+  'aria-multiselectable': computed(function() {
     return `${isArray(this.get('select.selected'))}`;
   }),
 
