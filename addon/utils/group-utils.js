@@ -71,6 +71,50 @@ export function optionAtIndex(originalCollection, index) {
   })(originalCollection, false) || { disabled: false, option: undefined };
 }
 
+function copyGroup(group, suboptions) {
+  let groupCopy = { groupName: group.groupName, options: suboptions };
+  if (group.hasOwnProperty('disabled')) {
+    groupCopy.disabled = group.disabled;
+  }
+  return groupCopy;
+}
+
+export function filterOptionsWithOffset(options, text, matcher, offset, skipDisabled = false) {
+  let counter = 0;
+  let push = (beforeOffset, afterOffset, x) => (counter < offset ? beforeOffset : afterOffset).push(x);
+
+  let [beforeOffset, afterOffset] = (function walk(options, ancestorIsDisabled, beforeOffset, afterOffset) {
+    let length = get(options, 'length');
+
+    for (let i = 0; i < length; i++) {
+      let entry = options.objectAt ? options.objectAt(i) : options[i];
+      let entryIsDisabled = !!get(entry, 'disabled');
+      if (!skipDisabled || !entryIsDisabled) {
+        if (isGroup(entry)) {
+          let [beforeOffsetSuboptions, afterOffsetSuboptions] = walk(get(entry, 'options'), ancestorIsDisabled || entryIsDisabled, A(), A());
+          if (get(beforeOffsetSuboptions, 'length') > 0) {
+            beforeOffset.push(copyGroup(entry, beforeOffsetSuboptions));
+          }
+          if (get(afterOffsetSuboptions, 'length') > 0) {
+            afterOffset.push(copyGroup(entry, afterOffsetSuboptions));
+          }
+        } else if (matcher(entry, text) >= 0) {
+          push(beforeOffset, afterOffset, entry);
+          counter++;
+        } else {
+          counter++;
+        }
+      } else {
+        counter++;
+      }
+    }
+
+    return [beforeOffset, afterOffset];
+  })(options, false, A(), A());
+
+  return afterOffset.concat(beforeOffset);
+}
+
 export function filterOptions(options, text, matcher, skipDisabled = false) {
   let opts = A();
   let length = get(options, 'length');
@@ -80,11 +124,7 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
       if (isGroup(entry)) {
         let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
         if (get(suboptions, 'length') > 0) {
-          let groupCopy = { groupName: entry.groupName, options: suboptions };
-          if (entry.hasOwnProperty('disabled')) {
-            groupCopy.disabled = entry.disabled;
-          }
-          opts.push(groupCopy);
+          opts.push(copyGroup(entry, suboptions));
         }
       } else if (matcher(entry, text) >= 0) {
         opts.push(entry);

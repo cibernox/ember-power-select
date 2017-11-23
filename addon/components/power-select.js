@@ -16,6 +16,7 @@ import {
   indexOfOption,
   optionAtIndex,
   filterOptions,
+  filterOptionsWithOffset,
   countOptions,
   defaultHighlighted,
   advanceSelectableOption
@@ -63,7 +64,8 @@ const initialState = {
   loading: false,           // Truthy if there is a pending promise that will update the results
   isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
   // Private API (for now)
-  _expirableSearchText: ''
+  _expirableSearchText: '',
+  _repeatingChar: ''
 };
 
 export default Component.extend({
@@ -402,14 +404,43 @@ export default Component.extend({
 
   // Tasks
   triggerTypingTask: task(function* (e) {
+    // In general, a user doing this interaction means to have a different result.
+    let searchStartOffset = 1;
     let publicAPI = this.get('publicAPI');
     let charCode = e.keyCode;
     if (this._isNumpadKeyEvent(e)) {
       charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
     }
-    let term = publicAPI._expirableSearchText + String.fromCharCode(charCode);
-    this.updateState({ _expirableSearchText: term });
-    let matches = this.filter(publicAPI.options, term, true);
+    let term;
+
+    // Check if user intends to cycle through results. _repeatingChar can only be the first character.
+    let c = String.fromCharCode(charCode);
+    if (c === publicAPI._repeatingChar) {
+      term = c;
+    } else {
+      term = publicAPI._expirableSearchText + c;
+    }
+
+    if (term.length > 1) {
+      // If the term is longer than one char, the user is in the middle of a non-cycling interaction
+      // so the offset is just zero (the current selection is a valid match).
+      searchStartOffset = 0;
+      this.updateState({ _repeatingChar: '' });
+    } else {
+      this.updateState({ _repeatingChar: c });
+    }
+
+    // When the select is open, the "selection" is just highlighted.
+    if (publicAPI.isOpen && publicAPI.highlighted) {
+      searchStartOffset += indexOfOption(publicAPI.options, publicAPI.highlighted);
+    } else if (!publicAPI.isOpen && publicAPI.selected) {
+      searchStartOffset += indexOfOption(publicAPI.options, publicAPI.selected);
+    }
+
+    // The char is always appended. That way, searching for words like "Aaron" will work even
+    // if "Aa" would cycle through the results.
+    this.updateState({ _expirableSearchText: publicAPI._expirableSearchText + c });
+    let matches = this.filterWithOffset(publicAPI.options, term, searchStartOffset, true);
     if (get(matches, 'length') > 0) {
       let firstMatch = optionAtIndex(matches, 0);
       if (firstMatch !== undefined) {
@@ -422,7 +453,7 @@ export default Component.extend({
       }
     }
     yield timeout(1000);
-    this.updateState({ _expirableSearchText: '' });
+    this.updateState({ _expirableSearchText: '', _repeatingChar: '' });
   }).restartable(),
 
   _updateSelectedTask: task(function* (selectionPromise) {
@@ -472,6 +503,10 @@ export default Component.extend({
 
   filter(options, term, skipDisabled = false) {
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
+  },
+
+  filterWithOffset(options, term, offset, skipDisabled = false) {
+    return filterOptionsWithOffset(options || [], term, this.get('optionMatcher'), offset, skipDisabled);
   },
 
   updateOptions(options) {
