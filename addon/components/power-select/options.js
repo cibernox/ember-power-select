@@ -65,7 +65,9 @@ export default Component.extend({
   _addTouchEvents() {
     let touchMoveHandler = () => {
       this.hasMoved = true;
-      this.element.removeEventListener('touchmove', touchMoveHandler);
+      if (this.element) {
+        this.element.removeEventListener('touchmove', touchMoveHandler);
+      }
     };
     // Add touch event handlers to detect taps
     this.element.addEventListener('touchstart', () => {
