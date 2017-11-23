@@ -13,12 +13,13 @@ import {
 } from 'ember-power-select/test-support/helpers';
 
 function deprecateHelper(fn, name) {
-  return function() {
+  return function(...args) {
     deprecate(
       `DEPRECATED \`import { ${name} } from '../../tests/helpers/ember-power-select';\` is deprecated. Please, replace it with \`import { ${name} } from 'ember-power-select/test-support/helpers';\``,
       false,
       { until: '1.11.0', id: `ember-power-select-test-support-${name}` }
     );
+    return fn(...args);
   };
 }
 

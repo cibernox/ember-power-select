@@ -4,7 +4,7 @@ import { task, timeout } from 'ember-concurrency';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
-import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, countries } from '../constants';
 import { find, findAll, click } from 'ember-native-dom-helpers';
 import RSVP from 'rsvp';

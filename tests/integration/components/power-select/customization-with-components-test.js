@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
-import { clickTrigger } from '../../../helpers/ember-power-select';
+import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { find, findAll, click } from 'ember-native-dom-helpers';
 import { get } from '@ember/object';
 import Component from '@ember/component';

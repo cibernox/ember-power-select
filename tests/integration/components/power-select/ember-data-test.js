@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { startMirage } from '../../../../initializers/ember-cli-mirage';
 import emberDataInitializer from '../../../../initializers/ember-data';
 import { find, findAll, click } from 'ember-native-dom-helpers';
