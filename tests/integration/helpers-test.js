@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from './components/constants';
-import { clickTrigger, typeInSearch, findContains } from '../helpers/ember-power-select';
+import { clickTrigger, typeInSearch, findContains } from 'ember-power-select/test-support/helpers';
 
 moduleForComponent('ember-power-select', 'Integration | Helpers', {
   integration: true

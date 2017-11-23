@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { touchTrigger } from '../../../helpers/ember-power-select';
+import { touchTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
 import { find, findAll, tap } from 'ember-native-dom-helpers';
 

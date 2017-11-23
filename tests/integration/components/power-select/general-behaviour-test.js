@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, clickTrigger, findContains } from '../../../helpers/ember-power-select';
+import { typeInSearch, clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
 import EmberObject, { get } from '@ember/object';
 import { A } from '@ember/array';
