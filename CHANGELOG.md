@@ -1,5 +1,9 @@
 # Master
 
+- [DEPRECATION] Add deprecation to all test helpers when imported from `../../test-support/ember-power-select`.
+  Users should use the helpers that live in `/addon-test-selectors`, whose import part is stable regardless
+  of the nesting of the file from where they are imported. P.e. `import { selectChoose } from 'ember-power-select/test-support/helpers';`
+
 # 1.10.2
 - [ENHANCEMENT] Upgrade to `ember-basic-dropdown` 0.33.10, which supports the `horizontalPosition` property
   on selects rendered in-place.
