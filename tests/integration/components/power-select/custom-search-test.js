@@ -664,7 +664,7 @@ test('If a select is destroyed while a search is still ongoing and the search is
 
   this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
-      yield timeout(100);
+      yield timeout(100).linked();
       assert.ok(false, 'This task should not have been executed this far');
       return numbers.filter((str) => str.indexOf(term) > -1);
     })
@@ -786,7 +786,7 @@ test('If a multiple select is destroyed while a search is still ongoing and the 
 
   this.obj = EmberObject.extend({
     searchTask: task(function* (term) {
-      yield timeout(100);
+      yield timeout(100).linked();
       assert.ok(false, 'This task should not have been executed this far');
       return numbers.filter((str) => str.indexOf(term) > -1);
     })
