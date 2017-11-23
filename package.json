@@ -39,8 +39,8 @@
     "vendor"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "^0.33.10",
-    "ember-cli-babel": "^6.9.0",
+    "ember-basic-dropdown": "^0.34.0",
+    "ember-cli-babel": "^6.10.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-concurrency": "^0.8.12",
     "ember-text-measurer": "^0.4.0",
@@ -57,7 +57,7 @@
     "ember-cli-inject-live-reload": "^1.7.0",
     "ember-cli-mirage": "^0.4.0",
     "ember-cli-qunit": "^4.1.1",
-    "ember-cli-sass": "^7.0.0",
+    "ember-cli-sass": "^7.1.0",
     "ember-cli-template-lint": "0.7.5",
     "ember-cli-uglify": "^2.0.0",
     "ember-code-example-component": "^0.2.0",
@@ -69,7 +69,7 @@
     "ember-href-to": "1.15.1",
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-native-dom-event-dispatcher": "^0.6.0",
+    "ember-native-dom-event-dispatcher": "^0.6.3",
     "ember-native-dom-helpers": "^0.5.5",
     "ember-qunit-assert-helpers": "^0.2.1",
     "ember-resolver": "^4.0.0",
