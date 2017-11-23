@@ -19,7 +19,7 @@
         extra=(readonly extra)
         role="group"
         class="ember-power-select-options" as |option|}}
-        {{yield option select}}
+        {{yield option select index}}
       {{/component}}
     {{/component}}
   {{else}}
@@ -29,7 +29,7 @@
       aria-current="{{eq opt select.highlighted}}"
       data-option-index="{{groupIndex}}{{index}}"
       role="option">
-      {{yield opt select}}
+      {{yield opt select index}}
     </li>
   {{/if}}
 {{/each}}

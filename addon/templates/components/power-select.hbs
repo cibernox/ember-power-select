@@ -45,8 +45,8 @@
       searchField=(readonly searchField)
       select=(readonly publicAPI)
       selectedItemComponent=(readonly selectedItemComponent)
-      as |opt term|}}
-      {{yield opt term}}
+      as |opt term index|}}
+      {{yield opt term index}}
     {{/component}}
   {{/dropdown.trigger}}
 
@@ -89,8 +89,8 @@
         optionsComponent=(readonly optionsComponent)
         groupComponent=(readonly groupComponent)
         select=(readonly publicAPI)
-        as |option term|}}
-        {{yield option term}}
+        as |option term index|}}
+        {{yield option term index}}
       {{/component}}
     {{/if}}
     {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
