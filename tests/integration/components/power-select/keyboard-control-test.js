@@ -518,7 +518,7 @@ test('Typing on an opened single select highlights the first value that matches 
   assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
   assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'nine', 'The option containing "nine" has been highlighted');
   assert.ok(find('.ember-power-select-options').scrollTop > 0, 'The list has scrolled');
-  assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
+  assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still open');
 });
 
 test('Typing from the Numpad on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', function(assert) {
