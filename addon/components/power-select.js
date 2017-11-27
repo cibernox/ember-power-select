@@ -435,6 +435,8 @@ export default Component.extend({
       searchStartOffset += indexOfOption(publicAPI.options, publicAPI.highlighted);
     } else if (!publicAPI.isOpen && publicAPI.selected) {
       searchStartOffset += indexOfOption(publicAPI.options, publicAPI.selected);
+    } else {
+      searchStartOffset = 0;
     }
 
     // The char is always appended. That way, searching for words like "Aaron" will work even
