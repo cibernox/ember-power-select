@@ -157,7 +157,8 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
   test('BUGFIX: When searching by pressing keys on a focused & closed select, disabled options are ignored', async function(assert) {
     assert.expect(3);
-    this.countriesWithDisabled = countriesWithDisabled;
+    this.countriesWithDisabled = countriesWithDisabled.map((country) => Object.assign({}, country));
+    this.countriesWithDisabled[0].disabled = true;
 
     await render(hbs`
      {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
@@ -168,7 +169,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     let trigger = find('.ember-power-select-trigger');
     trigger.focus();
     assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is closed');
-    keyEvent(trigger, 'keydown', 79); // o
+    keyEvent(trigger, 'keydown', 85); // u
     assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
     assert.equal(trigger.textContent.trim(), 'United Kingdom', '"United Kingdom" has been selected');
   });

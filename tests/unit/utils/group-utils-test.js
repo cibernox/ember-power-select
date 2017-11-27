@@ -1,6 +1,5 @@
-import { isGroup, indexOfOption, optionAtIndex, filterOptions, filterOptionsWithOffset, stripDiacritics, countOptions } from 'ember-power-select/utils/group-utils';
+import { isGroup, indexOfOption, optionAtIndex, filterOptions, filterOptionsWithOffset, stripDiacritics, countOptions, defaultTypeAheadMatcher } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
-import { defaultTypeAheadMatcher } from '../../../addon/utils/group-utils';
 
 const groupedOptions = [
   { groupName: 'Smalls', options: ['zero', 'one', 'two', 'three'] },

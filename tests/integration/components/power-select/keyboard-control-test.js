@@ -657,7 +657,8 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
   test('Typing on an opened single select highlights skips disabled options', async function(assert) {
     assert.expect(4);
 
-    this.countries = countriesWithDisabled;
+    this.countries = countriesWithDisabled.map((country) => Object.assign({}, country));
+    this.countries[0].disabled = true;
     await render(hbs`
       {{#power-select options=countries selected=selected onchange=(action (mut selected)) searchField="name" as |country|}}
         {{country.name}}
@@ -667,7 +668,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     let trigger = find('.ember-power-select-trigger');
     clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is open');
-    triggerKeydown(trigger, 79); // o
+    triggerKeydown(trigger, 85); // u
     assert.equal(trigger.textContent.trim(), '', 'nothing has been selected');
     assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'United Kingdom', 'The option containing "United Kingdom" has been highlighted');
     assert.ok(find('.ember-power-select-dropdown'),  'The dropdown is still closed');

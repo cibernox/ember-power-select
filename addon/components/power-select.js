@@ -11,6 +11,7 @@ import { isArray as isEmberArray } from '@ember/array';
 import ArrayProxy from '@ember/array/proxy';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
+import optionsMatcher from '../utils/computed-options-matcher';
 import {
   defaultMatcher,
   indexOfOption,
@@ -164,17 +165,9 @@ export default Component.extend({
     }
   }),
 
-  optionMatcher: computed('searchField', 'matcher', function() {
-    let { matcher, searchField } = this.getProperties('matcher', 'searchField');
-    if (searchField && matcher === defaultMatcher) {
-      return (option, text) => matcher(get(option, searchField), text);
-    } else {
-      return (option, text) => {
-        assert('{{power-select}} If you want the default filtering to work on options that are not plain strings, you need to provide `searchField`', matcher !== defaultMatcher || typeof option === 'string');
-        return matcher(option, text);
-      };
-    }
-  }),
+  optionMatcher: optionsMatcher('matcher', defaultMatcher),
+
+  typeAheadOptionMatcher: optionsMatcher('typeAheadMatcher', defaultTypeAheadMatcher),
 
   concatenatedTriggerClasses: computed('triggerClass', 'publicAPI.isActive', function() {
     let classes = ['ember-power-select-trigger'];
@@ -511,7 +504,7 @@ export default Component.extend({
   },
 
   filterWithOffset(options, term, offset, skipDisabled = false) {
-    return filterOptionsWithOffset(options || [], term, this.get('typeAheadMatcher'), offset, skipDisabled);
+    return filterOptionsWithOffset(options || [], term, this.get('typeAheadOptionMatcher'), offset, skipDisabled);
   },
 
   updateOptions(options) {
