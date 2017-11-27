@@ -19,7 +19,8 @@ import {
   filterOptionsWithOffset,
   countOptions,
   defaultHighlighted,
-  advanceSelectableOption
+  advanceSelectableOption,
+  defaultTypeAheadMatcher
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
 
@@ -83,6 +84,7 @@ export default Component.extend({
   searchMessage: fallbackIfUndefined('Type to search'),
   closeOnSelect: fallbackIfUndefined(true),
   defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
+  typeAheadMatcher: fallbackIfUndefined(defaultTypeAheadMatcher),
 
   afterOptionsComponent: fallbackIfUndefined(null),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
@@ -508,7 +510,7 @@ export default Component.extend({
   },
 
   filterWithOffset(options, term, offset, skipDisabled = false) {
-    return filterOptionsWithOffset(options || [], term, this.get('optionMatcher'), offset, skipDisabled);
+    return filterOptionsWithOffset(options || [], term, this.get('typeAheadMatcher'), offset, skipDisabled);
   },
 
   updateOptions(options) {

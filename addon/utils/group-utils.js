@@ -1010,3 +1010,7 @@ export function stripDiacritics(text) {
 export function defaultMatcher(value, text) {
   return stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase());
 }
+
+export function defaultTypeAheadMatcher(value, text) {
+  return stripDiacritics(value).toUpperCase().startsWith(stripDiacritics(text).toUpperCase()) ? 1 : -1;
+}

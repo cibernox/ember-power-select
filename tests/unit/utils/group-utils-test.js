@@ -1,5 +1,6 @@
 import { isGroup, indexOfOption, optionAtIndex, filterOptions, filterOptionsWithOffset, stripDiacritics, countOptions } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
+import { defaultTypeAheadMatcher } from '../../../addon/utils/group-utils';
 
 const groupedOptions = [
   { groupName: 'Smalls', options: ['zero', 'one', 'two', 'three'] },
@@ -193,5 +194,20 @@ module('Unit | Utility | Group utils', function() {
 
   test('#countOptions returns the number of options, transversing the groups with no depth level', function(assert) {
     assert.equal(countOptions(groupedOptions), 16);
+  });
+});
+
+test('#defaultTypeAheadMatcher', function(assert) {
+  [
+    ['Aaron', 'Aa'],
+    ['Álvaro', 'alv']
+  ].forEach(([value, text]) => {
+    assert.equal(defaultTypeAheadMatcher(value, text), 1, `${value} is matched by ${text}`);
+  });
+
+  [
+    ['Fabiola', 'Ab']
+  ].forEach(([value, text]) => {
+    assert.equal(defaultTypeAheadMatcher(value, text), -1, `${value} is not matched by ${text}`);
   });
 });
