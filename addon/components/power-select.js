@@ -15,9 +15,8 @@ import optionsMatcher from '../utils/computed-options-matcher';
 import {
   defaultMatcher,
   indexOfOption,
-  optionAtIndex,
   filterOptions,
-  filterOptionsWithOffset,
+  findOptionWithOffset,
   countOptions,
   defaultHighlighted,
   advanceSelectableOption,
@@ -438,16 +437,13 @@ export default Component.extend({
     // The char is always appended. That way, searching for words like "Aaron" will work even
     // if "Aa" would cycle through the results.
     this.updateState({ _expirableSearchText: publicAPI._expirableSearchText + c, _repeatingChar: repeatingChar });
-    let matches = this.filterWithOffset(publicAPI.options, term, searchStartOffset, true);
-    if (get(matches, 'length') > 0) {
-      let firstMatch = optionAtIndex(matches, 0);
-      if (firstMatch !== undefined) {
-        if (publicAPI.isOpen) {
-          publicAPI.actions.highlight(firstMatch.option, e);
-          publicAPI.actions.scrollTo(firstMatch.option, e);
-        } else {
-          publicAPI.actions.select(firstMatch.option, e);
-        }
+    let match = this.findWithOffset(publicAPI.options, term, searchStartOffset, true);
+    if (match !== undefined) {
+      if (publicAPI.isOpen) {
+        publicAPI.actions.highlight(match, e);
+        publicAPI.actions.scrollTo(match, e);
+      } else {
+        publicAPI.actions.select(match, e);
       }
     }
     yield timeout(1000);
@@ -503,8 +499,8 @@ export default Component.extend({
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
   },
 
-  filterWithOffset(options, term, offset, skipDisabled = false) {
-    return filterOptionsWithOffset(options || [], term, this.get('typeAheadOptionMatcher'), offset, skipDisabled);
+  findWithOffset(options, term, offset, skipDisabled = false) {
+    return findOptionWithOffset(options || [], term, this.get('typeAheadOptionMatcher'), offset, skipDisabled);
   },
 
   updateOptions(options) {

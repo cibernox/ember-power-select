@@ -1,4 +1,4 @@
-import { isGroup, indexOfOption, optionAtIndex, filterOptions, filterOptionsWithOffset, stripDiacritics, countOptions, defaultTypeAheadMatcher } from 'ember-power-select/utils/group-utils';
+import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions, defaultTypeAheadMatcher } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
 const groupedOptions = [
@@ -113,74 +113,67 @@ module('Unit | Utility | Group utils', function() {
     ]);
   });
 
-  let FILTER_METHODS = [
-    ['filterOptions', filterOptions],
-    ['filterOptionsWithOffset', (options, text, matcher, skipDisabled = false) => filterOptionsWithOffset(options, text, matcher, 0, skipDisabled)]
-  ];
+  test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function(assert) {
+    let matcher = function(value, searchText) {
+      return new RegExp(searchText, 'i').test(value) ? 0 : -1;
+    };
+    assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [{ groupName: 'Smalls', options: ['zero'] }]);
+    assert.deepEqual(filterOptions(groupedOptions, 'ele', matcher), [
+      {
+        groupName: 'Bigs',
+        options: [{ groupName: 'Really big', options: ['eleven'] }]
+      }
+    ]);
+    assert.deepEqual(filterOptions(groupedOptions, 't', matcher), [
+      { groupName: 'Smalls', options: ['two', 'three'] },
+      {
+        groupName: 'Bigs',
+        options: [
+          { groupName: 'Fairly big', options: ['eight'] },
+          { groupName: 'Really big', options: ['ten', 'twelve'] },
+          'thirteen'
+        ]
+      },
+      'one thousand'
+    ]);
 
-  FILTER_METHODS.forEach(([name, fn]) => {
-    test(`#${name} generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches`, function(assert) {
-      let matcher = function(value, searchText) {
-        return new RegExp(searchText, 'i').test(value) ? 0 : -1;
-      };
-      assert.deepEqual(fn(groupedOptions, 'zero', matcher), [{ groupName: 'Smalls', options: ['zero'] }]);
-      assert.deepEqual(fn(groupedOptions, 'ele', matcher), [
-        {
-          groupName: 'Bigs',
-          options: [{ groupName: 'Really big', options: ['eleven'] }]
-        }
-      ]);
-      assert.deepEqual(fn(groupedOptions, 't', matcher), [
-        { groupName: 'Smalls', options: ['two', 'three'] },
-        {
-          groupName: 'Bigs',
-          options: [
-            { groupName: 'Fairly big', options: ['eight'] },
-            { groupName: 'Really big', options: ['ten', 'twelve'] },
-            'thirteen'
-          ]
-        },
-        'one thousand'
-      ]);
+    assert.deepEqual(filterOptions(groupedOptions, 'imposible', matcher), []);
+    assert.deepEqual(filterOptions(groupedOptions, '', matcher), groupedOptions);
+  });
 
-      assert.deepEqual(fn(groupedOptions, 'imposible', matcher), []);
-      assert.deepEqual(fn(groupedOptions, '', matcher), groupedOptions);
-    });
+  test('#filterOptions skips disabled options and groups if it receives a truty values as 4th arguments', function(assert) {
+    let matcher = function(value, searchText) {
+      return new RegExp(searchText, 'i').test(value) ? 0 : -1;
+    };
+    assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'zero', matcher, true), [{ groupName: 'Smalls', options: ['zero'] }]);
+    assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'one', matcher, true), ['one hundred', 'one thousand']);
+    assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'ele', matcher, true), []);
+    assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 't', matcher, true), [
+      { groupName: 'Smalls', options: ['two', 'three'] },
+      'one thousand'
+    ]);
 
-    test(`#${name} skips disabled options and groups if it receives a truty values as 4th arguments`, function(assert) {
-      let matcher = function(value, searchText) {
-        return new RegExp(searchText, 'i').test(value) ? 0 : -1;
-      };
-      assert.deepEqual(fn(groupedOptionsWithDisabledThings, 'zero', matcher, true), [{ groupName: 'Smalls', options: ['zero'] }]);
-      assert.deepEqual(fn(groupedOptionsWithDisabledThings, 'one', matcher, true), ['one hundred', 'one thousand']);
-      assert.deepEqual(fn(groupedOptionsWithDisabledThings, 'ele', matcher, true), []);
-      assert.deepEqual(fn(groupedOptionsWithDisabledThings, 't', matcher, true), [
-        { groupName: 'Smalls', options: ['two', 'three'] },
-        'one thousand'
-      ]);
-
-      assert.deepEqual(fn(groupedOptionsWithDisabledThings, 'imposible', matcher, true), []);
-      assert.deepEqual(fn(groupedOptionsWithDisabledThings, '', matcher, true), [
-        {
-          'groupName': 'Smalls',
-          'options': [
-            'zero',
-            'two',
-            'three'
-          ]
-        },
-        {
-          'groupName': 'Mediums',
-          'options': [
-            'four',
-            'five',
-            'six'
-          ]
-        },
-        'one hundred',
-        'one thousand'
-      ]);
-    });
+    assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, 'imposible', matcher, true), []);
+    assert.deepEqual(filterOptions(groupedOptionsWithDisabledThings, '', matcher, true), [
+      {
+        'groupName': 'Smalls',
+        'options': [
+          'zero',
+          'two',
+          'three'
+        ]
+      },
+      {
+        'groupName': 'Mediums',
+        'options': [
+          'four',
+          'five',
+          'six'
+        ]
+      },
+      'one hundred',
+      'one thousand'
+    ]);
   });
 
   test('#stripDiacritics returns the given string with diacritics normalized into simple letters', function(assert) {

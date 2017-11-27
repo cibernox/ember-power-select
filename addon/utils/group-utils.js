@@ -79,11 +79,12 @@ function copyGroup(group, suboptions) {
   return groupCopy;
 }
 
-export function filterOptionsWithOffset(options, text, matcher, offset, skipDisabled = false) {
+export function findOptionWithOffset(options, text, matcher, offset, skipDisabled = false) {
   let counter = 0;
-  let push = (beforeOffset, afterOffset, x) => (counter < offset ? beforeOffset : afterOffset).push(x);
+  let foundBeforeOffset, foundAfterOffset;
+  let canStop = () => !!foundAfterOffset;
 
-  let [beforeOffset, afterOffset] = (function walk(options, ancestorIsDisabled, beforeOffset, afterOffset) {
+  (function walk(options, ancestorIsDisabled) {
     let length = get(options, 'length');
 
     for (let i = 0; i < length; i++) {
@@ -91,28 +92,31 @@ export function filterOptionsWithOffset(options, text, matcher, offset, skipDisa
       let entryIsDisabled = !!get(entry, 'disabled');
       if (!skipDisabled || !entryIsDisabled) {
         if (isGroup(entry)) {
-          let [beforeOffsetSuboptions, afterOffsetSuboptions] = walk(get(entry, 'options'), ancestorIsDisabled || entryIsDisabled, A(), A());
-          if (get(beforeOffsetSuboptions, 'length') > 0) {
-            beforeOffset.push(copyGroup(entry, beforeOffsetSuboptions));
-          }
-          if (get(afterOffsetSuboptions, 'length') > 0) {
-            afterOffset.push(copyGroup(entry, afterOffsetSuboptions));
+          walk(get(entry, 'options'), ancestorIsDisabled || entryIsDisabled);
+          if (canStop()) {
+            return;
           }
         } else if (matcher(entry, text) >= 0) {
-          push(beforeOffset, afterOffset, entry);
+          if (counter < offset) {
+            if (!foundBeforeOffset) {
+              foundBeforeOffset = entry;
+            }
+          } else {
+            foundAfterOffset = entry;
+          }
           counter++;
         } else {
           counter++;
         }
-      } else {
-        counter++;
+
+        if (canStop()) {
+          return;
+        }
       }
     }
+  })(options, false);
 
-    return [beforeOffset, afterOffset];
-  })(options, false, A(), A());
-
-  return afterOffset.concat(beforeOffset);
+  return foundAfterOffset ? foundAfterOffset : foundBeforeOffset;
 }
 
 export function filterOptions(options, text, matcher, skipDisabled = false) {
