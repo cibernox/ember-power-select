@@ -409,6 +409,7 @@ export default Component.extend({
     // In general, a user doing this interaction means to have a different result.
     let searchStartOffset = 1;
     let publicAPI = this.get('publicAPI');
+    let repeatingChar = publicAPI._repeatingChar;
     let charCode = e.keyCode;
     if (this._isNumpadKeyEvent(e)) {
       charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
@@ -427,9 +428,9 @@ export default Component.extend({
       // If the term is longer than one char, the user is in the middle of a non-cycling interaction
       // so the offset is just zero (the current selection is a valid match).
       searchStartOffset = 0;
-      this.updateState({ _repeatingChar: '' });
+      repeatingChar = '';
     } else {
-      this.updateState({ _repeatingChar: c });
+      repeatingChar = c;
     }
 
     // When the select is open, the "selection" is just highlighted.
@@ -443,7 +444,7 @@ export default Component.extend({
 
     // The char is always appended. That way, searching for words like "Aaron" will work even
     // if "Aa" would cycle through the results.
-    this.updateState({ _expirableSearchText: publicAPI._expirableSearchText + c });
+    this.updateState({ _expirableSearchText: publicAPI._expirableSearchText + c, _repeatingChar: repeatingChar });
     let matches = this.filterWithOffset(publicAPI.options, term, searchStartOffset, true);
     if (get(matches, 'length') > 0) {
       let firstMatch = optionAtIndex(matches, 0);
