@@ -1,5 +1,11 @@
 # Master
 
+- [BREAKING] Change the behaviour of the select when the user types on the focused trigger to mimic
+  how native selects work: Repeating a char cycles though the options that start with that char, but
+  not repeating performs a search (from be beginning, it will not match substrings in the middle of
+  a word). This matcher is called `typeAheadMatcher`, and can also be provided by the user if they
+  want a different behaviour. This change in behaviour kicks the 2.0 cycle.
+
 # 1.10.4
 - [INTERNAL] Refactor test suite to use the new testing API
 
