@@ -286,6 +286,14 @@
       <td>The aria-role to use on the trigger element. Defaults to <code>'button'</code></td>
     </tr>
     <tr>
+      <td>typeAheadMatcher</td>
+      <td><code>function</code></td>
+      <td>
+        The <code>function(option, searchTerm)</code> used to match the searchTerm with an option when the
+        selector is closed or search is disabled. The default one will compare ignoring diacritics.
+      </td>
+    </tr>
+    <tr>
       <td>verticalPosition</td>
       <td><code>string</code></td>
       <td>

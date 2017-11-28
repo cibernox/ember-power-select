@@ -71,6 +71,54 @@ export function optionAtIndex(originalCollection, index) {
   })(originalCollection, false) || { disabled: false, option: undefined };
 }
 
+function copyGroup(group, suboptions) {
+  let groupCopy = { groupName: group.groupName, options: suboptions };
+  if (group.hasOwnProperty('disabled')) {
+    groupCopy.disabled = group.disabled;
+  }
+  return groupCopy;
+}
+
+export function findOptionWithOffset(options, text, matcher, offset, skipDisabled = false) {
+  let counter = 0;
+  let foundBeforeOffset, foundAfterOffset;
+  let canStop = () => !!foundAfterOffset;
+
+  (function walk(options, ancestorIsDisabled) {
+    let length = get(options, 'length');
+
+    for (let i = 0; i < length; i++) {
+      let entry = options.objectAt ? options.objectAt(i) : options[i];
+      let entryIsDisabled = !!get(entry, 'disabled');
+      if (!skipDisabled || !entryIsDisabled) {
+        if (isGroup(entry)) {
+          walk(get(entry, 'options'), ancestorIsDisabled || entryIsDisabled);
+          if (canStop()) {
+            return;
+          }
+        } else if (matcher(entry, text) >= 0) {
+          if (counter < offset) {
+            if (!foundBeforeOffset) {
+              foundBeforeOffset = entry;
+            }
+          } else {
+            foundAfterOffset = entry;
+          }
+          counter++;
+        } else {
+          counter++;
+        }
+
+        if (canStop()) {
+          return;
+        }
+      }
+    }
+  })(options, false);
+
+  return foundAfterOffset ? foundAfterOffset : foundBeforeOffset;
+}
+
 export function filterOptions(options, text, matcher, skipDisabled = false) {
   let opts = A();
   let length = get(options, 'length');
@@ -80,11 +128,7 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
       if (isGroup(entry)) {
         let suboptions = filterOptions(get(entry, 'options'), text, matcher, skipDisabled);
         if (get(suboptions, 'length') > 0) {
-          let groupCopy = { groupName: entry.groupName, options: suboptions };
-          if (entry.hasOwnProperty('disabled')) {
-            groupCopy.disabled = entry.disabled;
-          }
-          opts.push(groupCopy);
+          opts.push(copyGroup(entry, suboptions));
         }
       } else if (matcher(entry, text) >= 0) {
         opts.push(entry);
@@ -969,4 +1013,8 @@ export function stripDiacritics(text) {
 
 export function defaultMatcher(value, text) {
   return stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase());
+}
+
+export function defaultTypeAheadMatcher(value, text) {
+  return stripDiacritics(value).toUpperCase().startsWith(stripDiacritics(text).toUpperCase()) ? 1 : -1;
 }

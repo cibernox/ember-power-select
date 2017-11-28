@@ -92,3 +92,52 @@ export const groupedNumbersWithDisabled = [
   'one hundred',
   'one thousand'
 ];
+
+export const namesStartingWithA = [
+  'Abigail',
+  'Abril',
+  'Adriana',
+  'Adrián',
+  'Agustina',
+  'Agustín',
+  'Aitana',
+  'Alan',
+  'Alejandra',
+  'Alejandro',
+  'Alessandra',
+  'Alex',
+  'Alexa',
+  'Alexander',
+  'Allison',
+  'Alma',
+  'Alonso',
+  'Álvaro',
+  'Amanda',
+  'Amelia',
+  'Ana',
+  'Andrea',
+  'Andrés',
+  // These two need to be in the middle.
+  'Aaran', // Does not exist, don't look for it.
+  'Aarón',
+  'Ángel',
+  'Anthony',
+  'Antonella',
+  'Antonia',
+  'Antonio',
+  'Ariadna',
+  'Ariana',
+  'Ashley',
+  'Axel'
+];
+
+const ABC = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+export function charCode(letter) {
+  let idx = ABC.indexOf(letter.toLowerCase());
+
+  if (idx === -1) {
+    return null;
+  }
+
+  return idx + 65;
+}

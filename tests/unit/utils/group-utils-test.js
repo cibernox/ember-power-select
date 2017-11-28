@@ -1,4 +1,4 @@
-import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions } from 'ember-power-select/utils/group-utils';
+import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions, defaultTypeAheadMatcher } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
 const groupedOptions = [
@@ -111,6 +111,31 @@ module('Unit | Utility | Group utils', function() {
       },
       'one thousand'
     ]);
+  });
+
+  test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function(assert) {
+    let matcher = function(value, searchText) {
+      return new RegExp(searchText, 'i').test(value) ? 0 : -1;
+    };
+    assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [{ groupName: 'Smalls', options: ['zero'] }]);
+    assert.deepEqual(filterOptions(groupedOptions, 'ele', matcher), [
+      {
+        groupName: 'Bigs',
+        options: [{ groupName: 'Really big', options: ['eleven'] }]
+      }
+    ]);
+    assert.deepEqual(filterOptions(groupedOptions, 't', matcher), [
+      { groupName: 'Smalls', options: ['two', 'three'] },
+      {
+        groupName: 'Bigs',
+        options: [
+          { groupName: 'Fairly big', options: ['eight'] },
+          { groupName: 'Really big', options: ['ten', 'twelve'] },
+          'thirteen'
+        ]
+      },
+      'one thousand'
+    ]);
 
     assert.deepEqual(filterOptions(groupedOptions, 'imposible', matcher), []);
     assert.deepEqual(filterOptions(groupedOptions, '', matcher), groupedOptions);
@@ -161,5 +186,20 @@ module('Unit | Utility | Group utils', function() {
 
   test('#countOptions returns the number of options, transversing the groups with no depth level', function(assert) {
     assert.equal(countOptions(groupedOptions), 16);
+  });
+});
+
+test('#defaultTypeAheadMatcher', function(assert) {
+  [
+    ['Aaron', 'Aa'],
+    ['Álvaro', 'alv']
+  ].forEach(([value, text]) => {
+    assert.equal(defaultTypeAheadMatcher(value, text), 1, `${value} is matched by ${text}`);
+  });
+
+  [
+    ['Fabiola', 'Ab']
+  ].forEach(([value, text]) => {
+    assert.equal(defaultTypeAheadMatcher(value, text), -1, `${value} is not matched by ${text}`);
   });
 });
