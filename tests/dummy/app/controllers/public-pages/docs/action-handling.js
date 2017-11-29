@@ -30,6 +30,9 @@ export default Controller.extend({
     },
 
     handleFocus(select, e) {
+      /* eslint-disable */
+      console.debug('EPS focused!');
+      /* eslint-enable */
       let blurredEl = e.relatedTarget;
       if (!blurredEl || !blurredEl.classList.contains('ember-power-select-search-input')) {
         select.actions.open();

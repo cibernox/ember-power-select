@@ -4,6 +4,7 @@ export default Controller.extend({
   cities: ['Barcelona', 'London', 'New York', 'Porto'],
   actions: {
     handleFocus(select, e) {
+      console.debug('EPS focused!');
       if (this.focusComesFromOutside(e)) {
         select.actions.open();
       }
