@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import { find, findAll, click } from 'ember-native-dom-helpers';
+import { find, findAll, click, focus } from 'ember-native-dom-helpers';
 import { get } from '@ember/object';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
@@ -193,7 +193,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    find('#focusable-input').focus();
+    focus('#focusable-input');
   });
 
   test('the search message can be customized passing `searchMessageComponent`', async function(assert) {

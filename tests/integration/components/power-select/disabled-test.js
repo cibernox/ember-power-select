@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { run } from '@ember/runloop';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers, countriesWithDisabled } from '../constants';
-import { find, findAll, triggerEvent, keyEvent, click } from 'ember-native-dom-helpers';
+import { find, findAll, triggerEvent, keyEvent, click, focus } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Disabled)', function(hooks) {
   setupRenderingTest(hooks);
@@ -167,7 +167,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     `);
 
     let trigger = find('.ember-power-select-trigger');
-    trigger.focus();
+    focus(trigger);
     assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is closed');
     keyEvent(trigger, 'keydown', 85); // u
     assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');

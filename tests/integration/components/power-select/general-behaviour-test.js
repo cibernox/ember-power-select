@@ -14,7 +14,7 @@ import {
 } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
-import { find, findAll, click, keyEvent, triggerEvent } from 'ember-native-dom-helpers';
+import { find, findAll, click, keyEvent, triggerEvent, focus } from 'ember-native-dom-helpers';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 
@@ -1009,7 +1009,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     assert.ok(!find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
     clickTrigger();
-    run(() => find('.ember-power-select-search-input').focus());
+    focus('.ember-power-select-search-input');
     assert.ok(find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select has the class now');
   });
 

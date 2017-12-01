@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, names, countries, countriesWithDisabled } from '../constants';
-import { find, findAll, click, tap, keyEvent } from 'ember-native-dom-helpers';
+import { find, findAll, click, tap, keyEvent, focus } from 'ember-native-dom-helpers';
 import RSVP from 'rsvp';
 import EmberObject, { get } from '@ember/object';
 import { isEmpty } from '@ember/utils';
@@ -289,7 +289,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     let trigger = find('.ember-power-select-trigger');
-    trigger.focus();
+    focus(trigger);
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
     keyEvent(trigger, 'keydown', 13);
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
