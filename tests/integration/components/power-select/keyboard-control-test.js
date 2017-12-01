@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
-import { find, keyEvent } from 'ember-native-dom-helpers';
+import { find, keyEvent, focus } from 'ember-native-dom-helpers';
 import { run } from '@ember/runloop';
 
 module('Integration | Component | Ember Power Select (Keyboard control)', function(hooks) {
@@ -229,7 +229,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => find('.ember-power-select-trigger').focus());
+    run(() => focus('.ember-power-select-trigger'));
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 13);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -247,7 +247,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => find('.ember-power-select-trigger').focus());
+    run(() => focus('.ember-power-select-trigger'));
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 32);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -265,7 +265,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => find('.ember-power-select-trigger').focus());
+    run(() => focus('.ember-power-select-trigger'));
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 40);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -281,7 +281,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => find('.ember-power-select-trigger').focus());
+    run(() => focus('.ember-power-select-trigger'));
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 38);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -465,7 +465,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     `);
 
     let trigger = find('.ember-power-select-trigger');
-    trigger.focus();
+    focus(trigger);
     assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
     keyEvent(trigger, 'keydown', 78); // n
     keyEvent(trigger, 'keydown', 73); // i
@@ -485,7 +485,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     `);
 
     let trigger = find('.ember-power-select-trigger');
-    trigger.focus();
+    focus(trigger);
     assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
     keyEvent(trigger, 'keydown', 82, { ctrlKey: true }); // r
     assert.notEqual(trigger.textContent.trim(), 'three', '"three" is not selected');
@@ -578,7 +578,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     `);
 
     let trigger = find('.ember-power-select-trigger');
-    trigger.focus();
+    focus(trigger);
     assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is closed');
     triggerKeydown(trigger, 84); // t
     triggerKeydown(trigger, 87); // w
@@ -603,7 +603,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     `);
 
     let trigger = find('.ember-power-select-trigger');
-    trigger.focus();
+    focus(trigger);
     assert.equal(trigger.textContent.trim(), '', 'nothing is selected');
     triggerKeydown(trigger, 78); // n
     triggerKeydown(trigger, 73); // i
@@ -823,7 +823,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
     let trigger = find('.ember-power-select-trigger');
-    trigger.focus();
+    focus(trigger);
     assert.equal(find('.ember-power-select-selected-item').textContent.trim(), '25');
     assert.expectAssertion(() => {
       triggerKeydown(trigger, 67); // c

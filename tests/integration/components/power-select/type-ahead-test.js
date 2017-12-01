@@ -3,11 +3,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { optionAtIndex } from 'ember-power-select/utils/group-utils';
 import { triggerKeydown, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { charCode, namesStartingWithA } from '../constants';
-import { find } from 'ember-native-dom-helpers';
+import { find, focus } from 'ember-native-dom-helpers';
 
 const WITH_EPS_CLOSED = {
   beforeInteraction(trigger, assert) {
-    trigger.focus();
+    focus(trigger);
     assert.equal(trigger.textContent.trim(), '', 'no value selected');
     assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
   },
