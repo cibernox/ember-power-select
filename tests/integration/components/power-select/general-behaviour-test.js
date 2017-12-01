@@ -1009,7 +1009,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     assert.ok(!find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
     clickTrigger();
-    run(() => focus('.ember-power-select-search-input'));
+    focus('.ember-power-select-search-input');
     assert.ok(find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select has the class now');
   });
 

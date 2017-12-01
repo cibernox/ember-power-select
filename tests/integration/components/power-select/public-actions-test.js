@@ -237,7 +237,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       {{/power-select}}
     `);
 
-    run(() => focus('.ember-power-select-trigger'));
+    focus('.ember-power-select-trigger');
   });
 
   test('The onfocus of multiple selects action receives the public API and the focus event', async function(assert) {
@@ -255,7 +255,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       {{/power-select-multiple}}
     `);
 
-    run(() => focus('.ember-power-select-trigger'));
+    focus('.ember-power-select-trigger');
   });
 
   test('The onfocus of multiple selects also gets called when the thing getting the focus is the searbox', async function(assert) {
@@ -273,7 +273,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       {{/power-select-multiple}}
     `);
 
-    run(() => focus('.ember-power-select-trigger-multiple-input'));
+    focus('.ember-power-select-trigger-multiple-input');
   });
 
   test('The onblur of single selects action receives the public API and the event', async function(assert) {
@@ -292,8 +292,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       <input type="text" id="other-element"/>
     `);
 
-    run(() => focus('.ember-power-select-trigger'));
-    run(() => focus('#other-element'));
+    focus('.ember-power-select-trigger');
+    focus('#other-element');
   });
 
   test('The onblur of multiple selects action receives the public API and the focus event', async function(assert) {
@@ -312,8 +312,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       <input type="text" id="other-element"/>
     `);
 
-    run(() => focus('.ember-power-select-trigger-multiple-input'));
-    run(() => focus('#other-element'));
+    focus('.ember-power-select-trigger-multiple-input');
+    focus('#other-element');
   });
 
   test('The onblur of multiple selects also gets called when the thing getting the focus is the searbox', async function(assert) {

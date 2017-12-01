@@ -5,7 +5,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { find, keyEvent, focus } from 'ember-native-dom-helpers';
-import { run } from '@ember/runloop';
 
 module('Integration | Component | Ember Power Select (Keyboard control)', function(hooks) {
   setupRenderingTest(hooks);
@@ -229,7 +228,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => focus('.ember-power-select-trigger'));
+    focus('.ember-power-select-trigger');
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 13);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -247,7 +246,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => focus('.ember-power-select-trigger'));
+    focus('.ember-power-select-trigger');
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 32);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -265,7 +264,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => focus('.ember-power-select-trigger'));
+    focus('.ember-power-select-trigger');
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 40);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
@@ -281,7 +280,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    run(() => focus('.ember-power-select-trigger'));
+    focus('.ember-power-select-trigger');
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     keyEvent('.ember-power-select-trigger', 'keydown', 38);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
