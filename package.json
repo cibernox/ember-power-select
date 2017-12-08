@@ -70,7 +70,7 @@
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-native-dom-event-dispatcher": "^0.6.3",
-    "ember-native-dom-helpers": "^0.5.5",
+    "ember-native-dom-helpers": "^0.6.0",
     "ember-qunit-assert-helpers": "^0.2.1",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.16.2",
