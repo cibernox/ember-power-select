@@ -1193,18 +1193,17 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   test('The `selected` option can be a thenable', async function(assert) {
     assert.expect(6);
     let pets = [{ name: 'Toby' }, { name: 'Rex' }, { name: 'Lucius' }, { name: 'Donatello' }];
-    this.mainUser = {
-      pets,
-      bestie: new RSVP.Promise(function(resolve) {
-        setTimeout(() => resolve(pets[2]), 40);
-      })
-    };
+    this.mainUser = { pets, bestie: null };
 
     await render(hbs`
       {{#power-select options=mainUser.pets selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}
         {{option.name}}
       {{/power-select}}
     `);
+
+    this.set('mainUser.bestie', new RSVP.Promise(function(resolve) {
+      setTimeout(() => resolve(pets[2]), 40);
+    }));
 
     clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Toby', 'The first element is highlighted');
