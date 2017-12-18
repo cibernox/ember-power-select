@@ -24,5 +24,3 @@ package.json.ember-try
 
 # custom
 /fastboot-dist
-.pagefrontrc
-.env.deploy.*

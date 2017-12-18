@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "ember build",
-    "start": "ember server",
+    "start": "ember serve",
     "test": "ember try:each",
     "nodetest": "$(npm bin)/mocha node-tests --recursive"
   },
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "ember-basic-dropdown": "^0.34.0",
-    "ember-cli-babel": "^6.10.0",
+    "ember-cli-babel": "^6.11.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-concurrency": "^0.8.12",
     "ember-text-measurer": "^0.4.0",
@@ -48,9 +48,8 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "ember-cli": "~2.16.2",
-    "ember-cli-app-version": "^3.1.0",
-    "ember-cli-blueprint-test-helpers": "^0.18.0",
+    "ember-cli": "~2.17.1",
+    "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^2.0.1",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.2",
@@ -62,7 +61,7 @@
     "ember-cli-uglify": "^2.0.0",
     "ember-code-example-component": "^0.2.0",
     "ember-code-snippet": "2.0.0",
-    "ember-data": "^2.16.3",
+    "ember-data": "^2.17.0",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-export-application-global": "^2.0.0",
     "ember-fetch": "^3.4.0",
@@ -70,10 +69,10 @@
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-native-dom-event-dispatcher": "^0.6.3",
-    "ember-native-dom-helpers": "^0.5.5",
+    "ember-native-dom-helpers": "^0.5.10",
     "ember-qunit-assert-helpers": "^0.2.1",
     "ember-resolver": "^4.0.0",
-    "ember-source": "~2.16.2",
+    "ember-source": "~2.17.0",
     "eslint-plugin-ember-suave": "^1.0.0",
     "liquid-fire": "0.29.1",
     "loader.js": "^4.6.0",
@@ -83,7 +82,7 @@
     "testdouble": "^3.2.6"
   },
   "engines": {
-    "node": "^ 4.5 || 6.* || >= 7.*"
+    "node": "^4.5 || 6.* || >= 7.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",

@@ -31,11 +31,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
   test('The search text shouldn\'t appear if options are loading', async function(assert) {
     assert.expect(2);
 
-    this.options = new RSVP.Promise(function(resolve) {
-      later(function() {
-        resolve(numbers);
-      }, 100);
-    });
+    this.options = [];
     this.searchFn = function() {};
 
     await render(hbs`
@@ -44,6 +40,11 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
+    this.set('options', new RSVP.Promise(function(resolve) {
+      later(function() {
+        resolve(numbers);
+      }, 100);
+    }));
     clickTrigger();
     assert.notOk(/Type to search/.test(find('.ember-power-select-dropdown').textContent), 'The type to search message doesn\'t show');
     assert.ok(/Loading options\.\.\./.test(find('.ember-power-select-dropdown').textContent), '"Loading options..." message appears');

@@ -24,13 +24,14 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
   test('Passing as options of a `store.findAll` works', async function(assert) {
     server.createList('user', 10);
     server.timing = 200;
-    this.users = this.store.findAll('user');
+    this.users = [];
     await render(hbs`
       {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
         {{option.name}}
       {{/power-select}}
     `);
 
+    this.set('users', this.store.findAll('user'));
     clickTrigger();
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'Loading options...', 'The loading message appears while the promise is pending');
 
@@ -44,13 +45,14 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
   test('Passing as options the result of `store.query` works', async function(assert) {
     server.createList('user', 10);
     server.timing = 200;
-    this.users = this.store.query('user', { foo: 'bar' });
+    this.users = [];
     await render(hbs`
-      {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
-        {{option.name}}
-      {{/power-select}}
+    {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
+    {{option.name}}
+    {{/power-select}}
     `);
 
+    this.set('users', this.store.query('user', { foo: 'bar' }));
     clickTrigger();
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'Loading options...', 'The loading message appears while the promise is pending');
 
@@ -63,13 +65,14 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
 
   test('Delete an item in a multiple selection', async function(assert) {
     server.createList('user', 10);
-    this.users = this.store.findAll('user');
+    this.users = [];
     await render(hbs`
       {{#power-select-multiple options=users searchField="name" selected=users onchange=(action (mut users)) as |option|}}
         {{option.name}}
       {{/power-select-multiple}}
     `);
 
+    this.set('users', this.store.findAll('user'));
     return settled().then(function() {
       click('.ember-power-select-multiple-remove-btn');
       return settled().then(function() {
