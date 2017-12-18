@@ -2,7 +2,7 @@
   <input type="text" value="sample input">
   <h2 id="title">Select with 300 items</h2>
 
-{{#power-select options=simpleOptions selected=trick disabled=trick onchange=(action (mut trick)) as |opt|}}
+{{#power-select options=moarNumbers selected=trick disabled=trick onchange=(action (mut trick)) as |opt|}}
   {{opt}}
 {{/power-select}}
 
