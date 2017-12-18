@@ -13,7 +13,7 @@ ember-data collections and follows idiomatic patterns.
 
 ## Installation
 
-Ember Power Select works in Ember **2.3.1+**, beta and canary with no deprecations
+Ember Power Select 1.X works in Ember **2.3.1+**, beta and canary with no deprecations
 whatsoever. Any deprecation will be considered a bug.
 
 As any other ember-cli addon, run:
@@ -21,6 +21,8 @@ As any other ember-cli addon, run:
 ```
 ember install ember-power-select
 ```
+
+Ember Power Select 2.X (currently in beta) requires Ember **2.10.0+**.
 
 ## Features overview
 
