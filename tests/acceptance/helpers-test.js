@@ -64,7 +64,7 @@ module('Acceptance | helpers | selectChoose', function(hooks) {
     await visit('/helpers-testing');
     assert.equal(currentURL(), '/helpers-testing');
 
-    await selectChoose('.select-with-class-in-trigger', '.ember-power-select-option:eq(2)');
+    await selectChoose('.select-with-class-in-trigger', '.ember-power-select-option:nth-child(3)');
     assert.equal(find('.select-choose').textContent.trim(), 'three', 'The proper value has been selected');
     assert.notOk(find('.ember-power-select-options'), 'The selectis closed');
     assert.equal(find('.select-choose-target').textContent.trim(), 'You\'ve selected: three');
