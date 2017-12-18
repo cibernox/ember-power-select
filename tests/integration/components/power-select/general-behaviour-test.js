@@ -125,17 +125,18 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     let done = assert.async();
     assert.expect(4);
 
-    this.numbersPromise = new RSVP.Promise(function(resolve) {
-      run.later(function() {
-        resolve(numbers);
-      }, 150);
-    });
-
+    this.numbersPromise = [];
     await render(hbs`
       {{#power-select options=numbersPromise onchange=(action (mut foo)) as |option|}}
         {{option}}
       {{/power-select}}
     `);
+
+    this.set('numbersPromise', new RSVP.Promise(function(resolve) {
+      run.later(function() {
+        resolve(numbers);
+      }, 150);
+    }));
 
     clickTrigger();
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'Loading options...', 'The loading message appears while the promise is pending');
@@ -150,12 +151,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is false, no loading message is shown', async function(assert) {
     let done = assert.async();
     assert.expect(2);
-
-    this.numbersPromise = new RSVP.Promise(function(resolve) {
-      run.later(function() {
-        resolve(numbers);
-      }, 100);
-    });
+    this.numbersPromise = [];
 
     await render(hbs`
       {{#power-select options=numbersPromise onchange=(action (mut foo)) loadingMessage=false as |option|}}
@@ -163,6 +159,11 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
+    this.set('numbersPromise', new RSVP.Promise(function(resolve) {
+      run.later(function() {
+        resolve(numbers);
+      }, 100);
+    }));
     clickTrigger();
 
     assert.notOk(find('.ember-power-select-option'), 'No loading options message is displayed');
@@ -821,18 +822,16 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
   test('If the passed selected element is a pending promise, the first element is highlighted and the trigger is empty', async function(assert) {
     assert.expect(3);
-
     this.numbers = numbers;
-    this.selected = new RSVP.Promise(function(resolve) {
-      run.later(resolve, numbers[3], 50);
-    });
-
     await render(hbs`
       {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
         {{option}}
       {{/power-select}}
     `);
 
+    this.set('selected', new RSVP.Promise(function(resolve) {
+      run.later(resolve, numbers[3], 50);
+    }));
     clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
     assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
@@ -862,15 +861,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.expect(6);
 
     this.numbers = numbers;
-    this.selected = new RSVP.Promise(function(resolve) {
-      run.later(resolve, numbers[3], 50);
-    });
-
     await render(hbs`
       {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
         {{option}}
       {{/power-select}}
     `);
+    this.set('selected', new RSVP.Promise(function(resolve) {
+      run.later(resolve, numbers[3], 50);
+    }));
 
     clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
@@ -887,6 +885,13 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
   test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'t the same promise it resolved from', async function(assert) {
     assert.expect(6);
+    this.numbers = numbers;
+
+    await render(hbs`
+      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+        {{option}}
+      {{/power-select}}
+    `);
 
     let promise1 = new RSVP.Promise(function(resolve) {
       run.later(resolve, numbers[3], 400);
@@ -896,15 +901,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       run.later(resolve, numbers[4], 300);
     });
 
-    this.numbers = numbers;
-    this.selected = promise1;
-
-    await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
-        {{option}}
-      {{/power-select}}
-    `);
-
+    this.set('selected', promise1);
+    await new RSVP.Promise(function(resolve) {
+      run.later(resolve, 20);
+    });
     this.set('selected', promise2);
 
     clickTrigger();
