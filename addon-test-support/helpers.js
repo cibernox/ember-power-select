@@ -1,4 +1,4 @@
-import { deprecate } from '@ember/debug';
+import { deprecate, warn } from '@ember/debug';
 import { registerAsyncHelper } from '@ember/test';
 import wait from 'ember-test-helpers/wait';
 import { click, fillIn, keyEvent, triggerEvent, find, findAll } from 'ember-native-dom-helpers';
@@ -196,7 +196,7 @@ export default function() {
       await click(elem);
       return wait();
     } catch(e) {
-      console.warn('css path to remove btn not found');
+      warn('css path to remove btn not found');
       throw e;
     }
   });
@@ -207,7 +207,7 @@ export default function() {
       await click(elem);
       return wait();
     } catch(e) {
-      console.warn('css path to clear btn not found');
+      warn('css path to clear btn not found');
       throw e;
     }
   });
