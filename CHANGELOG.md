@@ -1,5 +1,8 @@
 # Master
 
+- [BREAKING] Remove long-time-deprecated behavior to support _some_ usages of the `:eq` pseudoselector from jQuery.
+- [DEPRECATE] Deprecate global async test helpers: `selectChoose`, `selectSearch`, `removeMultipleOption`
+  and `clearSelected`. They are still available, but we recomend explicitly importing them from `ember-power-select/test-support/helpers`
 - [BREAKING] Update to ember-basic-dropdown 1.0.0-beta.0, which drops support for Ember 2.9 and below.
   In exchange, the component is now lighter and presumably faster.
 - [BREAKING] Change the behaviour of the select when the user types on the focused trigger to mimic

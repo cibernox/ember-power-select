@@ -1,22 +1,25 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
-import { currentURL, find, click, visit } from 'ember-native-dom-helpers';
+import { test, module } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, click, currentURL } from '@ember/test-helpers';
+import { find } from 'ember-native-dom-helpers';
 
-moduleForAcceptance('Acceptance | All Public Pages');
+module('Acceptance | All Public Pages', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visit every Docs page in order', async function(assert) {
-  let urls = await keepClickingNext('/docs', '.doc-page-nav-link-next');
-  assert.equal(urls.length, 15);
-});
+  test('visit every Docs page in order', async function(assert) {
+    let urls = await keepClickingNext('/docs', '.doc-page-nav-link-next');
+    assert.equal(urls.length, 15);
+  });
 
-test('visit every Cookbook page in order', async function(assert) {
-  let urls = await keepClickingNext('/cookbook', '.doc-page-nav-link-next');
-  assert.equal(urls.length, 7);
-});
+  test('visit every Cookbook page in order', async function(assert) {
+    let urls = await keepClickingNext('/cookbook', '.doc-page-nav-link-next');
+    assert.equal(urls.length, 7);
+  });
 
-test('visit /addons', async function(assert) {
-  await visit('/addons');
-  assert.equal('/addons', currentURL());
+  test('visit /addons', async function(assert) {
+    await visit('/addons');
+    assert.equal('/addons', currentURL());
+  });
 });
 
 async function keepClickingNext(initialUrl, nextLinkSelector) {
