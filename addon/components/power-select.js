@@ -79,6 +79,7 @@ export default Component.extend({
   matchTriggerWidth: fallbackIfUndefined(true),
   preventScroll: fallbackIfUndefined(false),
   matcher: fallbackIfUndefined(defaultMatcher),
+  allowEmptySearch: fallbackIfUndefined(false),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
   searchMessage: fallbackIfUndefined('Type to search'),
@@ -186,7 +187,9 @@ export default Component.extend({
 
   mustShowSearchMessage: computed('publicAPI.{loading,searchText,resultsCount}', 'search', 'searchMessage', function() {
     let publicAPI = this.get('publicAPI');
-    return !publicAPI.loading && publicAPI.searchText.length === 0
+    let allowEmptySearch = this.get('allowEmptySearch');
+    return !publicAPI.loading
+      && !allowEmptySearch && publicAPI.searchText.length === 0
       && !!this.get('search') && !!this.get('searchMessage')
       && publicAPI.resultsCount === 0;
   }),
@@ -270,7 +273,7 @@ export default Component.extend({
     },
 
     search(term) {
-      if (isBlank(term)) {
+      if (!this.get('allowEmptySearch') && isBlank(term)) {
         this._resetSearch();
       } else if (this.get('search')) {
         this._performSearch(term);

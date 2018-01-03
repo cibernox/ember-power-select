@@ -842,5 +842,45 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       done();
     }, 250);
   });
+
+  test('If allowEmptySearch is true, still perform a search even when search box is empty', async function(assert) {
+    assert.expect(4);
+    let done = assert.async();
+
+    this.searchFn = function(term) {
+      return new RSVP.Promise(function(resolve) {
+        later(function() {
+          resolve(countries.filter((country) => country.name.indexOf(term) > -1));
+        }, 50);
+      });
+    };
+
+    await render(hbs`
+      {{#power-select search=searchFn allowEmptySearch=true onchange=(action (mut foo)) as |country|}}
+        {{country.name}}
+      {{/power-select}}
+    `);
+
+    clickTrigger();
+    typeInSearch('Brazil');
+    later(() => {
+      assert.equal(findAll('.ember-power-select-option').length, 1, 'There should be one option');
+      typeInSearch('I\'m invalid contry');
+    }, 60);
+
+    later(() => {
+      assert.equal(findAll('.ember-power-select-option--no-matches-message').length, 1, 'There should be no option.');
+      typeInSearch('');
+    }, 120);
+
+    later(() => {
+      assert.equal(findAll('.ember-power-select-option--no-matches-message').length, 0, 'There should have result.');
+      assert.ok(findAll('.ember-power-select-option').length > 1, 'There should be at least one option.');
+    }, 180);
+
+    later(function() {
+      done();
+    }, 200);
+  });
 });
 
