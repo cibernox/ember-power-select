@@ -211,6 +211,39 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.ok(find('.ember-power-select-dropdown #custom-search-message-p-tag'), 'The custom component is rendered instead of the usual message');
   });
 
+  test('A caret is displayed', async function(assert) {
+    this.countries = countries;
+
+    await render(hbs`
+      {{#power-select
+        options=countries
+        onchange=(action (mut foo)) as |country|}}
+        {{country.name}}
+      {{/power-select}}
+    `);
+
+    assert.ok(find('.ember-power-select-caret > .ember-power-select-status-icon'), 'The default caret appears.');
+  });
+
+  test('The caret can be customizd using caretComponent', async function(assert) {
+    this.countries = countries;
+
+    this.owner.register('component:custom-caret', Component.extend({
+      classNames: ['my-custom-caret']
+    }));
+
+    await render(hbs`
+      {{#power-select
+        options=countries
+        caretComponent="custom-caret"
+        onchange=(action (mut foo)) as |country|}}
+        {{country.name}}
+      {{/power-select}}
+    `);
+
+    assert.ok(find('.my-custom-caret'), 'The custom caret appears.');
+  });
+
   test('placeholder can be customized using placeholderComponent', async function(assert) {
     assert.expect(2);
 
