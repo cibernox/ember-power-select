@@ -1,6 +1,7 @@
 {{#if searchEnabled}}
   <div class="ember-power-select-search">
-    <input type="search" autocomplete="off"
+    <label class="ember-power-select-search-input-label" for="{{concat listboxId '-search-input'}}">{{placeholder}}</label>
+    <input type="search" autocomplete="off" id="{{concat listboxId '-search-input'}}"
       autocorrect="off" autocapitalize="off"
       spellcheck="false" role="combobox"
       class="ember-power-select-search-input"
