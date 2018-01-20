@@ -21,6 +21,11 @@
     {{/if}}
   {{/each}}
   {{#if searchEnabled}}
+    {{#if searchLabel}}
+      <label class="ember-power-select-search-input-label" for="ember-power-select-trigger-multiple-input-{{select.uniqueId}}">
+        {{searchLabel}}
+      </label>
+    {{/if}}
     <input type="search" class="ember-power-select-trigger-multiple-input"
       tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
       id="ember-power-select-trigger-multiple-input-{{select.uniqueId}}"

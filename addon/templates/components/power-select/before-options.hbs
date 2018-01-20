@@ -1,6 +1,11 @@
 {{#if searchEnabled}}
   <div class="ember-power-select-search">
-    <input type="search" autocomplete="off"
+    {{#if searchLabel}}
+      <label class="ember-power-select-search-input-label" for="{{select.uniqueId}}-search-input">
+        {{searchLabel}}
+      </label>
+    {{/if}}
+    <input type="search" autocomplete="off" id="{{select.uniqueId}}-search-input"
       autocorrect="off" autocapitalize="off"
       spellcheck="false" role="combobox"
       class="ember-power-select-search-input"

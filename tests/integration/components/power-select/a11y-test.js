@@ -448,4 +448,26 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.set('role', undefined);
     assert.equal(find('.ember-power-select-trigger').getAttribute('role'), 'button', 'The `role` was defaults to `button`.');
   });
+
+  test('Label element is present when searchLabel property is set', async function(assert) {
+    assert.expect(2);
+
+    this.numbers = numbers;
+
+    this.set('expectedLabelText', 'Select a country');
+
+    await render(hbs`
+      {{#power-select searchLabel=expectedLabelText options=countries selected=country onchange=(action (mut foo))}}
+        {{country.name}}
+      {{/power-select}}
+    `);
+
+    clickTrigger();
+
+    let labelElement = find('.ember-power-select-search-input-label');
+    let inputElement = find('.ember-power-select-search-input');
+
+    assert.equal(labelElement.innerText, this.get('expectedLabelText'), 'The label is populated by the searchLabel property');
+    assert.equal(labelElement.getAttribute('for'), inputElement.getAttribute('id'), 'The input has a corresponding label');
+  });
 });
