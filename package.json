@@ -1,6 +1,6 @@
 {
-  "name": "ember-power-select",
-  "version": "2.0.0-beta.0",
+  "name": "@salsify/ember-power-select",
+  "version": "2.0.0-beta.0-0.2.0",
   "description": "The extensible select component built for ember",
   "keywords": [
     "ember-addon",
@@ -19,15 +19,12 @@
     "doc": "doc",
     "test": "tests"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/cibernox/ember-power-select.git"
-  },
+  "repository": "salsify/ember-power-select",
   "scripts": {
     "build": "ember build",
     "start": "ember serve",
     "test": "ember try:each",
-    "nodetest": "$(npm bin)/mocha node-tests --recursive"
+    "nodetest": "mocha node-tests --recursive"
   },
   "files": [
     "addon/",
@@ -82,7 +79,7 @@
     "testdouble": "^3.2.6"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": ">= 4.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",

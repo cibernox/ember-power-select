@@ -1,6 +1,7 @@
 /* eslint-env node */
 module.exports = {
   useYarn: true,
+  command: 'ember test --reporter xunit --skip-cleanup=true',
   scenarios: [
     {
       name: 'ember-2.10',

@@ -2,6 +2,7 @@
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
+  report_file: `./test-output/${process.env.EMBER_TRY_CURRENT_SCENARIO}/output.xml`,
   launch_in_ci: [
     'Chrome'
   ],

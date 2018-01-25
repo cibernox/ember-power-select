@@ -22,8 +22,16 @@ function createStyleFixture(name) {
   fs.writeFileSync(path.join(stylePath, name), 'body { color: red; }');
 }
 
+function createSalsifyDir() {
+  let salsifyPath = path.join('node_modules', '@salsify');
+  if (!fs.existsSync(salsifyPath)) {
+    fs.mkdirSync(salsifyPath);
+  }
+}
+
 describe('Acceptance: ember generate ember-power-select', function() {
   setupTestHooks(this);
+  createSalsifyDir();
 
   it('skips blueprint when no preprocessor present', function() {
     let args = ['ember-power-select'];
