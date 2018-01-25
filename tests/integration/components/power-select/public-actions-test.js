@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
+import { clickTrigger, typeInSearch, triggerScroll } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
 import { find, findAll, click, keyEvent, focus } from 'ember-native-dom-helpers';
 import { run } from '@ember/runloop';
@@ -569,6 +569,24 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'baz', 'The third option is highlighted');
   });
 
+  test('The `onscroll` action of single selects action receives the public API and the event', async function(assert) {
+    assert.expect(22);
+
+    this.numbers = numbers;
+    this.handleScroll = (select, e) => {
+      assertPublicAPIShape(assert, select);
+      assert.ok(e instanceof window.Event, 'The second argument is an event');
+    };
+
+    await render(hbs`
+      {{#power-select initiallyOpened=true options=numbers onscroll=handleScroll onchange=(action (mut foo)) as |number|}}
+        {{number}}
+      {{/power-select}}
+    `);
+
+    await triggerScroll(0, 20);
+  });
+
   test('The programmer can use the received public API to perform searches in single selects', async function(assert) {
     assert.expect(2);
 
@@ -692,4 +710,3 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     run(() => this.selectAPI.actions.scrollTo('three'));
   });
 });
-

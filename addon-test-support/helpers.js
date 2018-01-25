@@ -1,7 +1,7 @@
 import { deprecate, warn } from '@ember/debug';
 import { registerAsyncHelper } from '@ember/test';
 import wait from 'ember-test-helpers/wait';
-import { click, fillIn, keyEvent, triggerEvent, find, findAll } from 'ember-native-dom-helpers';
+import { click, fillIn, keyEvent, triggerEvent, find, findAll, scrollTo } from 'ember-native-dom-helpers';
 
 /**
  * @private
@@ -24,6 +24,11 @@ export function nativeMouseUp(selectorOrDomElement, options) {
 
 export function triggerKeydown(domElement, k) {
   keyEvent(domElement, 'keydown', k);
+}
+
+export function triggerScroll(x = 0, y = 0) {
+  let selector = '.ember-power-select-options';
+  return scrollTo(selector, x, y);
 }
 
 export function typeInSearch(scopeOrText, text) {
