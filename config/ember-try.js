@@ -4,20 +4,6 @@ module.exports = {
   command: 'ember test --reporter xunit --skip-cleanup=true',
   scenarios: [
     {
-      name: 'ember-2.10',
-      bower: {
-        dependencies: {
-          ember: '~2.10.0'
-        }
-      },
-      npm: {
-        devDependencies: {
-          'ember-source': null,
-          'ember-native-dom-event-dispatcher': null
-        }
-      }
-    },
-    {
       name: 'ember-lts-2.12',
       npm: {
         devDependencies: {
