@@ -12,6 +12,7 @@ module.exports = {
     Chrome: {
       mode: 'ci',
       args: [
+        process.env.TRAVIS ? '--no-sandbox' : null,
         '--touch-events',
         '--disable-gpu',
         '--headless',
