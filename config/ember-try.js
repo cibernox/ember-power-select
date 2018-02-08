@@ -12,7 +12,8 @@ module.exports = {
       npm: {
         devDependencies: {
           'ember-source': null,
-          'ember-native-dom-event-dispatcher': null
+          'ember-native-dom-event-dispatcher': null,
+          'ember-factory-for-polyfill': '1.3.1'
         }
       }
     },
