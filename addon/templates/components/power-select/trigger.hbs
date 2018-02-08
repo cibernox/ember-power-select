@@ -1,6 +1,6 @@
 {{#if select.selected}}
   {{#if selectedItemComponent}}
-    {{component selectedItemComponent option=(readonly select.selected) select=(readonly select)}}
+    {{component selectedItemComponent extra=(readonly extra) option=(readonly select.selected) select=(readonly select)}}
   {{else}}
     <span class="ember-power-select-selected-item">{{yield select.selected select}}</span>
   {{/if}}
