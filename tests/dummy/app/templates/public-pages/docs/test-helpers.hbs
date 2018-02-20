@@ -4,17 +4,25 @@
 <h2>Acceptance Tests</h2>
 
 <p>
-  Since 0.7.0 ember-power-select bundles some handy test helpers (<code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code>)
+  Ember Power Select bundles some handy test helpers (<code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code>)
   that make it nicer to interact with the component in acceptance tests.
 </p>
 
 <p>
-  To use those helpers in acceptance tests you need to register them in the <code>/tests/helpers/start-app.js</code>
+  To use those helpers in acceptance tests that use <code>moduleForAcceptance</code>, you need to register them in the <code>/tests/helpers/start-app.js</code>
   file.
 </p>
 
 <p>
   For that import the registration function and invoke it immedialty.
+</p>
+
+{{code-snippet name="test-helpers-1-js.js"}}
+
+<p>
+  However if you are using the new testing API described in
+  <a href="https://github.com/emberjs/rfcs/pull/232">RFC 232</a>, available in ember-cli-qunit >= 4.2 and ember-cli-mocha >= 0.15.0, then you just can explicitly import those
+  helpers where needed (even in integration tests!)
 </p>
 
 {{code-snippet name="test-helpers-1-js.js"}}
