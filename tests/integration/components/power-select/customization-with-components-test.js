@@ -283,6 +283,40 @@ module('Integration | Component | Ember Power Select (Customization using compon
     clickTrigger();
   });
 
+  test('the power-select-multiple `optionsComponent` receives the `extra` hash', async function(assert) {
+    assert.expect(2);
+
+    this.countries = countries;
+    this.country = countries[1]; // Spain
+
+    await render(hbs`
+      {{#power-select-multiple options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) extra=(hash field='code') as |country|}}
+        {{country.code}}
+      {{/power-select-multiple}}
+    `);
+
+    clickTrigger();
+    let text = find('.ember-power-select-options').textContent.trim();
+    assert.ok(/Countries:/.test(text), 'The given component is rendered');
+    assert.ok(/3\. RU/.test(text), 'The component uses the field in the extra has to render the options');
+  });
+
+  test('the power-select-multiple `triggerComponent` receives the `extra` hash', async function(assert) {
+    assert.expect(1);
+
+    this.countries = countries;
+    this.country = countries[1]; // Spain
+
+    await render(hbs`
+      {{#power-select-multiple options=countries selected=country triggerComponent="selected-country" onchange=(action (mut foo)) extra=(hash coolFlagIcon=true) as |country|}}
+        {{country.code}}
+      {{/power-select-multiple}}
+    `);
+
+    clickTrigger();
+    assert.ok(find('.ember-power-select-trigger .cool-flag-icon'), 'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
+  });
+
   test('the power-select-multiple `selectedItemComponent` receives the `extra` hash', async function(assert) {
     assert.expect(1);
 
