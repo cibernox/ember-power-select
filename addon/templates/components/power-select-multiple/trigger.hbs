@@ -10,7 +10,7 @@
         </span>
       {{/unless}}
       {{#if selectedItemComponent}}
-        {{component selectedItemComponent option=(readonly opt) select=(readonly select)}}
+        {{component selectedItemComponent extra=(readonly extra) option=(readonly opt) select=(readonly select)}}
       {{else}}
         {{yield opt select}}
       {{/if}}

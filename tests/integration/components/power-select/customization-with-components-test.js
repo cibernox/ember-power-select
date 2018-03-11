@@ -282,4 +282,26 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     clickTrigger();
   });
+
+  test('the power-select-multiple `selectedItemComponent` receives the `extra` hash', async function(assert) {
+    assert.expect(1);
+
+    this.countries = countries;
+    this.country = [countries[1]]; // Spain
+
+    await render(hbs`
+      <div class="select-box">
+        {{#power-select-multiple
+            options=countries
+            selected=country
+            selectedItemComponent="selected-item-country"
+            onchange=(action (mut selected))
+            extra=(hash coolFlagIcon=true) as |country|}}
+          {{country.code}}
+        {{/power-select-multiple}}
+      </div>
+    `);
+
+    assert.ok(find('.ember-power-select-trigger .cool-flag-icon'), 'The custom selectedItemComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
+  });
 });
