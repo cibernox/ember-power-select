@@ -1007,8 +1007,9 @@ export function stripDiacritics(text) {
   function match(a) {
     return DIACRITICS[a] || a;
   }
-
+  /* eslint-disable */
   return `${text}`.replace(/[^\u0000-\u007E]/g, match);
+  /* eslint-enable */
 }
 
 export function defaultMatcher(value, text) {
