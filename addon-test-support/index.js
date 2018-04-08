@@ -1,5 +1,5 @@
-import { click, fillIn, settled } from '@ember/test-helpers';
-import { find, findAll } from 'ember-native-dom-helpers';
+import { settled } from '@ember/test-helpers';
+import { click, fillIn, find, findAll } from 'ember-native-dom-helpers';
 import { warn } from '@ember/debug';
 
 export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex) {
