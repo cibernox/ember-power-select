@@ -149,6 +149,16 @@
   This is because it deserves an entire chapter of its own.
 </p>
 
+<h3>Prevent click propagation inside the list</h3>
+
+<p>
+ The options inside the list are selected with mousedown, a good way to prevent the selection is intercepting onmouseup and calling stopPropagation on the element "e.stopPropagation()"
+</p>
+
+{{#code-example hbs="the-list-10.hbs" js="the-list-10-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-example}}
+
 <div class="doc-page-nav">
   <a href="{{href-to 'public-pages.docs.the-trigger'}}" class="doc-page-nav-link-prev">&lt; The trigger</a>
   <a href="{{href-to 'public-pages.docs.the-search'}}" class="doc-page-nav-link-next">The search &gt;</a>
