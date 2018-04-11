@@ -155,6 +155,10 @@
  The options inside the list are selected with mousedown, a good way to prevent the selection is intercepting onmouseup and calling stopPropagation on the element "e.stopPropagation()"
 </p>
 
+<p>
+This is particularly useful if you want to add some kind of link or button inside the list of options and prevent the selection of the item when the user clicks on the link.
+</p>
+
 {{#code-example hbs="the-list-10.hbs" js="the-list-10-js.js" as |partialName|}}
   {{partial partialName}}
 {{/code-example}}
