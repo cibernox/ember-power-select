@@ -7,7 +7,8 @@ import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, countries } from '../constants';
-import { find, findAll, click } from 'ember-native-dom-helpers';
+import { click } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 import RSVP from 'rsvp';
 
 module('Integration | Component | Ember Power Select (Custom search function)', function(hooks) {
@@ -320,13 +321,13 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
     assert.equal(findAll('.ember-power-select-option').length, 7, 'Results are filtered');
     assert.equal(find('.ember-power-select-search-input').value, 'teen');
-    click('#different-node');
+    await click('#different-node');
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-option').length, 1, 'Results have been cleared');
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search');
     assert.equal(find('.ember-power-select-search-input').value, '', 'The searchbox was cleared');

@@ -83,6 +83,7 @@
     "loader.js": "^4.6.0",
     "memory-scroll": "0.9.1",
     "mocha": "2.5.3",
+    "qunit-dom": "^0.6.2",
     "simple-git": "^1.10.0",
     "testdouble": "^3.2.6"
   },
