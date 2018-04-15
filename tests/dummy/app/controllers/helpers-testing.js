@@ -1,7 +1,6 @@
 import Controller from '@ember/controller';
 import { later } from '@ember/runloop';
 import RSVP from 'rsvp';
-
 const numbers = [
   'one',
   'two',

@@ -7,7 +7,8 @@
     "select",
     "select2",
     "selectize",
-    "dropdown"
+    "dropdown",
+    "ember-power"
   ],
   "license": "MIT",
   "author": {
@@ -25,9 +26,11 @@
   },
   "scripts": {
     "build": "ember build",
+    "lint:js": "eslint ./*.js addon addon-test-support app config lib server test-support tests --ignore-pattern tests/dummy/app/templates/snippets",
+    "nodetest": "$(npm bin)/mocha node-tests --recursive",
     "start": "ember serve",
-    "test": "ember try:each",
-    "nodetest": "$(npm bin)/mocha node-tests --recursive"
+    "test": "ember test",
+    "test:all": "ember try:each"
   },
   "files": [
     "addon/",
@@ -39,7 +42,7 @@
     "vendor"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "^1.0.0-beta.3",
+    "ember-basic-dropdown": "^1.0.0-beta.5",
     "ember-cli-babel": "^6.11.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-concurrency": "^0.8.12",
@@ -48,33 +51,35 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "ember-cli": "~2.17.1",
+    "ember-cli": "~3.1.2",
     "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^2.0.1",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.2",
     "ember-cli-inject-live-reload": "^1.7.0",
-    "ember-cli-mirage": "^0.4.0",
+    "ember-cli-mirage": "^0.4.3",
     "ember-cli-qunit": "^4.3.2",
-    "ember-cli-sass": "^7.1.0",
+    "ember-cli-sass": "^7.1.7",
     "ember-cli-template-lint": "0.7.5",
-    "ember-cli-uglify": "^2.0.0",
+    "ember-cli-uglify": "^2.1.0",
     "ember-code-example-component": "^0.2.0",
     "ember-code-snippet": "2.0.0",
-    "ember-data": "^2.17.0",
+    "ember-data": "^3.1.1",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-export-application-global": "^2.0.0",
-    "ember-fetch": "^3.4.0",
+    "ember-fetch": "^3.4.5",
     "ember-href-to": "1.15.1",
     "ember-load-initializers": "^1.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-native-dom-event-dispatcher": "^0.6.3",
-    "ember-native-dom-helpers": "^0.5.10",
+    "ember-native-dom-helpers": "^0.6.2",
     "ember-qunit-assert-helpers": "^0.2.1",
     "ember-resolver": "^4.0.0",
-    "ember-source": "~2.17.0",
-    "eslint-plugin-ember-suave": "^1.0.0",
-    "liquid-fire": "0.29.1",
+    "ember-source": "~3.1.0",
+    "ember-source-channel-url": "^1.0.1",
+    "ember-try": "^0.2.23",
+    "eslint-plugin-ember": "^5.0.0",
+    "eslint-plugin-node": "^6.0.1",
+    "liquid-fire": "0.29.2",
     "loader.js": "^4.6.0",
     "memory-scroll": "0.9.1",
     "mocha": "2.5.3",
@@ -85,7 +90,6 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config",
-    "before": "ember-cli-sri"
+    "configPath": "tests/dummy/config"
   }
 }
