@@ -4,7 +4,8 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { groupedNumbers } from '../constants';
-import { find, findAll, click } from 'ember-native-dom-helpers';
+import { click } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Groups)', function(hooks) {
   setupRenderingTest(hooks);
@@ -89,9 +90,9 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
+    await clickTrigger();
     let option = findAll('.ember-power-select-option').find((e) => e.textContent.indexOf('four') > -1);
-    click(option);
+    await click(option);
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The clicked option was selected');
     assert.notOk(find('.ember-power-select-options'), 'The dropdown has dissapeared');
   });

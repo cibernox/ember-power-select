@@ -4,7 +4,8 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
 import { clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
-import { find, findAll, keyEvent } from 'ember-native-dom-helpers';
+import { triggerKeyEvent } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Accesibility)', function(hooks) {
   setupRenderingTest(hooks);
@@ -117,7 +118,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     clickTrigger();
     assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'true', 'the highlighted option has aria-current=true');
     assert.equal(findAll('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'false', 'the first option has now aria-current=false');
     assert.equal(findContains('.ember-power-select-option', 'two').attributes['aria-current'].value, 'true', 'the second option has now aria-current=false');
   });
@@ -135,7 +136,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     clickTrigger();
     assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'true', 'the highlighted option has aria-current=true');
     assert.equal(findAll('.ember-power-select-option[aria-current="false"]').length, numbers.length - 1, 'All other options have aria-current=false');
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.equal(findContains('.ember-power-select-option', 'one').attributes['aria-current'].value, 'false', 'the first option has now aria-current=false');
     assert.equal(findContains('.ember-power-select-option', 'two').attributes['aria-current'].value, 'true', 'the second option has now aria-current=false');
   });

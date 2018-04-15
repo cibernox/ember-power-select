@@ -14,7 +14,8 @@ import {
 } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
-import { find, findAll, click, keyEvent, triggerEvent, focus } from 'ember-native-dom-helpers';
+import { click, triggerKeyEvent, triggerEvent, focus } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 
@@ -33,7 +34,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
   });
 
@@ -47,10 +48,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
 
-    clickTrigger();
+    await clickTrigger();
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
   });
 
@@ -64,7 +65,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-search'), 'The search box is rendered');
   });
 
@@ -78,7 +79,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
     assert.notOk(find('.ember-power-select-search'), 'The search box NOT rendered');
   });
@@ -99,7 +100,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-search-input') !== document.activeElement, 'The search box is not focused after opening select');
   });
 
@@ -113,7 +114,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     let options = findAll('.ember-power-select-option');
     assert.equal(options.length, numbers.length, 'There is as many options in the markup as in the supplied array');
     assert.equal(options[0].textContent.trim(), 'one');
@@ -184,8 +185,8 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     assert.equal(find('.ember-power-select-trigger .ember-power-select-placeholder').textContent.trim(), 'abracadabra', 'The placeholder is rendered when there is no element');
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[3]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[3]);
     assert.notOk(find('.ember-power-select-trigger .ember-power-select-placeholder'), 'The placeholder is gone');
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The selected item replaced it');
   });
@@ -200,7 +201,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-search-input').attributes.placeholder.value, 'foobar yo!', 'The searchbox has the proper placeholder');
   });
 
@@ -221,7 +222,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     run(() => this.set('selected', 'three'));
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'three', 'The `three` element is selected');
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'three', 'The proper option gets highlighed');
     assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'three', 'The proper option gets selected');
   });
@@ -238,8 +239,8 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected');
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[3]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[3]);
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', '"four" has been selected');
     run(() => this.set('selected', 'three'));
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'three', '"three" has been selected because a change came from the outside');
@@ -255,7 +256,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'The dropdown is inside the component');
   });
 
@@ -270,9 +271,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
-    click(findAll('.ember-power-select-option')[3]);
+    await click(findAll('.ember-power-select-option')[3]);
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', '"four" has been selected');
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
   });
@@ -288,9 +289,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
-    keyEvent('.ember-power-select-search-input', 'keydown', 13);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'one', '"one" has been selected');
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
   });
@@ -314,7 +315,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`
     );
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('o');
 
     setTimeout(function() {
@@ -343,7 +344,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`
     );
 
-    clickTrigger();
+    await clickTrigger();
 
     assert.ok(find('.ember-power-select-option'), 'The dropdown is opened and results shown with initial proxy contents');
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'one');
@@ -367,8 +368,8 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'two', 'The second options is highlighted');
     run(() => this.set('numbers', ['foo', 'bar', 'baz']));
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'foo', 'The first element is highlighted');
@@ -383,7 +384,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown').classList.contains('this-is-a-test-class'), 'dropdownClass can be customized');
   });
 
@@ -397,11 +398,11 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('th');
+    await clickTrigger();
+    await typeInSearch('th');
     assert.equal(findAll('.ember-power-select-option').length, 2, 'the dropdown has filtered the results');
-    triggerEvent('#outside-div', 'mousedown');
-    clickTrigger();
+    await triggerEvent('#outside-div', 'mousedown');
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-option').length, numbers.length, 'the dropdown has shows all results');
   });
 
@@ -414,11 +415,11 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('tw');
     assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'tw:two', 'Each option receives the public API');
-    click(findAll('.ember-power-select-option')[0]);
-    clickTrigger();
+    await click(findAll('.ember-power-select-option')[0]);
+    await clickTrigger();
     typeInSearch('thr');
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'thr:two', 'The trigger also receives the public API');
   });
@@ -430,7 +431,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-option').length, 1);
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
     assert.ok(find('.ember-power-select-option').classList.contains('ember-power-select-option--no-matches-message'), 'The row has a special class to differentiate it from regular options');
@@ -444,7 +445,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-option').length, 1);
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search');
     typeInSearch('foo');
@@ -459,7 +460,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-option').length, 1);
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'Nope');
   });
@@ -472,7 +473,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-option').length, 0);
     typeInSearch('foo');
     assert.equal(findAll('.ember-power-select-option').length, 1);
@@ -488,7 +489,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         <span class="empty-option-foo">Foo bar</span>
       {{/power-select}}
     `);
-    clickTrigger();
+    await clickTrigger();
     assert.notOk(find('.ember-power-select-option'), 'No list elements, just the given alternate block');
     assert.ok(find('.empty-option-foo'));
   });
@@ -503,7 +504,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
     assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
     assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first one to be precise');
@@ -539,7 +540,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     let highlightedOption = find('.ember-power-select-option[aria-current="true"]');
     assert.ok(highlightedOption, 'One element is highlighted');
     assert.equal(highlightedOption.textContent.trim(), 'three', 'The third option is highlighted');
@@ -555,7 +556,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     let selectedOption = findAll('.ember-power-select-option')[2];
     assert.equal(selectedOption.attributes['aria-selected'].value, 'true', 'The third option is marked as selected');
   });
@@ -570,7 +571,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('mar');
     let options = findAll('.ember-power-select-option');
     assert.equal(options.length, 2, 'Only 2 results match the search');
@@ -601,7 +602,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('on');
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found', 'No number ends in "on"');
     typeInSearch('teen');
@@ -618,7 +619,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
     assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
     assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first one to be precise');
@@ -649,7 +650,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     let highlightedOption = find('.ember-power-select-option[aria-current="true"]');
     assert.ok(highlightedOption, 'One element is highlighted');
     assert.equal(highlightedOption.textContent.trim(), 'ES: Spain', 'The second option is highlighted');
@@ -666,7 +667,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     let selectedOption = findContains('.ember-power-select-option', 'ES: Spain');
     assert.equal(selectedOption.attributes['aria-selected'].value, 'true', 'The second option is marked as selected');
   });
@@ -689,7 +690,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('mar');
     let options = findAll('.ember-power-select-option');
     assert.equal(options.length, 2, 'Only 2 results match the search');
@@ -728,7 +729,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('s');
     let options = findAll('.ember-power-select-option');
     assert.equal(options.length, 3, 'Only 3 results match the search');
@@ -748,12 +749,12 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'three', 'The third element is highlighted');
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The forth element is highlighted');
-    clickTrigger();
-    clickTrigger();
+    await clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'three', 'The third element is highlighted again');
   });
 
@@ -767,12 +768,12 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'two', 'The second element is highlighted');
-    clickTrigger();
-    clickTrigger();
+    await clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted again');
   });
 
@@ -850,7 +851,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
     assert.equal(find('.ember-power-select-option[aria-selected="true"]').textContent.trim(), 'four', 'The 4th element is highlighted');
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'four', 'The trigger has the proper content');
@@ -941,7 +942,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   //     {{/power-select}}
   //   `);
 
-  //   clickTrigger();
+  //   await clickTrigger();
 
   //   assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
   //   assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
@@ -979,7 +980,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   //     {{/power-select}}
   //   `);
 
-  //   clickTrigger();
+  //   await clickTrigger();
 
   //   assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
   //   assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');
@@ -1008,7 +1009,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     assert.ok(!find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select doesn\'t have the class yet');
-    clickTrigger();
+    await clickTrigger();
     focus('.ember-power-select-search-input');
     assert.ok(find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The select has the class now');
   });
@@ -1023,7 +1024,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'nine');
     assert.ok(findAll('.ember-power-select-options')[0].scrollTop > 0, 'The list has scrolled');
   });
@@ -1041,7 +1042,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('#alternative-destination .ember-power-select-dropdown'), 'Dropdown is rendered inside the destination element');
   });
 
@@ -1057,8 +1058,8 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'two');
     run(() => this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']));
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
@@ -1075,7 +1076,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
     assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'five', 'the given element is highlighted instead of the first, as usual');
   });
@@ -1103,7 +1104,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
     assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'five', 'the given element is highlighted instead of the first, as usual');
   });
@@ -1134,14 +1135,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('M');
-    click(findAll('.ember-power-select-option')[1]);
-    clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
     typeInSearch('i');
     let firstOption = findAll('.ember-power-select-option')[0];
     assert.equal(firstOption.attributes['aria-selected'].value, 'true', 'The item in the list is marked as selected');
-    click(firstOption);
+    await click(firstOption);
     assert.equal(onChangeInvocationsCount, 1);
   });
 
@@ -1175,15 +1176,15 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     let dropdownContent = find('.ember-power-select-dropdown');
     assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--above'), 'The dropdown is above');
     assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--right'), 'The dropdown is in the right');
     assert.equal(dropdownContent.attributes.style.value, 'top: 111px;right: 222px;', 'The style attribute is the expected one');
-    clickTrigger();
+    await clickTrigger();
 
     run(() => this.set('renderInPlace', true));
-    clickTrigger();
+    await clickTrigger();
     dropdownContent = find('.ember-power-select-dropdown');
     assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--below'), 'The dropdown is below');
     assert.ok(dropdownContent.classList.contains('ember-basic-dropdown-content--left'), 'The dropdown is in the left');
@@ -1205,7 +1206,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       setTimeout(() => resolve(pets[2]), 40);
     }));
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'Toby', 'The first element is highlighted');
     assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'no element is selected');
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing is selected yet');

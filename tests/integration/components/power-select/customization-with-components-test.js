@@ -5,7 +5,8 @@ import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import { find, findAll, click, focus } from 'ember-native-dom-helpers';
+import { click, focus } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 import { get } from '@ember/object';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
@@ -161,9 +162,9 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
-    click('.custom-before-options2-button');
-    click('.custom-after-options2-button');
+    await clickTrigger();
+    await click('.custom-before-options2-button');
+    await click('.custom-after-options2-button');
     assert.equal(counter, 2, 'The action inside the extra hash has been called twice');
   });
 

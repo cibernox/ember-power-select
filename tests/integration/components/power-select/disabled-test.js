@@ -5,7 +5,8 @@ import hbs from 'htmlbars-inline-precompile';
 import { run } from '@ember/runloop';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers, countriesWithDisabled } from '../constants';
-import { find, findAll, triggerEvent, keyEvent, click, focus } from 'ember-native-dom-helpers';
+import { triggerEvent, triggerKeyEvent, click, focus } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Disabled)', function(hooks) {
   setupRenderingTest(hooks);
@@ -22,9 +23,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     let trigger = find('.ember-power-select-trigger');
     assert.ok(trigger.attributes['aria-disabled'].value, 'true', 'The trigger has `aria-disabled=true`');
-    clickTrigger();
+    await clickTrigger();
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
-    keyEvent('.ember-power-select-trigger', 'keydown', 13);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
   });
 
@@ -50,8 +51,8 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
-    triggerEvent('.ember-power-select-option[aria-disabled="true"]', 'mouseover');
+    await clickTrigger();
+    await triggerEvent('.ember-power-select-option[aria-disabled="true"]', 'mouseover');
     assert.equal(find('.ember-power-select-option[aria-disabled="true"]').attributes['aria-current'].value, 'false', 'The hovered option was not highlighted because it\'s disabled');
   });
 
@@ -65,9 +66,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
   });
 
@@ -129,10 +130,10 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
      {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('Br');
     assert.notOk(find('.ember-power-select-option[aria-current="true"]'), 'Nothing is highlighted');
-    keyEvent('.ember-power-select-search-input', 'keydown', 13);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing was selected');
   });
@@ -147,7 +148,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
      {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('o'); // Finds ["Portugal", "United Kingdom"]
     assert.equal(findAll('.ember-power-select-option').length, 2, 'There is two results');
     assert.equal(findAll('.ember-power-select-option[aria-disabled="true"]').length, 1, 'One is disabled');
@@ -167,9 +168,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     `);
 
     let trigger = find('.ember-power-select-trigger');
-    focus(trigger);
+    await focus(trigger);
     assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is closed');
-    keyEvent(trigger, 'keydown', 85); // u
+    await triggerKeyEvent(trigger, 'keydown', 85); // u
     assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
     assert.equal(trigger.textContent.trim(), 'United Kingdom', '"United Kingdom" has been selected');
   });
@@ -199,7 +200,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is disabled');
     typeInSearch('fiv');
     assert.equal(findAll('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is still disabled');
@@ -231,12 +232,12 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
     assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'No option is selected');
-    triggerEvent(findAll('.ember-power-select-option')[8], 'mouseover');
+    await triggerEvent(findAll('.ember-power-select-option')[8], 'mouseover');
     assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
-    click(findAll('.ember-power-select-option')[9]);
+    await click(findAll('.ember-power-select-option')[9]);
     assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'Noting was selected');
   });
 
@@ -268,7 +269,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'The select is open');
     run(() => this.set('isDisabled', true));
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is now closed');
@@ -284,8 +285,8 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
      {{/power-select}}
     `);
 
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
     assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'two', 'The option is selected');
     assert.equal(find('.ember-power-select-trigger').attributes['aria-disabled'].value, 'true');
   });
