@@ -1,15 +1,13 @@
-/* eslint-env node */
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  let project = defaults.project;
   let options = {
     snippetPaths: ['tests/dummy/app/templates/snippets']
   };
 
-  if (project.findAddonByName('ember-native-dom-event-dispatcher') && process.env.DEPLOY_TARGET === undefined) {
+  if (process.env.DEPLOY_TARGET === undefined) {
     options.vendorFiles = { 'jquery.js': null };
   }
 

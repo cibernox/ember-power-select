@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
-import { find, findAll, click, keyEvent, focus } from 'ember-native-dom-helpers';
+import { find, findAll, click, triggerKeyEvent, focus } from '@ember/test-helpers';
 import { run } from '@ember/runloop';
 
 function assertPublicAPIShape(assert, select) {
@@ -127,8 +127,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     let input = find('.ember-power-select-search-input');
-    keyEvent(input, 'keydown', 13);
-    keyEvent(input, 'keydown', 65);
+    triggerKeyEvent(input, 'keydown', 13);
+    triggerKeyEvent(input, 'keydown', 65);
   });
 
   test('The onkeydown can be used to easily allow to select on tab', async function(assert) {
@@ -150,9 +150,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     let trigger = find('.ember-power-select-trigger');
-    keyEvent(trigger, 'keydown', 40);
-    keyEvent(trigger, 'keydown', 40);
-    keyEvent(trigger, 'keydown', 9);
+    await triggerKeyEvent(trigger, 'keydown', 40);
+    await triggerKeyEvent(trigger, 'keydown', 40);
+    await triggerKeyEvent(trigger, 'keydown', 9);
     assert.equal(trigger.textContent.trim(), 'three', 'The highlighted options has been selected');
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is opened');
   });
@@ -174,8 +174,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     let input = find('.ember-power-select-trigger-multiple-input');
-    keyEvent(input, 'keydown', 13);
-    keyEvent(input, 'keydown', 65);
+    triggerKeyEvent(input, 'keydown', 13);
+    triggerKeyEvent(input, 'keydown', 65);
   });
 
   test('returning false from the `onkeydown` action prevents the default behaviour in single selects', async function(assert) {
@@ -195,9 +195,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       {{/power-select}}
     `);
 
-    keyEvent('.ember-power-select-trigger', 'keydown', 13);
+    triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is still closed');
-    keyEvent('.ember-power-select-trigger', 'keydown', 84); // 't'
+    triggerKeyEvent('.ember-power-select-trigger', 'keydown', 84); // 't'
     assert.notEqual(find('.ember-power-select-trigger').textContent.trim(), 'two', 'nothing was selected');
   });
 
@@ -218,7 +218,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       {{/power-select-multiple}}
     `);
 
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
+    triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is still closed');
   });
 
@@ -268,6 +268,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
+      <input type="text" autofocus>
       {{#power-select-multiple options=numbers selected=foo onfocus=handleFocus onchange=(action (mut foo)) as |number|}}
         {{number}}
       {{/power-select-multiple}}

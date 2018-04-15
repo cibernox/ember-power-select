@@ -14,7 +14,7 @@ module.exports = {
   // format: 'YYYY-MM-DD',
   // timezone: 'America/Los_Angeles',
   //
-  beforeCommit: function(project, versions) {
+  beforeCommit: function (/* project, versions */) {
     require('../compile-css.js'); // Requiring the file compiles
     return new Promise(function(resolve) {
       simpleGit.add(['vendor/ember-power-select.css'], function() {

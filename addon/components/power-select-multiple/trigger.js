@@ -52,7 +52,7 @@ export default Component.extend({
   },
 
   // CPs
-  triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
+  triggerMultipleInputStyle: computed('select.{searchText.length,selected.length}', function() {
     let select = this.get('select');
     scheduleOnce('actions', select.actions.reposition);
     if (!select.selected || select.selected.length === 0) {
