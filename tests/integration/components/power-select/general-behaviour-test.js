@@ -1203,7 +1203,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     this.set('mainUser.bestie', new RSVP.Promise(function(resolve) {
-      setTimeout(() => resolve(pets[2]), 40);
+      setTimeout(() => resolve(pets[2]), 90);
     }));
 
     await clickTrigger();
