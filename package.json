@@ -42,7 +42,7 @@
     "vendor"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "^1.0.0-beta.3",
+    "ember-basic-dropdown": "^1.0.0-beta.5",
     "ember-cli-babel": "^6.11.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-concurrency": "^0.8.12",
