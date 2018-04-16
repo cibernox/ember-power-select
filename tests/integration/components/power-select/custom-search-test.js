@@ -3,11 +3,10 @@ import { later } from '@ember/runloop';
 import { task, timeout } from 'ember-concurrency';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, countries } from '../constants';
-import { click } from '@ember/test-helpers';
 import { find, findAll } from 'ember-native-dom-helpers';
 import RSVP from 'rsvp';
 

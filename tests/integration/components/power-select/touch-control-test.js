@@ -1,9 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, tap } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from '../constants';
-import { tap } from '@ember/test-helpers';
 
 module('Integration | Component | Ember Power Select (Touch control)', function(hooks) {
   setupRenderingTest(hooks);

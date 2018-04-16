@@ -1,10 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { groupedNumbers } from '../constants';
-import { click } from '@ember/test-helpers';
 import { find, findAll } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Groups)', function(hooks) {
