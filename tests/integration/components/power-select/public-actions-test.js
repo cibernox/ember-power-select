@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, triggerKeyEvent, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
-import { find, findAll, click, triggerKeyEvent, focus } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 import { run } from '@ember/runloop';
 
 function assertPublicAPIShape(assert, select) {

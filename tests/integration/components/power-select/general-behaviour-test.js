@@ -1,20 +1,15 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, triggerKeyEvent, triggerEvent, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
 import EmberObject, { get } from '@ember/object';
 import { A } from '@ember/array';
 import { run } from '@ember/runloop';
-import {
-  numbers,
-  names,
-  countries
-} from '../constants';
+import { numbers, names, countries } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
-import { click, triggerKeyEvent, triggerEvent, focus } from '@ember/test-helpers';
 import { find, findAll } from 'ember-native-dom-helpers';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);

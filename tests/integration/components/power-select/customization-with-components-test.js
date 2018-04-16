@@ -1,11 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import { click, focus } from '@ember/test-helpers';
 import { find, findAll } from 'ember-native-dom-helpers';
 import { get } from '@ember/object';
 import Component from '@ember/component';
