@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.0-beta.4
+- [BUGFIX] Fixes big un Ember 3.1 accessing the getter `selected.then`
+
 # 2.0.0-beta.0
 - [BREAKING] Remove long-time-deprecated behavior to support _some_ usages of the `:eq` pseudoselector from jQuery.
 - [DEPRECATE] Deprecate global async test helpers: `selectChoose`, `selectSearch`, `removeMultipleOption`
