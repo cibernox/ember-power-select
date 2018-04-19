@@ -138,7 +138,7 @@ export default Component.extend({
       return null;
     },
     set(_, selected) {
-      if (selected && selected.then) {
+      if (selected && get(selected, 'then')) {
         this.get('_updateSelectedTask').perform(selected);
       } else {
         scheduleOnce('actions', this, this.updateSelection, selected);
