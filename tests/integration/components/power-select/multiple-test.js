@@ -4,7 +4,8 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, names, countries, countriesWithDisabled } from '../constants';
-import { find, findAll, click, tap, keyEvent, focus } from 'ember-native-dom-helpers';
+import { click, tap, triggerKeyEvent, focus } from '@ember/test-helpers';
+import { find, findAll } from 'ember-native-dom-helpers';
 import RSVP from 'rsvp';
 import EmberObject, { get } from '@ember/object';
 import { isEmpty } from '@ember/utils';
@@ -24,7 +25,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.notOk(find('.ember-power-select-search'), 'There is no search box');
   });
 
@@ -38,7 +39,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The search input is focused');
   });
 
@@ -52,9 +53,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The input of the trigger is focused');
-    click(findAll('.ember-power-select-option')[1]);
+    await click(findAll('.ember-power-select-option')[1]);
     assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
     assert.ok(/two/.test(find('.ember-power-select-multiple-option').textContent), 'The clicked element has been selected');
@@ -75,8 +76,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
   });
 
   test('Click an option when there is already another selects both, and triggers the onchange action with them', async function(assert) {
@@ -96,8 +97,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
     let selectedTriggerOptions = findAll('.ember-power-select-multiple-option');
     assert.equal(selectedTriggerOptions.length, 2, 'There is 2 options selected');
     assert.ok(/four/.test(selectedTriggerOptions[0].textContent), 'The first option is the provided one');
@@ -116,7 +117,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     let options = findAll('.ember-power-select-option');
     assert.equal(options[1].attributes['aria-selected'].value, 'true', 'The second option is styled as selected');
     assert.equal(options[3].attributes['aria-selected'].value, 'true', 'The 4th option is styled as selected');
@@ -134,7 +135,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'There is one element highlighted');
     assert.equal(findAll('.ember-power-select-option[aria-selected="true"]').length, 1, 'There is one element selected');
     assert.equal(findAll('.ember-power-select-option[aria-current="true"][aria-selected="true"]').length, 0, 'They are not the same');
@@ -158,8 +159,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
-    clickTrigger();
-    click('.ember-power-select-option[aria-selected="true"]');
+    await clickTrigger();
+    await click('.ember-power-select-option[aria-selected="true"]');
     assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no options selected');
   });
 
@@ -173,7 +174,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('four');
     assert.equal(findAll('.ember-power-select-option').length, 2, 'Only two items matched the criteria');
   });
@@ -196,7 +197,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('mar');
     let options = findAll('.ember-power-select-option');
     assert.equal(options.length, 2, 'Only 2 results match the search');
@@ -226,7 +227,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('on');
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found', 'No number ends in "on"');
     typeInSearch('teen');
@@ -251,7 +252,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(function() {
@@ -270,11 +271,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
     assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The trigger is focused');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
   });
 
@@ -291,7 +292,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     let trigger = find('.ember-power-select-trigger');
     focus(trigger);
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
-    keyEvent(trigger, 'keydown', 13);
+    await triggerKeyEvent(trigger, 'keydown', 13);
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
   });
 
@@ -309,9 +310,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
     assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element was selected');
   });
 
@@ -325,11 +326,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
     let trigger = find('.ember-power-select-trigger');
-    keyEvent(trigger, 'keydown', 40);
-    keyEvent(trigger, 'keydown', 13);
+    await triggerKeyEvent(trigger, 'keydown', 40);
+    await triggerKeyEvent(trigger, 'keydown', 13);
     assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element was selected');
   });
 
@@ -347,11 +348,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
     let trigger = find('.ember-power-select-trigger');
-    keyEvent(trigger, 'keydown', 40);
-    keyEvent(trigger, 'keydown', 13);
+    await triggerKeyEvent(trigger, 'keydown', 40);
+    await triggerKeyEvent(trigger, 'keydown', 13);
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
     assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element is "two"');
   });
@@ -371,9 +372,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
     assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element is still selected');
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
     assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The trigger is focused');
@@ -394,9 +395,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('four');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
     assert.ok(find('.ember-power-select-dropdown'), 'The dropown is still opened');
   });
 
@@ -418,7 +419,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     let input = find('.ember-power-select-trigger-multiple-input');
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
-    keyEvent(input, 'keydown', 8);
+    await triggerKeyEvent(input, 'keydown', 8);
     assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
     assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'two', 'The text of the seach input is two now');
     assert.ok(find('.ember-power-select-dropdown'), 'The dropown has been opened');
@@ -442,9 +443,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
         {{c.name}}
       {{/power-select-multiple}}
     `);
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-multiple-option').length, 2, 'There is two elements selected');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
     assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'Latvia', 'The text of the seach input is two "Latvia"');
     assert.ok(find('.ember-power-select-dropdown'), 'The dropown is still opened');
@@ -461,11 +462,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     click(findAll('.ember-power-select-option')[2]);
-    clickTrigger();
+    await clickTrigger();
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
     assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
     assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'three', 'The text of the seach input is three now');
     assert.ok(find('.ember-power-select-dropdown'), 'The dropown is still opened');
@@ -482,10 +483,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
   });
 
@@ -499,10 +500,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
     assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 38);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 38);
     assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
   });
 
@@ -517,8 +518,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, 'Select stuff here', 'There is a placeholder');
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
     assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'The placeholder is gone');
   });
 
@@ -533,8 +534,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     assert.equal(find('.ember-power-select-placeholder').textContent, 'Select stuff here', 'There is a placeholder');
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
     assert.notOk(find('.ember-power-select-placeholder'), 'The placeholder is gone');
   });
 
@@ -549,10 +550,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input does not have a placeholder');
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
     assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
-    click('.ember-power-select-multiple-remove-btn');
+    await click('.ember-power-select-multiple-remove-btn');
     assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
   });
 
@@ -564,10 +565,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
         {{option}}
       {{/power-select-multiple}}
     `);
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'Should add selected option');
-    click('.ember-power-select-multiple-remove-btn');
+    await click('.ember-power-select-multiple-remove-btn');
     assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
     assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
   });
@@ -580,10 +581,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
         {{option}}
       {{/power-select-multiple}}
     `);
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
+    await clickTrigger();
+    await click(findAll('.ember-power-select-option')[1]);
     assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'Should add selected option');
-    tap('.ember-power-select-multiple-remove-btn');
+    await tap('.ember-power-select-multiple-remove-btn');
     assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
     assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
   });
@@ -637,11 +638,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('tw');
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'tw:two');
-    click(findAll('.ember-power-select-option')[0]);
-    clickTrigger();
+    await click(findAll('.ember-power-select-option')[0]);
+    await clickTrigger();
     typeInSearch('thr');
     assert.ok(/thr:two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The trigger also receives the public API');
   });
@@ -656,11 +657,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       <div id="other-thing">Other div</div>
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('asjdnah');
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
     assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'asjdnah');
-    click('#other-thing');
+    await click('#other-thing');
     assert.equal(find('.ember-power-select-trigger-multiple-input').value, '');
   });
 
@@ -676,10 +677,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('asjdnah');
     assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
-    keyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
     assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
     assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The input is focused');
   });
@@ -706,9 +707,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
         {{option}}
       {{/power-select-multiple}}
     `);
-    clickTrigger();
+    await clickTrigger();
     run(() => this.get('selected').pushObject(numbers[3]));
-    click(findAll('.ember-power-select-option')[0]);
+    await click(findAll('.ember-power-select-option')[0]);
     assert.equal(findAll('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
   });
 
@@ -723,7 +724,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     assert.ok(!find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The trigger does not have the class');
-    clickTrigger();
+    await clickTrigger();
     assert.ok(find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The trigger has the class');
     assert.ok(find('.ember-power-select-dropdown').classList.contains('ember-power-select-dropdown--active'), 'The dropdown has the class');
   });
@@ -779,7 +780,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'four', 'the given defaultHighlighted element is highlighted instead of the first, as usual');
   });
 
@@ -804,10 +805,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     typeInSearch('M');
-    click(findAll('.ember-power-select-option')[1]);
+    await click(findAll('.ember-power-select-option')[1]);
     typeInSearch('Mi');
     assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-selected'].value, 'true', 'The item in the list is marked as selected');
-    click(findAll('.ember-power-select-option')[0]); // select the same user again should  i[0])t
+    await click(findAll('.ember-power-select-option')[0]); // select the same user again should  i[0])t
     assert.equal(findAll('.ember-power-select-multiple-option').length, 0);
   });
 

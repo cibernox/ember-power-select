@@ -5,7 +5,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
 import { click, triggerEvent } from '@ember/test-helpers';
-import { find, findAll } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Mouse control)', function(hooks) {
   setupRenderingTest(hooks);
@@ -21,7 +20,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     `);
 
     await clickTrigger();
-    assert.equal(find('.ember-power-select-option').attributes['aria-current'].value, 'true', 'The first element is highlighted');
+    assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first element is highlighted');
     await triggerEvent('.ember-power-select-option:nth-child(4)', 'mouseover');
     assert.dom('.ember-power-select-option:nth-child(4)').hasAttribute('aria-current', 'true', 'The 4th element is highlighted');
     assert.dom('.ember-power-select-option:nth-child(4)').hasText('four');
@@ -54,7 +53,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     await render(hbs`
       {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
         {{option}}
-      {{/power-select}}
+      {{/power-select}}f
     `);
 
     await clickTrigger();
@@ -117,11 +116,11 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     await clickTrigger(null, { clientY: 123 });
     assert.dom('.ember-power-select-dropdown').exists('The select is opened');
-    await triggerEvent(findAll('.ember-power-select-option')[1], 'mouseup', { clientY: 124 });
+    await triggerEvent('.ember-power-select-option:nth-child(2)', 'mouseup', { clientY: 124 });
     assert.dom('.ember-power-select-dropdown').exists('The select is still opened');
-    await triggerEvent(findAll('.ember-power-select-option')[1], 'mouseup', { clientY: 125 });
+    await triggerEvent('.ember-power-select-option:nth-child(2)', 'mouseup', { clientY: 125 });
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed now');
-    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'two', 'The element has been selected');
+    assert.dom('.ember-power-select-trigger').hasText('two', 'The element has been selected');
   });
 
   test('Clicking on a wrapped option should select it', async function(assert) {
@@ -140,7 +139,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     `);
 
     await clickTrigger();
-    await click(findAll('.special-class')[3]);
+    await click(document.querySelectorAll('.special-class')[3]);
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select was closed');
     assert.dom('.ember-power-select-trigger').isFocused();
   });
@@ -157,9 +156,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     `);
 
     await clickTrigger();
-    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The first element is highlighted');
-    await triggerEvent(findAll('.special-class')[3], 'mouseover');
-    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'four', 'The fourth element is highlighted');
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one', 'The first element is highlighted');
+    await triggerEvent(document.querySelectorAll('.special-class')[3], 'mouseover');
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('four', 'The fourth element is highlighted');
   });
 
   test('Mouse-overing the list itself doesn\'t crashes the app', async function(assert) {

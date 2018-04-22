@@ -4,7 +4,6 @@ import { render, click, triggerKeyEvent, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
-import { find, findAll } from 'ember-native-dom-helpers';
 import { run } from '@ember/runloop';
 
 function assertPublicAPIShape(assert, select) {
@@ -126,9 +125,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    let input = find('.ember-power-select-search-input');
-    triggerKeyEvent(input, 'keydown', 13);
-    triggerKeyEvent(input, 'keydown', 65);
+    triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
+    triggerKeyEvent('.ember-power-select-search-input', 'keydown', 65);
   });
 
   test('The onkeydown can be used to easily allow to select on tab', async function(assert) {
@@ -149,12 +147,11 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    let trigger = find('.ember-power-select-trigger');
-    await triggerKeyEvent(trigger, 'keydown', 40);
-    await triggerKeyEvent(trigger, 'keydown', 40);
-    await triggerKeyEvent(trigger, 'keydown', 9);
-    assert.equal(trigger.textContent.trim(), 'three', 'The highlighted options has been selected');
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is opened');
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 9);
+    assert.dom('.ember-power-select-trigger').hasText('three', 'The highlighted options has been selected');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is opened');
   });
 
   test('The onkeydown of multiple selects action receives the public API and the keydown event', async function(assert) {
@@ -173,9 +170,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    let input = find('.ember-power-select-trigger-multiple-input');
-    triggerKeyEvent(input, 'keydown', 13);
-    triggerKeyEvent(input, 'keydown', 65);
+    triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
+    triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 65);
   });
 
   test('returning false from the `onkeydown` action prevents the default behaviour in single selects', async function(assert) {
@@ -196,9 +192,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is still closed');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is still closed');
     triggerKeyEvent('.ember-power-select-trigger', 'keydown', 84); // 't'
-    assert.notEqual(find('.ember-power-select-trigger').textContent.trim(), 'two', 'nothing was selected');
+    assert.dom('.ember-power-select-trigger').doesNotIncludeText('two', 'nothing was selected');
   });
 
   test('returning false from the `onkeydown` action prevents the default behaviour in multiple selects', async function(assert) {
@@ -219,7 +215,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is still closed');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is still closed');
   });
 
   test('The onfocus of single selects action receives the public API and the focus event', async function(assert) {
@@ -352,7 +348,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is opened');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
   });
 
   test('returning false from the `onopen` action prevents the single select from opening', async function(assert) {
@@ -373,7 +369,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown didn\'t open');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown didn\'t open');
   });
 
   test('returning false from the `onopen` action prevents the multiple select from opening', async function(assert) {
@@ -394,7 +390,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown didn\'t open');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown didn\'t open');
   });
 
   test('the `onclose` action is invoked just before the dropdown closes', async function(assert) {
@@ -415,7 +411,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     clickTrigger();
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is closed');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is closed');
   });
 
   test('returning false from the `onclose` action prevents the single select from closing', async function(assert) {
@@ -436,9 +432,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is open');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is open');
     clickTrigger();
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown didn\'t close');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown didn\'t close');
   });
 
   test('returning false from the `onclose` action prevents the multiple select from closing', async function(assert) {
@@ -459,9 +455,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is open');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is open');
     clickTrigger();
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown didn\'t close');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown didn\'t close');
   });
 
   test('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', async function(assert) {
@@ -483,11 +479,10 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     typeInSearch('tw');
-    let options = findAll('.ember-power-select-option');
-    assert.equal(options.length, 3, 'There is three options');
-    assert.equal(options[0].textContent.trim(), 'two');
-    assert.equal(options[1].textContent.trim(), 'twelve');
-    assert.equal(options[2].textContent.trim(), 'twenty');
+    assert.dom('.ember-power-select-option').exists({ count: 3 }, 'There is three options');
+    assert.dom('.ember-power-select-option:nth-child(1)').hasText('two');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasText('twelve');
+    assert.dom('.ember-power-select-option:nth-child(3)').hasText('twenty');
   });
 
   test('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', async function(assert) {
@@ -509,11 +504,10 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     typeInSearch('tw');
-    let options = findAll('.ember-power-select-option');
-    assert.equal(options.length, 3, 'There is three options');
-    assert.equal(options[0].textContent.trim(), 'two');
-    assert.equal(options[1].textContent.trim(), 'twelve');
-    assert.equal(options[2].textContent.trim(), 'twenty');
+    assert.dom('.ember-power-select-option').exists({ count: 3 }, 'There is three options');
+    assert.dom('.ember-power-select-option:nth-child(1)').hasText('two');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasText('twelve');
+    assert.dom('.ember-power-select-option:nth-child(3)').hasText('twenty');
   });
 
   test('if the `oninput` action of single selects returns false the search is cancelled', async function(assert) {
@@ -532,7 +526,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     typeInSearch('tw');
-    assert.equal(findAll('.ember-power-select-option').length, 20, 'There is the same options than before');
+    assert.dom('.ember-power-select-option').exists({ count: 20 }, 'There is the same options than before');
   });
 
   test('if `oninput` action of multiple selects returns false the search is cancelled', async function(assert) {
@@ -551,7 +545,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     clickTrigger();
     typeInSearch('tw');
-    assert.equal(findAll('.ember-power-select-option').length, 20, 'There is the same options than before');
+    assert.dom('.ember-power-select-option').exists({ count: 20 }, 'There is the same options than before');
   });
 
   test('the `highlight` action of the public api passed to the public actions works as expected', async function(assert) {
@@ -566,8 +560,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       {{/power-select}}
     `);
     clickTrigger();
-    assert.equal(findAll('.ember-power-select-option').length, 3, 'There is three options');
-    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'baz', 'The third option is highlighted');
+    assert.dom('.ember-power-select-option').exists({ count: 3 }, 'There is three options');
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('baz', 'The third option is highlighted');
   });
 
   test('The programmer can use the received public API to perform searches in single selects', async function(assert) {
@@ -586,7 +580,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    assert.equal(find('.ember-power-select-search-input').value, 'hello', 'The search text contains the searched string');
+    assert.dom('.ember-power-select-search-input').hasValue('hello', 'The search text contains the searched string');
   });
 
   test('The programmer can use the received public API to perform searches in mutiple selects', async function(assert) {
@@ -605,7 +599,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     clickTrigger();
-    assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'hello', 'The search text contains the searched string');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasValue('hello', 'The search text contains the searched string');
   });
 
   test('The search action of multiple selects has the searchText set to the up-to-date value', async function(assert) {
