@@ -5,7 +5,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, names, countries, countriesWithDisabled } from '../constants';
 import { click, tap, triggerKeyEvent, focus } from '@ember/test-helpers';
-import { find, findAll } from 'ember-native-dom-helpers';
 import RSVP from 'rsvp';
 import EmberObject, { get } from '@ember/object';
 import { isEmpty } from '@ember/utils';
@@ -26,7 +25,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    assert.notOk(find('.ember-power-select-search'), 'There is no search box');
+    assert.dom('.ember-power-select-search').doesNotExist('There is no search box');
   });
 
   test('When the select opens, the search input in the trigger gets the focus', async function(assert) {
@@ -40,7 +39,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The search input is focused');
+    assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
   });
 
   test('Click on an element selects it and closes the dropdown and focuses the trigger\'s input', async function(assert) {
@@ -54,12 +53,12 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The input of the trigger is focused');
-    await click(findAll('.ember-power-select-option')[1]);
-    assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
-    assert.ok(/two/.test(find('.ember-power-select-multiple-option').textContent), 'The clicked element has been selected');
-    assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The input of the trigger is focused again');
+    assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'There is 1 option selected');
+    assert.dom('.ember-power-select-multiple-option').includesText('two', 'The clicked element has been selected');
+    assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
   });
 
   test('Selecting an element triggers the onchange action with the list of selected options', async function(assert) {
@@ -77,7 +76,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    await click(findAll('.ember-power-select-option')[1]);
+    await click('.ember-power-select-option:nth-child(2)');
   });
 
   test('Click an option when there is already another selects both, and triggers the onchange action with them', async function(assert) {
@@ -96,13 +95,12 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'There is 1 option selected');
     await clickTrigger();
-    await click(findAll('.ember-power-select-option')[1]);
-    let selectedTriggerOptions = findAll('.ember-power-select-multiple-option');
-    assert.equal(selectedTriggerOptions.length, 2, 'There is 2 options selected');
-    assert.ok(/four/.test(selectedTriggerOptions[0].textContent), 'The first option is the provided one');
-    assert.ok(/two/.test(selectedTriggerOptions[1].textContent), 'The second option is the one just selected');
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 2 }, 'There is 2 options selected');
+    assert.dom('.ember-power-select-multiple-option:nth-child(1)').includesText('four', 'The first option is the provided one');
+    assert.dom('.ember-power-select-multiple-option:nth-child(2)').includesText('two', 'The second option is the one just selected');
   });
 
   test('If there is many selections, all those options are styled as `selected`', async function(assert) {
@@ -118,9 +116,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    let options = findAll('.ember-power-select-option');
-    assert.equal(options[1].attributes['aria-selected'].value, 'true', 'The second option is styled as selected');
-    assert.equal(options[3].attributes['aria-selected'].value, 'true', 'The 4th option is styled as selected');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasAttribute('aria-selected', 'true', 'The second option is styled as selected');
+    assert.dom('.ember-power-select-option:nth-child(4)').hasAttribute('aria-selected', 'true', 'The 4th option is styled as selected');
   });
 
   test('When the popup opens, the first items is highlighed, even if there is only one selection', async function(assert) {
@@ -136,10 +133,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'There is one element highlighted');
-    assert.equal(findAll('.ember-power-select-option[aria-selected="true"]').length, 1, 'There is one element selected');
-    assert.equal(findAll('.ember-power-select-option[aria-current="true"][aria-selected="true"]').length, 0, 'They are not the same');
-    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one', 'The highlighted element is the first one');
+    assert.dom('.ember-power-select-option[aria-current="true"]').exists({ count: 1 }, 'There is one element highlighted');
+    assert.dom('.ember-power-select-option[aria-selected="true"]').exists({ count: 1 }, 'There is one element selected');
+    assert.dom('.ember-power-select-option[aria-current="true"][aria-selected="true"]').doesNotExist('They are not the same');
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one', 'The highlighted element is the first one');
   });
 
   test('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', async function(assert) {
@@ -158,10 +155,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is 1 option selected');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'There is 1 option selected');
     await clickTrigger();
     await click('.ember-power-select-option[aria-selected="true"]');
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no options selected');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 0 }, 'There is no options selected');
   });
 
   test('The default filtering works in multiple mode', async function(assert) {
@@ -176,7 +173,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     typeInSearch('four');
-    assert.equal(findAll('.ember-power-select-option').length, 2, 'Only two items matched the criteria');
+    assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only two items matched the criteria');
   });
 
   test('The filtering specifying a searchkey works in multiple model', async function(assert) {
@@ -199,18 +196,16 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     typeInSearch('mar');
-    let options = findAll('.ember-power-select-option');
-    assert.equal(options.length, 2, 'Only 2 results match the search');
-    assert.equal(options[0].textContent.trim(), 'María Murray');
-    assert.equal(options[1].textContent.trim(), 'Marta Stinson');
+    assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
+    assert.dom('.ember-power-select-option:nth-child(1)').hasText('María Murray');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasText('Marta Stinson');
     typeInSearch('mari');
-    assert.equal(findAll('.ember-power-select-option').length, 1, 'Only 1 results match the search');
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'María Murray');
+    assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Only 1 results match the search');
+    assert.dom('.ember-power-select-option').hasText('María Murray');
     typeInSearch('o');
-    options = findAll('.ember-power-select-option');
-    assert.equal(options.length, 2, 'Only 2 results match the search');
-    assert.equal(options[0].textContent.trim(), 'Søren Williams');
-    assert.equal(options[1].textContent.trim(), 'João Jin');
+    assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
+    assert.dom('.ember-power-select-option:nth-child(1)').hasText('Søren Williams');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasText('João Jin');
   });
 
   test('The filtering specifying a custom matcher works in multiple model', async function(assert) {
@@ -229,9 +224,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     typeInSearch('on');
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found', 'No number ends in "on"');
+    assert.dom('.ember-power-select-option').hasText('No results found', 'No number ends in "on"');
     typeInSearch('teen');
-    assert.equal(findAll('.ember-power-select-option').length, 7, 'There is 7 number that end in "teen"');
+    assert.dom('.ember-power-select-option').exists({ count: 7 }, 'There is 7 number that end in "teen"');
   });
 
   test('The search using a custom action works int multiple mode', async function(assert) {
@@ -256,7 +251,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     typeInSearch('teen');
 
     setTimeout(function() {
-      assert.equal(findAll('.ember-power-select-option').length, 7);
+      assert.dom('.ember-power-select-option').exists({ count: 7 });
       done();
     }, 150);
   });
@@ -273,10 +268,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
-    assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The trigger is focused');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
+    assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
   });
 
   test('Pressing ENTER on a multiple select with `searchEnabled=false` when it is closed opens it', async function(assert) {
@@ -289,11 +284,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    let trigger = find('.ember-power-select-trigger');
-    focus(trigger);
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
-    await triggerKeyEvent(trigger, 'keydown', 13);
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
+    await focus('.ember-power-select-trigger');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
   });
 
   test('Pressing ENTER over a highlighted element selects it', async function(assert) {
@@ -313,7 +307,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     await clickTrigger();
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
-    assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element was selected');
+    assert.dom('.ember-power-select-trigger').includesText('two', 'The element was selected');
   });
 
   test('Pressing ENTER over a highlighted element on a multiple select with `searchEnabled=false` selects it', async function(assert) {
@@ -327,11 +321,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is rendered');
-    let trigger = find('.ember-power-select-trigger');
-    await triggerKeyEvent(trigger, 'keydown', 40);
-    await triggerKeyEvent(trigger, 'keydown', 13);
-    assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element was selected');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
+    assert.dom('.ember-power-select-trigger').includesText('two', 'The element was selected');
   });
 
   test('Pressing ENTER over a highlighted element on a select with `searchEnabled=false` selects it', async function(assert) {
@@ -349,12 +342,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
-    let trigger = find('.ember-power-select-trigger');
-    await triggerKeyEvent(trigger, 'keydown', 40);
-    await triggerKeyEvent(trigger, 'keydown', 13);
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
-    assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element is "two"');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 0 }, 'There is no elements selected');
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'There is one element selected');
+    assert.dom('.ember-power-select-trigger').includesText('two', 'The element was selected');
   });
 
   test('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', async function(assert) {
@@ -375,9 +367,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     await clickTrigger();
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
-    assert.ok(/two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The element is still selected');
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
-    assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The trigger is focused');
+    assert.dom('.ember-power-select-trigger').includesText('two', 'The element is still selected');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
+    assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
   });
 
   test('Pressing BACKSPACE on the search input when there is text on it does nothing special', async function(assert) {
@@ -398,7 +390,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     await clickTrigger();
     typeInSearch('four');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
-    assert.ok(find('.ember-power-select-dropdown'), 'The dropown is still opened');
+    assert.dom('.ember-power-select-dropdown').exists('The dropown is still opened');
   });
 
   test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly, opening the select if closed', async function(assert) {
@@ -417,13 +409,13 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    let input = find('.ember-power-select-trigger-multiple-input');
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
-    await triggerKeyEvent(input, 'keydown', 8);
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'two', 'The text of the seach input is two now');
-    assert.ok(find('.ember-power-select-dropdown'), 'The dropown has been opened');
-    assert.equal(findAll('.ember-power-select-option').length, 1, 'The list has been filtered');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'There is one element selected');
+    await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 0 }, 'There is no elements selected');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasValue('two', 'The text of the seach input is two now');
+    assert.dom('.ember-power-select-dropdown').exists('The dropown has been opened');
+    assert.dom('.ember-power-select-option').exists({ count: 1 }, 'The list has been filtered');
+    let input = this.element.querySelector('.ember-power-select-trigger-multiple-input');
     assert.equal(input.selectionStart, 3);
     assert.equal(input.selectionEnd, 3);
   });
@@ -444,12 +436,12 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
     await clickTrigger();
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 2, 'There is two elements selected');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 2 }, 'There is two elements selected');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'Latvia', 'The text of the seach input is two "Latvia"');
-    assert.ok(find('.ember-power-select-dropdown'), 'The dropown is still opened');
-    assert.equal(findAll('.ember-power-select-option').length, 1, 'The list has been filtered');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'There is one element selected');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasValue('Latvia', 'The text of the seach input is two "Latvia"');
+    assert.dom('.ember-power-select-dropdown').exists('The dropown is still opened');
+    assert.dom('.ember-power-select-option').exists({ count: 1 }, 'The list has been filtered');
   });
 
   test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection ALSO when that option didn\'t come from the outside', async function(assert) {
@@ -463,14 +455,14 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    click(findAll('.ember-power-select-option')[2]);
+    await click('.ember-power-select-option:nth-child(3)');
     await clickTrigger();
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'There is one element selected');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'There is one element selected');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'There is no elements selected');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'three', 'The text of the seach input is three now');
-    assert.ok(find('.ember-power-select-dropdown'), 'The dropown is still opened');
-    assert.equal(findAll('.ember-power-select-option').length, 1, 'The list has been filtered');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 0 }, 'There is no elements selected');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasValue('three', 'The text of the seach input is three now');
+    assert.dom('.ember-power-select-dropdown').exists('The dropown is still opened');
+    assert.dom('.ember-power-select-option').exists({ count: 1 }, 'The list has been filtered');
   });
 
   test('If the multiple component is focused, pressing KEYDOWN opens it', async function(assert) {
@@ -485,9 +477,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
-    assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 40);
-    assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
+    assert.dom('.ember-power-select-dropdown').exists('The select is opened');
   });
 
   test('If the multiple component is focused, pressing KEYUP opens it', async function(assert) {
@@ -502,9 +494,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 27);
-    assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 38);
-    assert.ok(find('.ember-power-select-dropdown'), 'The select is opened');
+    assert.dom('.ember-power-select-dropdown').exists('The select is opened');
   });
 
   test('The placeholder is only visible when no options are selected', async function(assert) {
@@ -517,10 +509,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, 'Select stuff here', 'There is a placeholder');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('placeholder', 'Select stuff here', 'There is a placeholder');
     await clickTrigger();
-    await click(findAll('.ember-power-select-option')[1]);
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'The placeholder is gone');
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('placeholder', '', 'The placeholder is gone');
   });
 
   test('The placeholder is visible when no options are selected and search is disabled', async function(assert) {
@@ -533,10 +525,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(find('.ember-power-select-placeholder').textContent, 'Select stuff here', 'There is a placeholder');
+    assert.dom('.ember-power-select-placeholder').hasText('Select stuff here', 'There is a placeholder');
     await clickTrigger();
-    await click(findAll('.ember-power-select-option')[1]);
-    assert.notOk(find('.ember-power-select-placeholder'), 'The placeholder is gone');
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-placeholder').doesNotExist('The placeholder is gone');
   });
 
   test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', async function(assert) {
@@ -549,12 +541,12 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input does not have a placeholder');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('placeholder', '', 'Input does not have a placeholder');
     await clickTrigger();
-    await click(findAll('.ember-power-select-option')[1]);
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('placeholder', '', 'Input still does not have a placeholder');
     await click('.ember-power-select-multiple-remove-btn');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('placeholder', '', 'Input still does not have a placeholder');
   });
 
   test('Selecting and removing should result in desired behavior', async function(assert) {
@@ -566,11 +558,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
     await clickTrigger();
-    await click(findAll('.ember-power-select-option')[1]);
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'Should add selected option');
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'Should add selected option');
     await click('.ember-power-select-multiple-remove-btn');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('placeholder', '', 'Input still does not have a placeholder');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 0 }, 'Should remove selected option');
   });
 
   test('Selecting and removing can also be done with touch events', async function(assert) {
@@ -582,11 +574,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
     await clickTrigger();
-    await click(findAll('.ember-power-select-option')[1]);
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 1, 'Should add selected option');
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'Should add selected option');
     await tap('.ember-power-select-multiple-remove-btn');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.placeholder.value, '', 'Input still does not have a placeholder');
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 0, 'Should remove selected option');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('placeholder', '', 'Input still does not have a placeholder');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 0 }, 'Should remove selected option');
   });
 
   test('Typing in the input opens the component and filters the options', async function(assert) {
@@ -600,7 +592,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     typeInSearch('fo');
-    assert.equal(findAll('.ember-power-select-option').length, 2, 'The dropdown is opened and results filtered');
+    assert.dom('.ember-power-select-option').exists({ count: 2 }, 'The dropdown is opened and results filtered');
   });
 
   test('Typing in the input opens the component and filters the options also with async searches', async function(assert) {
@@ -624,7 +616,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     let done = assert.async();
 
     setTimeout(function() {
-      assert.equal(findAll('.ember-power-select-option').length, 2, 'The dropdown is opened and results filtered');
+      assert.dom('.ember-power-select-option').exists({ count: 2 }, 'The dropdown is opened and results filtered');
       done();
     }, 150);
   });
@@ -640,11 +632,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     typeInSearch('tw');
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'tw:two');
-    await click(findAll('.ember-power-select-option')[0]);
+    assert.dom('.ember-power-select-option').hasText('tw:two');
+    await click('.ember-power-select-option');
     await clickTrigger();
     typeInSearch('thr');
-    assert.ok(/thr:two/.test(find('.ember-power-select-trigger').textContent.trim()), 'The trigger also receives the public API');
+    assert.dom('.ember-power-select-trigger').includesText('thr:two', 'The trigger also receives the public API');
   });
 
   test('The search input is cleared when the component is closed', async function(assert) {
@@ -659,10 +651,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     typeInSearch('asjdnah');
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').value, 'asjdnah');
+    assert.dom('.ember-power-select-option').hasText('No results found');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasValue('asjdnah');
     await click('#other-thing');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').value, '');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasValue('');
   });
 
   test('When hitting ENTER after a search with no results, the component is closed but the onchange function is not invoked', async function(assert) {
@@ -679,10 +671,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     typeInSearch('asjdnah');
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'No results found');
+    assert.dom('.ember-power-select-option').hasText('No results found');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
-    assert.notOk(find('.ember-power-select-dropdown'), 'The dropdown is closed');
-    assert.ok(find('.ember-power-select-trigger-multiple-input') === document.activeElement, 'The input is focused');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
+    assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
   });
 
   test('The trigger of multiple selects have a special class to distinguish them from regular ones, even if you pass them another one', async function(assert) {
@@ -694,8 +686,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.ok(find('.ember-power-select-trigger').classList.contains('ember-power-select-multiple-trigger'), 'The trigger has the default class');
-    assert.ok(find('.ember-power-select-trigger').classList.contains('foobar-trigger'), 'The trigger has the given class');
+    assert.dom('.ember-power-select-trigger').hasClass('ember-power-select-multiple-trigger', 'The trigger has the default class');
+    assert.dom('.ember-power-select-trigger').hasClass('foobar-trigger', 'The trigger has the given class');
   });
 
   test('The component works when the array of selected elements is mutated in place instead of replaced', async function(assert) {
@@ -709,8 +701,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
     await clickTrigger();
     run(() => this.get('selected').pushObject(numbers[3]));
-    await click(findAll('.ember-power-select-option')[0]);
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 2, 'Two elements are selected');
+    await click('.ember-power-select-option');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 2 }, 'Two elements are selected');
   });
 
   test('When the input inside the multiple select gets focused, the trigger and the dropdown gain special `--active` classes', async function(assert) {
@@ -723,10 +715,10 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.ok(!find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The trigger does not have the class');
+    assert.dom('.ember-power-select-trigger').doesNotHaveClass('ember-power-select-trigger--active', 'The trigger does not have the class');
     await clickTrigger();
-    assert.ok(find('.ember-power-select-trigger').classList.contains('ember-power-select-trigger--active'), 'The trigger has the class');
-    assert.ok(find('.ember-power-select-dropdown').classList.contains('ember-power-select-dropdown--active'), 'The dropdown has the class');
+    assert.dom('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active', 'The trigger has the class');
+    assert.dom('.ember-power-select-dropdown').hasClass('ember-power-select-dropdown--active', 'The dropdown has the class');
   });
 
   test('When the power select multiple uses the default component and the search is enabled, the trigger has `tabindex=-1`', async function(assert) {
@@ -739,7 +731,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger').attributes.tabindex.value, '-1', 'The trigger has tabindex=-1');
+    assert.dom('.ember-power-select-trigger').hasAttribute('tabindex', '-1', 'The trigger has tabindex=-1');
   });
 
   test('When the power select multiple uses the default component and the search is disabled, the trigger has `tabindex=0`', async function(assert) {
@@ -752,7 +744,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger').attributes.tabindex.value, '0', 'The trigger has tabindex=0');
+    assert.dom('.ember-power-select-trigger').hasAttribute('tabindex', '0', 'The trigger has tabindex=0');
   });
 
   test('When the power select multiple uses the default component and the search is enabled, and the component receives an specific tabindex, the trigger has tabindex=-1, and the tabindex is applied to the searchbox inside', async function(assert) {
@@ -765,8 +757,8 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger').attributes.tabindex.value, '-1', 'The trigger has tabindex=1');
-    assert.equal(find('.ember-power-select-trigger-multiple-input').attributes.tabindex.value, '3', 'The searchbox has tabindex=3');
+    assert.dom('.ember-power-select-trigger').hasAttribute('tabindex', '-1', 'The trigger has tabindex=1');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('tabindex', '3', 'The searchbox has tabindex=3');
   });
 
   test('Multiple selects honor the `defaultHighlighted` option', async function(assert) {
@@ -781,7 +773,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    assert.equal(find('.ember-power-select-option[aria-current=true]').textContent.trim(), 'four', 'the given defaultHighlighted element is highlighted instead of the first, as usual');
+    assert.dom('.ember-power-select-option[aria-current=true]').hasText('four', 'the given defaultHighlighted element is highlighted instead of the first, as usual');
   });
 
   test('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
@@ -805,11 +797,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     typeInSearch('M');
-    await click(findAll('.ember-power-select-option')[1]);
+    await click('.ember-power-select-option:nth-child(2)');
     typeInSearch('Mi');
-    assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-selected'].value, 'true', 'The item in the list is marked as selected');
-    await click(findAll('.ember-power-select-option')[0]); // select the same user again should  i[0])t
-    assert.equal(findAll('.ember-power-select-multiple-option').length, 0);
+    assert.dom('.ember-power-select-option').hasAttribute('aria-selected', 'true', 'The item in the list is marked as selected');
+    await click('.ember-power-select-option'); // select the same user again should remove it
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 0 });
   });
 
   test('When there is an option which is disabled the css class "ember-power-select-multiple-option--disabled" should be added', async function(assert) {
@@ -831,6 +823,6 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
         {{option}}
       {{/power-select-multiple}}
     `);
-    assert.equal(findAll('.ember-power-select-multiple-options .ember-power-select-multiple-option--disabled').length, disabledNumCountries, 'The class "ember-power-select-multiple-option--disabled" is added to disabled options');
+    assert.dom('.ember-power-select-multiple-options .ember-power-select-multiple-option--disabled').exists({ count: disabledNumCountries }, 'The class "ember-power-select-multiple-option--disabled" is added to disabled options');
   });
 });
