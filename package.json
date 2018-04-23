@@ -46,6 +46,7 @@
     "ember-cli-babel": "^6.11.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-concurrency": "^0.8.12",
+    "ember-get-config": "^0.2.4",
     "ember-text-measurer": "^0.4.0",
     "ember-truth-helpers": "^2.0.0"
   },

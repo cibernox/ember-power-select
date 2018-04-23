@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { getWithDefault, computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { getOwner } from '@ember/application';
 import { isEqual } from '@ember/utils';
@@ -23,6 +23,9 @@ import {
   defaultTypeAheadMatcher
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
+import config from 'ember-get-config';
+
+const globalConfig = config['ember-power-select']; // Import app config object
 
 // Copied from Ember. It shouldn't be necessary in Ember 2.5+
 const assign = Object.assign || function EmberAssign(original, ...args) {
@@ -76,7 +79,7 @@ export default Component.extend({
 
   // Options
   searchEnabled: fallbackIfUndefined(true),
-  matchTriggerWidth: fallbackIfUndefined(true),
+  matchTriggerWidth: fallbackIfUndefined(getWithDefault(globalConfig, 'matchTriggerWidth',  true)),
   preventScroll: fallbackIfUndefined(false),
   matcher: fallbackIfUndefined(defaultMatcher),
   loadingMessage: fallbackIfUndefined('Loading options...'),
