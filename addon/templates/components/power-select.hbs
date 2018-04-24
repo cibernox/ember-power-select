@@ -83,6 +83,8 @@
     {{else}}
       {{#component optionsComponent
         class="ember-power-select-options"
+        ariaLabel=(readonly ariaLabel)
+        ariaLabelledBy=(readonly ariaLabelledBy)
         extra=(readonly extra)
         groupIndex=""
         loadingMessage=(readonly loadingMessage)

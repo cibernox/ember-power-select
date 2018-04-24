@@ -26,7 +26,12 @@ export default Component.extend({
   isTouchDevice,
   layout,
   tagName: 'ul',
-  attributeBindings: ['role', 'aria-controls'],
+  attributeBindings: [
+    'role',
+    'aria-controls',
+    'ariaLabel:aria-label',
+    'ariaLabelledBy:aria-labelledby'
+  ],
   role: 'listbox',
 
   // Lifecycle hooks
