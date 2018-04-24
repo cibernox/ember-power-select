@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, triggerKeyEvent, triggerEvent, focus, settled } from '@ember/test-helpers';
+import { render, click, triggerKeyEvent, triggerEvent, focus, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
 import EmberObject, { get } from '@ember/object';
 import { A } from '@ember/array';
-import { run } from '@ember/runloop';
+import { run, later } from '@ember/runloop';
 import { numbers, names, countries } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
@@ -126,12 +126,13 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     this.set('numbersPromise', new RSVP.Promise(function(resolve) {
-      run.later(function() {
+      later(function() {
         resolve(numbers);
       }, 150);
     }));
 
     clickTrigger();
+    await waitFor('.ember-power-select-options');
     assert.dom('.ember-power-select-option').hasText('Loading options...', 'The loading message appears while the promise is pending');
     assert.dom('.ember-power-select-option').hasClass('ember-power-select-option--loading-message', 'The row has a special class to differentiate it from regular options');
     await settled()
@@ -150,7 +151,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     this.set('numbersPromise', new RSVP.Promise(function(resolve) {
-      run.later(function() {
+      later(function() {
         resolve(numbers);
       }, 100);
     }));
@@ -292,7 +293,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.search = () => {
       return new RSVP.Promise(function(resolve) {
         resolve(data);
-        run.later(function() {
+        later(function() {
           data.pushObject('one');
         }, 100);
       });
@@ -321,7 +322,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.search = () => {
       return new RSVP.Promise(function(resolve) {
         resolve(data);
-        run.later(function() {
+        later(function() {
           data.pushObject('owner');
         }, 100);
       });
@@ -403,11 +404,11 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     await clickTrigger();
-    typeInSearch('tw');
+    await typeInSearch('tw');
     assert.dom('.ember-power-select-option').hasText('tw:two', 'Each option receives the public API');
     await click('.ember-power-select-option');
     await clickTrigger();
-    typeInSearch('thr');
+    await typeInSearch('thr');
     assert.dom('.ember-power-select-trigger').hasText('thr:two', 'The trigger also receives the public API');
   });
 
@@ -435,7 +436,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await clickTrigger();
     assert.dom('.ember-power-select-option').exists({ count: 1 });
     assert.dom('.ember-power-select-option').hasText('Type to search');
-    typeInSearch('foo');
+    await typeInSearch('foo');
     assert.dom('.ember-power-select-option').exists({ count: 1 });
     assert.dom('.ember-power-select-option').hasText('No results found');
   });
@@ -462,7 +463,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
     await clickTrigger();
     assert.dom('.ember-power-select-option').exists({ count: 0 });
-    typeInSearch('foo');
+    await typeInSearch('foo');
     assert.dom('.ember-power-select-option').exists({ count: 1 });
     assert.dom('.ember-power-select-option').hasText('No results found');
   });
@@ -557,14 +558,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     await clickTrigger();
-    typeInSearch('mar');
+    await typeInSearch('mar');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('María');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('Marta');
-    typeInSearch('mari');
+    await typeInSearch('mari');
     assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Only 1 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('María');
-    typeInSearch('o');
+    await typeInSearch('o');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('Søren Larsen');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('João');
@@ -585,9 +586,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     await clickTrigger();
-    typeInSearch('on');
+    await typeInSearch('on');
     assert.dom('.ember-power-select-option').hasText('No results found', 'No number ends in "on"');
-    typeInSearch('teen');
+    await typeInSearch('teen');
     assert.dom('.ember-power-select-option').exists({ count: 7 }, 'There is 7 number that end in "teen"');
   });
 
@@ -672,14 +673,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     await clickTrigger();
-    typeInSearch('mar');
+    await typeInSearch('mar');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('María Murray');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('Marta Stinson');
-    typeInSearch('mari');
+    await typeInSearch('mari');
     assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Only 1 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('María Murray');
-    typeInSearch('o');
+    await typeInSearch('o');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('Søren Williams');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('João Jin');
@@ -708,7 +709,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     await clickTrigger();
-    typeInSearch('s');
+    await typeInSearch('s');
     assert.dom('.ember-power-select-option').exists({ count: 3 }, 'Only 3 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('Søren Williams');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('Marta Stinson');
@@ -755,11 +756,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   });
 
   test('If the passed options is a promise that is resolved, searching should filter the results from a promise', async function(assert) {
-    let done = assert.async();
     assert.expect(5);
 
     this.numbersPromise = new RSVP.Promise(function(resolve) {
-      run.later(function() {
+      later(function() {
         resolve(numbers);
       }, 100);
     });
@@ -770,17 +770,16 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
 
-    setTimeout(function() {
-      clickTrigger();
-      typeInSearch('o');
+    await new RSVP.Promise((resolve) => setTimeout(resolve, 150));
 
-      assert.dom('.ember-power-select-option').exists({ count: 4 }, 'The dropdown is opened and results shown.');
-      assert.dom('.ember-power-select-option:nth-child(1)').hasText('one');
-      assert.dom('.ember-power-select-option:nth-child(2)').hasText('two');
-      assert.dom('.ember-power-select-option:nth-child(3)').hasText('four');
-      assert.dom('.ember-power-select-option:nth-child(4)').hasText('fourteen');
-      done();
-    }, 150);
+    await clickTrigger();
+    await typeInSearch('o');
+
+    assert.dom('.ember-power-select-option').exists({ count: 4 }, 'The dropdown is opened and results shown.');
+    assert.dom('.ember-power-select-option:nth-child(1)').hasText('one');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasText('two');
+    assert.dom('.ember-power-select-option:nth-child(3)').hasText('four');
+    assert.dom('.ember-power-select-option:nth-child(4)').hasText('fourteen');
   });
 
   test('Disabled single selects don\'t have a clear button even if `allowClear` is true', async function(assert) {
@@ -807,9 +806,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     this.set('selected', new RSVP.Promise(function(resolve) {
-      run.later(resolve, numbers[3], 50);
+      later(resolve, numbers[3], 100);
     }));
     clickTrigger();
+    await waitFor('.ember-power-select-options')
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one', 'The first element is highlighted');
     assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
@@ -834,7 +834,6 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   });
 
   test('If the passed selected element is a pending promise that resolves while the select is opened, the highlighted & selected elements get updated, along with the trigger', async function(assert) {
-    let done = assert.async();
     assert.expect(6);
 
     this.numbers = numbers;
@@ -844,20 +843,19 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       {{/power-select}}
     `);
     this.set('selected', new RSVP.Promise(function(resolve) {
-      run.later(resolve, numbers[3], 50);
+      later(resolve, numbers[3], 100);
     }));
 
     clickTrigger();
+    await waitFor('.ember-power-select-options')
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one', 'The first element is highlighted');
     assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
 
-    setTimeout(function() {
-      assert.dom('.ember-power-select-option[aria-current="true"]').hasText('four', 'The 4th element is highlighted');
-      assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('four', 'The 4th element is highlighted');
-      assert.dom('.ember-power-select-trigger').hasText('four', 'The trigger has the proper content');
-      done();
-    }, 100);
+    await this.get('selected');
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('four', 'The 4th element is highlighted');
+    assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('four', 'The 4th element is highlighted');
+    assert.dom('.ember-power-select-trigger').hasText('four', 'The trigger has the proper content');
   });
 
   test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'t the same promise it resolved from', async function(assert) {
@@ -871,33 +869,27 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     let promise1 = new RSVP.Promise(function(resolve) {
-      run.later(resolve, numbers[3], 400);
+      later(resolve, numbers[3], 400);
     });
 
     let promise2 = new RSVP.Promise(function(resolve) {
-      run.later(resolve, numbers[4], 300);
+      later(resolve, numbers[4], 300);
     });
 
     this.set('selected', promise1);
-    await new RSVP.Promise(function(resolve) {
-      run.later(resolve, 20);
-    });
+    await new RSVP.Promise((resolve) => later(resolve, 20));
     this.set('selected', promise2);
 
     clickTrigger();
-
+    await waitFor('.ember-power-select-options');
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one', 'The first element is highlighted');
     assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
 
-    return new RSVP.Promise(function(resolve) {
-      setTimeout(function() {
-        assert.dom('.ember-power-select-option[aria-current="true"]').hasText('five', 'The 5th element is highlighted');
-        assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('five', 'The 5th element is highlighted');
-        assert.dom('.ember-power-select-trigger').hasText('five', 'The trigger has the proper content');
-        resolve();
-      }, 500);
-    });
+    await promise1;
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('five', 'The 5th element is highlighted');
+    assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('five', 'The 5th element is highlighted');
+    assert.dom('.ember-power-select-trigger').hasText('five', 'The trigger has the proper content');
   });
 
   // This test also fails randomly. Refactor.
@@ -1112,10 +1104,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     await clickTrigger();
-    typeInSearch('M');
+    await typeInSearch('M');
     await click('.ember-power-select-option:nth-child(2)');
     await clickTrigger();
-    typeInSearch('i');
+    await typeInSearch('i');
     assert.dom('.ember-power-select-option:nth-child(1)').hasAttribute('aria-selected', 'true', 'The item in the list is marked as selected');
     await click('.ember-power-select-option:nth-child(1)');
     assert.equal(onChangeInvocationsCount, 1);

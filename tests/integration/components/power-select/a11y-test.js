@@ -18,7 +18,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-dropdown > .ember-power-select-options').hasAttribute('role', 'listbox', 'The top-level list has `role=listbox`');
     let nestedOptionList = document.querySelectorAll('.ember-power-select-options .ember-power-select-options');
     [].slice.call(nestedOptionList).forEach((e) => assert.dom(e).hasAttribute('role', 'group'));
@@ -34,7 +34,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-dropdown > .ember-power-select-options').hasAttribute('role', 'listbox', 'The top-level list has `role=listbox`');
     let nestedOptionList = document.querySelectorAll('.ember-power-select-options .ember-power-select-options');
     [].slice.call(nestedOptionList).forEach((e) => assert.dom(e).hasAttribute('role', 'group'));
@@ -50,7 +50,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     [].slice.call(document.querySelectorAll('.ember-power-select-option')).forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
   });
 
@@ -64,7 +64,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     [].slice.call(document.querySelectorAll('.ember-power-select-option')).forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
   });
 
@@ -79,7 +79,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom(findContains('.ember-power-select-option', 'two')).hasAttribute('aria-selected', 'true', 'the selected option has aria-selected=true');
     assert.dom('.ember-power-select-option[aria-selected="false"]').exists({ count: numbers.length - 1 }, 'All other options have aria-selected=false');
   });
@@ -95,7 +95,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom(findContains('.ember-power-select-option', 'two')).hasAttribute('aria-selected', 'true', 'the first selected option has aria-selected=true');
     assert.dom(findContains('.ember-power-select-option', 'four')).hasAttribute('aria-selected', 'true', 'the second selected option has aria-selected=true');
     assert.dom('.ember-power-select-option[aria-selected="false"]').exists({ count: numbers.length - 2 }, 'All other options have aria-selected=false');
@@ -111,7 +111,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom(findContains('.ember-power-select-option', 'one')).hasAttribute('aria-current', 'true', 'the highlighted option has aria-current=true');
     assert.dom('.ember-power-select-option[aria-current="false"]').exists({ count: numbers.length - 1 }, 'All other options have aria-current=false');
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
@@ -129,7 +129,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom(findContains('.ember-power-select-option', 'one')).hasAttribute('aria-current', 'true', 'the highlighted option has aria-current=true');
     assert.dom('.ember-power-select-option[aria-current="false"]').exists({ count: numbers.length - 1 }, 'All other options have aria-current=false');
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
@@ -147,7 +147,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-option[aria-disabled=true]').exists({ count: 3 }, 'Three of them are disabled');
   });
 
@@ -161,7 +161,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-option[aria-disabled=true]').exists({ count: 3 }, 'Three of them are disabled');
   });
 
@@ -175,7 +175,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The trigger has role button');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns points to the dropdown');
   });
@@ -190,7 +190,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The trigger has role button');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns points to the dropdown');
   });
@@ -206,7 +206,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     `);
 
     assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded', 'Not expanded');
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'true', 'Expanded');
   });
 
@@ -221,7 +221,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     `);
 
     assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded', 'Not expanded');
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'true', 'Expanded');
   });
 
@@ -235,7 +235,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-options').hasAttribute('id', /^ember-power-select-options-ember\d+$/, 'The search has a unique id');
   });
 
@@ -249,7 +249,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-options').hasAttribute('id', /^ember-power-select-options-ember\d+$/, 'The search has a unique id');
   });
 
@@ -263,7 +263,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-search-input').hasAttribute('type', 'search', 'The type of the input is `search`');
     assert.dom('.ember-power-select-search-input').hasAttribute('aria-controls', /^ember-power-select-options-ember\d+$/, 'The `aria-controls` points to the id of the listbox');
   });
@@ -278,7 +278,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('type', 'search', 'The type of the input is `search`');
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('aria-controls', /^ember-power-select-options-ember\d+$/, 'The `aria-controls` points to the id of the listbox');
   });
@@ -293,7 +293,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-options').hasAttribute('aria-controls', /^ember-power-select-trigger-ember\d+$/, 'The listbox controls the trigger');
   });
 
@@ -307,7 +307,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-options').hasAttribute('aria-controls', /^ember-power-select-trigger-ember\d+$/, 'The listbox controls the trigger');
   });
 

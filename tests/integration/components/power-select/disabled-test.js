@@ -127,7 +127,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('Br');
+    await typeInSearch('Br');
     assert.dom('.ember-power-select-option[aria-current="true"]').doesNotExist('Nothing is highlighted');
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
@@ -145,7 +145,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('o'); // Finds ["Portugal", "United Kingdom"]
+    await typeInSearch('o'); // Finds ["Portugal", "United Kingdom"]
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'There is two results');
     assert.dom('.ember-power-select-option[aria-disabled="true"]').exists({ count: 1 }, 'One is disabled');
     assert.dom('.ember-power-select-option[aria-current="true"]').exists({ count: 1 }, 'One element is highlighted');
@@ -197,7 +197,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     await clickTrigger();
     assert.dom('.ember-power-select-group[aria-disabled="true"]').exists({ count: 1 }, 'one group is disabled');
-    typeInSearch('fiv');
+    await typeInSearch('fiv');
     assert.dom('.ember-power-select-group[aria-disabled="true"]').exists({ count: 1 }, 'one group is still disabled');
   });
 
