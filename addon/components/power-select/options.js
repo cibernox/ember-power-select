@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../../templates/components/power-select/options';
 
-const isTouchDevice = (!!self.window && 'ontouchstart' in self.window);
+const isTouchDevice = (!!window && 'ontouchstart' in window);
 (function(ElementProto) {
   if (typeof ElementProto.matches !== 'function') {
     ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
