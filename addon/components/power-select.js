@@ -326,7 +326,7 @@ export default Component.extend({
     },
 
     scrollTo(option, ...rest) {
-      if (!self.document || !option) {
+      if (!document || !option) {
         return;
       }
       let publicAPI = this.get('publicAPI');
@@ -334,7 +334,7 @@ export default Component.extend({
       if (userDefinedScrollTo) {
         return userDefinedScrollTo(option, publicAPI, ...rest);
       }
-      let optionsList = self.document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
+      let optionsList = document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
       if (!optionsList) {
         return;
       }
