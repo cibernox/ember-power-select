@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.0-beta.5
+- [BUGFIX] Remove redundant `self.` preceeding many well know globals like document or window
+
 # 2.0.0-beta.4
 - [BUGFIX] Fixes big un Ember 3.1 accessing the getter `selected.then`
 
