@@ -26,9 +26,8 @@
     <li
       id="{{get optionIds opt}}"
       class="ember-power-select-option"
-      aria-selected="{{ember-power-select-is-selected opt select.selected}}"
       aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
-      aria-current="{{eq opt select.highlighted}}"
+      aria-selected="{{or (eq opt select.highlighted)}}"
       data-option-index="{{groupIndex}}{{index}}"
       role="option">
       {{yield opt select}}
