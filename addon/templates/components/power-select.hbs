@@ -15,6 +15,7 @@
   as |dropdown|}}
 
   {{#dropdown.trigger
+    aria-activedescendant=activeDescendant
     role=(readonly triggerRole)
     tagName=(readonly _triggerTagName)
     ariaDescribedBy=(readonly ariaDescribedBy)
@@ -83,6 +84,7 @@
     {{else}}
       {{#component optionsComponent
         class="ember-power-select-options"
+        optionIds=optionIds
         ariaLabel=(readonly ariaLabel)
         ariaLabelledBy=(readonly ariaLabelledBy)
         extra=(readonly extra)
