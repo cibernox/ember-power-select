@@ -1176,7 +1176,8 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
 
-    await this.mainUser.bestie;
+    await this.get('mainUser.bestie');
+    await settled();
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('Lucius', 'The 4th element is highlighted');
     assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('Lucius', 'The 4th element is highlighted');
     assert.dom('.ember-power-select-trigger').hasText('Lucius', 'The trigger has the proper content');
