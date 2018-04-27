@@ -663,7 +663,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
 
     await clickTrigger();
     typeInSearch('teen');
-
+    // await new RSVP.Promise((resolve) => setTimeout(resolve, 50));
     setTimeout(() => {
       this.set('hideSelect', true);
     }, 50);

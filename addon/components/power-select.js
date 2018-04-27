@@ -108,7 +108,12 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this._publicAPIActions = {
-      search: (...args) => this.send('search', ...args),
+      search: (...args) => {
+        if (this.get('isDestroying')) {
+          return;
+        }
+        return this.send('search', ...args)
+      },
       highlight: (...args) => this.send('highlight', ...args),
       select: (...args) => this.send('select', ...args),
       choose: (...args) => this.send('choose', ...args),
