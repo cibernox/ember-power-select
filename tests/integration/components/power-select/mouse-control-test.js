@@ -116,7 +116,8 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     await clickTrigger(null, { clientY: 123 });
     assert.dom('.ember-power-select-dropdown').exists('The select is opened');
-    await triggerEvent('.ember-power-select-option:nth-child(2)', 'mouseup', { clientY: 124 });
+
+    await triggerEvent('.ember-power-select-option:nth-child(2)', 'mousedown', { clientY: 124 });
     assert.dom('.ember-power-select-dropdown').exists('The select is still opened');
     await triggerEvent('.ember-power-select-option:nth-child(2)', 'mouseup', { clientY: 125 });
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed now');

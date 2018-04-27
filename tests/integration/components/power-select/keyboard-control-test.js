@@ -5,6 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
+import RSVP from 'rsvp';
 
 module('Integration | Component | Ember Power Select (Keyboard control)', function(hooks) {
   setupRenderingTest(hooks);
@@ -155,7 +156,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     `);
 
     await clickTrigger();
-    typeInSearch('asjdnah');
+    await typeInSearch('asjdnah');
     assert.dom('.ember-power-select-trigger').hasText('two', 'Two is selected');
     assert.dom('.ember-power-select-option').hasText('No results found');
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
@@ -228,7 +229,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
     assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -246,7 +247,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 32);
     assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -264,7 +265,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
     assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -280,7 +281,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 38);
     assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -482,7 +483,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 82, { ctrlKey: true }); // r
     assert.dom('.ember-power-select-trigger').doesNotIncludeText('three', '"three" is not selected');
@@ -511,7 +512,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.equal(document.querySelector('.ember-power-select-options').scrollTop, 0, 'The list is not scrolled');
     triggerKeydown('.ember-power-select-trigger', 78); // n
     triggerKeydown('.ember-power-select-trigger', 73); // i
-    triggerKeydown('.ember-power-select-trigger', 78); // n
+    await triggerKeydown('.ember-power-select-trigger', 78); // n
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('nine', 'The option containing "nine" has been highlighted');
     assert.ok(document.querySelector('.ember-power-select-options').scrollTop > 0, 'The list has scrolled');
@@ -531,7 +532,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is open');
     assert.equal(document.querySelector('.ember-power-select-options').scrollTop, 0, 'The list is not scrolled');
-    triggerKeydown('.ember-power-select-trigger', 104); // Numpad 8
+    await triggerKeydown('.ember-power-select-trigger', 104); // Numpad 8
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('853', 'The option containing "853" has been highlighted');
     assert.ok(document.querySelector('.ember-power-select-options').scrollTop > 0, 'The list has scrolled');
@@ -553,7 +554,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.equal(document.querySelector('.ember-power-select-options').scrollTop, 0, 'The list is not scrolled');
     triggerKeydown('.ember-power-select-trigger', 78); // n
     triggerKeydown('.ember-power-select-trigger', 73); // i
-    triggerKeydown('.ember-power-select-trigger', 78); // n
+    await triggerKeydown('.ember-power-select-trigger', 78); // n
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('nine', 'The option containing "nine" has been highlighted');
     assert.ok(document.querySelector('.ember-power-select-options').scrollTop > 0, 'The list has scrolled');
@@ -561,7 +562,6 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
   });
 
   test('The typed string gets reset after 1s idle', async function(assert) {
-    let done = assert.async();
     assert.expect(5);
 
     this.numbers = numbers;
@@ -571,18 +571,16 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist( 'The dropdown is closed');
-    triggerKeydown('.ember-power-select-trigger', 84); // t
-    triggerKeydown('.ember-power-select-trigger', 87); // w
+    await triggerKeydown('.ember-power-select-trigger', 84); // t
+    await triggerKeydown('.ember-power-select-trigger', 87); // w
     assert.dom('.ember-power-select-trigger').hasText('two', '"two" has been selected');
     assert.dom('.ember-power-select-dropdown').doesNotExist( 'The dropdown is still closed');
-    setTimeout(function() {
-      triggerKeydown('.ember-power-select-trigger', 79); // o
-      assert.dom('.ember-power-select-trigger').hasText('one', '"one" has been selected, instead of "two", because the typing started over');
-      assert.dom('.ember-power-select-dropdown').doesNotExist( 'The dropdown is still closed');
-      done();
-    }, 1100);
+    await new RSVP.Promise((resolve) => setTimeout(resolve, 1100));
+    await triggerKeydown('.ember-power-select-trigger', 79); // o
+    assert.dom('.ember-power-select-trigger').hasText('one', '"one" has been selected, instead of "two", because the typing started over');
+    assert.dom('.ember-power-select-dropdown').doesNotExist( 'The dropdown is still closed');
   });
 
   test('Type something that doesn\'t give you any result leaves the current selection', async function(assert) {
@@ -595,14 +593,14 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       {{/power-select}}
     `);
 
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing is selected');
     triggerKeydown('.ember-power-select-trigger', 78); // n
     triggerKeydown('.ember-power-select-trigger', 73); // i
     triggerKeydown('.ember-power-select-trigger', 78); // n
-    triggerKeydown('.ember-power-select-trigger', 69); // e
+    await triggerKeydown('.ember-power-select-trigger', 69); // e
     assert.dom('.ember-power-select-trigger').hasText('nine', 'nine has been selected');
-    triggerKeydown('.ember-power-select-trigger', 87); // w
+    await triggerKeydown('.ember-power-select-trigger', 87); // w
     assert.dom('.ember-power-select-trigger').hasText('nine', 'nine is still selected because "ninew" gave no results');
   });
 
@@ -619,7 +617,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is open');
     triggerKeydown('.ember-power-select-trigger', 80); // p
-    triggerKeydown('.ember-power-select-trigger', 79); // o
+    await triggerKeydown('.ember-power-select-trigger', 79); // o
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('Portugal', 'The option containing "Portugal" has been highlighted');
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is still closed');
@@ -638,7 +636,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is open');
     triggerKeydown('.ember-power-select-trigger', 69); // e
-    triggerKeydown('.ember-power-select-trigger', 76); // l
+    await triggerKeydown('.ember-power-select-trigger', 76); // l
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('eleven', 'The option containing "eleven" has been highlighted');
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is still closed');
@@ -657,7 +655,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is open');
-    triggerKeydown('.ember-power-select-trigger', 85); // u
+    await triggerKeydown('.ember-power-select-trigger', 85); // u
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('United Kingdom', 'The option containing "United Kingdom" has been highlighted');
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is still closed');
@@ -676,7 +674,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is open');
     triggerKeydown('.ember-power-select-trigger', 84); // t
-    triggerKeydown('.ember-power-select-trigger', 87); // w
+    await triggerKeydown('.ember-power-select-trigger', 87); // w
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('twelve', 'The option containing "United Kingdom" has been highlighted');
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is still closed');
@@ -813,7 +811,8 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-selected-item').hasText('25');
     assert.expectAssertion(() => {
-      triggerKeydown('.ember-power-select-trigger', 67); // c
+      let trigger = document.querySelector('.ember-power-select-trigger');
+      trigger.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, cancelable: true, keyCode: 67 }));
     }, '{{power-select}} If you want the default filtering to work on options that are not plain strings, you need to provide `searchField`');
   });
 });

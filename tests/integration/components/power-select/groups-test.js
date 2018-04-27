@@ -20,7 +20,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
 
-    clickTrigger();
+    await clickTrigger();
 
     let rootLevelGroups = document.querySelectorAll('.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group');
     let rootLevelOptions = document.querySelectorAll('.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option');
@@ -54,7 +54,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
     `);
 
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-option').exists({ count: 4 });
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('Tigers');
   });
@@ -68,13 +68,13 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
         {{option}}
       {{/power-select}}
     `);
-    clickTrigger();
-    typeInSearch('ve');
+    await clickTrigger();
+    await typeInSearch('ve');
     let groupNames = Array.from(document.querySelectorAll('.ember-power-select-group-name')).map((e) => e.textContent.trim());
     let optionValues = Array.from(document.querySelectorAll('.ember-power-select-option')).map((e) => e.textContent.trim());
     assert.deepEqual(groupNames, ['Mediums', 'Bigs', 'Fairly big', 'Really big'], 'Only the groups with matching options are shown');
     assert.deepEqual(optionValues, ['five', 'seven', 'eleven', 'twelve'], 'Only the matching options are shown');
-    typeInSearch('lve');
+    await typeInSearch('lve');
     groupNames = Array.from(document.querySelectorAll('.ember-power-select-group-name')).map((e) => e.textContent.trim());
     assert.deepEqual(groupNames, ['Bigs', 'Really big'], 'With no depth level');
   });
@@ -105,7 +105,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     await click(document.querySelectorAll('.ember-power-select-group-name')[1]);
     assert.dom('.ember-power-select-dropdown').exists('The select is still opened');
   });

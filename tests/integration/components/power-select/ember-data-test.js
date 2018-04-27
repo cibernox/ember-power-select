@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click } from '@ember/test-helpers';
+import { render, settled, click, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import emberDataInitializer from '../../../../initializers/ember-data';
@@ -27,11 +27,12 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     `);
 
     this.set('users', this.store.findAll('user'));
-    clickTrigger();
+    let promise = clickTrigger();
+    await waitFor('.ember-power-select-option');
     assert.dom('.ember-power-select-option').hasText('Loading options...', 'The loading message appears while the promise is pending');
-    await settled();
+    await promise;
     assert.dom('.ember-power-select-option').exists({ count: 10 }, 'Once the collection resolves the options render normally');
-    typeInSearch('2');
+    await typeInSearch('2');
     assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Filtering works');
   });
 
@@ -46,12 +47,12 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     `);
 
     this.set('users', this.store.query('user', { foo: 'bar' }));
-    clickTrigger();
+    let promise = clickTrigger();
+    await waitFor('.ember-power-select-option');
     assert.dom('.ember-power-select-option').hasText('Loading options...', 'The loading message appears while the promise is pending')
-    await settled();
-
+    await promise;
     assert.dom('.ember-power-select-option').exists({ count: 10 }, 'Once the collection resolves the options render normally');
-    typeInSearch('2');
+    await typeInSearch('2');
     assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Filtering works');
   });
 

@@ -72,7 +72,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-options').includesText('Countries:', 'The given component is rendered');
     assert.dom('.ember-power-select-options').includesText('3. Russia', 'The component has access to the options');
   });
@@ -89,7 +89,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-options').includesText('Countries:', 'The given component is rendered');
     assert.dom('.ember-power-select-options').includesText('3. RU', 'The component uses the field in the extra has to render the options');
   });
@@ -112,7 +112,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-dropdown #custom-before-options-p-tag').exists('The custom component is rendered instead of the usual search bar');
     assert.dom('.ember-power-select-dropdown #custom-before-options-p-tag').hasText('inception', 'The placeholder attribute is passed through.');
     assert.dom('.ember-power-select-dropdown .ember-power-select-placeholder').exists('The placeholder component is passed through.');
@@ -131,7 +131,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-dropdown #custom-after-options-p-tag').exists('The custom component is rendered instead of the usual search bar');
     assert.dom('.ember-power-select-search-input').exists('The search input is still visible');
   });
@@ -202,7 +202,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-dropdown #custom-search-message-p-tag').exists('The custom component is rendered instead of the usual message');
   });
 
@@ -240,7 +240,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     assert.dom('.ember-power-select-options .custom-component').exists({ count: numberOfGroups });
   });
 
@@ -270,6 +270,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
   });
 });

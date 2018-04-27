@@ -172,7 +172,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('four');
+    await typeInSearch('four');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only two items matched the criteria');
   });
 
@@ -195,14 +195,14 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('mar');
+    await typeInSearch('mar');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('María Murray');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('Marta Stinson');
-    typeInSearch('mari');
+    await typeInSearch('mari');
     assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Only 1 results match the search');
     assert.dom('.ember-power-select-option').hasText('María Murray');
-    typeInSearch('o');
+    await typeInSearch('o');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'Only 2 results match the search');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('Søren Williams');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('João Jin');
@@ -223,9 +223,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('on');
+    await typeInSearch('on');
     assert.dom('.ember-power-select-option').hasText('No results found', 'No number ends in "on"');
-    typeInSearch('teen');
+    await typeInSearch('teen');
     assert.dom('.ember-power-select-option').exists({ count: 7 }, 'There is 7 number that end in "teen"');
   });
 
@@ -248,7 +248,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('teen');
+    await typeInSearch('teen');
 
     setTimeout(function() {
       assert.dom('.ember-power-select-option').exists({ count: 7 });
@@ -388,7 +388,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('four');
+    await typeInSearch('four');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 8);
     assert.dom('.ember-power-select-dropdown').exists('The dropown is still opened');
   });
@@ -591,7 +591,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    typeInSearch('fo');
+    await typeInSearch('fo');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'The dropdown is opened and results filtered');
   });
 
@@ -612,7 +612,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    typeInSearch('fo');
+    await typeInSearch('fo');
     let done = assert.async();
 
     setTimeout(function() {
@@ -631,11 +631,11 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('tw');
+    await typeInSearch('tw');
     assert.dom('.ember-power-select-option').hasText('tw:two');
     await click('.ember-power-select-option');
     await clickTrigger();
-    typeInSearch('thr');
+    await typeInSearch('thr');
     assert.dom('.ember-power-select-trigger').includesText('thr:two', 'The trigger also receives the public API');
   });
 
@@ -650,7 +650,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('asjdnah');
+    await typeInSearch('asjdnah');
     assert.dom('.ember-power-select-option').hasText('No results found');
     assert.dom('.ember-power-select-trigger-multiple-input').hasValue('asjdnah');
     await click('#other-thing');
@@ -670,7 +670,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
 
     await clickTrigger();
-    typeInSearch('asjdnah');
+    await typeInSearch('asjdnah');
     assert.dom('.ember-power-select-option').hasText('No results found');
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
     assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
@@ -796,9 +796,9 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    typeInSearch('M');
+    await typeInSearch('M');
     await click('.ember-power-select-option:nth-child(2)');
-    typeInSearch('Mi');
+    await typeInSearch('Mi');
     assert.dom('.ember-power-select-option').hasAttribute('aria-selected', 'true', 'The item in the list is marked as selected');
     await click('.ember-power-select-option'); // select the same user again should remove it
     assert.dom('.ember-power-select-multiple-option').exists({ count: 0 });

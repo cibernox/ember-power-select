@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { optionAtIndex } from 'ember-power-select/utils/group-utils';
-import { triggerKeydown, clickTrigger } from 'ember-power-select/test-support/helpers';
-import { charCode, namesStartingWithA } from '../constants';
-import { render, focus } from '@ember/test-helpers';
+import { clickTrigger } from 'ember-power-select/test-support/helpers';
+import { namesStartingWithA } from '../constants';
+import { render, focus, triggerKeyEvent } from '@ember/test-helpers';
 
 const WITH_EPS_CLOSED = {
-  beforeInteraction(trigger, assert) {
-    focus(trigger);
+  async beforeInteraction(trigger, assert) {
+    await focus(trigger);
     assert.dom(trigger).hasText('', 'no value selected');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
   },
@@ -26,8 +26,8 @@ const WITH_EPS_CLOSED = {
 };
 
 const WITH_EPS_OPEN = {
-  beforeInteraction(trigger, assert) {
-    clickTrigger();
+  async beforeInteraction(trigger, assert) {
+    await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
   },
 
@@ -43,10 +43,10 @@ const WITH_EPS_OPEN = {
   }
 };
 
-function typeString(trigger, str, times = 1) {
+async function typeString(trigger, str, times = 1) {
   for (let j = 0; j < times; j++) {
     for (let i = 0; i < str.length; i++) {
-      triggerKeydown(trigger, charCode(str.charAt(i)));
+      await triggerKeyEvent(trigger, 'keydown', str.charAt(i));
     }
   }
 }
@@ -58,14 +58,14 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
     test(`(${state}) Repeating the first character cycles through the results`, async function(assert) {
       this.names = namesStartingWithA;
       await render(hbs`
-      {{#power-select options=names onchange=(action (mut selected)) selected=selected searchEnabled=false as |option|}}
-        {{option}}
-      {{/power-select}}
-    `);
+        {{#power-select options=names onchange=(action (mut selected)) selected=selected searchEnabled=false as |option|}}
+          {{option}}
+        {{/power-select}}
+      `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
-      helpers.beforeInteraction(trigger, assert);
-      typeString(trigger, 'aaa');
+      await helpers.beforeInteraction(trigger, assert);
+      await typeString(trigger, 'aaa');
       helpers.checkSelectedValue(helpers.valueAt(this.names, 'aaa'.length), trigger, assert);
     });
 
@@ -78,9 +78,12 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
       `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
-      helpers.beforeInteraction(trigger, assert);
+      await helpers.beforeInteraction(trigger, assert);
       let { length } = namesStartingWithA;
-      typeString(trigger, 'a', length + 1);
+      for(let i = 0; i < length; i++) {
+        triggerKeyEvent(trigger, 'keydown', 'a');
+      }
+      await triggerKeyEvent(trigger, 'keydown', 'a');
       helpers.checkSelectedValue(helpers.valueAt(this.names, length + 1), trigger, assert);
     });
 
@@ -93,10 +96,10 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
       `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
-      helpers.beforeInteraction(trigger, assert);
-      typeString(trigger, 'aa');
-      helpers.checkSelectedValue(helpers.valueAt(this.names, 'aa'.length), trigger, assert);
-      typeString(trigger, 'r');
+      await helpers.beforeInteraction(trigger, assert);
+      triggerKeyEvent(trigger, 'keydown', 'a');
+      triggerKeyEvent(trigger, 'keydown', 'a');
+      await triggerKeyEvent(trigger, 'keydown', 'r');
       helpers.checkSelectedValue('Aaran', trigger, assert);
       assert.notEqual('Aaran', helpers.valueAt(this.names, 'aar'.length), 'Aaran would not be selected unless aa was remembered');
     });
@@ -110,8 +113,11 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
       `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
-      helpers.beforeInteraction(trigger, assert);
-      typeString(trigger, 'aara');
+      await helpers.beforeInteraction(trigger, assert);
+      triggerKeyEvent(trigger, 'keydown', 'a');
+      triggerKeyEvent(trigger, 'keydown', 'a');
+      triggerKeyEvent(trigger, 'keydown', 'r');
+      await triggerKeyEvent(trigger, 'keydown', 'a');
       helpers.checkSelectedValue('Aaran', trigger, assert);
     });
 
@@ -126,14 +132,14 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
         {{/power-select}}
       `);
       let trigger = this.element.querySelector('.ember-power-select-trigger');
-      helpers.beforeInteraction(trigger, assert);
-      typeString(trigger, 'f', state === 'Open' ? 1 : 2); // Normalize open closed behaviour
+      await helpers.beforeInteraction(trigger, assert);
+      await typeString(trigger, 'f', state === 'Open' ? 1 : 2); // Normalize open closed behaviour
       helpers.checkSelectedValue('Fab', trigger, assert);
-      typeString(trigger, 'f', 2);
+      await typeString(trigger, 'f', 2);
       helpers.checkSelectedValue('Fba', trigger, assert);
-      typeString(trigger, 'f');
+      await typeString(trigger, 'f');
       helpers.checkSelectedValue('FFba', trigger, assert);
-      typeString(trigger, 'f');
+      await typeString(trigger, 'f');
       helpers.checkSelectedValue('Fbb', trigger, assert);
     });
   });
