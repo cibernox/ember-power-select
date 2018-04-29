@@ -1,5 +1,9 @@
 # Master
 
+- [INTERNAL] Stop using `ember-native-dom-helpers`. Use regular helpers in `@ember/test-helpers`. This
+  causes some subtle changes in asynchrony on the provided test helpers, but if people are using them
+  as intended (with async/await) there should be no noticeable changes.
+
 # 2.0.0-beta.5
 - [BUGFIX] Remove redundant `self.` preceeding many well know globals like document or window
 
