@@ -1,5 +1,7 @@
 # Master
 
+# 2.0.0
+- [INTERNAL] Update to `ember-basic-dropdown` 1.0.0!!
 - [INTERNAL] Stop using `ember-native-dom-helpers`. Use regular helpers in `@ember/test-helpers`. This
   causes some subtle changes in asynchrony on the provided test helpers, but if people are using them
   as intended (with async/await) there should be no noticeable changes.
