@@ -125,8 +125,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     await clickTrigger();
-    triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 65);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
   });
 
   test('The onkeydown can be used to easily allow to select on tab', async function(assert) {
