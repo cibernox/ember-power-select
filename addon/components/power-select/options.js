@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../../templates/components/power-select/options';
 
+const isTouchDevice = (!!window && 'ontouchstart' in window);
 (function(ElementProto) {
   if (typeof ElementProto.matches !== 'function') {
     ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
@@ -22,7 +23,7 @@ import layout from '../../templates/components/power-select/options';
 })(window.Element.prototype);
 
 export default Component.extend({
-  isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
+  isTouchDevice,
   layout,
   tagName: 'ul',
   attributeBindings: ['role', 'aria-controls'],

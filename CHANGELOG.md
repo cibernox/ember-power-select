@@ -1,5 +1,17 @@
 # Master
 
+# 2.0.0
+- [INTERNAL] Update to `ember-basic-dropdown` 1.0.0!!
+- [INTERNAL] Stop using `ember-native-dom-helpers`. Use regular helpers in `@ember/test-helpers`. This
+  causes some subtle changes in asynchrony on the provided test helpers, but if people are using them
+  as intended (with async/await) there should be no noticeable changes.
+
+# 2.0.0-beta.5
+- [BUGFIX] Remove redundant `self.` preceeding many well know globals like document or window
+
+# 2.0.0-beta.4
+- [BUGFIX] Fixes big un Ember 3.1 accessing the getter `selected.then`
+
 # 2.0.0-beta.0
 - [BREAKING] Remove long-time-deprecated behavior to support _some_ usages of the `:eq` pseudoselector from jQuery.
 - [DEPRECATE] Deprecate global async test helpers: `selectChoose`, `selectSearch`, `removeMultipleOption`

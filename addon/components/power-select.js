@@ -108,7 +108,12 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this._publicAPIActions = {
-      search: (...args) => this.send('search', ...args),
+      search: (...args) => {
+        if (this.get('isDestroying')) {
+          return;
+        }
+        return this.send('search', ...args)
+      },
       highlight: (...args) => this.send('highlight', ...args),
       select: (...args) => this.send('select', ...args),
       choose: (...args) => this.send('choose', ...args),
@@ -138,7 +143,7 @@ export default Component.extend({
       return null;
     },
     set(_, selected) {
-      if (selected && selected.then) {
+      if (selected && get(selected, 'then')) {
         this.get('_updateSelectedTask').perform(selected);
       } else {
         scheduleOnce('actions', this, this.updateSelection, selected);
@@ -326,7 +331,7 @@ export default Component.extend({
     },
 
     scrollTo(option, ...rest) {
-      if (!self.document || !option) {
+      if (!document || !option) {
         return;
       }
       let publicAPI = this.get('publicAPI');
@@ -334,7 +339,7 @@ export default Component.extend({
       if (userDefinedScrollTo) {
         return userDefinedScrollTo(option, publicAPI, ...rest);
       }
-      let optionsList = self.document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
+      let optionsList = document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
       if (!optionsList) {
         return;
       }

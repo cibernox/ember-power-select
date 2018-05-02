@@ -17,8 +17,8 @@ module('Integration | Helpers', function(hooks) {
       {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('one');
+    await clickTrigger();
+    await typeInSearch('one');
 
     assert.ok(findContains('.ember-power-select-option', 'one'));
   });
@@ -37,8 +37,8 @@ module('Integration | Helpers', function(hooks) {
       </div>
     `);
 
-    clickTrigger('#single-select');
-    typeInSearch('#single-select', 'one');
+    await clickTrigger('#single-select');
+    await typeInSearch('#single-select', 'one');
 
     assert.ok(findContains('#single-select .ember-power-select-option', 'one'));
   });

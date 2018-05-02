@@ -8,9 +8,9 @@ import { isBlank } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/power-select-multiple/trigger';
 
-const ua = self.window && self.window.navigator ? self.window.navigator.userAgent : '';
+const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
-const isTouchDevice = !!self.window && 'ontouchstart' in self.window;
+const isTouchDevice = !!window && 'ontouchstart' in window;
 
 export default Component.extend({
   tagName: '',
@@ -52,7 +52,7 @@ export default Component.extend({
   },
 
   // CPs
-  triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
+  triggerMultipleInputStyle: computed('select.{searchText.length,selected.length}', function() {
     let select = this.get('select');
     scheduleOnce('actions', select.actions.reposition);
     if (!select.selected || select.selected.length === 0) {

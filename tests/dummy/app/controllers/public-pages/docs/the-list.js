@@ -43,6 +43,12 @@ export default Controller.extend({
   actions: {
     refreshCollection() {
       this.set('promise', generatePromise());
+    },
+    stopPropagation(e) {
+      e.stopPropagation();
+    },
+    removeName(name) {
+      alert(`remove name: ${name}`);
     }
   }
 });

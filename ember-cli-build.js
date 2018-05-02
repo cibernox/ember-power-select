@@ -1,15 +1,20 @@
-/* eslint-env node */
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const VersionChecker = require('ember-cli-version-checker'); // eslint-disable-line
+const crawl = require('prember-crawler');
 
 module.exports = function(defaults) {
-  let project = defaults.project;
+  let checker = new VersionChecker(defaults);
+  let emberChecker = checker.forEmber();
   let options = {
-    snippetPaths: ['tests/dummy/app/templates/snippets']
+    snippetPaths: ['tests/dummy/app/templates/snippets'],
+    prember: {
+      urls: crawl
+    }
   };
 
-  if (project.findAddonByName('ember-native-dom-event-dispatcher') && process.env.DEPLOY_TARGET === undefined) {
+  if (process.env.DEPLOY_TARGET === undefined && emberChecker.isAbove('2.14.0')) {
     options.vendorFiles = { 'jquery.js': null };
   }
 

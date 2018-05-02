@@ -1,6 +1,6 @@
 import { deprecate } from '@ember/debug';
 import { registerAsyncHelper } from '@ember/test';
-import { click, fillIn, keyEvent, triggerEvent, findAll } from 'ember-native-dom-helpers';
+import { click, fillIn, triggerKeyEvent, triggerEvent } from '@ember/test-helpers';
 import {
   selectChoose as _selectChoose,
   selectSearch as _selectSearch,
@@ -15,19 +15,21 @@ import {
  *                      given text
  */
 export function findContains(selector, text) {
-  return findAll(selector).filter((e) => e.textContent.trim().indexOf(text) > -1)[0];
+  return [].slice.apply(document.querySelectorAll(selector)).filter((e) => {
+    return e.textContent.trim().indexOf(text) > -1
+  })[0];
 }
 
-export function nativeMouseDown(selectorOrDomElement, options) {
-  triggerEvent(selectorOrDomElement, 'mousedown', options);
+export async function nativeMouseDown(selectorOrDomElement, options) {
+  return triggerEvent(selectorOrDomElement, 'mousedown', options);
 }
 
-export function nativeMouseUp(selectorOrDomElement, options) {
-  triggerEvent(selectorOrDomElement, 'mouseup', options);
+export async function nativeMouseUp(selectorOrDomElement, options) {
+  return triggerEvent(selectorOrDomElement, 'mouseup', options);
 }
 
-export function triggerKeydown(domElement, k) {
-  keyEvent(domElement, 'keydown', k);
+export async function triggerKeydown(domElement, k) {
+  return triggerKeyEvent(domElement, 'keydown', k);
 }
 
 export function typeInSearch(scopeOrText, text) {
@@ -49,7 +51,7 @@ export function typeInSearch(scopeOrText, text) {
   return fillIn(selectors, text);
 }
 
-export function clickTrigger(scope, options = {}) {
+export async function clickTrigger(scope, options = {}) {
   let selector = '.ember-power-select-trigger';
   if (scope) {
     selector = `${scope} ${selector}`;
@@ -57,13 +59,13 @@ export function clickTrigger(scope, options = {}) {
   return click(selector, options);
 }
 
-export function nativeTouch(selectorOrDomElement) {
+export async function nativeTouch(selectorOrDomElement) {
   triggerEvent(selectorOrDomElement, 'touchstart');
-  triggerEvent(selectorOrDomElement, 'touchend');
+  return triggerEvent(selectorOrDomElement, 'touchend');
 }
 
-export function touchTrigger() {
-  nativeTouch('.ember-power-select-trigger');
+export async function touchTrigger() {
+  return nativeTouch('.ember-power-select-trigger');
 }
 
 export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex) {

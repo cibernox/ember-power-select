@@ -3,11 +3,10 @@ import { later } from '@ember/runloop';
 import { task, timeout } from 'ember-concurrency';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, countries } from '../constants';
-import { find, findAll, click } from 'ember-native-dom-helpers';
 import RSVP from 'rsvp';
 
 module('Integration | Component | Ember Power Select (Custom search function)', function(hooks) {
@@ -24,8 +23,8 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search', 'The dropdown shows the "type to search" message');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').hasText('Type to search', 'The dropdown shows the "type to search" message');
   });
 
   test('The search text shouldn\'t appear if options are loading', async function(assert) {
@@ -46,8 +45,9 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       }, 100);
     }));
     clickTrigger();
-    assert.notOk(/Type to search/.test(find('.ember-power-select-dropdown').textContent), 'The type to search message doesn\'t show');
-    assert.ok(/Loading options\.\.\./.test(find('.ember-power-select-dropdown').textContent), '"Loading options..." message appears');
+    await waitFor('.ember-power-select-dropdown');
+    assert.dom('.ember-power-select-dropdown').doesNotIncludeText('Type to search', 'The type to search message doesn\'t show');
+    assert.dom('.ember-power-select-dropdown').includesText('Loading options...', '"Loading options..." message appears');
   });
 
   test('When no options are given but there is a search action, a "type to search" message is rendered', async function(assert) {
@@ -60,9 +60,9 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search');
-    assert.ok(find('.ember-power-select-option').classList.contains('ember-power-select-option--search-message'), 'The option with the search message has a special class');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').hasText('Type to search');
+    assert.dom('.ember-power-select-option').hasClass('ember-power-select-option--search-message', 'The option with the search message has a special class');
   });
 
   test('The "type to search" message can be customized passing `searchMessage=something`', async function(assert) {
@@ -75,8 +75,8 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type the name of the thing');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').hasText('Type the name of the thing');
   });
 
   test('The search function can return an array and those options get rendered', async function(assert) {
@@ -92,9 +92,9 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('teen');
-    assert.equal(findAll('.ember-power-select-option').length, 7);
+    await clickTrigger();
+    await typeInSearch('teen');
+    assert.dom('.ember-power-select-option').exists({ count: 7 });
   });
 
   test('The search function can return a promise that resolves to an array and those options get rendered', async function(assert) {
@@ -114,12 +114,11 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
-    return settled().then(function() {
-      assert.equal(findAll('.ember-power-select-option').length, 7);
-    });
+    await settled()
+    assert.dom('.ember-power-select-option').exists({ count: 7 });
   });
 
   test('While the async search is being performed the "Type to search" dissapears the "Loading..." message appears', async function(assert) {
@@ -139,12 +138,12 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.ok(/Type to search/.test(find('.ember-power-select-dropdown').textContent), 'The type to search message is displayed');
+    await clickTrigger();
+    assert.dom('.ember-power-select-dropdown').includesText('Type to search', 'The type to search message is displayed');
     typeInSearch('teen');
-    assert.ok(!/Type to search/.test(find('.ember-power-select-dropdown').textContent), 'The type to search message dissapeared');
-    assert.ok(/Loading options\.\.\./.test(find('.ember-power-select-dropdown').textContent), '"Loading options..." message appears');
-    return settled();
+    await waitFor('.ember-power-select-option:not(.ember-power-select-option--search-message)');
+    assert.dom('.ember-power-select-dropdown').doesNotIncludeText('Type to search', 'The type to search message dissapeared');
+    assert.dom('.ember-power-select-dropdown').includesText('Loading options...', '"Loading options..." message appears');
   });
 
   test('When the search resolves to an empty array then the "No results found" message or block appears.', async function(assert) {
@@ -164,11 +163,9 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('teen');
-    return settled().then(function() {
-      assert.ok(/No results found/.test(find('.ember-power-select-option').textContent), 'The default "No results" message renders');
-    });
+    await clickTrigger();
+    await typeInSearch('teen');
+    assert.dom('.ember-power-select-option').includesText('No results found', 'The default "No results" message renders');
   });
 
   test('When the search resolves to an empty array then the custom "No results" message appears', async function(assert) {
@@ -188,11 +185,10 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
-    return settled().then(function() {
-      assert.ok(/Meec\. Try again/.test(find('.ember-power-select-option').textContent), 'The customized "No results" message renders');
-    });
+    await settled();
+    assert.dom('.ember-power-select-option').includesText('Meec. Try again', 'The customized "No results" message renders');
   });
 
   test('When the search resolves to an empty array then the custom alternate block renders', async function(assert) {
@@ -214,11 +210,10 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
-    return settled().then(function() {
-      assert.ok(find('.ember-power-select-dropdown .foo-bar'), 'The alternate block message gets rendered');
-    });
+    await settled();
+    assert.dom('.ember-power-select-dropdown .foo-bar').exists('The alternate block message gets rendered');
   });
 
   //    Random failure test. Fix
@@ -271,12 +266,11 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
-    return settled().then(function() {
-      assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first result is highlighted');
-    });
+    await settled();
+    assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first result is highlighted');
   });
 
   test('On an select with a selected value, if after a search this value is not among the options the first element is highlighted', async function(assert) {
@@ -298,13 +292,12 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(findAll('.ember-power-select-option')[2].attributes['aria-current'].value, 'true', 'The 3rd result is highlighted');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option:nth-child(3)').hasAttribute('aria-current', 'true', 'The 3rd result is highlighted');
     typeInSearch('teen');
 
-    return settled().then(function() {
-      assert.equal(findAll('.ember-power-select-option')[0].attributes['aria-current'].value, 'true', 'The first result is highlighted');
-    });
+    await settled();
+    assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first result is highlighted');
   });
 
   test('Closing a component with a custom search cleans the search box and the results list', async function(assert) {
@@ -320,16 +313,16 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('teen');
-    assert.equal(findAll('.ember-power-select-option').length, 7, 'Results are filtered');
-    assert.equal(find('.ember-power-select-search-input').value, 'teen');
-    click('#different-node');
+    await clickTrigger();
+    await typeInSearch('teen');
+    assert.dom('.ember-power-select-option').exists({ count: 7 }, 'Results are filtered');
+    assert.dom('.ember-power-select-search-input').hasValue('teen');
+    await click('#different-node');
 
-    clickTrigger();
-    assert.equal(findAll('.ember-power-select-option').length, 1, 'Results have been cleared');
-    assert.equal(find('.ember-power-select-option').textContent.trim(), 'Type to search');
-    assert.equal(find('.ember-power-select-search-input').value, '', 'The searchbox was cleared');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Results have been cleared');
+    assert.dom('.ember-power-select-option').hasText('Type to search');
+    assert.dom('.ember-power-select-search-input').hasNoValue('The searchbox was cleared');
   });
 
   test('When received both options and search, those options are shown when the dropdown opens before the first search is performed', async function(assert) {
@@ -340,7 +333,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       return new RSVP.Promise(function(resolve) {
         later(function() {
           resolve(numbers.filter((str) => str.indexOf(term) > -1));
-        }, 50);
+        }, 150);
       });
     };
 
@@ -351,14 +344,14 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(findAll('.ember-power-select-option').length, 20, 'All the options are shown');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').exists({ count: 20 }, 'All the options are shown');
     typeInSearch('teen');
-    assert.equal(findAll('.ember-power-select-option').length, 21, 'All the options are shown and also the loading message');
-    assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...');
-    return settled().then(function() {
-      assert.equal(findAll('.ember-power-select-option').length, 7, 'All the options are shown but no the loading message');
-    });
+    await waitFor('.ember-power-select-option--loading-message');
+    assert.dom('.ember-power-select-option').exists({ count: 21 }, 'All the options are shown and also the loading message');
+    assert.dom('.ember-power-select-option').hasText('Loading options...');
+    await settled();
+    assert.dom('.ember-power-select-option').exists({ count: 7 }, 'All the options are shown but no the loading message');
   });
 
   test('Don\'t return from the search action and update the options instead also works as an strategy', async function(assert) {
@@ -378,13 +371,12 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(findAll('.ember-power-select-option').length, 20, 'All the options are shown');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').exists({ count: 20 }, 'All the options are shown');
     typeInSearch('teen');
 
-    return settled().then(function() {
-      assert.equal(findAll('.ember-power-select-option').length, 7);
-    });
+    await settled();
+    assert.dom('.ember-power-select-option').exists({ count: 7 });
   });
 
   // This test fails randomly
@@ -459,7 +451,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
     setTimeout(function() {
       typeInSearch('t');
@@ -468,19 +460,18 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       typeInSearch('');
     }, 200);
     setTimeout(function() {
-      assert.equal(findAll('.ember-power-select-option').length, numbers.length, 'All the options are displayed after clearing the search');
-      assert.equal(findAll('.ember-power-select-option')[1].textContent.trim(), 'two:', 'The results are the original options');
+      assert.dom('.ember-power-select-option').exists({ count: numbers.length }, 'All the options are displayed after clearing the search');
+      assert.dom('.ember-power-select-option:nth-child(2)').hasText('two:', 'The results are the original options');
       done();
     }, 300);
   });
 
   test('The lastSearchedText of the yielded publicAPI in single selects is updated only when the async search for it finishes', async function(assert) {
-    let done = assert.async();
     assert.expect(3);
     this.numbers = numbers;
     this.searchFn = function(term) {
       return new RSVP.Promise(function(resolve) {
-        setTimeout(function() {
+        later(function() {
           resolve(numbers.filter((str) => str.indexOf(term) > -1));
         }, 100);
       });
@@ -492,24 +483,21 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('teen');
-    setTimeout(function() {
-      assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'thirteen:teen', 'The results and the lastSearchedText have updated');
-      typeInSearch('four');
-      assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'There is a search going on');
-      assert.equal(findAll('.ember-power-select-option')[1].textContent.trim(), 'thirteen:teen', 'The results and the lastSearchedText are still the same because the search has not finished yet');
-      done();
-    }, 150);
+    await clickTrigger();
+    await typeInSearch('teen');
+    assert.dom('.ember-power-select-option').hasText('thirteen:teen', 'The results and the lastSearchedText have updated');
+    typeInSearch('four');
+    await waitFor('.ember-power-select-option--loading-message');
+    assert.dom('.ember-power-select-option').hasText('Loading options...', 'There is a search going on');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasText('thirteen:teen', 'The results and the lastSearchedText are still the same because the search has not finished yet');
   });
 
   test('The lastSearchedText of the yielded publicAPI in multiple selects is updated only when the async search for it finishes', async function(assert) {
-    let done = assert.async();
     assert.expect(3);
     this.numbers = numbers;
     this.searchFn = function(term) {
       return new RSVP.Promise(function(resolve) {
-        setTimeout(function() {
+        later(function() {
           resolve(numbers.filter((str) => str.indexOf(term) > -1));
         }, 100);
       });
@@ -521,26 +509,23 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    typeInSearch('teen');
-    setTimeout(function() {
-      assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'thirteen:teen', 'The results and the searchTerm have updated');
-      typeInSearch('four');
-      assert.equal(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'There is a search going on');
-      assert.equal(findAll('.ember-power-select-option')[1].textContent.trim(), 'thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
-      done();
-    }, 150);
+    await clickTrigger();
+    await typeInSearch('teen');
+    assert.dom('.ember-power-select-option').hasText('thirteen:teen', 'The results and the searchTerm have updated');
+    typeInSearch('four');
+    await waitFor('.ember-power-select-option--loading-message');
+    assert.dom('.ember-power-select-option').hasText('Loading options...', 'There is a search going on');
+    assert.dom('.ember-power-select-option:nth-child(2)').hasText('thirteen:teen', 'The results and the searchTerm are still the same because the search has not finished yet');
   });
 
   test('BUGFIX: Destroy a component why an async search is pending does not cause an error', async function(assert) {
-    let done = assert.async();
     assert.expect(0); // This test has no assertions. The fact that nothing fails is the proof that it works
     this.numbers = numbers;
     this.visible = true;
 
     this.searchFn = function(term) {
       return new RSVP.Promise(function(resolve) {
-        setTimeout(function() {
+        later(function() {
           resolve(numbers.filter((str) => str.indexOf(term) > -1));
         }, 200);
       });
@@ -554,12 +539,9 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/if}}
     `);
 
-    clickTrigger();
-    typeInSearch('teen');
+    await clickTrigger();
+    await typeInSearch('teen');
     this.set('visible', false);
-    setTimeout(() => {
-      done();
-    }, 150);
   });
 
   test('BUGFIX: When the given options are a promise and a search function is provided, clearing the search must display the results of the original promise', async function(assert) {
@@ -576,12 +558,12 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
      {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(findAll('.ember-power-select-option').length, 20, 'There is 20 options');
-    typeInSearch('teen');
-    assert.equal(findAll('.ember-power-select-option').length, 7, 'There is 7 options');
-    typeInSearch('');
-    assert.equal(findAll('.ember-power-select-option').length, 20, 'There is 20 options again§');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').exists({ count: 20 }, 'There is 20 options');
+    await typeInSearch('teen');
+    assert.dom('.ember-power-select-option').exists({ count: 7 }, 'There is 7 options');
+    await typeInSearch('');
+    assert.dom('.ember-power-select-option').exists({ count: 20 }, 'There is 20 options again§');
   });
 
   test('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', async function(assert) {
@@ -617,7 +599,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(function() {
@@ -647,7 +629,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(function() {
@@ -679,9 +661,9 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/unless}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
-
+    // await new RSVP.Promise((resolve) => setTimeout(resolve, 50));
     setTimeout(() => {
       this.set('hideSelect', true);
     }, 50);
@@ -709,7 +691,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(() => {
@@ -739,7 +721,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(function() {
@@ -769,7 +751,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(function() {
@@ -801,7 +783,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/unless}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(() => {
@@ -831,7 +813,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
+    await clickTrigger();
     typeInSearch('teen');
 
     setTimeout(() => {

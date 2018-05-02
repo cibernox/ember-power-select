@@ -1,5 +1,4 @@
-/* global require, module */
-var sass = require('node-sass');
+var sass = require('node-sass'); // eslint-disable-line
 var fs = require('fs');
 var path = require('path');
 

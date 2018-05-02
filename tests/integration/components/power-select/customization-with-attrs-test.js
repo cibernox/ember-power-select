@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
-import { find } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Customization using attrs)', function(hooks) {
   setupRenderingTest(hooks);
@@ -15,12 +14,12 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      {{#power-select renderInPlace=true classNames="ember-power-select" options=countries selected=country onchange=(action (mut foo)) as |country|}}
+      {{#power-select renderInPlace=true classNames="foo" options=countries selected=country onchange=(action (mut foo)) as |country|}}
         {{country.name}}
       {{/power-select}}
     `);
 
-    assert.ok(find('.ember-basic-dropdown.ember-power-select'), 'Class was added.');
+    assert.dom('.ember-basic-dropdown').hasClass('foo', 'Class was added.');
   });
 
   test('trigger on single selects can be customized using triggerClass', async function(assert) {
@@ -35,7 +34,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
       {{/power-select}}
     `);
 
-    assert.ok(find('.country-single-trigger'), 'Class was added.');
+    assert.dom('.ember-power-select-trigger').hasClass('country-single-trigger', 'Class was added.');
   });
 
   test('trigger on multiple selects can be customized using triggerClass', async function(assert) {
@@ -50,7 +49,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
       {{/power-select}}
     `);
 
-    assert.ok(find('.country-multiple-trigger'), 'Class was added.');
+    assert.dom('.ember-power-select-trigger').hasClass('country-multiple-trigger', 'Class was added.');
   });
 
   test('Trigger can have a custom id passing triggerId', async function(assert) {
@@ -65,7 +64,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
       {{/power-select}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger').id, 'this-is-my-id', 'The `id` was added.');
+    assert.dom('.ember-power-select-trigger').hasAttribute('id', 'this-is-my-id', 'The `id` was added.');
   });
 
   test('Trigger can have a custom id passing triggerId', async function(assert) {
@@ -80,6 +79,6 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
       {{/power-select-multiple}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger').id, 'this-is-my-id', 'The `id` was added.');
+    assert.dom('.ember-power-select-trigger').hasAttribute('id', 'this-is-my-id', 'The `id` was added.');
   });
 });
