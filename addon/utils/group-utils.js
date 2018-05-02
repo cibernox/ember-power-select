@@ -1007,7 +1007,7 @@ export function stripDiacritics(text) {
   function match(a) {
     return DIACRITICS[a] || a;
   }
-  
+
   return `${text}`.replace(/[^\u0000-\u007E]/g, match); // eslint-disable-line
 }
 
