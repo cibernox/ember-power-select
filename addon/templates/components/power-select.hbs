@@ -17,6 +17,7 @@
   {{#dropdown.trigger
     aria-activedescendant=activeDescendant
     role=(readonly triggerRole)
+    aria-autocomplete=(if searchEnabled "list" "none")
     tagName=(readonly _triggerTagName)
     ariaDescribedBy=(readonly ariaDescribedBy)
     ariaInvalid=(readonly ariaInvalid)
@@ -56,7 +57,7 @@
     {{component beforeOptionsComponent
       extra=(readonly extra)
       listboxId=(readonly optionsId)
-      ariaActivedescendant=ariaActivedescendant
+      ariaActivedescendant=activeDescendant
       onInput=(action "onInput")
       onKeydown=(action "onKeydown")
       searchEnabled=(readonly searchEnabled)
