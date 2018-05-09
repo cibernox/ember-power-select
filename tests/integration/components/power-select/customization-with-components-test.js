@@ -272,4 +272,61 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     await clickTrigger();
   });
+
+  test('the power-select-multiple `optionsComponent` receives the `extra` hash', async function(assert) {
+    assert.expect(2);
+
+    this.countries = countries;
+    this.country = countries[1]; // Spain
+
+    await render(hbs`
+      {{#power-select-multiple options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) extra=(hash field='code') as |country|}}
+        {{country.code}}
+      {{/power-select-multiple}}
+    `);
+
+    await clickTrigger();
+
+    assert.dom('.ember-power-select-options').includesText('Countries:', 'The given component is rendered');
+    assert.dom('.ember-power-select-options').includesText('3. RU', 'The component uses the field option in the `extra` hash to render the options');
+  });
+
+  test('the power-select-multiple `triggerComponent` receives the `extra` hash', async function(assert) {
+    assert.expect(1);
+
+    this.countries = countries;
+    this.country = countries[1]; // Spain
+
+    await render(hbs`
+      {{#power-select-multiple options=countries selected=country triggerComponent="selected-country" onchange=(action (mut foo)) extra=(hash coolFlagIcon=true) as |country|}}
+        {{country.code}}
+      {{/power-select-multiple}}
+    `);
+
+    await clickTrigger();
+
+    assert.dom('.ember-power-select-trigger .cool-flag-icon').exists({ count: 1 }, 'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
+  });
+
+  test('the power-select-multiple `selectedItemComponent` receives the `extra` hash', async function(assert) {
+    assert.expect(1);
+
+    this.countries = countries;
+    this.country = [countries[1]]; // Spain
+
+    await render(hbs`
+      <div class="select-box">
+        {{#power-select-multiple
+            options=countries
+            selected=country
+            selectedItemComponent="selected-item-country"
+            onchange=(action (mut selected))
+            extra=(hash coolFlagIcon=true) as |country|}}
+          {{country.code}}
+        {{/power-select-multiple}}
+      </div>
+    `);
+
+    assert.dom('.ember-power-select-trigger .cool-flag-icon').exists({ count: 1 }, 'The custom selectedItemComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
+  });
 });
