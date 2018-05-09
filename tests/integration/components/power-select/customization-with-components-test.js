@@ -285,10 +285,10 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    let text = find('.ember-power-select-options').textContent.trim();
-    assert.ok(/Countries:/.test(text), 'The given component is rendered');
-    assert.ok(/3\. RU/.test(text), 'The component uses the field in the extra has to render the options');
+    await clickTrigger();
+
+    assert.dom('.ember-power-select-options').includesText('Countries:', 'The given component is rendered');
+    assert.dom('.ember-power-select-options').includesText('3. RU', 'The component uses the field option in the `extra` hash to render the options');
   });
 
   test('the power-select-multiple `triggerComponent` receives the `extra` hash', async function(assert) {
@@ -303,8 +303,9 @@ module('Integration | Component | Ember Power Select (Customization using compon
       {{/power-select-multiple}}
     `);
 
-    clickTrigger();
-    assert.ok(find('.ember-power-select-trigger .cool-flag-icon'), 'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
+    await clickTrigger();
+
+    assert.dom('.ember-power-select-trigger .cool-flag-icon').exists({ count: 1 }, 'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
   });
 
   test('the power-select-multiple `selectedItemComponent` receives the `extra` hash', async function(assert) {
@@ -326,6 +327,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
       </div>
     `);
 
-    assert.ok(find('.ember-power-select-trigger .cool-flag-icon'), 'The custom selectedItemComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
+    assert.dom('.ember-power-select-trigger .cool-flag-icon').exists({ count: 1 }, 'The custom selectedItemComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
   });
 });
