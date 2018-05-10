@@ -1,5 +1,9 @@
 # Master
 
+# 2.0.1
+- [ENHANCEMENT] Pass the `extra` option to the `selectedItemComponent`
+- [CLEANUP] Remove support for node 4.
+
 # 2.0.0
 - [INTERNAL] Update to `ember-basic-dropdown` 1.0.0!!
 - [INTERNAL] Stop using `ember-native-dom-helpers`. Use regular helpers in `@ember/test-helpers`. This
