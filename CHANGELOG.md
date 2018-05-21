@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.2
+- [INTERNAL] Ensure the addon checks if an object is "thenable" using `Ember.get`.
+
 # 2.0.1
 - [ENHANCEMENT] Pass the `extra` option to the `selectedItemComponent`
 - [CLEANUP] Remove support for node 4.
