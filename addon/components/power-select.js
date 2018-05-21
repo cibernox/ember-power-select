@@ -160,7 +160,7 @@ export default Component.extend({
       if (options === oldOptions) {
         return options;
       }
-      if (options && options.then) {
+      if (options && get(options, 'then')) {
         this.get('_updateOptionsTask').perform(options);
       } else {
         scheduleOnce('actions', this, this.updateOptions, options);
@@ -520,7 +520,7 @@ export default Component.extend({
           let subOptions = get(entry, 'options');
           let isGroup = !!get(entry, 'groupName') && !!subOptions;
           if (isGroup) {
-            assert('ember-power-select doesn\'t support promises inside groups. Please, resolve those promises and turn them into arrays before passing them to ember-power-select', !subOptions.then);
+            assert('ember-power-select doesn\'t support promises inside groups. Please, resolve those promises and turn them into arrays before passing them to ember-power-select', !get(subOptions, 'then'));
             walk(subOptions);
           }
         }
@@ -607,7 +607,7 @@ export default Component.extend({
     let search = searchAction(term, publicAPI);
     if (!search) {
       publicAPI = this.updateState({ lastSearchedText: term });
-    } else if (search.then) {
+    } else if (get(search, 'then')) {
       this.get('handleAsyncSearchTask').perform(term, search);
     } else {
       let resultsArray = toPlainArray(search);
