@@ -39,7 +39,6 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
   if (potentialTargets.length === 0) {
     potentialTargets = document.querySelectorAll(`#${contentId} ${valueOrSelector}`);
   }
-  console.log("PT", potentialTargets)
   if (potentialTargets.length > 1) {
     let filteredTargets = [].slice.apply(potentialTargets).filter((t) => t.textContent.trim() === valueOrSelector);
     if (optionIndex === undefined) {
