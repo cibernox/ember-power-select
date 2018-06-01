@@ -100,7 +100,6 @@ export default Component.extend({
               select.actions.search(lastSelection);
             } else {
               let searchField = this.get('searchField');
-              assert('`{{power-select-multiple}}` requires a `searchField` when the options are not strings to remove options using backspace', searchField);
               select.actions.search(get(lastSelection, searchField));
             }
             select.actions.open(e);
