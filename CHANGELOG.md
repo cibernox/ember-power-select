@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.3
+- [BUGFIX] Remove forgoten console statement in test helper
+
 # 2.0.2
 - [INTERNAL] Ensure the addon checks if an object is "thenable" using `Ember.get`.
 
