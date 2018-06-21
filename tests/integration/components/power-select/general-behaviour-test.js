@@ -1205,4 +1205,17 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option').exists({ count: 1 });
     assert.dom('.ember-power-select-option').hasClass('ember-power-select-option--loading-message');
   });
+
+  test('The title is rendered in the trigger', async function (assert) {
+    assert.expect(1);
+
+    this.numbers = numbers;
+    await render(hbs`
+      {{#power-select options=numbers onchange=(action (mut foo)) title="The title" as |option|}}
+        {{option}}
+      {{/power-select}}
+    `);
+
+    assert.dom('.ember-power-select-trigger').hasAttribute('title', 'The title');
+  });
 });

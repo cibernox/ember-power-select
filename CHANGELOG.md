@@ -1,5 +1,7 @@
 # Master
 
+- [FEATURE] You can add a title to the trigger by passing `title="The title"` to `{{power-select}}` or `{{power-select-multiple}}`
+
 # 2.0.3
 - [BUGFIX] Remove forgoten console statement in test helper
 

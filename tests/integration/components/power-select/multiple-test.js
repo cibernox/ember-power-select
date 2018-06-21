@@ -825,4 +825,17 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     `);
     assert.dom('.ember-power-select-multiple-options .ember-power-select-multiple-option--disabled').exists({ count: disabledNumCountries }, 'The class "ember-power-select-multiple-option--disabled" is added to disabled options');
   });
+
+  test('The title is rendered in the trigger of multiple selects', async function (assert) {
+    assert.expect(1);
+
+    this.numbers = numbers;
+    await render(hbs`
+      {{#power-select-multiple options=numbers onchange=(action (mut foo)) title="The title" as |option|}}
+        {{option}}
+      {{/power-select-multiple}}
+    `);
+
+    assert.dom('.ember-power-select-trigger').hasAttribute('title', 'The title');
+  });
 });
