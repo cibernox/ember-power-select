@@ -68,7 +68,7 @@ export default Component.extend({
 
   maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
     if (isIE) {
-      return null;
+      return;
     }
     let select = this.get('select');
     return (!select.selected || get(select.selected, 'length') === 0) ? (this.get('placeholder') || '') : '';
