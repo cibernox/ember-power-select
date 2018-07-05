@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.4
+- [BUGFIX] Fix a bug in which the multiple select opened immediately when renderedin IE11 when using Ember 3.1+ (3.0 and below did not have this bug).
+  It has to do with the way placeholders are set and a bug in IE11 that setting the placeholder trigger a `input` event.
 - [FEATURE] You can add a title to the trigger by passing `title="The title"` to `{{power-select}}` or `{{power-select-multiple}}`
 
 # 2.0.3
