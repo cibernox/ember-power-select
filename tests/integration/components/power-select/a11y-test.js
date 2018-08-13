@@ -176,9 +176,6 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     `);
 
     await clickTrigger();
-
-    let trigger = assert.dom('.ember-power-select-trigger');
-
     assert.dom('.ember-power-select-trigger').hasAttribute('role', 'combobox', 'The trigger has role combobox');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns point to the dropdown');
   });
