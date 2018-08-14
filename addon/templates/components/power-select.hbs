@@ -63,12 +63,15 @@
       searchEnabled=(readonly searchEnabled)
       onFocus=(action "onFocus")
       onBlur=(action "onBlur")
-      highlightedId=(readonly highlightedId)
+      placeholder=(readonly placeholder)
+      placeholderComponent=(readonly placeholderComponent)
       searchPlaceholder=(readonly searchPlaceholder)
       select=(readonly publicAPI)
       selectedItemComponent=(readonly selectedItemComponent)
+      highlightedId=(readonly highlightedId)
       resultsCount=(readonly publicAPI.resultsCount)
-      resultsCountId=(readonly resultsCountId)}}
+      resultsCountId=(readonly resultsCountId)
+    }}
     {{#if mustShowSearchMessage}}
       {{component searchMessageComponent
         searchMessage=(readonly searchMessage)
