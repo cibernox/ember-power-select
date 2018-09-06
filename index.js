@@ -4,7 +4,7 @@ module.exports = {
   name: require('./package').name,
 
   included() {
-    let app = this.findHost();
+    let app = this._findHost();
     if (!app.__emberPowerSelectIncludedInvoked) {
       app.__emberPowerSelectIncludedInvoked = true;
 

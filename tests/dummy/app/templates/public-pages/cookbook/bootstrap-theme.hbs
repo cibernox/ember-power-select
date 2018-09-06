@@ -1,7 +1,7 @@
 <h1 class="doc-page-title">Bootstrap theme</h1>
 
 <p>
-  In the {{#link-to 'public-pages.docs.styles'}}chapter about styles{{/link-to}} of the docs you've seen how, if you are a Sass user,
+  In the {{#link-to "public-pages.docs.styles"}}chapter about styles{{/link-to}} of the docs you've seen how, if you are a Sass user,
   you can customize the styles of the dropdown by defining some variables before importing the styles
   of the addon.
 </p>
@@ -27,12 +27,12 @@
 <div class="evenly-splitted">
   <div>
     {{#power-select options=options selected=selectedSingle onchange=(action (mut selectedSingle)) searchField="name" triggerClass="bootstrap-theme-trigger" dropdownClass="bootstrap-theme-dropdown" as |country|}}
-      <img src="{{country.flagUrl}}" class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
+      <img src={{country.flagUrl}} class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
     {{/power-select}}
   </div>
   <div>
     {{#power-select-multiple options=options selected=selectedMultiple onchange=(action (mut selectedMultiple)) searchField="name" triggerClass="bootstrap-theme-trigger" dropdownClass="bootstrap-theme-dropdown" as |country|}}
-      <img src="{{country.flagUrl}}" class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
+      <img src={{country.flagUrl}} class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
     {{/power-select-multiple}}
   </div>
 </div>
@@ -56,6 +56,6 @@
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.cookbook.index' class="doc-page-nav-link-prev"}}&lt; System-wide config{{/link-to}}
-  {{#link-to 'public-pages.cookbook.material-theme' class="doc-page-nav-link-next"}}Material theme &gt;{{/link-to}}
+  {{#link-to "public-pages.cookbook.index" class="doc-page-nav-link-prev"}}&lt; System-wide config{{/link-to}}
+  {{#link-to "public-pages.cookbook.material-theme" class="doc-page-nav-link-next"}}Material theme &gt;{{/link-to}}
 </div>

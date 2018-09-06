@@ -1,19 +1,19 @@
 <header class="main-header">
   <nav class="main-header-nav">
     <div class="main-header-nav-links">
-      {{#link-to 'public-pages.docs' class="main-header-nav-link"}}Docs{{/link-to}}
-      {{#link-to 'public-pages.cookbook' class="main-header-nav-link"}}Cookbook{{/link-to}}
-      {{#link-to 'public-pages.addons' class="main-header-nav-link"}}Addons{{/link-to}}
+      {{#link-to "public-pages.docs" class="main-header-nav-link"}}Docs{{/link-to}}
+      {{#link-to "public-pages.cookbook" class="main-header-nav-link"}}Cookbook{{/link-to}}
+      {{#link-to "public-pages.addons" class="main-header-nav-link"}}Addons{{/link-to}}
       <a href="https://github.com/cibernox/ember-power-select" class="main-header-nav-link">Github</a>
     </div>
     <div class="main-header-logo">
-      {{#link-to 'public-pages.index' class="home-link"}}
+      {{#link-to "public-pages.index" class="home-link"}}
         <img src="/ember_logo.png" alt="ember">
       {{/link-to}}
       <div class="main-header-select">
         {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled
           searchEnabled=false
-          triggerComponent='main-header-select-trigger'
+          triggerComponent="main-header-select-trigger"
           onchange=(action "changeOptions")
           dropdownClass="main-header-select-dropdown" as |opt|}}
           {{opt}}
@@ -29,7 +29,7 @@
   <div class="main-footer-content">
     Deployed with love by <a href="http://github.com/cibernox">Miguel Camba</a>
     <div class="contribute-call-to-action">
-      Enjoy the addon? <a href={{href-to 'public-pages.support-the-project'}}>Support it!</a>
+      Enjoy the addon? <a href={{href-to "public-pages.support-the-project"}}>Support it!</a>
     </div>
   </div>
 </footer>

@@ -1,17 +1,17 @@
 <section class="docs">
   <nav class="side-nav">
     <header class="side-nav-header">Basic recipes</header>
-    {{#link-to 'public-pages.cookbook.index' class="side-nav-link"}}System-wide config{{/link-to}}
-    {{#link-to 'public-pages.cookbook.bootstrap-theme' class="side-nav-link"}}Bootstrap theme{{/link-to}}
-    {{#link-to 'public-pages.cookbook.material-theme' class="side-nav-link"}}Material theme{{/link-to}}
-    {{#link-to 'public-pages.cookbook.css-animations' class="side-nav-link"}}CSS Animations{{/link-to}}
-    {{#link-to 'public-pages.cookbook.debounce-searches' class="side-nav-link"}}Debounce searches{{/link-to}}
-    {{#link-to 'public-pages.cookbook.create-custom-options' class="side-nav-link"}}Create custom options{{/link-to}}
+    {{#link-to "public-pages.cookbook.index" class="side-nav-link"}}System-wide config{{/link-to}}
+    {{#link-to "public-pages.cookbook.bootstrap-theme" class="side-nav-link"}}Bootstrap theme{{/link-to}}
+    {{#link-to "public-pages.cookbook.material-theme" class="side-nav-link"}}Material theme{{/link-to}}
+    {{#link-to "public-pages.cookbook.css-animations" class="side-nav-link"}}CSS Animations{{/link-to}}
+    {{#link-to "public-pages.cookbook.debounce-searches" class="side-nav-link"}}Debounce searches{{/link-to}}
+    {{#link-to "public-pages.cookbook.create-custom-options" class="side-nav-link"}}Create custom options{{/link-to}}
     <header class="side-nav-header">Advanced recipes</header>
-    {{#link-to 'public-pages.cookbook.navigable-select' class="side-nav-link"}}Navigable select{{/link-to}}
+    {{#link-to "public-pages.cookbook.navigable-select" class="side-nav-link"}}Navigable select{{/link-to}}
   </nav>
   <section class="doc-page">
-    {{#power-select selected=currentSection options=groupedSections onchange=(action 'visit') searchField="text" searchEnabled=false triggerClass="section-selector" as |option|}}
+    {{#power-select selected=currentSection options=groupedSections onchange=(action "visit") searchField="text" searchEnabled=false triggerClass="section-selector" as |option|}}
       {{option.text}}
     {{/power-select}}
     {{outlet}}
