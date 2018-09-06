@@ -23,6 +23,7 @@ module.exports = {
     {
       files: [
         'compile-css.js',
+        '.template-lintrc.js',
         'ember-cli-build.js',
         'index.js',
         'testem.js',
