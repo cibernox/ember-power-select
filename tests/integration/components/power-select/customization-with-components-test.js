@@ -84,7 +84,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      {{#power-select options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) extra=(hash field='code') as |country|}}
+      {{#power-select options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) extra=(hash field="code") as |country|}}
         {{country.code}}
       {{/power-select}}
     `);
@@ -235,7 +235,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     }));
 
     await render(hbs`
-      {{#power-select options=groupedNumbers groupComponent='custom-group-component' onchange=(action (mut foo)) as |country|}}
+      {{#power-select options=groupedNumbers groupComponent="custom-group-component" onchange=(action (mut foo)) as |country|}}
         {{country.name}}
       {{/power-select}}
     `);
@@ -265,7 +265,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     }));
 
     await render(hbs`
-      {{#power-select options=groupedNumbers groupComponent='custom-group-component' extra=extra onchange=(action (mut foo)) as |country|}}
+      {{#power-select options=groupedNumbers groupComponent="custom-group-component" extra=extra onchange=(action (mut foo)) as |country|}}
         {{country.name}}
       {{/power-select}}
     `);
@@ -280,7 +280,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      {{#power-select-multiple options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) extra=(hash field='code') as |country|}}
+      {{#power-select-multiple options=countries selected=country optionsComponent="list-of-countries" onchange=(action (mut foo)) extra=(hash field="code") as |country|}}
         {{country.code}}
       {{/power-select-multiple}}
     `);

@@ -14,12 +14,12 @@
 </p>
 
 {{#code-example as |component|}}
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'template') 'active'}}">
+  <pre class="code-sample-snippet {{if (eq component.activeTab "template") "active"}}">
     \{{#power-select options=countries as |country|}}
       \{{country.name}}
     \{{/power-select}}
   </pre>
-  <pre class="code-sample-snippet {{if (eq component.activeTab 'javascript') 'active'}}">
+  <pre class="code-sample-snippet {{if (eq component.activeTab "javascript") "active"}}">
     import Controller from '@ember/controller';
 
     export default Controller.extend({
@@ -34,7 +34,7 @@
       ]
     });
   </pre>
-  <div class="code-sample-snippet result {{if (eq component.activeTab 'result') 'active'}}">
+  <div class="code-sample-snippet result {{if (eq component.activeTab "result") "active"}}">
     {{#power-select options=countries as |country|}}
       {{country.name}}
     {{/power-select}}
@@ -48,6 +48,6 @@
 
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.docs.multiple-selection' class="doc-page-nav-link-prev"}}&lt; Multiple selection{{/link-to}}
-  {{#link-to 'public-pages.docs.the-list' class="doc-page-nav-link-next"}}Basic customization &gt;{{/link-to}}
+  {{#link-to "public-pages.docs.multiple-selection" class="doc-page-nav-link-prev"}}&lt; Multiple selection{{/link-to}}
+  {{#link-to "public-pages.docs.the-list" class="doc-page-nav-link-next"}}Basic customization &gt;{{/link-to}}
 </div>

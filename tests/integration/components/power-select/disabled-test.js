@@ -121,7 +121,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
        {{country.name}}
      {{/power-select}}
     `);
@@ -139,7 +139,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
        {{country.name}}
      {{/power-select}}
     `);
@@ -158,7 +158,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled[0].disabled = true;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
        {{country.name}}
      {{/power-select}}
     `);

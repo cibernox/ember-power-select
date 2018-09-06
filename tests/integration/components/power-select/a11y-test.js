@@ -338,7 +338,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     await render(hbs`
       {{#power-select
         ariaInvalid=true
-        ariaLabel='ariaLabelString'
+        ariaLabel="ariaLabelString"
         onchange=(action (mut foo))
         options=numbers
         required=true
@@ -359,7 +359,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
     await render(hbs`
       {{#power-select-multiple
-        ariaLabel='ariaLabelString'
+        ariaLabel="ariaLabelString"
         ariaInvalid=true
         onchange=(action (mut foo))
         options=numbers
@@ -381,8 +381,8 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
     await render(hbs`
       {{#power-select
-        ariaDescribedBy='ariaDescribedByString'
-        ariaLabelledBy='ariaLabelledByString'
+        ariaDescribedBy="ariaDescribedByString"
+        ariaLabelledBy="ariaLabelledByString"
         onchange=(action (mut foo))
         options=numbers
         selected=selected
@@ -401,8 +401,8 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
     await render(hbs`
       {{#power-select-multiple
-        ariaDescribedBy='ariaDescribedByString'
-        ariaLabelledBy='ariaLabelledByString'
+        ariaDescribedBy="ariaDescribedByString"
+        ariaLabelledBy="ariaLabelledByString"
         onchange=(action (mut foo))
         options=numbers
         selected=selected

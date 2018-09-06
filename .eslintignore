@@ -14,6 +14,8 @@
 
 # ember-try
 /.node_modules.ember-try/
+/bower.json.ember-try
+/package.json.ember-try
 
 # Snippets
 tests/dummy/app/templates/snippets/**
