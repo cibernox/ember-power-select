@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.6
+- [BUGFIX] Better support `ObjectProxy` to adapt to changes in EmberData > 3.1
+
 # 2.0.5
 - [BUGFIX] Ensure the active/deactivate actions are not called if the component is already being destroyed.
 
