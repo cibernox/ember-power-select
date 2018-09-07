@@ -9,6 +9,7 @@ import { DEBUG } from '@glimmer/env';
 import { isBlank } from '@ember/utils';
 import { isArray as isEmberArray } from '@ember/array';
 import ArrayProxy from '@ember/array/proxy';
+import ObjectProxy from '@ember/object/proxy';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import optionsMatcher from '../utils/computed-options-matcher';
@@ -143,7 +144,7 @@ export default Component.extend({
       return null;
     },
     set(_, selected) {
-      if (selected && get(selected, 'then')) {
+      if (selected && !(selected instanceof ObjectProxy) && get(selected, 'then')) {
         this.get('_updateSelectedTask').perform(selected);
       } else {
         scheduleOnce('actions', this, this.updateSelection, selected);

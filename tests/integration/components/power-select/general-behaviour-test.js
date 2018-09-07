@@ -10,8 +10,10 @@ import { run, later } from '@ember/runloop';
 import { numbers, names, countries } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
+import ObjectProxy from '@ember/object/proxy';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
+const PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
 
 module('Integration | Component | Ember Power Select (General behavior)', function(hooks) {
   setupRenderingTest(hooks);
@@ -1217,5 +1219,39 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     assert.dom('.ember-power-select-trigger').hasAttribute('title', 'The title');
+  });
+  
+  test('Constant PromiseProxy references are tracked when .content changes', async function(assert) {
+    let initial = null;
+    //initial = countries[1];
+    this.proxy = PromiseObject.create({content: initial, promise: Promise.resolve(initial)});
+    //this.proxy = ObjectProxy.create({content: initial});
+    //ObjectProxy does work, because they are not 'unpacked' by the .then
+    // and the {{#if select.selected}} in the trigger will correctly call the ObjectProxy.isTruthy
+    // which will setup the dep chain
+    this.countries = countries;
+    this.updateProxy = () => {
+      //this.set('proxy', countries[0]);
+      //this.set('proxy', PromiseObject.create({content: countries[0], promise: Promise.resolve(countries[0])}));
+      this.proxy.set('content', countries[0]);
+      this.proxy.set('promise', Promise.resolve(countries[0]));
+    };
+    
+    await render(hbs`
+      <button id="update-proxy-btn" onclick={{action updateProxy}}>Update proxy content</button>
+      <br>
+      {{#power-select selected=proxy options=countries onchange=(action (mut foo)) as |option|}}
+        {{option.name}}
+      {{/power-select}}
+    `);
+    
+    assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
+    assert.dom('.ember-power-select-trigger').hasText(initial ? initial.name : '', 'Nothing is selected yet');
+    
+    await click('#update-proxy-btn');
+    
+    assert.dom('.ember-power-select-trigger').hasText(countries[0].name, 'The trigger has the proper content');
+    
+    //TODO: also try starting from non-null value and maybe also going back to null?
   });
 });
