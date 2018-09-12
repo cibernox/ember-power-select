@@ -66,36 +66,39 @@
       searchPlaceholder=(readonly searchPlaceholder)
       select=(readonly publicAPI)
       selectedItemComponent=(readonly selectedItemComponent)}}
-    {{#if mustShowSearchMessage}}
-      {{component searchMessageComponent
-        searchMessage=(readonly searchMessage)
-        select=(readonly publicAPI)
-      }}
-    {{else if mustShowNoMessages}}
-      {{#if (hasBlock "inverse")}}
-        {{yield to="inverse"}}
-      {{else if noMatchesMessage}}
-        <ul class="ember-power-select-options" role="listbox">
-          <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
-            {{noMatchesMessage}}
-          </li>
-        </ul>
+
+    <div class="ember-power-select-options-wrapper">
+      {{#if mustShowSearchMessage}}
+        {{component searchMessageComponent
+          searchMessage=(readonly searchMessage)
+          select=(readonly publicAPI)
+        }}
+      {{else if mustShowNoMessages}}
+        {{#if (hasBlock "inverse")}}
+          {{yield to="inverse"}}
+        {{else if noMatchesMessage}}
+          <ul class="ember-power-select-options" role="listbox">
+            <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
+              {{noMatchesMessage}}
+            </li>
+          </ul>
+        {{/if}}
+      {{else}}
+        {{#component optionsComponent
+          class="ember-power-select-options"
+          extra=(readonly extra)
+          groupIndex=""
+          loadingMessage=(readonly loadingMessage)
+          id=(readonly optionsId)
+          options=(readonly publicAPI.results)
+          optionsComponent=(readonly optionsComponent)
+          groupComponent=(readonly groupComponent)
+          select=(readonly publicAPI)
+          as |option term|}}
+          {{yield option term}}
+        {{/component}}
       {{/if}}
-    {{else}}
-      {{#component optionsComponent
-        class="ember-power-select-options"
-        extra=(readonly extra)
-        groupIndex=""
-        loadingMessage=(readonly loadingMessage)
-        id=(readonly optionsId)
-        options=(readonly publicAPI.results)
-        optionsComponent=(readonly optionsComponent)
-        groupComponent=(readonly groupComponent)
-        select=(readonly publicAPI)
-        as |option term|}}
-        {{yield option term}}
-      {{/component}}
-    {{/if}}
-    {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
+      {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
+    </div>
   {{/dropdown.content}}
 {{/basic-dropdown}}
