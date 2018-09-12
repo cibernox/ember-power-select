@@ -3,24 +3,26 @@ import { computed } from '@ember/object';
 import layout from '../../templates/components/power-select/options';
 
 const isTouchDevice = (!!window && 'ontouchstart' in window);
-(function(ElementProto) {
-  if (typeof ElementProto.matches !== 'function') {
-    ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
-  }
+if(typeof FastBoot === undefined){
+  (function(ElementProto) {
+    if (typeof ElementProto.matches !== 'function') {
+      ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
+    }
 
-  if (typeof ElementProto.closest !== 'function') {
-    ElementProto.closest = function closest(selector) {
-      let element = this;
-      while (element && element.nodeType === 1) {
-        if (element.matches(selector)) {
-          return element;
+    if (typeof ElementProto.closest !== 'function') {
+      ElementProto.closest = function closest(selector) {
+        let element = this;
+        while (element && element.nodeType === 1) {
+          if (element.matches(selector)) {
+            return element;
+          }
+          element = element.parentNode;
         }
-        element = element.parentNode;
-      }
-      return null;
-    };
-  }
-})(window.Element.prototype);
+        return null;
+      };
+    }
+  })(window.Element.prototype);
+}
 
 export default Component.extend({
   isTouchDevice,
