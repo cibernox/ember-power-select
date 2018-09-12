@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.7
+- [BUGFIX] Avoid polyfilling the DOM in fastboot.
+
 # 2.0.6
 - [BUGFIX] Better support `ObjectProxy` to adapt to changes in EmberData > 3.1
 
