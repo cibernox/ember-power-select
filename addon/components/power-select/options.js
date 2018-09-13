@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import layout from '../../templates/components/power-select/options';
 
 const isTouchDevice = (!!window && 'ontouchstart' in window);
-if(typeof FastBoot === undefined){
+if(typeof FastBoot === 'undefined'){
   (function(ElementProto) {
     if (typeof ElementProto.matches !== 'function') {
       ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
