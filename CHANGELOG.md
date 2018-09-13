@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.8
+- [BUGFIX] Fix the previous bugfix.
+
 # 2.0.7
 - [BUGFIX] Avoid polyfilling the DOM in fastboot.
 
