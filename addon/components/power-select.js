@@ -228,7 +228,7 @@ export default Component.extend({
         return false;
       }
       if (e) {
-        this.openingEvent = e;
+        this.set('openingEvent', e);
         if (e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
           e.preventDefault();
         }
@@ -242,7 +242,7 @@ export default Component.extend({
         return false;
       }
       if (e) {
-        this.openingEvent = null;
+        this.set('openingEvent', null);
       }
       this.updateState({ highlighted: undefined });
     },
