@@ -367,9 +367,9 @@ export default Ember.Component.extend({
     }
   },
 
-  _doSelect(dropdown, selected /*, e */) {
+  _doSelect(dropdown, selected, e) {
     if (this.get('resolvedSelected') !== selected) {
-      this.get('onchange')(selected, this.get('publicAPI'));
+      this.get('onchange')(selected, this.get('publicAPI'), e);
     }
   },
 
