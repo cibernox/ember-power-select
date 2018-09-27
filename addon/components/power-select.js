@@ -86,7 +86,7 @@ export default Component.extend({
   closeOnSelect: fallbackIfUndefined(true),
   defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
   typeAheadMatcher: fallbackIfUndefined(defaultTypeAheadMatcher),
-
+  triggerRole: fallbackIfUndefined('combobox'),
   afterOptionsComponent: fallbackIfUndefined(null),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   optionsComponent: fallbackIfUndefined('power-select/options'),
@@ -168,6 +168,18 @@ export default Component.extend({
       }
       return options;
     }
+  }),
+
+  optionIds: computed('options.[]','publicAPI.optionsId', function() {
+    debugger
+    return this.get('options').reduce((acc, option, index) => {
+      acc[option]=`${this.get('optionsId')}-option-${index}`;
+      return acc;
+    }, {});
+  }),
+
+  activeDescendant: computed('optionIds', 'publicAPI.highlighted', function() {
+    return this.get('optionIds')[this.get('publicAPI.highlighted')];
   }),
 
   optionMatcher: optionsMatcher('matcher', defaultMatcher),
