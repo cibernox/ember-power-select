@@ -1,5 +1,44 @@
 # Master
 
+# 2.0.8
+- [BUGFIX] Fix the previous bugfix.
+
+# 2.0.7
+- [BUGFIX] Avoid polyfilling the DOM in fastboot.
+
+# 2.0.6
+- [BUGFIX] Better support `ObjectProxy` to adapt to changes in EmberData > 3.1
+
+# 2.0.5
+- [BUGFIX] Ensure the active/deactivate actions are not called if the component is already being destroyed.
+
+# 2.0.4
+- [BUGFIX] Fix a bug in which the multiple select opened immediately when renderedin IE11 when using Ember 3.1+ (3.0 and below did not have this bug).
+  It has to do with the way placeholders are set and a bug in IE11 that setting the placeholder trigger a `input` event.
+- [FEATURE] You can add a title to the trigger by passing `title="The title"` to `{{power-select}}` or `{{power-select-multiple}}`
+
+# 2.0.3
+- [BUGFIX] Remove forgoten console statement in test helper
+
+# 2.0.2
+- [INTERNAL] Ensure the addon checks if an object is "thenable" using `Ember.get`.
+
+# 2.0.1
+- [ENHANCEMENT] Pass the `extra` option to the `selectedItemComponent`
+- [CLEANUP] Remove support for node 4.
+
+# 2.0.0
+- [INTERNAL] Update to `ember-basic-dropdown` 1.0.0!!
+- [INTERNAL] Stop using `ember-native-dom-helpers`. Use regular helpers in `@ember/test-helpers`. This
+  causes some subtle changes in asynchrony on the provided test helpers, but if people are using them
+  as intended (with async/await) there should be no noticeable changes.
+
+# 2.0.0-beta.5
+- [BUGFIX] Remove redundant `self.` preceeding many well know globals like document or window
+
+# 2.0.0-beta.4
+- [BUGFIX] Fixes big un Ember 3.1 accessing the getter `selected.then`
+
 # 2.0.0-beta.0
 - [BREAKING] Remove long-time-deprecated behavior to support _some_ usages of the `:eq` pseudoselector from jQuery.
 - [DEPRECATE] Deprecate global async test helpers: `selectChoose`, `selectSearch`, `removeMultipleOption`
@@ -18,7 +57,7 @@
 # 1.10.3
 - [DEPRECATION] Add deprecation to all test helpers when imported from `../../test-support/ember-power-select`.
   Users should use the helpers that live in `/addon-test-selectors`, whose import part is stable regardless
-  of the nesting of the file from where they are imported. P.e. `import { selectChoose } from 'ember-power-select/test-support/helpers';`
+  of the nesting of the file from where they are imported. P.e. `import { selectChoose } from '@salsify/ember-power-select/test-support/helpers';`
 
 # 1.10.2
 - [ENHANCEMENT] Upgrade to `ember-basic-dropdown` 0.33.10, which supports the `horizontalPosition` property

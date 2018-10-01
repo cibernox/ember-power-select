@@ -1,4 +1,4 @@
-import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions, defaultTypeAheadMatcher } from 'ember-power-select/utils/group-utils';
+import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions, defaultTypeAheadMatcher } from '@salsify/ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
 const groupedOptions = [

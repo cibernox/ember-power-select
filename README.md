@@ -22,7 +22,7 @@ As any other ember-cli addon, run:
 ember install ember-power-select
 ```
 
-Ember Power Select 2.X (currently in beta) requires Ember **2.10.0+**.
+Ember Power Select 2.X requires Ember **2.10.0+**.
 
 ## Features overview
 
@@ -45,7 +45,7 @@ Features include:
 * Groups (with not deep limit), placeholders...
 * Clear the selection
 * Disable the component or individual options
-* CSS animations and transitions [in beta]
+* CSS animations and transitions
 * ... and anything else you want. Just replace parts of the selects with your own components.
 
 

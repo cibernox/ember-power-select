@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers } from '../constants';
-import { find } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (The opened property)', function(hooks) {
   setupRenderingTest(hooks);
@@ -18,6 +17,6 @@ module('Integration | Component | Ember Power Select (The opened property)', fun
       {{/power-select}}
     `);
 
-    assert.ok(find('.ember-power-select-dropdown'), 'Dropdown is opened');
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
   });
 });

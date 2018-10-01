@@ -121,7 +121,7 @@
 <h3>Disabling specific options or groups</h3>
 
 <p>
-  In <a href="{{href-to 'public-pages.docs.the-trigger'}}">The trigger</a> we saw how to disable the entire component,
+  In <a href={{href-to "public-pages.docs.the-trigger"}}>The trigger</a> we saw how to disable the entire component,
   but you can also disable specific options. Options that have a <code>disabled</code> property set to true
   will automatically be considered disabled and styled as such.
 </p>
@@ -149,7 +149,21 @@
   This is because it deserves an entire chapter of its own.
 </p>
 
+<h3>Prevent click propagation inside the list</h3>
+
+<p>
+ The options inside the list are selected with mousedown, a good way to prevent the selection is intercepting onmouseup and calling stopPropagation on the element "e.stopPropagation()"
+</p>
+
+<p>
+This is particularly useful if you want to add some kind of link or button inside the list of options and prevent the selection of the item when the user clicks on the link.
+</p>
+
+{{#code-example hbs="the-list-10.hbs" js="the-list-10-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-example}}
+
 <div class="doc-page-nav">
-  <a href="{{href-to 'public-pages.docs.the-trigger'}}" class="doc-page-nav-link-prev">&lt; The trigger</a>
-  <a href="{{href-to 'public-pages.docs.the-search'}}" class="doc-page-nav-link-next">The search &gt;</a>
+  <a href={{href-to "public-pages.docs.the-trigger"}} class="doc-page-nav-link-prev">&lt; The trigger</a>
+  <a href={{href-to "public-pages.docs.the-search"}} class="doc-page-nav-link-next">The search &gt;</a>
 </div>

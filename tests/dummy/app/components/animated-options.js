@@ -1,5 +1,5 @@
 import { computed } from '@ember/object';
-import OptionsComponent from 'ember-power-select/components/power-select/options';
+import OptionsComponent from '@salsify/ember-power-select/components/power-select/options';
 
 export default OptionsComponent.extend({
   animationRules: computed(function() {

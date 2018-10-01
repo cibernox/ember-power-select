@@ -1,1 +1,1 @@
-export { default } from 'ember-power-select/components/power-select-multiple/trigger';
+export { default } from '@salsify/ember-power-select/components/power-select-multiple/trigger';

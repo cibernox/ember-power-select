@@ -1,0 +1,88 @@
+version: 2
+jobs:
+  defaults:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - run:
+          name: Version Details
+          command: 'echo -e "Node: $(node --version)\nYarn: $(yarn --version)"'
+      - run:
+          name: Configure Artifactory Credentials
+          command: curl -u ${ARTIFACTORY_CREDENTIALS} https://npm.salsify.com/api/npm/npm-local/auth/salsify >> ~/.npmrc
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-
+      - run:
+          name: Refresh Dependencies
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Lint JS
+          command: yarn lint:js
+      - run:
+          name: Create Test Output Directory
+          command: mkdir -p tmp/test-output/defaults
+      - run:
+          name: Test
+          command: yarn -s ember test --reporter xunit --silent | tee tmp/test-output/defaults/results.xml
+      - store_test_results:
+          path: tmp/test-output
+
+  try: &try
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:8-browsers
+    steps:
+      - checkout
+      - run:
+          name: Configure Artifactory Credentials
+          command: curl -u ${ARTIFACTORY_CREDENTIALS} https://npm.salsify.com/api/npm/npm-local/auth/salsify >> ~/.npmrc
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-
+      - run:
+          name: Create Test Output Directory
+          command: mkdir -p tmp/test-output/$EMBER_TRY_SCENARIO
+      - run:
+          name: Test
+          command: yarn -s ember try:one $EMBER_TRY_SCENARIO --skip-cleanup --- 'ember test --reporter xunit --silent | tee tmp/test-output/$EMBER_TRY_SCENARIO/results.xml'
+      - store_test_results:
+          path: tmp/test-output
+
+  release:
+    <<: *try
+    environment:
+      EMBER_TRY_SCENARIO: ember-release
+
+  beta:
+    <<: *try
+    environment:
+      EMBER_TRY_SCENARIO: ember-beta
+
+  canary:
+    <<: *try
+    environment:
+      EMBER_TRY_SCENARIO: ember-canary
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - defaults
+      - release:
+          requires:
+            - defaults
+      - beta:
+          requires:
+            - defaults
+      - canary:
+          requires:
+            - defaults

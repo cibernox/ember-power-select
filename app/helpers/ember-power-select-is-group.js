@@ -1,1 +1,1 @@
-export { default, emberPowerSelectIsGroup } from 'ember-power-select/helpers/ember-power-select-is-group';
+export { default, emberPowerSelectIsGroup } from '@salsify/ember-power-select/helpers/ember-power-select-is-group';

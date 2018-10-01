@@ -1,7 +1,7 @@
 import { test, module } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit, click, currentURL } from '@ember/test-helpers';
-import { find } from 'ember-native-dom-helpers';
+import { find } from '@ember/test-helpers';
 
 module('Acceptance | All Public Pages', function(hooks) {
   setupApplicationTest(hooks);

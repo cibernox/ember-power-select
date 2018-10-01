@@ -2,27 +2,30 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../../templates/components/power-select/options';
 
-(function(ElementProto) {
-  if (typeof ElementProto.matches !== 'function') {
-    ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
-  }
+const isTouchDevice = (!!window && 'ontouchstart' in window);
+if(typeof FastBoot === 'undefined'){
+  (function(ElementProto) {
+    if (typeof ElementProto.matches !== 'function') {
+      ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
+    }
 
-  if (typeof ElementProto.closest !== 'function') {
-    ElementProto.closest = function closest(selector) {
-      let element = this;
-      while (element && element.nodeType === 1) {
-        if (element.matches(selector)) {
-          return element;
+    if (typeof ElementProto.closest !== 'function') {
+      ElementProto.closest = function closest(selector) {
+        let element = this;
+        while (element && element.nodeType === 1) {
+          if (element.matches(selector)) {
+            return element;
+          }
+          element = element.parentNode;
         }
-        element = element.parentNode;
-      }
-      return null;
-    };
-  }
-})(window.Element.prototype);
+        return null;
+      };
+    }
+  })(window.Element.prototype);
+}
 
 export default Component.extend({
-  isTouchDevice: (!!self.window && 'ontouchstart' in self.window),
+  isTouchDevice,
   layout,
   tagName: 'ul',
   attributeBindings: ['role', 'aria-controls', 'onScroll:onscroll'],

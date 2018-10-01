@@ -22,7 +22,9 @@
     ariaLabel=(readonly ariaLabel)
     ariaLabelledBy=(readonly ariaLabelledBy)
     ariaRequired=(readonly required)
+    title=(readonly title)
     class=(readonly concatenatedTriggerClasses)
+    extra=(readonly extra)
     id=(readonly triggerId)
     eventType="mousedown"
     onKeyDown=(action "onTriggerKeydown")
@@ -62,7 +64,8 @@
       placeholder=(readonly placeholder)
       placeholderComponent=(readonly placeholderComponent)
       searchPlaceholder=(readonly searchPlaceholder)
-      select=(readonly publicAPI)}}
+      select=(readonly publicAPI)
+      selectedItemComponent=(readonly selectedItemComponent)}}
     {{#if mustShowSearchMessage}}
       {{component searchMessageComponent
         searchMessage=(readonly searchMessage)

@@ -1,4 +1,4 @@
-import EmberPowerSelect from 'ember-power-select/components/power-select';
+import EmberPowerSelect from '@salsify/ember-power-select/components/power-select';
 
 export default EmberPowerSelect.extend({
   // Place here your system-wide preferences

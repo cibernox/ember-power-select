@@ -1,6 +1,5 @@
 module.exports = {
   globals: {
-    server: true,
     selectChoose: true,
     selectSearch: true,
     removeMultipleOption: true,

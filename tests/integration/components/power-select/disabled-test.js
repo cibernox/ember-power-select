@@ -1,11 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, triggerEvent, triggerKeyEvent, click, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { run } from '@ember/runloop';
-import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
+import { clickTrigger, typeInSearch } from '@salsify/ember-power-select/test-support/helpers';
 import { numbers, countriesWithDisabled } from '../constants';
-import { find, findAll, triggerEvent, keyEvent, click, focus } from 'ember-native-dom-helpers';
 
 module('Integration | Component | Ember Power Select (Disabled)', function(hooks) {
   setupRenderingTest(hooks);
@@ -20,15 +19,14 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    let trigger = find('.ember-power-select-trigger');
-    assert.ok(trigger.attributes['aria-disabled'].value, 'true', 'The trigger has `aria-disabled=true`');
-    clickTrigger();
-    assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
-    keyEvent('.ember-power-select-trigger', 'keydown', 13);
-    assert.notOk(find('.ember-power-select-dropdown'), 'The select is still closed');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-disabled', 'true');
+    await clickTrigger();
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The select is still closed');
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The select is still closed');
   });
 
-  test('A disabled dropdown is not focusable, and ignores the passed tabindex ', async function(assert) {
+  test('A disabled dropdown is not focusable, and ignores the passed tabindex', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
@@ -37,7 +35,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
         {{option}}
       {{/power-select}}
     `);
-    assert.equal(find('.ember-power-select-trigger').attributes.tabindex, undefined, 'The trigger has no tabindex so it can\'t be focused');
+    assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('tabindex', 'The trigger has no tabindex so it can\'t be focused');
   });
 
   test('Disabled options are not highlighted when hovered with the mouse', async function(assert) {
@@ -50,9 +48,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
-    triggerEvent('.ember-power-select-option[aria-disabled="true"]', 'mouseover');
-    assert.equal(find('.ember-power-select-option[aria-disabled="true"]').attributes['aria-current'].value, 'false', 'The hovered option was not highlighted because it\'s disabled');
+    await clickTrigger();
+    await triggerEvent('.ember-power-select-option[aria-disabled="true"]', 'mouseover');
+    assert.dom('.ember-power-select-option[aria-disabled="true"]').hasAttribute('aria-current', 'false', 'The hovered option was not highlighted because it\'s disabled');
   });
 
   test('Disabled options are skipped when highlighting items with the keyboard', async function(assert) {
@@ -65,10 +63,10 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
-    keyEvent('.ember-power-select-search-input', 'keydown', 40);
-    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
   });
 
   test('When passed `disabled=true`, the input inside the trigger is also disabled', async function(assert) {
@@ -81,7 +79,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.ok(find('.ember-power-select-trigger-multiple-input').disabled, 'The input is disabled');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('disabled');
   });
 
   test('When passed `disabled=true`, the options cannot be removed', async function(assert) {
@@ -96,7 +94,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    assert.equal(findAll('.ember-power-select-multiple-remove-btn').length, 0, 'There is no button to remove selected elements');
+    assert.dom('.ember-power-select-multiple-remove-btn').doesNotExist('There is no button to remove selected elements');
   });
 
   test('Multiple select: When passed `disabled=prop`, enabling and disabling that property changes the component', async function(assert) {
@@ -112,11 +110,10 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select-multiple}}
     `);
 
-    let trigger = find('.ember-power-select-trigger');
-    assert.equal(trigger.attributes['aria-disabled'].value, 'true', 'The trigger has `aria-disabled=true`');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-disabled', 'true', 'The trigger has `aria-disabled=true`');
     this.set('shouldBeDisabled', false);
-    assert.notOk(trigger.attributes['aria-expanded']);
-    assert.notOk(find('.ember-power-select-trigger-multiple-input').disabled, 'The input is not disabled');
+    assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded')
+    assert.dom('.ember-power-select-trigger-multiple-input').doesNotHaveAttribute('disabled');
   });
 
   test('BUGFIX: When after a search the only result is a disabled element, it isn\'t highlighted and cannot be selected', async function(assert) {
@@ -124,17 +121,17 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
        {{country.name}}
      {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('Br');
-    assert.notOk(find('.ember-power-select-option[aria-current="true"]'), 'Nothing is highlighted');
-    keyEvent('.ember-power-select-search-input', 'keydown', 13);
-    assert.notOk(find('.ember-power-select-dropdown'), 'The select is closed');
-    assert.equal(find('.ember-power-select-trigger').textContent.trim(), '', 'Nothing was selected');
+    await clickTrigger();
+    await typeInSearch('Br');
+    assert.dom('.ember-power-select-option[aria-current="true"]').doesNotExist('Nothing is highlighted');
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
+    assert.dom('.ember-power-select-trigger').hasText('', 'Nothing was selected');
   });
 
   test('BUGFIX: When after a search there is two results and the first one is a disabled element, the second one is highlighted', async function(assert) {
@@ -142,17 +139,17 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
        {{country.name}}
      {{/power-select}}
     `);
 
-    clickTrigger();
-    typeInSearch('o'); // Finds ["Portugal", "United Kingdom"]
-    assert.equal(findAll('.ember-power-select-option').length, 2, 'There is two results');
-    assert.equal(findAll('.ember-power-select-option[aria-disabled="true"]').length, 1, 'One is disabled');
-    assert.equal(findAll('.ember-power-select-option[aria-current="true"]').length, 1, 'One element is highlighted');
-    assert.equal(findAll('.ember-power-select-option[aria-current="true"]')[0].textContent.trim(), 'United Kingdom', 'The first non-disabled element is highlighted');
+    await clickTrigger();
+    await typeInSearch('o'); // Finds ["Portugal", "United Kingdom"]
+    assert.dom('.ember-power-select-option').exists({ count: 2 }, 'There is two results');
+    assert.dom('.ember-power-select-option[aria-disabled="true"]').exists({ count: 1 }, 'One is disabled');
+    assert.dom('.ember-power-select-option[aria-current="true"]').exists({ count: 1 }, 'One element is highlighted');
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('United Kingdom', 'The first non-disabled element is highlighted');
   });
 
   test('BUGFIX: When searching by pressing keys on a focused & closed select, disabled options are ignored', async function(assert) {
@@ -161,17 +158,16 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled[0].disabled = true;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField='name' selected=foo onchange=(action (mut foo)) as |country|}}
+     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
        {{country.name}}
      {{/power-select}}
     `);
 
-    let trigger = find('.ember-power-select-trigger');
-    focus(trigger);
-    assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is closed');
-    keyEvent(trigger, 'keydown', 85); // u
-    assert.notOk(find('.ember-power-select-dropdown'),  'The dropdown is still closed');
-    assert.equal(trigger.textContent.trim(), 'United Kingdom', '"United Kingdom" has been selected');
+    await focus('.ember-power-select-trigger');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 85); // u
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is still closed');
+    assert.dom('.ember-power-select-trigger').hasText('United Kingdom', '"United Kingdom" has been selected');
   });
 
   test('The title of a group can be marked as disabled, and it is still disabled after filtering', async function(assert) {
@@ -199,10 +195,10 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(findAll('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is disabled');
-    typeInSearch('fiv');
-    assert.equal(findAll('.ember-power-select-group[aria-disabled="true"]').length, 1, 'one group is still disabled');
+    await clickTrigger();
+    assert.dom('.ember-power-select-group[aria-disabled="true"]').exists({ count: 1 }, 'one group is disabled');
+    await typeInSearch('fiv');
+    assert.dom('.ember-power-select-group[aria-disabled="true"]').exists({ count: 1 }, 'one group is still disabled');
   });
 
   test('If a group is disabled, any options inside cannot be interacted with mouse', async function(assert) {
@@ -231,13 +227,13 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
-    assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'No option is selected');
-    triggerEvent(findAll('.ember-power-select-option')[8], 'mouseover');
-    assert.equal(find('.ember-power-select-option[aria-current="true"]').textContent.trim(), 'one');
-    click(findAll('.ember-power-select-option')[9]);
-    assert.notOk(find('.ember-power-select-option[aria-selected="true"]'), 'Noting was selected');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one');
+    assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('No option is selected');
+    await triggerEvent(document.querySelectorAll('.ember-power-select-option')[8], 'mouseover');
+    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one');
+    await click(document.querySelectorAll('.ember-power-select-option')[9]);
+    assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('Noting was selected');
   });
 
   test('If the value of `disabled` changes, the `disabled` property in the publicAPI matches it', async function(assert) {
@@ -252,9 +248,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'enabled!', 'The `disabled` attribute in the public API is false');
+    assert.dom('.ember-power-select-trigger').hasText('enabled!', 'The `disabled` attribute in the public API is false');
     run(() => this.set('isDisabled', true));
-    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'disabled!', 'The `disabled` attribute in the public API is true');
+    assert.dom('.ember-power-select-trigger').hasText('disabled!', 'The `disabled` attribute in the public API is true');
   });
 
   test('If a select gets disabled while it\'s open, it closes automatically', async function(assert) {
@@ -268,10 +264,10 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
       {{/power-select}}
     `);
 
-    clickTrigger();
-    assert.ok(find('.ember-power-select-dropdown'), 'The select is open');
+    await clickTrigger();
+    assert.dom('.ember-power-select-dropdown').exists('The select is open');
     run(() => this.set('isDisabled', true));
-    assert.notOk(find('.ember-power-select-dropdown'), 'The select is now closed');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('The select is now closed');
   });
 
   test('BUGFIX: A component can be disabled on selection', async function(assert) {
@@ -284,9 +280,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
      {{/power-select}}
     `);
 
-    clickTrigger();
-    click(findAll('.ember-power-select-option')[1]);
-    assert.equal(find('.ember-power-select-trigger').textContent.trim(), 'two', 'The option is selected');
-    assert.equal(find('.ember-power-select-trigger').attributes['aria-disabled'].value, 'true');
+    await clickTrigger();
+    await click(document.querySelectorAll('.ember-power-select-option')[1]);
+    assert.dom('.ember-power-select-trigger').hasText('two', 'The option is selected');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-disabled', 'true');
   });
 });

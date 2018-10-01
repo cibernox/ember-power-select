@@ -1,4 +1,3 @@
-/* eslint-env node */
 'use strict';
 
 module.exports = function(environment) {
@@ -48,9 +47,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    // ENV['ember-cli-mirage'] = {
-    //   enabled: true
-    // }
+    // here you can enable a production-specific feature
   }
 
   return ENV;

@@ -1,1 +1,1 @@
-export { default, emberPowerSelectTrueStringIfPresent } from 'ember-power-select/helpers/ember-power-select-true-string-if-present';
+export { default, emberPowerSelectTrueStringIfPresent } from '@salsify/ember-power-select/helpers/ember-power-select-true-string-if-present';

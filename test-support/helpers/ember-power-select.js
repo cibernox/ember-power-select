@@ -1,5 +1,5 @@
 import { deprecate } from '@ember/debug';
-import _registerHelpers from 'ember-power-select/test-support/helpers';
+import _registerHelpers from '@salsify/ember-power-select/test-support/helpers';
 import {
   findContains as _findContains,
   nativeMouseDown as _nativeMouseDown,
@@ -10,12 +10,12 @@ import {
   nativeTouch as _nativeTouch,
   touchTrigger as _touchTrigger,
   selectChoose as _selectChoose
-} from 'ember-power-select/test-support/helpers';
+} from '@salsify/ember-power-select/test-support/helpers';
 
 function deprecateHelper(fn, name) {
   return function(...args) {
     deprecate(
-      `DEPRECATED \`import { ${name} } from '../../tests/helpers/ember-power-select';\` is deprecated. Please, replace it with \`import { ${name} } from 'ember-power-select/test-support/helpers';\``,
+      `DEPRECATED \`import { ${name} } from '../../tests/helpers/ember-power-select';\` is deprecated. Please, replace it with \`import { ${name} } from '@salsify/ember-power-select/test-support/helpers';\``,
       false,
       { until: '1.11.0', id: `ember-power-select-test-support-${name}` }
     );
@@ -35,7 +35,7 @@ let selectChoose = deprecateHelper(_selectChoose, 'selectChoose');
 
 export default function deprecatedRegisterHelpers() {
   deprecate(
-    "DEPRECATED `import registerPowerSelectHelpers from '../../tests/helpers/ember-power-select';` is deprecated. Please, replace it with `import registerPowerSelectHelpers from 'ember-power-select/test-support/helpers';`",
+    "DEPRECATED `import registerPowerSelectHelpers from '../../tests/helpers/ember-power-select';` is deprecated. Please, replace it with `import registerPowerSelectHelpers from '@salsify/ember-power-select/test-support/helpers';`",
     false,
     { until: '1.11.0', id: 'ember-power-select-test-support-register-helpers' }
   );

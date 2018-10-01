@@ -34,7 +34,7 @@
 {{/code-example}}
 
 <p>
-  That gives you the freedom of doing whatever suits your need when the user selects a value. <br>
+  That gives you the freedom of doing whatever suits your needs when the user selects a value. <br>
   If the only thing you want to do is update the value, you can make it more concise by using the
   <code>mut</code> helper.
 </p>
@@ -53,7 +53,7 @@
 
 <p>
   The second option you can provide to the component to customize it's behavior is <code>onkeypress</code>.
-  This options will be fired whenever the user presses a key while the component or the search input inside
+  This option will be fired whenever the user presses a key while the component or the search input inside
   have the focus.
 </p>
 
@@ -68,7 +68,7 @@
 
 <p>
   One particular common use case for this action is to add new options in multiple selects when the
-  user introduced free text.
+  user introduces free text.
 </p>
 
 {{#code-example hbs="action-handling-3.hbs" js="action-handling-3-js.js" as |partialName|}}
@@ -84,7 +84,7 @@
 </p>
 
 <p>
-  This action gives your the opportunity to react to any change in the inputs of the select, even when the inputs are
+  This action gives you the opportunity to react to any change in the inputs of the select, even when the inputs are
   emptied, because the <code>search</code> action doesn't fire in that case. If you return false from this action,
   you will prevent the default behavior, which is searching.
 </p>
@@ -122,7 +122,7 @@
 <h3><code>onopen/onclose</code> Actions</h3>
 
 <p>
-  As their names suggest, this actions are fired when the component is about to be opened or closed respectively,
+  As their names suggest, these actions are fired when the component is about to be opened or closed respectively,
   and they both have the same signature <code>(select, event)</code> (the event will be undefined if
   the component is not opened as result of user interaction).
 </p>
@@ -139,7 +139,7 @@
 <p>
   Another neat trick is that you can prevent the component from open/close if you return <code>false</code>
   from these actions, so you have the last word. This is all it takes to create a mandatory select component
-  that once opened it cannot be closed until you select some value, and changes
+  that once opened cannot be closed until you select some value, and changes
   the styles of the component.
 </p>
 
@@ -152,6 +152,6 @@
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.docs.how-to-use-it' class="doc-page-nav-link-prev"}}&lt; How to use it{{/link-to}}
-  {{#link-to 'public-pages.docs.groups' class="doc-page-nav-link-next"}}Groups &gt;{{/link-to}}
+  {{#link-to "public-pages.docs.how-to-use-it" class="doc-page-nav-link-prev"}}&lt; How to use it{{/link-to}}
+  {{#link-to "public-pages.docs.groups" class="doc-page-nav-link-next"}}Groups &gt;{{/link-to}}
 </div>
