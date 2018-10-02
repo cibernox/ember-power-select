@@ -54,6 +54,7 @@
 
   {{#dropdown.content _contentTagName=_contentTagName class=(readonly concatenatedDropdownClasses)}}
     {{component beforeOptionsComponent
+      animationEnabled=(readonly animationEnabled)
       extra=(readonly extra)
       listboxId=(readonly optionsId)
       onInput=(action "onInput")
