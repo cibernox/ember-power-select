@@ -49,7 +49,9 @@ export default Component.extend({
       action(this._optionFromIndex(optionIndex), e);
     };
     this.element.addEventListener('mouseup', (e) => findOptionAndPerform(this.get('select.actions.choose'), e));
-    this.element.addEventListener('mouseover', (e) => findOptionAndPerform(this.get('select.actions.highlight'), e));
+    if (this.get('highlightOnHoverEnabled')) {
+      this.element.addEventListener('mouseover', (e) => findOptionAndPerform(this.get('select.actions.highlight'), e));
+    }
     if (this.get('isTouchDevice')) {
       this._addTouchEvents();
     }
