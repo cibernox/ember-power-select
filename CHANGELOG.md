@@ -1,5 +1,9 @@
 # Master
 
+# 2.0.9
+- [BUGFIX] Add `highlightOnHover` option (defaults to `true`) that decides if
+  hovering an option with the mouse highlights it.
+
 # 2.0.8
 - [BUGFIX] Fix the previous bugfix.
 
