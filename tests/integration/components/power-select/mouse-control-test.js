@@ -26,6 +26,24 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     assert.dom('.ember-power-select-option:nth-child(4)').hasText('four');
   });
 
+  test('Mouseovering a list item does not highlight it when highlightOnHover is false', async function(assert) {
+    assert.expect(3);
+
+    this.numbers = numbers;
+    await render(hbs`
+      {{#power-select highlightOnHover=false options=numbers onchange=(action (mut foo)) as |option|}}
+        {{option}}
+      {{/power-select}}
+    `);
+
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first element is highlighted');
+    await triggerEvent('.ember-power-select-option:nth-child(4)', 'mouseover');
+
+    assert.dom('.ember-power-select-option:nth-child(4)').hasAttribute('aria-current', 'false', 'The 4th element is not highlighted');
+    assert.dom('.ember-power-select-option:nth-child(1)').hasAttribute('aria-current', 'true', 'The 1st element is still highlighted');
+  });
+
   test('Clicking an item selects it, closes the dropdown and focuses the trigger', async function(assert) {
     assert.expect(4);
 

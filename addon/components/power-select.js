@@ -86,6 +86,7 @@ export default Component.extend({
   closeOnSelect: fallbackIfUndefined(true),
   defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
   typeAheadMatcher: fallbackIfUndefined(defaultTypeAheadMatcher),
+  highlightOnHover: fallbackIfUndefined(true),
 
   afterOptionsComponent: fallbackIfUndefined(null),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
