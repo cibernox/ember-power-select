@@ -26,12 +26,12 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     assert.dom('.ember-power-select-option:nth-child(4)').hasText('four');
   });
 
-  test('Mouseovering a list item does not highlight it when highlightOnHoverEnabled is false', async function(assert) {
+  test('Mouseovering a list item does not highlight it when highlightOnHover is false', async function(assert) {
     assert.expect(3);
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select highlightOnHoverEnabled=false options=numbers onchange=(action (mut foo)) as |option|}}
+      {{#power-select highlightOnHover=false options=numbers onchange=(action (mut foo)) as |option|}}
         {{option}}
       {{/power-select}}
     `);
