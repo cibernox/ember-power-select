@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.11
+- [BUGFIX] Forward `eventType` in multiple selects
+
 # 2.0.10
 - [ENHANCEMENT] Allow select to be open with `click` instead of `mousedown`
 
