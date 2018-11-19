@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.12
+- [BUGFIX] Fix focusing of the searchbox in recent versions of Ember.
+
 # 2.0.11
 - [BUGFIX] Forward `eventType` in multiple selects
 
