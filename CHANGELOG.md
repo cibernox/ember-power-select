@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.10
+- [ENHANCEMENT] Allow select to be open with `click` instead of `mousedown`
+
 # 2.0.9
 - [BUGFIX] Add `highlightOnHover` option (defaults to `true`) that decides if
   hovering an option with the mouse highlights it.
