@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.15
+- [BUGFIX] Forward `triggerRole` from the multiple-select to the inner select
+
 # 2.0.14
 - [BUGFIX] Fix bug when multiple selects are tagless
 
