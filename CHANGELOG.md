@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.14
+- [BUGFIX] Fix bug when multiple selects are tagless
+
 # 2.0.13
 - [INTERNAL] Forward `_triggerTagName` in multiple selects
 

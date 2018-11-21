@@ -100,6 +100,7 @@ export default Component.extend({
 
   // Methods
   focusInput() {
+    if (!this.element) return;
     let input = this.element.querySelector('.ember-power-select-trigger-multiple-input');
     if (input) {
       input.focus();
