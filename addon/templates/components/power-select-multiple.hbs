@@ -1,5 +1,6 @@
 {{#if (hasBlock "inverse")}}
   {{#power-select
+    _triggerTagName=_triggerTagName
     afterOptionsComponent=afterOptionsComponent
     allowClear=allowClear
     ariaDescribedBy=ariaDescribedBy
@@ -62,6 +63,7 @@
   {{/power-select}}
 {{else}}
   {{#power-select
+    _triggerTagName=_triggerTagName
     afterOptionsComponent=afterOptionsComponent
     allowClear=allowClear
     ariaDescribedBy=ariaDescribedBy

@@ -1,5 +1,8 @@
 # Master
 
+# 2.0.13
+- [INTERNAL] Forward `_triggerTagName` in multiple selects
+
 # 2.0.12
 - [BUGFIX] Fix focusing of the searchbox in recent versions of Ember.
 
