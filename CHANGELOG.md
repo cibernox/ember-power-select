@@ -1,5 +1,8 @@
 # Master
 
+# 2.2.0
+- [BUGFIX] `{{power-select-multiple}}` should be a tagless component unless otherwise specified.
+
 # 2.1.0
 - [ENHANCEMENT] Create a new sass/less styles that are then imported from the main style. This should
   not change the public API
