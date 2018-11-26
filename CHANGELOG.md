@@ -1,5 +1,9 @@
 # Master
 
+# 2.1.0
+- [ENHANCEMENT] Create a new sass/less styles that are then imported from the main style. This should
+  not change the public API
+
 # 2.0.15
 - [BUGFIX] Forward `triggerRole` from the multiple-select to the inner select
 
