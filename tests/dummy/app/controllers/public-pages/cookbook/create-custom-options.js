@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { isBlank } from '@ember/utils';
+import { A } from '@ember/array';
 
-const { isBlank } = Ember;
-
-export default Ember.Controller.extend({
-  options: Ember.A(['Barcelona', 'London', 'New York', 'Porto']),
+export default Controller.extend({
+  options: A(['Barcelona', 'London', 'New York', 'Porto']),
   selected: [],
 
   actions: {

@@ -1,4 +1,4 @@
-import Component from 'ember-component';
+import Component from '@ember/component';
 import layout from '../../templates/components/power-select/trigger';
 
 export default Component.extend({
@@ -10,6 +10,9 @@ export default Component.extend({
     clear(e) {
       e.stopPropagation();
       this.get('select').actions.select(null);
+      if (e.type === 'touchstart') {
+        return false;
+      }
     }
   }
 });

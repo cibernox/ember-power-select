@@ -1,5 +1,7 @@
 {{#if (hasBlock "inverse")}}
   {{#power-select
+    _triggerTagName=_triggerTagName
+    triggerRole=triggerRole
     afterOptionsComponent=afterOptionsComponent
     allowClear=allowClear
     ariaDescribedBy=ariaDescribedBy
@@ -8,6 +10,7 @@
     ariaLabelledBy=ariaLabelledBy
     beforeOptionsComponent=beforeOptionsComponent
     buildSelection=(action "buildSelection")
+    calculatePosition=calculatePosition
     class=class
     closeOnSelect=closeOnSelect
     defaultHighlighted=defaultHighlighted
@@ -16,6 +19,7 @@
     disabled=disabled
     dropdownClass=dropdownClass
     extra=extra
+    groupComponent=groupComponent
     horizontalPosition=horizontalPosition
     initiallyOpened=initiallyOpened
     loadingMessage=loadingMessage
@@ -32,9 +36,12 @@
     options=options
     optionsComponent=optionsComponent
     placeholder=placeholder
-    registerAPI=(readonly registerAPI)
+    placeholderComponent=placeholderComponent
+    preventScroll=preventScroll
+    registerAPI=(action registerAPI)
     renderInPlace=renderInPlace
     required=required
+    scrollTo=scrollTo
     search=search
     searchEnabled=searchEnabled
     searchField=searchField
@@ -43,8 +50,12 @@
     selected=selected
     selectedItemComponent=selectedItemComponent
     tabindex=computedTabIndex
+    tagName=tagName
+    eventType=eventType
+    title=title
     triggerClass=concatenatedTriggerClass
     triggerComponent=(component triggerComponent tabindex=tabindex)
+    triggerId=triggerId
     verticalPosition=verticalPosition
     as |option select|}}
     {{yield option select}}
@@ -53,6 +64,8 @@
   {{/power-select}}
 {{else}}
   {{#power-select
+    _triggerTagName=_triggerTagName
+    triggerRole=triggerRole
     afterOptionsComponent=afterOptionsComponent
     allowClear=allowClear
     ariaDescribedBy=ariaDescribedBy
@@ -61,6 +74,7 @@
     ariaLabelledBy=ariaLabelledBy
     beforeOptionsComponent=beforeOptionsComponent
     buildSelection=(action "buildSelection")
+    calculatePosition=calculatePosition
     class=class
     closeOnSelect=closeOnSelect
     defaultHighlighted=defaultHighlighted
@@ -69,6 +83,7 @@
     disabled=disabled
     dropdownClass=dropdownClass
     extra=extra
+    groupComponent=groupComponent
     horizontalPosition=horizontalPosition
     initiallyOpened=initiallyOpened
     loadingMessage=loadingMessage
@@ -85,9 +100,12 @@
     options=options
     optionsComponent=optionsComponent
     placeholder=placeholder
+    placeholderComponent=placeholderComponent
+    preventScroll=preventScroll
     registerAPI=(readonly registerAPI)
     renderInPlace=renderInPlace
     required=required
+    scrollTo=scrollTo
     search=search
     searchEnabled=searchEnabled
     searchField=searchField
@@ -96,8 +114,12 @@
     selected=selected
     selectedItemComponent=selectedItemComponent
     tabindex=computedTabIndex
+    tagName=tagName
+    eventType=eventType
+    title=title
     triggerClass=concatenatedTriggerClass
     triggerComponent=(component triggerComponent tabindex=tabindex)
+    triggerId=triggerId
     verticalPosition=verticalPosition
     as |option select|}}
     {{yield option select}}

@@ -10,7 +10,8 @@
 @import 'components/side-nav';
 @import 'components/docs';
 @import 'components/cookbook';
-@import 'components/code-sample';
+@import 'ember-code-example';
+@include ember-code-example($brand-color);
 
 // Legacy demo
 @import 'ember-power-select';
@@ -31,6 +32,9 @@
 .max-500-height {
   max-height: 500px;
   overflow-y: scroll;
+}
+.text-pink {
+  color: pink;
 }
 // App styles
 .icon-flag {
@@ -248,6 +252,7 @@
     -webkit-user-select: none; }
     .ember-power-select-options[role="listbox"] {
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       max-height: 14em; }
 
   .ember-power-select-option {

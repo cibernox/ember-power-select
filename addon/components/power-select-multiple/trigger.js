@@ -1,24 +1,21 @@
-import Ember from 'ember';
-import Component from 'ember-component';
+import Component from '@ember/component';
+import { get } from '@ember/object';
+import { computed } from '@ember/object';
+import { inject } from '@ember/service';
+import { scheduleOnce } from '@ember/runloop';
+import { assert } from '@ember/debug';
+import { isBlank } from '@ember/utils';
+import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/power-select-multiple/trigger';
-import get from 'ember-metal/get';
-import computed from 'ember-computed';
-import service from 'ember-service/inject';
-import { scheduleOnce } from 'ember-runloop';
-import { assert } from 'ember-metal/utils';
-import { isBlank } from 'ember-utils';
-import { htmlSafe } from 'ember-string';
 
-const { testing } = Ember;
-
-const ua = self.window && self.window.navigator ? self.window.navigator.userAgent : '';
+const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
-const isTouchDevice = (testing || !!self.window && 'ontouchstart' in self.window);
+const isTouchDevice = !!window && 'ontouchstart' in window;
 
 export default Component.extend({
   tagName: '',
   layout,
-  textMeasurer: service(),
+  textMeasurer: inject(),
   _lastIsOpen: false,
 
   // Lifecycle hooks
@@ -55,9 +52,9 @@ export default Component.extend({
   },
 
   // CPs
-  triggerMultipleInputStyle: computed('select.searchText.length', 'select.selected.length', function() {
+  triggerMultipleInputStyle: computed('select.{searchText.length,selected.length}', function() {
     let select = this.get('select');
-    select.actions.reposition();
+    scheduleOnce('actions', select.actions.reposition);
     if (!select.selected || select.selected.length === 0) {
       return htmlSafe('width: 100%;');
     } else {
@@ -71,7 +68,7 @@ export default Component.extend({
 
   maybePlaceholder: computed('placeholder', 'select.selected.length', function() {
     if (isIE) {
-      return null;
+      return;
     }
     let select = this.get('select');
     return (!select.selected || get(select.selected, 'length') === 0) ? (this.get('placeholder') || '') : '';

@@ -25,15 +25,22 @@
   to select a new set of results.
 </p>
 
-{{#code-sample hbs="create-custom-options-1.hbs" js="create-custom-options-1-js.js" as |partialName|}}
+{{#code-example hbs="create-custom-options-1.hbs" js="create-custom-options-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   <i>Et voilà</i>, you've created a component that allows you to create custom tags.
 </p>
 
+<p>
+  For the sake of completeness, this example takes a naive approach that doesn't cover all
+  edge cases. By example, it isn't possible to create a tag named "York" above because it
+  would match "New York". Check the <a href="https://github.com/cibernox/ember-power-select-with-create">ember-power-select-with-create</a>
+  addon for a more complete solution.
+</p>
+
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.cookbook.debounce-searches' class="doc-page-nav-link-prev"}}&lt; Debounce searches{{/link-to}}
-  {{#link-to 'public-pages.cookbook.navigable-select' class="doc-page-nav-link-next"}}Navigable select &gt;{{/link-to}}
+  {{#link-to "public-pages.cookbook.debounce-searches" class="doc-page-nav-link-prev"}}&lt; Debounce searches{{/link-to}}
+  {{#link-to "public-pages.cookbook.navigable-select" class="doc-page-nav-link-next"}}Navigable select &gt;{{/link-to}}
 </div>

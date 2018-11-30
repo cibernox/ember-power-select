@@ -1,13 +1,15 @@
-import Ember from 'ember';
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+import { A } from '@ember/array';
+export default Controller.extend({
   cities: ['Barcelona', 'London', 'New York', 'Porto'],
-  selectedCities: [],
+  selectedCities: A(),
   actions: {
     handleKeydown(dropdown, e) {
       if (e.keyCode !== 13) { return; }
       let text = e.target.value;
       if (text.length > 0 && this.get('cities').indexOf(text) === -1) {
-        this.get('selectedCities').pushObject(text);
+        let cities = this.get('selectedCities');
+        this.set('selectedCities', cities.concat([text]));
       }
     }
   }

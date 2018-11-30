@@ -1,12 +1,12 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
+import { A } from '@ember/array';
 
-const { get, computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
   // CPs
   transformedOptions: computed('options', function() {
     return (function walker(options, parentLevel = null) {
-      let results = Ember.A();
+      let results = A();
 
       // this is necessary because power-select calls `toArray`, which
       // makes a copy and breaks our ability to compare parentLevel
@@ -20,7 +20,7 @@ export default Ember.Component.extend({
         let groupName = get(opt, 'groupName');
         if (groupName) {
           let level = { levelName: groupName };
-          let optionsWithBack = Ember.A([{ parentLevel }]).concat(get(opt, 'options'));
+          let optionsWithBack = A([{ parentLevel }]).concat(get(opt, 'options'));
           level.options = walker(optionsWithBack, level);
           results.push(level);
         } else {

@@ -1,9 +1,11 @@
-import Component from 'ember-component';
-import computed from 'ember-computed';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEqual } from '@ember/utils';
 import layout from '../templates/components/power-select-multiple';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
 export default Component.extend({
+  tagName: '',
   layout,
   // Config
   triggerComponent: fallbackIfUndefined('power-select-multiple/trigger'),
@@ -45,7 +47,7 @@ export default Component.extend({
       if (action && action(select, e) === false) {
         return false;
       }
-      this.focusInput();
+      this.focusInput(select);
     },
 
     handleFocus(select, e) {
@@ -53,7 +55,7 @@ export default Component.extend({
       if (action) {
         action(select, e);
       }
-      this.focusInput();
+      this.focusInput(select);
     },
 
     handleKeydown(select, e) {
@@ -81,7 +83,13 @@ export default Component.extend({
 
     buildSelection(option, select) {
       let newSelection = (select.selected || []).slice(0);
-      let idx = newSelection.indexOf(option);
+      let idx = -1;
+      for (let i = 0; i < newSelection.length; i++) {
+        if (isEqual(newSelection[i], option)) {
+          idx = i;
+          break;
+        }
+      }
       if (idx > -1) {
         newSelection.splice(idx, 1);
       } else {
@@ -92,10 +100,12 @@ export default Component.extend({
   },
 
   // Methods
-  focusInput() {
-    let input = this.element.querySelector('.ember-power-select-trigger-multiple-input');
-    if (input) {
-      input.focus();
+  focusInput(select) {
+    if (select) {
+      let input = document.querySelector(`#ember-power-select-trigger-multiple-input-${select.uniqueId}`);
+      if (input) {
+        input.focus();
+      }
     }
   }
 });

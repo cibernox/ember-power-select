@@ -1,5 +1,6 @@
-import Ember from 'ember';
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+import { get } from '@ember/object';
+export default Controller.extend({
   actions: {
     onchange(levelOrOption, dropdown) {
       if (get(levelOrOption, 'levelName')) {
@@ -14,8 +15,8 @@ export default Ember.Controller.extend({
     },
 
     search(term) {
-      const normalizedTerm = term.toLowerCase();
-      const results = this.get('currentOptions').filter(o => {
+      let normalizedTerm = term.toLowerCase();
+      let results = this.get('currentOptions').filter(o => {
         if (o.parentLevel) {
           return normalizedTerm === '';
         } else if (get(o, 'levelName')) {
@@ -24,7 +25,7 @@ export default Ember.Controller.extend({
           return o.toLowerCase().indexOf(normalizedTerm) > -1;
         }
       });
-      results.fromSearch = true;d
+      results.fromSearch = true;
       return results;
     }
   }

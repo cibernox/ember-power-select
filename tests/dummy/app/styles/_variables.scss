@@ -4,7 +4,7 @@ $headings-text-color: #313131;
 $code-text-color: $text-color;
 
 // Breakpoints
-$small-breakpoint: 568px;
+$small-breakpoint: 678px;
 $medium-breakpoint: 748px; // 768px originally
 
 // // Orange theme
@@ -44,3 +44,6 @@ $link-color: $brand-color;
 
 $light-gray: #ddd;
 $gray: #888;
+
+// Paddings
+$wrapper-padding: 0.5rem;

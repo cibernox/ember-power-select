@@ -1,4 +1,4 @@
-/* jshint node:true */
+/* eslint-env node */
 // var RSVP = require('rsvp');
 
 // For details on each option run `ember help release`
@@ -14,7 +14,7 @@ module.exports = {
   // format: 'YYYY-MM-DD',
   // timezone: 'America/Los_Angeles',
   //
-  beforeCommit: function(project, versions) {
+  beforeCommit: function (/* project, versions */) {
     require('../compile-css.js'); // Requiring the file compiles
     return new Promise(function(resolve) {
       simpleGit.add(['vendor/ember-power-select.css'], function() {

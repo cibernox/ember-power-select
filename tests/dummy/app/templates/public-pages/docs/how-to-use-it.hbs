@@ -1,23 +1,22 @@
 <h1 class="doc-page-title">How to use it</h1>
 
 <p>
-  The basic component usage is very simple. The only mandatory arguments you have to
-  pass to it are <code>options</code>(<b>*</b>) which has to be a <em>collection</em> of any kind, including
-  the result of ember-data operations like <code>.find</code> or <code>.query</code>, and the
-  <code>onchange</code> action.
-  The component will yield each individual item in the collection to the block to generate the list.
+  The basic component usage is very simple. You must pass the component an <code>onchange</code> action, and either an <code>options</code>
+  collection and/or a <code>search</code> action. The <code>options</code> argument can be a collection of any kind, including the result of
+  ember-data operations like <code>.find</code> or <code>.query</code>. The component will yield each individual item in the collection to
+  the block to generate the list.
 </p>
 
 <p>
-  <b>*</b> There's one exception: When you use the <code>search</code> action passing an initial
-  set of options is optional. Read more about {{#link-to 'public-pages.docs.the-search'}} the search{{/link-to}}
+  When you use the <code>search</code> action passing an initial set of <code>options</code> is optional.
+  Read more about {{#link-to "public-pages.docs.the-search"}} the search{{/link-to}} action.
 </p>
 
-<p><strong>Selects in this page seem to not work. This is intended.</strong> See last paragraph.</p>
+<p><strong>Selects in this page seem do not work. This is intended.</strong> See last paragraph.</p>
 
-{{#code-sample hbs="how-to-use-it-1.hbs" js="how-to-use-it-1-js.js" as |partialName|}}
+{{#code-example hbs="how-to-use-it-1.hbs" js="how-to-use-it-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   The block of the component becomes the content of each option of the select and also the content
@@ -25,14 +24,28 @@
   selects with complex HTML inside very naturally.
 </p>
 
-{{#code-sample hbs="how-to-use-it-2.hbs" js="how-to-use-it-2-js.js" as |partialName|}}
+{{#code-example hbs="how-to-use-it-2.hbs" js="how-to-use-it-2-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   <strong>Filtering in the above select also seems broken, but is also intended.</strong>
-  See {{#link-to 'public-pages.docs.the-search'}}the search{{/link-to}} section (Customize the search field) for
+  See {{#link-to "public-pages.docs.the-search"}}the search{{/link-to}} section (Customize the search field) for
   instructions on how to make it work.
+</p>
+
+<p>
+  The component expects <code>selected</code> to contain the actual selected object and not just an Id. One way to do this is to have a
+  computed property that returns the correct object based upon the Id.
+</p>
+
+{{#code-example hbs="how-to-use-it-3.hbs" js="how-to-use-it-3-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-example}}
+
+<p>
+  You could alternatively do this using the <code><a href="https://github.com/DockYard/ember-composable-helpers#find-by">find-by</a></code>
+  helper from the <a href="https://github.com/DockYard/ember-composable-helpers#find-by">ember-composable-helpers</a> add-on by DockYard.
 </p>
 
 <p>
@@ -43,14 +56,21 @@
 
 <ul>
   <li>
-    The component compares the selected option with the options in the collection by equality, to
-    have in mind that when working with POJOs that <code>{ foo: 'bar' } === { foo: 'bar' }</code> is false.
+    The component compares options using <code>Ember.isEqual</code>.
+    With primitive values like strings or numbers it works exactly as <code>===</code>.
+    With dates, although in JS <code>new Date(2017, 5, 5) !== new Date(2017, 5, 5)</code>,
+    in Ember Power Select they will be considered the same because <code>Ember.isEqual(new Date(2017, 5, 5), new Date(2017, 5, 5))) === true</code>.
+    <p>
+      When comparing objects, remember that in JS objects are compared by reference, so
+      <code>{ foo: 'bar' } !== { foo: 'bar' }</code>. However if you define on your objects
+      an <code>isEqual(other) {}</code> function, that will be used instead of a simple <code>===</code>.
+    </p>
   </li>
   <li>
     Updates in the selected element will update the selected value in the component as expected.
   </li>
   <li>
-    <code>selected</code> (and all other options options actually) is read only. This means that selecting
+    <code>selected</code> (and all other options actually) is read only. This means that selecting
     an element in the component won't do anything. That is a design decision and the reason why the
     <code>onchange</code> action is mandatory. This is aligned with Ember's Data Down Actions Up (DDAU) philosophy.
   </li>
@@ -66,6 +86,6 @@
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.docs.installation' class="doc-page-nav-link-prev"}}&lt; Installation{{/link-to}}
-  {{#link-to 'public-pages.docs.action-handling' class="doc-page-nav-link-next"}}Action handling &gt;{{/link-to}}
+  {{#link-to "public-pages.docs.installation" class="doc-page-nav-link-prev"}}&lt; Installation{{/link-to}}
+  {{#link-to "public-pages.docs.action-handling" class="doc-page-nav-link-next"}}Action handling &gt;{{/link-to}}
 </div>

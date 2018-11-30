@@ -1,7 +1,7 @@
 <h1 class="doc-page-title">Custom search action</h1>
 
 <p>
-  In {{#link-to 'public-pages.docs.the-search'}}The search{{/link-to}} chapter we saw all the possible ways of
+  In {{#link-to "public-pages.docs.the-search"}}The search{{/link-to}} chapter we saw all the possible ways of
   personalizing the way the component can filter but they all had something in common. You had all the
   options available upon initialization and you were just filtering that collection.
 </p>
@@ -36,9 +36,9 @@
   </ul>
 </p>
 
-{{#code-sample hbs="custom-search-action-1.hbs" js="custom-search-action-1-js.js" as |partialName|}}
+{{#code-example hbs="custom-search-action-1.hbs" js="custom-search-action-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <h3>Handling of thenables and cancellables (p.e. ember-concurrecy)</h3>
 
@@ -64,9 +64,9 @@
   And if before those 1500ms you clear the search or close the select, <strong>no request is made at all!</strong>
 </p>
 
-{{#code-sample hbs="custom-search-action-2.hbs" js="custom-search-action-2-js.js" as |partialName|}}
+{{#code-example hbs="custom-search-action-2.hbs" js="custom-search-action-2-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   Cool, eh? Now let's see how you can use all of this in testing.
@@ -74,6 +74,6 @@
 
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.docs.styles' class="doc-page-nav-link-prev"}}&lt; Styles{{/link-to}}
-  {{#link-to 'public-pages.docs.test-helpers' class="doc-page-nav-link-next"}}Test helpers &gt;{{/link-to}}
+  {{#link-to "public-pages.docs.styles" class="doc-page-nav-link-prev"}}&lt; Styles{{/link-to}}
+  {{#link-to "public-pages.docs.test-helpers" class="doc-page-nav-link-next"}}Test helpers &gt;{{/link-to}}
 </div>

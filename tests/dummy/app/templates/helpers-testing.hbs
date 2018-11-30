@@ -40,13 +40,13 @@
 </div>
 
 <div id="select-multiple-async">
-  {{#power-select-multiple options=numbers selected=asyncSelectedList onchange=(action "onChangeAsync" 'asyncSelectedList') as |num|}}
+  {{#power-select-multiple options=numbers selected=asyncSelectedList onchange=(action "onChangeAsync" "asyncSelectedList") as |num|}}
     {{num}}
   {{/power-select-multiple}}
 </div>
 
 <div class="select-deselect-async">
-  {{#power-select options=numbers selected=asyncSelected onchange=(action "onChangeAsync" 'asyncSelected') allowClear=true as |num|}}
+  {{#power-select options=numbers selected=asyncSelected onchange=(action "onChangeAsync" "asyncSelected") allowClear=true as |num|}}
     {{num}}
   {{/power-select}}
 </div>

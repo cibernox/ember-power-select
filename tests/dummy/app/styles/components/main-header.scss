@@ -9,17 +9,18 @@
 .main-header-logo {
   color: white;
   font-size: 30px;
-  display: block;
-  text-align: center;
-  line-height: 66px;
-  padding-top: 5px;
-  height: 76px;
-  .home-link {
-    vertical-align: text-bottom;
-  }
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img {
     height: 36px;
-    vertical-align: -5%;
+    min-width: 88px;
+  }
+  .home-link {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
   }
 }
 .main-header-nav-links {
@@ -34,13 +35,13 @@
 // Easter egg
 $almost-white: #fff2f2;
 .main-header-select {
-  display: inline-block;
   a { color: $almost-white; }
   .ember-basic-dropdown-trigger.ember-power-select-trigger {
     padding: 0rem 2rem 0rem 0.5rem !important;
     background-color: transparent;
     border: 2px solid $almost-white !important;
     border-radius: 4px;
+    line-height: 1.6;
     white-space: nowrap;
     outline: none;
   }
@@ -49,7 +50,7 @@ $almost-white: #fff2f2;
     border-color: white transparent transparent transparent;
   }
 }
-.ember-power-select-dropdown.main-header-select-dropdown {
+.ember-power-select-dropdown.ember-basic-dropdown-content--below.main-header-select-dropdown {
   color: $almost-white;
   line-height: 3rem;
   font-size: 24px;
@@ -78,10 +79,6 @@ $almost-white: #fff2f2;
   .main-header-nav {
     padding-right: 0;
     padding-left: 0;
-  }
-  .main-header-logo {
-    display: block;
-    text-align: center;
   }
   .main-header-nav-links {
     justify-content: space-between;

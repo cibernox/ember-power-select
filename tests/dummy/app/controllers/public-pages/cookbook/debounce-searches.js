@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { isBlank } from '@ember/utils';
+import { run } from '@ember/runloop';
+import fetch from 'fetch';
+import RSVP from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
-const { run, isBlank, inject } = Ember;
 
-export default Ember.Controller.extend({
-  ajax: inject.service(),
-
+export default Controller.extend({
   actions: {
     searchRepo(term) {
-      return new Ember.RSVP.Promise((resolve, reject) => {
+      return new RSVP.Promise((resolve, reject) => {
         run.debounce(this, this._performSearch, term, resolve, reject, 600);
       });
     }
@@ -16,7 +17,7 @@ export default Ember.Controller.extend({
   searchRepo: task(function* (term) {
     yield timeout(600);
     let url = `https://api.github.com/search/repositories?q=${term}`;
-    return this.get('ajax').request(url).then((json) => json.items);
+    return fetch(url).then((resp) => resp.json()).then((json) => json.items);
   }),
 
   _performSearch(term, resolve, reject) {
@@ -24,7 +25,7 @@ export default Ember.Controller.extend({
       return resolve([]);
     }
     let url = `https://api.github.com/search/repositories?q=${term}`;
-    this.get('ajax').request(url)
+    fetch(url).then((resp) => resp.json())
       .then((json) => resolve(json.items), reject);
   }
 });

@@ -1,30 +1,30 @@
 <section class="docs">
   <nav class="side-nav">
     <header class="side-nav-header">Getting started</header>
-    {{#link-to 'public-pages.docs.index' class="side-nav-link"}}Overview{{/link-to}}
-    {{#link-to 'public-pages.docs.installation' class="side-nav-link"}}Installation{{/link-to}}
-    {{#link-to 'public-pages.docs.how-to-use-it' class="side-nav-link"}}How to use it{{/link-to}}
-    {{#link-to 'public-pages.docs.action-handling' class="side-nav-link"}}Action handling{{/link-to}}
-    {{#link-to 'public-pages.docs.groups' class="side-nav-link"}}Groups{{/link-to}}
-    {{#link-to 'public-pages.docs.multiple-selection' class="side-nav-link"}}Multiple selection{{/link-to}}
+    {{#link-to "public-pages.docs.index" class="side-nav-link"}}Overview{{/link-to}}
+    {{#link-to "public-pages.docs.installation" class="side-nav-link"}}Installation{{/link-to}}
+    {{#link-to "public-pages.docs.how-to-use-it" class="side-nav-link"}}How to use it{{/link-to}}
+    {{#link-to "public-pages.docs.action-handling" class="side-nav-link"}}Action handling{{/link-to}}
+    {{#link-to "public-pages.docs.groups" class="side-nav-link"}}Groups{{/link-to}}
+    {{#link-to "public-pages.docs.multiple-selection" class="side-nav-link"}}Multiple selection{{/link-to}}
 
     <header class="side-nav-header">Basic customization</header>
-    {{#link-to 'public-pages.docs.the-trigger' class="side-nav-link"}}The trigger{{/link-to}}
-    {{#link-to 'public-pages.docs.the-list' class="side-nav-link"}}The list{{/link-to}}
-    {{#link-to 'public-pages.docs.the-search' class="side-nav-link"}}The search{{/link-to}}
-    {{#link-to 'public-pages.docs.styles' class="side-nav-link"}}Styles{{/link-to}}
+    {{#link-to "public-pages.docs.the-trigger" class="side-nav-link"}}The trigger{{/link-to}}
+    {{#link-to "public-pages.docs.the-list" class="side-nav-link"}}The list{{/link-to}}
+    {{#link-to "public-pages.docs.the-search" class="side-nav-link"}}The search{{/link-to}}
+    {{#link-to "public-pages.docs.styles" class="side-nav-link"}}Styles{{/link-to}}
 
     <header class="side-nav-header">Advanced customization</header>
-    {{#link-to 'public-pages.docs.custom-search-action' class="side-nav-link"}}Custom search action{{/link-to}}
+    {{#link-to "public-pages.docs.custom-search-action" class="side-nav-link"}}Custom search action{{/link-to}}
 
     <header class="side-nav-header">Other</header>
-    {{#link-to 'public-pages.docs.test-helpers' class="side-nav-link"}}Test helpers{{/link-to}}
-    {{#link-to 'public-pages.docs.troubleshooting' class="side-nav-link"}}Troubleshooting{{/link-to}}
-    {{#link-to 'public-pages.docs.architecture' class="side-nav-link"}}Architecture{{/link-to}}
-    {{#link-to 'public-pages.docs.api-reference' class="side-nav-link"}}API reference{{/link-to}}
+    {{#link-to "public-pages.docs.test-helpers" class="side-nav-link"}}Test helpers{{/link-to}}
+    {{#link-to "public-pages.docs.troubleshooting" class="side-nav-link"}}Troubleshooting{{/link-to}}
+    {{#link-to "public-pages.docs.architecture" class="side-nav-link"}}Architecture{{/link-to}}
+    {{#link-to "public-pages.docs.api-reference" class="side-nav-link"}}API reference{{/link-to}}
   </nav>
   <section class="doc-page">
-    {{#power-select selected=currentSection options=groupedSections onchange=(action 'visit') searchField="text" searchEnabled=false triggerClass="section-selector" as |option|}}
+    {{#power-select selected=currentSection options=groupedSections onchange=(action "visit") searchField="text" searchEnabled=false triggerClass="section-selector" as |option|}}
       {{option.text}}
     {{/power-select}}
     {{outlet}}

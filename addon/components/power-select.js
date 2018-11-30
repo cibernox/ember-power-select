@@ -1,21 +1,27 @@
-import Component from 'ember-component';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
+import { getOwner } from '@ember/application';
+import { isEqual } from '@ember/utils';
+import { get, set } from '@ember/object';
+import { assert } from '@ember/debug';
+import { DEBUG } from '@glimmer/env';
+import { isBlank } from '@ember/utils';
+import { isArray as isEmberArray } from '@ember/array';
+import ArrayProxy from '@ember/array/proxy';
+import ObjectProxy from '@ember/object/proxy';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
-import { assert } from 'ember-metal/utils';
-import { isBlank } from 'ember-utils';
-import { isEmberArray } from 'ember-array/utils';
-import computed from 'ember-computed';
-import get from 'ember-metal/get';
-import set from 'ember-metal/set';
-import { scheduleOnce } from 'ember-runloop';
+import optionsMatcher from '../utils/computed-options-matcher';
 import {
   defaultMatcher,
   indexOfOption,
-  optionAtIndex,
   filterOptions,
+  findOptionWithOffset,
   countOptions,
   defaultHighlighted,
-  advanceSelectableOption
+  advanceSelectableOption,
+  defaultTypeAheadMatcher
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
 
@@ -60,7 +66,8 @@ const initialState = {
   loading: false,           // Truthy if there is a pending promise that will update the results
   isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
   // Private API (for now)
-  _expirableSearchText: ''
+  _expirableSearchText: '',
+  _repeatingChar: ''
 };
 
 export default Component.extend({
@@ -71,19 +78,30 @@ export default Component.extend({
   // Options
   searchEnabled: fallbackIfUndefined(true),
   matchTriggerWidth: fallbackIfUndefined(true),
+  preventScroll: fallbackIfUndefined(false),
   matcher: fallbackIfUndefined(defaultMatcher),
   loadingMessage: fallbackIfUndefined('Loading options...'),
   noMatchesMessage: fallbackIfUndefined('No results found'),
   searchMessage: fallbackIfUndefined('Type to search'),
   closeOnSelect: fallbackIfUndefined(true),
   defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
+  typeAheadMatcher: fallbackIfUndefined(defaultTypeAheadMatcher),
+  highlightOnHover: fallbackIfUndefined(true),
 
   afterOptionsComponent: fallbackIfUndefined(null),
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   optionsComponent: fallbackIfUndefined('power-select/options'),
+  groupComponent: fallbackIfUndefined('power-select/power-select-group'),
   selectedItemComponent: fallbackIfUndefined(null),
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
+  placeholderComponent: fallbackIfUndefined('power-select/placeholder'),
+  buildSelection: fallbackIfUndefined(function buildSelection(option) {
+    return option;
+  }),
+
+  _triggerTagName: fallbackIfUndefined('div'),
+  _contentTagName: fallbackIfUndefined('div'),
 
   // Private state
   publicAPI: initialState,
@@ -92,7 +110,12 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this._publicAPIActions = {
-      search: (...args) => this.send('search', ...args),
+      search: (...args) => {
+        if (this.get('isDestroying')) {
+          return;
+        }
+        return this.send('search', ...args)
+      },
       highlight: (...args) => this.send('highlight', ...args),
       select: (...args) => this.send('select', ...args),
       choose: (...args) => this.send('choose', ...args),
@@ -105,15 +128,24 @@ export default Component.extend({
     this._super(...arguments);
     this._removeObserversInOptions();
     this._removeObserversInSelected();
+    let action = this.get('registerAPI');
+    if (action) {
+      action(null);
+    }
   },
 
   // CPs
+  inTesting: computed(function() {
+    let config = getOwner(this).resolveRegistration('config:environment');
+    return config.environment === 'test';
+  }),
+
   selected: computed({
     get() {
       return null;
     },
     set(_, selected) {
-      if (selected && selected.then) {
+      if (selected && !(selected instanceof ObjectProxy) && get(selected, 'then')) {
         this.get('_updateSelectedTask').perform(selected);
       } else {
         scheduleOnce('actions', this, this.updateSelection, selected);
@@ -130,7 +162,7 @@ export default Component.extend({
       if (options === oldOptions) {
         return options;
       }
-      if (options && options.then) {
+      if (options && get(options, 'then')) {
         this.get('_updateOptionsTask').perform(options);
       } else {
         scheduleOnce('actions', this, this.updateOptions, options);
@@ -139,14 +171,9 @@ export default Component.extend({
     }
   }),
 
-  optionMatcher: computed('searchField', 'matcher', function() {
-    let { matcher, searchField } = this.getProperties('matcher', 'searchField');
-    if (searchField && matcher === defaultMatcher) {
-      return (option, text) => matcher(get(option, searchField), text);
-    } else {
-      return (option, text) => matcher(option, text);
-    }
-  }),
+  optionMatcher: optionsMatcher('matcher', defaultMatcher),
+
+  typeAheadOptionMatcher: optionsMatcher('typeAheadMatcher', defaultTypeAheadMatcher),
 
   concatenatedTriggerClasses: computed('triggerClass', 'publicAPI.isActive', function() {
     let classes = ['ember-power-select-trigger'];
@@ -164,9 +191,9 @@ export default Component.extend({
     return concatWithProperty(classes, this.get('dropdownClass'));
   }),
 
-  mustShowSearchMessage: computed('publicAPI.{searchText,resultsCount}', 'search', 'searchMessage', function() {
+  mustShowSearchMessage: computed('publicAPI.{loading,searchText,resultsCount}', 'search', 'searchMessage', function() {
     let publicAPI = this.get('publicAPI');
-    return publicAPI.searchText.length === 0
+    return !publicAPI.loading && publicAPI.searchText.length === 0
       && !!this.get('search') && !!this.get('searchMessage')
       && publicAPI.resultsCount === 0;
   }),
@@ -181,6 +208,9 @@ export default Component.extend({
   // Actions
   actions: {
     registerAPI(dropdown) {
+      if (!dropdown) {
+        return;
+      }
       let publicAPI = assign({}, this.get('publicAPI'), dropdown);
       publicAPI.actions = assign({}, dropdown.actions, this._publicAPIActions);
       this.setProperties({
@@ -199,7 +229,7 @@ export default Component.extend({
         return false;
       }
       if (e) {
-        this.openingEvent = e;
+        this.set('openingEvent', e);
         if (e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
           e.preventDefault();
         }
@@ -213,7 +243,7 @@ export default Component.extend({
         return false;
       }
       if (e) {
-        this.openingEvent = null;
+        this.set('openingEvent', null);
       }
       this.updateState({ highlighted: undefined });
     },
@@ -224,7 +254,7 @@ export default Component.extend({
       let publicAPI = this.get('publicAPI');
       let correctedTerm;
       if (action) {
-        correctedTerm = action(e.target.value, publicAPI, e);
+        correctedTerm = action(term, publicAPI, e);
         if (correctedTerm === false) {
           return;
         }
@@ -239,10 +269,10 @@ export default Component.extend({
       this.updateState({ highlighted: option });
     },
 
-    select(selected /* , e */) {
+    select(selected, e) {
       let publicAPI = this.get('publicAPI');
-      if (publicAPI.selected !== selected) {
-        this.get('onchange')(selected, publicAPI);
+      if (!isEqual(publicAPI.selected, selected)) {
+        this.get('onchange')(selected, publicAPI, e);
       }
     },
 
@@ -257,10 +287,12 @@ export default Component.extend({
     },
 
     choose(selected, e) {
-      if (e && e.clientY) {
-        if (this.openingEvent && this.openingEvent.clientY) {
-          if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
-            return;
+      if (!this.get('inTesting')) {
+        if (e && e.clientY) {
+          if (this.openingEvent && this.openingEvent.clientY) {
+            if (Math.abs(this.openingEvent.clientY - e.clientY) < 2) {
+              return;
+            }
           }
         }
       }
@@ -278,7 +310,11 @@ export default Component.extend({
       if (onkeydown && onkeydown(this.get('publicAPI'), e) === false) {
         return false;
       }
-      if (e.keyCode >= 48 && e.keyCode <= 90) { // Keys 0-9, a-z or SPACE
+      if (e.ctrlKey || e.metaKey) {
+        return false;
+      }
+      if ((e.keyCode >= 48 && e.keyCode <= 90) // Keys 0-9, a-z
+        || this._isNumpadKeyEvent(e)) {
         this.get('triggerTypingTask').perform(e);
       } else if (e.keyCode === 32) {  // Space
         return this._handleKeySpace(e);
@@ -296,12 +332,16 @@ export default Component.extend({
       return this._routeKeydown(e);
     },
 
-    scrollTo(option /* , e */) {
-      if (!self.document || !option) {
+    scrollTo(option, ...rest) {
+      if (!document || !option) {
         return;
       }
       let publicAPI = this.get('publicAPI');
-      let optionsList = self.document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
+      let userDefinedScrollTo = this.get('scrollTo');
+      if (userDefinedScrollTo) {
+        return userDefinedScrollTo(option, publicAPI, ...rest);
+      }
+      let optionsList = document.getElementById(`ember-power-select-options-${publicAPI.uniqueId}`);
       if (!optionsList) {
         return;
       }
@@ -310,6 +350,9 @@ export default Component.extend({
         return;
       }
       let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
+      if (!optionElement) {
+        return;
+      }
       let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
       let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
       if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
@@ -336,7 +379,9 @@ export default Component.extend({
     },
 
     onTriggerBlur(_, event) {
-      this.send('deactivate');
+      if (!this.isDestroying) {
+        this.send('deactivate');
+      }
       let action = this.get('onblur');
       if (action) {
         action(this.get('publicAPI'), event);
@@ -344,7 +389,9 @@ export default Component.extend({
     },
 
     onBlur(event) {
-      this.send('deactivate');
+      if (!this.isDestroying) {
+        this.send('deactivate');
+      }
       let action = this.get('onblur');
       if (action) {
         action(this.get('publicAPI'), event);
@@ -352,33 +399,66 @@ export default Component.extend({
     },
 
     activate() {
-      this.updateState({ isActive: true });
+      scheduleOnce('actions', this, 'setIsActive', true);
     },
 
     deactivate() {
-      this.updateState({ isActive: false });
+      scheduleOnce('actions', this, 'setIsActive', false);
     }
   },
 
   // Tasks
   triggerTypingTask: task(function* (e) {
+    // In general, a user doing this interaction means to have a different result.
+    let searchStartOffset = 1;
     let publicAPI = this.get('publicAPI');
-    let term = publicAPI._expirableSearchText + String.fromCharCode(e.keyCode);
-    this.updateState({ _expirableSearchText: term });
-    let matches = this.filter(publicAPI.options, term, true);
-    if (get(matches, 'length') > 0) {
-      let firstMatch = optionAtIndex(matches, 0);
-      if (firstMatch !== undefined) {
-        if (publicAPI.isOpen) {
-          publicAPI.actions.highlight(firstMatch.option, e);
-          publicAPI.actions.scrollTo(firstMatch.option, e);
-        } else {
-          publicAPI.actions.select(firstMatch.option, e);
-        }
+    let repeatingChar = publicAPI._repeatingChar;
+    let charCode = e.keyCode;
+    if (this._isNumpadKeyEvent(e)) {
+      charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
+    }
+    let term;
+
+    // Check if user intends to cycle through results. _repeatingChar can only be the first character.
+    let c = String.fromCharCode(charCode);
+    if (c === publicAPI._repeatingChar) {
+      term = c;
+    } else {
+      term = publicAPI._expirableSearchText + c;
+    }
+
+    if (term.length > 1) {
+      // If the term is longer than one char, the user is in the middle of a non-cycling interaction
+      // so the offset is just zero (the current selection is a valid match).
+      searchStartOffset = 0;
+      repeatingChar = '';
+    } else {
+      repeatingChar = c;
+    }
+
+    // When the select is open, the "selection" is just highlighted.
+    if (publicAPI.isOpen && publicAPI.highlighted) {
+      searchStartOffset += indexOfOption(publicAPI.options, publicAPI.highlighted);
+    } else if (!publicAPI.isOpen && publicAPI.selected) {
+      searchStartOffset += indexOfOption(publicAPI.options, publicAPI.selected);
+    } else {
+      searchStartOffset = 0;
+    }
+
+    // The char is always appended. That way, searching for words like "Aaron" will work even
+    // if "Aa" would cycle through the results.
+    this.updateState({ _expirableSearchText: publicAPI._expirableSearchText + c, _repeatingChar: repeatingChar });
+    let match = this.findWithOffset(publicAPI.options, term, searchStartOffset, true);
+    if (match !== undefined) {
+      if (publicAPI.isOpen) {
+        publicAPI.actions.highlight(match, e);
+        publicAPI.actions.scrollTo(match, e);
+      } else {
+        publicAPI.actions.select(match, e);
       }
     }
     yield timeout(1000);
-    this.updateState({ _expirableSearchText: '' });
+    this.updateState({ _expirableSearchText: '', _repeatingChar: '' });
   }).restartable(),
 
   _updateSelectedTask: task(function* (selectionPromise) {
@@ -387,6 +467,9 @@ export default Component.extend({
   }).restartable(),
 
   _updateOptionsTask: task(function* (optionsPromise) {
+    if (optionsPromise instanceof ArrayProxy) {
+      this.updateOptions(optionsPromise.get('content'));
+    }
     this.updateState({ loading: true });
     try {
       let options = yield optionsPromise;
@@ -403,6 +486,7 @@ export default Component.extend({
       let resultsArray = toPlainArray(results);
       this.updateState({
         results: resultsArray,
+        _rawSearchResults: results,
         lastSearchedText: term,
         resultsCount: countOptions(results),
         loading: false
@@ -418,14 +502,35 @@ export default Component.extend({
   }).restartable(),
 
   // Methods
+  setIsActive(isActive) {
+    this.updateState({ isActive });
+  },
+
   filter(options, term, skipDisabled = false) {
     return filterOptions(options || [], term, this.get('optionMatcher'), skipDisabled);
+  },
+
+  findWithOffset(options, term, offset, skipDisabled = false) {
+    return findOptionWithOffset(options || [], term, this.get('typeAheadOptionMatcher'), offset, skipDisabled);
   },
 
   updateOptions(options) {
     this._removeObserversInOptions();
     if (!options) {
       return;
+    }
+    if (DEBUG) {
+      (function walk(collection) {
+        for (let i = 0; i < get(collection, 'length'); i++) {
+          let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
+          let subOptions = get(entry, 'options');
+          let isGroup = !!get(entry, 'groupName') && !!subOptions;
+          if (isGroup) {
+            assert('ember-power-select doesn\'t support promises inside groups. Please, resolve those promises and turn them into arrays before passing them to ember-power-select', !get(subOptions, 'then'));
+            walk(subOptions);
+          }
+        }
+      })(options);
     }
     if (options && options.addObserver) {
       options.addObserver('[]', this, this._updateOptionsAndResults);
@@ -459,12 +564,8 @@ export default Component.extend({
     this.updateState({ highlighted });
   },
 
-  buildSelection(option /* , select */) {
-    return option;
-  },
-
   _updateOptionsAndResults(opts) {
-    if (get(this, 'isDestroyed')) {
+    if (get(this, 'isDestroying')) {
       return;
     }
     let options = toPlainArray(opts);
@@ -512,7 +613,7 @@ export default Component.extend({
     let search = searchAction(term, publicAPI);
     if (!search) {
       publicAPI = this.updateState({ lastSearchedText: term });
-    } else if (search.then) {
+    } else if (get(search, 'then')) {
       this.get('handleAsyncSearchTask').perform(term, search);
     } else {
       let resultsArray = toPlainArray(search);
@@ -558,6 +659,7 @@ export default Component.extend({
   _handleKeySpace(e) {
     let publicAPI = this.get('publicAPI');
     if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
+      e.preventDefault(); // Prevents scrolling of the page.
       publicAPI.actions.choose(publicAPI.highlighted, e);
       return false;
     }
@@ -581,6 +683,10 @@ export default Component.extend({
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
     }
+  },
+
+  _isNumpadKeyEvent(e) {
+    return e.keyCode >= 96 && e.keyCode <= 105;
   },
 
   updateState(changes) {

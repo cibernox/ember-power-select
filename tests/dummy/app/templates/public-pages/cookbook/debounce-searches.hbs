@@ -10,9 +10,9 @@
   You can do that yourself with a few lines of code:
 </p>
 
-{{#code-sample hbs="debounce-searches-1.hbs" js="debounce-searches-1-js.js" as |partialName|}}
+{{#code-example hbs="debounce-searches-1.hbs" js="debounce-searches-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   That way you are in control and you can vary the debounce intervals depending on any custom
@@ -24,7 +24,7 @@
   It makes you code a little more but in exchange you always have the ultimate decision.
 </p>
 
-<h3>Debounceing searches with ember-concurrency</h3>
+<h3>Debouncing searches with ember-concurrency</h3>
 
 <p>
   Ember Power Select uses ember-concurrency internally to manage asyncrony in a nice way, and
@@ -32,13 +32,13 @@
   because it abstract you from all the manual bookeeping of promises and debounce times.
 </p>
 
-{{#code-sample hbs="debounce-searches-2.hbs" js="debounce-searches-2-js.js" as |partialName|}}
+{{#code-example hbs="debounce-searches-2.hbs" js="debounce-searches-2-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>That's it. Three lines of code for debounced searches with automatic cancellation.</p>
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
-  {{#link-to 'public-pages.cookbook.create-custom-options' class="doc-page-nav-link-next"}}Create custom options &gt;{{/link-to}}
+  {{#link-to "public-pages.cookbook.bootstrap-theme" class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
+  {{#link-to "public-pages.cookbook.create-custom-options" class="doc-page-nav-link-next"}}Create custom options &gt;{{/link-to}}
 </div>

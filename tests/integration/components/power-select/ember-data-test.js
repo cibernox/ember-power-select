@@ -1,110 +1,73 @@
-import Ember from 'ember';
-import $ from 'jquery';
-import { moduleForComponent, test } from 'ember-qunit';
-import wait from 'ember-test-helpers/wait';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, settled, click, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, clickTrigger } from '../../../helpers/ember-power-select';
-import { startMirage } from '../../../../initializers/ember-cli-mirage';
+import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import emberDataInitializer from '../../../../initializers/ember-data';
-import { nativeMouseDown } from '../../../helpers/ember-power-select';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-moduleForComponent('ember-power-select', 'Integration | Component | Ember Power Select (Ember-data integration)', {
-  integration: true,
-  beforeEach() {
-    let owner = Ember.getOwner(this);
-    this.server = startMirage({ environment: 'test', modulePrefix: 'dummy' });
+module('Integration | Component | Ember Power Select (Ember-data integration)', function(hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
+  hooks.beforeEach(function() {
+    let owner = this.owner;
     emberDataInitializer.initialize(owner);
     this.store = owner.lookup('service:store');
-  },
-
-  afterEach() {
-    this.server.shutdown();
-  }
-});
-
-test('Passing as options of a `store.findAll` works', function(assert) {
-  server.createList('user', 10);
-  this.users = this.store.findAll('user');
-  this.render(hbs`
-    {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
-      {{option.name}}
-    {{/power-select}}
-  `);
-
-  clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
-
-  return wait().then(function() {
-    assert.equal($('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
-    typeInSearch('2');
-    assert.equal($('.ember-power-select-option').length, 1, 'Filtering works');
   });
-});
 
-test('Passing as options the result of `store.query` works', function(assert) {
-  server.createList('user', 10);
-  this.users = this.store.query('user', { foo: 'bar' });
-  this.render(hbs`
-    {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
-      {{option.name}}
-    {{/power-select}}
-  `);
+  test('Passing as options of a `store.findAll` works', async function(assert) {
+    this.server.createList('user', 10);
+    this.server.timing = 200;
+    this.users = [];
+    await render(hbs`
+      {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
+        {{option.name}}
+      {{/power-select}}
+    `);
 
-  clickTrigger();
-  assert.equal($('.ember-power-select-option').text().trim(), 'Loading options...', 'The loading message appears while the promise is pending');
-
-  return wait().then(function() {
-    assert.equal($('.ember-power-select-option').length, 10, 'Once the collection resolves the options render normally');
-    typeInSearch('2');
-    assert.equal($('.ember-power-select-option').length, 1, 'Filtering works');
+    this.set('users', this.store.findAll('user'));
+    let promise = clickTrigger();
+    await waitFor('.ember-power-select-option');
+    assert.dom('.ember-power-select-option').hasText('Loading options...', 'The loading message appears while the promise is pending');
+    await promise;
+    assert.dom('.ember-power-select-option').exists({ count: 10 }, 'Once the collection resolves the options render normally');
+    await typeInSearch('2');
+    assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Filtering works');
   });
-});
 
-test('Delete an item in a multiple selection', function(assert) {
-  server.createList('user', 10);
-  this.users = this.store.findAll('user');
-  this.render(hbs`
-    {{#power-select-multiple options=users searchField="name" selected=users onchange=(action (mut users)) as |option|}}
-      {{option.name}}
-    {{/power-select-multiple}}
-  `);
+  test('Passing as options the result of `store.query` works', async function(assert) {
+    this.server.createList('user', 10);
+    this.server.timing = 200;
+    this.users = [];
+    await render(hbs`
+      {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
+        {{option.name}}
+      {{/power-select}}
+    `);
 
-  return wait().then(function() {
-    nativeMouseDown('.ember-power-select-multiple-remove-btn:eq(0)');
-    return wait().then(function() {
-      assert.equal($('.ember-power-select-multiple-remove-btn').length, 9, 'Once the collection resolves the options render normally');
-    });
+    this.set('users', this.store.query('user', { foo: 'bar' }));
+    let promise = clickTrigger();
+    await waitFor('.ember-power-select-option');
+    assert.dom('.ember-power-select-option').hasText('Loading options...', 'The loading message appears while the promise is pending')
+    await promise;
+    assert.dom('.ember-power-select-option').exists({ count: 10 }, 'Once the collection resolves the options render normally');
+    await typeInSearch('2');
+    assert.dom('.ember-power-select-option').exists({ count: 1 }, 'Filtering works');
   });
-});
 
-test('The `selected` option can be an async belongsTo', function(assert) {
-  let done = assert.async();
-  assert.expect(6);
+  test('Delete an item in a multiple selection', async function(assert) {
+    this.server.createList('user', 10);
+    this.users = [];
+    await render(hbs`
+      {{#power-select-multiple options=users searchField="name" selected=users onchange=(action (mut users)) as |option|}}
+        {{option.name}}
+      {{/power-select-multiple}}
+    `);
 
-  let pets = server.createList('pet', 10);
-  let mainUser = server.create('user', { petIds: pets.map((u) => u.id), bestieId: pets[3].id });
-
-  Ember.run(() => {
-    this.store.findRecord('user', mainUser.id).then((record) => {
-      this.mainUser = record;
-      this.render(hbs`
-        {{#power-select options=mainUser.pets selected=mainUser.bestie searchField="name" onchange=(action (mut foo)) as |option|}}
-          {{option.name}}
-        {{/power-select}}
-      `);
-
-      clickTrigger();
-      assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'Pet 0', 'The first element is highlighted');
-      assert.equal($('.ember-power-select-option[aria-selected="true"]').length, 0, 'no element is selected');
-      assert.equal(this.$('.ember-power-select-trigger').text().trim(), '', 'Nothing is selected yet');
-
-      setTimeout(function() {
-        assert.equal($('.ember-power-select-option[aria-current="true"]').text().trim(), 'Pet 3', 'The 4th element is highlighted');
-        assert.equal($('.ember-power-select-option[aria-selected="true"]').text().trim(), 'Pet 3', 'The 4th element is highlighted');
-        assert.equal(this.$('.ember-power-select-trigger').text().trim(), 'Pet 3', 'The trigger has the proper content');
-        done();
-      }, 10);
-    });
+    this.set('users', this.store.findAll('user'));
+    await settled()
+    await click('.ember-power-select-multiple-remove-btn');
+    assert.dom('.ember-power-select-multiple-remove-btn').exists({ count: 9 }, 'Once the collection resolves the options render normally');
   });
 });

@@ -1,7 +1,6 @@
-import Ember from 'ember';
-
-const { computed } = Ember;
-const { service } = Ember.inject;
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { inject } from '@ember/service';
 
 const groupedSections = [
   {
@@ -23,8 +22,8 @@ const groupedSections = [
   }
 ];
 
-export default Ember.Controller.extend({
-  routing: service('-routing'),
+export default Controller.extend({
+  routing: inject('-routing'),
   groupedSections,
 
   currentSection: computed('routing.currentRouteName', function() {

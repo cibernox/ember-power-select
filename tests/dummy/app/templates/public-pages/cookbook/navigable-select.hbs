@@ -1,39 +1,38 @@
 <h1 class="doc-page-title">Navigable select</h1>
 
 <p>
-  Ember Power Select's design decision of being build by composing several independent components
-  makes it perfect for build your own custom components by replacing parts of with with your own components.
+  Ember Power Select is built by composing several independent components. This is great for customization, because
+  you can replace any of these independent components with your own.
 </p>
 
 <p>
-  Usually this feature will be used for customize the appearance appearance, but it can also be
-  use to build completely different behaviors.
+  Usually this is used for customizing appearance, but it can also be used to build completely different behaviors.
 </p>
 
 <p>
-  Let's see how to build a component that show grouped options as a navigable menu
-  a multi-level select with animations with just a few lines of code.
+  Let's see how to build a component that shows grouped options as a multi-leveled, navigable menu with nice animations,
+  in only a few lines of code!
 </p>
 
 <p>
   Let's see the result:
 </p>
 
-{{#code-sample hbs="navigable-select-1.hbs" js="navigable-select-1-js.js" as |partialName|}}
+{{#code-example hbs="navigable-select-1.hbs" js="navigable-select-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
-  Nice? Probably it will require less code than you think.
+  Nice? It takes less code than you might think.
 </p>
 
 <p>
-  Before writing any code lets install <code>liquid-fire</code> for the animations.
+  Before writing any code, let's install <code>liquid-fire</code> for the animations.
 </p>
 
 <p>
   Now let's analyze the problem.
-  The task consists basically in create a grouped select like this:
+  The task consists basically of creating a grouped select like this:
 </p>
 <div style="margin: 0 auto; max-width: 250px;">
   {{#power-select
@@ -47,32 +46,32 @@
 </div>
 <br>
 <p>
-  But in the new one the groups are regular options that can be highlighted, searched and interacted, and for
-  backwards compatibility reasons should take the same arguments so it behaves like a drop-in replacement.
+  But in the new one the groups are regular options that can be highlighted, searched and interacted with.
+  It should take the same arguments so that it behaves like a drop-in replacement.
 </p>
 
 <p>
-  The first evident difference is that the list of options is completely different. It uses liquid-fire for animations
-  so we need to use the `optionsComponent` option to let Ember Power Select know that it should render our own custom
-  component in the dropdown instead of the default one.
+  The first main difference is that the list of options is completely different.
+  We'll use the <code>optionsComponent</code> attribute to let Ember Power Select know
+  that it should render our own component in the dropdown, instead of the default one.
 </p>
 
 <ul>
   <li>
     Another key difference is that the dropdown should not be closed when we select a group, only when we
-    select a leaf node. We can do that with by passing `closeOnSelect=false`. That will keep the select open
-    after selecting an option it will be up to use to decide when to close it, using the second argument
+    select a leaf node. We can do that with by passing <code>closeOnSelect=false</code>. That will keep the select open
+    after selecting an option, but it will be up to us to decide when to close it, using the second argument
     received by the <code>onchange</code> option.
   </li>
 
   <li>
-    Now let's consider filtering. Just for refreshment, keep in ming that Ember Power Selects considers any option with a <code>groupName</code>
-    and <code>options</code> attributes to be a group itself, and the default search strategy will ignore it,
-    so seems that this component will need to provide a custom search function function to the underlying select.
+    Now let's consider filtering. Remember, Ember Power Selects considers any option with a <code>groupName</code>
+    and <code>options</code> attributes to be a group itself, and the default search strategy will ignore it.
+    So, it seems that this component will need to provide a custom search function to the underlying select.
   </li>
 
   <li>
-    The keyboard arrows also are a problem. By default only leaf options can be highlighted. This along
+    We also need to handle the keyboard arrows. By default only leaf options can be highlighted. This along
     with the search issues commented above makes us think that we should not treat groups as groups at all,
     so we should internally transform the groups into another data structure that doesn't look as a group
     for ember-power-select and in which each level keeps a reference to the parent level in order to
@@ -81,12 +80,12 @@
 </ul>
 
 <p>
-  Ok, seems that all it's clear. Is time to code.
+  Ok, we've thought through the issues we're solving. It's time to code.
 </p>
 
 <p>
   The <code>navigable-select.hbs</code> template renders the select, and the yielded options will be
-  leaf options or groups with more options inside. For avoiding confusion we'll call this transformed
+  leaf options or groups with more options inside. For avoiding confusion we'll call these transformed
   groups "levels".
 </p>
 
@@ -119,12 +118,12 @@
   The default list doesn't work for us, we need to create that "animated-options".
 </p>
 
-{{code-sample hbs="navigable-select-3.hbs" js="navigable-select-3-js.js" showResult=false}}
+{{code-example hbs="navigable-select-3.hbs" js="navigable-select-3-js.js" showResult=false}}
 
 <p>
   The template uses liquid-fire's <code>liquid-bind</code> component to animate when we swap the list
-  of options, and we use the new <code>didReceiveAttrs</code> to detect if we're navigating to a
-  lower level, upper level or we are just filtering, and decide the kind of animation.
+  of options, and we use the <code>didReceiveAttrs</code> hook to detect if we're navigating to a
+  lower level, upper level, or just filtering results, and decide the kind of animation.
 </p>
 
 <p>
@@ -137,10 +136,10 @@
 <p>
   Check the full picture in github:
   <ul>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/animated-options.js" target="_blank">app/components/animated-options.js</a></li>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/animated-options.hbs" target="_blank">app/templates/components/animated-options.hbs</a></li>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/navigable-select.js" target="_blank">app/components/navigable-select.js</a></li>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/navigable-select.hbs" target="_blank">app/templates/components/navigable-select.hbs</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/animated-options.js" target="_blank" rel="noopener">app/components/animated-options.js</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/animated-options.hbs" target="_blank" rel="noopener">app/templates/components/animated-options.hbs</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/navigable-select.js" target="_blank" rel="noopener">app/components/navigable-select.js</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/navigable-select.hbs" target="_blank" rel="noopener">app/templates/components/navigable-select.hbs</a></li>
   </ul>
 </p>
 
@@ -149,5 +148,5 @@
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.cookbook.create-custom-options' class="doc-page-nav-link-prev"}}&lt; Create custom options{{/link-to}}
+  {{#link-to "public-pages.cookbook.create-custom-options" class="doc-page-nav-link-prev"}}&lt; Create custom options{{/link-to}}
 </div>

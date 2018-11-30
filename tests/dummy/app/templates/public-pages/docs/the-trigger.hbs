@@ -13,14 +13,14 @@
   <code>disabled=true</code>.
 </p>
 
-{{#code-sample hbs="the-trigger-1.hbs" js="the-trigger-1-js.js" as |partialName|}}
+{{#code-example hbs="the-trigger-1.hbs" js="the-trigger-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <h3>The selected option</h3>
 
 <p>
-  As we saw in the <a href="{{href-to 'public-pages.docs.how-to-use-it'}}">How to use it</a> section, Ember Power Select
+  As we saw in the <a href={{href-to "public-pages.docs.how-to-use-it"}}>How to use it</a> section, Ember Power Select
   will reuse the same block used for each element of the list for the content of the trigger, both
   in normal and multiple mode, but this is something you can also customize if you need to.
 </p>
@@ -31,12 +31,13 @@
 </p>
 
 <p>
-  Within that component you have access to <code>selected</code>.
+  Within that component you have access to an <code>option</code> property that contains the selected option. In multiple
+  selects the <code>selectedItemComponent</code> component is rendered as once per each selected option.
 </p>
 
-{{#code-sample hbs="the-trigger-2.hbs" js="the-trigger-2-js.js" as |partialName|}}
+{{#code-example hbs="the-trigger-2.hbs" js="the-trigger-2-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <h3>Set a placeholder</h3>
 
@@ -45,13 +46,29 @@
   in the trigger when no value has been selected.
 </p>
 
-{{#code-sample hbs="the-trigger-3.hbs" js="the-trigger-3-js.js" as |partialName|}}
+{{#code-example hbs="the-trigger-3.hbs" js="the-trigger-3-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 Take into account that in the multiple selects with search enabled, the trigger contains a searchbox
-and you should use the <code>searchPlaceholder</code> option instead. Check <a href="{{href-to 'public-pages.docs.the-search'}}">The search</a>
+and you should use the <code>searchPlaceholder</code> option instead. Check <a href={{href-to "public-pages.docs.the-search"}}>The search</a>
 section for more info.
+
+<h3>Set a complex placeholder</h3>
+
+<p>
+  Sometimes a simple string as placeholder is not enough and you want bold text, icons and such. In
+  that case you can pass a <code>placeholderComponent</code>, on which you can do pretty much anything.
+</p>
+
+{{#code-example hbs="the-trigger-4.hbs" hbs2="the-trigger-4-hbs2.hbs" js="the-trigger-4-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-example}}
+
+<p>
+  You can pass both <code>placeholderComponent</code> and <code>placeholder</code>. Inside
+  your component the placeholder text will be available.
+</p>
 
 <h3>Clear button</h3>
 
@@ -61,9 +78,9 @@ section for more info.
   <strong>Please note that this option has no effect in  </strong><code>\{{power-select-multiple}}</code>
 </p>
 
-{{#code-sample hbs="the-trigger-4.hbs" js="the-trigger-4-js.js" as |partialName|}}
+{{#code-example hbs="the-trigger-5.hbs" js="the-trigger-5-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   When the user clicks in the trigger the dropdown with the options appears. It's the most complex
@@ -71,6 +88,6 @@ section for more info.
 </p>
 
 <div class="doc-page-nav">
-  <a href="{{href-to 'public-pages.docs.multiple-selection'}}" class="doc-page-nav-link-prev">&lt; Multiple selection</a>
-  <a href="{{href-to 'public-pages.docs.the-list'}}" class="doc-page-nav-link-next">The list &gt;</a>
+  <a href={{href-to "public-pages.docs.multiple-selection"}} class="doc-page-nav-link-prev">&lt; Multiple selection</a>
+  <a href={{href-to "public-pages.docs.the-list"}} class="doc-page-nav-link-next">The list &gt;</a>
 </div>

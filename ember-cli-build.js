@@ -1,12 +1,24 @@
-/*jshint node:true*/
-/* global require, module */
-var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+'use strict';
+
+const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const VersionChecker = require('ember-cli-version-checker'); // eslint-disable-line
+const crawl = require('prember-crawler');
 
 module.exports = function(defaults) {
-  var app = new EmberAddon(defaults, {
-    // Add options here
-    snippetPaths: ['tests/dummy/app/templates/snippets']
-  });
+  let checker = new VersionChecker(defaults);
+  let emberChecker = checker.forEmber();
+  let options = {
+    snippetPaths: ['tests/dummy/app/templates/snippets'],
+    prember: {
+      urls: crawl
+    }
+  };
+
+  if (process.env.DEPLOY_TARGET === undefined && emberChecker.isAbove('2.14.0')) {
+    options.vendorFiles = { 'jquery.js': null };
+  }
+
+  let app = new EmberAddon(defaults, options);
 
   /*
     This build file specifies the options for the dummy test app of this

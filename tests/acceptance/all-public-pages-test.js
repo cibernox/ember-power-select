@@ -1,51 +1,41 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
-import Ember from 'ember';
+import { test, module } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, click, currentURL } from '@ember/test-helpers';
+import { find } from '@ember/test-helpers';
 
-moduleForAcceptance('Acceptance | All Public Pages');
+module('Acceptance | All Public Pages', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visit every Docs page in order', function(assert) {
-  let expectedPages = 15;
-  return keepClickingNext('/docs', '.doc-page-nav-link-next').then((urls) => {
-    assert.equal(urls.length, expectedPages);
+  test('visit every Docs page in order', async function(assert) {
+    let urls = await keepClickingNext('/docs', '.doc-page-nav-link-next');
+    assert.equal(urls.length, 15);
   });
-});
 
-test('visit every Cookbook page in order', function(assert) {
-  let expectedPages = 7;
-  return keepClickingNext('/cookbook', '.doc-page-nav-link-next').then((urls) => {
-    assert.equal(urls.length, expectedPages);
+  test('visit every Cookbook page in order', async function(assert) {
+    let urls = await keepClickingNext('/cookbook', '.doc-page-nav-link-next');
+    assert.equal(urls.length, 7);
   });
-});
 
-test('visit /addons', function(assert) {
-  visit('/addons');
-  andThen(() => {
+  test('visit /addons', async function(assert) {
+    await visit('/addons');
     assert.equal('/addons', currentURL());
   });
 });
 
-function keepClickingNext(initialUrl, nextLinkSelector) {
+async function keepClickingNext(initialUrl, nextLinkSelector) {
   let seenURLs = Object.create(null);
-  return new Ember.RSVP.Promise((resolve) => {
-    visit(initialUrl);
-    andThen(() => {
-      visitNextPage();
-    });
-    function visitNextPage() {
-      andThen(() => {
-        if (seenURLs[currentURL()]) {
-          throw new Error('page visitor detected a loop');
-        }
-        seenURLs[currentURL()] = true;
-        let nextLink = find(nextLinkSelector);
-        if (nextLink.length === 0) {
-          resolve(Object.keys(seenURLs));
-        } else {
-          click(nextLinkSelector);
-          visitNextPage();
-        }
-      });
+  await visit(initialUrl);
+  let nextLink;
+  do {
+    let url = currentURL();
+    if (seenURLs[url]) {
+      throw new Error('page visitor detected a loop');
     }
-  });
+    seenURLs[currentURL()] = true;
+    nextLink = find(nextLinkSelector);
+    if (nextLink) {
+      await click(nextLink);
+    }
+  } while (nextLink);
+  return Object.keys(seenURLs);
 }

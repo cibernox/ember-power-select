@@ -1,3 +1,4 @@
+  /* eslint-env node */
 global.QUnit = require('qunitjs');
 
 // adds test reporting
@@ -17,4 +18,4 @@ function addFiles(files) {
 
 addFiles('/**/*-test.js');
 
-QUnit.load();
+global.QUnit.load();

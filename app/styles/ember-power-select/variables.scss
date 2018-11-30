@@ -49,7 +49,7 @@ $ember-power-select-default-border-radius: 4px !default; // General border radiu
 $ember-power-select-trigger-default-border-radius: $ember-power-select-default-border-radius !default;
 $ember-power-select-dropdown-default-border-radius: $ember-power-select-default-border-radius !default;
 
-$ember-power-select-opened-border-radius: 0 !default; // Border radious of the side of the dropdown and the trigger where they touch
+$ember-power-select-opened-border-radius: 0 !default; // Border radius of the side of the dropdown and the trigger where they touch
 
 $ember-power-select-search-input-border-radius: 0 !default;
 $ember-power-select-multiple-option-border-radius: $ember-power-select-default-border-radius !default;
@@ -68,3 +68,6 @@ $ember-power-select-trigger-ltr-padding: 0 16px 0 0 !default;
 $ember-power-select-trigger-rtl-padding: 0 0 0 16px !default;
 $ember-power-select-multiple-option-padding: 0 4px !default;
 $ember-power-select-multiple-option-line-height: 1.45 !default;
+
+// ember-basic-dropdown
+$ember-basic-dropdown-content-background-color: $ember-power-select-background-color;

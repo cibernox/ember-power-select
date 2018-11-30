@@ -26,10 +26,10 @@
   left: 0;
   pointer-events: none; }
 
-.ember-power-select {
-  position: relative; }
+.ember-basic-dropdown-content-wormhole-origin {
+  display: inline; }
 
-.ember-power-select *, .ember-power-select-dropdown * {
+.ember-power-select-dropdown * {
   box-sizing: border-box; }
 
 .ember-power-select-trigger {
@@ -160,8 +160,8 @@
     outline: 0; }
 
 .ember-power-select-dropdown {
-  border-left: 1px solid #66afe9;
-  border-right: 1px solid #66afe9;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
   line-height: 2;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.172549) 0px 6px 12px 0px;
@@ -169,8 +169,8 @@
   color: inherit; }
 
 .ember-power-select-dropdown.ember-basic-dropdown-content--above {
-  transform: translateY(-3px);
-  border-top: 1px solid #66afe9;
+  transform: translateY(calc(-1 * 3px));
+  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px; }
@@ -178,7 +178,7 @@
 .ember-power-select-dropdown.ember-basic-dropdown-content--below, .ember-power-select-dropdown.ember-basic-dropdown-content--in-place {
   transform: translateY(3px);
   border-top: 1px solid #ccc;
-  border-bottom: 1px solid #66afe9;
+  border-bottom: 1px solid #ccc;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px; }
 
@@ -193,6 +193,8 @@
   -webkit-user-select: none; }
   .ember-power-select-options[role="listbox"] {
     overflow-y: auto;
+    /* in firefox in windows this can cause a word-break issue. Try `overflow-y: scroll` if that happens */
+    -webkit-overflow-scrolling: touch;
     max-height: 14em; }
 
 .ember-power-select-option {

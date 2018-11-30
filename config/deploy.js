@@ -1,8 +1,4 @@
-module.exports = function(deployTarget) {  
+module.exports = function() {
   return {
-    pagefront: {
-      app: 'ember-power-select',
-      key: process.env.PAGEFRONT_KEY
-    }
   };
 };

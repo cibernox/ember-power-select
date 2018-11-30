@@ -8,12 +8,12 @@
 
 Ember Power Select is a select component written in Ember with a focus in flexibility and extensibility.
 
-It is designed to work well with the way we build Ember apps, si it plays nicely with promises, ember-concurrency's tasks,
+It is designed to work well with the way we build Ember apps, so it plays nicely with promises, ember-concurrency's tasks,
 ember-data collections and follows idiomatic patterns.
 
 ## Installation
 
-Ember Power Select works in Ember **2.3.1+**, beta and canary with no deprecations
+Ember Power Select 1.X works in Ember **2.3.1+**, beta and canary with no deprecations
 whatsoever. Any deprecation will be considered a bug.
 
 As any other ember-cli addon, run:
@@ -21,6 +21,8 @@ As any other ember-cli addon, run:
 ```
 ember install ember-power-select
 ```
+
+Ember Power Select 2.X requires Ember **2.10.0+**.
 
 ## Features overview
 
@@ -43,7 +45,7 @@ Features include:
 * Groups (with not deep limit), placeholders...
 * Clear the selection
 * Disable the component or individual options
-* CSS animations and transitions [in beta]
+* CSS animations and transitions
 * ... and anything else you want. Just replace parts of the selects with your own components.
 
 
@@ -75,6 +77,8 @@ to interact with the component in acceptance tests.
 ## Contributing
 
 Any contribution is welcome. Please read our [guidelines](CONTRIBUTING.md).
+However, if your contribution involves adding a new feature, please open an issue before to
+share your plan and agree the details of the feature before starting implementing it.
 
 ## Troubleshooting
 

@@ -1,5 +1,5 @@
-import Component from 'ember-component';
-import { scheduleOnce } from 'ember-runloop';
+import Component from '@ember/component';
+import { scheduleOnce, later } from '@ember/runloop';
 import layout from '../../templates/components/power-select/before-options';
 
 export default Component.extend({
@@ -39,9 +39,9 @@ export default Component.extend({
 
   // Methods
   focusInput() {
-    this.input = self.document.querySelector('.ember-power-select-search-input');
+    this.input = document.querySelector(`.ember-power-select-search-input[aria-controls="${this.get('listboxId')}"]`);
     if (this.input) {
-      scheduleOnce('afterRender', this.input, 'focus');
+      later(this.input, 'focus', 0);
     }
   }
 });

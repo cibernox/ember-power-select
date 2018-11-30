@@ -1,88 +1,100 @@
 {
   "name": "ember-power-select",
-  "version": "1.0.0-beta.24",
+  "version": "2.2.0",
   "description": "The extensible select component built for ember",
-  "homepage": "http://www.ember-power-select.com",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
-  "scripts": {
-    "build": "ember build",
-    "start": "ember server",
-    "test": "ember try:each"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/cibernox/ember-power-select.git"
-  },
-  "engines": {
-    "node": ">= 0.12.0"
-  },
-  "author": {
-    "name": "Miguel Camba",
-    "email": "miguel.camba@gmail.com"
-  },
-  "license": "MIT",
-  "files": [
-    "addon/",
-    "app/",
-    "blueprints/",
-    "test-support/",
-    "index.js",
-    "vendor"
-  ],
-  "devDependencies": {
-    "broccoli-asset-rev": "^2.4.5",
-    "ember-ajax": "^2.4.1",
-    "ember-cli": "^2.9.0-beta.2",
-    "ember-cli-app-version": "^2.0.0",
-    "ember-cli-dependency-checker": "^1.3.0",
-    "ember-cli-deploy": "0.5.0",
-    "ember-cli-eslint": "3.0.0",
-    "ember-cli-htmlbars-inline-precompile": "^0.3.3",
-    "ember-cli-inject-live-reload": "^1.4.1",
-    "ember-cli-mirage": "0.2.2",
-    "ember-cli-qunit": "^3.0.1",
-    "ember-cli-release": "1.0.0-beta.2",
-    "ember-cli-sass": "5.5.2",
-    "ember-cli-sri": "^2.1.0",
-    "ember-cli-template-lint": "0.4.12",
-    "ember-cli-test-loader": "^1.1.0",
-    "ember-cli-uglify": "^1.2.0",
-    "ember-code-snippet": "1.8.0",
-    "ember-data": "^2.9.0-beta.1",
-    "ember-disable-prototype-extensions": "^1.1.0",
-    "ember-export-application-global": "^1.0.5",
-    "ember-fastboot-test-helpers": "0.1.1",
-    "ember-href-to": "1.7.0",
-    "ember-load-initializers": "^0.5.1",
-    "ember-pagefront": "0.10.10",
-    "ember-resolver": "^2.0.3",
-    "eslint-plugin-ember-suave": "^1.0.0",
-    "liquid-fire": "0.26.1",
-    "loader.js": "^4.0.10",
-    "memory-scroll": "0.2.0",
-    "node-sass": "^3.10.1",
-    "simple-git": "^1.10.0"
-  },
   "keywords": [
     "ember-addon",
     "select",
     "select2",
     "selectize",
-    "dropdown"
+    "dropdown",
+    "ember-power"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cibernox/ember-power-select.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Miguel Camba",
+    "email": "miguel.camba@gmail.com"
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "homepage": "http://www.ember-power-select.com",
+  "scripts": {
+    "build": "ember build",
+    "lint:hbs": "ember-template-lint .",
+    "lint:js": "eslint .",
+    "start": "ember serve",
+    "test": "ember test",
+    "test:all": "ember try:each",
+    "nodetest": "$(npm bin)/mocha node-tests --recursive"
+  },
+  "files": [
+    "addon/",
+    "app/",
+    "blueprints/",
+    "addon-test-support/",
+    "test-support/",
+    "index.js",
+    "vendor"
   ],
   "dependencies": {
-    "ember-cli-babel": "^5.1.10",
-    "ember-cli-htmlbars": "^1.1.0",
-    "ember-basic-dropdown": "^0.16.0",
-    "ember-concurrency": "^0.7.9",
-    "ember-text-measurer": "^0.3.3",
-    "ember-truth-helpers": "^1.2.0"
+    "ember-basic-dropdown": "^1.0.0",
+    "ember-cli-babel": "^6.16.0",
+    "ember-cli-htmlbars": "^3.0.0",
+    "ember-concurrency": "^0.8.19",
+    "ember-text-measurer": "^0.4.0",
+    "ember-truth-helpers": "^2.0.0"
+  },
+  "devDependencies": {
+    "@ember/optional-features": "^0.6.3",
+    "broccoli-asset-rev": "^2.7.0",
+    "ember-cli": "~3.4.1",
+    "ember-cli-blueprint-test-helpers": "^0.18.3",
+    "ember-cli-dependency-checker": "^3.0.0",
+    "ember-cli-eslint": "^4.2.3",
+    "ember-cli-fastboot": "^1.1.4-beta.1",
+    "ember-cli-htmlbars-inline-precompile": "^1.0.3",
+    "ember-cli-inject-live-reload": "^1.8.2",
+    "ember-cli-mirage": "^0.4.3",
+    "ember-cli-qunit": "^4.3.2",
+    "ember-cli-sass": "^7.1.7",
+    "ember-cli-template-lint": "^1.0.0-beta.1",
+    "ember-cli-uglify": "^2.1.0",
+    "ember-code-example-component": "^0.2.0",
+    "ember-code-snippet": "^2.3.1",
+    "ember-data": "^3.4.0",
+    "ember-disable-prototype-extensions": "^1.1.3",
+    "ember-export-application-global": "^2.0.0",
+    "ember-fetch": "^3.4.5",
+    "ember-href-to": "1.15.1",
+    "ember-load-initializers": "^1.1.0",
+    "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-qunit-assert-helpers": "^0.2.1",
+    "ember-resolver": "^5.0.1",
+    "ember-source": "~3.4.0",
+    "ember-source-channel-url": "^1.1.0",
+    "ember-try": "^1.0.0",
+    "eslint-plugin-ember": "^5.2.0",
+    "eslint-plugin-node": "^7.0.1",
+    "liquid-fire": "0.29.2",
+    "loader.js": "^4.7.0",
+    "memory-scroll": "0.9.1",
+    "mocha": "^5.2.0",
+    "prember": "0.4.0",
+    "prember-crawler": "^0.1.0",
+    "qunit-dom": "^0.7.1",
+    "simple-git": "^1.10.0",
+    "testdouble": "^3.2.6"
+  },
+  "engines": {
+    "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config",
-    "before": "ember-cli-sri"
+    "configPath": "tests/dummy/config"
   }
 }

@@ -6,13 +6,14 @@
   attribute named <code>groupName</code> and another named <code>options</code> that is also a collection.
 </p>
 
-{{#code-sample hbs="groups-1.hbs" js="groups-1-js.js" as |partialName|}}
+{{#code-example hbs="groups-1.hbs" js="groups-1-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   You can nest groups inside groups with absolutely no depth limit, everything else like arrow
-  navigation and filtering will just work.
+  navigation and filtering will just work. However, the options of a group cannot be a
+  promise, it has to be a regular collection.
 </p>
 
 <p>
@@ -21,6 +22,6 @@
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.docs.action-handling' class="doc-page-nav-link-prev"}}&lt; Action handling{{/link-to}}
-  {{#link-to 'public-pages.docs.multiple-selection' class="doc-page-nav-link-next"}}Multiple selection &gt;{{/link-to}}
+  {{#link-to "public-pages.docs.action-handling" class="doc-page-nav-link-prev"}}&lt; Action handling{{/link-to}}
+  {{#link-to "public-pages.docs.multiple-selection" class="doc-page-nav-link-next"}}Multiple selection &gt;{{/link-to}}
 </div>

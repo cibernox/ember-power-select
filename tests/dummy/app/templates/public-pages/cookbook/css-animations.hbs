@@ -20,7 +20,7 @@
     replaced by <code>.ember-basic-dropdown--transitioned-in</code>.
   </li>
   <li>
-    When closed, EPS replaces its content with a close and adds a <code>.ember-basic-dropdown--transitioning-out</code> to it.
+    When closed, EPS replaces its content with a clone and adds a <code>.ember-basic-dropdown--transitioning-out</code> to it.
   </li>
   <li>
     Once all closing animations or transitions have finished, the "ghost" clone is finally removed.
@@ -39,9 +39,9 @@
 
 <p>Lets add some slide and fade in animation to a select that uses the bootstrap theme.</p>
 
-{{#code-sample hbs="css-animation-1.hbs" css="css-animation-1.scss" as |partialName|}}
+{{#code-example hbs="css-animation-1.hbs" css="css-animation-1.scss" as |partialName|}}
   {{partial partialName}}
-{{/code-sample}}
+{{/code-example}}
 
 <p>
   Now that you can add animations, the first rule of animations is use them with caution, and if you
@@ -50,10 +50,10 @@
 </p>
 
 <p>
-  Now lets dive in something more serious. Debounding searches.
+  Now lets dive in something more serious. Debouncing searches.
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to 'public-pages.cookbook.bootstrap-theme' class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
-  {{#link-to 'public-pages.cookbook.debounce-searches' class="doc-page-nav-link-next"}}Debounce searches &gt;{{/link-to}}
+  {{#link-to "public-pages.cookbook.bootstrap-theme" class="doc-page-nav-link-prev"}}&lt; Bootstrap theme{{/link-to}}
+  {{#link-to "public-pages.cookbook.debounce-searches" class="doc-page-nav-link-next"}}Debounce searches &gt;{{/link-to}}
 </div>
