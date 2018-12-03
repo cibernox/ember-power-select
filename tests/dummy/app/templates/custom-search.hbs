@@ -1,0 +1,15 @@
+<div class="container">
+  {{#power-select
+    allowClear=allowClear
+    onchange=(action "select")
+    options=options
+    placeholder="Type to search..."
+    beforeOptionsComponent=null
+    search=(perform searchTask)
+    searchEnabled=false
+    selected=selected
+    triggerComponent="search-trigger"
+  as |obj|}}
+    {{obj.text}}
+  {{/power-select}}
+</div>

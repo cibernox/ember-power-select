@@ -7,6 +7,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('custom-search');
   this.route('public-pages', { path: '' }, function() {
     this.route('docs', function() {
       // GETTING STARTED
