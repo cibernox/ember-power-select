@@ -1,5 +1,8 @@
 # Master
 
+# 2.2.1
+- [BUGFIX] Update test helpers so they work with latest version of EBD
+
 # 2.2.0
 - [BUGFIX] `{{power-select-multiple}}` should be a tagless component unless otherwise specified.
 
