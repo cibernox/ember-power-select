@@ -43,7 +43,7 @@
     "vendor"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "^1.0.0",
+    "ember-basic-dropdown": "^1.0.5",
     "ember-cli-babel": "^6.16.0",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-concurrency": "^0.8.19",
