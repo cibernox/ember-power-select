@@ -808,7 +808,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
         {{option.label}}
       {{/power-select}}
     `);
-    focus('.ember-power-select-trigger');
+    await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-selected-item').hasText('25');
     assert.expectAssertion(() => {
       let trigger = document.querySelector('.ember-power-select-trigger');
