@@ -13,8 +13,8 @@
 /connect.lock
 /coverage/
 /libpeerconnection.log
-=======
 /test-output
+=======
 /npm-debug.log*
 /testem.log
 /yarn-error.log

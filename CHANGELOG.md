@@ -1,5 +1,37 @@
 # Master
 
+# 2.2.1
+- [BUGFIX] Update test helpers so they work with latest version of EBD
+
+# 2.2.0
+- [BUGFIX] `{{power-select-multiple}}` should be a tagless component unless otherwise specified.
+
+# 2.1.0
+- [ENHANCEMENT] Create a new sass/less styles that are then imported from the main style. This should
+  not change the public API
+
+# 2.0.15
+- [BUGFIX] Forward `triggerRole` from the multiple-select to the inner select
+
+# 2.0.14
+- [BUGFIX] Fix bug when multiple selects are tagless
+
+# 2.0.13
+- [INTERNAL] Forward `_triggerTagName` in multiple selects
+
+# 2.0.12
+- [BUGFIX] Fix focusing of the searchbox in recent versions of Ember.
+
+# 2.0.11
+- [BUGFIX] Forward `eventType` in multiple selects
+
+# 2.0.10
+- [ENHANCEMENT] Allow select to be open with `click` instead of `mousedown`
+
+# 2.0.9
+- [BUGFIX] Add `highlightOnHover` option (defaults to `true`) that decides if
+  hovering an option with the mouse highlights it.
+
 # 2.0.8
 - [BUGFIX] Fix the previous bugfix.
 

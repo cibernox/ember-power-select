@@ -1,19 +1,18 @@
 <h1 class="doc-page-title">How to use it</h1>
 
 <p>
-  The basic component usage is very simple. The only mandatory arguments you have to
-  pass to it are <code>options</code>(<b>*</b>) which has to be a <em>collection</em> of any kind, including
-  the result of ember-data operations like <code>.find</code> or <code>.query</code>, and the
-  <code>onchange</code> action.
-  The component will yield each individual item in the collection to the block to generate the list.
+  The basic component usage is very simple. You must pass the component an <code>onchange</code> action, and either an <code>options</code>
+  collection and/or a <code>search</code> action. The <code>options</code> argument can be a collection of any kind, including the result of
+  ember-data operations like <code>.find</code> or <code>.query</code>. The component will yield each individual item in the collection to
+  the block to generate the list.
 </p>
 
 <p>
-  <b>*</b> There's one exception: When you use the <code>search</code> action passing an initial
-  set of options is optional. Read more about {{#link-to "public-pages.docs.the-search"}} the search{{/link-to}}
+  When you use the <code>search</code> action passing an initial set of <code>options</code> is optional.
+  Read more about {{#link-to "public-pages.docs.the-search"}} the search{{/link-to}} action.
 </p>
 
-<p><strong>Selects in this page seem to not work. This is intended.</strong> See last paragraph.</p>
+<p><strong>Selects in this page seem do not work. This is intended.</strong> See last paragraph.</p>
 
 {{#code-example hbs="how-to-use-it-1.hbs" js="how-to-use-it-1-js.js" as |partialName|}}
   {{partial partialName}}
@@ -33,6 +32,20 @@
   <strong>Filtering in the above select also seems broken, but is also intended.</strong>
   See {{#link-to "public-pages.docs.the-search"}}the search{{/link-to}} section (Customize the search field) for
   instructions on how to make it work.
+</p>
+
+<p>
+  The component expects <code>selected</code> to contain the actual selected object and not just an Id. One way to do this is to have a
+  computed property that returns the correct object based upon the Id.
+</p>
+
+{{#code-example hbs="how-to-use-it-3.hbs" js="how-to-use-it-3-js.js" as |partialName|}}
+  {{partial partialName}}
+{{/code-example}}
+
+<p>
+  You could alternatively do this using the <code><a href="https://github.com/DockYard/ember-composable-helpers#find-by">find-by</a></code>
+  helper from the <a href="https://github.com/DockYard/ember-composable-helpers#find-by">ember-composable-helpers</a> add-on by DockYard.
 </p>
 
 <p>

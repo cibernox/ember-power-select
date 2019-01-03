@@ -1,5 +1,7 @@
 {{#if (hasBlock "inverse")}}
   {{#power-select
+    _triggerTagName=_triggerTagName
+    triggerRole=triggerRole
     afterOptionsComponent=afterOptionsComponent
     allowClear=allowClear
     ariaDescribedBy=ariaDescribedBy
@@ -37,7 +39,7 @@
     placeholder=placeholder
     placeholderComponent=placeholderComponent
     preventScroll=preventScroll
-    registerAPI=(readonly registerAPI)
+    registerAPI=(action registerAPI)
     renderInPlace=renderInPlace
     required=required
     scrollTo=scrollTo
@@ -50,6 +52,7 @@
     selectedItemComponent=selectedItemComponent
     tabindex=computedTabIndex
     tagName=tagName
+    eventType=eventType
     title=title
     triggerClass=concatenatedTriggerClass
     triggerComponent=(component triggerComponent tabindex=tabindex)
@@ -62,6 +65,8 @@
   {{/power-select}}
 {{else}}
   {{#power-select
+    _triggerTagName=_triggerTagName
+    triggerRole=triggerRole
     afterOptionsComponent=afterOptionsComponent
     allowClear=allowClear
     ariaDescribedBy=ariaDescribedBy
@@ -112,6 +117,7 @@
     selectedItemComponent=selectedItemComponent
     tabindex=computedTabIndex
     tagName=tagName
+    eventType=eventType
     title=title
     triggerClass=concatenatedTriggerClass
     triggerComponent=(component triggerComponent tabindex=tabindex)

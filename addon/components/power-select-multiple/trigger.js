@@ -55,7 +55,7 @@ export default Component.extend({
   triggerMultipleInputStyle: computed('select.{searchText.length,selected.length}', function() {
     let select = this.get('select');
     scheduleOnce('actions', select.actions.reposition);
-    if (!select.selected || select.selected.length === 0) {
+    if (!select.selected || get(select.selected, 'length') === 0) {
       return htmlSafe('width: 100%;');
     } else {
       let textWidth = 0;

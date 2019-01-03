@@ -22,6 +22,11 @@
       <td>When truthy, single selects allow to nullify the selection</td>
     </tr>
     <tr>
+      <td>animationEnabled</td>
+      <td><code>boolean</code></td>
+      <td>Flag to determine whether the content will allow CSS animations. Defaults to true</td>
+    </tr>
+    <tr>
       <td>ariaDescribedBy</td>
       <td><code>string</code></td>
       <td>Sets <code>aria-describedby</code> on the component</td>
@@ -108,6 +113,11 @@
       <td>The component to render instead of the default one around the list of options that have groups</td>
     </tr>
     <tr>
+      <td>highlightOnHover</td>
+      <td><code>boolean</code></td>
+      <td>Defaults to true. When false, when the user hovers over an option with the mouse, it will not be highlighted.</td>
+    </tr>
+    <tr>
       <td>horizontalPosition</td>
       <td><code>string</code></td>
       <td>
@@ -130,6 +140,14 @@
       <td>
         Message shown in the list of options while the options are still not resolved,
         typically after a search but also when <code>options</code> is a promise.
+      </td>
+    </tr>
+    <tr>
+      <td>eventType</td>
+      <td><code>string</code></td>
+      <td>
+        Defaults to <code>"mousedown"</code>. Indicates the type of event the trigger component will be listening to
+        open or close.
       </td>
     </tr>
     <tr>
