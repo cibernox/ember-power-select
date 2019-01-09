@@ -91,10 +91,11 @@ convenient:
 
 {{code-snippet name="test-helpers-7-js.js"}}
 
-<h3><code>typeInSearch(text)</code></h3>
+<h3><code>typeInSearch(scopeOrText, text)</code></h3>
 
 <p>
-  This helper is used in conjunction with opening a power select dropdown as long as search is not disabled.
+  This helper is used in conjunction with opening a power select dropdown as long as search is not disabled. This helper takes an optional scope parameter, which is useful
+  when there are more than one power select instances on the page. When only the text is passed as the first parameter, the first select on the page will be chosen.
 </p>
 
 {{code-snippet name="test-helpers-8-js.js"}}
