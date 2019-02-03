@@ -657,11 +657,12 @@ export default Component.extend({
   },
 
   _handleKeySpace(e) {
+    if (['TEXTAREA', 'INPUT'].includes(e.target.nodeName)) {
+      return false;
+    }
     let publicAPI = this.get('publicAPI');
     if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
-      if (e.target === document.body) {
-        e.preventDefault(); // Prevents scrolling of the page.
-      }
+      e.preventDefault(); // Prevents scrolling of the page.
       publicAPI.actions.choose(publicAPI.highlighted, e);
       return false;
     }
