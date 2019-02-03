@@ -659,7 +659,9 @@ export default Component.extend({
   _handleKeySpace(e) {
     let publicAPI = this.get('publicAPI');
     if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
-      e.preventDefault(); // Prevents scrolling of the page.
+      if (e.target === document.body) {
+        e.preventDefault(); // Prevents scrolling of the page.
+      }
       publicAPI.actions.choose(publicAPI.highlighted, e);
       return false;
     }
