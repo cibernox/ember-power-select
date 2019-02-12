@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "The extensible select component built for ember",
   "keywords": [
     "ember-addon",
