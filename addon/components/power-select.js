@@ -657,6 +657,9 @@ export default Component.extend({
   },
 
   _handleKeySpace(e) {
+    if (['TEXTAREA', 'INPUT'].includes(e.target.nodeName)) {
+      return false;
+    }
     let publicAPI = this.get('publicAPI');
     if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
       e.preventDefault(); // Prevents scrolling of the page.
