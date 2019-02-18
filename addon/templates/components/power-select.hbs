@@ -12,7 +12,13 @@
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
   ...attributes as |dropdown|>
-  <dropdown.Trigger>
+  <dropdown.Trigger
+    @onKeyDown={{action "onTriggerKeydown"}}
+    @onFocus={{action "onTriggerFocus"}}
+    @onBlur={{action "onTriggerBlur"}}
+    @eventType={{or @eventType "mousedown"}}
+    class={{this.concatenatedTriggerClasses}}
+    id={{@triggerId}}>
     {{#let (component this.triggerComponent) as |Trigger|}}
       <Trigger
         @allowClear={{@allowClear}}
@@ -30,7 +36,6 @@
         @searchField={{@searchField}}
         @select={{this.publicAPI}}
         @selectedItemComponent={{@selectedItemComponent}}
-        class={{this.concatenatedTriggerClasses}}
         as |opt term|>
         {{yield opt term}}
       </Trigger>
