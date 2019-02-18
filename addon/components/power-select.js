@@ -76,7 +76,7 @@ export default Component.extend({
   tagName: '',
 
   // Options
-  searchEnabled: fallbackIfUndefined(true),
+  // searchEnabled: fallbackIfUndefined(true),
   matchTriggerWidth: fallbackIfUndefined(true),
   preventScroll: fallbackIfUndefined(false),
   matcher: fallbackIfUndefined(defaultMatcher),
@@ -92,7 +92,7 @@ export default Component.extend({
   beforeOptionsComponent: fallbackIfUndefined('power-select/before-options'),
   optionsComponent: fallbackIfUndefined('power-select/options'),
   groupComponent: fallbackIfUndefined('power-select/power-select-group'),
-  selectedItemComponent: fallbackIfUndefined(null),
+  // selectedItemComponent: fallbackIfUndefined(null),
   triggerComponent: fallbackIfUndefined('power-select/trigger'),
   searchMessageComponent: fallbackIfUndefined('power-select/search-message'),
   placeholderComponent: fallbackIfUndefined('power-select/placeholder'),

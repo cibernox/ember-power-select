@@ -11,13 +11,15 @@
         <img src="/ember_logo.png" alt="ember">
       {{/link-to}}
       <div class="main-header-select">
-        {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled
-          searchEnabled=false
-          triggerComponent="main-header-select-trigger"
-          onchange=(action "changeOptions")
-          dropdownClass="main-header-select-dropdown" as |opt|}}
+        <PowerSelect
+          @options={{mainSelectOptions}}
+          @selected={{mainSelected}}
+          @disabled={{disabled}}
+          @triggerComponent="main-header-select-trigger"
+          @onchange={{action "changeOptions"}}
+          @dropdownClass="main-header-select-dropdown" as |opt|>
           {{opt}}
-        {{/power-select}}
+        </PowerSelect>
       </div>
     </div>
   </nav>

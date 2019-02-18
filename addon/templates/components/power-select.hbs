@@ -1,4 +1,82 @@
-{{#basic-dropdown
+<BasicDropdown
+  @horizontalPosition={{@horizontalPosition}}
+  @calculatePosition={{@calculatePosition}}
+  @destination={{@destination}}
+  @initiallyOpened={{@initiallyOpened}}
+  @matchTriggerWidth={{this.matchTriggerWidth}}
+  @preventScroll={{this.preventScroll}}
+  @onClose={{action "onClose"}}
+  @onOpen={{action "onOpen"}}
+  @registerAPI={{action "registerAPI"}}
+  @renderInPlace={{@renderInPlace}}
+  @verticalPosition={{@verticalPosition}}
+  @disabled={{@disabled}}
+  ...attributes as |dropdown|>
+  <dropdown.Trigger>
+    {{#let (component this.triggerComponent) as |Trigger|}}
+      <Trigger
+        @allowClear={{@allowClear}}
+        @buildSelection={{@buildSelection}}
+        @extra={{@extra}}
+        @listboxId={{this.optionsId}}
+        @loadingMessage={{this.loadingMessage}}
+        @onFocus={{action "onFocus"}}
+        @onBlur={{action "onBlur"}}
+        @onInput={{action "onInput"}}
+        @placeholder={{@placeholder}}
+        @placeholderComponent={{this.placeholderComponent}}
+        @onKeydown={{action "onKeydown"}}
+        @searchEnabled={{@searchEnabled}}
+        @searchField={{@searchField}}
+        @select={{this.publicAPI}}
+        @selectedItemComponent={{@selectedItemComponent}}
+        class={{this.concatenatedTriggerClasses}}
+        as |opt term|>
+        {{yield opt term}}
+      </Trigger>
+    {{/let}}
+  </dropdown.Trigger>
+  <dropdown.Content class={{this.concatenatedDropdownClasses}}>
+    {{#let (component this.beforeOptionsComponent) as |BeforeOptions|}}
+      <BeforeOptions/>
+    {{/let}}
+    {{#if this.mustShowSearchMessage}}
+      {{#let (component this.searchMessageComponent) as |SearchMessage|}}
+        <SearchMessage @searchMessage={{this.searchMessage}} @select={{this.publicAPI}}/>
+      {{/let}}
+    {{else if mustShowNoMessages}}
+      {{#if (hasBlock "inverse")}}
+        {{yield to="inverse"}}
+      {{else if noMatchesMessage}}
+        <ul class="ember-power-select-options" role="listbox">
+          <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
+            {{this.noMatchesMessage}}
+          </li>
+        </ul>
+      {{/if}}
+    {{else}}
+      {{#let (component this.optionsComponent) as |Options|}}
+        <Options
+          @loadingMessage={{this.loadingMessage}}
+          @groupIndex=""
+          @extra={{@extra}}
+          @select={{this.publicAPI}}
+          @options={{this.publicAPI.results}}
+          @optionsComponent={{Options}}
+          @highlightOnHover={{this.highlightOnHover}}
+          @groupComponent={{this.groupComponent}}
+          id={{this.optionsId}}
+          class="ember-power-select-options" as |option term|>
+          {{yield option term}}
+        </Options>
+      {{/let}}
+    {{/if}}
+    {{#let (component this.afterOptionsComponent) as |AfterOptions|}}
+      <AfterOptions @select={{this.publicAPI}} @extra={{@extra}}/>
+    {{/let}}
+  </dropdown.Content>
+</BasicDropdown>
+{{!-- {{#basic-dropdown
   classNames=(readonly classNames)
   horizontalPosition=(readonly horizontalPosition)
   calculatePosition=calculatePosition
@@ -52,7 +130,9 @@
     {{/component}}
   {{/dropdown.trigger}}
 
-  {{#dropdown.content _contentTagName=_contentTagName class=(readonly concatenatedDropdownClasses)}}
+  {{#dropdown.content
+    _contentTagName=_contentTagName
+    class=(readonly concatenatedDropdownClasses)}}
     {{component beforeOptionsComponent
       animationEnabled=(readonly animationEnabled)
       extra=(readonly extra)
@@ -100,4 +180,4 @@
     {{/if}}
     {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
   {{/dropdown.content}}
-{{/basic-dropdown}}
+{{/basic-dropdown}} --}}
