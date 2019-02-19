@@ -1,7 +1,7 @@
 {{#power-select-multiple
   selected=selectedCities
   options=cities
-  onchange=(action (mut selectedCities))
+  onChange=(action (mut selectedCities))
   onkeydown=(action "handleKeydown")
   as |name|
 }}

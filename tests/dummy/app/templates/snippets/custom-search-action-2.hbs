@@ -1,7 +1,7 @@
 {{#power-select
   search=(perform searchTask)
   selected=selected
-  onchange=(action (mut selected))
+  onChange=(action (mut selected))
   as |repo|}}
   {{repo.full_name}}
 {{/power-select}}

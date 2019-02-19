@@ -19,7 +19,7 @@
       searchEnabled=false
       placeholder="Country"
       searchField="name"
-      onchange=(action (mut country)) as |country|}}
+      onChange=(action (mut country)) as |country|}}
       {{country.name}}
     {{/power-select}}
   </div>
@@ -32,7 +32,7 @@
       searchEnabled=false
       placeholder="City"
       allowClear=true
-      onchange=(action (mut city)) as |city|}}
+      onChange=(action (mut city)) as |city|}}
       {{city}}
     {{/power-select}}
   </div>
@@ -46,7 +46,7 @@
   selected=country2
   placeholder="Country"
   searchField="name"
-  onchange=(action (mut country2)) as |country|}}
+  onChange=(action (mut country2)) as |country|}}
   {{country.name}}
 {{/power-select}}
 
@@ -58,7 +58,7 @@
   selected=selectedCountries
   placeholder="Country"
   searchField="name"
-  onchange=(action (mut selectedCountries)) as |country|}}
+  onChange=(action (mut selectedCountries)) as |country|}}
   {{country.name}}
 {{/power-select-multiple}}
 <h3>Groups</h3>
@@ -68,7 +68,7 @@
   options=groupedNumbers
   selected=number
   placeholder="Choose a number"
-  onchange=(action (mut number)) as |num|}}
+  onChange=(action (mut number)) as |num|}}
   {{num}}
 {{/power-select}}
 
@@ -82,7 +82,7 @@
   placeholder="Country"
   searchField="name"
   allowClear=true
-  onchange=(action (mut country3)) as |country|}}
+  onChange=(action (mut country3)) as |country|}}
   {{country.name}}
 {{/power-select}}
 <br>

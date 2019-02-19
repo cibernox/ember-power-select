@@ -4,7 +4,7 @@ Default loading message
 {{#power-select
   options=promise
   selected=selected
-  onchange=(action (mut selected))
+  onChange=(action (mut selected))
   as |name|
 }}
   {{name}}
@@ -15,7 +15,7 @@ Custom loading message (press the <code>Refresh Collection</code> button and ope
   options=promise
   loadingMessage="Waiting for the server...."
   selected=selected
-  onchange=(action (mut selected))
+  onChange=(action (mut selected))
   as |name|
 }}
   {{name}}

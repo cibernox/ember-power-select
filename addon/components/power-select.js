@@ -121,7 +121,7 @@ export default Component.extend({
       choose: (...args) => this.send('choose', ...args),
       scrollTo: (...args) => scheduleOnce('afterRender', this, this.send, 'scrollTo', ...args)
     };
-    assert('{{power-select}} requires an `onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
+    assert('{{power-select}} requires an `onChange` function', this.get('onChange') && typeof this.get('onChange') === 'function');
   },
 
   willDestroy() {
@@ -224,7 +224,7 @@ export default Component.extend({
     },
 
     onOpen(_, e) {
-      let action = this.get('onopen');
+      let action = this.get('onOpen');
       if (action && action(this.get('publicAPI'), e) === false) {
         return false;
       }
@@ -238,7 +238,7 @@ export default Component.extend({
     },
 
     onClose(_, e) {
-      let action = this.get('onclose');
+      let action = this.get('onClose');
       if (action && action(this.get('publicAPI'), e) === false) {
         return false;
       }
@@ -250,7 +250,7 @@ export default Component.extend({
 
     onInput(e) {
       let term = e.target.value;
-      let action = this.get('oninput');
+      let action = this.get('onInput');
       let publicAPI = this.get('publicAPI');
       let correctedTerm;
       if (action) {
@@ -272,7 +272,7 @@ export default Component.extend({
     select(selected, e) {
       let publicAPI = this.get('publicAPI');
       if (!isEqual(publicAPI.selected, selected)) {
-        this.get('onchange')(selected, publicAPI, e);
+        this.get('onChange')(selected, publicAPI, e);
       }
     },
 

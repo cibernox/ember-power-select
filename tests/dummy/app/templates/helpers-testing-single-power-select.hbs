@@ -1,6 +1,6 @@
 <h3>Helpers testing with single select</h3>
 <div class="select-choose">
-  {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |num|}}
+  {{#power-select options=numbers selected=selected onChange=(action (mut selected)) as |num|}}
     {{num}}
   {{/power-select}}
 </div>

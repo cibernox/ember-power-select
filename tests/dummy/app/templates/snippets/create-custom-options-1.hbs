@@ -1,7 +1,7 @@
 {{#power-select-multiple
   options=options
   selected=selected
-  onchange=(action (mut selected))
+  onChange=(action (mut selected))
   onkeydown=(action "createOnEnter")
   as |number|}}
   {{number}}
