@@ -1,8 +1,3 @@
-{{#power-select
-  selected=destination
-  options=cities
-  onChange=(action (mut destination))
-  as |name|
-}}
+<PowerSelect @selected={{destination}} @options={{cities}} @onChange={{action (mut destination)}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelect>

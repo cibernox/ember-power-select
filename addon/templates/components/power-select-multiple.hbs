@@ -1,4 +1,55 @@
-{{#if (hasBlock "inverse")}}
+<PowerSelect
+  {{!-- triggerRole=triggerRole --}}
+  @afterOptionsComponent={{@afterOptionsComponent}}
+  @allowClear={{@allowClear}}
+  @beforeOptionsComponent={{@beforeOptionsComponent}}
+  @buildSelection={{action "buildSelection"}}
+  @calculatePosition={{@calculatePosition}}
+  @closeOnSelect={{@closeOnSelect}}
+  @defaultHighlighted={{@defaultHighlighted}}
+  @destination={{destination}}
+  @disabled={{@disabled}}
+  @dropdownClass={{@dropdownClass}}
+  @extra={{@extra}}
+  @groupComponent={{@groupComponent}}
+  @horizontalPosition={{@horizontalPosition}}
+  @initiallyOpened={{@initiallyOpened}}
+  @loadingMessage={{@loadingMessage}}
+  @matcher={{@matcher}}
+  @matchTriggerWidth={{@matchTriggerWidth}}
+  @noMatchesMessage={{@noMatchesMessage}}
+  @onblur={{@onblur}}
+  @onChange={{@onChange}}
+  @onClose={{@onClose}}
+  @onfocus={{action "handleFocus"}}
+  @onInput={{@onInput}}
+  @onkeydown={{action "handleKeydown"}}
+  @onOpen={{action "handleOpen"}}
+  @options={{@options}}
+  @optionsComponent={{@optionsComponent}}
+  @placeholder={{@placeholder}}
+  @placeholderComponent={{@placeholderComponent}}
+  @preventScroll={{@preventScroll}}
+  @registerAPI={{@registerAPI}}
+  @renderInPlace={{@renderInPlace}}
+  @scrollTo={{@scrollTo}}
+  @search={{@search}}
+  @searchEnabled={{@searchEnabled}}
+  @searchField={{@searchField}}
+  @searchMessage={{@searchMessage}}
+  @searchPlaceholder={{@searchPlaceholder}}
+  @selected={{@selected}}
+  @selectedItemComponent={{@selectedItemComponent}}
+  @eventType={{@eventType}}
+  @triggerClass={{@concatenatedTriggerClass}}
+  @triggerComponent={{component this.triggerComponent tabindex=@tabindex}}
+  @triggerId={{@triggerId}}
+  @verticalPosition={{@verticalPosition}}
+  ...attributes as |option select|>
+  {{yield option select}}
+</PowerSelect>
+
+{{!-- {{#if (hasBlock "inverse")}}
   {{#power-select
     _triggerTagName=_triggerTagName
     triggerRole=triggerRole
@@ -124,4 +175,4 @@
     as |option select|}}
     {{yield option select}}
   {{/power-select}}
-{{/if}}
+{{/if}} --}}
