@@ -4,6 +4,10 @@
 const path = require('path');
 const fs = require('fs');
 
+function isModuleUnificationProject(project) {
+  return project && project.isModuleUnification && project.isModuleUnification();
+}
+
 module.exports = {
   normalizeEntityName() {
     // this prevents an error when the entityName is
@@ -16,6 +20,7 @@ module.exports = {
     let type;
     let importStatement = '\n@import "ember-power-select";\n';
 
+
     if ('ember-cli-sass' in dependencies) {
       type = 'scss';
     } else if ('ember-cli-less' in dependencies) {
@@ -24,6 +29,10 @@ module.exports = {
 
     if (type) {
       let stylePath = path.join('app', 'styles');
+      if (isModuleUnificationProject(this.project)) {
+        stylePath = path.join('src', 'ui', 'styles');
+      }
+
       let file = path.join(stylePath, `app.${type}`);
 
       if (!fs.existsSync(stylePath)) {
@@ -37,5 +46,6 @@ module.exports = {
         this.ui.writeLine(`Created ${file}`);
       }
     }
+
   }
 };
