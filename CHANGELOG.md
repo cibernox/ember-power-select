@@ -1,5 +1,11 @@
 # Master
 
+# 2.2.3
+- [ENHANCEMENT] Allow styles to work on apps using Module Unification.
+
+# 2.2.2
+- [BUGFIX] Prevent scroll only if target is body
+
 # 2.2.1
 - [BUGFIX] Update test helpers so they work with latest version of EBD
 
