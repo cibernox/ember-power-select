@@ -1,5 +1,8 @@
 # Master
 
+# 2.3.0
+- [UPDATE] Depend on ember-concurrency 0.9 for better octane support
+
 # 2.2.3
 - [ENHANCEMENT] Allow styles to work on apps using Module Unification.
 
