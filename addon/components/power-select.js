@@ -76,7 +76,7 @@ export default Component.extend({
   tagName: '',
 
   // Options
-  searchEnabled: fallbackIfUndefined(false),
+  // searchEnabled: fallbackIfUndefined(false),
   matchTriggerWidth: fallbackIfUndefined(true),
   preventScroll: fallbackIfUndefined(false),
   matcher: fallbackIfUndefined(defaultMatcher),
@@ -121,7 +121,7 @@ export default Component.extend({
       choose: (...args) => this.send('choose', ...args),
       scrollTo: (...args) => scheduleOnce('afterRender', this, this.send, 'scrollTo', ...args)
     };
-    assert('<PowerSelect> requires an `@onchange` function', this.get('onchange') && typeof this.get('onchange') === 'function');
+    assert('<PowerSelect> requires an `@onChange` function', this.get('onChange') && typeof this.get('onChange') === 'function');
   },
 
   willDestroy() {
