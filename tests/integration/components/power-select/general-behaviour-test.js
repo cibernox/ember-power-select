@@ -23,9 +23,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
@@ -39,9 +39,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -51,33 +51,33 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
   });
 
-  test('Search functionality is enabled by default', async function(assert) {
+  test('Search functionality is disabled by default', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers  onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
-    assert.dom('.ember-power-select-search').exists('The search box is rendered');
+    assert.dom('.ember-power-select-search').doesNotExist('The search box is rendered');
   });
 
-  test('The search functionality can be disabled by passing `searchEnabled=false`', async function(assert) {
+  test('The search functionality can be enabled by passing `@searchEnabled={{true}}`', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers searchEnabled=false onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @searchEnabled={{true}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
-    assert.dom('.ember-power-select-search').doesNotExist('The search box NOT rendered');
+    assert.dom('.ember-power-select-search').exists('The search box NOT rendered');
   });
 
   test("The search box shouldn't gain focus if autofocus is disabled", async function(assert) {
@@ -86,14 +86,12 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
 
     await render(hbs`
-      {{#power-select
-      options=numbers
-      onchange=(action (mut foo))
-      beforeOptionsComponent=(component "power-select/before-options" autofocus=false)
-      as |option|
-      }}
+      <PowerSelect
+        @options={{numbers}}
+        @onchange={{action (mut foo)}}
+        @beforeOptionsComponent={{component "power-select/before-options" autofocus=false}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -105,9 +103,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -122,9 +120,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbersPromise = [];
     await render(hbs`
-      {{#power-select options=numbersPromise onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbersPromise}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     this.set('numbersPromise', new RSVP.Promise(function(resolve) {
@@ -147,9 +145,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbersPromise = [];
 
     await render(hbs`
-      {{#power-select options=numbersPromise onchange=(action (mut foo)) loadingMessage=false as |option|}}
+      <PowerSelect @options={{numbersPromise}} @onchange={{action (mut foo)}} @loadingMessage={{false}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     this.set('numbersPromise', new RSVP.Promise(function(resolve) {
@@ -169,9 +167,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=foo placeholder="abracadabra" onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @placeholder="abracadabra" @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger .ember-power-select-placeholder').hasText('abracadabra', 'The placeholder is rendered when there is no element');
@@ -186,9 +184,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=foo searchPlaceholder="foobar yo!" onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @searchPlaceholder="foobar yo!" @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -205,9 +203,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      {{#power-select options=numbers onchange=(action foo) selected=selected as |option|}}
+      <PowerSelect @options={{numbers}} @onchange={{action foo}} @selected={{selected}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     run(() => this.set('selected', 'three'));
@@ -223,9 +221,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
     this.selected = null;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected=selected @onchange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected');
@@ -241,9 +239,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers renderInPlace=true onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @renderInPlace={{true}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -255,9 +253,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @closeOnSelect={{false}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
@@ -273,9 +271,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=foo closeOnSelect=false onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @closeOnSelect={{false}} @onchange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
@@ -302,7 +300,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(
-      hbs`{{#power-select options=proxy search=(action search) onchange=(action (mut foo)) as |option|}} {{option}} {{/power-select}}`
+      hbs`<PowerSelect @options={{proxy}} @search={{action search}} @onchange={{action (mut foo)}} as |option|>{{option}}</PowerSelect>`
     );
 
     await clickTrigger();
@@ -1220,7 +1218,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     assert.dom('.ember-power-select-trigger').hasAttribute('title', 'The title');
   });
-  
+
   test('Constant PromiseProxy references are tracked when .content changes', async function(assert) {
     let initial = null;
     //initial = countries[1];
@@ -1236,7 +1234,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       this.proxy.set('content', countries[0]);
       this.proxy.set('promise', Promise.resolve(countries[0]));
     };
-    
+
     await render(hbs`
       <button id="update-proxy-btn" onclick={{action updateProxy}}>Update proxy content</button>
       <br>
@@ -1244,14 +1242,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
         {{option.name}}
       {{/power-select}}
     `);
-    
+
     assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
     assert.dom('.ember-power-select-trigger').hasText(initial ? initial.name : '', 'Nothing is selected yet');
-    
+
     await click('#update-proxy-btn');
-    
+
     assert.dom('.ember-power-select-trigger').hasText(countries[0].name, 'The trigger has the proper content');
-    
+
     //TODO: also try starting from non-null value and maybe also going back to null?
   });
 });
