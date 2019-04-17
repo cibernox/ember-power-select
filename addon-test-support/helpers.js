@@ -38,6 +38,18 @@ export function triggerScroll(x = 0, y = 0) {
   return scrollTo(selector, x, y);
 }
 
+export async function nativeMouseDown(selectorOrDomElement, options) {
+  return triggerEvent(selectorOrDomElement, 'mousedown', options);
+}
+
+export async function nativeMouseUp(selectorOrDomElement, options) {
+  return triggerEvent(selectorOrDomElement, 'mouseup', options);
+}
+
+export async function triggerKeydown(domElement, k) {
+  return triggerKeyEvent(domElement, 'keydown', k);
+}
+
 export function typeInSearch(scopeOrText, text) {
   let scope = '';
 

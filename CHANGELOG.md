@@ -1,5 +1,17 @@
 # Master
 
+# 2.3.1
+- [BUGFIX] Allow both ember-concurrency 0.9.X and 0.8.X to support octane and older versions of Ember
+
+# 2.3.0
+- [UPDATE] Depend on ember-concurrency 0.9 for better octane support
+
+# 2.2.3
+- [ENHANCEMENT] Allow styles to work on apps using Module Unification.
+
+# 2.2.2
+- [BUGFIX] Prevent scroll only if target is body
+
 # 2.2.1
 - [BUGFIX] Update test helpers so they work with latest version of EBD
 

@@ -1,1 +1,1 @@
-import { selectChoose, selectSearch, removeMultipleOption, clearSelected } from '@salsify/ember-power-select/test-support';
+import { selectChoose, selectSearch, removeMultipleOption, clearSelected } from 'ember-power-select/test-support';
