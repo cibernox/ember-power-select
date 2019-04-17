@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerKeyEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
-import { clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
+import { clickTrigger, findContains } from '@salsify/ember-power-select/test-support/helpers';
 
 module('Integration | Component | Ember Power Select (Accesibility)', function(hooks) {
   setupRenderingTest(hooks);

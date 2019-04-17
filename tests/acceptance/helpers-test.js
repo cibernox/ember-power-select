@@ -1,7 +1,12 @@
 import { test, module } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { click, visit, currentURL } from '@ember/test-helpers';
-import { selectChoose, selectSearch, removeMultipleOption, clearSelected } from 'ember-power-select/test-support/helpers';
+import {
+  selectChoose,
+  selectSearch,
+  removeMultipleOption,
+  clearSelected
+} from '@salsify/ember-power-select/test-support/helpers';
 
 module('Acceptance | helpers | selectChoose', function(hooks) {
   setupApplicationTest(hooks);

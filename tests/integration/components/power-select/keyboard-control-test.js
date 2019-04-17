@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { triggerKeydown, clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
+import { triggerKeydown, clickTrigger, typeInSearch } from '@salsify/ember-power-select/test-support/helpers';
 import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';

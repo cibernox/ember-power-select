@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
+import { typeInSearch, clickTrigger } from '@salsify/ember-power-select/test-support/helpers';
 import emberDataInitializer from '../../../../initializers/ember-data';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
