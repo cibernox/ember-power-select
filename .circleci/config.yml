@@ -14,13 +14,12 @@ jobs:
           command: curl -u ${ARTIFACTORY_CREDENTIALS} https://npm.salsify.com/api/npm/npm-local/auth/salsify >> ~/.npmrc
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
-            - dependency-cache-
+            - node_modules-cache-{{ checksum "yarn.lock" }}
       - run:
           name: Refresh Dependencies
           command: yarn
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          key: node_modules-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
       - run:
@@ -46,8 +45,7 @@ jobs:
           command: curl -u ${ARTIFACTORY_CREDENTIALS} https://npm.salsify.com/api/npm/npm-local/auth/salsify >> ~/.npmrc
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
-            - dependency-cache-
+            - node_modules-cache-{{ checksum "yarn.lock" }}
       - run:
           name: Create Test Output Directory
           command: mkdir -p tmp/test-output/$EMBER_TRY_SCENARIO
