@@ -52,18 +52,18 @@
 <h3><code>onkeydown</code> Action</h3>
 
 <p>
-  The second option you can provide to the component to customize it's behavior is <code>onkeypress</code>.
+  The second option you can provide to the component to customize it's behavior is <code>onkeydown</code>.
   This option will be fired whenever the user presses a key while the component or the search input inside
   have the focus.
 </p>
 
 <p>
   This action receives two arguments, <code>dropdown</code> and <code>event</code>. The first one is
-  an object that you can use to control the component through it's actions (open, close, toggle...).
+  an object that you can use to control the component through its actions (open, close, toggle...).
   The event is the raw <code>keydown</code> event you can use to decide what to do next.
-  If you desire to highjack the browsers' default bahaviour you can call `preventDefault` on that
-  event. If you want to avoid the component's default behaviour (p.e. open/close the select or
-  navigate through the options using the arrow keys) return false from this action.
+  If you desire to hijack the browser's default bahaviour you can call <code>preventDefault</code> on that
+  event. If you want to avoid the component's default behaviour (e.g., open/close the select or
+  navigate through the options using the arrow keys) return <code>false</code> from this action.
 </p>
 
 <p>
