@@ -90,6 +90,10 @@ export default Component.extend({
         this.hasMoved = false;
         return;
       }
+      
+      if (optionItem.closest('[aria-disabled=true]')) {
+        return; // Abort if the item or an ancestor is disabled
+      }
 
       let optionIndex = optionItem.getAttribute('data-option-index');
       this.get('select.actions.choose')(this._optionFromIndex(optionIndex), e);
