@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerEvent, triggerKeyEvent, click, focus } from '@ember/test-helpers';
+import { render, triggerEvent, triggerKeyEvent, click, focus, tap } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { run } from '@ember/runloop';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
@@ -284,5 +284,24 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     await click(document.querySelectorAll('.ember-power-select-option')[1]);
     assert.dom('.ember-power-select-trigger').hasText('two', 'The option is selected');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-disabled', 'true');
+  });
+
+  test('Disabled options cannot be selected', async function(assert) {
+    assert.expect(4);
+    this.countriesWithDisabled = countriesWithDisabled;
+    
+    await render(hbs`
+     {{#power-select options=countriesWithDisabled selected=foo onchange=(action (mut foo)) as |country|}}
+       {{country.name}}
+     {{/power-select}}
+    `);
+
+    await clickTrigger();
+    assert.dom('.ember-power-select-dropdown').exists('The select is open');
+    await click(document.querySelectorAll('.ember-power-select-option')[2]);
+    assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected');
+    assert.dom('.ember-power-select-dropdown').exists('The select is still open');
+    await tap(document.querySelectorAll('.ember-power-select-option')[2]);
+    assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected');
   });
 });
