@@ -1,5 +1,8 @@
 # Master
 
+# 2.3.2
+- [BUGFIX] Fix bug that caused disabled options to be selectable on touch devices.
+
 # 2.3.1
 - [BUGFIX] Allow both ember-concurrency 0.9.X and 0.8.X to support octane and older versions of Ember
 
