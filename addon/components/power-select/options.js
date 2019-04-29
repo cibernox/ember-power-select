@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../../templates/components/power-select/options';
 
+const isTouchDevice = (!!window && 'ontouchstart' in window);
 if(typeof FastBoot === 'undefined'){
   (function(ElementProto) {
     if (typeof ElementProto.matches !== 'function') {
@@ -24,6 +25,7 @@ if(typeof FastBoot === 'undefined'){
 }
 
 export default Component.extend({
+  isTouchDevice,
   layout,
   tagName: 'ul',
   attributeBindings: ['role', 'aria-controls'],
@@ -50,7 +52,22 @@ export default Component.extend({
     if (this.get('highlightOnHover')) {
       this.element.addEventListener('mouseover', (e) => findOptionAndPerform(this.get('select.actions.highlight'), e));
     }
-    
+    if (this.get('isTouchDevice')) {
+      this._addTouchEvents();
+    }
+    if (this.get('role') !== 'group') {
+      let select = this.get('select');
+      select.actions.scrollTo(select.highlighted);
+    }
+  },
+
+  // CPs
+  'aria-controls': computed('select.uniqueId', function() {
+    return `ember-power-select-trigger-${this.get('select.uniqueId')}`;
+  }),
+
+  // Methods
+  _addTouchEvents() {
     let touchMoveHandler = () => {
       this.hasMoved = true;
       if (this.element) {
@@ -81,17 +98,7 @@ export default Component.extend({
       let optionIndex = optionItem.getAttribute('data-option-index');
       this.get('select.actions.choose')(this._optionFromIndex(optionIndex), e);
     });
-    
-    if (this.get('role') !== 'group') {
-      let select = this.get('select');
-      select.actions.scrollTo(select.highlighted);
-    }
   },
-
-  // CPs
-  'aria-controls': computed('select.uniqueId', function() {
-    return `ember-power-select-trigger-${this.get('select.uniqueId')}`;
-  }),
 
   _optionFromIndex(index) {
     let parts = index.split('.');
