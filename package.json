@@ -56,7 +56,6 @@
     "ember-cli": "~3.10.1",
     "ember-cli-blueprint-test-helpers": "^0.19.1",
     "ember-cli-dependency-checker": "^3.1.0",
-    "ember-cli-fastboot": "^2.0.0",
     "ember-cli-htmlbars-inline-precompile": "^2.1.0",
     "ember-cli-inject-live-reload": "^2.0.1",
     "ember-cli-mirage": "^0.4.10",
@@ -87,7 +86,7 @@
     "mocha": "^5.2.0",
     "prember": "1.0.0",
     "prember-crawler": "^0.1.0",
-    "qunit-dom": "^0.8.4",
+    "qunit-dom": "^0.8.5",
     "sass": "^1.17.4",
     "simple-git": "^1.10.0",
     "testdouble": "^3.2.6"

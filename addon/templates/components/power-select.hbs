@@ -18,9 +18,11 @@
     @onBlur={{action "onTriggerBlur"}}
     @eventType={{or @eventType "mousedown"}}
     class={{this.concatenatedTriggerClasses}}
-    id={{@triggerId}}>
+    id={{@triggerId}}
+    title={{@title}}>
     {{#let (component this.triggerComponent) as |Trigger|}}
       <Trigger
+        @htmlTag={{this._triggerTagName}}
         @allowClear={{@allowClear}}
         @buildSelection={{@buildSelection}}
         @extra={{@extra}}
@@ -41,9 +43,16 @@
       </Trigger>
     {{/let}}
   </dropdown.Trigger>
-  <dropdown.Content class={{this.concatenatedDropdownClasses}}>
+  <dropdown.Content @htmlTag={{this._contentTagName}} class={{this.concatenatedDropdownClasses}}>
     {{#let (component this.beforeOptionsComponent) as |BeforeOptions|}}
-      <BeforeOptions/>
+      <BeforeOptions
+        @select={{this.publicAPI}}
+        @searchEnabled={{@searchEnabled}}
+        @searchPlaceholder={{@searchPlaceholder}}
+        @listboxId={{this.optionsId}}
+        @onInput={{action "onInput"}}
+        @onKeydown={{action "onKeydown"}}
+        @onFocus={{action "onFocus"}}/>
     {{/let}}
     {{#if this.mustShowSearchMessage}}
       {{#let (component this.searchMessageComponent) as |SearchMessage|}}

@@ -13,6 +13,8 @@ import ObjectProxy from '@ember/object/proxy';
 import layout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import optionsMatcher from '../utils/computed-options-matcher';
+import { assign } from '@ember/polyfills';
+
 import {
   defaultMatcher,
   indexOfOption,
@@ -24,25 +26,6 @@ import {
   defaultTypeAheadMatcher
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
-
-// Copied from Ember. It shouldn't be necessary in Ember 2.5+
-const assign = Object.assign || function EmberAssign(original, ...args) {
-  for (let i = 0; i < args.length; i++) {
-    let arg = args[i];
-    if (!arg) {
-      continue;
-    }
-
-    let updates = Object.keys(arg);
-
-    for (let i = 0; i < updates.length; i++) {
-      let prop = updates[i];
-      original[prop] = arg[prop];
-    }
-  }
-
-  return original;
-};
 
 function concatWithProperty(strings, property) {
   if (property) {

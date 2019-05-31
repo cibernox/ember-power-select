@@ -1,20 +1,12 @@
 import Component from '@ember/component';
 import { scheduleOnce, later } from '@ember/runloop';
 import layout from '../../templates/components/power-select/before-options';
+import { action } from '@ember/object';
 
 export default Component.extend({
   tagName: '',
   layout,
   autofocus: true,
-
-  // Lifecycle hooks
-  didInsertElement() {
-    this._super(...arguments);
-
-    if (this.get('autofocus')) {
-      this.focusInput();
-    }
-  },
 
   willDestroyElement() {
     this._super(...arguments);
@@ -38,10 +30,10 @@ export default Component.extend({
   },
 
   // Methods
-  focusInput() {
-    this.input = document.querySelector(`.ember-power-select-search-input[aria-controls="${this.get('listboxId')}"]`);
-    if (this.input) {
-      later(this.input, 'focus', 0);
+  @action
+  focusInput(el) {
+    if (this.autofocus) {
+      el.focus();
     }
   }
 });

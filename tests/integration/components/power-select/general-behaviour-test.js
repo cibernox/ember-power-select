@@ -89,6 +89,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       <PowerSelect
         @options={{numbers}}
         @onChange={{action (mut foo)}}
+        @searchEnabled={{true}}
         @beforeOptionsComponent={{component "power-select/before-options" autofocus=false}} as |option|>
         {{option}}
       </PowerSelect>
@@ -184,7 +185,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @searchPlaceholder="foobar yo!" @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @searchEnabled={{true}} @searchPlaceholder="foobar yo!" @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -221,7 +222,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
     this.selected = null;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected=selected @onChange={{action (mut selected)}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -299,8 +300,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       });
     };
 
-    await render(
-      hbs`<PowerSelect @options={{proxy}} @search={{action search}} @onChange={{action (mut foo)}} as |option|>{{option}}</PowerSelect>`
+    await render(hbs`
+      <PowerSelect @options={{proxy}} @search={{action search}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
+        {{option}}
+      </PowerSelect>`
     );
 
     await clickTrigger();
@@ -329,7 +332,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(
-      hbs`<PowerSelect @options={{proxy}} @search={{action search}} @onChange={{action (mut foo)}} as |option|> {{option}} </PowerSelect>`
+      hbs`<PowerSelect @options={{proxy}} @searchEnabled={{true}} @search={{action search}} @onChange={{action (mut foo)}} as |option|> {{option}} </PowerSelect>`
     );
 
     await clickTrigger();
@@ -352,7 +355,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @closeOnSelect={{false}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @searchEnabled={{true}} @closeOnSelect={{false}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -381,7 +384,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
     await render(hbs`
       <div id="outside-div"></div>
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -389,7 +392,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await clickTrigger();
     await typeInSearch('th');
     assert.dom('.ember-power-select-option').exists({ count: 2 }, 'the dropdown has filtered the results');
-    await triggerEvent('#outside-div', 'mousedown');
+    await click('#outside-div');
     await clickTrigger();
     assert.dom('.ember-power-select-option').exists({ count: numbers.length }, 'the dropdown has shows all results');
   });
@@ -398,7 +401,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.expect(2);
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option select|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option select|>
         {{select.lastSearchedText}}:{{option}}
       </PowerSelect>
     `);
@@ -429,7 +432,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.options = [];
     this.search = () => [];
     await render(hbs`
-      <PowerSelect @search={{search}} @options={{options}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @search={{search}} @options={{options}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -457,7 +460,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.options = [];
     this.search = () => [];
     await render(hbs`
-      <PowerSelect @search={{search}} @searchMessage={{false}} @options={{options}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @search={{search}} @searchMessage={{false}} @searchEnabled={{true}} @options={{options}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -518,7 +521,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText('Selected: three', 'The selected option uses the same yielded block as the options');
   });
 
-  test('When `selected` option is provided, it is highlighted when the dropdown opens', async function(assert) {
+  test('When `selected` option is provided, it is highlighted when the dropdown opens (string options)', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -552,7 +555,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.names = names;
     await render(hbs`
-      <PowerSelect @options={{names}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{names}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -580,7 +583,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @matcher={{endsWithMatcher}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @matcher={{endsWithMatcher}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -622,13 +625,13 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText('ES: Spain', 'The selected country is rendered in the trigger');
   });
 
-  test('When `selected` option is provided, it is highlighted when the dropdown opens', async function(assert) {
+  test('When `selected` option is provided, it is highlighted when the dropdown opens (object options)', async function(assert) {
     assert.expect(2);
 
     this.countries = countries;
     this.country = countries[1]; // Spain
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} onchange={{action (mut country)}} as |option|>
+      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut country)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -667,7 +670,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     ];
 
     await render(hbs`
-      <PowerSelect @options={{people}} @searchField="name" @onChange={{action (mut foo)}} as |person|>
+      <PowerSelect @options={{people}} @searchField="name" @searchEnabled={{true}} @onChange={{action (mut foo)}} as |person|>
         {{person.name}} {{person.surname}}
       </PowerSelect>
     `);
@@ -703,7 +706,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{people}} @matcher={{nameOrSurnameNoDiacriticsCaseSensitive}} @onChange={{action (mut foo)}} as |person|>
+      <PowerSelect @options={{people}} @searchEnabled={{true}} @matcher={{nameOrSurnameNoDiacriticsCaseSensitive}} @onChange={{action (mut foo)}} as |person|>
         {{person.name}} {{person.surname}}
       </PowerSelect>
     `);
@@ -722,7 +725,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
     this.foo = 'three';
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -741,7 +744,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -765,7 +768,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     });
 
     await render(hbs`
-      <PowerSelect @options={{numbersPromise}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbersPromise}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -971,14 +974,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').doesNotHaveClass('ember-power-select-trigger--active', 'The select doesn\'t have the class yet');
     await clickTrigger();
-    focus('.ember-power-select-search-input');
+    await focus('.ember-power-select-search-input');
     assert.dom('.ember-power-select-trigger').hasClass('ember-power-select-trigger--active', 'The select has the class now');
   });
 
@@ -1021,7 +1024,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.selected = null;
     this.search = () => [];
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} @search={{search}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{selected}} @searchEnabled={{true}} @onChange={{action (mut selected)}} @search={{search}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1098,6 +1101,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       <PowerSelect
         @selected={{selected}}
         @onChange={{onChange}}
+        @searchEnabled={{true}}
         @search={{search}} as |user|>
         {{user.name}}
       </PowerSelect>
@@ -1211,7 +1215,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} title="The title" as |option|>
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @title="The title" as |option|>
         {{option}}
       </PowerSelect>
     `);
