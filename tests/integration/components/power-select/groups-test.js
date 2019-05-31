@@ -13,9 +13,9 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
@@ -48,9 +48,9 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
       { groupName: 'Eagles', initial: 'E' }
     ];
     await render(hbs`
-      {{#power-select options=notQuiteGroups onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{this.notQuiteGroups}} @onChange={{action (mut foo)}} as |option|>
         {{option.groupName}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
@@ -64,9 +64,9 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     await clickTrigger();
     await typeInSearch('ve');
@@ -84,9 +84,9 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{this.groupedNumbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     await clickTrigger();
     let option = Array.from(document.querySelectorAll('.ember-power-select-option')).find((e) => e.textContent.indexOf('four') > -1);
@@ -100,9 +100,9 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();

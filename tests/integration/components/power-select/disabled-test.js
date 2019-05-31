@@ -14,9 +14,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers disabled=true onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @disabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-disabled', 'true');
@@ -31,9 +31,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers tabindex="123" disabled=true onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} tabindex="123" @disabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('tabindex', 'The trigger has no tabindex so it can\'t be focused');
   });
@@ -43,9 +43,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      {{#power-select options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{countriesWithDisabled}} @onChange={{action (mut foo)}} as |option|>
         {{option.code}}: {{option.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -58,9 +58,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      {{#power-select options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{countriesWithDisabled}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option.code}}: {{option.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -69,14 +69,14 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
   });
 
-  test('When passed `disabled=true`, the input inside the trigger is also disabled', async function(assert) {
+  test('When passed `@disabled={{true}}`, the input inside the trigger is also disabled', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) disabled=true as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @disabled={{true}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('disabled');
@@ -89,15 +89,15 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.selectedNumbers = [numbers[2], numbers[4]];
 
     await render(hbs`
-      {{#power-select-multiple selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=true as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @disabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     assert.dom('.ember-power-select-multiple-remove-btn').doesNotExist('There is no button to remove selected elements');
   });
 
-  test('Multiple select: When passed `disabled=prop`, enabling and disabling that property changes the component', async function(assert) {
+  test('Multiple select: When passed `@disabled={{prop}}`, enabling and disabling that property changes the component', async function(assert) {
     assert.expect(3);
 
     this.numbers = numbers;
@@ -105,9 +105,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.set('shouldBeDisabled', true);
 
     await render(hbs`
-      {{#power-select-multiple selected=selectedNumbers onchange=(action (mut foo)) options=numbers disabled=shouldBeDisabled as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @disabled={{shouldBeDisabled}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-disabled', 'true', 'The trigger has `aria-disabled=true`');
@@ -121,9 +121,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
+     <PowerSelect @options={{countriesWithDisabled}} @searchField="name" @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |country|>
        {{country.name}}
-     {{/power-select}}
+     </PowerSelect>
     `);
 
     await clickTrigger();
@@ -139,9 +139,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
+     <PowerSelect @options={{countriesWithDisabled}} @searchField="name" @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |country|>
        {{country.name}}
-     {{/power-select}}
+     </PowerSelect>
     `);
 
     await clickTrigger();
@@ -158,9 +158,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled[0].disabled = true;
 
     await render(hbs`
-     {{#power-select options=countriesWithDisabled searchField="name" selected=foo onchange=(action (mut foo)) as |country|}}
+     <PowerSelect @options={{countriesWithDisabled}} @searchField="name" @selected={{foo}} @onChange={{action (mut foo)}} as |country|>
        {{country.name}}
-     {{/power-select}}
+     </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -190,9 +190,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.options = options;
     await render(hbs`
-      {{#power-select options=options onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{options}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -222,9 +222,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.options = options;
     await render(hbs`
-      {{#power-select options=options selected=foo onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{options}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -243,9 +243,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.isDisabled = false;
     this.foo = numbers[0];
     await render(hbs`
-      {{#power-select options=numbers selected=foo disabled=isDisabled onchange=(action (mut foo)) as |option select|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @disabled={{isDisabled}} @onChange={{action (mut foo)}} as |option select|>
         {{if select.disabled 'disabled!' 'enabled!'}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasText('enabled!', 'The `disabled` attribute in the public API is false');
@@ -259,9 +259,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.numbers = numbers;
     this.isDisabled = false;
     await render(hbs`
-      {{#power-select options=numbers disabled=isDisabled onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @disabled={{isDisabled}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -275,9 +275,9 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.numbers = numbers;
 
     await render(hbs`
-     {{#power-select options=numbers selected=foo onchange=(action (mut foo)) disabled=foo  as |opt|}}
+     <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @disabled={{foo}}  as |opt|>
        {{opt}}
-     {{/power-select}}
+     </PowerSelect>
     `);
 
     await clickTrigger();
@@ -289,11 +289,11 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
   test('Disabled options cannot be selected', async function(assert) {
     assert.expect(4);
     this.countriesWithDisabled = countriesWithDisabled;
-    
+
     await render(hbs`
-     {{#power-select options=countriesWithDisabled selected=foo onchange=(action (mut foo)) as |country|}}
+     <PowerSelect @options={{countriesWithDisabled}} @selected={{foo}} @onChange={{action (mut foo)}} as |country|>
        {{country.name}}
-     {{/power-select}}
+     </PowerSelect>
     `);
 
     await clickTrigger();
