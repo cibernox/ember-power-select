@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select",
-  "version": "2.3.0",
+  "version": "2.3.2",
   "description": "The extensible select component built for ember",
   "keywords": [
     "ember-addon",
@@ -44,16 +44,16 @@
   ],
   "dependencies": {
     "ember-basic-dropdown": "^2.0.0-alpha.5",
-    "ember-cli-babel": "^7.7.0",
+    "ember-cli-babel": "^7.7.3",
     "ember-cli-htmlbars": "^3.0.1",
-    "ember-concurrency": "^0.9.0",
+    "ember-concurrency": "^0.8.27 || ^0.9.0 || ^0.10.0",
     "ember-text-measurer": "^0.5.0",
     "ember-truth-helpers": "^2.1.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-cli": "~3.8.1",
+    "ember-cli": "~3.10.1",
     "ember-cli-blueprint-test-helpers": "^0.19.1",
     "ember-cli-dependency-checker": "^3.1.0",
     "ember-cli-fastboot": "^2.0.0",
@@ -72,15 +72,15 @@
     "ember-href-to": "3.1.0",
     "ember-load-initializers": "^2.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-qunit": "^4.4.0",
+    "ember-qunit": "^4.4.1",
     "ember-qunit-assert-helpers": "^0.2.2",
     "ember-resolver": "^5.1.0",
-    "ember-source": "https://s3.amazonaws.com/builds.emberjs.com/canary/shas/0b0a32a40660f604dc72b9a8762f3592f452028a.tgz",
+    "ember-source": "~3.11.0-beta.1",
     "ember-source-channel-url": "^1.1.0",
     "ember-try": "^1.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-ember": "^6.3.0",
-    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-node": "^9.0.1",
     "liquid-fire": "0.29.5",
     "loader.js": "^4.7.0",
     "memory-scroll": "0.9.1",
@@ -93,7 +93,7 @@
     "testdouble": "^3.2.6"
   },
   "engines": {
-    "node": "6.* || 8.* || >= 10.*"
+    "node": "8.* || >= 10.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
