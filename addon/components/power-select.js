@@ -679,12 +679,14 @@ export default Component.extend({
   _removeObserversInOptions() {
     if (this._observedOptions) {
       this._observedOptions.removeObserver('[]', this, this._updateOptionsAndResults);
+      this._observedOptions = undefined;
     }
   },
 
   _removeObserversInSelected() {
     if (this._observedSelected) {
       this._observedSelected.removeObserver('[]', this, this._updateSelectedArray);
+      this._observedSelected = undefined;
     }
   },
 
