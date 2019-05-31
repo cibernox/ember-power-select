@@ -19,6 +19,12 @@
     @eventType={{or @eventType "mousedown"}}
     class={{this.concatenatedTriggerClasses}}
     id={{@triggerId}}
+    role={{or @triggerRole "button"}}
+    aria-describedby={{@ariaDescribedBy}}
+    aria-invalid={{@ariaInvalid}}
+    aria-label={{@ariaLabel}}
+    aria-labelledby={{@ariaLabelledBy}}
+    aria-required={{@required}}
     title={{@title}}>
     {{#let (component this.triggerComponent) as |Trigger|}}
       <Trigger
