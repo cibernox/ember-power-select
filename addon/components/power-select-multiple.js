@@ -33,10 +33,10 @@ export default Component.extend({
   }),
 
   computedTabIndex: computed('tabindex', 'searchEnabled', 'triggerComponent', function() {
-    if (this.get('triggerComponent') === 'power-select-multiple/trigger' && this.get('searchEnabled') !== false) {
+    if (this.get('triggerComponent') === 'power-select-multiple/trigger' && this.get('searchEnabled')) {
       return '-1';
     } else {
-      return this.get('tabindex');
+      return this.get('tabindex') || '0';
     }
   }),
 

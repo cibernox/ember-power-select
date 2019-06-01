@@ -28,12 +28,12 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.dom('.ember-power-select-search').doesNotExist('There is no search box');
   });
 
-  test('When the select opens, the search input in the trigger gets the focus', async function(assert) {
+  test('When the select opens, the search input (if any) in the trigger gets the focus', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -47,7 +47,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -166,7 +166,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -189,7 +189,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     ];
 
     await render(hbs`
-      <PowerSelectMultiple @options={{people}} @searchField="name" @onChange={{action (mut foo)}} as |person|>
+      <PowerSelectMultiple @options={{people}} @searchField="name" @onChange={{action (mut foo)}} @searchEnabled={{true}} as |person|>
         {{person.name}} {{person.surname}}
       </PowerSelectMultiple>
     `);
@@ -217,7 +217,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @matcher={{endsWithMatcher}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @matcher={{endsWithMatcher}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -242,7 +242,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     };
 
     await render(hbs`
-      <PowerSelectMultiple @search={{searchFn}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelectMultiple @search={{searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -261,7 +261,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -279,7 +279,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple searchEnabled=false options=numbers @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -299,7 +299,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       this.set('foo', selected);
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{change}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{change}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -310,12 +310,12 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.dom('.ember-power-select-trigger').includesText('two', 'The element was selected');
   });
 
-  test('Pressing ENTER over a highlighted element on a multiple select with `searchEnabled=false` selects it', async function(assert) {
+  test('Pressing ENTER over a highlighted element on a multiple select without a searchbox selects it', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple searchEnabled=false options=numbers @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -327,7 +327,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.dom('.ember-power-select-trigger').includesText('two', 'The element was selected');
   });
 
-  test('Pressing ENTER over a highlighted element on a select with `searchEnabled=false` selects it', async function(assert) {
+  test('Pressing ENTER over a highlighted element on a select without a searchbox selects it', async function(assert) {
     assert.expect(4);
 
     this.numbers = numbers;
@@ -336,7 +336,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       this.set('foo', selected);
     };
     await render(hbs`
-      <PowerSelectMultiple searchEnabled=false options=numbers @selected={{foo}} @onChange={{change}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{change}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -359,7 +359,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       this.set('selected', val);
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{didChange}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{didChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -382,7 +382,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       this.set('selected', val);
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{didChange}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{didChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -404,7 +404,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       assert.ok(dropdown.actions.close, 'The dropdown API is received as second argument');
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{didChange}} @selected={{selected}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @onChange={{didChange}} @selected={{selected}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -431,7 +431,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       assert.ok(dropdown.actions.close, 'The dropdown API is received as second argument');
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{countries}} @selected={{country}} @onChange={{didChange}} @searchField="name" as |c|>
+      <PowerSelectMultiple @options={{countries}} @selected={{country}} @onChange={{didChange}} @searchField="name" @searchEnabled={{true}} as |c|>
         {{c.name}}
       </PowerSelectMultiple>
     `);
@@ -449,7 +449,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -470,7 +470,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -487,7 +487,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -504,7 +504,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} placeholder="Select stuff here" as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @placeholder="Select stuff here" @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -520,7 +520,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple searchEnabled=false options=numbers @selected={{foo}} @onChange={{action (mut foo)}} placeholder="Select stuff here" as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @placeholder="Select stuff here" as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -536,7 +536,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -553,7 +553,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.expect(3);
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -569,7 +569,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.expect(3);
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -586,7 +586,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -607,7 +607,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     };
 
     await render(hbs`
-      <PowerSelectMultiple @selected={{foo}} @onChange={{action (mut foo)}} @search={{action search}} as |option|>
+      <PowerSelectMultiple @selected={{foo}} @onChange={{action (mut foo)}} @search={{action search}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -625,7 +625,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.expect(2);
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option select|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option select|>
         {{select.lastSearchedText}}:{{option}}
       </PowerSelectMultiple>
     `);
@@ -643,7 +643,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.expect(3);
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
       <div id="other-thing">Other div</div>
@@ -664,7 +664,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       assert.ok(false, 'The handle change should not be called');
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} onchange=(action handleChange) as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action handleChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -681,7 +681,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.expect(2);
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} triggerClass="foobar-trigger" @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @triggerClass="foobar-trigger" @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -726,7 +726,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -739,7 +739,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} searchEnabled=false as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -752,7 +752,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} tabindex=3 as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @tabindex="3" @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -767,7 +767,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     this.numbers = numbers;
     this.defaultHighlighted = numbers[3];
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} defaultHighlighted=defaultHighlighted as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @defaultHighlighted={{defaultHighlighted}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -791,6 +791,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       <PowerSelectMultiple
         @selected={{selected}}
         @onChange={{action (mut selected)}}
+        @searchEnabled={{true}}
         @search={{search}} as |user|>
         {{user.name}}
       </PowerSelectMultiple>
@@ -831,7 +832,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} title="The title" as |option|>
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @title="The title" as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);

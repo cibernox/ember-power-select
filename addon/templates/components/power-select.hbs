@@ -25,7 +25,8 @@
     aria-label={{@ariaLabel}}
     aria-labelledby={{@ariaLabelledBy}}
     aria-required={{@required}}
-    title={{@title}}>
+    title={{@title}}
+    tabindex={{@tabindex}}>
     {{#let (component this.triggerComponent) as |Trigger|}}
       <Trigger
         @htmlTag={{this._triggerTagName}}

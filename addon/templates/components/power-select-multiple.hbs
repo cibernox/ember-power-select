@@ -46,10 +46,12 @@
   @selected={{@selected}}
   @selectedItemComponent={{@selectedItemComponent}}
   @eventType={{@eventType}}
-  @triggerClass={{@concatenatedTriggerClass}}
+  @title={{@title}}
+  @triggerClass={{this.concatenatedTriggerClass}}
   @triggerComponent={{component this.triggerComponent tabindex=@tabindex}}
   @triggerId={{@triggerId}}
   @verticalPosition={{@verticalPosition}}
+  @tabindex={{this.computedTabIndex}}
   ...attributes as |option select|>
   {{yield option select}}
 </PowerSelect>
