@@ -15,9 +15,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -31,9 +31,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected="three" onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected="three" @onChange={{action (mut selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -48,9 +48,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.lastNumber = numbers[numbers.length - 1];
     await render(hbs`
-      {{#power-select options=numbers selected=lastNumber onchange=(action (mut lastNumber)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{lastNumber}} @onChange={{action (mut lastNumber)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -65,9 +65,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.firstNumber = numbers[0];
     await render(hbs`
-      {{#power-select options=numbers selected=firstNumber onchange=(action (mut firstNumber)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{firstNumber}} @onChange={{action (mut firstNumber)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -81,9 +81,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected="seven" onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected="seven" @onChange={{action (mut selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -105,9 +105,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action changed) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action changed}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -129,9 +129,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select searchEnabled=false options=numbers selected=selected onchange=(action changed) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action changed}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -150,9 +150,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       assert.ok(false, 'The handle change should not be called');
     };
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action handleChange) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action handleChange}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -176,9 +176,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action changed) searchEnabled=false as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action changed}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -189,14 +189,14 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-trigger').isFocused('The trigger is focused');
   });
 
-  test('Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger', async function(assert) {
+  test('Pressing TAB closes the select WITHOUT selecting the highlighted element and focuses the trigger', async function(assert) {
     assert.expect(3);
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -212,9 +212,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     assert.dom('.ember-power-select-trigger').hasAttribute('tabindex', '0', 'The trigger is reachable with TAB');
   });
@@ -224,9 +224,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -242,9 +242,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -260,9 +260,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -276,9 +276,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -292,9 +292,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -320,9 +320,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -347,9 +347,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -375,9 +375,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -387,7 +387,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing was selected');
   });
 
-  test('in single-mode if the users returns false in the `onkeydown` action it prevents the component to do the usual thing', async function(assert) {
+  test('in single-mode if the users returns false in the `@onkeydown` action it prevents the component to do the usual thing', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -397,9 +397,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -408,7 +408,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-dropdown').exists('The select is still opened');
   });
 
-  test('In multiple-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', async function(assert) {
+  test('In multiple-mode, when the user presses a key being the search input focused the passes `@onkeydown` action is invoked with the public API and the event', async function(assert) {
     assert.expect(9);
 
     this.numbers = numbers;
@@ -424,9 +424,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -435,7 +435,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
   });
 
-  test('in multiple-mode if the users returns false in the `onkeydown` action it prevents the component to do the usual thing', async function(assert) {
+  test('in multiple-mode if the users returns false in the `@onkeydown` action it prevents the component to do the usual thing', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -443,9 +443,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.handleKeydown = () => false;
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selectedNumbers onchange=(action (mut foo)) onkeydown=(action handleKeydown) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -459,9 +459,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -478,9 +478,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -502,9 +502,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -524,9 +524,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numerals = numerals;
     await render(hbs`
-      {{#power-select options=numerals selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numerals}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -544,9 +544,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -566,9 +566,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -588,9 +588,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -609,9 +609,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.countries = countries;
     await render(hbs`
-      {{#power-select options=countries selected=selected onchange=(action (mut selected)) searchField="name" as |country|}}
+      <PowerSelect @options={{countries}} @selected={{selected}} @onChange={{action (mut selected)}} @searchField="name" as |country|>
         {{country.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -628,9 +628,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers selected=selected onchange=(action (mut selected)) as |number|}}
+      <PowerSelect @options={{groupedNumbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -648,9 +648,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.countries = countriesWithDisabled.map((country) => Object.assign({}, country));
     this.countries[0].disabled = true;
     await render(hbs`
-      {{#power-select options=countries selected=selected onchange=(action (mut selected)) searchField="name" as |country|}}
+      <PowerSelect @options={{countries}} @selected={{selected}} @onChange={{action (mut selected)}} @searchField="name" as |country|>
         {{country.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -666,9 +666,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numbers = groupedNumbersWithDisabled;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -692,9 +692,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       }
     };
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{action handleOpen}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
@@ -721,9 +721,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       return false; // prevent the dropdown from opening
     };
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{action handleOpen}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
@@ -749,9 +749,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       }
     };
     await render(hbs`
-      {{#power-select-multiple options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{action handleOpen}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
@@ -778,9 +778,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       return false; // prevent the dropdown from opening
     };
     await render(hbs`
-      {{#power-select-multiple options=numbers onchange=(action (mut foo)) searchEnabled=false onopen=(action handleOpen) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{action handleOpen}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
@@ -804,9 +804,9 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     ];
     this.selected = this.options[1];
     await render(hbs`
-      {{#power-select options=options selected=selected onchange=(action (mut selected)) searchEnabled=false as |option|}}
+      <PowerSelect @options={{options}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option.label}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-selected-item').hasText('25');
