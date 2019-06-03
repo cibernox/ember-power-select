@@ -53,13 +53,19 @@
   <dropdown.Content @htmlTag={{this._contentTagName}} class={{this.concatenatedDropdownClasses}}>
     {{#let (component this.beforeOptionsComponent) as |BeforeOptions|}}
       <BeforeOptions
+        @animationEnabled={{@animationEnabled}}
         @select={{this.publicAPI}}
         @searchEnabled={{@searchEnabled}}
         @searchPlaceholder={{@searchPlaceholder}}
         @listboxId={{this.optionsId}}
         @onInput={{action "onInput"}}
         @onKeydown={{action "onKeydown"}}
-        @onFocus={{action "onFocus"}}/>
+        @onFocus={{action "onFocus"}}
+        @onBlur={{action "onBlur"}}
+        @extra={{@extra}}
+        @placeholder={{placeholder}}
+        @placeholderComponent={{this.placeholderComponent}}
+        @selectedItemComponent={{@selectedItemComponent}}/>
     {{/let}}
     {{#if this.mustShowSearchMessage}}
       {{#let (component this.searchMessageComponent) as |SearchMessage|}}
