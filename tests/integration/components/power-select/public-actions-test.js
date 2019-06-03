@@ -43,9 +43,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=(action (mut foo)) search=handleSearch as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @search={{handleSearch}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -62,9 +62,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) search=handleSearch as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @search={{handleSearch}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -81,9 +81,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=handleChange as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{handleChange}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -100,9 +100,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=handleChange as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{handleChange}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -119,9 +119,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onkeydown=onKeyDown onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onkeydown={{onKeyDown}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -141,9 +141,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onkeydown=onKeyDown onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onkeydown={{onKeyDown}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -164,9 +164,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onkeydown=onKeyDown onchange=(action (mut foo)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onkeydown={{onKeyDown}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -186,9 +186,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=(action (mut foo)) onkeydown=handleKeyDown as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @onkeydown={{handleKeyDown}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
@@ -209,9 +209,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) onkeydown=handleKeyDown as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @onkeydown={{handleKeyDown}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 13);
@@ -228,16 +228,16 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onfocus=handleFocus onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onfocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await focus('.ember-power-select-trigger');
   });
 
   test('The onfocus of multiple selects action receives the public API and the focus event', async function(assert) {
-    assert.expect(44);
+    assert.expect(22);
 
     this.numbers = numbers;
     this.handleFocus = (select, e) => {
@@ -246,9 +246,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onfocus=handleFocus onchange=(action (mut foo)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onfocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await focus('.ember-power-select-trigger');
@@ -265,9 +265,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     await render(hbs`
       <input type="text" autofocus>
-      {{#power-select-multiple options=numbers selected=foo onfocus=handleFocus onchange=(action (mut foo)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onfocus={{handleFocus}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await focus('.ember-power-select-trigger-multiple-input');
@@ -283,9 +283,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onblur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
       <input type="text" id="other-element"/>
     `);
 
@@ -303,9 +303,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onblur={{handleBlur}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
       <input type="text" id="other-element"/>
     `);
 
@@ -321,9 +321,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onblur=handleBlur onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onblur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
       <input type="text" id="other-element"/>
     `);
 
@@ -331,7 +331,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await focus('#other-element');
   });
 
-  test('the `onopen` action is invoked just before the dropdown opens', async function(assert) {
+  test('the `@onOpen` action is invoked just before the dropdown opens', async function(assert) {
     assert.expect(24);
 
     this.numbers = numbers;
@@ -342,16 +342,16 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{handleOpen}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
   });
 
-  test('returning false from the `onopen` action prevents the single select from opening', async function(assert) {
+  test('returning false from the `@onOpen` action prevents the single select from opening', async function(assert) {
     assert.expect(24);
 
     this.numbers = numbers;
@@ -363,16 +363,16 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{handleOpen}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown didn\'t open');
   });
 
-  test('returning false from the `onopen` action prevents the multiple select from opening', async function(assert) {
+  test('returning false from the `@onOpen` action prevents the multiple select from opening', async function(assert) {
     assert.expect(24);
 
     this.numbers = numbers;
@@ -384,16 +384,16 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{handleOpen}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown didn\'t open');
   });
 
-  test('the `onclose` action is invoked just before the dropdown closes', async function(assert) {
+  test('the `@onClose` action is invoked just before the dropdown closes', async function(assert) {
     assert.expect(24);
 
     this.numbers = numbers;
@@ -404,9 +404,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onClose={{handleClose}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -414,7 +414,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is closed');
   });
 
-  test('returning false from the `onclose` action prevents the single select from closing', async function(assert) {
+  test('returning false from the `@onClose` action prevents the single select from closing', async function(assert) {
     assert.expect(25);
 
     this.numbers = numbers;
@@ -426,9 +426,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onClose={{handleClose}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -437,7 +437,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     assert.dom('.ember-power-select-dropdown').exists('Dropdown didn\'t close');
   });
 
-  test('returning false from the `onclose` action prevents the multiple select from closing', async function(assert) {
+  test('returning false from the `@onClose` action prevents the multiple select from closing', async function(assert) {
     assert.expect(25);
 
     this.numbers = numbers;
@@ -449,9 +449,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers onchange=(action (mut foo)) onclose=handleClose as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} @onClose={{handleClose}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -472,9 +472,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onInput={{handleInput}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -497,9 +497,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onInput={{handleInput}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -519,9 +519,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onInput={{handleInput}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -538,9 +538,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo oninput=handleInput onchange=(action (mut foo)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onInput={{handleInput}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -555,9 +555,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       select.actions.highlight('baz');
     };
     await render(hbs`
-      {{#power-select options=options onchange=(action (mut foo)) onopen=handleOpen as |option|}}
+      <PowerSelect @options={{options}} @onChange={{action (mut foo)}} @onOpen={{handleOpen}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     await clickTrigger();
     assert.dom('.ember-power-select-option').exists({ count: 3 }, 'There is three options');
@@ -574,9 +574,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onopen=initSearch onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onOpen={{initSearch}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -593,9 +593,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onopen=initSearch onchange=(action (mut foo)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onOpen={{initSearch}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -612,9 +612,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) search=handleSearch as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @search={{handleSearch}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -629,9 +629,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       }
     };
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @registerAPI={{storeAPI}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
   });
 
@@ -643,9 +643,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       }
     };
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @registerAPI={{storeAPI}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
   });
 
@@ -660,9 +660,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       assertPublicAPIShape(assert, select);
     };
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI scrollTo=scrollTo as |number|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @registerAPI={{storeAPI}} @scrollTo={{scrollTo}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     run(() => this.selectAPI.actions.scrollTo('three'));
@@ -679,9 +679,9 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       assertPublicAPIShape(assert, select);
     };
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) registerAPI=storeAPI scrollTo=scrollTo as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @registerAPI={{storeAPI}} @scrollTo={{scrollTo}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     run(() => this.selectAPI.actions.scrollTo('three'));
