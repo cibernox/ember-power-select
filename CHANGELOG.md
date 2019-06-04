@@ -1,5 +1,8 @@
 # Master
 
+# 2.3.3
+- [CHORE] Allow ember-concurrency 1.0
+
 # 2.3.2
 - [BUGFIX] Fix bug that caused disabled options to be selectable on touch devices.
 
