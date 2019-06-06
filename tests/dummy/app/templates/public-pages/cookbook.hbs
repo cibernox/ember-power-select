@@ -11,9 +11,9 @@
     {{#link-to "public-pages.cookbook.navigable-select" class="side-nav-link"}}Navigable select{{/link-to}}
   </nav>
   <section class="doc-page">
-    {{#power-select selected=currentSection options=groupedSections onChange=(action "visit") searchField="text" searchEnabled=false triggerClass="section-selector" as |option|}}
+    <PowerSelect @selected={{currentSection}} @options={{groupedSections}} @onChange={{action "visit"}} @searchField="text" @triggerClass="section-selector" as |option|>
       {{option.text}}
-    {{/power-select}}
+    </PowerSelect>
     {{outlet}}
   </section>
 </section>

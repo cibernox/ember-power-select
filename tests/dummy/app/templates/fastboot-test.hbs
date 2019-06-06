@@ -1,23 +1,23 @@
 <div id="single-select-without-selected">
-  {{#power-select options=numbers selected=none onChange=(action (mut none)) as |num|}}
+  <PowerSelect @options={{numbers}} @selected={{none}} @onChange={{action (mut none)}} as |num|>
     {{num}}
-  {{/power-select}}
+  </PowerSelect>
 </div>
 
 <div id="single-select-with-selected">
-  {{#power-select options=numbers selected=singleSelected onChange=(action (mut singleSelected)) as |num|}}
+  <PowerSelect @options={{numbers}} @selected={{singleSelected}} @onChange={{action (mut singleSelected)}} as |num|>
     {{num}}
-  {{/power-select}}
+  </PowerSelect>
 </div>
 
 <div id="multiple-select-without-selected">
-  {{#power-select-multiple options=numbers selected=none onChange=(action (mut none)) as |num|}}
+  <PowerSelectMultiple @options={{numbers}} @selected={{none}} @onChange={{action (mut none)}} as |num|>
     {{num}}
-  {{/power-select-multiple}}
+  </PowerSelectMultiple>
 </div>
 
 <div id="multiple-select-with-selected">
-  {{#power-select-multiple options=numbers selected=multipleSelected onChange=(action (mut multipleSelected)) as |num|}}
+  <PowerSelectMultiple @options={{numbers}} @selected={{multipleSelected}} @onChange={{action (mut multipleSelected)}} as |num|>
     {{num}}
-  {{/power-select-multiple}}
+  </PowerSelectMultiple>
 </div>

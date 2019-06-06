@@ -11,80 +11,80 @@
 <h3>Regular selects without search</h3>
 <div style="display: flex;">
   <div style="flex: 1; padding: 5px;">
-    {{#power-select
-      triggerClass="material-theme-trigger"
-      dropdownClass="material-theme-dropdown"
-      options=countries
-      selected=country
-      searchEnabled=false
-      placeholder="Country"
-      searchField="name"
-      onChange=(action (mut country)) as |country|}}
+    <PowerSelect
+      @triggerClass="material-theme-trigger"
+      @dropdownClass="material-theme-dropdown"
+      @options={{countries}}
+      @selected={{country}}
+      @placeholder="Country"
+      @searchField="name"
+      @onChange={{action (mut country)}} as |country|>
       {{country.name}}
-    {{/power-select}}
+    </PowerSelect>
   </div>
   <div style="flex: 1; padding: 5px;">
-    {{#power-select
-      triggerClass="material-theme-trigger"
-      dropdownClass="material-theme-dropdown"
-      options=cities
-      selected=city
-      searchEnabled=false
-      placeholder="City"
-      allowClear=true
-      onChange=(action (mut city)) as |city|}}
+    <PowerSelect
+      @triggerClass="material-theme-trigger"
+      @dropdownClass="material-theme-dropdown"
+      @options={{cities}}
+      @selected={{city}}
+      @placeholder="City"
+      @allowClear={{true}}
+      @onChange={{action (mut city)}} as |city|>
       {{city}}
-    {{/power-select}}
+    </PowerSelect>
   </div>
 </div>
 
 <h3>Regular selects with search</h3>
-{{#power-select
-  triggerClass="material-theme-trigger"
-  dropdownClass="material-theme-dropdown"
-  options=countries
-  selected=country2
-  placeholder="Country"
-  searchField="name"
-  onChange=(action (mut country2)) as |country|}}
+<PowerSelect
+  @triggerClass="material-theme-trigger"
+  @dropdownClass="material-theme-dropdown"
+  @options={{countries}}
+  @selected={{country2}}
+  @placeholder="Country"
+  @searchField="name"
+  @searchEnabled={{true}}
+  @onChange={{action (mut country2)}} as |country|>
   {{country.name}}
-{{/power-select}}
+</PowerSelect>
 
 <h3>Multiple selects with search</h3>
-{{#power-select-multiple
-  triggerClass="material-theme-trigger"
-  dropdownClass="material-theme-dropdown"
-  options=countries
-  selected=selectedCountries
-  placeholder="Country"
-  searchField="name"
-  onChange=(action (mut selectedCountries)) as |country|}}
+<PowerSelectMultiple
+  @triggerClass="material-theme-trigger"
+  @dropdownClass="material-theme-dropdown"
+  @options={{countries}}
+  @selected={{selectedCountries}}
+  @placeholder="Country"
+  @searchField="name"
+  @searchEnabled={{true}}
+  @onChange={{action (mut selectedCountries)}} as |country|>
   {{country.name}}
-{{/power-select-multiple}}
+</PowerSelectMultiple>
 <h3>Groups</h3>
-{{#power-select
-  triggerClass="material-theme-trigger"
-  dropdownClass="material-theme-dropdown"
-  options=groupedNumbers
-  selected=number
-  placeholder="Choose a number"
-  onChange=(action (mut number)) as |num|}}
+<PowerSelect
+  @triggerClass="material-theme-trigger"
+  @dropdownClass="material-theme-dropdown"
+  @options={{groupedNumbers}}
+  @selected={{number}}
+  @placeholder="Choose a number"
+  @onChange={{action (mut number)}} as |num|>
   {{num}}
-{{/power-select}}
+</PowerSelect>
 
 <h3>Select with clear btn</h3>
-{{#power-select
-  triggerClass="material-theme-trigger"
-  dropdownClass="material-theme-dropdown"
-  options=countries
-  selected=country3
-  searchEnabled=false
-  placeholder="Country"
-  searchField="name"
-  allowClear=true
-  onChange=(action (mut country3)) as |country|}}
+<PowerSelect
+  @triggerClass="material-theme-trigger"
+  @dropdownClass="material-theme-dropdown"
+  @options={{countries}}
+  @selected={{country3}}
+  @placeholder="Country"
+  @searchField="name"
+  @allowClear={{true}}
+  @searchEnabled={{true}}
+  @onChange={{action (mut country3)}} as |country|>
   {{country.name}}
-{{/power-select}}
+</PowerSelect>
 <br>
 <br>
 <p>
