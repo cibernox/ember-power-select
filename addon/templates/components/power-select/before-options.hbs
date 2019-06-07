@@ -10,7 +10,7 @@
       oninput={{@onInput}}
       onfocus={{@onFocus}}
       onblur={{@onBlur}}
-      onkeydown={{action "onKeydown"}}
+      {{on 'keydown' this.handleKeydown}}
       {{did-insert this.focusInput}}>
   </div>
 {{/if}}

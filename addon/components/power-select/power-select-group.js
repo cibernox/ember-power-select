@@ -1,10 +1,8 @@
+import { layout, tagName } from "@ember-decorators/component";
 import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
-import layout from '../../templates/components/power-select/power-select-group';
+import templateLayout from '../../templates/components/power-select/power-select-group';
 
-export default Component.extend({
-  layout,
-  tagName: '',
-  disabled: reads('group.disabled'),
-  groupName: reads('group.groupName')
-});
+@tagName('')
+@layout(templateLayout)
+export default class PowerSelectGroup extends Component {
+}

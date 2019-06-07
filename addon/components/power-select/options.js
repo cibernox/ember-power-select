@@ -1,6 +1,7 @@
+import { layout, tagName } from "@ember-decorators/component";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import layout from '../../templates/components/power-select/options';
+import { action, computed } from '@ember/object';
+import templateLayout from '../../templates/components/power-select/options';
 
 const isTouchDevice = (!!window && 'ontouchstart' in window);
 if(typeof FastBoot === 'undefined'){
@@ -23,18 +24,15 @@ if(typeof FastBoot === 'undefined'){
     }
   })(window.Element.prototype);
 }
+@tagName('')
+@layout(templateLayout)
+export default class Options extends Component {
+  isTouchDevice = isTouchDevice
 
-export default Component.extend({
-  isTouchDevice,
-  layout,
-  tagName: 'ul',
-  attributeBindings: ['role', 'aria-controls'],
-  role: 'listbox',
-
-  // Lifecycle hooks
-  didInsertElement() {
-    this._super(...arguments);
-    if (this.get('role') === 'group') {
+  @action
+  addHandlers(element) {
+    let role = element.getAttribute('role');
+    if (role === 'group') {
       return;
     }
     let findOptionAndPerform = (action, e) => {
@@ -48,65 +46,53 @@ export default Component.extend({
       let optionIndex = optionItem.getAttribute('data-option-index');
       action(this._optionFromIndex(optionIndex), e);
     };
-    this.element.addEventListener('mouseup', (e) => findOptionAndPerform(this.get('select.actions.choose'), e));
-    if (this.get('highlightOnHover')) {
-      this.element.addEventListener('mouseover', (e) => findOptionAndPerform(this.get('select.actions.highlight'), e));
+    element.addEventListener('mouseup', (e) => findOptionAndPerform(this.select.actions.choose, e));
+    if (this.highlightOnHover) {
+      element.addEventListener('mouseover', (e) => findOptionAndPerform(this.select.actions.highlight, e));
     }
-    if (this.get('isTouchDevice')) {
-      this._addTouchEvents();
+    if (this.isTouchDevice) {
+      let touchMoveHandler = () => {
+        this.hasMoved = true;
+        if (element) {
+          element.removeEventListener('touchmove', touchMoveHandler);
+        }
+      };
+      // Add touch event handlers to detect taps
+      element.addEventListener('touchstart', () => {
+        element.addEventListener('touchmove', touchMoveHandler);
+      });
+      element.addEventListener('touchend', (e) => {
+        let optionItem = e.target.closest('[data-option-index]');
+
+        if (!optionItem) {
+          return;
+        }
+
+        e.preventDefault();
+        if (this.hasMoved) {
+          this.hasMoved = false;
+          return;
+        }
+
+        if (optionItem.closest('[aria-disabled=true]')) {
+          return; // Abort if the item or an ancestor is disabled
+        }
+
+        let optionIndex = optionItem.getAttribute('data-option-index');
+        this.select.actions.choose(this._optionFromIndex(optionIndex), e);
+      });
     }
-    if (this.get('role') !== 'group') {
-      let select = this.get('select');
-      select.actions.scrollTo(select.highlighted);
+    if (role !== 'group') {
+      this.select.actions.scrollTo(this.select.highlighted);
     }
-  },
-
-  // CPs
-  'aria-controls': computed('select.uniqueId', function() {
-    return `ember-power-select-trigger-${this.get('select.uniqueId')}`;
-  }),
-
-  // Methods
-  _addTouchEvents() {
-    let touchMoveHandler = () => {
-      this.hasMoved = true;
-      if (this.element) {
-        this.element.removeEventListener('touchmove', touchMoveHandler);
-      }
-    };
-    // Add touch event handlers to detect taps
-    this.element.addEventListener('touchstart', () => {
-      this.element.addEventListener('touchmove', touchMoveHandler);
-    });
-    this.element.addEventListener('touchend', (e) => {
-      let optionItem = e.target.closest('[data-option-index]');
-
-      if (!optionItem) {
-        return;
-      }
-
-      e.preventDefault();
-      if (this.hasMoved) {
-        this.hasMoved = false;
-        return;
-      }
-      
-      if (optionItem.closest('[aria-disabled=true]')) {
-        return; // Abort if the item or an ancestor is disabled
-      }
-
-      let optionIndex = optionItem.getAttribute('data-option-index');
-      this.get('select.actions.choose')(this._optionFromIndex(optionIndex), e);
-    });
-  },
+  }
 
   _optionFromIndex(index) {
     let parts = index.split('.');
-    let options = this.get('options');
-    let option = options[parseInt(parts[0], 10)];
+    let option = this.options[parseInt(parts[0], 10)];
     for (let i = 1; i < parts.length; i++) {
       option = option.options[parseInt(parts[i], 10)];
     }
     return option;
   }
-});
+}
