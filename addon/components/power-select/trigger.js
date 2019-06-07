@@ -3,9 +3,7 @@ import Component from '@ember/component';
 import { action } from "@ember/object";
 import templateLayout from '../../templates/components/power-select/trigger';
 
-@tagName('')
-@layout(templateLayout)
-export default class Trigger extends Component {
+export default @tagName('') @layout(templateLayout) class Trigger extends Component {
   @action
   clear(e) {
     e.stopPropagation();

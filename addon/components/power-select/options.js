@@ -24,9 +24,8 @@ if(typeof FastBoot === 'undefined'){
     }
   })(window.Element.prototype);
 }
-@tagName('')
-@layout(templateLayout)
-export default class Options extends Component {
+
+export default @tagName('') @layout(templateLayout) class Options extends Component {
   isTouchDevice = isTouchDevice
 
   @action

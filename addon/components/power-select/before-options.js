@@ -4,9 +4,7 @@ import { scheduleOnce, later } from '@ember/runloop';
 import templateLayout from '../../templates/components/power-select/before-options';
 import { action } from '@ember/object';
 
-@tagName('')
-@layout(templateLayout)
-export default class BeforeOptions extends Component {
+export default @tagName('') @layout(templateLayout) class BeforeOptions extends Component {
   autofocus = true;
 
   willDestroyElement() {
