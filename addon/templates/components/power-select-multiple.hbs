@@ -7,7 +7,7 @@
   @afterOptionsComponent={{@afterOptionsComponent}}
   @allowClear={{@allowClear}}
   @beforeOptionsComponent={{@beforeOptionsComponent}}
-  @buildSelection={{action "buildSelection"}}
+  @buildSelection={{this.buildSelection}}
   @calculatePosition={{@calculatePosition}}
   @closeOnSelect={{@closeOnSelect}}
   @defaultHighlighted={{@defaultHighlighted}}
@@ -25,10 +25,10 @@
   @onblur={{@onblur}}
   @onChange={{@onChange}}
   @onClose={{@onClose}}
-  @onfocus={{action "handleFocus"}}
+  @onfocus={{this.handleFocus}}
   @onInput={{@onInput}}
-  @onkeydown={{action "handleKeydown"}}
-  @onOpen={{action "handleOpen"}}
+  @onkeydown={{this.handleKeydown}}
+  @onOpen={{this.handleOpen}}
   @options={{@options}}
   @optionsComponent={{@optionsComponent}}
   @placeholder={{@placeholder}}
