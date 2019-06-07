@@ -1,9 +1,7 @@
-{{#power-select
-  options=names
-  selected=name
-  allowClear=true
-  onChange=(action (mut name))
-  as |name|
-}}
+<PowerSelect
+  @options={{names}}
+  @selected={{name}}
+  @allowClear={{true}}
+  @onChange={{action (mut name)}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelect>

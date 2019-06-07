@@ -1,10 +1,9 @@
-{{#power-select
-  options=countries
-  searchField="name"
-  selected=selected
-  onChange=(action (mut selected))
-  beforeOptionsComponent=(component "power-select/before-options" autofocus=false)
-  as |country|
-}}
+<PowerSelect
+  @searchEnabled={{true}}
+  @options={{countries}}
+  @searchField="name"
+  @selected={{selected}}
+  @onChange={{action (mut selected)}}
+  @beforeOptionsComponent={{component "power-select/before-options" autofocus=false}} as |country|>
   {{country.name}}
-{{/power-select}}
+</PowerSelect>

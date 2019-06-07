@@ -32,8 +32,10 @@ export default Component.extend({
   // Methods
   @action
   focusInput(el) {
-    if (this.autofocus) {
-      el.focus();
-    }
+    later(() => {
+      if (this.autofocus) {
+        el.focus();
+      }
+    }, 0);
   }
 });

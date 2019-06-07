@@ -1,9 +1,8 @@
-{{#power-select
-  options=people
-  matcher=myMatcher
-  selected=selectedPerson
-  onChange=(action (mut selectedPerson))
-  as |person|
-}}
+<PowerSelect
+  @searchEnabled={{true}}
+  @options={{people}}
+  @matcher={{myMatcher}}
+  @selected={{selectedPerson}}
+  @onChange={{action (mut selectedPerson)}} as |person|>
   {{person.name}} {{person.surname}}
-{{/power-select}}
+</PowerSelect>

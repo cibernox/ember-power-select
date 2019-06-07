@@ -1,12 +1,11 @@
-{{#power-select
-  triggerClass="bootstrap-theme-trigger"
-  dropdownClass="slide-fade bootstrap-theme-dropdown"
-  searchField="name"
-  options=options
-  selected=country
-  onChange=(action (mut country))
-  as |country|
-}}
+<PowerSelect
+  @triggerClass="bootstrap-theme-trigger"
+  @dropdownClass="slide-fade bootstrap-theme-dropdown"
+  @searchField="name"
+  @searchEnabled={{true}}
+  @options={{options}}
+  @selected={{country}}
+  @onChange={{action (mut country)}} as |country|>
   <img src={{country.flagUrl}} class="icon-flag" alt="Flag of {{country.name}}">
   <strong>{{country.name}}</strong>
-{{/power-select}}
+</PowerSelect>

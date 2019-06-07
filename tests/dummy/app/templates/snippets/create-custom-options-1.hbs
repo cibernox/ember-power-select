@@ -1,8 +1,8 @@
-{{#power-select-multiple
-  options=options
-  selected=selected
-  onChange=(action (mut selected))
-  onkeydown=(action "createOnEnter")
-  as |number|}}
+<PowerSelectMultiple
+  @options={{options}}
+  @selected={{selected}}
+  @onChange={{action (mut selected)}}
+  @searchEnabled={{true}}
+  @onKeydown={{action "createOnEnter"}} as |number|>
   {{number}}
-{{/power-select-multiple}}
+</PowerSelectMultiple>

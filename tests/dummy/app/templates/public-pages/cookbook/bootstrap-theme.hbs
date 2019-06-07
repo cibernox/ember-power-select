@@ -26,14 +26,14 @@
 
 <div class="evenly-splitted">
   <div>
-    {{#power-select options=options selected=selectedSingle onChange=(action (mut selectedSingle)) searchField="name" triggerClass="bootstrap-theme-trigger" dropdownClass="bootstrap-theme-dropdown" as |country|}}
+    <PowerSelect @options={{options}} @selected={{selectedSingle}} @onChange={{action (mut selectedSingle)}} @searchEnabled={{true}} @searchField="name" @triggerClass="bootstrap-theme-trigger" @dropdownClass="bootstrap-theme-dropdown" as |country|>
       <img src={{country.flagUrl}} class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
-    {{/power-select}}
+    </PowerSelect>
   </div>
   <div>
-    {{#power-select-multiple options=options selected=selectedMultiple onChange=(action (mut selectedMultiple)) searchField="name" triggerClass="bootstrap-theme-trigger" dropdownClass="bootstrap-theme-dropdown" as |country|}}
+    <PowerSelectMultiple @options={{options}} @selected={{selectedMultiple}} @onChange={{action (mut selectedMultiple)}} @searchEnabled={{true}} @searchField="name" @triggerClass="bootstrap-theme-trigger" @dropdownClass="bootstrap-theme-dropdown" as |country|>
       <img src={{country.flagUrl}} class="icon-flag" alt="Country of {{country.name}}"> <strong>{{country.name}}</strong>
-    {{/power-select-multiple}}
+    </PowerSelectMultiple>
   </div>
 </div>
 

@@ -1,10 +1,8 @@
-{{#power-select
-  options=names
-  verticalPosition="above"
-  selected=name
-  onChange=(action (mut name))
-  as |name|
-}}
+<PowerSelect
+  @options={{names}}
+  @verticalPosition="above"
+  @selected={{name}}
+  @onChange={{action (mut name)}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelect>
 (This list of options will always be on top regardless of how much available space there is around)
