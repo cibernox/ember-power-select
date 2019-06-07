@@ -31,7 +31,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} tabindex="123" @disabled={{true}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @disabled={{true}} @onChange={{action (mut foo)}} @tabindex="123" as |option|>
         {{option}}
       </PowerSelect>
     `);

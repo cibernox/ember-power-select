@@ -5,34 +5,32 @@
       <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">{{@loadingMessage}}</li>
     {{/if}}
   {{/if}}
-  {{#each @options as |opt index|}}
-    {{#if (ember-power-select-is-group opt)}}
-      {{#component groupComponent
-          group=(readonly opt)
-          select=(readonly select)
-          extra=(readonly extra)
-        }}
-        {{#component optionsComponent
-          options=(readonly opt.options)
-          select=(readonly select)
-          groupIndex=(concat groupIndex index ".")
-          optionsComponent=(readonly optionsComponent)
-          groupComponent=(readonly groupComponent)
-          extra=(readonly extra)
-          role="group"
-          class="ember-power-select-options" as |option|}}
-          {{yield option @select}}
-        {{/component}}
-      {{/component}}
-    {{else}}
-      <li class="ember-power-select-option"
-        aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
-        aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
-        aria-current="{{eq opt @select.highlighted}}"
-        data-option-index="{{groupIndex}}{{index}}"
-        role="option">
-        {{yield opt @select}}
-      </li>
-    {{/if}}
-  {{/each}}
+  {{#let (component @groupComponent) (component @optionsComponent) as |Group Options|}}
+    {{#each @options as |opt index|}}
+      {{#if (ember-power-select-is-group opt)}}
+        <Group @group={{opt}} @select={{@select}} @extra={{@extra}}>
+          <Options
+            @options={{opt.options}}
+            @select={{@select}}
+            @groupIndex="{{groupIndex}}{{index}}."
+            @optionsComponent={{@optionsComponent}}
+            @groupComponent={{@groupComponent}}
+            @extra={{@extra}}
+            role="group"
+            class="ember-power-select-options" as |option|>
+            {{yield option @select}}
+          </Options>
+        </Group>
+      {{else}}
+        <li class="ember-power-select-option"
+          aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
+          aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
+          aria-current="{{eq opt @select.highlighted}}"
+          data-option-index="{{groupIndex}}{{index}}"
+          role="option">
+          {{yield opt @select}}
+        </li>
+      {{/if}}
+    {{/each}}
+  {{/let}}
 </ul>

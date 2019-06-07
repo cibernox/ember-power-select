@@ -791,7 +791,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
     this.foo = numbers[2];
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} allowClear=true disabled=true as |option|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @allowClear={{true}} disabled=true as |option|>
         {{option}}
       </PowerSelect>
     `);

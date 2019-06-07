@@ -57,7 +57,7 @@ module('Integration | Component | Ember Power Select (Touch control)', function(
     this.numbers = numbers;
     this.foo = 'one';
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} allowClear=true @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @allowClear={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);

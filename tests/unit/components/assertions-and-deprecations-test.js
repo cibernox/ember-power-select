@@ -4,12 +4,12 @@ import { setupTest } from 'ember-qunit';
 module('Unit | Component | Ember Power Select (Assertions & deprecations)', function(hooks) {
   setupTest(hooks);
 
-  test('the `onchange` function is mandatory', function(assert) {
+  test('the `@onChange` function is mandatory', function(assert) {
     assert.expect(1);
 
     assert.throws(() => {
       this.owner.factoryFor('component:power-select').create({});
-    }, /requires an `onchange` function/);
+    }, /requires an `@onChange` function/);
   });
 
   // test('the `onchange` function is mandatory', function(assert) {
