@@ -479,7 +479,7 @@
 - [BUGFIX] Fix styles of selects that are rendered in place so they are full width.
 
 # 1.0.0-alpha.3
-- [BUGFIX] `onkeydown` in multiple selects is also called for keypresses in the A-Z range.
+- [BUGFIX] `onKeydown` in multiple selects is also called for keypresses in the A-Z range.
 - [ENHANCEMENT] Add a `registerAPI` public action than can be used to store a reference to the public
   API of the component from the outside.
 
@@ -580,7 +580,7 @@
 - No changes since beta.13
 
 # 0.10.0-beta.13
-- [BUGFIX] Ensure that returning `false` from the `onkeydown` action prevents the default behaviour
+- [BUGFIX] Ensure that returning `false` from the `onKeydown` action prevents the default behaviour
   even when that default behaviour is handled by ember-basic-dropdown.
 
 # 0.10.0-beta.12
@@ -932,7 +932,7 @@
 - [FEATURE] EPS now accepts a `triggerClass` which is applied to the trigger.
 
 # 0.7.0-beta.2
-- [FEATURE] All actions (onchange, onkeydown and onFocus) now receive a richer public API object
+- [FEATURE] All actions (onchange, onKeydown and onFocus) now receive a richer public API object
   that is identical in shape to the one they received before but also contains `highlight(option)`
   and `search(term)` actions
 - [BREAKING] Delegate the rendering of the list's topmost element to `optionsComponent`. This
@@ -966,7 +966,7 @@
 # 0.6.0-beta.6
 - [DOCS] Document how to disable specific option
 - [DOCS] Add troubleshooting section with most common pitfalls.
-- [FEATURE] The user can provide a `onkeydown` action that will be invoked whenever the user
+- [FEATURE] The user can provide a `onKeydown` action that will be invoked whenever the user
   presses a key being the component (of the searchbox inside) focused. This enables to create
   selects components that can create options on the fly (tags).
   This action received the dropdown as first argument and the event as second argument

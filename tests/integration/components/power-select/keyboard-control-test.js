@@ -304,7 +304,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-trigger').isFocused('The select is focused');
   });
 
-  test('In single-mode, when the user presses a key being the search input focused the passes `onkeydown` action is invoked with the public API and the event', async function(assert) {
+  test('In single-mode, when the user presses a key being the search input focused the passes `onKeydown` action is invoked with the public API and the event', async function(assert) {
     assert.expect(9);
 
     this.numbers = numbers;
@@ -320,7 +320,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -347,7 +347,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -375,7 +375,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -387,7 +387,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing was selected');
   });
 
-  test('in single-mode if the users returns false in the `@onkeydown` action it prevents the component to do the usual thing', async function(assert) {
+  test('in single-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -397,7 +397,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -408,7 +408,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-dropdown').exists('The select is still opened');
   });
 
-  test('In multiple-mode, when the user presses a key being the search input focused the passes `@onkeydown` action is invoked with the public API and the event', async function(assert) {
+  test('In multiple-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function(assert) {
     assert.expect(9);
 
     this.numbers = numbers;
@@ -424,7 +424,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -435,7 +435,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
   });
 
-  test('in multiple-mode if the users returns false in the `@onkeydown` action it prevents the component to do the usual thing', async function(assert) {
+  test('in multiple-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -443,7 +443,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.handleKeydown = () => false;
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @onkeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{selectedNumbers}} @onChange={{action (mut foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);

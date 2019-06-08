@@ -109,7 +109,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await click('.ember-power-select-option');
   });
 
-  test('The onkeydown of single selects action receives the public API and the keydown event when fired on the searchbox', async function(assert) {
+  test('The onKeydown of single selects action receives the public API and the keydown event when fired on the searchbox', async function(assert) {
     assert.expect(44);
 
     this.numbers = numbers;
@@ -119,7 +119,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onkeydown={{onKeyDown}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onKeydown={{onKeyDown}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -129,7 +129,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
   });
 
-  test('The onkeydown can be used to easily allow to select on tab', async function(assert) {
+  test('The onKeydown can be used to easily allow to select on tab', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -141,7 +141,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onkeydown={{onKeyDown}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onKeydown={{onKeyDown}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -154,7 +154,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is opened');
   });
 
-  test('The onkeydown of multiple selects action receives the public API and the keydown event', async function(assert) {
+  test('The onKeydown of multiple selects action receives the public API and the keydown event', async function(assert) {
     assert.expect(44);
 
     this.numbers = numbers;
@@ -164,7 +164,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onkeydown={{onKeyDown}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onKeydown={{onKeyDown}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -174,7 +174,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 65);
   });
 
-  test('returning false from the `onkeydown` action prevents the default behaviour in single selects', async function(assert) {
+  test('returning false from the `onKeydown` action prevents the default behaviour in single selects', async function(assert) {
     assert.expect(48);
 
     this.numbers = numbers;
@@ -186,7 +186,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @onkeydown={{handleKeyDown}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @onKeydown={{handleKeyDown}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -197,7 +197,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     assert.dom('.ember-power-select-trigger').doesNotIncludeText('two', 'nothing was selected');
   });
 
-  test('returning false from the `onkeydown` action prevents the default behaviour in multiple selects', async function(assert) {
+  test('returning false from the `onKeydown` action prevents the default behaviour in multiple selects', async function(assert) {
     assert.expect(24);
 
     this.numbers = numbers;
@@ -209,7 +209,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @onkeydown={{handleKeyDown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @onKeydown={{handleKeyDown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);

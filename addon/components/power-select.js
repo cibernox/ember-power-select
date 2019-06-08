@@ -110,7 +110,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   }
   set selected(selected) {
     if (selected && !(selected instanceof ObjectProxy) && get(selected, 'then')) {
-      this.get('_updateSelectedTask').perform(selected);
+      this._updateSelectedTask.perform(selected);
     } else {
       scheduleOnce('actions', this, this.updateSelection, selected);
     }
@@ -128,7 +128,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
       return options;
     }
     if (options && get(options, 'then')) {
-      this.get('_updateOptionsTask').perform(options);
+      this._updateOptionsTask.perform(options);
     } else {
       scheduleOnce('actions', this, this.updateOptions, options);
     }
@@ -265,7 +265,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
         }
       }
     }
-    this.publicAPI.actions.select(this.get('buildSelection')(selected, this.publicAPI), e);
+    this.publicAPI.actions.select(this.buildSelection(selected, this.publicAPI), e);
     if (this.closeOnSelect) {
       this.publicAPI.actions.close(e);
       return false;
@@ -275,7 +275,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   // keydowns handled by the trigger provided by ember-basic-dropdown
   @action
   handleTriggerKeydown(_, e) {
-    if (this.onkeydown && this.onkeydown(this.publicAPI, e) === false) {
+    if (this.onKeydown && this.onKeydown(this.publicAPI, e) === false) {
       return false;
     }
     if (e.ctrlKey || e.metaKey) {
@@ -294,7 +294,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   // keydowns handled by inputs inside the component
   @action
   handleKeydown(e) {
-    if (this.onkeydown && this.onkeydown(this.publicAPI, e) === false) {
+    if (this.onKeydown && this.onKeydown(this.publicAPI, e) === false) {
       return false;
     }
     return this._routeKeydown(e);
@@ -513,7 +513,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
         this._observedSelected = selection;
       }
       this._updateSelectedArray(selection);
-    } else if (selection !== this.get('publicAPI').selected) {
+    } else if (selection !== this.publicAPI.selected) {
       this.updateState({ selected: selection, highlighted: selection });
     }
   }
@@ -534,10 +534,10 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
     }
     let options = toPlainArray(opts);
     let publicAPI;
-    if (this.get('search')) { // external search
+    if (this.search) { // external search
       publicAPI = this.updateState({ options, results: options, resultsCount: countOptions(options), loading: false });
     } else { // filter
-      publicAPI = this.get('publicAPI');
+      publicAPI = this.publicAPI;
       let results = isBlank(publicAPI.searchText) ? options : this.filter(options, publicAPI.searchText);
       publicAPI = this.updateState({ results, options, resultsCount: countOptions(results), loading: false });
     }
@@ -554,8 +554,8 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   }
 
   _resetSearch() {
-    let results = this.get('publicAPI').options;
-    this.get('handleAsyncSearchTask').cancelAll();
+    let results = this.publicAPI.options;
+    this.handleAsyncSearchTask.cancelAll();
     this.updateState({
       results,
       searchText: '',
@@ -566,19 +566,19 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   }
 
   _performFilter(term) {
-    let results = this.filter(this.get('publicAPI').options, term);
+    let results = this.filter(this.publicAPI.options, term);
     this.updateState({ results, searchText: term, lastSearchedText: term, resultsCount: countOptions(results) });
     this._resetHighlighted();
   }
 
   _performSearch(term) {
-    let searchAction = this.get('search');
+    let searchAction = this.search;
     let publicAPI = this.updateState({ searchText: term });
     let search = searchAction(term, publicAPI);
     if (!search) {
       publicAPI = this.updateState({ lastSearchedText: term });
     } else if (get(search, 'then')) {
-      this.get('handleAsyncSearchTask').perform(term, search);
+      this.handleAsyncSearchTask.perform(term, search);
     } else {
       let resultsArray = toPlainArray(search);
       this.updateState({ results: resultsArray, lastSearchedText: term, resultsCount: countOptions(resultsArray) });
@@ -599,23 +599,21 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   }
 
   _handleKeyUpDown(e) {
-    let publicAPI = this.get('publicAPI');
-    if (publicAPI.isOpen) {
+    if (this.publicAPI.isOpen) {
       e.preventDefault();
       e.stopPropagation();
       let step = e.keyCode === 40 ? 1 : -1;
-      let newHighlighted = advanceSelectableOption(publicAPI.results, publicAPI.highlighted, step);
-      publicAPI.actions.highlight(newHighlighted, e);
-      publicAPI.actions.scrollTo(newHighlighted);
+      let newHighlighted = advanceSelectableOption(this.publicAPI.results, this.publicAPI.highlighted, step);
+      this.publicAPI.actions.highlight(newHighlighted, e);
+      this.publicAPI.actions.scrollTo(newHighlighted);
     } else {
-      publicAPI.actions.open(e);
+      this.publicAPI.actions.open(e);
     }
   }
 
   _handleKeyEnter(e) {
-    let publicAPI = this.get('publicAPI');
-    if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
-      publicAPI.actions.choose(publicAPI.highlighted, e);
+    if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
+      this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
       return false;
     }
   }
@@ -624,20 +622,19 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
     if (['TEXTAREA', 'INPUT'].includes(e.target.nodeName)) {
       return false;
     }
-    let publicAPI = this.get('publicAPI');
-    if (publicAPI.isOpen && publicAPI.highlighted !== undefined) {
+    if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
       e.preventDefault(); // Prevents scrolling of the page.
-      publicAPI.actions.choose(publicAPI.highlighted, e);
+      this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
       return false;
     }
   }
 
   _handleKeyTab(e) {
-    this.get('publicAPI').actions.close(e);
+    this.publicAPI.actions.close(e);
   }
 
   _handleKeyESC(e) {
-    this.get('publicAPI').actions.close(e);
+    this.publicAPI.actions.close(e);
   }
 
   _removeObserversInOptions() {
@@ -659,10 +656,9 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   }
 
   updateState(changes) {
-    let newState = set(this, 'publicAPI', assign({}, this.get('publicAPI'), changes));
-    let registerAPI = this.get('registerAPI');
-    if (registerAPI) {
-      registerAPI(newState);
+    let newState = set(this, 'publicAPI', assign({}, this.publicAPI, changes));
+    if (this.registerAPI) {
+      this.registerAPI(newState);
     }
     return newState;
   }

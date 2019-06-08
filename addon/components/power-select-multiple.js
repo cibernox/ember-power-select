@@ -57,7 +57,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelectMultiple ex
 
   @action
   handleKeydown(select, e) {
-    if (this.onkeydown && this.onkeydown(select, e) === false) {
+    if (this.onKeydown && this.onKeydown(select, e) === false) {
       e.stopPropagation();
       return false;
     }
