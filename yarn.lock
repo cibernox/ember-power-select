@@ -710,6 +710,17 @@
     "@ember-decorators/utils" "^6.0.0"
     ember-cli-babel "^7.1.3"
 
+"@ember-decorators/utils@^5.1.4 || 5.1.2 || ^4.0.0 || ^3.0.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@ember-decorators/utils/-/utils-5.2.0.tgz#75c79b6d2b69b7d9224a3697176bc198d4e274a9"
+  integrity sha512-GjVPkvqprQNOtsut16Nk3M/UWmqCDDFVSfvUyqasaPlYt9+d6w0y6XrjSnQ6+3VOyk4rUWE+3u0tJoukgeWVLw==
+  dependencies:
+    babel-plugin-debug-macros "^0.2.0"
+    ember-cli-babel "^7.1.3"
+    ember-cli-version-checker "^3.0.0"
+    ember-compatibility-helpers "^1.1.2"
+    semver "^6.0.0"
+
 "@ember-decorators/utils@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@ember-decorators/utils/-/utils-6.0.0.tgz#94ac94ce03b607fc0d2d6a058b9a27e20735ec8e"
@@ -4358,7 +4369,7 @@ ember-code-snippet@^2.4.0:
     es6-promise "^1.0.0"
     glob "^7.1.3"
 
-ember-compatibility-helpers@^1.1.1, ember-compatibility-helpers@^1.2.0:
+ember-compatibility-helpers@^1.1.1, ember-compatibility-helpers@^1.1.2, ember-compatibility-helpers@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/ember-compatibility-helpers/-/ember-compatibility-helpers-1.2.0.tgz#feee16c5e9ef1b1f1e53903b241740ad4b01097e"
   integrity sha512-pUW4MzJdcaQtwGsErYmitFRs0rlCYBAnunVzlFFUBr4xhjlCjgHJo0b53gFnhTgenNM3d3/NqLarzRhDTjXRTg==
@@ -4366,6 +4377,14 @@ ember-compatibility-helpers@^1.1.1, ember-compatibility-helpers@^1.2.0:
     babel-plugin-debug-macros "^0.2.0"
     ember-cli-version-checker "^2.1.1"
     semver "^5.4.1"
+
+ember-concurrency-decorators@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ember-concurrency-decorators/-/ember-concurrency-decorators-0.6.0.tgz#999045cbb91c02a8904703dbb5d6948617f73f74"
+  integrity sha512-kZ2TR07ZxYw7IXvtCp98NRJDq22hb/VDoyhpCA0sWgbR8YQ1C0RaRcCc+QrYKQIpuxHh+nByb9n+dPm5142T0g==
+  dependencies:
+    "@ember-decorators/utils" "^5.1.4 || 5.1.2 || ^4.0.0 || ^3.0.0"
+    ember-cli-babel "^7.5.0"
 
 "ember-concurrency@^0.8.27 || ^0.9.0 || ^0.10.0 || ^1.0.0":
   version "1.0.0"

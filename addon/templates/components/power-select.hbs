@@ -5,17 +5,17 @@
   @initiallyOpened={{@initiallyOpened}}
   @matchTriggerWidth={{this.matchTriggerWidth}}
   @preventScroll={{this.preventScroll}}
-  @onClose={{action "onClose"}}
-  @onOpen={{action "onOpen"}}
-  @registerAPI={{action "registerAPI"}}
+  @onClose={{this.handleClose}}
+  @onOpen={{this.handleOpen}}
+  @registerAPI={{this._registerAPI}}
   @renderInPlace={{@renderInPlace}}
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
   ...attributes as |dropdown|>
   <dropdown.Trigger
-    @onKeyDown={{action "onTriggerKeydown"}}
-    @onFocus={{action "onTriggerFocus"}}
-    @onBlur={{action "onTriggerBlur"}}
+    @onKeyDown={{this.handleTriggerKeydown}}
+    @onFocus={{this.handleTriggerFocus}}
+    @onBlur={{this.handleTriggerBlur}}
     @eventType={{or @eventType "mousedown"}}
     class={{this.concatenatedTriggerClasses}}
     id={{@triggerId}}
@@ -35,12 +35,12 @@
         @extra={{@extra}}
         @listboxId={{this.optionsId}}
         @loadingMessage={{this.loadingMessage}}
-        @onFocus={{action "onFocus"}}
-        @onBlur={{action "onBlur"}}
-        @onInput={{action "onInput"}}
+        @onFocus={{this.handleFocus}}
+        @onBlur={{this.handleBlur}}
+        @onInput={{this.handleInput}}
         @placeholder={{@placeholder}}
         @placeholderComponent={{this.placeholderComponent}}
-        @onKeydown={{action "onKeydown"}}
+        @onKeydown={{this.handleKeydown}}
         @searchEnabled={{@searchEnabled}}
         @searchField={{@searchField}}
         @select={{this.publicAPI}}
@@ -58,10 +58,10 @@
         @searchEnabled={{@searchEnabled}}
         @searchPlaceholder={{@searchPlaceholder}}
         @listboxId={{this.optionsId}}
-        @onInput={{action "onInput"}}
-        @onKeydown={{action "onKeydown"}}
-        @onFocus={{action "onFocus"}}
-        @onBlur={{action "onBlur"}}
+        @onInput={{this.handleInput}}
+        @onKeydown={{this.handleKeydown}}
+        @onFocus={{this.handleFocus}}
+        @onBlur={{this.handleBlur}}
         @extra={{@extra}}
         @placeholder={{placeholder}}
         @placeholderComponent={{this.placeholderComponent}}
@@ -110,8 +110,7 @@
   destination=(readonly destination)
   initiallyOpened=(readonly initiallyOpened)
   matchTriggerWidth=(readonly matchTriggerWidth)
-  preventScroll=(readonly preventScroll)
-  onClose=(action "onClose")
+  preventScroll=(readonly preventScrollthis.handleClose(action "onClose")
   onOpen=(action "onOpen")
   registerAPI=(action "registerAPI")
   renderInPlace=(readonly renderInPlace)
@@ -133,8 +132,7 @@
     id=(readonly triggerId)
     eventType=(or eventType "mousedown")
     onKeyDown=(action "onTriggerKeydown")
-    onFocus=(action "onTriggerFocus")
-    onBlur=(action "onTriggerBlur")
+    onFocus=(this.handleTriggerFocus(this.handleTriggerBlur)
     tabindex=(readonly tabindex)}}
     {{#component triggerComponent
       allowClear=(readonly allowClear)
@@ -147,7 +145,7 @@
       onInput=(action "onInput")
       placeholder=(readonly placeholder)
       placeholderComponent=(readonly placeholderComponent)
-      onKeydown=(action "onKeydown")
+      onKeydown=(this.handleKeydown)
       searchEnabled=(readonly searchEnabled)
       searchField=(readonly searchField)
       select=(readonly publicAPI)
@@ -165,7 +163,7 @@
       extra=(readonly extra)
       listboxId=(readonly optionsId)
       onInput=(action "onInput")
-      onKeydown=(action "onKeydown")
+      onKeydown=(this.handleKeydown)
       searchEnabled=(readonly searchEnabled)
       onFocus=(action "onFocus")
       onBlur=(action "onBlur")

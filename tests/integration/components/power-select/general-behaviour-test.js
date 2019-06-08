@@ -194,7 +194,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-search-input').hasAttribute('placeholder', 'foobar yo!', 'The searchbox has the proper placeholder');
   });
 
-  test('If the `selected` value changes the select gets updated, but the `onchange` action doesn\'t fire', async function(assert) {
+  test('If the `@selected` value changes the select gets updated, but the `@onChange` action doesn\'t fire', async function(assert) {
     assert.expect(3);
 
     this.numbers = numbers;

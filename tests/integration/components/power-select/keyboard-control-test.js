@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { triggerKeydown, clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
@@ -792,27 +792,5 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       assert.ok(!events[1].defaultPrevented, 'The second event was default prevented');
       done();
     }, 50);
-  });
-
-  test('If you try to filter options that are objects without providing a `searchField`, an assertion is thrown', async function(assert) {
-    assert.expect(2);
-    this.options = [
-      { label: '10', value: 10 },
-      { label: '25', value: 25 },
-      { label: '50', value: 50 },
-      { label: 'All', value: 255 }
-    ];
-    this.selected = this.options[1];
-    await render(hbs`
-      <PowerSelect @options={{options}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
-        {{option.label}}
-      </PowerSelect>
-    `);
-    await focus('.ember-power-select-trigger');
-    assert.dom('.ember-power-select-selected-item').hasText('25');
-    assert.expectAssertion(() => {
-      let trigger = document.querySelector('.ember-power-select-trigger');
-      trigger.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, cancelable: true, keyCode: 67 }));
-    }, '{{power-select}} If you want the default filtering to work on options that are not plain strings, you need to provide `searchField`');
   });
 });
