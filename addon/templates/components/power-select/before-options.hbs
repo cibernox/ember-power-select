@@ -7,9 +7,9 @@
       value={{@select.searchText}}
       aria-controls={{@listboxId}}
       placeholder={{@searchPlaceholder}}
-      oninput={{@onInput}}
-      onfocus={{@onFocus}}
-      onblur={{@onBlur}}
+      {{on "input" @onInput}}
+      {{on "focus" @onFocus}}
+      {{on "blur" @onBlur}}
       {{on "keydown" this.handleKeydown}}
       {{did-insert this.focusInput}}>
   </div>

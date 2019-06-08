@@ -39,9 +39,9 @@
       style={{this.triggerMultipleInputStyle}}
       placeholder={{this.maybePlaceholder}}
       disabled={{@select.disabled}}
-      onfocus={{@onFocus}}
-      onblur={{@onBlur}}
       tabindex={{@tabindex}}
+      {{on "focus" @onFocus}}
+      {{on "blur" @onBlur}}
       {{on "input" this.handleInput}}
       {{on "keydown" this.handleKeydown}}
       {{did-insert this.storeInputStyles}}>

@@ -49,8 +49,8 @@ export default @tagName('') @layout(templateLayout) class PowerSelectMultiple ex
 
   @action
   handleFocus(select, e) {
-    if (this.onfocus) {
-      this.onfocus(select, e);
+    if (this.onFocus) {
+      this.onFocus(select, e);
     }
     this.focusInput(select);
   }

@@ -218,7 +218,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is still closed');
   });
 
-  test('The onfocus of single selects action receives the public API and the focus event', async function(assert) {
+  test('The onFocus of single selects action receives the public API and the focus event', async function(assert) {
     assert.expect(22);
 
     this.numbers = numbers;
@@ -228,7 +228,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onfocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onFocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -236,7 +236,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await focus('.ember-power-select-trigger');
   });
 
-  test('The onfocus of multiple selects action receives the public API and the focus event', async function(assert) {
+  test('The onFocus of multiple selects action receives the public API and the focus event', async function(assert) {
     assert.expect(22);
 
     this.numbers = numbers;
@@ -246,7 +246,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onfocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onFocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -254,7 +254,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await focus('.ember-power-select-trigger');
   });
 
-  test('The onfocus of multiple selects also gets called when the thing getting the focus is the searbox', async function(assert) {
+  test('The onFocus of multiple selects also gets called when the thing getting the focus is the searbox', async function(assert) {
     assert.expect(22);
 
     this.numbers = numbers;
@@ -265,7 +265,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
 
     await render(hbs`
       <input type="text" autofocus>
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onfocus={{handleFocus}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onFocus={{handleFocus}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -273,7 +273,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await focus('.ember-power-select-trigger-multiple-input');
   });
 
-  test('The onblur of single selects action receives the public API and the event', async function(assert) {
+  test('The onBlur of single selects action receives the public API and the event', async function(assert) {
     assert.expect(22);
 
     this.numbers = numbers;
@@ -283,7 +283,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onblur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onBlur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
       <input type="text" id="other-element"/>
@@ -293,7 +293,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await focus('#other-element');
   });
 
-  test('The onblur of multiple selects action receives the public API and the focus event', async function(assert) {
+  test('The onBlur of multiple selects action receives the public API and the focus event', async function(assert) {
     assert.expect(22);
 
     this.numbers = numbers;
@@ -303,7 +303,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onblur={{handleBlur}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onBlur={{handleBlur}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
       <input type="text" id="other-element"/>
@@ -313,7 +313,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await focus('#other-element');
   });
 
-  test('The onblur of multiple selects also gets called when the thing getting the focus is the searbox', async function(assert) {
+  test('The onBlur of multiple selects also gets called when the thing getting the focus is the searbox', async function(assert) {
     this.numbers = numbers;
     this.handleBlur = (select, e) => {
       assertPublicAPIShape(assert, select);
@@ -321,7 +321,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onblur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onBlur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
       <input type="text" id="other-element"/>

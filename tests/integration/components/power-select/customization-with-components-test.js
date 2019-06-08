@@ -226,7 +226,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
   test('the `@triggerComponent` receives the `@onFocus` action that triggers it', async function(assert) {
     assert.expect(10);
     this.owner.register('component:custom-trigger-that-handles-focus', Component.extend({
-      layout: hbs`<input type="text" id="focusable-input" onfocus={{@onFocus}}>`
+      layout: hbs`<input type="text" id="focusable-input" onFocus={{@onFocus}}>`
     }));
     this.countries = countries;
     this.country = countries[1]; // Spain
@@ -248,7 +248,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
         @selected={{country}}
         @onChange={{action (mut selected)}}
         @triggerComponent="custom-trigger-that-handles-focus"
-        @onfocus={{didFocusInside}} as |country|>
+        @onFocus={{didFocusInside}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
