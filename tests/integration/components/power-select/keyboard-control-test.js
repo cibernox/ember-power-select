@@ -304,7 +304,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-trigger').isFocused('The select is focused');
   });
 
-  test('In single-mode, when the user presses a key being the search input focused the passes `onKeydown` action is invoked with the public API and the event', async function(assert) {
+  test('In single-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function(assert) {
     assert.expect(9);
 
     this.numbers = numbers;

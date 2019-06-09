@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import RSVP from 'rsvp';
 
 function generatePromise() {
@@ -33,22 +34,23 @@ const groupedNumbers = [
   'one thousand'
 ];
 
-export default Controller.extend({
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-  emptyList: [],
-  promise: null,
-  countries,
-  groupedNumbers,
+export default class extends Controller {
+  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+  emptyList = []
+  promise = null
+  countries = countries
+  groupedNumbers = groupedNumbers
 
-  actions: {
-    refreshCollection() {
-      this.set('promise', generatePromise());
-    },
-    stopPropagation(e) {
-      e.stopPropagation();
-    },
-    removeName(name) {
-      alert(`remove name: ${name}`);
-    }
+  stopPropagation(e) {
+    e.stopPropagation();
   }
-});
+
+  removeName(name) {
+    alert(`remove name: ${name}`);
+  }
+
+  @action
+  refreshCollection() {
+    this.set('promise', generatePromise());
+  }
+}

@@ -333,7 +333,7 @@
 # 1.0.0-beta.23
 - [ENHANCEMENT] Add a `defaultHighlighted` option that can be used to customize what item is highlighted by default with the component is opened.
   It can either be a value, or a function that gets called with the select and returns that value.
-- [ENHANCEMENT] Add `onBlur` event for symmetry with `onFocus`, and also clarify that both are fired for any element of
+- [ENHANCEMENT] Add `@onBlur` event for symmetry with `@onFocus`, and also clarify that both are fired for any element of
   the select gaining the focus, so the `event.target` should be used to disambiguate the origin.
 - [BUGFIX] Fix SHIFT+TAB in multiple select: In multiple selects with search enabled that use the default component,
   the tabindex is applied to the searchbox, and the trigger has -1.
@@ -479,7 +479,7 @@
 - [BUGFIX] Fix styles of selects that are rendered in place so they are full width.
 
 # 1.0.0-alpha.3
-- [BUGFIX] `onKeydown` in multiple selects is also called for keypresses in the A-Z range.
+- [BUGFIX] `@onKeydown` in multiple selects is also called for keypresses in the A-Z range.
 - [ENHANCEMENT] Add a `registerAPI` public action than can be used to store a reference to the public
   API of the component from the outside.
 
@@ -573,14 +573,14 @@
 - [BUGFIX] The component can and closed with the spacebar while the trigger is focused.
 
 # 0.10.1
-- [ENHANCEMENT] Allow trigger the `onFocus` action from within the trigger component.
+- [ENHANCEMENT] Allow trigger the `@onFocus` action from within the trigger component.
 
 # 0.10.0
 
 - No changes since beta.13
 
 # 0.10.0-beta.13
-- [BUGFIX] Ensure that returning `false` from the `onKeydown` action prevents the default behaviour
+- [BUGFIX] Ensure that returning `false` from the `@onKeydown` action prevents the default behaviour
   even when that default behaviour is handled by ember-basic-dropdown.
 
 # 0.10.0-beta.12
@@ -944,7 +944,7 @@
   closed using mousedown instead of click. This makes the component feel more snappy. It is unlikeliy
   that this breaks real world usage but might break integration tests of people where people rely
   on `$('.ember-power-select-trigger').click()`.
-- [FEATURE] New action: `onFocus`. Unsurprisingly it is invoked when the component gains focus.
+- [FEATURE] New action: `@onFocus`. Unsurprisingly it is invoked when the component gains focus.
   It receives `(dropdown, event)` and can be used, by example, to open the component on focus.
 - [FEATURE] EPS now accepts a `opened` boolean property used to open/close the component
   without triggering events on it. Useful to render the component already opened.
@@ -966,7 +966,7 @@
 # 0.6.0-beta.6
 - [DOCS] Document how to disable specific option
 - [DOCS] Add troubleshooting section with most common pitfalls.
-- [FEATURE] The user can provide a `onKeydown` action that will be invoked whenever the user
+- [FEATURE] The user can provide a `@onKeydown` action that will be invoked whenever the user
   presses a key being the component (of the searchbox inside) focused. This enables to create
   selects components that can create options on the fly (tags).
   This action received the dropdown as first argument and the event as second argument

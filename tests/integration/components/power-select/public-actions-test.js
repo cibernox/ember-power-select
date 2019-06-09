@@ -174,7 +174,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await triggerKeyEvent('.ember-power-select-trigger-multiple-input', 'keydown', 65);
   });
 
-  test('returning false from the `onKeydown` action prevents the default behaviour in single selects', async function(assert) {
+  test('returning false from the `@onKeydown` action prevents the default behaviour in single selects', async function(assert) {
     assert.expect(48);
 
     this.numbers = numbers;
@@ -197,7 +197,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     assert.dom('.ember-power-select-trigger').doesNotIncludeText('two', 'nothing was selected');
   });
 
-  test('returning false from the `onKeydown` action prevents the default behaviour in multiple selects', async function(assert) {
+  test('returning false from the `@onKeydown` action prevents the default behaviour in multiple selects', async function(assert) {
     assert.expect(24);
 
     this.numbers = numbers;
