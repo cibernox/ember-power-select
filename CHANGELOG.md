@@ -1,5 +1,11 @@
 # Master
 
+# 3.0.0-beta.1
+
+- [BREAKING] Now this addon requires Ember 3.11 (in beta at the moment of this writing)
+- [BREAKING] This component now expects to be invoked with `<AngleBracket>` syntax.
+- [BREAKING] All actions starting with `on` (e.g. `onchange` and `onopen`) are now spelled with camelCase (`@onChange` and `@onOpen`)
+
 # 2.3.3
 - [CHORE] Allow ember-concurrency 1.0
 
