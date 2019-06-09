@@ -86,8 +86,6 @@
     "loader.js": "^4.7.0",
     "memory-scroll": "0.9.1",
     "mocha": "^5.2.0",
-    "prember": "1.0.0",
-    "prember-crawler": "^0.1.0",
     "qunit-dom": "^0.8.5",
     "sass": "^1.17.4",
     "simple-git": "^1.10.0",
