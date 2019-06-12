@@ -1,5 +1,4 @@
-<ul role="listbox" aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}}...attributes>
-  {{! template-lint-disable no-unnecessary-concat }}
+<ul role="listbox" aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} ...attributes>
   {{#if @select.loading}}
     {{#if @loadingMessage}}
       <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">{{@loadingMessage}}</li>
@@ -12,7 +11,7 @@
           <Options
             @options={{opt.options}}
             @select={{@select}}
-            @groupIndex="{{groupIndex}}{{index}}."
+            @groupIndex="{{@groupIndex}}{{index}}."
             @optionsComponent={{@optionsComponent}}
             @groupComponent={{@groupComponent}}
             @extra={{@extra}}
@@ -26,7 +25,7 @@
           aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
           aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
           aria-current="{{eq opt @select.highlighted}}"
-          data-option-index="{{groupIndex}}{{index}}"
+          data-option-index="{{@groupIndex}}{{index}}"
           role="option">
           {{yield opt @select}}
         </li>
