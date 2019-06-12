@@ -26,7 +26,7 @@ export default @tagName('') @layout(templateLayout) class Trigger extends Compon
     } else {
       let textWidth = 0;
       if (this.inputFont) {
-        textWidth = this.get('textMeasurer').width(this.select.searchText, this.inputFont);
+        textWidth = this.textMeasurer.width(this.select.searchText, this.inputFont);
       }
       return htmlSafe(`width: ${textWidth + 25}px`);
     }
@@ -90,9 +90,8 @@ export default @tagName('') @layout(templateLayout) class Trigger extends Compon
           if (typeof lastSelection === 'string') {
             this.select.actions.search(lastSelection);
           } else {
-            let searchField = this.get('searchField');
-            assert('`<PowerSelectMultiple>` requires a `@searchField` when the options are not strings to remove options using backspace', searchField);
-            this.select.actions.search(get(lastSelection, searchField));
+            assert('`<PowerSelectMultiple>` requires a `@searchField` when the options are not strings to remove options using backspace', this.searchField);
+            this.select.actions.search(get(lastSelection, this.searchField));
           }
           this.select.actions.open(e);
         }

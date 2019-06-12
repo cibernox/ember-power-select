@@ -1,14 +1,14 @@
 <section class="docs">
   <nav class="side-nav">
     <header class="side-nav-header">Basic recipes</header>
-    {{#link-to "public-pages.cookbook.index" class="side-nav-link"}}System-wide config{{/link-to}}
-    {{#link-to "public-pages.cookbook.bootstrap-theme" class="side-nav-link"}}Bootstrap theme{{/link-to}}
-    {{#link-to "public-pages.cookbook.material-theme" class="side-nav-link"}}Material theme{{/link-to}}
-    {{#link-to "public-pages.cookbook.css-animations" class="side-nav-link"}}CSS Animations{{/link-to}}
-    {{#link-to "public-pages.cookbook.debounce-searches" class="side-nav-link"}}Debounce searches{{/link-to}}
-    {{#link-to "public-pages.cookbook.create-custom-options" class="side-nav-link"}}Create custom options{{/link-to}}
+    <LinkTo @route="public-pages.cookbook.index" class="side-nav-link">System-wide config</LinkTo>
+    <LinkTo @route="public-pages.cookbook.bootstrap-theme" class="side-nav-link">Bootstrap theme</LinkTo>
+    <LinkTo @route="public-pages.cookbook.material-theme" class="side-nav-link">Material theme</LinkTo>
+    <LinkTo @route="public-pages.cookbook.css-animations" class="side-nav-link">CSS Animations</LinkTo>
+    <LinkTo @route="public-pages.cookbook.debounce-searches" class="side-nav-link">Debounce searches</LinkTo>
+    <LinkTo @route="public-pages.cookbook.create-custom-options" class="side-nav-link">Create custom options</LinkTo>
     <header class="side-nav-header">Advanced recipes</header>
-    {{#link-to "public-pages.cookbook.navigable-select" class="side-nav-link"}}Navigable select{{/link-to}}
+    <LinkTo @route="public-pages.cookbook.navigable-select" class="side-nav-link">Navigable select</LinkTo>
   </nav>
   <section class="doc-page">
     <PowerSelect @selected={{currentSection}} @options={{groupedSections}} @onChange={{action "visit"}} @searchField="text" @triggerClass="section-selector" as |option|>
