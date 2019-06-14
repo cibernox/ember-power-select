@@ -1,4 +1,4 @@
-import Controller from '@ember/controller';
+import Controller from "@ember/controller";
 
 const countries = [
   { name: 'United States',  flagUrl: '/flags/us.svg', population: 321853000 },
@@ -10,9 +10,9 @@ const countries = [
   { name: 'United Kingdom', flagUrl: '/flags/gb.svg', population: 64596752 }
 ];
 
-export default Controller.extend({
-  countries,
-  destination: countries[2],
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-  name: 'Pluto'
-});
+export default class TheTrigger extends Controller {
+  countries = countries;
+  destination = countries[2];
+  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto'];
+  name = 'Pluto';
+}

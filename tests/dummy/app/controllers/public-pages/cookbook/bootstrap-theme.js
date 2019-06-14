@@ -1,4 +1,4 @@
-import Controller from '@ember/controller';
+import Controller from "@ember/controller";
 
 const countries = [
   { name: 'United States',  flagUrl: '/flags/us.svg' },
@@ -10,8 +10,8 @@ const countries = [
   { name: 'United Kingdom', flagUrl: '/flags/gb.svg' }
 ];
 
-export default Controller.extend({
-  options: countries,
-  selectedSingle: null,
-  selectedMultiple: []
-});
+export default class BootstrapTheme extends Controller {
+  options = countries;
+  selectedSingle = null;
+  selectedMultiple = [];
+}

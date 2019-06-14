@@ -1,4 +1,4 @@
-import Controller from '@ember/controller';
+import Controller from "@ember/controller";
 
 const groupedNumbers = [
   { groupName: 'Smalls', options: ['one', 'two', 'three'] },
@@ -15,7 +15,7 @@ const groupedNumbers = [
   'one thousand'
 ];
 
-export default Controller.extend({
-  groupedNumbers,
-  selectedNumber: null
-});
+export default class NavigableSelect extends Controller {
+  groupedNumbers = groupedNumbers;
+  selectedNumber = null;
+}

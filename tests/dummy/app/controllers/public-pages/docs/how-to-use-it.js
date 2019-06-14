@@ -1,4 +1,5 @@
-import Controller from '@ember/controller';
+import Controller from "@ember/controller";
+import { action } from "@ember/object";
 
 const countries = [
   { name: 'United States',  flagUrl: '/flags/us.svg' },
@@ -10,13 +11,11 @@ const countries = [
   { name: 'United Kingdom', flagUrl: '/flags/gb.svg' }
 ];
 
-export default Controller.extend({
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-  countries,
-  destination: countries[2],
+export default class HowToUseIt extends Controller {
+  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto'];
+  countries = countries;
+  destination = countries[2];
 
-  // Actions
-  actions: {
-    foo() {  }
-  }
-});
+  @action
+  foo() {  }
+}

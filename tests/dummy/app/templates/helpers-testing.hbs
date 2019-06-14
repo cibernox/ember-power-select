@@ -6,13 +6,13 @@
 </div>
 
 <div class="select-choose-onopen">
-  <PowerSelect @onOpen={{action "onOpenHandle"}} @options={{optionz}} @selected={{selected}} @onChange={{action (mut selected)}} @allowClear={{true}} as |num|>
+  <PowerSelect @onOpen={{this.onOpenHandle}} @options={{optionz}} @selected={{selected}} @onChange={{action (mut selected)}} @allowClear={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
 <div class="select-choose-onopen-multiple">
-  <PowerSelectMultiple @onOpen={{action "onOpenHandle"}} @options={{optionz}} @selected={{selected2}} @onChange={{action (mut selected2)}} as |num|>
+  <PowerSelectMultiple @onOpen={{this.onOpenHandle}} @options={{optionz}} @selected={{selected2}} @onChange={{action (mut selected2)}} as |num|>
     {{num}}
   </PowerSelectMultiple>
 </div>
@@ -28,7 +28,7 @@
 {{/if}}
 
 <div class="select-async">
-  <PowerSelect @selected={{selected}} @onChange={{action (mut selected)}} @search={{action "searchAsync"}} @searchEnabled={{true}} as |num|>
+  <PowerSelect @selected={{selected}} @onChange={{action (mut selected)}} @search={{this.searchAsync}} @searchEnabled={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
@@ -40,13 +40,13 @@
 </div>
 
 <div id="select-multiple-async">
-  <PowerSelectMultiple @options={{numbers}} @selected={{asyncSelectedList}} @onChange={{action "onChangeAsync" "asyncSelectedList"}} as |num|>
+  <PowerSelectMultiple @options={{numbers}} @selected={{asyncSelectedList}} @onChange={{fn this.onChangeAsync "asyncSelectedList"}} as |num|>
     {{num}}
   </PowerSelectMultiple>
 </div>
 
 <div class="select-deselect-async">
-  <PowerSelect @options={{numbers}} @selected={{asyncSelected}} @onChange={{action "onChangeAsync" "asyncSelected"}} @allowClear={{true}} as |num|>
+  <PowerSelect @options={{numbers}} @selected={{asyncSelected}} @onChange={{fn this.onChangeAsync "asyncSelected"}} @allowClear={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
@@ -55,7 +55,7 @@
 <div class="select-custom-search">
   <PowerSelect @selected={{selected3}}
     @onChange={{action (mut selected3)}}
-    @search={{action "searchAsync"}}
+    @search={{this.searchAsync}}
     @beforeOptionsComponent={{null}}
     @triggerComponent="custom-trigger-with-search" as |num|>
     {{num}}
