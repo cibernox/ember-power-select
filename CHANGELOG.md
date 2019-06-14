@@ -1,5 +1,8 @@
 # Master
 
+# 2.3.4
+- [BUGFIX] Add back node 6 in the list of supported engines
+
 # 2.3.3
 - [CHORE] Allow ember-concurrency 1.0
 
