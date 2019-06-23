@@ -189,7 +189,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-trigger').isFocused('The trigger is focused');
   });
 
-  test('Pressing TAB closes the select WITHOUT selecting the highlighed element and focuses the trigger', async function(assert) {
+  test('If closeOnTab=true, pressing TAB closes the select WITHOUT selecting the highlighted element and focuses the trigger', async function(assert) {
     assert.expect(3);
 
     this.numbers = numbers;
@@ -204,7 +204,25 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 9);
     assert.dom('.ember-power-select-trigger').hasText('', 'The highlighted element wasn\'t selected');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
-    assert.dom('.ember-power-select-trigger').isFocused('The trigges is focused');
+    assert.dom('.ember-power-select-trigger').isFocused('The trigger is focused');
+  });
+
+  test('If closeOnTab=false, pressing TAB does not close the select, select the highlighted element, or focus the trigger', async function(assert) {
+    assert.expect(3);
+
+    this.numbers = numbers;
+    await render(hbs`
+      {{#power-select closeOnTab=false options=numbers onchange=(action (mut foo)) as |option|}}
+        {{option}}
+      {{/power-select}}
+    `);
+
+    await clickTrigger();
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 9);
+    assert.dom('.ember-power-select-trigger').hasText('', 'The highlighted element wasn\'t selected');
+    assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
+    assert.dom('.ember-power-select-trigger').isNotFocused('The trigger is not focused');
   });
 
   test('The component is focusable using the TAB key as any other kind of input', async function(assert) {

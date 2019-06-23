@@ -84,6 +84,7 @@ export default Component.extend({
   noMatchesMessage: fallbackIfUndefined('No results found'),
   searchMessage: fallbackIfUndefined('Type to search'),
   closeOnSelect: fallbackIfUndefined(true),
+  closeOnTab: fallbackIfUndefined(true),
   defaultHighlighted: fallbackIfUndefined(defaultHighlighted),
   typeAheadMatcher: fallbackIfUndefined(defaultTypeAheadMatcher),
   highlightOnHover: fallbackIfUndefined(true),
@@ -669,7 +670,9 @@ export default Component.extend({
   },
 
   _handleKeyTab(e) {
-    this.get('publicAPI').actions.close(e);
+    if (this.get('closeOnTab')) {
+      this.get('publicAPI').actions.close(e);
+    }
   },
 
   _handleKeyESC(e) {
