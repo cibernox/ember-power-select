@@ -363,7 +363,9 @@ export default Component.extend({
     },
 
     onTriggerFocus(_, event) {
-      this.send('activate');
+      if (!this.isDestroying) {
+        this.send('activate');
+      }
       let action = this.get('onfocus');
       if (action) {
         action(this.get('publicAPI'), event);
@@ -371,7 +373,9 @@ export default Component.extend({
     },
 
     onFocus(event) {
-      this.send('activate');
+      if (!this.isDestroying) {
+        this.send('activate');
+      }
       let action = this.get('onfocus');
       if (action) {
         action(this.get('publicAPI'), event);
