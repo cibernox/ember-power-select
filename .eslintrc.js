@@ -42,8 +42,7 @@ module.exports = {
         'app/templates/snippets/**/*.js'
       ],
       parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2017
+        sourceType: 'script'
       },
       env: {
         browser: false,
