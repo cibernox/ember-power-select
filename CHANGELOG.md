@@ -6,6 +6,9 @@
 - [BREAKING] This component now expects to be invoked with `<AngleBracket>` syntax.
 - [BREAKING] All actions starting with `on` (e.g. `onchange` and `onopen`) are now spelled with camelCase (`@onChange` and `@onOpen`)
 
+# 2.3.4
+- [BUGFIX] Add back node 6 in the list of supported engines
+
 # 2.3.3
 - [CHORE] Allow ember-concurrency 1.0
 
