@@ -330,10 +330,19 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   }
 
   @action
-  handleTriggerFocus(_, event) {
+  handleTriggerFocus(event) {
     this._activate();
     if (this.onFocus) {
       this.onFocus(this.publicAPI, event);
+    }
+  }
+  @action
+  handleTriggerBlur(event) {
+    if (!this.isDestroying) {
+      this._deactivate();
+    }
+    if (this.onBlur) {
+      this.onBlur(this.publicAPI, event);
     }
   }
 
@@ -342,16 +351,6 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
     this._activate();
     if (this.onFocus) {
       this.onFocus(this.publicAPI, event);
-    }
-  }
-
-  @action
-  handleTriggerBlur(_, event) {
-    if (!this.isDestroying) {
-      this._deactivate();
-    }
-    if (this.onBlur) {
-      this.onBlur(this.publicAPI, event);
     }
   }
 

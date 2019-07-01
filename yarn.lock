@@ -4083,15 +4083,15 @@ ember-auto-import@^1.2.19:
     walk-sync "^0.3.3"
     webpack "~4.28"
 
-ember-basic-dropdown@^2.0.0-beta.1:
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-2.0.0-beta.1.tgz#3c6052fb95e6a8fb4b6561946726cc19bf4271eb"
-  integrity sha512-RVQO1fPdcgImqJQdJz6qzK4C+2JEaN98JZPBUEcWwL5eKrpJGxoVQFqPVJOx5lkXVRUwkkZ9eUJCytxcmxyOsQ==
+ember-basic-dropdown@^2.0.0-beta.2:
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-2.0.0-beta.2.tgz#f6c08a1a064a5f6b6bf8039b3d684567592ccb28"
+  integrity sha512-ekjX4X8bPzNGE8WBBVGFEuLNQSFydai1kjJfNtOaiC6hDV+6yKWaLSOuiLu4mERZdFXti4QkKR/AAYm/Oygnhw==
   dependencies:
     "@ember-decorators/component" "^6.0.0"
     "@ember/render-modifiers" "^1.0.0"
-    ember-cli-babel "^7.7.3"
-    ember-cli-htmlbars "^3.0.1"
+    ember-cli-babel "^7.8"
+    ember-cli-htmlbars "^3.1.0"
     ember-element-helper "^0.1.1"
     ember-maybe-in-element "^0.2.0"
 
@@ -4146,7 +4146,7 @@ ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cl
     ensure-posix-path "^1.0.2"
     semver "^5.5.0"
 
-ember-cli-babel@^7.8.0:
+ember-cli-babel@^7.8, ember-cli-babel@^7.8.0:
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.8.0.tgz#e596500eca0f5a7c9aaee755f803d1542f578acf"
   integrity sha512-xUBgJQ81fqd7k/KIiGU+pjpoXhrmmRf9pUrqLenNSU5N+yeNFT5a1+w0b+p1F7oBphfXVwuxApdZxrmAHOdA3Q==
@@ -4251,16 +4251,6 @@ ember-cli-htmlbars@^2.0.0, ember-cli-htmlbars@^2.0.1:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-2.0.5.tgz#b5a105429a6bce4f7c9c97b667e3b8926e31397f"
   integrity sha512-3f3PAxdnQ/fhQa8XP/3z4RLRgLHxV8j4Ln75aHbRdemOCjBa048KxL9l+acRLhCulbGQCMnLiIUIC89PAzLrcA==
-  dependencies:
-    broccoli-persistent-filter "^1.4.3"
-    hash-for-dep "^1.2.3"
-    json-stable-stringify "^1.0.0"
-    strip-bom "^3.0.0"
-
-ember-cli-htmlbars@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-3.0.1.tgz#01e21f0fd05e0a6489154f26614b1041769e3e58"
-  integrity sha512-pyyB2s52vKTXDC5svU3IjU7GRLg2+5O81o9Ui0ZSiBS14US/bZl46H2dwcdSJAK+T+Za36ZkQM9eh1rNwOxfoA==
   dependencies:
     broccoli-persistent-filter "^1.4.3"
     hash-for-dep "^1.2.3"
