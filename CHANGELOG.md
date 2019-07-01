@@ -1,5 +1,8 @@
 # Master
 
+# 3.0.0-beta.3
+- [CHORE] Update version of ember-basic-dropdown
+
 # 3.0.0-beta.1
 
 - [BREAKING] Now this addon requires Ember 3.11 (in beta at the moment of this writing)
