@@ -12,9 +12,9 @@ module('Integration | Helpers', function(hooks) {
     this.numbers = numbers;
 
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |number|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -27,13 +27,13 @@ module('Integration | Helpers', function(hooks) {
     this.numbers = numbers;
 
     await render(hbs`
-      {{#power-select-multiple options=numbers onchange=(action (mut fooMultiple)) as |number|}}
+      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut fooMultiple)}} @searchEnabled={{true}} as |number|>
         {{number}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
       <div id="single-select">
-        {{#power-select options=numbers renderInPlace=true onchange=(action (mut foo)) as |number|}}
+        <PowerSelect @options={{numbers}} @renderInPlace={{true}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
           {{number}}
-        {{/power-select}}
+        </PowerSelect>
       </div>
     `);
 

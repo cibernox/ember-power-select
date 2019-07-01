@@ -1,15 +1,16 @@
-{{#if searchEnabled}}
+{{#if @searchEnabled}}
   <div class="ember-power-select-search">
     <input type="search" autocomplete="off"
       autocorrect="off" autocapitalize="off"
       spellcheck="false" role="combobox"
       class="ember-power-select-search-input"
-      value={{select.searchText}}
-      aria-controls={{listboxId}}
-      placeholder={{searchPlaceholder}}
-      oninput={{onInput}}
-      onfocus={{onFocus}}
-      onblur={{onBlur}}
-      onkeydown={{action "onKeydown"}}>
+      value={{@select.searchText}}
+      aria-controls={{@listboxId}}
+      placeholder={{@searchPlaceholder}}
+      {{on "input" @onInput}}
+      {{on "focus" @onFocus}}
+      {{on "blur" @onBlur}}
+      {{on "keydown" this.handleKeydown}}
+      {{did-insert this.focusInput}}>
   </div>
 {{/if}}

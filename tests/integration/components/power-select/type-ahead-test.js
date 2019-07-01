@@ -58,9 +58,9 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
     test(`(${state}) Repeating the first character cycles through the results`, async function(assert) {
       this.names = namesStartingWithA;
       await render(hbs`
-        {{#power-select options=names onchange=(action (mut selected)) selected=selected searchEnabled=false as |option|}}
+        <PowerSelect @options={{names}} @onChange={{action (mut selected)}} @selected={{selected}} as |option|>
           {{option}}
-        {{/power-select}}
+        </PowerSelect>
       `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
@@ -72,9 +72,9 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
     test(`(${state}) When going over all the possible results, it goes back to the first`, async function(assert) {
       this.names = namesStartingWithA;
       await render(hbs`
-        {{#power-select options=names onchange=(action (mut selected)) selected=selected searchEnabled=false as |option|}}
+        <PowerSelect @options={{names}} @onChange={{action (mut selected)}} @selected={{selected}} as |option|>
           {{option}}
-        {{/power-select}}
+        </PowerSelect>
       `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
@@ -90,9 +90,9 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
     test(`(${state}) Though repeating the first char, the whole search term is remembered`, async function(assert) {
       this.names = namesStartingWithA;
       await render(hbs`
-        {{#power-select options=names onchange=(action (mut selected)) selected=selected searchEnabled=false as |option|}}
+        <PowerSelect @options={{names}} @onChange={{action (mut selected)}} @selected={{selected}} as |option|>
           {{option}}
-        {{/power-select}}
+        </PowerSelect>
       `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
@@ -107,9 +107,9 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
     test(`(${state}) Typing the first character after typing a different one does not set again the cycling behaviour`, async function(assert) {
       this.names = namesStartingWithA;
       await render(hbs`
-        {{#power-select options=names onchange=(action (mut selected)) selected=selected searchEnabled=false as |option|}}
+        <PowerSelect @options={{names}} @onChange={{action (mut selected)}} @selected={{selected}} as |option|>
           {{option}}
-        {{/power-select}}
+        </PowerSelect>
       `);
 
       let trigger = this.element.querySelector('.ember-power-select-trigger');
@@ -127,9 +127,9 @@ module('Integration | Component | Ember Power Select (Type Ahead Native Behaviou
         { groupName: 'Second', options: ['Fba', { groupName: '2.1', options: ['FFba'] }, 'Fbb'] }
       ];
       await render(hbs`
-        {{#power-select options=names onchange=(action (mut selected)) selected=selected searchEnabled=false as |option|}}
+        <PowerSelect @options={{names}} @onChange={{action (mut selected)}} @selected={{selected}} as |option|>
           {{option}}
-        {{/power-select}}
+        </PowerSelect>
       `);
       let trigger = this.element.querySelector('.ember-power-select-trigger');
       await helpers.beforeInteraction(trigger, assert);

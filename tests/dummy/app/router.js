@@ -47,8 +47,6 @@ Router.map(function() {
     this.route('support-the-project');
   });
 
-  this.route('legacy-demo');
-
   // Routes for tests
   this.route('helpers-testing');
   this.route('helpers-testing-single-power-select');

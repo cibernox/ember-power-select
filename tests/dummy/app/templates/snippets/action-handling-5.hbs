@@ -1,13 +1,11 @@
 <input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
 <br>
 <br>
-{{#power-select
-  selected=selected
-  options=cities
-  onchange=(action (mut selected))
-  onfocus=(action "handleFocus")
-  onblur=(action "handleBlur")
-  as |name|
-}}
+<PowerSelectMultiple
+  @selected={{selected}}
+  @options={{cities}}
+  @onChange={{action (mut selected)}}
+  @onFocus={{action "handleFocus"}}
+  @onBlur={{action "handleBlur"}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelectMultiple>

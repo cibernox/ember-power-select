@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
@@ -41,8 +42,7 @@ module.exports = {
         'app/templates/snippets/**/*.js'
       ],
       parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2017
+        sourceType: 'script'
       },
       env: {
         browser: false,

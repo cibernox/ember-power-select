@@ -9,7 +9,7 @@
 
 <p>
   When you use the <code>search</code> action passing an initial set of <code>options</code> is optional.
-  Read more about {{#link-to "public-pages.docs.the-search"}} the search{{/link-to}} action.
+  Read more about <LinkTo @route="public-pages.docs.the-search">the search</LinkTo> action.
 </p>
 
 <p><strong>Selects in this page seem do not work. This is intended.</strong> See last paragraph.</p>
@@ -30,7 +30,7 @@
 
 <p>
   <strong>Filtering in the above select also seems broken, but is also intended.</strong>
-  See {{#link-to "public-pages.docs.the-search"}}the search{{/link-to}} section (Customize the search field) for
+  See <LinkTo @route="public-pages.docs.the-search">the search</LinkTo> section (Customize the search field) for
   instructions on how to make it work.
 </p>
 
@@ -86,6 +86,6 @@
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to "public-pages.docs.installation" class="doc-page-nav-link-prev"}}&lt; Installation{{/link-to}}
-  {{#link-to "public-pages.docs.action-handling" class="doc-page-nav-link-next"}}Action handling &gt;{{/link-to}}
+  <LinkTo @route="public-pages.docs.installation" class="doc-page-nav-link-prev">&lt; Installation</LinkTo>
+  <LinkTo @route="public-pages.docs.action-handling" class="doc-page-nav-link-next">Action handling &gt;</LinkTo>
 </div>

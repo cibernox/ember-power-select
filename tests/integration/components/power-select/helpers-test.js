@@ -13,9 +13,9 @@ module('Integration | Helpers | selectChoose', function(hooks) {
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasText('', 'The select is empty');
@@ -28,9 +28,9 @@ module('Integration | Helpers | selectChoose', function(hooks) {
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     assert.dom('.ember-power-select-multiple-option').doesNotExist('There is no selected options');

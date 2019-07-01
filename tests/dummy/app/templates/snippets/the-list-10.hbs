@@ -1,11 +1,8 @@
-{{#power-select
-  options=names
-  renderInPlace=true
-  selected=name345
-  onchange=(action (mut name345))
-  as |name|
-}}
+<PowerSelect
+  @options={{names}}
+  @renderInPlace={{true}}
+  @selected={{name345}}
+  @onChange={{action (mut name345)}} as |name|>
   {{name}}
-  <a onmouseup={{action "stopPropagation"}} 
-    onclick={{action "removeName" name}}>&times;</a>
-{{/power-select}}
+  <a {{on "mouseup" this.stopPropagation}} {{on "click" (fn this.removeName name)}}>&times;</a>
+</PowerSelect>

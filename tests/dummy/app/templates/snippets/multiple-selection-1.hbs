@@ -1,9 +1,8 @@
-{{#power-select-multiple
-  options=names
-  selected=name
-  placeholder="Select some names..."
-  onchange=(action (mut name))
-  as |name|
-}}
+<PowerSelectMultiple
+  @searchEnabled={{true}}
+  @options={{names}}
+  @selected={{name}}
+  @placeholder="Select some names..."
+  @onChange={{action (mut name)}} as |name|>
   {{name}}
-{{/power-select-multiple}}
+</PowerSelectMultiple>

@@ -1,11 +1,9 @@
 <input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
 <br>
 <br>
-{{#power-select
-  options=diacritics
-  selected=fellow
-  searchEnabled=false
-  onchange=(action (mut fellow))
-  as |name|}}
+<PowerSelect
+  @options={{diacritics}}
+  @selected={{fellow}}
+  @onChange={{action (mut fellow)}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelect>

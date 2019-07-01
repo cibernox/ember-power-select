@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import { inject } from '@ember/controller';
+import { computed, action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 const options = [
   ['I\'m', 'just', 'a logo'],
@@ -11,22 +11,26 @@ const options = [
   ['Enough.', 'I\'m done', 'with you']
 ];
 
-export default Controller.extend({
-  applicationController: inject('application'),
-  mainSelectOptions: options[0],
-  mainSelected: 'foo',
-  disabled: computed('applicationController.currentPath', function() {
-    return this.get('applicationController.currentPath') !== 'public-pages.index';
-  }),
+export default class extends Controller {
+  @service router
+  mainSelectOptions = options[0]
+  mainSelected = 'foo'
 
-  actions: {
-    changeOptions() {
-      let index = options.indexOf(this.get('mainSelectOptions')) + 1;
-      if (index === options.length) {
-        this.set('disabled', true);
-      } else {
-        this.set('mainSelectOptions', options[index]);
-      }
+  @computed('router.currentRouteName')
+  get disabled() {
+    return this.router.currentRouteName !== 'public-pages.index';
+  }
+  set disabled(v) {
+    return v;
+  }
+
+  @action
+  changeOptions() {
+    let index = options.indexOf(this.mainSelectOptions) + 1;
+    if (index === options.length) {
+      this.set('disabled', true);
+    } else {
+      this.set('mainSelectOptions', options[index]);
     }
   }
-});
+}

@@ -1,32 +1,32 @@
 <section class="docs">
   <nav class="side-nav">
     <header class="side-nav-header">Getting started</header>
-    {{#link-to "public-pages.docs.index" class="side-nav-link"}}Overview{{/link-to}}
-    {{#link-to "public-pages.docs.installation" class="side-nav-link"}}Installation{{/link-to}}
-    {{#link-to "public-pages.docs.how-to-use-it" class="side-nav-link"}}How to use it{{/link-to}}
-    {{#link-to "public-pages.docs.action-handling" class="side-nav-link"}}Action handling{{/link-to}}
-    {{#link-to "public-pages.docs.groups" class="side-nav-link"}}Groups{{/link-to}}
-    {{#link-to "public-pages.docs.multiple-selection" class="side-nav-link"}}Multiple selection{{/link-to}}
+    <LinkTo @route="public-pages.docs.index" class="side-nav-link">Overview</LinkTo>
+    <LinkTo @route="public-pages.docs.installation" class="side-nav-link">Installation</LinkTo>
+    <LinkTo @route="public-pages.docs.how-to-use-it" class="side-nav-link">How to use it</LinkTo>
+    <LinkTo @route="public-pages.docs.action-handling" class="side-nav-link">Action handling</LinkTo>
+    <LinkTo @route="public-pages.docs.groups" class="side-nav-link">Groups</LinkTo>
+    <LinkTo @route="public-pages.docs.multiple-selection" class="side-nav-link">Multiple selection</LinkTo>
 
     <header class="side-nav-header">Basic customization</header>
-    {{#link-to "public-pages.docs.the-trigger" class="side-nav-link"}}The trigger{{/link-to}}
-    {{#link-to "public-pages.docs.the-list" class="side-nav-link"}}The list{{/link-to}}
-    {{#link-to "public-pages.docs.the-search" class="side-nav-link"}}The search{{/link-to}}
-    {{#link-to "public-pages.docs.styles" class="side-nav-link"}}Styles{{/link-to}}
+    <LinkTo @route="public-pages.docs.the-trigger" class="side-nav-link">The trigger</LinkTo>
+    <LinkTo @route="public-pages.docs.the-list" class="side-nav-link">The list</LinkTo>
+    <LinkTo @route="public-pages.docs.the-search" class="side-nav-link">The search</LinkTo>
+    <LinkTo @route="public-pages.docs.styles" class="side-nav-link">Styles</LinkTo>
 
     <header class="side-nav-header">Advanced customization</header>
-    {{#link-to "public-pages.docs.custom-search-action" class="side-nav-link"}}Custom search action{{/link-to}}
+    <LinkTo @route="public-pages.docs.custom-search-action" class="side-nav-link">Custom search action</LinkTo>
 
     <header class="side-nav-header">Other</header>
-    {{#link-to "public-pages.docs.test-helpers" class="side-nav-link"}}Test helpers{{/link-to}}
-    {{#link-to "public-pages.docs.troubleshooting" class="side-nav-link"}}Troubleshooting{{/link-to}}
-    {{#link-to "public-pages.docs.architecture" class="side-nav-link"}}Architecture{{/link-to}}
-    {{#link-to "public-pages.docs.api-reference" class="side-nav-link"}}API reference{{/link-to}}
+    <LinkTo @route="public-pages.docs.test-helpers" class="side-nav-link">Test helpers</LinkTo>
+    <LinkTo @route="public-pages.docs.troubleshooting" class="side-nav-link">Troubleshooting</LinkTo>
+    <LinkTo @route="public-pages.docs.architecture" class="side-nav-link">Architecture</LinkTo>
+    <LinkTo @route="public-pages.docs.api-reference" class="side-nav-link">API reference</LinkTo>
   </nav>
   <section class="doc-page">
-    {{#power-select selected=currentSection options=groupedSections onchange=(action "visit") searchField="text" searchEnabled=false triggerClass="section-selector" as |option|}}
+    <PowerSelect @selected={{currentSection}} @options={{groupedSections}} @onChange={{this.visit}} @searchField="text" @triggerClass="section-selector" as |option|>
       {{option.text}}
-    {{/power-select}}
+    </PowerSelect>
     {{outlet}}
   </section>
 </section>

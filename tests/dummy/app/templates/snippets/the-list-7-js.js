@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import RSVP from 'rsvp';
 
 function generatePromise() {
@@ -7,11 +8,11 @@ function generatePromise() {
   });
 }
 
-export default Controller.extend({
-  promise: null,
-  actions: {
-    refreshCollection() {
-      this.set('promise', generatePromise());
-    }
+export default class extends Controller {
+  promise = null
+
+  @action
+  refreshCollection() {
+    this.set('promise', generatePromise());
   }
-});
+}

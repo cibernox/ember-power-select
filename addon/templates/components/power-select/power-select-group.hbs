@@ -1,4 +1,4 @@
-<li class="ember-power-select-group" aria-disabled={{ember-power-select-true-string-if-present disabled}} role="option">
-  <span class="ember-power-select-group-name">{{groupName}}</span>
+<li class="ember-power-select-group" aria-disabled={{if @group.disabled "true"}} role="option">
+  <span class="ember-power-select-group-name">{{@group.groupName}}</span>
   {{yield}}
 </li>

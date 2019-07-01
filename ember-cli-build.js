@@ -2,16 +2,16 @@
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 const VersionChecker = require('ember-cli-version-checker'); // eslint-disable-line
-const crawl = require('prember-crawler');
+// const crawl = require('prember-crawler');
 
 module.exports = function(defaults) {
   let checker = new VersionChecker(defaults);
   let emberChecker = checker.forEmber();
   let options = {
     snippetPaths: ['tests/dummy/app/templates/snippets'],
-    prember: {
-      urls: crawl
-    }
+    // prember: {
+    //   urls: crawl
+    // }
   };
 
   if (process.env.DEPLOY_TARGET === undefined && emberChecker.isAbove('2.14.0')) {

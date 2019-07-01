@@ -1,8 +1,7 @@
-{{#power-select
-  search=(action "searchRepo")
-  selected=selected
-  onchange=(action (mut selected))
-  as |repo|
-}}
+<PowerSelect
+  @search={{action "searchRepo"}}
+  @selected={{selected}}
+  @onChange={{action (mut selected)}}
+  @searchEnabled={{true}} as |repo|>
   {{repo.full_name}}
-{{/power-select}}
+</PowerSelect>

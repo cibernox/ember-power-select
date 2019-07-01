@@ -1,7 +1,6 @@
+import { layout, tagName } from "@ember-decorators/component";
 import Component from '@ember/component';
-import layout from '../../templates/components/power-select/search-message';
+import templateLayout from '../../templates/components/power-select/search-message';
 
-export default Component.extend({
-  layout,
-  tagName: ''
-});
+export default @tagName('') @layout(templateLayout) class SearchMessage extends Component {
+}

@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 const countries = [
   { id: 1, name: 'United States',  flagUrl: '/flags/us.svg' },
   { id: 2, name: 'Spain',          flagUrl: '/flags/es.svg' },
@@ -10,16 +10,17 @@ const countries = [
   { id: 7, name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
 ];
 
-export default Controller.extend({
-  countries,
-  destination: computed('destinationId', 'countries', function() {
+export default class extends Controller {
+  countries = countries
+  @computed('destinationId', 'countries')
+  get destination() {
     const countries = this.get('countries');
     if (!countries) {
       return null;
     }
     return countries.find(x => x.id === this.get('destinationId'));
-  }),  
-  actions: {
-    foo() { }
   }
-});
+
+  @action
+  foo() { }
+}

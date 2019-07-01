@@ -1,4 +1,4 @@
-import Controller from '@ember/controller';
+import Controller from "@ember/controller";
 
 const countries = [
   { name: 'United States',  flagUrl: '/flags/us.svg' },
@@ -27,10 +27,10 @@ const groupedNumbers = [
   'one thousand'
 ];
 
-export default Controller.extend({
-  cities,
-  countries,
-  groupedNumbers,
-  city: null,
-  country: null
-});
+export default class MaterialTheme extends Controller {
+  cities = cities;
+  countries = countries;
+  groupedNumbers = groupedNumbers;
+  city = null;
+  country = null;
+}

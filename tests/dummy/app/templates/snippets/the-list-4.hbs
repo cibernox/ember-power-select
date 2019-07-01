@@ -1,8 +1,6 @@
-{{#power-select
-  options=emptyList
-  selected=selected
-  onchange=(action (mut selected))
-  as |name|
-}}
+<PowerSelect
+  @options={{emptyList}}
+  @selected={{selected}}
+  @onChange={{action (mut selected)}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelect>

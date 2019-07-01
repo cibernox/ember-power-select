@@ -1,5 +1,5 @@
 import Component from '@ember/component';
+import { tagName } from "@ember-decorators/component";
 
-export default Component.extend({
-  tagName: ''
-});
+export default @tagName('') class extends Component {
+}

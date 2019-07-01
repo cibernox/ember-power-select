@@ -4,8 +4,8 @@
       aria-selected={{ember-power-select-is-selected opt selected}}
       aria-disabled={{opt.disabled}}
       aria-current={{eq opt highlighted}}
-      onclick={{action select opt dropdown}}
-      onmouseover={{action highlight opt}}>
+      {{on "click" (action select opt dropdown)}}
+      {{on "mouseover" (action highlight opt)}}>
       {{yield opt}}
     </li>
   {{/each}}

@@ -1,13 +1,13 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-  actions: {
-    stopPropagation(e) {
-      e.stopPropagation();
-    },
-    removeName(name) {
-      alert(`remove name: ${name}`);
-    }
+export default class extends Controller{
+  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+
+  stopPropagation(e) {
+    e.stopPropagation();
   }
-});
+
+  removeName(name) {
+    alert(`remove name: ${name}`);
+  }
+}

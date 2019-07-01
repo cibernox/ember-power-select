@@ -1,127 +1,57 @@
-{{#if (hasBlock "inverse")}}
-  {{#power-select
-    _triggerTagName=_triggerTagName
-    triggerRole=triggerRole
-    afterOptionsComponent=afterOptionsComponent
-    allowClear=allowClear
-    ariaDescribedBy=ariaDescribedBy
-    ariaInvalid=ariaInvalid
-    ariaLabel=ariaLabel
-    ariaLabelledBy=ariaLabelledBy
-    beforeOptionsComponent=beforeOptionsComponent
-    buildSelection=(action "buildSelection")
-    calculatePosition=calculatePosition
-    class=class
-    closeOnSelect=closeOnSelect
-    defaultHighlighted=defaultHighlighted
-    destination=destination
-    dir=dir
-    disabled=disabled
-    dropdownClass=dropdownClass
-    extra=extra
-    groupComponent=groupComponent
-    horizontalPosition=horizontalPosition
-    initiallyOpened=initiallyOpened
-    loadingMessage=loadingMessage
-    matcher=matcher
-    matchTriggerWidth=matchTriggerWidth
-    noMatchesMessage=noMatchesMessage
-    onblur=onblur
-    onchange=onchange
-    onclose=onclose
-    onfocus=(action "handleFocus")
-    oninput=oninput
-    onkeydown=(action "handleKeydown")
-    onopen=(action "handleOpen")
-    options=options
-    optionsComponent=optionsComponent
-    placeholder=placeholder
-    placeholderComponent=placeholderComponent
-    preventScroll=preventScroll
-    registerAPI=(action registerAPI)
-    renderInPlace=renderInPlace
-    required=required
-    scrollTo=scrollTo
-    search=search
-    searchEnabled=searchEnabled
-    searchField=searchField
-    searchMessage=searchMessage
-    searchPlaceholder=searchPlaceholder
-    selected=selected
-    selectedItemComponent=selectedItemComponent
-    tabindex=computedTabIndex
-    tagName=tagName
-    eventType=eventType
-    title=title
-    triggerClass=concatenatedTriggerClass
-    triggerComponent=(component triggerComponent tabindex=tabindex)
-    triggerId=triggerId
-    verticalPosition=verticalPosition
-    as |option select|}}
-    {{yield option select}}
-  {{else}}
-    {{yield to="inverse"}}
-  {{/power-select}}
-{{else}}
-  {{#power-select
-    _triggerTagName=_triggerTagName
-    triggerRole=triggerRole
-    afterOptionsComponent=afterOptionsComponent
-    allowClear=allowClear
-    ariaDescribedBy=ariaDescribedBy
-    ariaInvalid=ariaInvalid
-    ariaLabel=ariaLabel
-    ariaLabelledBy=ariaLabelledBy
-    beforeOptionsComponent=beforeOptionsComponent
-    buildSelection=(action "buildSelection")
-    calculatePosition=calculatePosition
-    class=class
-    closeOnSelect=closeOnSelect
-    defaultHighlighted=defaultHighlighted
-    destination=destination
-    dir=dir
-    disabled=disabled
-    dropdownClass=dropdownClass
-    extra=extra
-    groupComponent=groupComponent
-    horizontalPosition=horizontalPosition
-    initiallyOpened=initiallyOpened
-    loadingMessage=loadingMessage
-    matcher=matcher
-    matchTriggerWidth=matchTriggerWidth
-    noMatchesMessage=noMatchesMessage
-    onblur=onblur
-    onchange=onchange
-    onclose=onclose
-    onfocus=(action "handleFocus")
-    oninput=oninput
-    onkeydown=(action "handleKeydown")
-    onopen=(action "handleOpen")
-    options=options
-    optionsComponent=optionsComponent
-    placeholder=placeholder
-    placeholderComponent=placeholderComponent
-    preventScroll=preventScroll
-    registerAPI=(readonly registerAPI)
-    renderInPlace=renderInPlace
-    required=required
-    scrollTo=scrollTo
-    search=search
-    searchEnabled=searchEnabled
-    searchField=searchField
-    searchMessage=searchMessage
-    searchPlaceholder=searchPlaceholder
-    selected=selected
-    selectedItemComponent=selectedItemComponent
-    tabindex=computedTabIndex
-    tagName=tagName
-    eventType=eventType
-    title=title
-    triggerClass=concatenatedTriggerClass
-    triggerComponent=(component triggerComponent tabindex=tabindex)
-    triggerId=triggerId
-    verticalPosition=verticalPosition
-    as |option select|}}
-    {{yield option select}}
-  {{/power-select}}
-{{/if}}
+<PowerSelect
+  @triggerRole={{@triggerRole}}
+  @ariaDescribedBy={{@ariaDescribedBy}}
+  @ariaInvalid={{@ariaInvalid}}
+  @ariaLabel={{@ariaLabel}}
+  @ariaLabelledBy={{@ariaLabelledBy}}
+  @afterOptionsComponent={{@afterOptionsComponent}}
+  @allowClear={{@allowClear}}
+  @beforeOptionsComponent={{@beforeOptionsComponent}}
+  @buildSelection={{this.buildSelection}}
+  @calculatePosition={{@calculatePosition}}
+  @closeOnSelect={{@closeOnSelect}}
+  @defaultHighlighted={{@defaultHighlighted}}
+  @destination={{destination}}
+  @disabled={{@disabled}}
+  @dropdownClass={{@dropdownClass}}
+  @extra={{@extra}}
+  @groupComponent={{@groupComponent}}
+  @horizontalPosition={{@horizontalPosition}}
+  @initiallyOpened={{@initiallyOpened}}
+  @loadingMessage={{@loadingMessage}}
+  @matcher={{@matcher}}
+  @matchTriggerWidth={{@matchTriggerWidth}}
+  @noMatchesMessage={{@noMatchesMessage}}
+  @onBlur={{@onBlur}}
+  @onChange={{@onChange}}
+  @onClose={{@onClose}}
+  @onFocus={{this.handleFocus}}
+  @onInput={{@onInput}}
+  @onKeydown={{this.handleKeydown}}
+  @onOpen={{this.handleOpen}}
+  @options={{@options}}
+  @optionsComponent={{@optionsComponent}}
+  @placeholder={{@placeholder}}
+  @placeholderComponent={{@placeholderComponent}}
+  @preventScroll={{@preventScroll}}
+  @registerAPI={{@registerAPI}}
+  @renderInPlace={{@renderInPlace}}
+  @required={{required}}
+  @scrollTo={{@scrollTo}}
+  @search={{@search}}
+  @searchEnabled={{@searchEnabled}}
+  @searchField={{@searchField}}
+  @searchMessage={{@searchMessage}}
+  @searchPlaceholder={{@searchPlaceholder}}
+  @selected={{@selected}}
+  @selectedItemComponent={{@selectedItemComponent}}
+  @eventType={{@eventType}}
+  @title={{@title}}
+  @triggerClass={{this.concatenatedTriggerClass}}
+  @triggerComponent={{component this.triggerComponent tabindex=@tabindex}}
+  @triggerId={{@triggerId}}
+  @verticalPosition={{@verticalPosition}}
+  @tabindex={{this.computedTabIndex}}
+  ...attributes as |option select|>
+  {{yield option select}}
+</PowerSelect>

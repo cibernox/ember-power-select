@@ -88,14 +88,14 @@
   {{partial partialName}}
 {{/code-example}}
 
-<p>
+{{!-- <p>
   Or you can just use the <code>\{{else}}</code> block to just customize a totally
   different HTML content just like the <code>\{{each}}</code> helper.
 </p>
 
 {{#code-example hbs="the-list-6.hbs" js="the-list-6-js.js" as |partialName|}}
   {{partial partialName}}
-{{/code-example}}
+{{/code-example}} --}}
 
 <h3>The loading state</h3>
 
@@ -152,7 +152,7 @@
 <h3>Prevent click propagation inside the list</h3>
 
 <p>
- The options inside the list are selected with mousedown, a good way to prevent the selection is intercepting onmouseup and calling stopPropagation on the element "e.stopPropagation()"
+ The options inside the list are selected with mousedown, a good way to prevent the selection is intercepting <code>mouseup</code> and calling <code>stopPropagation</code> on the event.
 </p>
 
 <p>
