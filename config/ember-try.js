@@ -38,6 +38,10 @@ module.exports = async function() {
           }
         }
       },
+      {
+        name: 'node-tests',
+        command: 'npm run nodetest'
+      },
       // The default `.travis.yml` runs this scenario via `npm test`,
       // not via `ember try`. It's still included here so that running
       // `ember try:each` manually or from a customized CI config will run it
