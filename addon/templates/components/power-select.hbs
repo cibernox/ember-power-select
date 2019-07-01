@@ -14,9 +14,9 @@
   ...attributes as |dropdown|>
   <dropdown.Trigger
     @onKeyDown={{this.handleTriggerKeydown}}
-    @onFocus={{this.handleTriggerFocus}}
-    @onBlur={{this.handleTriggerBlur}}
     @eventType={{or @eventType "mousedown"}}
+    {{on "focus" this.handleTriggerFocus}}
+    {{on "blur" this.handleTriggerBlur}}
     class={{this.concatenatedTriggerClasses}}
     id={{@triggerId}}
     role={{or @triggerRole "button"}}
