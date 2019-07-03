@@ -276,16 +276,18 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   @action
   handleTriggerKeydown(e) {
     if (this.onKeydown && this.onKeydown(this.publicAPI, e) === false) {
-      return false;
+      e.stopImmediatePropagation();
+      return;
     }
     if (e.ctrlKey || e.metaKey) {
-      return false;
+      e.stopImmediatePropagation();
+      return;
     }
     if ((e.keyCode >= 48 && e.keyCode <= 90) // Keys 0-9, a-z
       || this._isNumpadKeyEvent(e)) {
       this.triggerTypingTask.perform(e);
     } else if (e.keyCode === 32) {  // Space
-      return this._handleKeySpace(e);
+      this._handleKeySpace(e);
     } else {
       return this._routeKeydown(e);
     }
@@ -613,18 +615,17 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   _handleKeyEnter(e) {
     if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
       this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
-      return false;
+      e.stopImmediatePropagation();
     }
   }
 
   _handleKeySpace(e) {
     if (['TEXTAREA', 'INPUT'].includes(e.target.nodeName)) {
-      return false;
-    }
-    if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
+      e.stopImmediatePropagation();
+    } else if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
+      e.stopImmediatePropagation();
       e.preventDefault(); // Prevents scrolling of the page.
       this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
-      return false;
     }
   }
 
