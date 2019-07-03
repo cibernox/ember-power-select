@@ -203,6 +203,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
 
   @action
   handleClose(_, e) {
+    debugger;
     if (this.onClose && this.onClose(this.publicAPI, e) === false) {
       return false;
     }
@@ -266,6 +267,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
       }
     }
     this.publicAPI.actions.select(this.buildSelection(selected, this.publicAPI), e);
+    debugger;
     if (this.closeOnSelect) {
       this.publicAPI.actions.close(e);
       return false;
@@ -275,6 +277,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   // keydowns handled by the trigger provided by ember-basic-dropdown
   @action
   handleTriggerKeydown(e) {
+    debugger;
     if (this.onKeydown && this.onKeydown(this.publicAPI, e) === false) {
       e.stopImmediatePropagation();
       return;
@@ -616,6 +619,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
     if (this.publicAPI.isOpen && this.publicAPI.highlighted !== undefined) {
       this.publicAPI.actions.choose(this.publicAPI.highlighted, e);
       e.stopImmediatePropagation();
+      return false;
     }
   }
 
