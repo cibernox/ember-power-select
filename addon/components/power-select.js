@@ -274,7 +274,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
 
   // keydowns handled by the trigger provided by ember-basic-dropdown
   @action
-  handleTriggerKeydown(_, e) {
+  handleTriggerKeydown(e) {
     if (this.onKeydown && this.onKeydown(this.publicAPI, e) === false) {
       return false;
     }
