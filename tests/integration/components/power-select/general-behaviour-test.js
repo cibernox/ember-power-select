@@ -282,7 +282,6 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
     assert.dom('.ember-power-select-trigger').hasText('one', '"one" has been selected');
-    debugger;
     assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
   });
 
