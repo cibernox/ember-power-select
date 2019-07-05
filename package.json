@@ -43,7 +43,7 @@
     "vendor"
   ],
   "dependencies": {
-    "ember-basic-dropdown": "cibernox/ember-basic-dropdown#use-stop-immediate-propagation-to-prevent-default-behavior",
+    "ember-basic-dropdown": "cibernox/ember-basic-dropdown#master",
     "ember-cli-babel": "^7.8.0",
     "ember-cli-htmlbars": "^3.1.0",
     "ember-concurrency": "^1.0.0",
