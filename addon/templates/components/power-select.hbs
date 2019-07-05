@@ -13,8 +13,8 @@
   @disabled={{@disabled}}
   ...attributes as |dropdown|>
   <dropdown.Trigger
-    @onKeyDown={{this.handleTriggerKeydown}}
     @eventType={{or @eventType "mousedown"}}
+    {{on "keydown" this.handleTriggerKeydown}}
     {{on "focus" this.handleTriggerFocus}}
     {{on "blur" this.handleTriggerBlur}}
     class={{this.concatenatedTriggerClasses}}
