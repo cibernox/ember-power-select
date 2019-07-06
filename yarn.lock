@@ -4090,9 +4090,10 @@ ember-auto-import@^1.2.19:
     walk-sync "^0.3.3"
     webpack "~4.28"
 
-ember-basic-dropdown@cibernox/ember-basic-dropdown#master:
-  version "2.0.0-beta.2"
-  resolved "https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/4264bbbb1943b5e4ae4d535e183771005d28b907"
+ember-basic-dropdown@^2.0.0-beta.3:
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-2.0.0-beta.3.tgz#f7e9d7a464bb518fae987bdc4b91b30a74925983"
+  integrity sha512-8XA3xwJQAQnkOwyOw67dy+liOhGt3qaMWegLJ7sJSJZG3cd7gaAN5Q7OJ+hI1Z31PXodoppE3jLBSDTwGhTldQ==
   dependencies:
     "@ember-decorators/component" "^6.0.0"
     "@ember/render-modifiers" "^1.0.0"
