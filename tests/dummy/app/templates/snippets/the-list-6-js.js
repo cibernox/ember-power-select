@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  emptyList: []
-});
+export default class extends Controller {
+  emptyList = []
+}

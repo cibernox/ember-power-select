@@ -9,7 +9,7 @@ const countries = [
   { name: 'United Kingdom', flagUrl: '/flags/gb.svg', population: 64596752 },
 ];
 
-export default Controller.extend({
-  countries,
-  destination: countries[2]
-});
+export default class extends Controller {
+  countries = countries
+  destination = countries[2]
+}

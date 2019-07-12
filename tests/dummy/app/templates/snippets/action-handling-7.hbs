@@ -1,10 +1,10 @@
 <PowerSelect
-  @selected={{mandatoryNumber}}
-  @options={{numbers}}
-  @class={{selectClass}}
-  @dropdownClass={{selectClass}}
-  @onChange={{action (mut mandatoryNumber)}}
-  @onClose={{action "verifyPresence"}}
+  @selected={{this.mandatoryNumber}}
+  @options={{this.numbers}}
+  @class={{this.selectClass}}
+  @dropdownClass={{this.selectClass}}
+  @onChange={{action (mut this.mandatoryNumber)}}
+  @onClose={{this.verifyPresence}}
   @placeholder={{"I really NEED this info"}} as |number|>
   {{number}}
 </PowerSelect>

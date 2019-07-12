@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-});
+export default class extends Controller {
+  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+}

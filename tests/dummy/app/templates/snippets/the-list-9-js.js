@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  groupedNumbers: [
+export default class extends Controller {
+  groupedNumbers = [
     { groupName: "Smalls", disabled: true, options: ["one", "two", "three"] },
     { groupName: "Mediums", options: ["four", "five", "six"] },
     { groupName: "Bigs", disabled: true, options: [
@@ -13,4 +13,4 @@ export default Controller.extend({
     "one hundred",
     "one thousand"
   ]
-});
+}
