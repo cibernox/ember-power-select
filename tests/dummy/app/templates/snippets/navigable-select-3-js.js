@@ -1,8 +1,8 @@
 import Component from '@ember/component';
 
-export default Component.extend({
+export default class extends Component {
   didReceiveAttrs({ oldAttrs, newAttrs }) {
-    this._super(...arguments);
+    super.didReceiveAttrs(...arguments);
     if (!oldAttrs || !oldAttrs.options || !newAttrs.options || oldAttrs.options === newAttrs.options) {
       return;
     }
@@ -22,4 +22,4 @@ export default Component.extend({
       }
     }
   }
-});
+}

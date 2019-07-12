@@ -1,8 +1,9 @@
-import { computed } from '@ember/object';
 import OptionsComponent from 'ember-power-select/components/power-select/options';
+import { computed } from '@ember/object';
 
-export default OptionsComponent.extend({
-  animationRules: computed(function() {
+export default class extends OptionsComponent {
+  @computed
+  get animationRules() {
     return function() {
       this.transition(
         this.toValue(function(newOptions, oldOptions) {
@@ -12,13 +13,13 @@ export default OptionsComponent.extend({
         this.reverse('toRight')
       );
     };
-  }),
+  }
 
   didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('enableGrowth', !this.get('options.fromSearch'));
+    super.didReceiveAttrs(...arguments);
+    this.set('enableGrowth', !this.options.fromSearch);
   }
-});
+}
 
 function safeGet(base, ...keys) {
   while (base && keys.length > 0) {

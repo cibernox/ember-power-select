@@ -1,10 +1,13 @@
 import Component from '@ember/component';
-import { get, computed } from '@ember/object';
+import { get, computed, action } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
 import { A } from '@ember/array';
 
-export default Component.extend({
+export default class extends Component {
   // CPs
-  transformedOptions: computed('options', function() {
+  @oneWay('transformedOptions') currentOptions
+  @computed('options')
+  get transformedOptions() {
     return (function walker(options, parentLevel = null) {
       let results = A();
 
@@ -29,38 +32,36 @@ export default Component.extend({
       }
       parentLevel.options = results;
       return results;
-    })(this.get('options'));
-  }),
-
-  currentOptions: computed.oneWay('transformedOptions'),
+    })(this.options);
+  }
 
   // Actions
-  actions: {
-    onchange(levelOrOption, dropdown) {
-      if (get(levelOrOption, 'levelName')) {
-        this.set('currentOptions', get(levelOrOption, 'options'));
-      } else if (levelOrOption.parentLevel) {
-        this.set('currentOptions', levelOrOption.parentLevel.options);
-      } else {
-        this.get('onchange')(levelOrOption);
-        dropdown.actions.close();
-        this.set('currentOptions', this.get('transformedOptions'));
-      }
-    },
-
-    search(term) {
-      let normalizedTerm = term.toLowerCase();
-      let results = this.get('currentOptions').filter((o) => {
-        if (o.parentLevel) {
-          return normalizedTerm === '';
-        } else if (get(o, 'levelName')) {
-          return get(o, 'levelName').toLowerCase().indexOf(normalizedTerm) > -1;
-        } else {
-          return o.toLowerCase().indexOf(normalizedTerm) > -1;
-        }
-      });
-      results.fromSearch = true;
-      return results;
+  @action
+  onchange(levelOrOption, dropdown) {
+    if (get(levelOrOption, 'levelName')) {
+      this.set('currentOptions', get(levelOrOption, 'options'));
+    } else if (levelOrOption.parentLevel) {
+      this.set('currentOptions', levelOrOption.parentLevel.options);
+    } else {
+      this.get('onchange')(levelOrOption);
+      dropdown.actions.close();
+      this.set('currentOptions', this.get('transformedOptions'));
     }
   }
-});
+
+  @action
+  search(term) {
+    let normalizedTerm = term.toLowerCase();
+    let results = this.currentOptions.filter(o => {
+      if (o.parentLevel) {
+        return normalizedTerm === '';
+      } else if (get(o, 'levelName')) {
+        return get(o, 'levelName').toLowerCase().indexOf(normalizedTerm) > -1;
+      } else {
+        return o.toLowerCase().indexOf(normalizedTerm) > -1;
+      }
+    });
+    results.fromSearch = true;
+    return results;
+  }
+}

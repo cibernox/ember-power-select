@@ -3,9 +3,9 @@
   @options={{currentOptions}}
   @selected={{selected}}
   @closeOnSelect={{false}}
-  @onChange={{action "onChange"}}
+  @onChange={{this.onChange}}
   @optionsComponent="animated-options"
-  @search={{action "search"}} as |levelOrOption|>
+  @search={{this.search}} as |levelOrOption|>
   {{#if levelOrOption.parentLevel}}
     <strong>Back</strong>
   {{else if levelOrOption.levelName}}
