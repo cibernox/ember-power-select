@@ -333,7 +333,9 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
 
   @action
   handleTriggerFocus(event) {
-    this._activate();
+    if (!this.isDestroying) {
+      this._activate();
+    }
     if (this.onFocus) {
       this.onFocus(this.publicAPI, event);
     }
