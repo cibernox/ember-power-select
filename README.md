@@ -23,6 +23,7 @@ ember install ember-power-select
 ```
 
 Ember Power Select 2.X requires Ember **2.10.0+**.
+Ember Power Select 3.X requires Ember **3.11.0+**.
 
 ## Features overview
 
