@@ -1,7 +1,5 @@
 import Controller from '@ember/controller';
-export default Controller.extend({
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-  actions: {
-    foo() { }
-  }
-});
+export default class extends Controller {
+  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto']
+  foo() { }
+}

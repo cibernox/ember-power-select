@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  countries: [
+export default class extends Controller {
+  countries = [
     { name: 'United States',  code: 'US' },
     { name: 'Spain',          code: 'ES' },
     { name: 'Portugal',       code: 'PT', disabled: true },
@@ -10,4 +10,4 @@ export default Controller.extend({
     { name: 'Brazil',         code: 'BR', disabled: true },
     { name: 'United Kingdom', code: 'GB' },
   ]
-});
+}

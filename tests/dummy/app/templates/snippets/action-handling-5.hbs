@@ -2,10 +2,10 @@
 <br>
 <br>
 <PowerSelectMultiple
-  @selected={{selected}}
-  @options={{cities}}
-  @onChange={{action (mut selected)}}
-  @onFocus={{action "handleFocus"}}
-  @onBlur={{action "handleBlur"}} as |name|>
+  @selected={{this.selected}}
+  @options={{this.cities}}
+  @onChange={{action (mut this.selected)}}
+  @onFocus={{this.handleFocus}}
+  @onBlur={{this.handleBlur}} as |name|>
   {{name}}
 </PowerSelectMultiple>

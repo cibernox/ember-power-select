@@ -1,7 +1,7 @@
 <PowerSelect
   @searchEnabled={{true}}
-  @search={{perform searchRepo}}
-  @selected={{selected}}
-  @onChange={{action (mut selected)}} as |repo|>
+  @search={{perform this.searchRepo}}
+  @selected={{this.selected}}
+  @onChange={{action (mut this.selected)}} as |repo|>
   {{repo.full_name}}
 </PowerSelect>

@@ -1,7 +1,7 @@
 <PowerSelectMultiple
-  @selected={{selectedCities}}
-  @options={{cities}}
-  @onChange={{action (mut selectedCities)}}
-  @onInput={{action "checkLength"}} as |name|>
+  @selected={{this.selectedCities}}
+  @options={{this.cities}}
+  @onChange={{action (mut this.selectedCities)}}
+  @onInput={{this.checkLength}} as |name|>
   {{name}}
 </PowerSelectMultiple>
