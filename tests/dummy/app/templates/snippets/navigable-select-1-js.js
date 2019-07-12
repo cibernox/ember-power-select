@@ -13,7 +13,7 @@ const groupedNumbers = [
   "one thousand"
 ];
 
-export default Controller.extend({
-  groupedNumbers,
-  selectedNumber: null
-});
+export default class extends Controller {
+  groupedNumbers = groupedNumbers
+  selectedNumber = null
+}

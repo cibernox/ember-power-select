@@ -23,8 +23,8 @@ const numbers = [
   'twenty'
 ];
 
-export default Controller.extend({
-  numbers,
-  singleSelected: 'four',
-  multipleSelected: ['two', 'six']
-});
+export default class extends Controller {
+  numbers = numbers
+  singleSelected = 'four'
+  multipleSelected = ['two', 'six']
+}
