@@ -1,5 +1,8 @@
 # Master
 
+# 3.0.0
+- [CHORE] Update to Ember Basic Dropdown 2.0 final.
+
 # 3.0.0-beta.3
 - [CHORE] Update version of ember-basic-dropdown
 
