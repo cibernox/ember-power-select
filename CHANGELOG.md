@@ -1,5 +1,9 @@
 # Master
 
+# 3.0.1
+- [BUGFIX] Fix bug in `<PowerSelectMultiple>` that caused it to render the search term in both the
+  trigger and the before options component.
+
 # 3.0.0
 - [CHORE] Update to Ember Basic Dropdown 2.0 final.
 

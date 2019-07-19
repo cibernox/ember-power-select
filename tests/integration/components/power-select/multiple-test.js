@@ -14,7 +14,7 @@ import { A } from '@ember/array';
 module('Integration | Component | Ember Power Select (Multiple)', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('Multiple selects don\'t have a search box', async function(assert) {
+  test('Multiple selects don\'t have a search box by default', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
@@ -26,6 +26,21 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await clickTrigger();
     assert.dom('.ember-power-select-search').doesNotExist('There is no search box');
+  });
+
+  test('Multiple selects have a search box in the trigger when the search is enabled', async function(assert) {
+    assert.expect(2);
+
+    this.numbers = numbers;
+    await render(hbs`
+      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+    await clickTrigger();
+    assert.dom('.ember-power-select-trigger input').exists();
+    assert.dom('.ember-power-select-dropdown input').doesNotExist();
   });
 
   test('When the select opens, the search input (if any) in the trigger gets the focus', async function(assert) {
