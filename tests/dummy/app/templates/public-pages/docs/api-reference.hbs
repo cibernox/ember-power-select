@@ -54,7 +54,7 @@
     <tr>
       <td>buildSelection</td>
       <td><code>function</code></td>
-      <td>The function to be invoked when the user selects an option. Should return either the `option` or `null`. This is used internally by `PowerSelectMultiple` to construct a new array of options, but can be used for unselecting a single option by returning `null` to the `onchange` event.</td>
+      <td>The function to be invoked when the user selects an option. Should return either the `option` or `null`. This is used internally by `PowerSelectMultiple` to construct a new array of options, but can be used for unselecting a single option by returning `null` to the `onChange` event.</td>
     </tr>
     <tr>
       <td>calculatePosition</td>
@@ -173,12 +173,12 @@
       <td>The function to be invoked when component or any of its subitems looses the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
     </tr>
     <tr>
-      <td>onchange</td>
+      <td>onChange</td>
       <td><code>function</code></td>
       <td>The function to be invoked when the user selects or unselects an option</td>
     </tr>
     <tr>
-      <td>onclose</td>
+      <td>onClose</td>
       <td><code>function</code></td>
       <td>The function to be invoked when component is closed</td>
     </tr>
@@ -188,7 +188,7 @@
       <td>The function to be invoked when component or any of its subitems gains the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
     </tr>
     <tr>
-      <td>oninput</td>
+      <td>onInput</td>
       <td><code>function</code></td>
       <td>
         The function to be invoked when the user changes the text in any search input of the component.
@@ -201,9 +201,14 @@
       <td>The function to be invoked when the user presses a key being the component or the inputs inside it focused</td>
     </tr>
     <tr>
-      <td>onopen</td>
+      <td>onOpen</td>
       <td><code>function</code></td>
       <td>The function to be invoked when component is opened</td>
+    </tr>
+    <tr>
+      <td>registerAPI</td>
+      <td><code>function</code></td>
+      <td>The function that will be called when the component is instantiated and also when any state changes inside the component, and receives a publicAPI object that the user can use to control the select from the outside using the actions in it.</td>
     </tr>
     <tr>
       <td>options</td>
