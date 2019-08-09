@@ -73,6 +73,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   @fallbackIfUndefined('power-select/search-message') searchMessageComponent
   @fallbackIfUndefined('power-select/placeholder') placeholderComponent
   @fallbackIfUndefined(option => option) buildSelection
+  @fallbackIfUndefined("button") triggerRole
   publicAPI = initialState;
 
   // Lifecycle hooks
