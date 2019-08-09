@@ -19,7 +19,7 @@
     {{on "blur" this.handleTriggerBlur}}
     class={{this.concatenatedTriggerClasses}}
     id={{@triggerId}}
-    role={{or @triggerRole "button"}}
+    role={{this.triggerRole}}
     aria-describedby={{@ariaDescribedBy}}
     aria-invalid={{@ariaInvalid}}
     aria-label={{@ariaLabel}}
