@@ -1,5 +1,8 @@
 # Master
 
+# 3.0.3
+- [BUGFIX] Allow `@triggerRole` to be used to remove completely the role of the trigger by passing `false`/`null`
+
 # 3.0.2
 - [BUGFIX] Put `@ember-decorators/component` in dependencies.
 
