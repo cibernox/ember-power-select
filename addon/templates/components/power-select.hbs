@@ -1,6 +1,5 @@
 <BasicDropdown
   @horizontalPosition={{@horizontalPosition}}
-  @calculatePosition={{@calculatePosition}}
   @destination={{@destination}}
   @initiallyOpened={{@initiallyOpened}}
   @matchTriggerWidth={{this.matchTriggerWidth}}
@@ -11,6 +10,7 @@
   @renderInPlace={{@renderInPlace}}
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
+  @calculatePosition={{this.calculatePosition}}
   ...attributes as |dropdown|>
   <dropdown.Trigger
     @eventType={{or @eventType "mousedown"}}

@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Allow to customize `calculatePosition` by extending from PowerSelect.
+
 # 3.0.3
 - [BUGFIX] Allow `@triggerRole` to be used to remove completely the role of the trigger by passing `false`/`null`
 
