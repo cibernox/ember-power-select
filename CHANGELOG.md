@@ -1,5 +1,6 @@
 # Master
 
+# 3.0.4
 - [BUGFIX] Allow to customize `calculatePosition` by extending from PowerSelect.
 
 # 3.0.3
