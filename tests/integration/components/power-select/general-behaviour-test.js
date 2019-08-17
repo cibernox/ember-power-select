@@ -11,6 +11,7 @@ import { numbers, names, countries } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
+import PowerSelect from 'ember-power-select/components/power-select';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 const PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
@@ -1117,7 +1118,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.equal(onChangeInvocationsCount, 1);
   });
 
-  test('If the select receives a `calculatePosition` option, it uses it to calculate the position of the floating content', async function(assert) {
+  test('If the select receives a `@calculatePosition` option, it uses it to calculate the position of the floating content', async function(assert) {
     this.numbers = numbers;
     this.renderInPlace = false;
     this.calculatePosition = function(_, _2, _3, { renderInPlace }) {
@@ -1145,6 +1146,51 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       <PowerSelect @options={{numbers}} @renderInPlace={{renderInPlace}} @selected={{selected}} @onChange={{action (mut selected)}} @calculatePosition={{calculatePosition}} as |num|>
        {{num}}
       </PowerSelect>
+    `);
+
+    await clickTrigger();
+    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--above', 'The dropdown is above');
+    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--right', 'The dropdown is in the right');
+    assert.dom('.ember-power-select-dropdown').hasAttribute('style', 'top: 111px;right: 222px;', 'The style attribute is the expected one');
+    await clickTrigger();
+
+    run(() => this.set('renderInPlace', true));
+    await clickTrigger();
+    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--below', 'The dropdown is below');
+    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--left', 'The dropdown is in the left');
+    assert.dom('.ember-power-select-dropdown').hasAttribute('style', 'top: 333px;right: 444px;', 'The style attribute is the expected one');
+  });
+
+  test('the `@calculatePosition` option can be set on components extending from EPS', async function (assert) {
+    this.numbers = numbers;
+    this.renderInPlace = false;
+    this.owner.register('component:custom-eps', class extends PowerSelect {
+      calculatePosition(_, _2, _3, { renderInPlace }) {
+        if (renderInPlace) {
+          return {
+            horizontalPosition: 'left',
+            verticalPosition: 'below',
+            style: {
+              top: 333,
+              right: 444
+            }
+          };
+        } else {
+          return {
+            horizontalPosition: 'right',
+            verticalPosition: 'above',
+            style: {
+              top: 111,
+              right: 222
+            }
+          };
+        }
+      }
+    })
+    await render(hbs`
+      <CustomEps @options={{numbers}} @renderInPlace={{renderInPlace}} @selected={{selected}} @onChange={{action (mut selected)}} as |num|>
+       {{num}}
+      </CustomEps>
     `);
 
     await clickTrigger();
