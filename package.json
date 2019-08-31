@@ -83,7 +83,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-ember": "^6.3.0",
     "eslint-plugin-node": "^9.0.1",
-    "liquid-fire": "0.29.5",
+    "liquid-fire": "0.30.0",
     "loader.js": "^4.7.0",
     "memory-scroll": "0.9.1",
     "mocha": "^5.2.0",
