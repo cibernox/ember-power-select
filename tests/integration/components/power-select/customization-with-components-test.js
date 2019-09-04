@@ -301,8 +301,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.groupedNumbers = groupedNumbers;
     let numberOfGroups = 5; // number of groups in groupedNumber;
 
-    let PowerSelectGroupComponent = get(this.owner.factoryFor('component:power-select/power-select-group'), 'class');
-    this.owner.register('component:custom-group-component', PowerSelectGroupComponent.extend({
+    this.owner.register('component:custom-group-component', Component.extend({
       layout: hbs`<div class="custom-component">{{yield}}</div>`
     }));
 
@@ -319,14 +318,12 @@ module('Integration | Component | Ember Power Select (Customization using compon
   test('`@groupComponent` has extension points', async function(assert) {
     this.groupedNumbers = groupedNumbers;
     let numberOfGroups = 5; // number of groups in groupedNumbers
-    assert.expect(4 * numberOfGroups + 1);
+    assert.expect(4 * numberOfGroups);
 
     let extra = { foo: 'bar' };
     this.extra = extra;
-    let PowerSelectGroupComponent = get(this.owner.factoryFor('component:power-select/power-select-group'), 'class');
-    assert.ok(PowerSelectGroupComponent, 'component:custom-group-component must be defined');
 
-    this.owner.register('component:custom-group-component', PowerSelectGroupComponent.extend({
+    this.owner.register('component:custom-group-component', Component.extend({
       init() {
         this._super(...arguments);
         assert.ok(isPresent(this.get('select')));
