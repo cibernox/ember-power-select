@@ -11,6 +11,7 @@
       {{on "focus" @onFocus}}
       {{on "blur" @onBlur}}
       {{on "keydown" this.handleKeydown}}
-      {{did-insert this.focusInput}}>
+      {{did-insert this.focusInput}}
+      {{will-destroy this.clearSearch}}>
   </div>
 {{/if}}
