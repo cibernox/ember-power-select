@@ -1,15 +1,11 @@
-// import { layout, tagName } from "@ember-decorators/component";
-// import Component from '@ember/component';
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
-// import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-// import templateLayout from '../../templates/components/power-select-multiple/trigger';
 
 const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
