@@ -408,7 +408,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.dom('.ember-power-select-dropdown').exists('The dropown is still opened');
   });
 
-  test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly, opening the select if closed', async function(assert) {
+  test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediately, opening the select if closed', async function(assert) {
     assert.expect(9);
 
     this.numbers = numbers;
