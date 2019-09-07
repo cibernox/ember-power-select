@@ -854,4 +854,43 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     assert.dom('.ember-power-select-trigger').hasAttribute('title', 'The title');
   });
+
+  test('triggerComponent argument could be passed with undefined', async function(assert) {
+    this.numbers = numbers;
+    this.selected = numbers.slice(0, 1);
+
+    await render(hbs`
+      <PowerSelectMultiple
+        @triggerComponent={{undefined}}
+        @options={{numbers}}
+        @onChange={{action (mut selected)}}
+        @selected={{selected}}
+        as |option|
+      >
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'Shows selected option');
+  });
+
+  test('buildSelection argument could be passed with undefined', async function(assert) {
+    this.numbers = numbers;
+
+    await render(hbs`
+      <PowerSelectMultiple
+        @buildSelection={{undefined}}
+        @options={{numbers}}
+        @onChange={{action (mut selected)}}
+        @selected={{selected}}
+        as |option|
+      >
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+    await clickTrigger();
+    await click('.ember-power-select-option');
+
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 }, 'Shows selected option');
+  });
 });

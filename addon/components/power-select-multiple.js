@@ -3,10 +3,14 @@ import Component from '@ember/component';
 import { computed, action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import templateLayout from '../templates/components/power-select-multiple';
+import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 
 export default @tagName('') @layout(templateLayout) class PowerSelectMultiple extends Component {
-  triggerComponent = this.triggerComponent === undefined &&  'power-select-multiple/trigger'
-  beforeOptionsComponent = this.beforeOptionsComponent === undefined && null
+  @fallbackIfUndefined('power-select-multiple/trigger')
+  triggerComponent
+
+  @fallbackIfUndefined(null)
+  beforeOptionsComponent
 
   // CPs
   @computed('triggerClass')
@@ -79,7 +83,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelectMultiple ex
   }
 
   // Methods
-  buildSelection(option, select) {
+  @fallbackIfUndefined(function(option, select) {
     let newSelection = (select.selected || []).slice(0);
     let idx = -1;
     for (let i = 0; i < newSelection.length; i++) {
@@ -94,7 +98,8 @@ export default @tagName('') @layout(templateLayout) class PowerSelectMultiple ex
       newSelection.push(option);
     }
     return newSelection;
-  }
+  })
+  buildSelection
 
   focusInput(select) {
     if (select) {

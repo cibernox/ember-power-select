@@ -2,6 +2,7 @@
 
 # 3.0.4
 - [BUGFIX] Allow to customize `calculatePosition` by extending from PowerSelect.
+- [BUGFIX] Fix default values for `triggerComponent` and `buildSelection` in `<PowerSelectMultiple>`
 
 # 3.0.3
 - [BUGFIX] Allow `@triggerRole` to be used to remove completely the role of the trigger by passing `false`/`null`
