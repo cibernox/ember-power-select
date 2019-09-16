@@ -8,7 +8,7 @@ export default @tagName('') @layout(templateLayout) class BeforeOptions extends 
   autofocus = true;
 
   willDestroyElement() {
-    this._super(...arguments);
+    super.willDestroyElement(...arguments);
     if (this.searchEnabled) {
       scheduleOnce('actions', this, this.select.actions.search, '');
     }
