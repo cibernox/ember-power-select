@@ -76,8 +76,8 @@ export default class PowerSelect extends Component {
   @fallbackIfUndefined('power-select/placeholder') placeholderComponent
   @fallbackIfUndefined(option => option) buildSelection
   @fallbackIfUndefined("button") triggerRole
+  @tracked optionsId
   @tracked _dropdownAPI = {}
-  @tracked _selected = undefined      // Contains the resolved selected option
   @tracked _highlighted = undefined   // Contains the currently highlighted option (if any)
   @tracked _searchText = ''           // Contains the text of the current search
   @tracked _lastSearchedText = ''     // Contains the text of the last finished search
@@ -89,12 +89,15 @@ export default class PowerSelect extends Component {
   get _options() {
     return this.args.options;
   }
+  get _selected() {
+    return this.args.selected;
+  }
   get _results() {
     return this._options;
   }
 
   get _resultsCount() {
-    return this._results.length;
+    return countOptions(this._results);
   }
 
   // Lifecycle hooks
@@ -122,7 +125,7 @@ export default class PowerSelect extends Component {
   // CPs
   get publicAPI() {
     return assign({}, this._dropdownAPI, {
-      actions: this._publicAPIActions,
+      actions: assign({}, this._dropdownAPI.actions, this._publicAPIActions),
       options: this._options,
       results: this._results,
       resultsCount: this._resultsCount,
@@ -143,18 +146,18 @@ export default class PowerSelect extends Component {
     return config.environment === 'test';
   }
 
-  @computed
-  get selected() {
-      return null;
-  }
-  set selected(selected) {
-    if (selected && !(selected instanceof ObjectProxy) && get(selected, 'then')) {
-      this._updateSelectedTask.perform(selected);
-    } else {
-      scheduleOnce('actions', this, this.updateSelection, selected);
-    }
-    return selected;
-  }
+  // @computed
+  // get selected() {
+  //     return null;
+  // }
+  // set selected(selected) {
+  //   if (selected && !(selected instanceof ObjectProxy) && get(selected, 'then')) {
+  //     this._updateSelectedTask.perform(selected);
+  //   } else {
+  //     scheduleOnce('actions', this, this.updateSelection, selected);
+  //   }
+  //   return selected;
+  // }
 
   // @computed
   _resolvedOptions = []
@@ -283,13 +286,13 @@ export default class PowerSelect extends Component {
     if (option && get(option, 'disabled')) {
       return;
     }
-    this.updateState({ highlighted: option });
+    this._highlighted = option;
   }
 
   @action
   _select(selected, e) {
     if (!isEqual(this.publicAPI.selected, selected)) {
-      this.onChange(selected, this.publicAPI, e);
+      this.args.onChange(selected, this.publicAPI, e);
     }
   }
 
