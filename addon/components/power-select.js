@@ -41,20 +41,20 @@ function toPlainArray(collection) {
   return collection.toArray ? collection.toArray() : collection;
 }
 
-const initialState = {
-  options: [],              // Contains the resolved collection of options
-  results: [],              // Contains the active set of results
-  resultsCount: 0,          // Contains the number of results incuding those nested/disabled
-  selected: undefined,      // Contains the resolved selected option
-  highlighted: undefined,   // Contains the currently highlighted option (if any)
-  searchText: '',           // Contains the text of the current search
-  lastSearchedText: '',     // Contains the text of the last finished search
-  loading: false,           // Truthy if there is a pending promise that will update the results
-  isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
-  // Private API (for now)
-  _expirableSearchText: '',
-  _repeatingChar: ''
-};
+// const initialState = {
+//   options: [],              // Contains the resolved collection of options
+//   results: [],              // Contains the active set of results
+//   resultsCount: 0,          // Contains the number of results incuding those nested/disabled
+//   selected: undefined,      // Contains the resolved selected option
+//   highlighted: undefined,   // Contains the currently highlighted option (if any)
+//   searchText: '',           // Contains the text of the current search
+//   lastSearchedText: '',     // Contains the text of the last finished search
+//   loading: false,           // Truthy if there is a pending promise that will update the results
+//   isActive: false,          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+//   // Private API (for now)
+//   _expirableSearchText: '',
+//   _repeatingChar: ''
+// };
 
 export default class PowerSelect extends Component {
   @fallbackIfUndefined(true) matchTriggerWidth
@@ -76,7 +76,26 @@ export default class PowerSelect extends Component {
   @fallbackIfUndefined('power-select/placeholder') placeholderComponent
   @fallbackIfUndefined(option => option) buildSelection
   @fallbackIfUndefined("button") triggerRole
-  @tracked publicAPI = initialState;
+  @tracked _dropdownAPI = {}
+  @tracked _selected = undefined      // Contains the resolved selected option
+  @tracked _highlighted = undefined   // Contains the currently highlighted option (if any)
+  @tracked _searchText = ''           // Contains the text of the current search
+  @tracked _lastSearchedText = ''     // Contains the text of the last finished search
+  @tracked _loading = false           // Truthy if there is a pending promise that will update the results
+  @tracked _isActive = false          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
+  @tracked _expirableSearchText = ''
+  @tracked _repeatingChar = ''
+
+  get _options() {
+    return this.args.options;
+  }
+  get _results() {
+    return this._options;
+  }
+
+  get _resultsCount() {
+    return this._results.length;
+  }
 
   // Lifecycle hooks
   constructor() {
@@ -102,9 +121,20 @@ export default class PowerSelect extends Component {
 
   // CPs
   get publicAPI() {
-
-    return assign({}, initialState, {
-
+    return assign({}, this._dropdownAPI, {
+      actions: this._publicAPIActions,
+      options: this._options,
+      results: this._results,
+      resultsCount: this._resultsCount,
+      selected: this._selected,
+      highlighted: this._highlighted,
+      searchText: this._searchText,
+      lastSearchedText: this._lastSearchedText,
+      loading: this._loading,
+      isActive: this._isActive,
+      // Private API (for now)
+      _expirableSearchText: this._expirableSearchText,
+      _repeatingChar: this._repeatingChar
     });
   }
 
@@ -127,9 +157,11 @@ export default class PowerSelect extends Component {
   }
 
   // @computed
+  _resolvedOptions = []
   get options() {
     if (this.args.options && this.args.options.then) {
-      // this._updateOptionsTask.perform(this.args.options);
+      this._updateOptionsTask.perform(this.args.options);
+      return this._resolvedOptions;
     } else {
       return this.args.options;
     }
@@ -188,11 +220,11 @@ export default class PowerSelect extends Component {
       && this.publicAPI.resultsCount === 0;
   }
 
-  @computed('search', 'publicAPI.{lastSearchedText,resultsCount,loading}')
+  // @computed('search', 'publicAPI.{lastSearchedText,resultsCount,loading}')
   get mustShowNoMessages() {
     return !this.publicAPI.loading
       && this.publicAPI.resultsCount === 0
-      && (!this.search || this.publicAPI.lastSearchedText.length > 0);
+      && (!this.args.search || this.publicAPI.lastSearchedText.length > 0);
   }
 
   // Actions
@@ -201,12 +233,10 @@ export default class PowerSelect extends Component {
     if (!dropdown) {
       return;
     }
-    let publicAPI = assign({}, this.publicAPI, dropdown);
-    publicAPI.actions = assign({}, dropdown.actions, this._publicAPIActions);
-    this.publicAPI = publicAPI;
-    this.optionsId = `ember-power-select-options-${publicAPI.uniqueId}`
+    this._dropdownAPI = dropdown;
+    this.optionsId = `ember-power-select-options-${this.publicAPI.uniqueId}`
     if (this.registerAPI) {
-      this.registerAPI(publicAPI);
+      this.registerAPI(this.publicAPI);
     }
   }
 
@@ -232,7 +262,7 @@ export default class PowerSelect extends Component {
     if (e) {
       this.openingEvent = null;
     }
-    this.updateState({ highlighted: undefined });
+    this._highlighted = undefined;
   }
 
   @action
@@ -495,7 +525,7 @@ export default class PowerSelect extends Component {
   }
 
   setIsActive(isActive) {
-    this.updateState({ isActive });
+    this._isActive = isActive;
   }
 
   filter(options, term, skipDisabled = false) {
@@ -551,7 +581,7 @@ export default class PowerSelect extends Component {
     } else {
       highlighted = this.defaultHighlighted;
     }
-    this.updateState({ highlighted });
+    this._highlighted = highlighted;
   }
 
   _updateOptionsAndResults(opts) {
@@ -681,11 +711,11 @@ export default class PowerSelect extends Component {
     return e.keyCode >= 96 && e.keyCode <= 105;
   }
 
-  updateState(changes) {
-    let newState = set(this, 'publicAPI', assign({}, this.publicAPI, changes));
-    if (this.registerAPI) {
-      this.registerAPI(newState);
-    }
-    return newState;
-  }
+  // updateState(changes) {
+  //   let newState = set(this, 'publicAPI', assign({}, this.publicAPI, changes));
+  //   if (this.registerAPI) {
+  //     this.registerAPI(newState);
+  //   }
+  //   return newState;
+  // }
 }

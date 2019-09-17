@@ -6,6 +6,7 @@
     {{/if}}
   {{/if}}
   {{#let (component @groupComponent) (component @optionsComponent) as |Group Options|}}
+    {{log @options}}
     {{#each @options as |opt index|}}
       {{#if (ember-power-select-is-group opt)}}
         <Group @group={{opt}} @select={{@select}} @extra={{@extra}}>

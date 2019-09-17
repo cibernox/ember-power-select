@@ -71,10 +71,8 @@
       {{#let (component this.searchMessageComponent) as |SearchMessage|}}
         <SearchMessage @searchMessage={{this.searchMessage}} @select={{this.publicAPI}}/>
       {{/let}}
-    {{else if mustShowNoMessages}}
-      {{#if (hasBlock "inverse")}}
-        {{yield to="inverse"}}
-      {{else if noMatchesMessage}}
+    {{else if this.mustShowNoMessages}}
+      {{#if this.noMatchesMessage}}
         <ul class="ember-power-select-options" role="listbox">
           <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
             {{this.noMatchesMessage}}
