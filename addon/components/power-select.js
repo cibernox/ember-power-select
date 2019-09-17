@@ -1,5 +1,7 @@
-import { layout, tagName } from "@ember-decorators/component";
-import Component from '@ember/component';
+// import { layout, tagName } from "@ember-decorators/component";
+// import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { computed, action } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { getOwner } from '@ember/application';
@@ -11,7 +13,7 @@ import { isBlank } from '@ember/utils';
 import { isArray as isEmberArray } from '@ember/array';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
-import templateLayout from '../templates/components/power-select';
+// import templateLayout from '../templates/components/power-select';
 import fallbackIfUndefined from '../utils/computed-fallback-if-undefined';
 import optionsMatcher from '../utils/computed-options-matcher';
 import { assign } from '@ember/polyfills';
@@ -54,7 +56,7 @@ const initialState = {
   _repeatingChar: ''
 };
 
-export default @tagName('') @layout(templateLayout) class PowerSelect extends Component {
+export default class PowerSelect extends Component {
   @fallbackIfUndefined(true) matchTriggerWidth
   @fallbackIfUndefined(false) preventScroll
   @fallbackIfUndefined(defaultMatcher) matcher
@@ -74,11 +76,11 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
   @fallbackIfUndefined('power-select/placeholder') placeholderComponent
   @fallbackIfUndefined(option => option) buildSelection
   @fallbackIfUndefined("button") triggerRole
-  publicAPI = initialState;
+  @tracked publicAPI = initialState;
 
   // Lifecycle hooks
-  init() {
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
     this._publicAPIActions = {
       search: this._search,
       highlight: this._highlight,
@@ -86,20 +88,26 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
       choose: this._choose,
       scrollTo: this._scrollTo
     }
-    assert('<PowerSelect> requires an `@onChange` function', this.onChange && typeof this.onChange === 'function');
+    assert('<PowerSelect> requires an `@onChange` function', this.args.onChange && typeof this.args.onChange === 'function');
   }
 
   willDestroy() {
     super.willDestroy(...arguments);
     this._removeObserversInOptions();
     this._removeObserversInSelected();
-    if (this.registerAPI) {
-      this.registerAPI(null);
+    if (this.args.registerAPI) {
+      this.args.registerAPI(null);
     }
   }
 
   // CPs
-  @computed
+  get publicAPI() {
+
+    return assign({}, initialState, {
+
+    });
+  }
+
   get inTesting() {
     let config = getOwner(this).resolveRegistration('config:environment');
     return config.environment === 'test';
@@ -118,23 +126,39 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
     return selected;
   }
 
-  @computed
+  // @computed
   get options() {
-    return [];
-  }
-  set options(options) {
-    let oldOptions = this.oldOptions;
-    this.oldOptions = options;
-    if (options === oldOptions) {
-      return options;
-    }
-    if (options && get(options, 'then')) {
-      this._updateOptionsTask.perform(options);
+    if (this.args.options && this.args.options.then) {
+      // this._updateOptionsTask.perform(this.args.options);
     } else {
-      scheduleOnce('actions', this, this.updateOptions, options);
+      return this.args.options;
     }
-    return options;
+    // let oldOptions = this.oldOptions;
+    // this.oldOptions = this.args.options;
+    // if (this.args.options === oldOptions) {
+    //   return this.args.options;
+    // }
+    // if (options && get(options, 'then')) {
+    //   this._updateOptionsTask.perform(options);
+    // } else {
+    //   scheduleOnce('actions', this, this.updateOptions, options);
+    // }
+    // return options;
+    // return [];
   }
+  // set options(options) {
+  //   let oldOptions = this.oldOptions;
+  //   this.oldOptions = options;
+  //   if (options === oldOptions) {
+  //     return options;
+  //   }
+  //   if (options && get(options, 'then')) {
+  //     this._updateOptionsTask.perform(options);
+  //   } else {
+  //     scheduleOnce('actions', this, this.updateOptions, options);
+  //   }
+  //   return options;
+  // }
 
   @optionsMatcher('matcher', defaultMatcher) optionMatcher
   @optionsMatcher('typeAheadMatcher', defaultTypeAheadMatcher) typeAheadOptionMatcher
@@ -179,10 +203,8 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
     }
     let publicAPI = assign({}, this.publicAPI, dropdown);
     publicAPI.actions = assign({}, dropdown.actions, this._publicAPIActions);
-    this.setProperties({
-      publicAPI,
-      optionsId: `ember-power-select-options-${publicAPI.uniqueId}`
-    });
+    this.publicAPI = publicAPI;
+    this.optionsId = `ember-power-select-options-${publicAPI.uniqueId}`
     if (this.registerAPI) {
       this.registerAPI(publicAPI);
     }
@@ -190,11 +212,11 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
 
   @action
   handleOpen(_, e) {
-    if (this.onOpen && this.onOpen(this.publicAPI, e) === false) {
+    if (this.args.onOpen && this.args.onOpen(this.publicAPI, e) === false) {
       return false;
     }
     if (e) {
-      this.set('openingEvent', e);
+      this.openingEvent = e;
       if (e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
         e.preventDefault();
       }
@@ -204,11 +226,11 @@ export default @tagName('') @layout(templateLayout) class PowerSelect extends Co
 
   @action
   handleClose(_, e) {
-    if (this.onClose && this.onClose(this.publicAPI, e) === false) {
+    if (this.args.onClose && this.args.onClose(this.publicAPI, e) === false) {
       return false;
     }
     if (e) {
-      this.set('openingEvent', null);
+      this.openingEvent = null;
     }
     this.updateState({ highlighted: undefined });
   }
