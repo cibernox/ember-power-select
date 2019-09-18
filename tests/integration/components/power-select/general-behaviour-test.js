@@ -83,7 +83,6 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
   test("The search box shouldn't gain focus if autofocus is disabled", async function(assert) {
     assert.expect(1);
-
     this.numbers = numbers;
 
     await render(hbs`
@@ -111,7 +110,6 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     `);
 
     await clickTrigger();
-    debugger;
     assert.dom('.ember-power-select-option').exists({ count: numbers.length }, 'There is as many options in the markup as in the supplied array');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('one');
     assert.dom('.ember-power-select-option:nth-child(10)').hasText('ten');

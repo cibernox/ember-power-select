@@ -3,7 +3,7 @@ import { assert } from '@ember/debug';
 
 export default function computedOptionsMatcher(matcherField, defaultMatcher) {
   return computed('searchField', matcherField, function() {
-    let { [matcherField]: matcher, searchField } = this.getProperties(matcherField, 'searchField');
+    let { [matcherField]: matcher, searchField } = this;
     if (searchField && matcher === defaultMatcher) {
       return (option, text) => matcher(get(option, searchField), text);
     } else {

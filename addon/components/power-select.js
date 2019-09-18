@@ -63,7 +63,6 @@ export default class PowerSelect extends Component {
   @fallbackIfUndefined('Loading options...') loadingMessage
   @fallbackIfUndefined('No results found') noMatchesMessage
   @fallbackIfUndefined('Type to search') searchMessage
-  @fallbackIfUndefined(true) closeOnSelect
   @fallbackIfUndefined(defaultHighlighted) defaultHighlighted
   @fallbackIfUndefined(defaultTypeAheadMatcher) typeAheadMatcher
   @fallbackIfUndefined(true) highlightOnHover
@@ -81,19 +80,44 @@ export default class PowerSelect extends Component {
   @tracked _highlighted = undefined   // Contains the currently highlighted option (if any)
   @tracked _searchText = ''           // Contains the text of the current search
   @tracked _lastSearchedText = ''     // Contains the text of the last finished search
-  @tracked _loading = false           // Truthy if there is a pending promise that will update the results
   @tracked _isActive = false          // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
   @tracked _expirableSearchText = ''
   @tracked _repeatingChar = ''
+  @tracked _filterText = ''
 
+  @tracked _resolvedPromise = undefined
+  @tracked _resolvedOptions = undefined
   get _options() {
-    return this.args.options;
+    let options = this.args.options;
+    if (options && options.then) {
+      if (options !== this._resolvedPromise) {
+        options.then(result => {
+          scheduleOnce('actions', this, '_updateResolvedOptions', result, options);
+        });
+      }
+      return this._resolvedOptions;
+    } else {
+      return this.args.options;
+    }
   }
+  _updateResolvedOptions(resolvedOptions, sourcePromise) {
+    this._resolvedPromise = sourcePromise;
+    this._resolvedOptions = resolvedOptions;
+  }
+
+  get _loading() {
+    return !!this.args.options && !!this.args.options.then && this.args.options !== this._resolvedPromise;
+  }
+
   get _selected() {
     return this.args.selected;
   }
   get _results() {
-    return this._options;
+    if (this._filterText.length > 0) {
+      return this.filter(this._options, this._filterText);
+    } else {
+      return this._options;
+    }
   }
 
   get _resultsCount() {
@@ -207,13 +231,13 @@ export default class PowerSelect extends Component {
     return concatWithProperty(classes, this.triggerClass);
   }
 
-  @computed('dropdownClass', 'publicAPI.isActive')
+  @computed('args.dropdownClass', 'publicAPI.isActive')
   get concatenatedDropdownClasses() {
     let classes = ['ember-power-select-dropdown'];
     if (this.publicAPI.isActive) {
       classes.push('ember-power-select-dropdown--active');
     }
-    return concatWithProperty(classes, this.dropdownClass);
+    return concatWithProperty(classes, this.args.dropdownClass);
   }
 
   @computed('publicAPI.{loading,searchText,resultsCount}', 'search', 'searchMessage')
@@ -306,7 +330,8 @@ export default class PowerSelect extends Component {
     } else if (this.search) {
       this._performSearch(term);
     } else {
-      this._performFilter(term);
+      this._filterText = this._searchText = term;
+      // this._performFilter(term);
     }
   }
 
@@ -322,7 +347,7 @@ export default class PowerSelect extends Component {
       }
     }
     this.publicAPI.actions.select(this.buildSelection(selected, this.publicAPI), e);
-    if (this.closeOnSelect) {
+    if (this.args.closeOnSelect !== false) {
       this.publicAPI.actions.close(e);
       return false;
     }
@@ -613,22 +638,22 @@ export default class PowerSelect extends Component {
   }
 
   _resetSearch() {
-    let results = this.publicAPI.options;
     this.handleAsyncSearchTask.cancelAll();
-    this.updateState({
-      results,
-      searchText: '',
-      lastSearchedText: '',
-      resultsCount: countOptions(results),
-      loading: false
-    });
+    this._filterText = this._searchText = this._lastSearchedText = '';
+    // this.updateState({
+    //   results,
+    //   searchText: '',
+    //   lastSearchedText: '',
+    //   resultsCount: countOptions(results),
+    //   loading: false
+    // });
   }
 
-  _performFilter(term) {
-    let results = this.filter(this.publicAPI.options, term);
-    this.updateState({ results, searchText: term, lastSearchedText: term, resultsCount: countOptions(results) });
-    this._resetHighlighted();
-  }
+  // _performFilter(term) {
+  //   let results = this.filter(this.publicAPI.options, term);
+  //   this.updateState({ results, searchText: term, lastSearchedText: term, resultsCount: countOptions(results) });
+  //   this._resetHighlighted();
+  // }
 
   _performSearch(term) {
     let searchAction = this.search;
