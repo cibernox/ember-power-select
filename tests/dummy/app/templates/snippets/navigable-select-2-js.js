@@ -1,8 +1,11 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+import { get, computed, action } from '@ember/object';
+import { oneWay } from '@ember/object/computed';
 
-export default Component.extend({
-  transformedOptions: computed('options', function() {
+export default class extends Component {
+  @oneWay('transformedOptions') currentOptions
+  @computed('options')
+  get transformedOptions() {
     return (function walker(options, parentLevel = null) {
       let results = [];
       let len = get(options, 'length');
@@ -25,7 +28,5 @@ export default Component.extend({
       parentLevel.options = results;
       return results;
     })(this.get('options'));
-  }),
-
-  currentOptions: computed.oneWay('transformedOptions'),
-});
+  }
+}

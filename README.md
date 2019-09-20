@@ -1,3 +1,7 @@
+## :warning: Updates For [![Salsify]](https://www.salsify.com/hs-fs/hubfs/Logos/Salsify_Logos/Salsify_Logo_Horizontal_White-01.png?width=300&name=Salsify_Logo_Horizontal_White-01.png)
+- [onscroll](tests/dummy/app/templates/public-pages/docs/api-reference.hbs) option
+
+
 [![Build Status](https://travis-ci.org/cibernox/ember-power-select.svg?branch=master)](https://travis-ci.org/cibernox/ember-power-select)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-power-select.svg)](http://emberobserver.com/addons/ember-power-select)
 [![Code Climate](https://codeclimate.com/github/cibernox/ember-power-select/badges/gpa.svg)](https://codeclimate.com/github/cibernox/ember-power-select)
@@ -23,6 +27,7 @@ ember install ember-power-select
 ```
 
 Ember Power Select 2.X requires Ember **2.10.0+**.
+Ember Power Select 3.X requires Ember **3.11.0+**.
 
 ## Features overview
 
@@ -85,4 +90,3 @@ share your plan and agree the details of the feature before starting implementin
 If something doesn't work visit the [Troubleshooting](http://www.ember-power-select.com/docs/troubleshooting)
 section of the docs first and if your problem persist open an issue, specify the version of the component,
 Ember and browser.
-

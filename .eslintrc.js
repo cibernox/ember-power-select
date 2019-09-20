@@ -1,7 +1,8 @@
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     sourceType: 'module'
   },
   plugins: [
@@ -16,7 +17,8 @@ module.exports = {
   },
   rules: {
     'no-console': 0,
-    'ember/avoid-leaking-state-in-ember-objects': 0
+    'ember/avoid-leaking-state-in-ember-objects': 0,
+    'ember/no-jquery': 'error'
   },
   overrides: [
     // node files
@@ -41,8 +43,7 @@ module.exports = {
         'app/templates/snippets/**/*.js'
       ],
       parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2017
+        sourceType: 'script'
       },
       env: {
         browser: false,

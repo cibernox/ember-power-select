@@ -9,10 +9,8 @@ const countries = [
   { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
 ];
 
-export default Controller.extend({
-  countries,
-  destination: countries[2],
-  actions: {
-    foo() { }
-  }
-});
+export default class extends Controller {
+  countries = countries
+  destination = countries[2]
+  foo() { }
+}

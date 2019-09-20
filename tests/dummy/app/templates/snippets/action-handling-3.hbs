@@ -1,9 +1,7 @@
-{{#power-select-multiple
-  selected=selectedCities
-  options=cities
-  onchange=(action (mut selectedCities))
-  onkeydown=(action "handleKeydown")
-  as |name|
-}}
+<PowerSelectMultiple
+  @selected={{this.selectedCities}}
+  @options={{this.cities}}
+  @onChange={{action (mut this.selectedCities)}}
+  @onKeydown={{this.handleKeydown}} as |name|>
   {{name}}
-{{/power-select-multiple}}
+</PowerSelectMultiple>

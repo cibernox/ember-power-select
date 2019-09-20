@@ -14,9 +14,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -31,9 +31,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select highlightOnHover=false options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @highlightOnHover={{false}} @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -53,9 +53,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
       assert.ok(dropdown.actions.close, 'The action is invoked with the the dropdown object as second parameter');
     };
     await render(hbs`
-      {{#power-select options=numbers onchange=foo as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{foo}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -69,9 +69,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}f
+      </PowerSelect>f
     `);
 
     await clickTrigger();
@@ -92,9 +92,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     };
     this.selected = 'three';
     await render(hbs`
-      {{#power-select options=numbers selected=selected allowClear=true onchange=onChange as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @allowClear={{true}} @onChange={{onChange}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-dropdown').doesNotExist('The select is closed');
@@ -110,9 +110,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     this.numbers = numbers;
     await render(hbs`
       <input type="text" id="other-thing">
-      {{#power-select options=numbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -127,9 +127,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers inTesting=false selected=foo onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @inTesting={{false}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger(null, { clientY: 123 });
@@ -152,9 +152,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     };
 
     await render(hbs`
-      {{#power-select options=numbers onchange=foo as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{foo}} as |option|>
         <span class="special-class">{{option}}</span>
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -169,9 +169,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     this.numbers = numbers;
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         <span class="special-class">{{option}}</span>
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -186,9 +186,9 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     this.numbers = numbers;
 
     await render(hbs`
-      {{#power-select options=numbers selected=foo onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
         <span class="special-class">{{option}}</span>
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();

@@ -1,8 +1,8 @@
-{{#if disabled}}
-  {{#link-to "public-pages.index"}}
+{{#if @disabled}}
+  <LinkTo @route="public-pages.index">
     <strong>Power</strong> Select
     <div class="ember-power-select-status-icon"></div>
-  {{/link-to}}
+  </LinkTo>
 {{else}}
   <strong>Power</strong> Select
   <div class="ember-power-select-status-icon"></div>

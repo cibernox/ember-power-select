@@ -7,16 +7,16 @@ import { countries } from '../constants';
 module('Integration | Component | Ember Power Select (Customization using attrs)', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('classNames can be propagated to the child basic-dropdown component', async function(assert) {
+  test('the `class` attribute is forwarded to the wrapper element', async function(assert) {
     assert.expect(1);
 
     this.countries = countries;
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      {{#power-select renderInPlace=true classNames="foo" options=countries selected=country onchange=(action (mut foo)) as |country|}}
+      <PowerSelect @renderInPlace={{true}} class="foo" @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} as |country|>
         {{country.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-basic-dropdown').hasClass('foo', 'Class was added.');
@@ -29,54 +29,54 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      {{#power-select options=countries selected=country onchange=(action (mut foo)) triggerClass="country-single-trigger" as |country|}}
+      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} @triggerClass="country-single-trigger" as |country|>
         {{country.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasClass('country-single-trigger', 'Class was added.');
   });
 
-  test('trigger on multiple selects can be customized using triggerClass', async function(assert) {
+  test('trigger on multiple selects can be customized using @triggerClass', async function(assert) {
     assert.expect(1);
 
     this.countries = countries;
     this.country = [countries[1], countries[0]];
 
     await render(hbs`
-      {{#power-select options=countries selected=country onchange=(action (mut foo)) triggerClass="country-multiple-trigger" as |country|}}
+      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} @triggerClass="country-multiple-trigger" as |country|>
         {{country.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasClass('country-multiple-trigger', 'Class was added.');
   });
 
-  test('Trigger can have a custom id passing triggerId', async function(assert) {
+  test('Trigger can have a custom id passing @triggerId', async function(assert) {
     assert.expect(1);
 
     this.countries = countries;
     this.country = [countries[1], countries[0]];
 
     await render(hbs`
-      {{#power-select options=countries selected=country onchange=(action (mut foo)) triggerId="this-is-my-id" as |country|}}
+      <PowerSelect @options=countries @selected={{country}} @onChange={{action (mut foo)}} @triggerId="this-is-my-id" as |country|>
         {{country.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasAttribute('id', 'this-is-my-id', 'The `id` was added.');
   });
 
-  test('Trigger can have a custom id passing triggerId', async function(assert) {
+  test('Trigger can have a custom id passing @triggerId (multiple select)', async function(assert) {
     assert.expect(1);
 
     this.countries = countries;
     this.country = [countries[1], countries[0]];
 
     await render(hbs`
-      {{#power-select-multiple options=countries selected=country onchange=(action (mut foo)) triggerId="this-is-my-id" as |country|}}
+      <PowerSelectMultiple @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} @triggerId="this-is-my-id" as |country|>
         {{country.name}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     assert.dom('.ember-power-select-trigger').hasAttribute('id', 'this-is-my-id', 'The `id` was added.');

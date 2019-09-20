@@ -1,8 +1,7 @@
-{{#power-select
-  options=countries
-  selected=destination
-  onchange=(action "foo")
-  as |country|}}
+<PowerSelect
+  @options={{this.countries}}
+  @selected={{this.destination}}
+  @onChange={{this.foo}} as |country|>
   <img src={{country.flagUrl}} class="icon-flag" alt="Flag of {{country.name}}">
   <strong>{{country.name}}</strong>
-{{/power-select}}
+</PowerSelect>

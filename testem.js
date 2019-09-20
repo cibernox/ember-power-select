@@ -10,7 +10,7 @@ module.exports = {
         process.env.TRAVIS ? '--no-sandbox' : null,
         '--touch-events',
         '--headless',
-        '--disable-gpu',
+        '--disable-dev-shm-usage',
         '--disable-software-rasterizer',
         '--mute-audio',
         '--remote-debugging-port=0',

@@ -13,7 +13,7 @@
   <tbody>
     <tr>
       <td>afterOptionsComponent</td>
-      <td><code>string/contextua-component</code></td>
+      <td><code>string/contextual-component</code></td>
       <td>The component rendered after the list of options. It is empty by default in both single and multiple selects</td>
     </tr>
     <tr>
@@ -48,13 +48,13 @@
     </tr>
     <tr>
       <td>beforeOptionsComponent</td>
-      <td><code>string/contextua-component</code></td>
+      <td><code>string/contextual-component</code></td>
       <td>The component rendered before the list of options. In single selects defaults to the searchbox. In multiple select defaults to nothing</td>
     </tr>
     <tr>
       <td>buildSelection</td>
       <td><code>function</code></td>
-      <td>The function to be invoked when the user selects an option. Should return either the `option` or `null`. This is used internally by `PowerSelectMultiple` to construct a new array of options, but can be used for unselecting a single option by returning `null` to the `onchange` event.</td>
+      <td>The function to be invoked when the user selects an option. Should return either the `option` or `null`. This is used internally by `PowerSelectMultiple` to construct a new array of options, but can be used for unselecting a single option by returning `null` to the `onChange` event.</td>
     </tr>
     <tr>
       <td>calculatePosition</td>
@@ -168,27 +168,27 @@
       <td>Message shown when a search doesn't find any matching result.</td>
     </tr>
     <tr>
-      <td>onblur</td>
+      <td>onBlur</td>
       <td><code>function</code></td>
       <td>The function to be invoked when component or any of its subitems looses the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
     </tr>
     <tr>
-      <td>onchange</td>
+      <td>onChange</td>
       <td><code>function</code></td>
       <td>The function to be invoked when the user selects or unselects an option</td>
     </tr>
     <tr>
-      <td>onclose</td>
+      <td>onClose</td>
       <td><code>function</code></td>
       <td>The function to be invoked when component is closed</td>
     </tr>
     <tr>
-      <td>onfocus</td>
+      <td>onFocus</td>
       <td><code>function</code></td>
       <td>The function to be invoked when component or any of its subitems gains the focus. The last argument is the FocusEvent, that can be used to disambiguate what gained the focus</td>
     </tr>
     <tr>
-      <td>oninput</td>
+      <td>onInput</td>
       <td><code>function</code></td>
       <td>
         The function to be invoked when the user changes the text in any search input of the component.
@@ -196,12 +196,12 @@
       </td>
     </tr>
     <tr>
-      <td>onkeydown</td>
+      <td>onKeydown</td>
       <td><code>function</code></td>
       <td>The function to be invoked when the user presses a key being the component or the inputs inside it focused</td>
     </tr>
     <tr>
-      <td>onopen</td>
+      <td>onOpen</td>
       <td><code>function</code></td>
       <td>The function to be invoked when component is opened</td>
     </tr>
@@ -209,6 +209,11 @@
       <td>onscroll</td>
       <td><code>function</code></td>
       <td>The function to be invoked when the options component is scrolled</td>
+    </tr>
+    <tr>
+      <td>registerAPI</td>
+      <td><code>function</code></td>
+      <td>The function that will be called when the component is instantiated and also when any state changes inside the component, and receives a publicAPI object that the user can use to control the select from the outside using the actions in it.</td>
     </tr>
     <tr>
       <td>options</td>
@@ -368,5 +373,5 @@
 </pre>
 
 <div class="doc-page-nav">
-  {{#link-to "public-pages.docs.architecture" class="doc-page-nav-link-prev"}}&lt; Architecture{{/link-to}}
+  <LinkTo @route="public-pages.docs.architecture" class="doc-page-nav-link-prev">&lt; Architecture</LinkTo>
 </div>

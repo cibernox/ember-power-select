@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import fetch from 'fetch';
 
-export default DS.JSONAPIAdapter.extend({
+export default class extends DS.JSONAPIAdapter {
   _ajaxRequest(ajaxOptions) {
     return fetch(ajaxOptions.url).then((response) => {
       if (!response.ok) {
@@ -18,4 +18,4 @@ export default DS.JSONAPIAdapter.extend({
       });
     });
   }
-});
+}

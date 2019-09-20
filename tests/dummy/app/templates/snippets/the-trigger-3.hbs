@@ -1,10 +1,9 @@
-{{#power-select
-  options=countries
-  placeholder="Please, select one destination"
-  selected=selected
-  searchField="name"
-  onchange=(action (mut selected))
-  as |country|
-}}
+<PowerSelect
+  @searchEnabled={{true}}
+  @options={{countries}}
+  @placeholder="Please, select one destination"
+  @selected={{selected}}
+  @searchField="name"
+  @onChange={{action (mut selected)}} as |country|>
   {{country.name}}
-{{/power-select}}
+</PowerSelect>

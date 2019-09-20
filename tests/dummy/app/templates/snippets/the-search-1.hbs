@@ -1,8 +1,7 @@
-{{#power-select
-  options=diacritics
-  selected=selectedDiacritic
-  onchange=(action (mut selectedDiacritic))
-  as |name|
-}}
+<PowerSelect
+  @searchEnabled={{true}}
+  @options={{diacritics}}
+  @selected={{selectedDiacritic}}
+  @onChange={{action (mut selectedDiacritic)}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelect>

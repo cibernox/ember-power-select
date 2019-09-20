@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { inject } from '@ember/service';
+import { inject as service } from '@ember/service';
 
 const groupedSections = [
   {
@@ -22,12 +22,13 @@ const groupedSections = [
   }
 ];
 
-export default Controller.extend({
-  routing: inject('-routing'),
-  groupedSections,
+export default class extends Controller {
+  @service router
+  groupedSections = groupedSections
 
-  currentSection: computed('routing.currentRouteName', function() {
-    let currentRouteName = this.get('routing.currentRouteName');
+  @computed('router.currentRouteName')
+  get currentSection() {
+    let currentRouteName = this.router.currentRouteName;
     for (let i = 0; i < groupedSections.length; i++) {
       let group = groupedSections[i];
       for (let j = 0; j < group.options.length; j++) {
@@ -37,11 +38,10 @@ export default Controller.extend({
         }
       }
     }
-  }),
-
-  actions: {
-    visit(section) {
-      this.transitionToRoute(section.route);
-    }
+    return undefined;
   }
-});
+
+  visit(section) {
+    this.transitionToRoute(section.route);
+  }
+}

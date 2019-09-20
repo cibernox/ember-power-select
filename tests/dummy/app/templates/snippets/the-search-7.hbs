@@ -1,9 +1,8 @@
-{{#power-select
-  options=diacritics
-  searchPlaceholder="Type to filter..."
-  selected=person
-  onchange=(action (mut person))
-  as |name|
-}}
+<PowerSelect
+  @searchEnabled={{true}}
+  @options={{diacritics}}
+  @searchPlaceholder="Type to filter..."
+  @selected={{person}}
+  @onChange={{action (mut person)}} as |name|>
   {{name}}
-{{/power-select}}
+</PowerSelect>

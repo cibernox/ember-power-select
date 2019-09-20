@@ -1,8 +1,9 @@
-import Controller from '@ember/controller';
+import Controller from "@ember/controller";
 
-export default Controller.extend({
-  names: ['Stefan', 'Miguel', 'Tomster', 'Pluto'],
-  countries: [
+export default class DisableThings extends Controller {
+  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto'];
+
+  countries = [
     { name: 'United States'           },
     { name: 'Spain',  disabled: true  },
     { name: 'Portugal'                },
@@ -10,5 +11,5 @@ export default Controller.extend({
     { name: 'Latvia', disabled: true  },
     { name: 'Brazil'                  },
     { name: 'United Kingdom'          }
-  ]
-});
+  ];
+}

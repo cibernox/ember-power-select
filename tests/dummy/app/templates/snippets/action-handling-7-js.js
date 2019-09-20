@@ -1,17 +1,18 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
 const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 
-export default Controller.extend({
-  numbers,
-  actions: {
-    verifyPresence(select /*, e */) {
-      if (this.get('mandatoryNumber')) {
-        this.set('selectClass', null);
-      } else {
-        this.set('selectClass', 'has-error');
-        return false;
-      }
+export default class extends Controller {
+  numbers = numbers
+
+  @action
+  verifyPresence(select /*, e */) {
+    if (this.mandatoryNumber) {
+      this.set('selectClass', null);
+    } else {
+      this.set('selectClass', 'has-error');
+      return false;
     }
   }
-});
+}

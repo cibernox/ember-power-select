@@ -1,16 +1,14 @@
-{{#if destroyed}}
+{{#if this.destroyed}}
   The bomb has exploded! Reload to try again :)
 {{else}}
-  {{#power-select
-    selected=number
-    options=numbers
-    onchange=(action (mut number))
-    onopen=(action "startSelfDestroyCountdown")
-    placeholder="Once opened this component will destroy itself in 8 seconds"
-    as |number|
-  }}
+  <PowerSelect
+    @selected={{this.number}}
+    @options={{this.numbers}}
+    @onChange={{action (mut this.number)}}
+    @onOpen={{this.startSelfDestroyCountdown}}
+    @placeholder="Once opened this component will destroy itself in 8 seconds" as |number|>
     {{number}}
-  {{/power-select}}
-  {{#if countdown}}<p>This component will be destroyed in {{counter}} seconds</p>{{/if}}
+  </PowerSelect>
+  {{#if this.countdown}}<p>This component will be destroyed in {{this.counter}} seconds</p>{{/if}}
 {{/if}}
-<p>Selected number: {{number}}</p>
+<p>Selected number: {{this.number}}</p>

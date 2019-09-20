@@ -13,9 +13,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -29,9 +29,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select-multiple options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -45,9 +45,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -59,9 +59,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      {{#power-select options=groupedNumbers onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -74,9 +74,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
     this.selected = 'two';
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -90,9 +90,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
     this.selected = ['two', 'four'];
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -106,9 +106,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -124,9 +124,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut selected)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -142,9 +142,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      {{#power-select options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{countriesWithDisabled}} @onChange={{action (mut foo)}} as |option|>
         {{option.code}}: {{option.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -156,9 +156,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      {{#power-select-multiple options=countriesWithDisabled onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{countriesWithDisabled}} @onChange={{action (mut foo)}} as |option|>
         {{option.code}}: {{option.name}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -170,9 +170,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -185,9 +185,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -200,9 +200,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded', 'Not expanded');
@@ -215,9 +215,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded', 'Not expanded');
@@ -230,9 +230,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -244,9 +244,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -258,9 +258,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -273,9 +273,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -288,9 +288,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     await clickTrigger();
@@ -302,9 +302,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     await clickTrigger();
@@ -317,9 +317,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
     this.selected = ['two', 'four', 'six'];
     await render(hbs`
-      {{#power-select-multiple options=numbers selected=selected onchange=(action (mut foo)) as |option|}}
+      <PowerSelectMultiple @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     [].slice.call(document.querySelectorAll('.ember-power-select-multiple-option')).forEach((e) => {
@@ -336,17 +336,16 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select
-        ariaInvalid=true
-        ariaLabel="ariaLabelString"
-        onchange=(action (mut foo))
-        options=numbers
-        required=true
-        selected=selected
-        as |option|
-      }}
+      <PowerSelect
+        @ariaInvalid="true"
+        @ariaLabel="ariaLabelString"
+        @onChange={{action (mut foo)}}
+        @options={{numbers}}
+        @required="true"
+        @selected={{selected}}
+        as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-label', 'ariaLabelString', 'aria-label set correctly');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-invalid', 'true', 'aria-invalid set correctly');
@@ -358,17 +357,16 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple
-        ariaLabel="ariaLabelString"
-        ariaInvalid=true
-        onchange=(action (mut foo))
-        options=numbers
-        required=true
-        selected=selected
-        as |option|
-      }}
+      <PowerSelectMultiple
+        @ariaLabel="ariaLabelString"
+        @ariaInvalid="true"
+        @onChange={{action (mut foo)}}
+        @options={{numbers}}
+        @required="true"
+        @selected={{selected}}
+        as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-label', 'ariaLabelString', 'aria-label set correctly');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-invalid', 'true', 'aria-invalid set correctly');
@@ -380,16 +378,15 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select
-        ariaDescribedBy="ariaDescribedByString"
-        ariaLabelledBy="ariaLabelledByString"
-        onchange=(action (mut foo))
-        options=numbers
-        selected=selected
-        as |option|
-      }}
+      <PowerSelect
+        @ariaDescribedBy="ariaDescribedByString"
+        @ariaLabelledBy="ariaLabelledByString"
+        @onChange={{action (mut foo)}}
+        @options={{numbers}}
+        @selected={{selected}}
+        as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-describedby', 'ariaDescribedByString', 'aria-describedby set correctly');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-labelledby', 'ariaLabelledByString', 'aria-required set correctly');
@@ -400,22 +397,21 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select-multiple
-        ariaDescribedBy="ariaDescribedByString"
-        ariaLabelledBy="ariaLabelledByString"
-        onchange=(action (mut foo))
-        options=numbers
-        selected=selected
-        as |option|
-      }}
+      <PowerSelectMultiple
+        @ariaDescribedBy="ariaDescribedByString"
+        @ariaLabelledBy="ariaLabelledByString"
+        @onChange={{action (mut foo)}}
+        @options={{numbers}}
+        @selected={{selected}}
+        as |option|>
         {{option}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-describedby', 'ariaDescribedByString', 'aria-describedby set correctly');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-labelledby', 'ariaLabelledByString', 'aria-required set correctly');
   });
 
-  test('Trigger can have a custom aria-role passing triggerRole', async function(assert) {
+  test('Trigger can have a custom aria-role passing @triggerRole', async function(assert) {
     assert.expect(2);
     let role = 'my-role';
     this.role = role;
@@ -423,9 +419,9 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
 
     await render(hbs`
-      {{#power-select options=countries selected=country onchange=(action (mut foo)) triggerRole=role as |country|}}
+      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} @triggerRole={{role}} as |country|>
         {{country.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-trigger').hasAttribute('role', role, 'The `role` was added.');

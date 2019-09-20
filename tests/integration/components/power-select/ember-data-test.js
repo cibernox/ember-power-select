@@ -21,9 +21,9 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     this.server.timing = 200;
     this.users = [];
     await render(hbs`
-      {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{users}} @searchField="name" @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     this.set('users', this.store.findAll('user'));
@@ -41,9 +41,9 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     this.server.timing = 200;
     this.users = [];
     await render(hbs`
-      {{#power-select options=users searchField="name" onchange=(action (mut foo)) as |option|}}
+      <PowerSelect @options={{users}} @searchField="name" @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option.name}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     this.set('users', this.store.query('user', { foo: 'bar' }));
@@ -60,9 +60,9 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     this.server.createList('user', 10);
     this.users = [];
     await render(hbs`
-      {{#power-select-multiple options=users searchField="name" selected=users onchange=(action (mut users)) as |option|}}
+      <PowerSelectMultiple @options={{users}} @searchField="name" @selected={{users}} @onChange={{action (mut users)}} as |option|>
         {{option.name}}
-      {{/power-select-multiple}}
+      </PowerSelectMultiple>
     `);
 
     this.set('users', this.store.findAll('user'));

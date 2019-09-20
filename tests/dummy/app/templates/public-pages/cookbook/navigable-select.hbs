@@ -35,14 +35,9 @@
   The task consists basically of creating a grouped select like this:
 </p>
 <div style="margin: 0 auto; max-width: 250px;">
-  {{#power-select
-    options=groupedNumbers
-    selected=selectedNumber
-    onchange=(action (mut selectedNumber))
-    as |option|
-  }}
+  <PowerSelect @options={{groupedNumbers}} @selected={{selectedNumber}} @onChange={{action (mut selectedNumber)}} as |option|>
     {{option}}
-  {{/power-select}}
+  </PowerSelect>
 </div>
 <br>
 <p>
@@ -148,5 +143,5 @@
 </p>
 
 <div class="doc-page-nav">
-  {{#link-to "public-pages.cookbook.create-custom-options" class="doc-page-nav-link-prev"}}&lt; Create custom options{{/link-to}}
+  <LinkTo @route="public-pages.cookbook.create-custom-options" class="doc-page-nav-link-prev">&lt; Create custom options</LinkTo>
 </div>

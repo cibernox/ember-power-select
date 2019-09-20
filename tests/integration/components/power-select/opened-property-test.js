@@ -7,14 +7,14 @@ import { numbers } from '../constants';
 module('Integration | Component | Ember Power Select (The opened property)', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('the select can be rendered already opened by passing `initiallyOpened=true`', async function(assert) {
+  test('the select can be rendered already opened by passing `@initiallyOpened={{true}}`', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
     await render(hbs`
-      {{#power-select options=numbers onchange=(action (mut foo)) initiallyOpened=true as |option|}}
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @initiallyOpened={{true}} as |option|>
         {{option}}
-      {{/power-select}}
+      </PowerSelect>
     `);
 
     assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');

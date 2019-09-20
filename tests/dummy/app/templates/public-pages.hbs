@@ -1,23 +1,25 @@
 <header class="main-header">
   <nav class="main-header-nav">
     <div class="main-header-nav-links">
-      {{#link-to "public-pages.docs" class="main-header-nav-link"}}Docs{{/link-to}}
-      {{#link-to "public-pages.cookbook" class="main-header-nav-link"}}Cookbook{{/link-to}}
-      {{#link-to "public-pages.addons" class="main-header-nav-link"}}Addons{{/link-to}}
+      <LinkTo @route="public-pages.docs" class="main-header-nav-link">Docs</LinkTo>
+      <LinkTo @route="public-pages.cookbook" class="main-header-nav-link">Cookbook</LinkTo>
+      <LinkTo @route="public-pages.addons" class="main-header-nav-link">Addons</LinkTo>
       <a href="https://github.com/cibernox/ember-power-select" class="main-header-nav-link">Github</a>
     </div>
     <div class="main-header-logo">
-      {{#link-to "public-pages.index" class="home-link"}}
+      <LinkTo @route="public-pages.index" class="home-link">
         <img src="/ember_logo.png" alt="ember">
-      {{/link-to}}
+      </LinkTo>
       <div class="main-header-select">
-        {{#power-select options=mainSelectOptions selected=mainSelected disabled=disabled
-          searchEnabled=false
-          triggerComponent="main-header-select-trigger"
-          onchange=(action "changeOptions")
-          dropdownClass="main-header-select-dropdown" as |opt|}}
+        <PowerSelect
+          @options={{mainSelectOptions}}
+          @selected={{mainSelected}}
+          @disabled={{disabled}}
+          @triggerComponent="main-header-select-trigger"
+          @onChange={{action "changeOptions"}}
+          @dropdownClass="main-header-select-dropdown" as |opt|>
           {{opt}}
-        {{/power-select}}
+        </PowerSelect>
       </div>
     </div>
   </nav>
@@ -25,6 +27,9 @@
 <div class="main-content">
   {{outlet}}
 </div>
+<aside class="link-to-other-version">
+  This is the documentation for version 3.X of the addon. If you are looking for version 2.X you can find the docs <a href="https://2-x.ember-power-select.com">here</a>
+</aside>
 <footer class="main-footer">
   <div class="main-footer-content">
     Deployed with love by <a href="http://github.com/cibernox">Miguel Camba</a>
@@ -34,4 +39,4 @@
   </div>
 </footer>
 
-{{remember-document-scroll key=applicationController.currentRouteName}}
+{{remember-document-scroll key=router.currentRouteName}}
