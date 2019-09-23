@@ -30,28 +30,42 @@
         </Trigger>
       {{/let}}
     </dropdown.Trigger>
-    <dropdown.Content class="ember-power-select-dropdown">
+    <dropdown.Content class="ember-power-select-dropdown {{@dropdownClass}}">
       {{#let (component (or @beforeOptionsComponent "power-select/before-options")) as |BeforeOptions|}}
         <BeforeOptions
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
           @onInput={{this.handleInput}}
-          @onKeydown={{this.handleKeydown}}
+          @onKeydown={{fn this.handleKeydown publicAPI}}
           @onFocus={{this.handleFocus}}
           @onBlur={{this.handleBlur}}
           @searchPlaceholder={{@searchPlaceholder}}
           />
       {{/let}}
-      {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
-        <Options
-          @select={{publicAPI}}
-          @options={{publicAPI.results}}
-          @groupIndex=""
-          @optionsComponent={{Options}}
-          class="ember-power-select-options" as |option select|>
-          {{yield option select}}
-        </Options>
-      {{/let}}
+      {{#if this.mustShowSearchMessage}}
+        {{#let (component (or @searchMessageComponent "power-select/search-message")) as |SearchMessage|}}
+          <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
+        {{/let}}
+      {{else if this.mustShowNoMessages}}
+        {{#if this.noMatchesMessage}}
+          <ul class="ember-power-select-options" role="listbox">
+            <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
+              {{this.noMatchesMessage}}
+            </li>
+          </ul>
+        {{/if}}
+      {{else}}
+        {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
+          <Options
+            @select={{publicAPI}}
+            @options={{publicAPI.results}}
+            @groupIndex=""
+            @optionsComponent={{Options}}
+            class="ember-power-select-options" as |option select|>
+            {{yield option select}}
+          </Options>
+        {{/let}}
+      {{/if}}
       {{#let (component @afterOptionsComponent) as |AfterOptions|}}
         <AfterOptions/>
       {{/let}}

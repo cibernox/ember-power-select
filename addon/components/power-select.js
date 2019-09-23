@@ -3,7 +3,16 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
-
+import {
+  // defaultMatcher,
+  // indexOfOption,
+  // filterOptions,
+  // findOptionWithOffset,
+  countOptions,
+  // defaultHighlighted,
+  // advanceSelectableOption,
+  // defaultTypeAheadMatcher
+} from '../utils/group-utils';
 export default class PowerSelect extends Component {
   // Untracked properties
   _publicAPIActions = {
@@ -18,13 +27,40 @@ export default class PowerSelect extends Component {
   @tracked lastSearchedText
 
   // Getters
+  get searchMessage() {
+    return this.args.searchMessage === undefined ? 'Type to search' : this.args.searchMessage;
+  }
+
+  get noMatchesMessage() {
+    return this.args.noMatchesMessage === undefined ? 'No results found' : this.args.noMatchesMessage;
+  }
+
   get matchTriggerWidth() {
     return this.args.matchTriggerWidth === undefined ? true : this.args.matchTriggerWidth;
   }
 
+  get mustShowSearchMessage() {
+    return !this.loading && this.searchText.length === 0
+      && !!this.args.search && !!this.searchMessage
+      && this.resultsCount === 0;
+  }
+
+  get mustShowNoMessages() {
+    return !this.loading
+      && this.resultsCount === 0
+      && (!this.args.search || this.lastSearchedText.length > 0);
+  }
+
   // PublicAPI
+  searchText = ''
+  lastSearchedText = ''
+
   get results() {
     return this.args.options;
+  }
+
+  get resultsCount() {
+    return countOptions(this.results);
   }
 
   get selected() {
@@ -35,6 +71,9 @@ export default class PowerSelect extends Component {
     return this.selected || this.results[0];
   }
 
+  get loading() {
+    return false;
+  }
 
   // Actions
   @action
@@ -52,8 +91,11 @@ export default class PowerSelect extends Component {
     this.lastSearchedText = e.target.value;
   }
   @action
-  handleKeydown() {
-    // noop
+  handleKeydown(select, e) {
+    // if (this.onKeydown && this.onKeydown(select, e) === false) {
+    //   return false;
+    // }
+    return this._routeKeydown(select, e);
   }
   @action
   handleFocus() {
@@ -83,10 +125,10 @@ export default class PowerSelect extends Component {
   _choose(selected, select, e) {
     let selection = this.args.buildSelection ? this.args.buildSelection(selected, select) : selected;
     select.actions.select(selection, select, e);
-    // if (this.args.closeOnSelect !== false) {
-    //   this._publicAPIActions.close(e);
-    //   return false;
-    // }
+    if (this.args.closeOnSelect !== false) {
+      select.actions.close(e);
+      // return false;
+    }
   }
   _scrollTo()   {
     // noop
@@ -94,6 +136,26 @@ export default class PowerSelect extends Component {
 
   _defaultBuildSelection(option) {
     return option
+  }
+
+  _routeKeydown(select, e) {
+    if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+      // return this._handleKeyUpDown(e);
+    } else if (e.keyCode === 13) {  // ENTER
+      return this._handleKeyEnter(select, e);
+    } else if (e.keyCode === 9) {   // Tab
+      // return this._handleKeyTab(e);
+    } else if (e.keyCode === 27) {  // ESC
+      // return this._handleKeyESC(e);
+    }
+  }
+
+  _handleKeyEnter(select, e) {
+    if (select.isOpen && select.highlighted !== undefined) {
+      select.actions.choose(select.highlighted, select, e);
+      // e.stopImmediatePropagation(); // reason for this line?
+      return false;
+    }
   }
 }
 
