@@ -3,14 +3,16 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
+import { assert } from '@ember/debug';
+import { get } from '@ember/object';
 import {
-  // defaultMatcher,
   // indexOfOption,
-  // filterOptions,
+  filterOptions,
   // findOptionWithOffset,
   countOptions,
   // defaultHighlighted,
-  // advanceSelectableOption,
+  advanceSelectableOption,
+  defaultMatcher,
   // defaultTypeAheadMatcher
 } from '../utils/group-utils';
 export default class PowerSelect extends Component {
@@ -52,10 +54,14 @@ export default class PowerSelect extends Component {
   }
 
   // PublicAPI
-  searchText = ''
-  lastSearchedText = ''
+  @tracked searchText = ''
+  @tracked lastSearchedText = ''
+  @tracked _highlighted = undefined
 
   get results() {
+    if (this.searchText.length > 0) {
+      return this.filter(this.args.options, this.searchText);
+    }
     return this.args.options;
   }
 
@@ -68,7 +74,7 @@ export default class PowerSelect extends Component {
   }
 
   get highlighted() {
-    return this.selected || this.results[0];
+    return this._highlighted || this.selected || this.results[0];
   }
 
   get loading() {
@@ -83,13 +89,22 @@ export default class PowerSelect extends Component {
 
   @action
   handleClose() {
-    // noop
+    this._highlighted = undefined;
   }
 
   @action
   handleInput(e) {
-    this.lastSearchedText = e.target.value;
+    let term = e.target.value;
+    let correctedTerm;
+    if (this.args.onInput) {
+      correctedTerm = this.args.onInput(term, this.publicAPI, e);
+      if (correctedTerm === false) {
+        return;
+      }
+    }
+    this._publicAPIActions.search(typeof correctedTerm === 'string' ? correctedTerm : term);
   }
+
   @action
   handleKeydown(select, e) {
     // if (this.onKeydown && this.onKeydown(select, e) === false) {
@@ -107,11 +122,14 @@ export default class PowerSelect extends Component {
   }
 
   // Methods
-  _search() {
-    // noop
+  @action
+  _search(term) {
+    this.searchText = this.lastSearchedText = term;
   }
-  _highlight() {
-    // noop
+
+  @action
+  _highlight(opt) {
+    this._highlighted = opt;
   }
 
   @action
@@ -140,7 +158,7 @@ export default class PowerSelect extends Component {
 
   _routeKeydown(select, e) {
     if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
-      // return this._handleKeyUpDown(e);
+      return this._handleKeyUpDown(select, e);
     } else if (e.keyCode === 13) {  // ENTER
       return this._handleKeyEnter(select, e);
     } else if (e.keyCode === 9) {   // Tab
@@ -156,6 +174,33 @@ export default class PowerSelect extends Component {
       // e.stopImmediatePropagation(); // reason for this line?
       return false;
     }
+  }
+
+  _handleKeyUpDown(select, e) {
+    if (select.isOpen) {
+      e.preventDefault();
+      e.stopPropagation();
+      let step = e.keyCode === 40 ? 1 : -1;
+      let newHighlighted = advanceSelectableOption(select.results, select.highlighted, step);
+      select.actions.highlight(newHighlighted, e);
+      select.actions.scrollTo(newHighlighted);
+    } else {
+      select.actions.open(e);
+    }
+  }
+
+  filter(options, term, skipDisabled = false) {
+    let { matcher = defaultMatcher, searchField } = this.args;
+    let optionMatcher;
+    if (searchField && matcher === defaultMatcher) {
+      optionMatcher = (option, text) => matcher(get(option, searchField), text);
+    } else {
+      optionMatcher = (option, text) => {
+        assert('<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`', matcher !== defaultMatcher || typeof option === 'string');
+        return matcher(option, text);
+      };
+    }
+    return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 }
 

@@ -389,7 +389,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
     await render(hbs`
       <div id="outside-div"></div>
-      <PowerSelect @options={{numbers}} @selected={{foo}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{this.foo}} @searchEnabled={{true}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
