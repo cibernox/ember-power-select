@@ -32,7 +32,7 @@ export default class Options extends Component {
     if (role === 'group') {
       return;
     }
-    let findOptionAndPerform = (action, e) => {
+    let findOptionAndPerform = (action, select, e) => {
       let optionItem = e.target.closest('[data-option-index]');
       if (!optionItem) {
         return;
@@ -41,9 +41,9 @@ export default class Options extends Component {
         return; // Abort if the item or an ancestor is disabled
       }
       let optionIndex = optionItem.getAttribute('data-option-index');
-      action(this._optionFromIndex(optionIndex), e);
+      action(this._optionFromIndex(optionIndex), select, e);
     };
-    element.addEventListener('mouseup', (e) => findOptionAndPerform(this.args.select.actions.choose, e));
+    element.addEventListener('mouseup', (e) => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e));
     if (this.args.highlightOnHover) {
       element.addEventListener('mouseover', (e) => findOptionAndPerform(this.args.select.actions.highlight, e));
     }

@@ -4272,6 +4272,13 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+ember-assign-helper@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-assign-helper/-/ember-assign-helper-0.2.0.tgz#02d1b5ee6b4f9cb68036b7d19db47f2a9d74f148"
+  integrity sha512-WO6K24m6Wk+G1PBOMaXUtOMkzCTtt9z67SPIcAFxOVqc95hUU62wDRUdDiPa/854T5rroq5CJ7Ey4LgxorCsgg==
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-assign-polyfill@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/ember-assign-polyfill/-/ember-assign-polyfill-2.6.0.tgz#07847e3357ee35b33f886a0b5fbec6873f6860eb"

@@ -3,6 +3,66 @@
   @destination={{@destination}}
   @initiallyOpened={{@initiallyOpened}}
   @matchTriggerWidth={{this.matchTriggerWidth}}
+  @preventScroll={{or @preventScroll false}}
+  @onClose={{this.handleClose}}
+  @onOpen={{this.handleOpen}}
+  @renderInPlace={{@renderInPlace}}
+  @verticalPosition={{@verticalPosition}}
+  @disabled={{@disabled}}
+  @calculatePosition={{@calculatePosition}}
+  ...attributes as |dropdown|>
+  {{#let (assign dropdown (hash
+    selected=this.selected
+    highlighted=this.highlighted
+    results=this.results
+    lastSearchedText=this.lastSearchedText
+    actions=(assign dropdown.actions this._publicAPIActions)
+  )) as |publicAPI|}}
+    <dropdown.Trigger class="ember-power-select-trigger {{@triggerClass}}">
+      {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
+        <Trigger
+          @select={{publicAPI}}
+          @searchEnabled={{@searchEnabled}}
+          @placeholder={{@placeholder}}
+          @placeholderComponent={{or @placeholderComponent "power-select/placeholder"}}
+          as |opt term|>
+          {{yield opt term}}
+        </Trigger>
+      {{/let}}
+    </dropdown.Trigger>
+    <dropdown.Content class="ember-power-select-dropdown">
+      {{#let (component (or @beforeOptionsComponent "power-select/before-options")) as |BeforeOptions|}}
+        <BeforeOptions
+          @select={{publicAPI}}
+          @searchEnabled={{@searchEnabled}}
+          @onInput={{this.handleInput}}
+          @onKeydown={{this.handleKeydown}}
+          @onFocus={{this.handleFocus}}
+          @onBlur={{this.handleBlur}}
+          @searchPlaceholder={{@searchPlaceholder}}
+          />
+      {{/let}}
+      {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
+        <Options
+          @select={{publicAPI}}
+          @options={{publicAPI.results}}
+          @groupIndex=""
+          @optionsComponent={{Options}}
+          class="ember-power-select-options" as |option select|>
+          {{yield option select}}
+        </Options>
+      {{/let}}
+      {{#let (component @afterOptionsComponent) as |AfterOptions|}}
+        <AfterOptions/>
+      {{/let}}
+    </dropdown.Content>
+  {{/let}}
+</BasicDropdown>
+{{!-- <BasicDropdown
+  @horizontalPosition={{@horizontalPosition}}
+  @destination={{@destination}}
+  @initiallyOpened={{@initiallyOpened}}
+  @matchTriggerWidth={{this.matchTriggerWidth}}
   @preventScroll={{this.preventScroll}}
   @onClose={{this.handleClose}}
   @onOpen={{this.handleOpen}}
@@ -38,8 +98,7 @@
         @onFocus={{this.handleFocus}}
         @onBlur={{this.handleBlur}}
         @onInput={{this.handleInput}}
-        @placeholder={{@placeholder}}
-        @placeholderComponent={{this.placeholderComponent}}
+
         @onKeydown={{this.handleKeydown}}
         @searchEnabled={{@searchEnabled}}
         @searchField={{@searchField}}
@@ -100,4 +159,4 @@
       <AfterOptions @select={{this.publicAPI}} @extra={{@extra}}/>
     {{/let}}
   </dropdown.Content>
-</BasicDropdown>
+</BasicDropdown> --}}
