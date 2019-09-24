@@ -27,6 +27,7 @@
       id={{@triggerId}}>
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
         <Trigger
+          @allowClear={{@allowClear}}
           @loadingMessage={{or @loadingMessage "Loading options..."}}
           @selectedItemComponent={{@selectedItemComponent}}
           @select={{publicAPI}}
@@ -79,6 +80,7 @@
             @groupIndex=""
             @optionsComponent={{Options}}
             @extra={{@extra}}
+            @highlightOnHover={{this.highlightOnHover}}
             @groupComponent={{or @groupComponent "power-select/power-select-group"}}
             class="ember-power-select-options" as |option select|>
             {{yield option select}}

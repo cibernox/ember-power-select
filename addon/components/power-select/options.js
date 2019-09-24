@@ -45,7 +45,7 @@ export default class Options extends Component {
     };
     element.addEventListener('mouseup', (e) => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e));
     if (this.args.highlightOnHover) {
-      element.addEventListener('mouseover', (e) => findOptionAndPerform(this.args.select.actions.highlight, e));
+      element.addEventListener('mouseover', (e) => findOptionAndPerform(this.args.select.actions.highlight, this.args.select, e));
     }
     if (this.isTouchDevice) {
       let touchMoveHandler = () => {

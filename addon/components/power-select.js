@@ -30,6 +30,9 @@ export default class PowerSelect extends Component {
   @tracked isActive = false
 
   // Getters
+  get highlightOnHover() {
+    return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
+  }
   get placeholderComponent() {
     return this.args.placeholderComponent || 'power-select/placeholder';
   }
