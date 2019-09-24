@@ -30,6 +30,10 @@ export default class PowerSelect extends Component {
   @tracked isActive = false
 
   // Getters
+  get placeholderComponent() {
+    return this.args.placeholderComponent || 'power-select/placeholder';
+  }
+
   get searchMessage() {
     return this.args.searchMessage === undefined ? 'Type to search' : this.args.searchMessage;
   }
@@ -75,7 +79,7 @@ export default class PowerSelect extends Component {
   }
 
   get highlighted() {
-    return this._highlighted || this.selected || this.results[0];
+    return this._highlighted || this.selected || (this.results && this.results[0]);
   }
 
   get loading() {
@@ -114,8 +118,11 @@ export default class PowerSelect extends Component {
     return this._routeKeydown(select, e);
   }
   @action
-  handleFocus() {
-    this.isActive = true
+  handleFocus(select, event) {
+    this.isActive = true;
+    if (this.args.onFocus) {
+      this.args.onFocus(select, event);
+    }
   }
 
   @action

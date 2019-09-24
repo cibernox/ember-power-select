@@ -23,17 +23,21 @@
   )) as |publicAPI|}}
     <dropdown.Trigger
       class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
-      title={{@title}}>
+      title={{@title}}
+      id={{@triggerId}}>
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
         <Trigger
+          @loadingMessage={{or @loadingMessage "Loading options..."}}
+          @selectedItemComponent={{@selectedItemComponent}}
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
-          @onFocus={{this.handleFocus}}
+          @onFocus={{fn this.handleFocus publicAPI}}
           @onBlur={{this.handleBlur}}
+          @extra={{@extra}}
           {{!-- @onInput={{this.handleInput}} --}}
           @onKeydown={{fn this.handleKeydown publicAPI}}
           @placeholder={{@placeholder}}
-          @placeholderComponent={{or @placeholderComponent "power-select/placeholder"}}
+          @placeholderComponent={{this.placeholderComponent}}
           as |opt term|>
           {{yield opt term}}
         </Trigger>
@@ -46,8 +50,12 @@
           @searchEnabled={{@searchEnabled}}
           @onInput={{this.handleInput}}
           @onKeydown={{fn this.handleKeydown publicAPI}}
-          @onFocus={{this.handleFocus}}
+          @onFocus={{fn this.handleFocus publicAPI}}
           @onBlur={{this.handleBlur}}
+          @placeholder={{@placeholder}}
+          @placeholderComponent={{this.placeholderComponent}}
+          @extra={{@extra}}
+          {{!-- @selectedItemComponent={{@selectedItemComponent}} --}}
           @searchPlaceholder={{@searchPlaceholder}}
           />
       {{/let}}
@@ -70,13 +78,17 @@
             @options={{publicAPI.results}}
             @groupIndex=""
             @optionsComponent={{Options}}
+            @extra={{@extra}}
+            @groupComponent={{or @groupComponent "power-select/power-select-group"}}
             class="ember-power-select-options" as |option select|>
             {{yield option select}}
           </Options>
         {{/let}}
       {{/if}}
       {{#let (component @afterOptionsComponent) as |AfterOptions|}}
-        <AfterOptions/>
+        <AfterOptions
+          @extra={{@extra}}
+        />
       {{/let}}
     </dropdown.Content>
   {{/let}}

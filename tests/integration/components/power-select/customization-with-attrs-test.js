@@ -52,14 +52,14 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     assert.dom('.ember-power-select-trigger').hasClass('country-multiple-trigger', 'Class was added.');
   });
 
-  test('Trigger can have a custom id passing @triggerId', async function(assert) {
+  test('Trigger can have a custom id passing `@triggerId`', async function(assert) {
     assert.expect(1);
 
     this.countries = countries;
     this.country = [countries[1], countries[0]];
 
     await render(hbs`
-      <PowerSelect @options=countries @selected={{country}} @onChange={{action (mut foo)}} @triggerId="this-is-my-id" as |country|>
+      <PowerSelect @options=countries @selected={{this.country}} @onChange={{action (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -67,7 +67,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     assert.dom('.ember-power-select-trigger').hasAttribute('id', 'this-is-my-id', 'The `id` was added.');
   });
 
-  test('Trigger can have a custom id passing @triggerId (multiple select)', async function(assert) {
+  test('Trigger can have a custom id passing `@triggerId` (multiple select)', async function(assert) {
     assert.expect(1);
 
     this.countries = countries;
