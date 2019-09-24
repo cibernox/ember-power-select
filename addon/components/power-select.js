@@ -6,11 +6,11 @@ import { isEqual } from '@ember/utils';
 import { assert } from '@ember/debug';
 import { get } from '@ember/object';
 import {
-  // indexOfOption,
+  indexOfOption,
   filterOptions,
   // findOptionWithOffset,
   countOptions,
-  // defaultHighlighted,
+  defaultHighlighted,
   advanceSelectableOption,
   defaultMatcher,
   // defaultTypeAheadMatcher
@@ -27,6 +27,7 @@ export default class PowerSelect extends Component {
 
   // Tracked properties
   @tracked lastSearchedText
+  @tracked isActive = false
 
   // Getters
   get searchMessage() {
@@ -60,7 +61,7 @@ export default class PowerSelect extends Component {
 
   get results() {
     if (this.searchText.length > 0) {
-      return this.filter(this.args.options, this.searchText);
+      return this._filter(this.args.options, this.searchText);
     }
     return this.args.options;
   }
@@ -84,7 +85,7 @@ export default class PowerSelect extends Component {
   // Actions
   @action
   handleOpen() {
-    // noop
+    this._resetHighlighted();
   }
 
   @action
@@ -114,8 +115,9 @@ export default class PowerSelect extends Component {
   }
   @action
   handleFocus() {
-    // noop
+    this.isActive = true
   }
+
   @action
   handleBlur() {
     // noop
@@ -148,8 +150,34 @@ export default class PowerSelect extends Component {
       // return false;
     }
   }
-  _scrollTo()   {
-    // noop
+
+  @action
+  _scrollTo(option, select) {
+    if (!document || !option) {
+      return;
+    }
+    if (this.args.scrollTo) {
+      return this.args.scrollTo(option, select);
+    }
+    let optionsList = document.querySelector(`[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`);
+    if (!optionsList) {
+      return;
+    }
+    let index = indexOfOption(select.results, option);
+    if (index === -1) {
+      return;
+    }
+    let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
+    if (!optionElement) {
+      return;
+    }
+    let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+    let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+    if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+      optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+    } else if (optionTopScroll < optionsList.scrollTop) {
+      optionsList.scrollTop = optionTopScroll;
+    }
   }
 
   _defaultBuildSelection(option) {
@@ -183,13 +211,24 @@ export default class PowerSelect extends Component {
       let step = e.keyCode === 40 ? 1 : -1;
       let newHighlighted = advanceSelectableOption(select.results, select.highlighted, step);
       select.actions.highlight(newHighlighted, e);
-      select.actions.scrollTo(newHighlighted);
+      select.actions.scrollTo(newHighlighted, select);
     } else {
       select.actions.open(e);
     }
   }
 
-  filter(options, term, skipDisabled = false) {
+  _resetHighlighted() {
+    let highlighted;
+    let defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
+    if (typeof defHighlighted === 'function') {
+      highlighted = defHighlighted({ results: this.results, highlighted: this.highlighted, selected: this.selected});
+    } else {
+      highlighted = defHighlighted
+    }
+    this._highlighted = highlighted;
+  }
+
+  _filter(options, term, skipDisabled = false) {
     let { matcher = defaultMatcher, searchField } = this.args;
     let optionMatcher;
     if (searchField && matcher === defaultMatcher) {

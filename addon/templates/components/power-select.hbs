@@ -15,17 +15,23 @@
     selected=this.selected
     highlighted=this.highlighted
     results=this.results
+    loading=this.loading
+    isActive=this.isActive
+    searchText=this.searchText
     lastSearchedText=this.lastSearchedText
-    loading=loading
-    searchText=searchText
-    lastSearchedText=lastSearchedText
     actions=(assign dropdown.actions this._publicAPIActions)
   )) as |publicAPI|}}
-    <dropdown.Trigger class="ember-power-select-trigger {{@triggerClass}}">
+    <dropdown.Trigger
+      class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
+      title={{@title}}>
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
         <Trigger
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
+          @onFocus={{this.handleFocus}}
+          @onBlur={{this.handleBlur}}
+          {{!-- @onInput={{this.handleInput}} --}}
+          @onKeydown={{fn this.handleKeydown publicAPI}}
           @placeholder={{@placeholder}}
           @placeholderComponent={{or @placeholderComponent "power-select/placeholder"}}
           as |opt term|>

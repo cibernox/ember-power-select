@@ -1040,13 +1040,13 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one');
   });
 
-  test('the item that is highlighted by default can be customized passing a value to `defaultHighlighted`', async function(assert) {
+  test('the item that is highlighted by default can be customized passing a value to `@defaultHighlighted`', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
     this.defaultHighlighted = numbers[4];
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @defaultHighlighted={{defaultHighlighted}} as |option|>
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @defaultHighlighted={{this.defaultHighlighted}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1057,24 +1057,18 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   });
 
   test('the item that is highlighted by default can be customized passing a function to `@defaultHighlighted`', async function(assert) {
-    assert.expect(12);
+    assert.expect(5);
 
     this.numbers = numbers;
-    this.defaultHighlighted = function(select) {
-      assert.equal(typeof select.uniqueId, 'string', 'select.uniqueId is a string');
-      assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-      assert.equal(typeof select.disabled, 'boolean', 'select.disabled is a boolean');
-      assert.equal(typeof select.isActive, 'boolean', 'select.isActive is a boolean');
-      assert.equal(typeof select.loading, 'boolean', 'select.loading is a boolean');
-      assert.ok(select.options instanceof Array, 'select.options is an array');
-      assert.ok(select.results instanceof Array, 'select.results is an array');
-      assert.equal(typeof select.resultsCount, 'number', 'select.resultsCount is a number');
-      assert.ok(select.hasOwnProperty('selected'));
-      assert.ok(select.hasOwnProperty('highlighted'));
+    this.selected = numbers[1];
+    this.defaultHighlighted = function({ selected, highlighted, results }) {
+      assert.ok(results instanceof Array, 'select.results is an array');
+      assert.equal(selected, numbers[1]);
+      assert.equal(highlighted, numbers[1]);
       return 'five';
     };
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @defaultHighlighted={{defaultHighlighted}} as |option|>
+      <PowerSelect @selected={{this.selected}} @options={{this.numbers}} @onChange={{action (mut foo)}} @defaultHighlighted={{this.defaultHighlighted}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1084,7 +1078,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('five', 'the given element is highlighted instead of the first, as usual');
   });
 
-  test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
+  skip('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
     let User = EmberObject.extend({
       isEqual(other) {
         return get(this, 'name') === get(other, 'name');
@@ -1149,51 +1143,6 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       <PowerSelect @options={{numbers}} @renderInPlace={{renderInPlace}} @selected={{selected}} @onChange={{action (mut selected)}} @calculatePosition={{calculatePosition}} as |num|>
        {{num}}
       </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--above', 'The dropdown is above');
-    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--right', 'The dropdown is in the right');
-    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 111px;right: 222px/, 'The style attribute is the expected one');
-    await clickTrigger();
-
-    run(() => this.set('renderInPlace', true));
-    await clickTrigger();
-    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--below', 'The dropdown is below');
-    assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--left', 'The dropdown is in the left');
-    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 333px;right: 444px/, 'The style attribute is the expected one');
-  });
-
-  test('the `@calculatePosition` option can be set on components extending from EPS', async function (assert) {
-    this.numbers = numbers;
-    this.renderInPlace = false;
-    this.owner.register('component:custom-eps', class extends PowerSelect {
-      calculatePosition(_, _2, _3, { renderInPlace }) {
-        if (renderInPlace) {
-          return {
-            horizontalPosition: 'left',
-            verticalPosition: 'below',
-            style: {
-              top: 333,
-              right: 444
-            }
-          };
-        } else {
-          return {
-            horizontalPosition: 'right',
-            verticalPosition: 'above',
-            style: {
-              top: 111,
-              right: 222
-            }
-          };
-        }
-      }
-    })
-    await render(hbs`
-      <CustomEps @options={{numbers}} @renderInPlace={{renderInPlace}} @selected={{selected}} @onChange={{action (mut selected)}} as |num|>
-       {{num}}
-      </CustomEps>
     `);
 
     await clickTrigger();

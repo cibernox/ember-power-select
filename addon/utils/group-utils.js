@@ -138,8 +138,7 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
   return opts;
 }
 
-export function defaultHighlighted(select) {
-  let { results, highlighted, selected } = select;
+export function defaultHighlighted({ results, highlighted, selected }) {
   let option = highlighted || selected;
   if (option === undefined || indexOfOption(results, option) === -1) {
     return advanceSelectableOption(results, option, 1);
