@@ -20,9 +20,15 @@
     searchText=this.searchText
     lastSearchedText=this.lastSearchedText
     actions=(assign dropdown.actions this._publicAPIActions)
-  )) as |publicAPI|}}
+  )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
     <dropdown.Trigger
       class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
+      aria-describedby={{@ariaDescribedBy}}
+      aria-invalid={{@ariaInvalid}}
+      aria-label={{@ariaLabel}}
+      aria-labelledby={{@ariaLabelledBy}}
+      aria-required={{@required}}
+      role={{or @triggerRole "button"}}
       title={{@title}}
       id={{@triggerId}}>
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
@@ -35,6 +41,7 @@
           @onFocus={{fn this.handleFocus publicAPI}}
           @onBlur={{this.handleBlur}}
           @extra={{@extra}}
+          @listboxId={{listboxId}}
           {{!-- @onInput={{this.handleInput}} --}}
           @onKeydown={{fn this.handleKeydown publicAPI}}
           @placeholder={{@placeholder}}
@@ -56,6 +63,7 @@
           @placeholder={{@placeholder}}
           @placeholderComponent={{this.placeholderComponent}}
           @extra={{@extra}}
+          @listboxId={{listboxId}}
           {{!-- @selectedItemComponent={{@selectedItemComponent}} --}}
           @searchPlaceholder={{@searchPlaceholder}}
           />
@@ -82,6 +90,7 @@
             @extra={{@extra}}
             @highlightOnHover={{this.highlightOnHover}}
             @groupComponent={{or @groupComponent "power-select/power-select-group"}}
+            id={{listboxId}}
             class="ember-power-select-options" as |option select|>
             {{yield option select}}
           </Options>
