@@ -69,7 +69,7 @@ export default @tagName('') @layout(templateLayout) class PowerSelectMultiple ex
       e.stopPropagation();
       if (select.highlighted !== undefined) {
         if (!select.selected || select.selected.indexOf(select.highlighted) === -1) {
-          select.actions.choose(select.highlighted, e);
+          select.actions.choose(select.highlighted, select, e);
           return false;
         } else {
           select.actions.close(e);

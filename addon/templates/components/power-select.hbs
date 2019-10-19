@@ -22,6 +22,10 @@
     actions=(assign dropdown.actions this._publicAPIActions)
   )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
     <dropdown.Trigger
+      @eventType={{or @eventType "mousedown"}}
+      {{did-insert this._registerAPI publicAPI}}
+      {{did-update this._registerAPI publicAPI}}
+      {{on "keydown" this.handleTriggerKeydown}}
       class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
       aria-describedby={{@ariaDescribedBy}}
       aria-invalid={{@ariaInvalid}}
@@ -30,7 +34,8 @@
       aria-required={{@required}}
       role={{or @triggerRole "button"}}
       title={{@title}}
-      id={{@triggerId}}>
+      id={{@triggerId}}
+      >
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
         <Trigger
           @allowClear={{@allowClear}}
@@ -38,12 +43,12 @@
           @selectedItemComponent={{@selectedItemComponent}}
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
-          @onFocus={{fn this.handleFocus publicAPI}}
+          @onFocus={{this.handleFocus}}
           @onBlur={{this.handleBlur}}
           @extra={{@extra}}
           @listboxId={{listboxId}}
           {{!-- @onInput={{this.handleInput}} --}}
-          @onKeydown={{fn this.handleKeydown publicAPI}}
+          @onKeydown={{this.handleKeydown}}
           @placeholder={{@placeholder}}
           @placeholderComponent={{this.placeholderComponent}}
           as |opt term|>
@@ -57,8 +62,8 @@
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
           @onInput={{this.handleInput}}
-          @onKeydown={{fn this.handleKeydown publicAPI}}
-          @onFocus={{fn this.handleFocus publicAPI}}
+          @onKeydown={{this.handleKeydown}}
+          @onFocus={{this.handleFocus}}
           @onBlur={{this.handleBlur}}
           @placeholder={{@placeholder}}
           @placeholderComponent={{this.placeholderComponent}}

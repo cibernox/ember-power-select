@@ -28,6 +28,7 @@ export default class PowerSelect extends Component {
   // Tracked properties
   @tracked lastSearchedText
   @tracked isActive = false
+  storedAPI = undefined
 
   // Getters
   get highlightOnHover() {
@@ -96,7 +97,13 @@ export default class PowerSelect extends Component {
   }
 
   @action
-  handleClose() {
+  handleClose(select, e) {
+    if (this.args.onClose && this.args.onClose(this.publicAPI, e) === false) {
+      return false;
+    }
+//     if (e) {
+//       this.openingEvent = null;
+//     }
     this._highlighted = undefined;
   }
 
@@ -114,17 +121,39 @@ export default class PowerSelect extends Component {
   }
 
   @action
-  handleKeydown(select, e) {
-    // if (this.onKeydown && this.onKeydown(select, e) === false) {
-    //   return false;
-    // }
-    return this._routeKeydown(select, e);
+  handleKeydown(e) {
+    if (this.args.onKeydown && this.args.onKeydown(this.storedAPI, e) === false) {
+      return false;
+    }
+    return this._routeKeydown(this.storedAPI, e);
   }
+
   @action
-  handleFocus(select, event) {
+  handleTriggerKeydown(e) {
+    if (this.args.onKeydown && this.args.onKeydown(this.storedAPI, e) === false) {
+      e.stopImmediatePropagation();
+      return;
+    }
+    if (e.ctrlKey || e.metaKey) {
+      e.stopImmediatePropagation();
+      return;
+    }
+    if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) { // Keys 0-9, a-z or numpad keys
+      assert('Typing on the trigger is not yet implemented', false);
+      // this.triggerTypingTask.perform(e);
+    } else if (e.keyCode === 32) {  // Space
+      // assert('Pressing space on the trigger is not yet implemented', false);
+      this._handleKeySpace(this.storedAPI, e);
+    } else {
+      return this._routeKeydown(this.storedAPI, e);
+    }
+  }
+
+  @action
+  handleFocus(event) {
     this.isActive = true;
     if (this.args.onFocus) {
-      this.args.onFocus(select, event);
+      this.args.onFocus(this.storedAPI, event);
     }
   }
 
@@ -190,6 +219,11 @@ export default class PowerSelect extends Component {
     }
   }
 
+  @action
+  _registerAPI(_, [publicAPI]) {
+    this.storedAPI = publicAPI;
+  }
+
   _defaultBuildSelection(option) {
     return option
   }
@@ -200,17 +234,31 @@ export default class PowerSelect extends Component {
     } else if (e.keyCode === 13) {  // ENTER
       return this._handleKeyEnter(select, e);
     } else if (e.keyCode === 9) {   // Tab
-      // return this._handleKeyTab(e);
+      return this._handleKeyTab(select, e);
     } else if (e.keyCode === 27) {  // ESC
       // return this._handleKeyESC(e);
     }
   }
 
+  _handleKeyTab(select, e) {
+    select.actions.close(e);
+  }
+
   _handleKeyEnter(select, e) {
     if (select.isOpen && select.highlighted !== undefined) {
       select.actions.choose(select.highlighted, select, e);
-      // e.stopImmediatePropagation(); // reason for this line?
+      e.stopImmediatePropagation();
       return false;
+    }
+  }
+
+  _handleKeySpace(select, e) {
+    if (['TEXTAREA', 'INPUT'].includes(e.target.nodeName)) {
+      e.stopImmediatePropagation();
+    } else if (select.isOpen && select.highlighted !== undefined) {
+      e.stopImmediatePropagation();
+      e.preventDefault(); // Prevents scrolling of the page.
+      select.actions.choose(select.highlighted, select, e);
     }
   }
 
@@ -253,6 +301,10 @@ export default class PowerSelect extends Component {
   }
 }
 
+
+function isNumpadKeyEvent(e) {
+    return e.keyCode >= 96 && e.keyCode <= 105;
+  }
 
 // // import { layout, tagName } from "@ember-decorators/component";
 // // import Component from '@ember/component';
