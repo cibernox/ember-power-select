@@ -18,11 +18,11 @@
     loading=this.loading
     isActive=this.isActive
     searchText=this.searchText
-    _repeatingChar=this._repeatingChar
-    _expirableSearchText=this._expirableSearchText
     lastSearchedText=this.lastSearchedText
     actions=(assign dropdown.actions this._publicAPIActions)
   )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
+    {{!-- _repeatingChar=this._repeatingChar --}}
+    {{!-- _expirableSearchText=this._expirableSearchText --}}
     <dropdown.Trigger
       @eventType={{or @eventType "mousedown"}}
       {{did-insert this._registerAPI publicAPI}}

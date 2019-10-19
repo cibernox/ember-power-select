@@ -314,27 +314,26 @@ export default class PowerSelect extends Component {
   @(task(function* (e) {
     // In general, a user doing this interaction means to have a different result.
     let searchStartOffset = 1;
-    let repeatingChar = this.storedAPI._repeatingChar;
+    // let repeatingChar = this.storedAPI._repeatingChar;
     let charCode = e.keyCode;
     if (isNumpadKeyEvent(e)) {
       charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
     }
-    let term;
 
     // Check if user intends to cycle through results. _repeatingChar can only be the first character.
     let c = String.fromCharCode(charCode);
-    if (c === this.storedAPI._repeatingChar) {
-      term = c;
+    if (c === this._repeatingChar) {
+      this._expirableSearchText = c;
     } else {
-      term = this.storedAPI._expirableSearchText + c;
+      this._expirableSearchText = this._expirableSearchText + c;
     }
-    if (term.length > 1) {
-      // If the term is longer than one char, the user is in the middle of a non-cycling interaction
+    if (this._expirableSearchText.length > 1) {
+      // If the expirable search text is longer than one char, the user is in the middle of a non-cycling interaction
       // so the offset is just zero (the current selection is a valid match).
       searchStartOffset = 0;
-      repeatingChar = '';
+      this.repeatingChar = '';
     } else {
-      repeatingChar = c;
+      this.repeatingChar = c;
     }
 
     // When the select is open, the "selection" is just highlighted.
@@ -348,14 +347,17 @@ export default class PowerSelect extends Component {
 
     // The char is always appended. That way, searching for words like "Aaron" will work even
     // if "Aa" would cycle through the results.
-    this._expirableSearchText = this.storedAPI._expirableSearchText + c;
-    this._repeatingChar = repeatingChar;
-    let match = this.findWithOffset(this.storedAPI.results, term, searchStartOffset, true);
+    console.debug({ _expirableSearchText: this._expirableSearchText });
+    if (this._expirableSearchText === 'PO') debugger;
+    let match = this.findWithOffset(this.storedAPI.results, this._expirableSearchText, searchStartOffset, true);
     if (match !== undefined) {
       if (this.storedAPI.isOpen) {
+        console.debug('select is open');
+        console.debug('match is', match);
         this.storedAPI.actions.highlight(match, e);
-        this.storedAPI.actions.scrollTo(match, e);
+        this.storedAPI.actions.scrollTo(match, this.storedAPI);
       } else {
+        console.debug('select is closed');
         this.storedAPI.actions.select(match, e);
       }
     }
