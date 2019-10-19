@@ -8,13 +8,15 @@ import { get } from '@ember/object';
 import {
   indexOfOption,
   filterOptions,
-  // findOptionWithOffset,
+  findOptionWithOffset,
   countOptions,
   defaultHighlighted,
   advanceSelectableOption,
   defaultMatcher,
-  // defaultTypeAheadMatcher
+  defaultTypeAheadMatcher
 } from '../utils/group-utils';
+import { task, timeout } from 'ember-concurrency';
+
 export default class PowerSelect extends Component {
   // Untracked properties
   _publicAPIActions = {
@@ -28,6 +30,8 @@ export default class PowerSelect extends Component {
   // Tracked properties
   @tracked lastSearchedText
   @tracked isActive = false
+  @tracked _repeatingChar = ''
+  @tracked _expirableSearchText = ''
   storedAPI = undefined
 
   // Getters
@@ -139,8 +143,8 @@ export default class PowerSelect extends Component {
       return;
     }
     if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) { // Keys 0-9, a-z or numpad keys
-      assert('Typing on the trigger is not yet implemented', false);
-      // this.triggerTypingTask.perform(e);
+      // assert('Typing on the trigger is not yet implemented', false);
+      this.triggerTypingTask.perform(e);
     } else if (e.keyCode === 32) {  // Space
       // assert('Pressing space on the trigger is not yet implemented', false);
       this._handleKeySpace(this.storedAPI, e);
@@ -299,12 +303,72 @@ export default class PowerSelect extends Component {
     }
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
+
+
+  findWithOffset(options, term, offset, skipDisabled = false) {
+    let { typeAheadOptionMatcher = defaultTypeAheadMatcher } = this.args;
+    return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
+  }
+
+  // Tasks
+  @(task(function* (e) {
+    // In general, a user doing this interaction means to have a different result.
+    let searchStartOffset = 1;
+    let repeatingChar = this.storedAPI._repeatingChar;
+    let charCode = e.keyCode;
+    if (isNumpadKeyEvent(e)) {
+      charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
+    }
+    let term;
+
+    // Check if user intends to cycle through results. _repeatingChar can only be the first character.
+    let c = String.fromCharCode(charCode);
+    if (c === this.storedAPI._repeatingChar) {
+      term = c;
+    } else {
+      term = this.storedAPI._expirableSearchText + c;
+    }
+    if (term.length > 1) {
+      // If the term is longer than one char, the user is in the middle of a non-cycling interaction
+      // so the offset is just zero (the current selection is a valid match).
+      searchStartOffset = 0;
+      repeatingChar = '';
+    } else {
+      repeatingChar = c;
+    }
+
+    // When the select is open, the "selection" is just highlighted.
+    if (this.storedAPI.isOpen && this.storedAPI.highlighted) {
+      searchStartOffset += indexOfOption(this.storedAPI.result, this.storedAPI.highlighted);
+    } else if (!this.storedAPI.isOpen && this.storedAPI.selected) {
+      searchStartOffset += indexOfOption(this.storedAPI.result, this.storedAPI.selected);
+    } else {
+      searchStartOffset = 0;
+    }
+
+    // The char is always appended. That way, searching for words like "Aaron" will work even
+    // if "Aa" would cycle through the results.
+    this._expirableSearchText = this.storedAPI._expirableSearchText + c;
+    this._repeatingChar = repeatingChar;
+    let match = this.findWithOffset(this.storedAPI.results, term, searchStartOffset, true);
+    if (match !== undefined) {
+      if (this.storedAPI.isOpen) {
+        this.storedAPI.actions.highlight(match, e);
+        this.storedAPI.actions.scrollTo(match, e);
+      } else {
+        this.storedAPI.actions.select(match, e);
+      }
+    }
+    yield timeout(1000);
+    this._expirableSearchText = '';
+    this._repeatingChar = '';
+  }).restartable()) triggerTypingTask
 }
 
 
 function isNumpadKeyEvent(e) {
-    return e.keyCode >= 96 && e.keyCode <= 105;
-  }
+  return e.keyCode >= 96 && e.keyCode <= 105;
+}
 
 // // import { layout, tagName } from "@ember-decorators/component";
 // // import Component from '@ember/component';

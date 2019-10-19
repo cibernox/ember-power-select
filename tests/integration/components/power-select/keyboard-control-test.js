@@ -466,6 +466,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
+
     triggerKeyEvent('.ember-power-select-trigger', 'keydown', 78); // n
     triggerKeyEvent('.ember-power-select-trigger', 'keydown', 73); // i
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 78); // n
