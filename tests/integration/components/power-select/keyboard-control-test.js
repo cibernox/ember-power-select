@@ -619,7 +619,6 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is open');
     triggerKeydown('.ember-power-select-trigger', 80); // p
     await triggerKeydown('.ember-power-select-trigger', 79); // o
-    debugger;
     assert.dom('.ember-power-select-trigger').hasText('', 'nothing has been selected');
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('Portugal', 'The option containing "Portugal" has been highlighted');
     assert.dom('.ember-power-select-dropdown').exists( 'The dropdown is still closed');
@@ -694,7 +693,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       }
     };
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{action handleOpen}} as |option|>
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{this.handleOpen}} as |option|>
         {{option}}
       </PowerSelect>
     `);

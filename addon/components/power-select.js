@@ -1,10 +1,9 @@
 
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
+import { action, get } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import { assert } from '@ember/debug';
-import { get } from '@ember/object';
 import {
   indexOfOption,
   filterOptions,
@@ -96,18 +95,27 @@ export default class PowerSelect extends Component {
 
   // Actions
   @action
-  handleOpen() {
+  handleOpen(_, e) {
+    if (this.args.onOpen && this.args.onOpen(this.storedAPI, e) === false) {
+      return false;
+    }
+    if (e) {
+      this.openingEvent = e;
+      if (e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
+        e.preventDefault();
+      }
+    }
     this._resetHighlighted();
   }
 
   @action
   handleClose(select, e) {
-    if (this.args.onClose && this.args.onClose(this.publicAPI, e) === false) {
+    if (this.args.onClose && this.args.onClose(this.storedAPI, e) === false) {
       return false;
     }
-//     if (e) {
-//       this.openingEvent = null;
-//     }
+    if (e) {
+      this.openingEvent = null;
+    }
     this._highlighted = undefined;
   }
 
@@ -116,7 +124,7 @@ export default class PowerSelect extends Component {
     let term = e.target.value;
     let correctedTerm;
     if (this.args.onInput) {
-      correctedTerm = this.args.onInput(term, this.publicAPI, e);
+      correctedTerm = this.args.onInput(term, this.storedAPI, e);
       if (correctedTerm === false) {
         return;
       }
@@ -291,22 +299,13 @@ export default class PowerSelect extends Component {
   }
 
   _filter(options, term, skipDisabled = false) {
-    let { matcher = defaultMatcher, searchField } = this.args;
-    let optionMatcher;
-    if (searchField && matcher === defaultMatcher) {
-      optionMatcher = (option, text) => matcher(get(option, searchField), text);
-    } else {
-      optionMatcher = (option, text) => {
-        assert('<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`', matcher !== defaultMatcher || typeof option === 'string');
-        return matcher(option, text);
-      };
-    }
+    let optionMatcher = getOptionMatcher(this.args.optionMatcher || defaultMatcher, defaultMatcher, this.args.searchField);
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 
 
   findWithOffset(options, term, offset, skipDisabled = false) {
-    let { typeAheadOptionMatcher = defaultTypeAheadMatcher } = this.args;
+    let typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
     return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
   }
 
@@ -325,7 +324,7 @@ export default class PowerSelect extends Component {
     if (c === this._repeatingChar) {
       this._expirableSearchText = c;
     } else {
-      this._expirableSearchText = this._expirableSearchText + c;
+      this._expirableSearchText += c;
     }
     if (this._expirableSearchText.length > 1) {
       // If the expirable search text is longer than one char, the user is in the middle of a non-cycling interaction
@@ -347,17 +346,12 @@ export default class PowerSelect extends Component {
 
     // The char is always appended. That way, searching for words like "Aaron" will work even
     // if "Aa" would cycle through the results.
-    console.debug({ _expirableSearchText: this._expirableSearchText });
-    if (this._expirableSearchText === 'PO') debugger;
     let match = this.findWithOffset(this.storedAPI.results, this._expirableSearchText, searchStartOffset, true);
     if (match !== undefined) {
       if (this.storedAPI.isOpen) {
-        console.debug('select is open');
-        console.debug('match is', match);
         this.storedAPI.actions.highlight(match, e);
         this.storedAPI.actions.scrollTo(match, this.storedAPI);
       } else {
-        console.debug('select is closed');
         this.storedAPI.actions.select(match, e);
       }
     }
@@ -367,6 +361,16 @@ export default class PowerSelect extends Component {
   }).restartable()) triggerTypingTask
 }
 
+function getOptionMatcher(matcher, defaultMatcher, searchField) {
+  if (searchField && matcher === defaultMatcher) {
+    return (option, text) => matcher(get(option, searchField), text);
+  } else {
+    return (option, text) => {
+      assert('<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`', matcher !== defaultMatcher || typeof option === 'string');
+      return matcher(option, text);
+    };
+  }
+}
 
 function isNumpadKeyEvent(e) {
   return e.keyCode >= 96 && e.keyCode <= 105;
