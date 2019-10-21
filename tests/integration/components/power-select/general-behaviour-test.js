@@ -587,7 +587,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @matcher={{endsWithMatcher}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{numbers}} @matcher={{this.endsWithMatcher}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1064,7 +1064,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.defaultHighlighted = function({ selected, highlighted, results }) {
       assert.ok(results instanceof Array, 'select.results is an array');
       assert.equal(selected, numbers[1]);
-      assert.equal(highlighted, numbers[1]);
+      assert.equal(highlighted, undefined);
       return 'five';
     };
     await render(hbs`

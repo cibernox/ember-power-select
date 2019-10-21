@@ -86,7 +86,7 @@ export default class PowerSelect extends Component {
   }
 
   get highlighted() {
-    return this._highlighted || this.selected || (this.results && this.results[0]);
+    return this._highlighted; // || this.selected || (this.results && this.results[0]);
   }
 
   get loading() {
@@ -116,7 +116,7 @@ export default class PowerSelect extends Component {
     if (e) {
       this.openingEvent = null;
     }
-    this._highlighted = undefined;
+    this._highlight(undefined);
   }
 
   @action
@@ -178,10 +178,14 @@ export default class PowerSelect extends Component {
   @action
   _search(term) {
     this.searchText = this.lastSearchedText = term;
+    this._resetHighlighted();
   }
 
   @action
   _highlight(opt) {
+    if (opt && get(opt, 'disabled')) {
+      return;
+    }
     this._highlighted = opt;
   }
 
@@ -291,15 +295,15 @@ export default class PowerSelect extends Component {
     let highlighted;
     let defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
-      highlighted = defHighlighted({ results: this.results, highlighted: this.highlighted, selected: this.selected});
+      highlighted = defHighlighted({ results: this.results, highlighted: this._highlighted, selected: this.selected});
     } else {
       highlighted = defHighlighted
     }
-    this._highlighted = highlighted;
+    this._highlight(highlighted);
   }
 
   _filter(options, term, skipDisabled = false) {
-    let optionMatcher = getOptionMatcher(this.args.optionMatcher || defaultMatcher, defaultMatcher, this.args.searchField);
+    let optionMatcher = getOptionMatcher(this.args.matcher || defaultMatcher, defaultMatcher, this.args.searchField);
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 
