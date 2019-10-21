@@ -236,7 +236,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
     this.didFocusInside = function(select, event) {
       assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-      assert.equal(typeof select.highlighted, 'object', 'select.highlighted is a string');
+      assert.equal(typeof select.highlighted, 'undefined', 'select.highlighted is undefined');
       assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
       assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
       assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');

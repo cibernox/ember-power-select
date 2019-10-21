@@ -43,7 +43,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @search={{handleSearch}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @search={{this.handleSearch}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -129,7 +129,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
   });
 
-  test('The onKeydown can be used to easily allow to select on tab', async function(assert) {
+  test('The `@onKeydown` can be used to easily allow to select on tab', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -141,7 +141,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onKeydown={{onKeyDown}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onKeydown={{this.onKeyDown}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);

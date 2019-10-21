@@ -190,18 +190,18 @@ export default class PowerSelect extends Component {
   }
 
   @action
-  _select(selected, select, e) {
-    if (!isEqual(select.selected, selected)) {
-      this.args.onChange(selected, select, e);
+  _select(selected, e) {
+    if (!isEqual(this.storedAPI.selected, selected)) {
+      this.args.onChange(selected, this.storedAPI, e);
     }
   }
 
   @action
-  _choose(selected, select, e) {
-    let selection = this.args.buildSelection ? this.args.buildSelection(selected, select) : selected;
-    select.actions.select(selection, select, e);
+  _choose(selected, e) {
+    let selection = this.args.buildSelection ? this.args.buildSelection(selected, this.storedAPI) : selected;
+    this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
-      select.actions.close(e);
+      this.storedAPI.actions.close(e);
       // return false;
     }
   }
@@ -262,7 +262,7 @@ export default class PowerSelect extends Component {
 
   _handleKeyEnter(select, e) {
     if (select.isOpen && select.highlighted !== undefined) {
-      select.actions.choose(select.highlighted, select, e);
+      select.actions.choose(select.highlighted, e);
       e.stopImmediatePropagation();
       return false;
     }
@@ -274,7 +274,7 @@ export default class PowerSelect extends Component {
     } else if (select.isOpen && select.highlighted !== undefined) {
       e.stopImmediatePropagation();
       e.preventDefault(); // Prevents scrolling of the page.
-      select.actions.choose(select.highlighted, select, e);
+      select.actions.choose(select.highlighted, e);
     }
   }
 
