@@ -151,10 +151,8 @@ export default class PowerSelect extends Component {
       return;
     }
     if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) { // Keys 0-9, a-z or numpad keys
-      // assert('Typing on the trigger is not yet implemented', false);
       this.triggerTypingTask.perform(e);
     } else if (e.keyCode === 32) {  // Space
-      // assert('Pressing space on the trigger is not yet implemented', false);
       this._handleKeySpace(this.storedAPI, e);
     } else {
       return this._routeKeydown(this.storedAPI, e);
@@ -163,7 +161,9 @@ export default class PowerSelect extends Component {
 
   @action
   handleFocus(event) {
-    this.isActive = true;
+    if (!this.isDestroying) {
+      this.isActive = true;
+    }
     if (this.args.onFocus) {
       this.args.onFocus(this.storedAPI, event);
     }
@@ -171,7 +171,12 @@ export default class PowerSelect extends Component {
 
   @action
   handleBlur() {
-    // noop
+    if (!this.isDestroying) {
+      this.isActive = false;
+    }
+    if (this.args.onBlur) {
+      this.args.onBlur(this.storedAPI, event);
+    }
   }
 
   // Methods

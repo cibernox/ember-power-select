@@ -147,8 +147,8 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
 
     await clickTrigger();
-    triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
-    triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 9);
     assert.dom('.ember-power-select-trigger').hasText('three', 'The highlighted options has been selected');
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is opened');
@@ -228,7 +228,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onFocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onFocus={{this.handleFocus}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);

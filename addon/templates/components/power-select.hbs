@@ -23,13 +23,13 @@
     lastSearchedText=this.lastSearchedText
     actions=(assign dropdown.actions this._publicAPIActions)
   )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
-    {{!-- _repeatingChar=this._repeatingChar --}}
-    {{!-- _expirableSearchText=this._expirableSearchText --}}
     <dropdown.Trigger
       @eventType={{or @eventType "mousedown"}}
       {{did-insert this._registerAPI publicAPI}}
       {{did-update this._registerAPI publicAPI}}
       {{on "keydown" this.handleTriggerKeydown}}
+      {{on "focus" this.handleFocus}}
+      {{on "blur" this.handleBlur}}
       class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
       aria-describedby={{@ariaDescribedBy}}
       aria-invalid={{@ariaInvalid}}
@@ -51,7 +51,7 @@
           @onBlur={{this.handleBlur}}
           @extra={{@extra}}
           @listboxId={{listboxId}}
-          {{!-- @onInput={{this.handleInput}} --}}
+          @onInput={{this.handleInput}}
           @onKeydown={{this.handleKeydown}}
           @placeholder={{@placeholder}}
           @placeholderComponent={{this.placeholderComponent}}
