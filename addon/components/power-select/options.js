@@ -80,7 +80,7 @@ export default class Options extends Component {
       });
     }
     if (role !== 'group') {
-      this.args.select.actions.scrollTo(this.args.select.highlighted, this.args.select);
+      this.args.select.actions.scrollTo(this.args.select.highlighted);
     }
   }
 

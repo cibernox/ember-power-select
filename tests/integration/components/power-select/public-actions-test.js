@@ -649,7 +649,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
   });
 
-  test('The given `scrollTo` function is invoken when a single select wants to scroll to an element', async function(assert) {
+  test('The given `scrollTo` function is invoked when a single select wants to scroll to an element', async function(assert) {
     assert.expect(22);
     this.numbers = numbers;
     this.storeAPI = (select) => {
@@ -660,7 +660,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       assertPublicAPIShape(assert, select);
     };
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @registerAPI={{storeAPI}} @scrollTo={{scrollTo}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} @registerAPI={{this.storeAPI}} @scrollTo={{scrollTo}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -668,7 +668,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     run(() => this.selectAPI.actions.scrollTo('three'));
   });
 
-  test('The given `scrollTo` function is invoken when a multiple select wants to scroll to an element', async function(assert) {
+  test('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function(assert) {
     assert.expect(22);
     this.numbers = numbers;
     this.storeAPI = (select) => {

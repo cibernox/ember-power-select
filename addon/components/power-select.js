@@ -2,6 +2,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
 import { isEqual } from '@ember/utils';
 import { assert } from '@ember/debug';
 import {
@@ -212,7 +213,8 @@ export default class PowerSelect extends Component {
   }
 
   @action
-  _scrollTo(option, select) {
+  _scrollTo(option) {
+    let select = this.storedAPI;
     if (!document || !option) {
       return;
     }
@@ -243,6 +245,9 @@ export default class PowerSelect extends Component {
   @action
   _registerAPI(_, [publicAPI]) {
     this.storedAPI = publicAPI;
+    if (this.args.registerAPI) {
+      scheduleOnce('actions', this.args.registerAPI, publicAPI);
+    }
   }
 
   _defaultBuildSelection(option) {
