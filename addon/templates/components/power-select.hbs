@@ -39,6 +39,7 @@
       role={{or @triggerRole "button"}}
       title={{@title}}
       id={{@triggerId}}
+      tabindex={{and (not @disabled) (or @tabindex "0")}}
       >
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
         <Trigger
@@ -60,8 +61,8 @@
         </Trigger>
       {{/let}}
     </dropdown.Trigger>
-    <dropdown.Content class="ember-power-select-dropdown {{@dropdownClass}}">
-      {{#let (component (or @beforeOptionsComponent "power-select/before-options")) as |BeforeOptions|}}
+    <dropdown.Content class="ember-power-select-dropdown{{if publicAPI.isActive " ember-power-select-dropdown--active"}} {{@dropdownClass}}">
+      {{#let (component (if (eq @beforeOptionsComponent undefined) "power-select/before-options" @beforeOptionsComponent)) as |BeforeOptions|}}
         <BeforeOptions
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
@@ -73,7 +74,7 @@
           @placeholderComponent={{this.placeholderComponent}}
           @extra={{@extra}}
           @listboxId={{listboxId}}
-          {{!-- @selectedItemComponent={{@selectedItemComponent}} --}}
+          @selectedItemComponent={{@selectedItemComponent}}
           @searchPlaceholder={{@searchPlaceholder}}
           />
       {{/let}}
