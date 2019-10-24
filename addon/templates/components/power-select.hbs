@@ -14,7 +14,7 @@
   {{#let (assign dropdown (hash
     selected=this.selected
     highlighted=this.highlighted
-    options=@options
+    options=this.options
     results=this.results
     resultsCount=this.resultsCount
     loading=this.loading
@@ -25,6 +25,7 @@
   )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
     <dropdown.Trigger
       @eventType={{or @eventType "mousedown"}}
+      {{did-update this._updateOptions @options}}
       {{did-insert this._registerAPI publicAPI}}
       {{did-update this._registerAPI publicAPI}}
       {{on "keydown" this.handleTriggerKeydown}}
@@ -93,6 +94,7 @@
       {{else}}
         {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
           <Options
+            @loadingMessage={{or @loadingMessage "Loading options..."}}
             @select={{publicAPI}}
             @options={{publicAPI.results}}
             @groupIndex=""

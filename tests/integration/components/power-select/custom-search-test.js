@@ -34,7 +34,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     this.searchFn = function() {};
 
     await render(hbs`
-      <PowerSelect @options={{options}} @search={{searchFn}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{options}} @search={{searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);

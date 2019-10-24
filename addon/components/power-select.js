@@ -32,6 +32,7 @@ export default class PowerSelect extends Component {
   @tracked isActive = false
   @tracked _repeatingChar = ''
   @tracked _expirableSearchText = ''
+  @tracked loading = false
   storedAPI = undefined
 
   // Getters
@@ -70,12 +71,22 @@ export default class PowerSelect extends Component {
   @tracked searchText = ''
   @tracked lastSearchedText = ''
   @tracked _highlighted = undefined
+  @tracked _searchResult
 
   get results() {
     if (this.searchText.length > 0) {
-      return this._filter(this.args.options, this.searchText);
+      if (this.args.search) {
+        return this._searchResult || this.options;
+      } else {
+        return this._filter(this.options, this.searchText);
+      }
+    } else {
+      return this.options;
     }
-    return this.args.options;
+  }
+
+  get options() {
+    return this._resolvedOptions || this.args.options;
   }
 
   get resultsCount() {
@@ -88,10 +99,6 @@ export default class PowerSelect extends Component {
 
   get highlighted() {
     return this._highlighted; // || this.selected || (this.results && this.results[0]);
-  }
-
-  get loading() {
-    return false;
   }
 
   // Actions
@@ -183,8 +190,32 @@ export default class PowerSelect extends Component {
   // Methods
   @action
   _search(term) {
-    this.searchText = this.lastSearchedText = term;
-    this._resetHighlighted();
+    if (this.args.search) {
+      this._performSearch(term);
+    } else {
+      this.searchText = this.lastSearchedText = term;
+      this._resetHighlighted();
+    }
+  }
+
+  @action
+  _updateOptions() {
+    if (this.args.options && typeof this.args.options.then === 'function') {
+      if (this._optionsPromise === this.args.options) return; // promise is still
+      let currentOptionsPromise = this.args.options;
+      this._lastOptionsPromise = currentOptionsPromise;
+      this.loading = true;
+      this._lastOptionsPromise.then(resolvedOptions => {
+        if (this._lastOptionsPromise === currentOptionsPromise) {
+          this.loading = false;
+          this._resolvedOptions = resolvedOptions;
+        }
+      }).catch(() => {
+        if (this._lastOptionsPromise === currentOptionsPromise) {
+          this.loading = false;
+        }
+      });
+    }
   }
 
   @action
@@ -247,6 +278,30 @@ export default class PowerSelect extends Component {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
       scheduleOnce('actions', this.args.registerAPI, publicAPI);
+    }
+  }
+
+  _performSearch(term) {
+    this.searchText = term;
+    let searchResult = this.args.search(term, this.storedAPI);
+    if (searchResult && typeof searchResult.then === 'function') {
+      this.loading = true;
+      this._lastSearchPromise = searchResult;
+      searchResult.then(results => {
+        if (this._lastSearchPromise === searchResult) {
+          this._searchResult = results;
+          this.loading = false;
+          this.lastSearchedText = term;
+        }
+      }).catch(() => {
+        if (this._lastSearchPromise === searchResult) {
+          this.loading = false;
+          this.lastSearchedText = term;
+        }
+      });
+    } else {
+      this.lastSearchedText = term;
+      this._searchResult = searchResult;
     }
   }
 
