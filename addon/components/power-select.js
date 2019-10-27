@@ -28,6 +28,7 @@ export default class PowerSelect extends Component {
   }
 
   // Tracked properties
+  @tracked _resolvedOptions
   @tracked lastSearchedText
   @tracked isActive = false
   @tracked _repeatingChar = ''

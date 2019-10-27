@@ -115,7 +115,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option:nth-child(14)').hasText('fourteen');
   });
 
-  skip('If the passed options is a promise and it\'s not resolved the component shows a Loading message', async function(assert) {
+  test('If the passed options is a promise and it\'s not resolved the component shows a Loading message', async function(assert) {
     assert.expect(4);
 
     this.numbersPromise = [];
@@ -140,7 +140,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option').exists({ count: 20 }, 'The results appear when the promise is resolved');
   });
 
-  skip('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is false, no loading message is shown', async function(assert) {
+  test('If the passed options is a promise and it\'s not resolved but the `loadingMessage` attribute is false, no loading message is shown', async function(assert) {
     assert.expect(2);
     this.numbersPromise = [];
 
@@ -1076,7 +1076,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option[aria-current=true]').hasText('five', 'the given element is highlighted instead of the first, as usual');
   });
 
-  skip('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
+  test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
     let User = EmberObject.extend({
       isEqual(other) {
         return get(this, 'name') === get(other, 'name');
