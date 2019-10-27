@@ -11,7 +11,6 @@ import { numbers, names, countries } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
-import PowerSelect from 'ember-power-select/components/power-select';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 const PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
@@ -81,8 +80,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-search').exists('The search box is rendered');
   });
 
-  skip("The search box shouldn't gain focus if autofocus is disabled", async function(assert) {
-    // Not working since migration to glimmer
+  test("The search box shouldn't gain focus if autofocus is disabled", async function(assert) {
     assert.expect(1);
     this.numbers = numbers;
 
@@ -137,7 +135,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await waitFor('.ember-power-select-options');
     assert.dom('.ember-power-select-option').hasText('Loading options...', 'The loading message appears while the promise is pending');
     assert.dom('.ember-power-select-option').hasClass('ember-power-select-option--loading-message', 'The row has a special class to differentiate it from regular options');
-    await settled()
+    await settled();
     assert.dom('.ember-power-select-option').doesNotIncludeText('Loading options', 'The loading message is gone');
     assert.dom('.ember-power-select-option').exists({ count: 20 }, 'The results appear when the promise is resolved');
   });
