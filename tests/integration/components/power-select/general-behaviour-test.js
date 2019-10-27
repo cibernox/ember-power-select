@@ -760,7 +760,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('one', 'The first element is highlighted again');
   });
 
-  skip('If the passed options is a promise that is resolved, searching should filter the results from a promise', async function(assert) {
+  test('If the passed options is a promise that is resolved, searching should filter the results from a promise', async function(assert) {
     assert.expect(5);
 
     this.numbersPromise = new RSVP.Promise(function(resolve) {
@@ -770,7 +770,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     });
 
     await render(hbs`
-      <PowerSelect @options={{numbersPromise}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbersPromise}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -779,7 +779,6 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     await clickTrigger();
     await typeInSearch('o');
-
     assert.dom('.ember-power-select-option').exists({ count: 4 }, 'The dropdown is opened and results shown.');
     assert.dom('.ember-power-select-option:nth-child(1)').hasText('one');
     assert.dom('.ember-power-select-option:nth-child(2)').hasText('two');
