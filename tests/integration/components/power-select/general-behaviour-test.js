@@ -430,11 +430,11 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option').hasClass('ember-power-select-option--no-matches-message', 'The row has a special class to differentiate it from regular options');
   });
 
-  skip('If there is a search action and the options is empty it shows the `searchMessage`, and if after searching there is no results, it shows the `noResults` message', async function(assert) {
+  test('If there is a search action and the options is empty it shows the `searchMessage`, and if after searching there is no results, it shows the `noResults` message', async function(assert) {
     this.options = [];
     this.search = () => [];
     await render(hbs`
-      <PowerSelect @search={{search}} @options={{options}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @search={{this.search}} @options={{this.options}} @searchEnabled={{true}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -458,11 +458,11 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option').hasText('Nope');
   });
 
-  skip('If there is a search action, the options are empty and the `seachMessage` in intentionally empty, it doesn\'t show anything, and if you seach and there is no results it shows the `noResultsMessage`', async function(assert) {
+  test('If there is a search action, the options are empty and the `searchMessage` in intentionally empty, it doesn\'t show anything, and if you search and there is no results it shows the `noResultsMessage`', async function(assert) {
     this.options = [];
     this.search = () => [];
     await render(hbs`
-      <PowerSelect @search={{search}} @searchMessage={{false}} @searchEnabled={{true}} @options={{options}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @search={{this.search}} @searchMessage={{false}} @searchEnabled={{true}} @options={{this.options}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
