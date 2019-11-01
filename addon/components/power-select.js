@@ -29,6 +29,7 @@ export default class PowerSelect extends Component {
 
   // Tracked properties
   @tracked _resolvedOptions
+  @tracked _resolvedSelected
   @tracked lastSearchedText
   @tracked isActive = false
   @tracked _repeatingChar = ''
@@ -95,7 +96,12 @@ export default class PowerSelect extends Component {
   }
 
   get selected() {
-    return this.args.selected;
+    if (this._resolvedSelected) {
+      return this._resolvedSelected;
+    } else if(this.args.selected && typeof this.args.selected.then !== 'function') {
+      return this.args.selected;
+    }
+    return undefined;
   }
 
   get highlighted() {
@@ -201,8 +207,9 @@ export default class PowerSelect extends Component {
 
   @action
   _updateOptions() {
-    if (this.args.options && typeof this.args.options.then === 'function') {
-      if (this._optionsPromise === this.args.options) return; // promise is still
+    if (!this.args.options) return
+    if (typeof this.args.options.then === 'function') {
+      if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
       let currentOptionsPromise = this.args.options;
       this._lastOptionsPromise = currentOptionsPromise;
       this.loading = true;
@@ -210,12 +217,40 @@ export default class PowerSelect extends Component {
         if (this._lastOptionsPromise === currentOptionsPromise) {
           this.loading = false;
           this._resolvedOptions = resolvedOptions;
+          this._resetHighlighted();
         }
       }).catch(() => {
         if (this._lastOptionsPromise === currentOptionsPromise) {
           this.loading = false;
         }
       });
+    } else {
+      scheduleOnce('actions', this, this._resetHighlighted);
+    }
+  }
+
+  @action
+  _updateHighlighted() {
+    if (this.storedAPI.isOpen) {
+      this._resetHighlighted();
+    }
+  }
+
+  @action
+  _updateSelected() {
+    if (!this.args.selected) return;
+    if (typeof this.args.selected.then === 'function') {
+      if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
+      let currentSelectedPromise = this.args.selected;
+      this._lastSelectedPromise = currentSelectedPromise;
+      this._lastSelectedPromise.then(resolvedSelected => {
+        if (this._lastSelectedPromise === currentSelectedPromise) {
+          this._resolvedSelected = resolvedSelected;
+          this._highlight(resolvedSelected)
+        }
+      });
+    } else {
+      this._highlight(this.args.selected)
     }
   }
 

@@ -353,12 +353,12 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     }, 150);
   });
 
-  skip('If the content of the selected is refreshed while opened the first element of the list gets highlighted', async function(assert) {
+  test('If the content of the options is refreshed while opened the first element of the list gets highlighted', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @searchEnabled={{true}} @closeOnSelect={{false}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{foo}} @searchEnabled={{true}} @closeOnSelect={{false}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -366,6 +366,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('two', 'The second options is highlighted');
     run(() => this.set('numbers', ['foo', 'bar', 'baz']));
+    await settled();
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('foo', 'The first element is highlighted');
   });
 
@@ -800,7 +801,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('ember-power-select-clear-btn').doesNotExist('There is no clear button');
   });
 
-  skip('If the passed selected element is a pending promise, the first element is highlighted and the trigger is empty', async function(assert) {
+  test('If the passed selected element is a pending promise, the first element is highlighted and the trigger is empty', async function(assert) {
     assert.expect(3);
     this.numbers = numbers;
     await render(hbs`
@@ -819,7 +820,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
   });
 
-  skip('If the passed selected element is a resolved promise, that element is selected and the trigger contains the proper text', async function(assert) {
+  test('If the passed selected element is a resolved promise, that element is selected and the trigger contains the proper text', async function(assert) {
     assert.expect(3);
 
     this.numbers = numbers;
@@ -837,7 +838,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText('four', 'The trigger has the proper content');
   });
 
-  skip('If the passed selected element is a pending promise that resolves while the select is opened, the highlighted & selected elements get updated, along with the trigger', async function(assert) {
+  test('If the passed selected element is a pending promise that resolves while the select is opened, the highlighted & selected elements get updated, along with the trigger', async function(assert) {
     assert.expect(6);
 
     this.numbers = numbers;
@@ -862,12 +863,12 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText('four', 'The trigger has the proper content');
   });
 
-  skip('When a promise resolves it doesn\'t overwrite a previous value if it isn\'t the same promise it resolved from', async function(assert) {
-    assert.expect(6);
+  test('When a promise resolves it doesn\'t overwrite a previous value if it isn\'t the same promise it resolved from', async function(assert) {
+    assert.expect(5);
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -891,8 +892,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
 
     await promise1;
-    assert.dom('.ember-power-select-option[aria-current="true"]').hasText('five', 'The 5th element is highlighted');
-    assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('five', 'The 5th element is highlighted');
+    assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('five', 'The 5th element is markes as selected');
     assert.dom('.ember-power-select-trigger').hasText('five', 'The trigger has the proper content');
   });
 
@@ -1018,7 +1018,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('#alternative-destination .ember-power-select-dropdown').exists('Dropdown is rendered inside the destination element');
   });
 
-  skip('[BUGFIX] When the component is open and it has a `search` action, if options get updated the highlighted items is reset', async function(assert) {
+  test('[BUGFIX] When the component is open and it has a `search` action, if options get updated the highlighted items is reset', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -1054,14 +1054,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   });
 
   test('the item that is highlighted by default can be customized passing a function to `@defaultHighlighted`', async function(assert) {
-    assert.expect(5);
+    assert.expect(6);
 
     this.numbers = numbers;
     this.selected = numbers[1];
+
     this.defaultHighlighted = function({ selected, highlighted, results }) {
       assert.ok(results instanceof Array, 'select.results is an array');
       assert.equal(selected, numbers[1]);
-      assert.equal(highlighted, undefined);
       return 'five';
     };
     await render(hbs`
@@ -1155,13 +1155,13 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 333px;right: 444px/, 'The style attribute is the expected one');
   });
 
-  skip('The `selected` option can be a thenable', async function(assert) {
+  test('The `selected` option can be a thenable', async function(assert) {
     assert.expect(6);
     let pets = [{ name: 'Toby' }, { name: 'Rex' }, { name: 'Lucius' }, { name: 'Donatello' }];
     this.mainUser = { pets, bestie: null };
 
     await render(hbs`
-      <PowerSelect @options={{mainUser.pets}} @selected={{mainUser.bestie}} @searchField="name" @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.mainUser.pets}} @selected={{this.mainUser.bestie}} @searchField="name" @onChange={{action (mut foo)}} as |option|>
         {{option.name}}
       </PowerSelect>
     `);
