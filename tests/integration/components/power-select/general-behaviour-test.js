@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, triggerKeyEvent, focus, settled, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -284,7 +284,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
   });
 
-  skip('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', async function(assert) {
+  test('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', async function(assert) {
     let done = assert.async();
     assert.expect(2);
 
@@ -319,7 +319,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     }, 150);
   });
 
-  skip('If the content of the options is updated (starting with populated array proxy) the available options should also refresh', async function(assert) {
+  test('If the content of the options is updated (starting with populated array proxy) the available options should also refresh', async function(assert) {
     let done = assert.async();
     assert.expect(5);
 
@@ -1182,7 +1182,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText('Lucius', 'The trigger has the proper content');
   });
 
-  skip('If the options change and the new value is PromiseArrayProxy, the content of that proxy is set immediately while the promise resolves', async function(assert) {
+  test('If the options change and the new value is PromiseArrayProxy, the content of that proxy is set immediately while the promise resolves', async function(assert) {
     this.options = ['initial', 'options'];
     this.refreshCollection = () => {
       let promise = new RSVP.Promise((resolve) => {
@@ -1218,7 +1218,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasAttribute('title', 'The title');
   });
 
-  skip('Constant PromiseProxy references are tracked when .content changes', async function(assert) {
+  test('Constant PromiseProxy references are tracked when .content changes', async function(assert) {
     let initial = null;
     //initial = countries[1];
     this.proxy = PromiseObject.create({content: initial, promise: Promise.resolve(initial)});
@@ -1235,7 +1235,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <button id="update-proxy-btn" onclick={{action updateProxy}}>Update proxy content</button>
+      <button id="update-proxy-btn" {{on "click" this.updateProxy}}>Update proxy content</button>
       <br>
       <PowerSelect @selected={{proxy}} @options={{countries}} @onChange={{action (mut foo)}} as |option|>
         {{option.name}}
@@ -1246,7 +1246,6 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-trigger').hasText(initial ? initial.name : '', 'Nothing is selected yet');
 
     await click('#update-proxy-btn');
-
     assert.dom('.ember-power-select-trigger').hasText(countries[0].name, 'The trigger has the proper content');
 
     //TODO: also try starting from non-null value and maybe also going back to null?

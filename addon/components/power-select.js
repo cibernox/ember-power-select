@@ -2,6 +2,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
+import { addObserver, removeObserver } from '@ember/object/observers';
 import { scheduleOnce } from '@ember/runloop';
 import { isEqual } from '@ember/utils';
 import { assert } from '@ember/debug';
@@ -242,6 +243,12 @@ export default class PowerSelect extends Component {
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
       let currentSelectedPromise = this.args.selected;
+      if (Object.hasOwnProperty.call(currentSelectedPromise, 'content')) { // seems a PromiseProxy
+        if (this._lastSelectedPromise) {
+          removeObserver(this._lastSelectedPromise, 'content', this._selectedObserverCallback);
+        }
+        addObserver(currentSelectedPromise, 'content', this, this._selectedObserverCallback);
+      }
       this._lastSelectedPromise = currentSelectedPromise;
       this._lastSelectedPromise.then(resolvedSelected => {
         if (this._lastSelectedPromise === currentSelectedPromise) {
@@ -252,6 +259,11 @@ export default class PowerSelect extends Component {
     } else {
       this._highlight(this.args.selected)
     }
+  }
+
+  _selectedObserverCallback() {
+    this._resolvedSelected = this._lastSelectedPromise;
+    this._highlight(this._resolvedSelected)
   }
 
   @action
