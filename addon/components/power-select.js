@@ -331,15 +331,30 @@ export default class PowerSelect extends Component {
 
   _performSearch(term) {
     this.searchText = term;
+    if (term === '') {
+      this.loading = false;
+      this.lastSearchedText = term;
+      if (this._lastSearchPromise !== undefined) {
+        if (typeof this._lastSearchPromise.cancel === 'function') {
+          this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
+        }
+        this._lastSearchPromise = undefined;
+      }
+      return;
+    }
     let searchResult = this.args.search(term, this.storedAPI);
     if (searchResult && typeof searchResult.then === 'function') {
       this.loading = true;
+      if (this._lastSearchPromise !== undefined && typeof this._lastSearchPromise.cancel === 'function') {
+        this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
+      }
       this._lastSearchPromise = searchResult;
       searchResult.then(results => {
         if (this._lastSearchPromise === searchResult) {
           this._searchResult = results;
           this.loading = false;
           this.lastSearchedText = term;
+          this._resetHighlighted();
         }
       }).catch(() => {
         if (this._lastSearchPromise === searchResult) {
