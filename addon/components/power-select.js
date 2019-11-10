@@ -99,7 +99,7 @@ export default class PowerSelect extends Component {
   get selected() {
     if (this._resolvedSelected) {
       return this._resolvedSelected;
-    } else if(this.args.selected && typeof this.args.selected.then !== 'function') {
+    } else if (this.args.selected && typeof this.args.selected.then !== 'function') {
       return this.args.selected;
     }
     return undefined;
@@ -257,6 +257,7 @@ export default class PowerSelect extends Component {
         }
       });
     } else {
+      this._resolvedSelected = undefined;
       this._highlight(this.args.selected)
     }
   }
