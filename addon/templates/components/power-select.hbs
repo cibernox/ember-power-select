@@ -48,10 +48,12 @@
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
         <Trigger
           @allowClear={{@allowClear}}
+          @buildSelection={{@buildSelection}}
           @loadingMessage={{or @loadingMessage "Loading options..."}}
           @selectedItemComponent={{@selectedItemComponent}}
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
+          @searchField={{@searchField}}
           @onFocus={{this.handleFocus}}
           @onBlur={{this.handleBlur}}
           @extra={{@extra}}
