@@ -31,6 +31,7 @@
       {{did-update this._updateSelected @selected}}
       {{did-insert this._registerAPI publicAPI}}
       {{did-update this._registerAPI publicAPI}}
+      {{did-update this._performSearch this.searchText}}
       {{on "keydown" this.handleTriggerKeydown}}
       {{on "focus" this.handleFocus}}
       {{on "blur" this.handleBlur}}

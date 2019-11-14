@@ -198,10 +198,10 @@ export default class PowerSelect extends Component {
   // Methods
   @action
   _search(term) {
-    if (this.args.search) {
-      this._performSearch(term);
-    } else {
-      this.searchText = this.lastSearchedText = term;
+    if (this.searchText === term) return;
+    this.searchText = term;
+    if (!this.args.search) {
+      this.lastSearchedText = term;
       this._resetHighlighted();
     }
   }
@@ -330,8 +330,9 @@ export default class PowerSelect extends Component {
     }
   }
 
-  _performSearch(term) {
-    this.searchText = term;
+  @action
+  _performSearch(_, [term]) {
+    if (!this.args.search) return;
     if (term === '') {
       this.loading = false;
       this.lastSearchedText = term;
