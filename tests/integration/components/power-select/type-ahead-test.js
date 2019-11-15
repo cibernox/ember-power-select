@@ -54,11 +54,14 @@ async function typeString(trigger, str, times = 1) {
 module('Integration | Component | Ember Power Select (Type Ahead Native Behaviour)', function(hooks) {
   setupRenderingTest(hooks);
 
-  [['Closed', WITH_EPS_CLOSED], ['Open', WITH_EPS_OPEN]].forEach(([state, helpers]) => {
+  [
+    ['Closed', WITH_EPS_CLOSED],
+    ['Open', WITH_EPS_OPEN]
+  ].forEach(([state, helpers]) => {
     test(`(${state}) Repeating the first character cycles through the results`, async function(assert) {
       this.names = namesStartingWithA;
       await render(hbs`
-        <PowerSelect @options={{names}} @onChange={{action (mut selected)}} @selected={{selected}} as |option|>
+        <PowerSelect @options={{this.names}} @onChange={{action (mut this.selected)}} @selected={{this.selected}} as |option|>
           {{option}}
         </PowerSelect>
       `);
