@@ -1,5 +1,7 @@
 # Master
 
+- [CHORE] Update to glimmer components
+
 # 3.0.4
 - [BUGFIX] Allow to customize `calculatePosition` by extending from PowerSelect.
 - [BUGFIX] Fix default values for `triggerComponent` and `buildSelection` in `<PowerSelectMultiple>`
