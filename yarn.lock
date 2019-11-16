@@ -4467,9 +4467,10 @@ ember-auto-import@^1.2.19:
     walk-sync "^0.3.3"
     webpack "~4.28"
 
-"ember-basic-dropdown@git+ssh://git@github.com:cibernox/ember-basic-dropdown.git#update-to-true-optane":
-  version "2.0.9"
-  resolved "git+ssh://git@github.com:cibernox/ember-basic-dropdown.git#15a7bd0dbde5b5ecd99f97b1911fd1bc2d3dc6fc"
+ember-basic-dropdown@3.0.0-alpha.1:
+  version "3.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-3.0.0-alpha.1.tgz#1680a800c18b10d20c9b4b78489e030985526935"
+  integrity sha512-arpZ2yTlxF9vDoKB/LqNJfYa21mGp2PLp9e/S1sVD2o3m1IfWeyME1WnIwIVJ5MkBhZ4VFD9+nE2KyZsee+UJA==
   dependencies:
     "@ember/render-modifiers" "^1.0.2"
     "@glimmer/component" "^0.14.0-alpha.12"
