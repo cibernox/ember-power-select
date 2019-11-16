@@ -45,7 +45,7 @@
   "dependencies": {
     "@ember-decorators/component": "^6.1.0",
     "@glimmer/component": "^0.14.0-alpha.12",
-    "ember-basic-dropdown": "git+ssh://git@github.com:cibernox/ember-basic-dropdown.git#15a7bd0dbde5b5ecd99f97b1911fd1bc2d3dc6fc",
+    "ember-basic-dropdown": "git+ssh://git@github.com:cibernox/ember-basic-dropdown.git#update-to-true-optane",
     "ember-cli-babel": "^7.11.0",
     "ember-cli-htmlbars": "^3.1.0",
     "ember-concurrency": "^1.0.0",

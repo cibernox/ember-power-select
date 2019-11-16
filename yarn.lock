@@ -4467,7 +4467,7 @@ ember-auto-import@^1.2.19:
     walk-sync "^0.3.3"
     webpack "~4.28"
 
-"ember-basic-dropdown@git+ssh://git@github.com:cibernox/ember-basic-dropdown.git#15a7bd0dbde5b5ecd99f97b1911fd1bc2d3dc6fc":
+"ember-basic-dropdown@git+ssh://git@github.com:cibernox/ember-basic-dropdown.git#update-to-true-optane":
   version "2.0.9"
   resolved "git+ssh://git@github.com:cibernox/ember-basic-dropdown.git#15a7bd0dbde5b5ecd99f97b1911fd1bc2d3dc6fc"
   dependencies:
