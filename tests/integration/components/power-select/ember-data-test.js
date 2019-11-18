@@ -66,7 +66,7 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     `);
 
     this.set('users', this.store.findAll('user'));
-    await settled()
+    await settled();
     await click('.ember-power-select-multiple-remove-btn');
     assert.dom('.ember-power-select-multiple-remove-btn').exists({ count: 9 }, 'Once the collection resolves the options render normally');
   });

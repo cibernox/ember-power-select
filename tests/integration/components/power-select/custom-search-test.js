@@ -34,7 +34,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     this.searchFn = function() {};
 
     await render(hbs`
-      <PowerSelect @options={{options}} @search={{searchFn}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{options}} @search={{searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -261,7 +261,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -446,7 +446,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @search={{searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number select|>
+      <PowerSelect @options={{numbers}} @search={{this.searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number select|>
         {{number}}:{{select.lastSearchedText}}
       </PowerSelect>
     `);
@@ -567,7 +567,6 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
   });
 
   test('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', async function(assert) {
-    assert.expect(7);
     this.countries = countries;
     this.matcherFn = function(option) {
       assert.equal(typeof option, 'object', 'The first argument received by the custom matches is the option itself');

@@ -1,7 +1,5 @@
-import { layout, tagName } from "@ember-decorators/component";
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import templateLayout from '../../templates/components/power-select/options';
 
 const isTouchDevice = (!!window && 'ontouchstart' in window);
 if(typeof FastBoot === 'undefined'){
@@ -25,7 +23,7 @@ if(typeof FastBoot === 'undefined'){
   })(window.Element.prototype);
 }
 
-export default @tagName('') @layout(templateLayout) class Options extends Component {
+export default class Options extends Component {
   isTouchDevice = isTouchDevice
 
   @action
@@ -34,7 +32,7 @@ export default @tagName('') @layout(templateLayout) class Options extends Compon
     if (role === 'group') {
       return;
     }
-    let findOptionAndPerform = (action, e) => {
+    let findOptionAndPerform = (action, select, e) => {
       let optionItem = e.target.closest('[data-option-index]');
       if (!optionItem) {
         return;
@@ -43,11 +41,11 @@ export default @tagName('') @layout(templateLayout) class Options extends Compon
         return; // Abort if the item or an ancestor is disabled
       }
       let optionIndex = optionItem.getAttribute('data-option-index');
-      action(this._optionFromIndex(optionIndex), e);
+      action(this._optionFromIndex(optionIndex), select, e);
     };
-    element.addEventListener('mouseup', (e) => findOptionAndPerform(this.select.actions.choose, e));
-    if (this.highlightOnHover) {
-      element.addEventListener('mouseover', (e) => findOptionAndPerform(this.select.actions.highlight, e));
+    element.addEventListener('mouseup', (e) => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e));
+    if (this.args.highlightOnHover) {
+      element.addEventListener('mouseover', (e) => findOptionAndPerform(this.args.select.actions.highlight, this.args.select, e));
     }
     if (this.isTouchDevice) {
       let touchMoveHandler = () => {
@@ -78,17 +76,17 @@ export default @tagName('') @layout(templateLayout) class Options extends Compon
         }
 
         let optionIndex = optionItem.getAttribute('data-option-index');
-        this.select.actions.choose(this._optionFromIndex(optionIndex), e);
+        this.args.select.actions.choose(this._optionFromIndex(optionIndex), e);
       });
     }
     if (role !== 'group') {
-      this.select.actions.scrollTo(this.select.highlighted);
+      this.args.select.actions.scrollTo(this.args.select.highlighted);
     }
   }
 
   _optionFromIndex(index) {
     let parts = index.split('.');
-    let option = this.options[parseInt(parts[0], 10)];
+    let option = this.args.options[parseInt(parts[0], 10)];
     for (let i = 1; i < parts.length; i++) {
       option = option.options[parseInt(parts[i], 10)];
     }

@@ -1,55 +1,48 @@
-import { layout, tagName } from "@ember-decorators/component";
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
-import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import templateLayout from '../../templates/components/power-select-multiple/trigger';
 
 const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
-export default @tagName('') @layout(templateLayout) class Trigger extends Component {
+export default class Trigger extends Component {
   @service textMeasurer
-  _lastIsOpen = false
 
-  // CPs
-  @computed('select.{searchText.length,selected.length}')
+  // Properties
   get triggerMultipleInputStyle() {
-    scheduleOnce('actions', this.select.actions.reposition);
-    if (!this.select.selected || get(this.select.selected, 'length') === 0) {
+    scheduleOnce('actions', this.args.select.actions.reposition);
+    if (!this.args.select.selected || get(this.args.select.selected, 'length') === 0) {
       return htmlSafe('width: 100%;');
     } else {
       let textWidth = 0;
       if (this.inputFont) {
-        textWidth = this.textMeasurer.width(this.select.searchText, this.inputFont);
+        textWidth = this.textMeasurer.width(this.args.select.searchText, this.inputFont);
       }
       return htmlSafe(`width: ${textWidth + 25}px`);
     }
   }
 
-  @computed('placeholder', 'select.selected.length')
   get maybePlaceholder() {
     if (isIE) {
       return undefined;
     }
-    return (!this.select.selected || get(this.select.selected, 'length') === 0) ? (this.placeholder || '') : '';
-  }
-
-  // Lifecycle hooks
-  didReceiveAttrs() {
-    let oldSelect = this.oldSelect || {};
-    this.set('oldSelect', this.select);
-    if (oldSelect.isOpen && !this.select.isOpen) {
-      scheduleOnce('actions', null, this.select.actions.search, '');
-    }
+    return (!this.args.select.selected || get(this.args.select.selected, 'length') === 0) ? (this.args.placeholder || '') : '';
   }
 
   // Actions
+  @action
+  openChanged(_el, [isOpen]) {
+    if (isOpen === false && this._lastIsOpen === true) {
+      scheduleOnce('actions', null, this.args.select.actions.search, '');
+    }
+    this._lastIsOpen = isOpen;
+  }
+
   @action
   storeInputStyles(input) {
     let { fontStyle, fontVariant, fontWeight, fontSize, lineHeight, fontFamily } = window.getComputedStyle(input);
@@ -62,38 +55,38 @@ export default @tagName('') @layout(templateLayout) class Trigger extends Compon
     if (selectedIndex) {
       e.stopPropagation();
       e.preventDefault();
-      let object = this.selectedObject(this.select.selected, selectedIndex);
-      this.select.actions.choose(object);
+      let object = this.selectedObject(this.args.select.selected, selectedIndex);
+      this.args.select.actions.choose(object);
     }
   }
 
   @action
   handleInput(e) {
-    if (this.onInput && this.onInput(e) === false) {
+    if (this.args.onInput && this.args.onInput(e) === false) {
       return;
     }
-    this.select.actions.open(e);
+    this.args.select.actions.open(e);
   }
 
   @action
   handleKeydown(e) {
-    if (this.onKeydown && this.onKeydown(e) === false) {
+    if (this.args.onKeydown && this.args.onKeydown(e) === false) {
       e.stopPropagation();
       return false;
     }
     if (e.keyCode === 8) {
       e.stopPropagation();
       if (isBlank(e.target.value)) {
-        let lastSelection = this.select.selected[this.select.selected.length - 1];
+        let lastSelection = this.args.select.selected[this.args.select.selected.length - 1];
         if (lastSelection) {
-          this.select.actions.select(this.buildSelection(lastSelection, this.select), e);
+          this.args.select.actions.select(this.args.buildSelection(lastSelection, this.args.select), e);
           if (typeof lastSelection === 'string') {
-            this.select.actions.search(lastSelection);
+            this.args.select.actions.search(lastSelection);
           } else {
-            assert('`<PowerSelectMultiple>` requires a `@searchField` when the options are not strings to remove options using backspace', this.searchField);
-            this.select.actions.search(get(lastSelection, this.searchField));
+            assert('`<PowerSelectMultiple>` requires a `@searchField` when the options are not strings to remove options using backspace', this.args.searchField);
+            this.args.select.actions.search(get(lastSelection, this.args.searchField));
           }
-          this.select.actions.open(e);
+          this.args.select.actions.open(e);
         }
       }
     } else if (e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32) { // Keys 0-9, a-z or SPACE

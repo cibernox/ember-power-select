@@ -5,7 +5,6 @@ import hbs from 'htmlbars-inline-precompile';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import { get } from '@ember/object';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 
@@ -15,12 +14,12 @@ module('Integration | Component | Ember Power Select (Customization using compon
   test('selected option can be customized using triggerComponent', async function(assert) {
     assert.expect(3);
 
-    this.owner.register('component:selected-country', Component.extend({
-      layout: hbs`
+    this.owner.register('component:selected-country', class extends Component {
+      layout = hbs`
         <img src={{select.selected.flagUrl}} class="icon-flag {{if extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{select.selected.name}}">
         {{select.selected.name}}
       `
-    }));
+    });
 
     this.countries = countries;
     this.country = countries[1]; // Spain
@@ -38,19 +37,24 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
   test('triggerComponent receives loading message', async function(assert) {
     assert.expect(1);
-
+    this.countries = countries;
     this.owner.register('component:custom-trigger-component', Component.extend({
-      layout: hbs`<div class="custom-trigger-component">{{loadingMessage}}</div>`
+      layout: hbs`<div class="custom-trigger-component">{{@loadingMessage}}</div>`
     }));
     await render(hbs`
-      <PowerSelect @loadingMessage="hmmmm paella" @selected={{country}} @triggerComponent="custom-trigger-component" @onChange={{action (mut foo)}} as |country|>
+      <PowerSelect
+        @options={{this.countries}}
+        @loadingMessage="hmmmm paella"
+        @selected={{country}}
+        @triggerComponent="custom-trigger-component"
+        @onChange={{action (mut foo)}} as |country|>
         {{option}}
       </PowerSelect>
     `);
     assert.dom('.custom-trigger-component').hasText('hmmmm paella', 'The loading message is passed to the trigger component');
   });
 
-  test('selected item option can be customized using selectedItemComponent', async function(assert) {
+  test('selected item option can be customized using `@selectedItemComponent`', async function(assert) {
     assert.expect(3);
     this.owner.register('component:selected-item-country', Component.extend({
       layout: hbs`
@@ -72,7 +76,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-trigger').hasText('Spain', 'With the country name as the text.');
   });
 
-  test('the list of options can be customized using optionsComponent', async function(assert) {
+  test('the list of options can be customized using `@optionsComponent`', async function(assert) {
     assert.expect(2);
     this.owner.register('component:list-of-countries', Component.extend({
       layout: hbs`
@@ -104,7 +108,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-options').includesText('3. Russia', 'The component has access to the options');
   });
 
-  test('the `optionsComponent` receives the `extra` hash', async function(assert) {
+  test('the `@optionsComponent` receives the `@extra` hash', async function(assert) {
     assert.expect(2);
     this.owner.register('component:list-of-countries', Component.extend({
       layout: hbs`
@@ -136,7 +140,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-options').includesText('3. RU', 'The component uses the field in the extra has to render the options');
   });
 
-  test('the content before the list can be customized passing `beforeOptionsComponent`', async function(assert) {
+  test('the content before the list can be customized passing `@beforeOptionsComponent`', async function(assert) {
     assert.expect(4);
     this.owner.register('component:custom-before-options', Component.extend({
       layout: hbs`
@@ -224,7 +228,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
   });
 
   test('the `@triggerComponent` receives the `@onFocus` action that triggers it', async function(assert) {
-    assert.expect(10);
+    assert.expect(9);
     this.owner.register('component:custom-trigger-that-handles-focus', Component.extend({
       layout: hbs`<input type="text" id="focusable-input" onFocus={{@onFocus}}>`
     }));
@@ -232,7 +236,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
     this.didFocusInside = function(select, event) {
       assert.equal(typeof select.isOpen, 'boolean', 'select.isOpen is a boolean');
-      assert.equal(typeof select.highlighted, 'object', 'select.highlighted is a string');
       assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
       assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');
       assert.equal(typeof select.actions.close, 'function', 'select.actions.close is a function');
@@ -248,7 +251,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
         @selected={{country}}
         @onChange={{action (mut selected)}}
         @triggerComponent="custom-trigger-that-handles-focus"
-        @onFocus={{didFocusInside}} as |country|>
+        @onFocus={{this.didFocusInside}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -301,8 +304,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.groupedNumbers = groupedNumbers;
     let numberOfGroups = 5; // number of groups in groupedNumber;
 
-    let PowerSelectGroupComponent = get(this.owner.factoryFor('component:power-select/power-select-group'), 'class');
-    this.owner.register('component:custom-group-component', PowerSelectGroupComponent.extend({
+    this.owner.register('component:custom-group-component', Component.extend({
       layout: hbs`<div class="custom-component">{{yield}}</div>`
     }));
 
@@ -319,14 +321,12 @@ module('Integration | Component | Ember Power Select (Customization using compon
   test('`@groupComponent` has extension points', async function(assert) {
     this.groupedNumbers = groupedNumbers;
     let numberOfGroups = 5; // number of groups in groupedNumbers
-    assert.expect(4 * numberOfGroups + 1);
+    assert.expect(4 * numberOfGroups);
 
     let extra = { foo: 'bar' };
     this.extra = extra;
-    let PowerSelectGroupComponent = get(this.owner.factoryFor('component:power-select/power-select-group'), 'class');
-    assert.ok(PowerSelectGroupComponent, 'component:custom-group-component must be defined');
 
-    this.owner.register('component:custom-group-component', PowerSelectGroupComponent.extend({
+    this.owner.register('component:custom-group-component', Component.extend({
       init() {
         this._super(...arguments);
         assert.ok(isPresent(this.get('select')));
@@ -378,7 +378,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-options').includesText('3. RU', 'The component uses the field option in the `extra` hash to render the options');
   });
 
-  test('the power-select-multiple `triggerComponent` receives the `extra` hash', async function(assert) {
+  test('the power-select-multiple `@triggerComponent` receives the `@extra` hash', async function(assert) {
     assert.expect(1);
     this.owner.register('component:selected-country', Component.extend({
       layout: hbs`
@@ -390,7 +390,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelectMultiple @options={{countries}} @selected={{country}} @triggerComponent="selected-country" @onChange={{action (mut foo)}} @extra={{hash coolFlagIcon=true}} as |country|>
+      <PowerSelectMultiple @options={{this.countries}} @selected={{this.country}} @triggerComponent="selected-country" @onChange={{action (mut foo)}} @extra={{hash coolFlagIcon=true}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
     `);
@@ -400,7 +400,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-trigger .cool-flag-icon').exists({ count: 1 }, 'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
   });
 
-  test('the power-select-multiple `selectedItemComponent` receives the `extra` hash', async function(assert) {
+  test('the power-select-multiple `@selectedItemComponent` receives the `extra` hash', async function(assert) {
     assert.expect(1);
     this.owner.register('component:selected-item-country', Component.extend({
       layout: hbs`

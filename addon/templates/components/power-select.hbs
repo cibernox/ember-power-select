@@ -3,6 +3,130 @@
   @destination={{@destination}}
   @initiallyOpened={{@initiallyOpened}}
   @matchTriggerWidth={{this.matchTriggerWidth}}
+  @preventScroll={{or @preventScroll false}}
+  @onClose={{this.handleClose}}
+  @onOpen={{this.handleOpen}}
+  @renderInPlace={{@renderInPlace}}
+  @verticalPosition={{@verticalPosition}}
+  @disabled={{@disabled}}
+  @calculatePosition={{@calculatePosition}}
+  ...attributes as |dropdown|>
+  {{#let (assign dropdown (hash
+    selected=this.selected
+    highlighted=this.highlighted
+    options=this.options
+    results=this.results
+    resultsCount=this.resultsCount
+    loading=this.loading
+    isActive=this.isActive
+    searchText=this.searchText
+    lastSearchedText=this.lastSearchedText
+    actions=(assign dropdown.actions this._publicAPIActions)
+  )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
+    <dropdown.Trigger
+      @eventType={{or @eventType "mousedown"}}
+      {{did-insert this._updateOptions @options}}
+      {{did-update this._updateOptions @options}}
+      {{did-insert this._updateSelected @selected}}
+      {{did-update this._updateSelected @selected}}
+      {{did-insert this._registerAPI publicAPI}}
+      {{did-update this._registerAPI publicAPI}}
+      {{did-update this._performSearch this.searchText}}
+      {{on "keydown" this.handleTriggerKeydown}}
+      {{on "focus" this.handleFocus}}
+      {{on "blur" this.handleBlur}}
+      class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
+      aria-describedby={{@ariaDescribedBy}}
+      aria-invalid={{@ariaInvalid}}
+      aria-label={{@ariaLabel}}
+      aria-labelledby={{@ariaLabelledBy}}
+      aria-required={{@required}}
+      role={{or @triggerRole "button"}}
+      title={{@title}}
+      id={{@triggerId}}
+      tabindex={{and (not @disabled) (or @tabindex "0")}}
+      >
+      {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
+        <Trigger
+          @allowClear={{@allowClear}}
+          @buildSelection={{@buildSelection}}
+          @loadingMessage={{or @loadingMessage "Loading options..."}}
+          @selectedItemComponent={{@selectedItemComponent}}
+          @select={{publicAPI}}
+          @searchEnabled={{@searchEnabled}}
+          @searchField={{@searchField}}
+          @onFocus={{this.handleFocus}}
+          @onBlur={{this.handleBlur}}
+          @extra={{@extra}}
+          @listboxId={{listboxId}}
+          @onInput={{this.handleInput}}
+          @onKeydown={{this.handleKeydown}}
+          @placeholder={{@placeholder}}
+          @placeholderComponent={{this.placeholderComponent}}
+          as |opt term|>
+          {{yield opt term}}
+        </Trigger>
+      {{/let}}
+    </dropdown.Trigger>
+    <dropdown.Content class="ember-power-select-dropdown{{if publicAPI.isActive " ember-power-select-dropdown--active"}} {{@dropdownClass}}">
+      {{#let (component (if (eq @beforeOptionsComponent undefined) "power-select/before-options" @beforeOptionsComponent)) as |BeforeOptions|}}
+        <BeforeOptions
+          @select={{publicAPI}}
+          @searchEnabled={{@searchEnabled}}
+          @onInput={{this.handleInput}}
+          @onKeydown={{this.handleKeydown}}
+          @onFocus={{this.handleFocus}}
+          @onBlur={{this.handleBlur}}
+          @placeholder={{@placeholder}}
+          @placeholderComponent={{this.placeholderComponent}}
+          @extra={{@extra}}
+          @listboxId={{listboxId}}
+          @selectedItemComponent={{@selectedItemComponent}}
+          @searchPlaceholder={{@searchPlaceholder}}
+          />
+      {{/let}}
+      {{#if this.mustShowSearchMessage}}
+        {{#let (component (or @searchMessageComponent "power-select/search-message")) as |SearchMessage|}}
+          <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
+        {{/let}}
+      {{else if this.mustShowNoMessages}}
+        {{#if this.noMatchesMessage}}
+          <ul class="ember-power-select-options" role="listbox">
+            <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
+              {{this.noMatchesMessage}}
+            </li>
+          </ul>
+        {{/if}}
+      {{else}}
+        {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
+          <Options
+            @loadingMessage={{or @loadingMessage "Loading options..."}}
+            @select={{publicAPI}}
+            @options={{publicAPI.results}}
+            @groupIndex=""
+            @optionsComponent={{Options}}
+            @extra={{@extra}}
+            @highlightOnHover={{this.highlightOnHover}}
+            @groupComponent={{or @groupComponent "power-select/power-select-group"}}
+            id={{listboxId}}
+            class="ember-power-select-options" as |option select|>
+            {{yield option select}}
+          </Options>
+        {{/let}}
+      {{/if}}
+      {{#let (component @afterOptionsComponent) as |AfterOptions|}}
+        <AfterOptions
+          @extra={{@extra}}
+        />
+      {{/let}}
+    </dropdown.Content>
+  {{/let}}
+</BasicDropdown>
+{{!-- <BasicDropdown
+  @horizontalPosition={{@horizontalPosition}}
+  @destination={{@destination}}
+  @initiallyOpened={{@initiallyOpened}}
+  @matchTriggerWidth={{this.matchTriggerWidth}}
   @preventScroll={{this.preventScroll}}
   @onClose={{this.handleClose}}
   @onOpen={{this.handleOpen}}
@@ -38,8 +162,7 @@
         @onFocus={{this.handleFocus}}
         @onBlur={{this.handleBlur}}
         @onInput={{this.handleInput}}
-        @placeholder={{@placeholder}}
-        @placeholderComponent={{this.placeholderComponent}}
+
         @onKeydown={{this.handleKeydown}}
         @searchEnabled={{@searchEnabled}}
         @searchField={{@searchField}}
@@ -71,10 +194,8 @@
       {{#let (component this.searchMessageComponent) as |SearchMessage|}}
         <SearchMessage @searchMessage={{this.searchMessage}} @select={{this.publicAPI}}/>
       {{/let}}
-    {{else if mustShowNoMessages}}
-      {{#if (hasBlock "inverse")}}
-        {{yield to="inverse"}}
-      {{else if noMatchesMessage}}
+    {{else if this.mustShowNoMessages}}
+      {{#if this.noMatchesMessage}}
         <ul class="ember-power-select-options" role="listbox">
           <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
             {{this.noMatchesMessage}}
@@ -102,4 +223,4 @@
       <AfterOptions @select={{this.publicAPI}} @extra={{@extra}}/>
     {{/let}}
   </dropdown.Content>
-</BasicDropdown>
+</BasicDropdown> --}}

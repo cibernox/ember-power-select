@@ -230,7 +230,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -258,7 +258,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);

@@ -33,7 +33,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -408,7 +408,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.dom('.ember-power-select-dropdown').exists('The dropown is still opened');
   });
 
-  test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediatly, opening the select if closed', async function(assert) {
+  test('Pressing BACKSPACE on the search input when it\'s empty removes the last selection and performs a search for that text immediately, opening the select if closed', async function(assert) {
     assert.expect(9);
 
     this.numbers = numbers;
@@ -725,7 +725,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut foo)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);

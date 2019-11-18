@@ -43,7 +43,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @search={{handleSearch}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @search={{this.handleSearch}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -129,7 +129,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
   });
 
-  test('The onKeydown can be used to easily allow to select on tab', async function(assert) {
+  test('The `@onKeydown` can be used to easily allow to select on tab', async function(assert) {
     assert.expect(2);
 
     this.numbers = numbers;
@@ -141,14 +141,14 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onKeydown={{onKeyDown}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onKeydown={{this.onKeyDown}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
 
     await clickTrigger();
-    triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
-    triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+    await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 9);
     assert.dom('.ember-power-select-trigger').hasText('three', 'The highlighted options has been selected');
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is opened');
@@ -228,7 +228,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onFocus={{handleFocus}} @onChange={{action (mut foo)}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{foo}} @onFocus={{this.handleFocus}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -649,7 +649,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     `);
   });
 
-  test('The given `scrollTo` function is invoken when a single select wants to scroll to an element', async function(assert) {
+  test('The given `scrollTo` function is invoked when a single select wants to scroll to an element', async function(assert) {
     assert.expect(22);
     this.numbers = numbers;
     this.storeAPI = (select) => {
@@ -660,7 +660,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       assertPublicAPIShape(assert, select);
     };
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @registerAPI={{storeAPI}} @scrollTo={{scrollTo}} as |number|>
+      <PowerSelect @options={{numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} @registerAPI={{this.storeAPI}} @scrollTo={{scrollTo}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -668,7 +668,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
     run(() => this.selectAPI.actions.scrollTo('three'));
   });
 
-  test('The given `scrollTo` function is invoken when a multiple select wants to scroll to an element', async function(assert) {
+  test('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function(assert) {
     assert.expect(22);
     this.numbers = numbers;
     this.storeAPI = (select) => {

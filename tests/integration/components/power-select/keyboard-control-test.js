@@ -129,7 +129,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action changed}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.changed}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -320,7 +320,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -466,6 +466,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     await focus('.ember-power-select-trigger');
     assert.dom('.ember-power-select-dropdown').doesNotExist('The dropdown is closed');
+
     triggerKeyEvent('.ember-power-select-trigger', 'keydown', 78); // n
     triggerKeyEvent('.ember-power-select-trigger', 'keydown', 73); // i
     await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 78); // n
@@ -692,7 +693,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       }
     };
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{action handleOpen}} as |option|>
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @onOpen={{this.handleOpen}} as |option|>
         {{option}}
       </PowerSelect>
     `);
