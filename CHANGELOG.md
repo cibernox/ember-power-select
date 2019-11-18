@@ -1,6 +1,7 @@
 # Master
 
-- [CHORE] Update to glimmer components
+# 4.0.0-beta.1
+- [MAYBE-BREAKING] Update to glimmer components and EBD
 
 # 3.0.4
 - [BUGFIX] Allow to customize `calculatePosition` by extending from PowerSelect.
