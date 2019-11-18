@@ -297,6 +297,7 @@ export default Ember.Component.extend({
 
   _handleKeyEnter(dropdown, e) {
     if (dropdown.isOpen) {
+      e.preventDefault();
       return this._doChoose(dropdown, this.get('highlighted'), e);
     }
   },
