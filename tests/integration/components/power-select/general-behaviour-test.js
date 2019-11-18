@@ -1059,7 +1059,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbers = numbers;
     this.selected = numbers[1];
 
-    this.defaultHighlighted = function({ selected, highlighted, results }) {
+    this.defaultHighlighted = function({ selected, results }) {
       assert.ok(results instanceof Array, 'select.results is an array');
       assert.equal(selected, numbers[1]);
       return 'five';
