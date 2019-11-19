@@ -51,6 +51,9 @@ Router.map(function() {
   this.route('helpers-testing');
   this.route('helpers-testing-single-power-select');
 
+  // Routes for playground
+  this.route('playground');
+
   // Routes for fastboot tests
   this.route('fastboot-test');
 });
