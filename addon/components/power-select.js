@@ -1,7 +1,7 @@
 
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action, get } from '@ember/object';
+import { action, get, computed } from '@ember/object';
 import { addObserver, removeObserver } from '@ember/object/observers';
 import { scheduleOnce } from '@ember/runloop';
 import { isEqual } from '@ember/utils';
@@ -80,6 +80,7 @@ export default class PowerSelect extends Component {
       && (!this.args.search || this.lastSearchedText.length > 0);
   }
 
+  @computed('searchText', '_searchResult', 'options')
   get results() {
     if (this.searchText.length > 0) {
       if (this.args.search) {
@@ -96,6 +97,7 @@ export default class PowerSelect extends Component {
     return this._resolvedOptions || this.args.options;
   }
 
+  @computed('results')
   get resultsCount() {
     return countOptions(this.results);
   }
