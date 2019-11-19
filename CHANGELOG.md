@@ -1,5 +1,8 @@
 # Master
 
+# 4.0.0-beta.2
+- [CHORE] Update `@glimmer/component` to 1.0.0 and EBD to next beta.
+
 # 4.0.0-beta.1
 - [MAYBE-BREAKING] Update to glimmer components and EBD
 
