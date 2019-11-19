@@ -38,6 +38,12 @@ export default class PowerSelect extends Component {
   @tracked loading = false
   storedAPI = undefined
 
+  // Lifecycle hooks
+  constructor() {
+    super(...arguments);
+    assert('<PowerSelect> requires an `@onChange` function', this.args.onChange && typeof this.args.onChange === 'function');
+  }
+
   // Getters
   get highlightOnHover() {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
