@@ -1,1 +1,10 @@
 <h1>Playground</h1>
+
+<PowerSelect
+  @options={{this.cities}}
+  @selected={{this.destination}}
+  @onChange={{fn (mut this.destination)}}
+  as |city|>
+  {{city}}
+</PowerSelect>
+
