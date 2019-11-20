@@ -2,6 +2,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, get, computed } from '@ember/object';
+import { dependentKeyCompat } from '@ember/object/compat';
 import { addObserver, removeObserver } from '@ember/object/observers';
 import { scheduleOnce } from '@ember/runloop';
 import { isEqual } from '@ember/utils';
@@ -93,6 +94,7 @@ export default class PowerSelect extends Component {
     }
   }
 
+  @dependentKeyCompat
   get options() {
     return this._resolvedOptions || this.args.options;
   }
