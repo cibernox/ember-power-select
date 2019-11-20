@@ -80,12 +80,20 @@ export default class PowerSelect extends Component {
       && (!this.args.search || this.lastSearchedText.length > 0);
   }
 
+  _filterResultsCache = { results: undefined, options: undefined, searchText: this.searchText };
   get results() {
     if (this.searchText.length > 0) {
       if (this.args.search) {
         return this._searchResult || this.options;
       } else {
-        return this._filter(this.options, this.searchText);
+        if (this._filterResultsCache.options === this.options && this._filterResultsCache.searchText === this.searchText) {
+          // This is an optimization to avoid filtering several times, which may be a bit expensive
+          // if there are many options, if neither the options nor the searchtext have changed
+          return this._filterResultsCache.results;
+        }
+        let results = this._filter(this.options, this.searchText);
+        this._filterResultsCache = { results, options: this.options, searchText: this.searchText };
+        return results;
       }
     } else {
       return this.options;
