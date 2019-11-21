@@ -1010,6 +1010,25 @@
     ember-cli-typescript "3.0.0"
     ember-compatibility-helpers "^1.1.2"
 
+"@glimmer/component@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@glimmer/component/-/component-1.0.0-beta.3.tgz#bc466f4da776cb74bc8c6c836d6aa658f2161bee"
+  integrity sha512-I/NTVE8Nz0gjvAlO9mAdP0+XumRj65zqh0+J2jBDxAQHJTw9R55MTx4nvkbQteh6+sWPixFzgtt/oLzy8L9sxQ==
+  dependencies:
+    "@glimmer/di" "^0.1.9"
+    "@glimmer/env" "^0.1.7"
+    "@glimmer/util" "^0.44.0"
+    broccoli-file-creator "^2.1.1"
+    broccoli-merge-trees "^3.0.2"
+    ember-cli-babel "^7.7.3"
+    ember-cli-get-component-path-option "^1.0.0"
+    ember-cli-is-package-missing "^1.0.0"
+    ember-cli-normalize-entity-name "^1.0.0"
+    ember-cli-path-utils "^1.0.0"
+    ember-cli-string-utils "^1.1.0"
+    ember-cli-typescript "3.0.0"
+    ember-compatibility-helpers "^1.1.2"
+
 "@glimmer/di@^0.1.9":
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/@glimmer/di/-/di-0.1.11.tgz#a6878c07a13a2c2c76fcde598a5c97637bfc4280"
