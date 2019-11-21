@@ -45,6 +45,7 @@
   "dependencies": {
     "@ember-decorators/component": "^6.1.0",
     "@glimmer/component": "^1.0.0-beta.2",
+    "ember-assign-helper": "^0.2.0",
     "ember-basic-dropdown": "3.0.0-beta.2",
     "ember-cli-babel": "^7.11.0",
     "ember-cli-htmlbars": "^3.1.0",
@@ -56,7 +57,6 @@
     "@ember/optional-features": "^0.7.0",
     "babel-eslint": "^10.0.2",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-assign-helper": "^0.2.0",
     "ember-cli": "~3.13.0-beta.1",
     "ember-cli-blueprint-test-helpers": "^0.19.1",
     "ember-cli-dependency-checker": "^3.1.0",
