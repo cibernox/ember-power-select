@@ -301,8 +301,7 @@ export default class PowerSelect extends Component {
   }
 
   @action
-  _scrollTo(option) {
-    let select = this.storedAPI;
+  _scrollTo(option, select) {
     if (!document || !option) {
       return;
     }
@@ -433,7 +432,7 @@ export default class PowerSelect extends Component {
     let highlighted;
     let defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
-      highlighted = defHighlighted({ results: this.results, highlighted: this.highlighted, selected: this.selected});
+      highlighted = defHighlighted({ results: this.results, highlighted: this.highlighted, selected: this.selected });
     } else {
       highlighted = defHighlighted
     }

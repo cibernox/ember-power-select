@@ -1,0 +1,50 @@
+<BasicDropdown
+  @horizontalPosition={{@horizontalPosition}}
+  @destination={{@destination}}
+  @initiallyOpened={{@initiallyOpened}}
+  @matchTriggerWidth={{this.matchTriggerWidth}}
+  @preventScroll={{or @preventScroll false}}
+  @onClose={{this.handleClose}}
+  @onOpen={{this.handleOpen}}
+  @renderInPlace={{@renderInPlace}}
+  @verticalPosition={{@verticalPosition}}
+  @disabled={{@disabled}}
+  @calculatePosition={{@calculatePosition}}
+  ...attributes as |dropdown|>
+  {{#let (assign dropdown (hash
+    selected=this.selected
+    highlighted=this.highlighted
+    options=this.options
+    results=this.results
+    resultsCount=this.resultsCount
+    loading=this.loading
+    isActive=this.isActive
+    searchText=this.searchText
+    lastSearchedText=this.lastSearchedText
+    actions=(assign dropdown.actions this._publicAPIActions)
+  )) (concat "ember-power-select-options-" dropdown.uniqueId) as |select listboxId|}}
+    {{#let (assign select (
+      hash
+      Trigger=(
+        component
+        "basic-select/trigger"
+        select=select
+        Trigger=(component "power-select/trigger" select=select)
+      )
+      Content=(
+        component
+        "basic-select/content"
+        select=select
+      )
+      Options=(
+        component
+        "power-select/options"
+        select=select
+        options=select.results
+        groupIndex=""
+      )
+    )) as |publicAPI|}}
+      {{yield publicAPI}}
+    {{/let}}
+  {{/let}}
+</BasicDropdown>

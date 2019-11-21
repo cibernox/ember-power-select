@@ -9,3 +9,17 @@
   {{city}}
 </PowerSelect>
 
+<h3>Example of basic-select</h3>
+<BasicSelect
+  @options={{this.cities}}
+  @selected={{this.destination}}
+  @onChange={{fn (mut this.destination)}} as |select|>
+  <select.Trigger as |opt|>
+    {{opt}}
+  </select.Trigger>
+  <select.Content>
+    <select.Options as |option select|>
+      {{option}}
+    </select.Options>
+  </select.Content>
+</BasicSelect>

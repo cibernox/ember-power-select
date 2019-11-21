@@ -1,0 +1,30 @@
+<@select.Trigger class="ember-power-select-trigger"
+  {{!-- @eventType={{or @eventType "mousedown"}}
+  {{did-insert this._updateOptions @options}}
+  {{did-update this._updateOptions @options}}
+  {{did-insert this._updateSelected @selected}}
+  {{did-update this._updateSelected @selected}}
+  {{did-update this._registerAPI publicAPI}}
+  {{did-update this._performSearch this.searchText}}
+  {{on "keydown" this.handleTriggerKeydown}}
+  {{on "focus" this.handleFocus}}
+  {{on "blur" this.handleBlur}}
+  class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
+  aria-describedby={{@ariaDescribedBy}}
+  aria-invalid={{@ariaInvalid}}
+  aria-label={{@ariaLabel}}
+  aria-labelledby={{@ariaLabelledBy}}
+  aria-required={{@required}}
+  role={{or @triggerRole "button"}}
+  title={{@title}}
+  id={{@triggerId}}
+  tabindex={{and (not @disabled) (or @tabindex "0")}} --}}
+  >
+  <@Trigger as |opt term|>
+    {{#if (has-block)}}
+      {{yield opt term}}
+    {{else}}
+      {{opt}}
+    {{/if}}
+  </@Trigger>
+</@select.Trigger>

@@ -665,7 +665,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       </PowerSelect>
     `);
 
-    run(() => this.selectAPI.actions.scrollTo('three'));
+    run(() => this.selectAPI.actions.scrollTo('three', this.selectAPI));
   });
 
   test('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function(assert) {
@@ -684,7 +684,7 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       </PowerSelectMultiple>
     `);
 
-    run(() => this.selectAPI.actions.scrollTo('three'));
+    run(() => this.selectAPI.actions.scrollTo('three', this.selectAPI));
   });
 });
 
