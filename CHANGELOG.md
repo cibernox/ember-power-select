@@ -1,7 +1,8 @@
 # Master
 
-# Next beta version
+# 4.0.0-beta.3
 - [BUGFIX] Moved `ember-assign-helpers` from devDependencies to dependencies in `package.json`
+- [ENHANCEMENT] Cache filtered results for better performance when selects have many items.
 
 # 4.0.0-beta.2
 - [CHORE] Update `@glimmer/component` to 1.0.0 and EBD to next beta.
