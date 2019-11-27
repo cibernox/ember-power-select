@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "The extensible select component built for ember",
   "keywords": [
     "ember-addon",
@@ -44,7 +44,7 @@
   ],
   "dependencies": {
     "@ember-decorators/component": "^6.1.0",
-    "ember-basic-dropdown": "^2.0.5",
+    "ember-basic-dropdown": "^2.0.11",
     "ember-cli-babel": "^7.11.0",
     "ember-cli-htmlbars": "^3.1.0",
     "ember-concurrency": "^1.0.0",

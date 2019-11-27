@@ -1,5 +1,8 @@
 # Master
 
+# 3.0.5
+- [BUGFIX] Update ember-basic-dropdown to remove bad assertion
+
 # 3.0.4
 - [BUGFIX] Allow to customize `calculatePosition` by extending from PowerSelect.
 - [BUGFIX] Fix default values for `triggerComponent` and `buildSelection` in `<PowerSelectMultiple>`
