@@ -101,7 +101,12 @@ export default class PowerSelect extends Component {
   }
 
   get options() {
-    return this._resolvedOptions || this.args.options;
+    if (this._resolvedOptions) return this._resolvedOptions;
+    if (this.args.options) {
+      return toPlainArray(this.args.options);
+    } else {
+      return [];
+    }
   }
 
   get resultsCount() {
@@ -520,4 +525,8 @@ function getOptionMatcher(matcher, defaultMatcher, searchField) {
 
 function isNumpadKeyEvent(e) {
   return e.keyCode >= 96 && e.keyCode <= 105;
+}
+
+function toPlainArray(collection) {
+  return collection.toArray ? collection.toArray() : collection;
 }
