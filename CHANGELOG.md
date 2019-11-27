@@ -1,5 +1,8 @@
 # Master
 
+- [BUGFIX] Update ember-basic-dropdown to 3.0.0-beta.3 to fix select not recalculating its position
+  after scrolling or resizing the window.
+
 # 4.0.0-beta.3
 - [BUGFIX] Moved `ember-assign-helpers` from devDependencies to dependencies in `package.json`
 - [ENHANCEMENT] Cache filtered results for better performance when selects have many items.
