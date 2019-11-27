@@ -1,5 +1,7 @@
 # Master
 
+# 4.0.0-beta.4
+- [BUGFIX] When `@options` is an ember-data collection, transform to a plain array for the public API
 - [BUGFIX] Update ember-basic-dropdown to 3.0.0-beta.3 to fix select not recalculating its position
   after scrolling or resizing the window.
 
