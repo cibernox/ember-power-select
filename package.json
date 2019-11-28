@@ -31,7 +31,9 @@
     "start": "ember serve",
     "test": "ember test",
     "test:all": "ember try:each",
-    "nodetest": "$(npm bin)/mocha node-tests --recursive"
+    "nodetest": "$(npm bin)/mocha node-tests --recursive",
+    "prepublishOnly": "ember ts:precompile",
+    "postpublish": "ember ts:clean"
   },
   "files": [
     "addon/",
@@ -46,15 +48,22 @@
     "@ember-decorators/component": "^6.1.0",
     "@glimmer/component": "^1.0.0-beta.3",
     "ember-assign-helper": "^0.2.0",
-    "ember-basic-dropdown": "3.0.0-beta.3",
+    "ember-basic-dropdown": "^3.0.0-beta.6",
     "ember-cli-babel": "^7.11.0",
     "ember-cli-htmlbars": "^3.1.0",
+    "ember-cli-typescript": "^3.1.1",
     "ember-concurrency": "^1.0.0",
     "ember-text-measurer": "^0.5.0",
     "ember-truth-helpers": "^2.1.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
+    "@types/ember": "^3.1.1",
+    "@types/ember-data": "^3.1.9",
+    "@types/ember-qunit": "^3.4.7",
+    "@types/ember__test-helpers": "^0.7.9",
+    "@types/qunit": "^2.9.0",
+    "@types/rsvp": "^4.0.3",
     "babel-eslint": "^10.0.2",
     "broccoli-asset-rev": "^3.0.0",
     "ember-cli": "~3.13.0-beta.1",
@@ -66,6 +75,7 @@
     "ember-cli-mirage": "^1.0.0",
     "ember-cli-sass": "^10.0.0",
     "ember-cli-template-lint": "^1.0.0-beta.1",
+    "ember-cli-typescript-blueprints": "^3.0.0",
     "ember-cli-uglify": "^2.1.0",
     "ember-code-example-component": "^0.2.0",
     "ember-code-snippet": "^2.4.0",
@@ -94,7 +104,8 @@
     "qunit-dom": "^0.9.0",
     "sass": "^1.17.4",
     "simple-git": "^1.10.0",
-    "testdouble": "^3.2.6"
+    "testdouble": "^3.2.6",
+    "typescript": "^3.7.2"
   },
   "engines": {
     "node": "8.* || >= 10.*"

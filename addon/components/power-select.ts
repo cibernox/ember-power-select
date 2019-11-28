@@ -17,8 +17,53 @@ import {
   defaultTypeAheadMatcher
 } from '../utils/group-utils';
 import { task, timeout } from 'ember-concurrency';
+import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components/basic-dropdown'
 
-export default class PowerSelect extends Component {
+interface SelectActions extends DropdownActions {
+  search: (term: string) => void
+  highlight: (option: any) => void
+  select: (selected: any, e: Event) => void
+  choose: (selected: any, e: Event) => void
+  scrollTo: (option: any) => void
+}
+interface Select extends Dropdown {
+  selected: any
+  highlighted: any
+  options: any[]
+  results: any[]
+  resultsCount: number
+  loading: boolean
+  isActive: boolean
+  searchText: string
+  lastSearchedText: string
+  actions: SelectActions
+}
+
+interface Args {
+  highlightOnHover?: boolean
+  placeholderComponent?: string
+  searchMessage?: string
+  noMatchesMessage?: string
+  matchTriggerWidth?: boolean
+  options: any[]
+  selected: any
+  closeOnSelect?: boolean
+  defaultHighlighted?: any
+  searchField?: string
+  matcher: (option: any, text: string) => boolean
+  buildSelection?: (selected: any, select: Select) => any
+  onChange: (selection: any, select: Select, event?: Event) => void
+  search?: (term: string, select: Select) => any[] | Promise<any[]>
+  onOpen?: (select: Select, e: Event) => boolean | undefined
+  onClose?: (select: Select, e: Event) => boolean | undefined
+  onInput?: (term: string, select: Select, e: Event) => void
+  onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined
+  onFocus?: (select: Select, event: FocusEvent) => void
+  onBlur?: (select: Select, event: FocusEvent) => void
+  scrollTo?: (option: any, select: Select) => void
+}
+
+export default class PowerSelect extends Component<Args> {
   // Untracked properties
   _publicAPIActions = {
     search: this._search,
@@ -40,11 +85,11 @@ export default class PowerSelect extends Component {
   @tracked lastSearchedText = ''
   @tracked highlighted
   @tracked _searchResult
-  storedAPI = undefined
+  storedAPI?: Select = undefined
 
   // Lifecycle hooks
-  constructor() {
-    super(...arguments);
+  constructor(owner: unknown, args: Args) {
+    super(owner, args);
     assert('<PowerSelect> requires an `@onChange` function', this.args.onChange && typeof this.args.onChange === 'function');
   }
 
@@ -124,13 +169,13 @@ export default class PowerSelect extends Component {
 
   // Actions
   @action
-  handleOpen(_, e) {
+  handleOpen(_select: Select, e: Event) {
     if (this.args.onOpen && this.args.onOpen(this.storedAPI, e) === false) {
       return false;
     }
     if (e) {
       this.openingEvent = e;
-      if (e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
+      if (e instanceof KeyboardEvent && e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
         e.preventDefault();
       }
     }
@@ -138,7 +183,7 @@ export default class PowerSelect extends Component {
   }
 
   @action
-  handleClose(select, e) {
+  handleClose(select: Select, e: Event) {
     if (this.args.onClose && this.args.onClose(this.storedAPI, e) === false) {
       return false;
     }
