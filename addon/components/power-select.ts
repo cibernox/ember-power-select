@@ -46,8 +46,8 @@ interface Args {
   searchMessage?: string
   noMatchesMessage?: string
   matchTriggerWidth?: boolean
-  options: any[]
-  selected: any
+  options: any[] | Promise<any[]>
+  selected: any | Promise<any>
   closeOnSelect?: boolean
   defaultHighlighted?: any
   searchField?: string
@@ -59,7 +59,7 @@ interface Args {
   search?: (term: string, select: Select) => any[] | Promise<any[]>
   onOpen?: (select: Select, e: Event) => boolean | undefined
   onClose?: (select: Select, e: Event) => boolean | undefined
-  onInput?: (term: string, select: Select, e: Event) => void
+  onInput?: (term: string, select: Select, e: Event) => string | false | void
   onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined
   onFocus?: (select: Select, event: FocusEvent) => void
   onBlur?: (select: Select, event: FocusEvent) => void
@@ -78,6 +78,9 @@ export default class PowerSelect extends Component<Args> {
   }
 
   // Tracked properties
+  private _lastOptionsPromise?: Promise<any[]>
+  private _lastSelectedPromise?: Promise<any>
+  private _lastSearchPromise?: Promise<any[]>
   @tracked private _resolvedOptions?: any[]
   @tracked private _resolvedSelected?: any
   @tracked isActive = false
@@ -128,7 +131,7 @@ export default class PowerSelect extends Component<Args> {
       && (!this.args.search || this.lastSearchedText.length > 0);
   }
 
-  _filterResultsCache = { results: undefined, options: undefined, searchText: this.searchText };
+  _filterResultsCache: { results: any[], options: any[], searchText: string } = { results: [], options: [], searchText: this.searchText };
   get results() {
     if (this.searchText.length > 0) {
       if (this.args.search) {
@@ -177,7 +180,6 @@ export default class PowerSelect extends Component<Args> {
       return false;
     }
     if (e) {
-      this.openingEvent = e;
       if (e instanceof KeyboardEvent && e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
         e.preventDefault();
       }
@@ -190,15 +192,13 @@ export default class PowerSelect extends Component<Args> {
     if (this.args.onClose && this.args.onClose(this.storedAPI, e) === false) {
       return false;
     }
-    if (e) {
-      this.openingEvent = null;
-    }
     this._highlight(undefined);
   }
 
   @action
-  handleInput(e) {
-    let term = e.target.value;
+  handleInput(e: InputEvent) {
+    if (e.target === null) return;
+    let term = (e.target as HTMLInputElement).value;
     let correctedTerm;
     if (this.args.onInput) {
       correctedTerm = this.args.onInput(term, this.storedAPI, e);
@@ -210,7 +210,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleKeydown(e) {
+  handleKeydown(e: KeyboardEvent) {
     if (this.args.onKeydown && this.args.onKeydown(this.storedAPI, e) === false) {
       return false;
     }
@@ -218,7 +218,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleTriggerKeydown(e) {
+  handleTriggerKeydown(e: KeyboardEvent) {
     if (this.args.onKeydown && this.args.onKeydown(this.storedAPI, e) === false) {
       e.stopImmediatePropagation();
       return;
@@ -237,7 +237,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleFocus(event: FocusEvent) {
+  handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
       this.isActive = true;
     }
@@ -247,7 +247,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleBlur(event: FocusEvent) {
+  handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
       this.isActive = false;
     }
@@ -258,7 +258,7 @@ export default class PowerSelect extends Component<Args> {
 
   // Methods
   @action
-  _search(term: string) {
+  _search(term: string): void {
     if (this.searchText === term) return;
     this.searchText = term;
     if (!this.args.search) {
@@ -268,12 +268,12 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _updateOptions() {
+  _updateOptions(): void {
     if (!this.args.options) return
-    if (typeof this.args.options.then === 'function') {
+    if (typeof (this.args.options as Promise<any[]>).then === 'function') {
       if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
       let currentOptionsPromise = this.args.options;
-      this._lastOptionsPromise = currentOptionsPromise;
+      this._lastOptionsPromise = currentOptionsPromise as Promise<any[]>;
       this.loading = true;
       this._lastOptionsPromise.then(resolvedOptions => {
         if (this._lastOptionsPromise === currentOptionsPromise) {
@@ -292,7 +292,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _updateHighlighted() {
+  _updateHighlighted(): void {
     if (this.storedAPI.isOpen) {
       this._resetHighlighted();
     }
@@ -303,7 +303,7 @@ export default class PowerSelect extends Component<Args> {
     if (!this.args.selected) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
-      let currentSelectedPromise = this.args.selected;
+      let currentSelectedPromise: Promise<any> = this.args.selected;
       if (Object.hasOwnProperty.call(currentSelectedPromise, 'content')) { // seems a PromiseProxy
         if (this._lastSelectedPromise) {
           removeObserver(this._lastSelectedPromise, 'content', this._selectedObserverCallback);
@@ -362,7 +362,7 @@ export default class PowerSelect extends Component<Args> {
     if (this.args.scrollTo) {
       return this.args.scrollTo(option, select);
     }
-    let optionsList = document.querySelector(`[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`);
+    let optionsList = document.querySelector(`[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`) as HTMLElement;
     if (!optionsList) {
       return;
     }
@@ -370,7 +370,7 @@ export default class PowerSelect extends Component<Args> {
     if (index === -1) {
       return;
     }
-    let optionElement = optionsList.querySelectorAll('[data-option-index]').item(index);
+    let optionElement = (optionsList.querySelectorAll('[data-option-index]') as NodeListOf<HTMLElement>).item(index);
     if (!optionElement) {
       return;
     }
@@ -384,7 +384,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _registerAPI(_, [publicAPI]: [Select]) {
+  _registerAPI(_: Element, [publicAPI]: [Select]) {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
       scheduleOnce('actions', this.args.registerAPI, publicAPI);
