@@ -22,10 +22,11 @@ import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components
 interface SelectActions extends DropdownActions {
   search: (term: string) => void
   highlight: (option: any) => void
-  select: (selected: any, e: Event) => void
-  choose: (selected: any, e: Event) => void
+  select: (selected: any, e?: Event) => void
+  choose: (selected: any, e?: Event) => void
   scrollTo: (option: any) => void
 }
+type MatcherFn = (option: any, text: string) => boolean
 interface Select extends Dropdown {
   selected: any
   highlighted: any
@@ -50,7 +51,9 @@ interface Args {
   closeOnSelect?: boolean
   defaultHighlighted?: any
   searchField?: string
-  matcher: (option: any, text: string) => boolean
+  matcher?: MatcherFn
+  initiallyOpened?: boolean
+  typeAheadOptionMatcher?: MatcherFn
   buildSelection?: (selected: any, select: Select) => any
   onChange: (selection: any, select: Select, event?: Event) => void
   search?: (term: string, select: Select) => any[] | Promise<any[]>
@@ -61,6 +64,7 @@ interface Args {
   onFocus?: (select: Select, event: FocusEvent) => void
   onBlur?: (select: Select, event: FocusEvent) => void
   scrollTo?: (option: any, select: Select) => void
+  registerAPI?: (select: Select) => void
 }
 
 export default class PowerSelect extends Component<Args> {
@@ -74,18 +78,17 @@ export default class PowerSelect extends Component<Args> {
   }
 
   // Tracked properties
-  @tracked _resolvedOptions
-  @tracked _resolvedSelected
-  @tracked lastSearchedText
+  @tracked private _resolvedOptions?: any[]
+  @tracked private _resolvedSelected?: any
   @tracked isActive = false
   @tracked _repeatingChar = ''
   @tracked _expirableSearchText = ''
   @tracked loading = false
   @tracked searchText = ''
   @tracked lastSearchedText = ''
-  @tracked highlighted
-  @tracked _searchResult
-  storedAPI?: Select = undefined
+  @tracked highlighted?: any
+  @tracked _searchResult?: any[]
+  storedAPI!: Select
 
   // Lifecycle hooks
   constructor(owner: unknown, args: Args) {
@@ -234,7 +237,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleFocus(event) {
+  handleFocus(event: FocusEvent) {
     if (!this.isDestroying) {
       this.isActive = true;
     }
@@ -244,7 +247,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleBlur() {
+  handleBlur(event: FocusEvent) {
     if (!this.isDestroying) {
       this.isActive = false;
     }
@@ -255,7 +258,7 @@ export default class PowerSelect extends Component<Args> {
 
   // Methods
   @action
-  _search(term) {
+  _search(term: string) {
     if (this.searchText === term) return;
     this.searchText = term;
     if (!this.args.search) {
@@ -326,7 +329,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _highlight(opt) {
+  _highlight(opt: any): void {
     if (opt && get(opt, 'disabled')) {
       return;
     }
@@ -334,14 +337,14 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _select(selected, e) {
+  _select(selected: any, e?: Event): void {
     if (!isEqual(this.storedAPI.selected, selected)) {
       this.args.onChange(selected, this.storedAPI, e);
     }
   }
 
   @action
-  _choose(selected, e) {
+  _choose(selected: any, e?: Event): void {
     let selection = this.args.buildSelection ? this.args.buildSelection(selected, this.storedAPI) : selected;
     this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
@@ -351,7 +354,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _scrollTo(option) {
+  _scrollTo(option: any): void {
     let select = this.storedAPI;
     if (!document || !option) {
       return;
@@ -381,7 +384,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _registerAPI(_, [publicAPI]) {
+  _registerAPI(_, [publicAPI]: [Select]) {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
       scheduleOnce('actions', this.args.registerAPI, publicAPI);
@@ -389,7 +392,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  _performSearch(_, [term]) {
+  _performSearch(_, [term]: [string]) {
     if (!this.args.search) return;
     if (term === '') {
       this.loading = false;
@@ -428,11 +431,11 @@ export default class PowerSelect extends Component<Args> {
     }
   }
 
-  _defaultBuildSelection(option) {
+  _defaultBuildSelection(option: any): any {
     return option
   }
 
-  _routeKeydown(select, e) {
+  _routeKeydown(select: Select, e: KeyboardEvent) {
     if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
       return this._handleKeyUpDown(select, e);
     } else if (e.keyCode === 13) {  // ENTER
@@ -444,11 +447,11 @@ export default class PowerSelect extends Component<Args> {
     }
   }
 
-  _handleKeyTab(select, e) {
+  _handleKeyTab(select: Select, e: KeyboardEvent): void {
     select.actions.close(e);
   }
 
-  _handleKeyEnter(select, e) {
+  _handleKeyEnter(select: Select, e: KeyboardEvent): boolean | void {
     if (select.isOpen && select.highlighted !== undefined) {
       select.actions.choose(select.highlighted, e);
       e.stopImmediatePropagation();
@@ -456,7 +459,7 @@ export default class PowerSelect extends Component<Args> {
     }
   }
 
-  _handleKeySpace(select, e) {
+  _handleKeySpace(select: Select, e: KeyboardEvent): void {
     if (['TEXTAREA', 'INPUT'].includes(e.target.nodeName)) {
       e.stopImmediatePropagation();
     } else if (select.isOpen && select.highlighted !== undefined) {
@@ -466,20 +469,20 @@ export default class PowerSelect extends Component<Args> {
     }
   }
 
-  _handleKeyUpDown(select, e) {
+  _handleKeyUpDown(select: Select, e: KeyboardEvent): void {
     if (select.isOpen) {
       e.preventDefault();
       e.stopPropagation();
       let step = e.keyCode === 40 ? 1 : -1;
       let newHighlighted = advanceSelectableOption(select.results, select.highlighted, step);
-      select.actions.highlight(newHighlighted, e);
-      select.actions.scrollTo(newHighlighted, select);
+      select.actions.highlight(newHighlighted);
+      select.actions.scrollTo(newHighlighted);
     } else {
       select.actions.open(e);
     }
   }
 
-  _resetHighlighted() {
+  _resetHighlighted(): void {
     let highlighted;
     let defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
@@ -490,13 +493,13 @@ export default class PowerSelect extends Component<Args> {
     this._highlight(highlighted);
   }
 
-  _filter(options, term, skipDisabled = false) {
+  _filter(options: any[], term: string, skipDisabled = false) {
     let optionMatcher = getOptionMatcher(this.args.matcher || defaultMatcher, defaultMatcher, this.args.searchField);
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 
 
-  findWithOffset(options, term, offset, skipDisabled = false) {
+  findWithOffset(options: any[], term: string, offset, skipDisabled = false) {
     let typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
     return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
   }
@@ -557,18 +560,18 @@ export default class PowerSelect extends Component<Args> {
   }).restartable()) triggerTypingTask
 }
 
-function getOptionMatcher(matcher, defaultMatcher, searchField) {
+function getOptionMatcher(matcher: MatcherFn, defaultMatcher: MatcherFn, searchField: string | undefined) {
   if (searchField && matcher === defaultMatcher) {
-    return (option, text) => matcher(get(option, searchField), text);
+    return (option: any, text: string) => matcher(get(option, searchField), text);
   } else {
-    return (option, text) => {
+    return (option: any, text: string) => {
       assert('<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`', matcher !== defaultMatcher || typeof option === 'string');
       return matcher(option, text);
     };
   }
 }
 
-function isNumpadKeyEvent(e) {
+function isNumpadKeyEvent(e: KeyboardEvent) {
   return e.keyCode >= 96 && e.keyCode <= 105;
 }
 
