@@ -9,9 +9,9 @@ export function isGroup(entry: any): boolean {
 
 export function countOptions(collection: any): number {
   let counter = 0;
-  (function walk(collection) {
+  (function walk(collection): void {
     if (!collection) {
-      return null;
+      return
     }
     for (let i = 0; i < get(collection, 'length'); i++) {
       let entry = collection.objectAt ? collection.objectAt(i) : collection[i];

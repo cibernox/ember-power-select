@@ -196,7 +196,7 @@ export default class PowerSelect extends Component<Args> {
 
   // Actions
   @action
-  handleOpen(_select: Select, e: Event) {
+  handleOpen(_select: Select, e: Event): boolean | void {
     if (this.args.onOpen && this.args.onOpen(this.storedAPI, e) === false) {
       return false;
     }
