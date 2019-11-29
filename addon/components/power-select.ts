@@ -17,8 +17,9 @@ import {
   defaultTypeAheadMatcher,
   MatcherFn
 } from '../utils/group-utils';
+import { restartableTask } from 'ember-concurrency-decorators';
 // @ts-ignore
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
 import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components/basic-dropdown'
 
 interface SelectActions extends DropdownActions {
@@ -48,6 +49,9 @@ interface CancellablePromise<T> extends Promise<T> {
 }
 interface Arrayable<T> {
   toArray(): T[];
+}
+interface Performable {
+  perform: (...args: any[]) => void
 }
 interface Args {
   highlightOnHover?: boolean
@@ -249,7 +253,7 @@ export default class PowerSelect extends Component<Args> {
       return;
     }
     if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) { // Keys 0-9, a-z or numpad keys
-      this.triggerTypingTask.perform(e);
+      (this.triggerTypingTask as unknown as Performable).perform(e);
     } else if (e.keyCode === 32) {  // Space
       this._handleKeySpace(this.storedAPI, e);
     } else {
@@ -531,7 +535,8 @@ export default class PowerSelect extends Component<Args> {
   }
 
   // Tasks
-  @(task(function* (this: PowerSelect, e: KeyboardEvent) {
+  @restartableTask
+  *triggerTypingTask(this: PowerSelect, e: KeyboardEvent) {
     // In general, a user doing this interaction means to have a different result.
     let searchStartOffset = 1;
     let repeatingChar = this._repeatingChar;
@@ -583,7 +588,7 @@ export default class PowerSelect extends Component<Args> {
     yield timeout(1000);
     this._expirableSearchText = '';
     this._repeatingChar = '';
-  }).restartable()) triggerTypingTask: any // there must be a better way
+  }
 }
 
 function getOptionMatcher(matcher: MatcherFn, defaultMatcher: MatcherFn, searchField: string | undefined) {
