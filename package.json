@@ -79,6 +79,7 @@
     "ember-cli-uglify": "^2.1.0",
     "ember-code-example-component": "^0.2.0",
     "ember-code-snippet": "^2.4.0",
+    "ember-concurrency-typescript": "^0.1.0",
     "ember-data": "^3.12.0",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-export-application-global": "^2.0.0",

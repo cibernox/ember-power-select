@@ -14,8 +14,10 @@ import {
   defaultHighlighted,
   advanceSelectableOption,
   defaultMatcher,
-  defaultTypeAheadMatcher
+  defaultTypeAheadMatcher,
+  MatcherFn
 } from '../utils/group-utils';
+// @ts-ignore
 import { task, timeout } from 'ember-concurrency';
 import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components/basic-dropdown'
 
@@ -26,7 +28,6 @@ interface SelectActions extends DropdownActions {
   choose: (selected: any, e?: Event) => void
   scrollTo: (option: any) => void
 }
-type MatcherFn = (option: any, text: string) => boolean
 interface Select extends Dropdown {
   selected: any
   highlighted: any
@@ -39,15 +40,20 @@ interface Select extends Dropdown {
   lastSearchedText: string
   actions: SelectActions
 }
-
+interface Thenable<T> extends Promise<T> {
+  [key: string]: any
+}
+interface Arrayable<T> {
+  toArray(): T[];
+}
 interface Args {
   highlightOnHover?: boolean
   placeholderComponent?: string
   searchMessage?: string
   noMatchesMessage?: string
   matchTriggerWidth?: boolean
-  options: any[] | Promise<any[]>
-  selected: any | Promise<any>
+  options: any[] | Thenable<any[]>
+  selected: any | Thenable<any>
   closeOnSelect?: boolean
   defaultHighlighted?: any
   searchField?: string
@@ -56,7 +62,7 @@ interface Args {
   typeAheadOptionMatcher?: MatcherFn
   buildSelection?: (selected: any, select: Select) => any
   onChange: (selection: any, select: Select, event?: Event) => void
-  search?: (term: string, select: Select) => any[] | Promise<any[]>
+  search?: (term: string, select: Select) => any[] | Thenable<any[]>
   onOpen?: (select: Select, e: Event) => boolean | undefined
   onClose?: (select: Select, e: Event) => boolean | undefined
   onInput?: (term: string, select: Select, e: Event) => string | false | void
@@ -65,6 +71,14 @@ interface Args {
   onBlur?: (select: Select, event: FocusEvent) => void
   scrollTo?: (option: any, select: Select) => void
   registerAPI?: (select: Select) => void
+}
+
+const isArrayable = <T>(coll: any): coll is Arrayable<T> => {
+  return typeof coll.toArray === 'function';
+}
+
+const isThenable = <T>(thing: any): thing is Thenable<T> => {
+  return typeof thing.then === 'function';
 }
 
 export default class PowerSelect extends Component<Args> {
@@ -78,9 +92,9 @@ export default class PowerSelect extends Component<Args> {
   }
 
   // Tracked properties
-  private _lastOptionsPromise?: Promise<any[]>
-  private _lastSelectedPromise?: Promise<any>
-  private _lastSearchPromise?: Promise<any[]>
+  private _lastOptionsPromise?: Thenable<any[]>
+  private _lastSelectedPromise?: Thenable<any>
+  private _lastSearchPromise?: Thenable<any[]>
   @tracked private _resolvedOptions?: any[]
   @tracked private _resolvedSelected?: any
   @tracked isActive = false
@@ -154,7 +168,7 @@ export default class PowerSelect extends Component<Args> {
   get options() {
     if (this._resolvedOptions) return this._resolvedOptions;
     if (this.args.options) {
-      return toPlainArray(this.args.options);
+      return toPlainArray(this.args.options as any[]);
     } else {
       return [];
     }
@@ -270,7 +284,7 @@ export default class PowerSelect extends Component<Args> {
   @action
   _updateOptions(): void {
     if (!this.args.options) return
-    if (typeof (this.args.options as Promise<any[]>).then === 'function') {
+    if (isThenable(this.args.options)) {
       if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
       let currentOptionsPromise = this.args.options;
       this._lastOptionsPromise = currentOptionsPromise as Promise<any[]>;
@@ -303,7 +317,7 @@ export default class PowerSelect extends Component<Args> {
     if (!this.args.selected) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
-      let currentSelectedPromise: Promise<any> = this.args.selected;
+      let currentSelectedPromise: Thenable<any> = this.args.selected;
       if (Object.hasOwnProperty.call(currentSelectedPromise, 'content')) { // seems a PromiseProxy
         if (this._lastSelectedPromise) {
           removeObserver(this._lastSelectedPromise, 'content', this._selectedObserverCallback);
@@ -387,12 +401,12 @@ export default class PowerSelect extends Component<Args> {
   _registerAPI(_: Element, [publicAPI]: [Select]) {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
-      scheduleOnce('actions', this.args.registerAPI, publicAPI);
+      scheduleOnce('actions', this, this.args.registerAPI, publicAPI);
     }
   }
 
   @action
-  _performSearch(_, [term]: [string]) {
+  _performSearch(_: any, [term]: [string]) {
     if (!this.args.search) return;
     if (term === '') {
       this.loading = false;
@@ -406,7 +420,7 @@ export default class PowerSelect extends Component<Args> {
       return;
     }
     let searchResult = this.args.search(term, this.storedAPI);
-    if (searchResult && typeof searchResult.then === 'function') {
+    if (searchResult && isThenable(searchResult)) {
       this.loading = true;
       if (this._lastSearchPromise !== undefined && typeof this._lastSearchPromise.cancel === 'function') {
         this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
@@ -460,7 +474,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   _handleKeySpace(select: Select, e: KeyboardEvent): void {
-    if (['TEXTAREA', 'INPUT'].includes(e.target.nodeName)) {
+    if (e.target !== null && ['TEXTAREA', 'INPUT'].includes((e.target as Element).nodeName)) {
       e.stopImmediatePropagation();
     } else if (select.isOpen && select.highlighted !== undefined) {
       e.stopImmediatePropagation();
@@ -473,7 +487,7 @@ export default class PowerSelect extends Component<Args> {
     if (select.isOpen) {
       e.preventDefault();
       e.stopPropagation();
-      let step = e.keyCode === 40 ? 1 : -1;
+      let step: 1 | -1 = e.keyCode === 40 ? 1 : -1;
       let newHighlighted = advanceSelectableOption(select.results, select.highlighted, step);
       select.actions.highlight(newHighlighted);
       select.actions.scrollTo(newHighlighted);
@@ -494,18 +508,19 @@ export default class PowerSelect extends Component<Args> {
   }
 
   _filter(options: any[], term: string, skipDisabled = false) {
-    let optionMatcher = getOptionMatcher(this.args.matcher || defaultMatcher, defaultMatcher, this.args.searchField);
+    let matcher = this.args.matcher || defaultMatcher;
+    let optionMatcher = getOptionMatcher(matcher, defaultMatcher, this.args.searchField);
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 
 
-  findWithOffset(options: any[], term: string, offset, skipDisabled = false) {
+  findWithOffset(options: any[], term: string, offset: number, skipDisabled = false) {
     let typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
     return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
   }
 
   // Tasks
-  @(task(function* (e) {
+  @(task(function* (this: PowerSelect, e: KeyboardEvent) {
     // In general, a user doing this interaction means to have a different result.
     let searchStartOffset = 1;
     let repeatingChar = this._repeatingChar;
@@ -548,8 +563,8 @@ export default class PowerSelect extends Component<Args> {
     let match = this.findWithOffset(this.storedAPI.options, term, searchStartOffset, true);
     if (match !== undefined) {
       if (this.storedAPI.isOpen) {
-        this.storedAPI.actions.highlight(match, e);
-        this.storedAPI.actions.scrollTo(match, e);
+        this.storedAPI.actions.highlight(match);
+        this.storedAPI.actions.scrollTo(match);
       } else {
         this.storedAPI.actions.select(match, e);
       }
@@ -557,7 +572,7 @@ export default class PowerSelect extends Component<Args> {
     yield timeout(1000);
     this._expirableSearchText = '';
     this._repeatingChar = '';
-  }).restartable()) triggerTypingTask
+  }).restartable()) triggerTypingTask: any // there must be a better way
 }
 
 function getOptionMatcher(matcher: MatcherFn, defaultMatcher: MatcherFn, searchField: string | undefined) {
@@ -575,6 +590,10 @@ function isNumpadKeyEvent(e: KeyboardEvent) {
   return e.keyCode >= 96 && e.keyCode <= 105;
 }
 
-function toPlainArray(collection) {
-  return collection.toArray ? collection.toArray() : collection;
+const toPlainArray = <T>(collection: T[] | Arrayable<T>): T[] => {
+  if (isArrayable<T>(collection)) {
+    return collection.toArray();
+  } else {
+    return collection;
+  }
 }

@@ -4,7 +4,3 @@ declare module 'ember-power-select/templates/*' {
   const tmpl: TemplateFactory;
   export default tmpl;
 }
-declare module 'ember-concurrency' {
-  export type task = Function;
-  export type timeout = (ms: number) => void;
-}
