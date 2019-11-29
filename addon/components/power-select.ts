@@ -40,8 +40,11 @@ interface Select extends Dropdown {
   lastSearchedText: string
   actions: SelectActions
 }
-interface Thenable<T> extends Promise<T> {
-  [key: string]: any
+interface PromiseProxy<T> extends Promise<T> {
+  content: any
+}
+interface CancellablePromise<T> extends Promise<T> {
+  cancel: () => void
 }
 interface Arrayable<T> {
   toArray(): T[];
@@ -52,8 +55,8 @@ interface Args {
   searchMessage?: string
   noMatchesMessage?: string
   matchTriggerWidth?: boolean
-  options: any[] | Thenable<any[]>
-  selected: any | Thenable<any>
+  options: any[] | PromiseProxy<any[]>
+  selected: any | PromiseProxy<any>
   closeOnSelect?: boolean
   defaultHighlighted?: any
   searchField?: string
@@ -62,7 +65,7 @@ interface Args {
   typeAheadOptionMatcher?: MatcherFn
   buildSelection?: (selected: any, select: Select) => any
   onChange: (selection: any, select: Select, event?: Event) => void
-  search?: (term: string, select: Select) => any[] | Thenable<any[]>
+  search?: (term: string, select: Select) => any[] | PromiseProxy<any[]>
   onOpen?: (select: Select, e: Event) => boolean | undefined
   onClose?: (select: Select, e: Event) => boolean | undefined
   onInput?: (term: string, select: Select, e: Event) => string | false | void
@@ -77,8 +80,12 @@ const isArrayable = <T>(coll: any): coll is Arrayable<T> => {
   return typeof coll.toArray === 'function';
 }
 
-const isThenable = <T>(thing: any): thing is Thenable<T> => {
+const isPromiseProxy = <T>(thing: any): thing is PromiseProxy<T> => {
   return typeof thing.then === 'function';
+}
+
+const isCancellablePromise = <T>(thing: any): thing is CancellablePromise<T> => {
+  return typeof thing.cancel === 'function';
 }
 
 export default class PowerSelect extends Component<Args> {
@@ -92,9 +99,9 @@ export default class PowerSelect extends Component<Args> {
   }
 
   // Tracked properties
-  private _lastOptionsPromise?: Thenable<any[]>
-  private _lastSelectedPromise?: Thenable<any>
-  private _lastSearchPromise?: Thenable<any[]>
+  private _lastOptionsPromise?: PromiseProxy<any[]>
+  private _lastSelectedPromise?: PromiseProxy<any>
+  private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>
   @tracked private _resolvedOptions?: any[]
   @tracked private _resolvedSelected?: any
   @tracked isActive = false
@@ -284,10 +291,10 @@ export default class PowerSelect extends Component<Args> {
   @action
   _updateOptions(): void {
     if (!this.args.options) return
-    if (isThenable(this.args.options)) {
+    if (isPromiseProxy(this.args.options)) {
       if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
       let currentOptionsPromise = this.args.options;
-      this._lastOptionsPromise = currentOptionsPromise as Promise<any[]>;
+      this._lastOptionsPromise = currentOptionsPromise as PromiseProxy<any[]>;
       this.loading = true;
       this._lastOptionsPromise.then(resolvedOptions => {
         if (this._lastOptionsPromise === currentOptionsPromise) {
@@ -317,7 +324,7 @@ export default class PowerSelect extends Component<Args> {
     if (!this.args.selected) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
-      let currentSelectedPromise: Thenable<any> = this.args.selected;
+      let currentSelectedPromise: PromiseProxy<any> = this.args.selected;
       if (Object.hasOwnProperty.call(currentSelectedPromise, 'content')) { // seems a PromiseProxy
         if (this._lastSelectedPromise) {
           removeObserver(this._lastSelectedPromise, 'content', this._selectedObserverCallback);
@@ -412,7 +419,7 @@ export default class PowerSelect extends Component<Args> {
       this.loading = false;
       this.lastSearchedText = term;
       if (this._lastSearchPromise !== undefined) {
-        if (typeof this._lastSearchPromise.cancel === 'function') {
+        if (isCancellablePromise(this._lastSearchPromise)) {
           this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
         }
         this._lastSearchPromise = undefined;
@@ -420,9 +427,9 @@ export default class PowerSelect extends Component<Args> {
       return;
     }
     let searchResult = this.args.search(term, this.storedAPI);
-    if (searchResult && isThenable(searchResult)) {
+    if (searchResult && isPromiseProxy(searchResult)) {
       this.loading = true;
-      if (this._lastSearchPromise !== undefined && typeof this._lastSearchPromise.cancel === 'function') {
+      if (this._lastSearchPromise !== undefined && isCancellablePromise(this._lastSearchPromise)) {
         this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
       }
       this._lastSearchPromise = searchResult;
