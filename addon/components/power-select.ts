@@ -209,7 +209,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleClose(select: Select, e: Event) {
+  handleClose(_select: Select, e: Event): boolean | void {
     if (this.args.onClose && this.args.onClose(this.storedAPI, e) === false) {
       return false;
     }
@@ -217,7 +217,7 @@ export default class PowerSelect extends Component<Args> {
   }
 
   @action
-  handleInput(e: InputEvent) {
+  handleInput(e: InputEvent): void {
     if (e.target === null) return;
     let term = (e.target as HTMLInputElement).value;
     let correctedTerm;
@@ -456,7 +456,7 @@ export default class PowerSelect extends Component<Args> {
     return option
   }
 
-  _routeKeydown(select: Select, e: KeyboardEvent) {
+  _routeKeydown(select: Select, e: KeyboardEvent): boolean | void {
     if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
       return this._handleKeyUpDown(select, e);
     } else if (e.keyCode === 13) {  // ENTER
@@ -464,11 +464,15 @@ export default class PowerSelect extends Component<Args> {
     } else if (e.keyCode === 9) {   // Tab
       return this._handleKeyTab(select, e);
     } else if (e.keyCode === 27) {  // ESC
-      // return this._handleKeyESC(e);
+      return this._handleKeyESC(select, e);
     }
   }
 
   _handleKeyTab(select: Select, e: KeyboardEvent): void {
+    select.actions.close(e);
+  }
+
+  _handleKeyESC(select: Select, e: KeyboardEvent): void {
     select.actions.close(e);
   }
 
@@ -514,7 +518,7 @@ export default class PowerSelect extends Component<Args> {
     this._highlight(highlighted);
   }
 
-  _filter(options: any[], term: string, skipDisabled = false) {
+  _filter(options: any[], term: string, skipDisabled = false): any[] {
     let matcher = this.args.matcher || defaultMatcher;
     let optionMatcher = getOptionMatcher(matcher, defaultMatcher, this.args.searchField);
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
