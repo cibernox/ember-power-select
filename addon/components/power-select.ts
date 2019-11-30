@@ -164,7 +164,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   get results() {
     if (this.searchText.length > 0) {
       if (this.args.search) {
-        return this._searchResult || this.options;
+        return toPlainArray(this._searchResult || this.options);
       } else {
         if (this._filterResultsCache.options === this.options && this._filterResultsCache.searchText === this.searchText) {
           // This is an optimization to avoid filtering several times, which may be a bit expensive
@@ -443,7 +443,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       this._lastSearchPromise = searchResult;
       searchResult.then(results => {
         if (this._lastSearchPromise === searchResult) {
-          this._searchResult = toPlainArray(results);
+          this._searchResult = results;
           this.loading = false;
           this.lastSearchedText = term;
           this._resetHighlighted();
