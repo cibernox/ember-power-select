@@ -70,4 +70,24 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     await click('.ember-power-select-multiple-remove-btn');
     assert.dom('.ember-power-select-multiple-remove-btn').exists({ count: 9 }, 'Once the collection resolves the options render normally');
   });
+
+  test('returning an Ember-data collection from the search works', async function(assert) {
+    this.server.createList('user', 10);
+    this.server.timing = 0;
+    this.selected = undefined;
+    this.search = () => {
+      return this.store.findAll('user');
+    }
+    await render(hbs`
+      <PowerSelect @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchEnabled={{true}} @search={{this.search}} as |option|>
+        {{option.name}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+    await typeInSearch('anything');
+    await click('.ember-power-select-option:nth-child(4)');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is rendered');
+    assert.dom('.ember-power-select-trigger').hasText('User 3', 'The 4th option was selected');
+  });
 });

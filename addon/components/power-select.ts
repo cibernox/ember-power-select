@@ -443,7 +443,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       this._lastSearchPromise = searchResult;
       searchResult.then(results => {
         if (this._lastSearchPromise === searchResult) {
-          this._searchResult = toPlainArray(results);;
+          this._searchResult = toPlainArray(results);
           this.loading = false;
           this.lastSearchedText = term;
           this._resetHighlighted();
