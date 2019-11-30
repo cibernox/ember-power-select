@@ -2,8 +2,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
+import { PowerSelectArgs, Select } from './power-select';
 
-export default class PowerSelectMultiple extends Component {
+interface PowerSelectMultipleArgs extends PowerSelectArgs {
+ // any extra property for multiple selects?
+}
+
+export default class PowerSelectMultiple extends Component<PowerSelectMultipleArgs> {
   get computedTabIndex() {
     if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
       return '-1';
@@ -12,19 +17,9 @@ export default class PowerSelectMultiple extends Component {
     }
   }
 
-  get selected() {
-    return [];
-  }
-  set selected(v) {
-    if (v === null || v === undefined) {
-      return [];
-    }
-    return v;
-  }
-
   // Actions
   @action
-  handleOpen(select, e) {
+  handleOpen(select: Select, e: Event): false | void {
     if (this.args.onOpen && this.args.onOpen(select, e) === false) {
       return false;
     }
@@ -32,7 +27,7 @@ export default class PowerSelectMultiple extends Component {
   }
 
   @action
-  handleFocus(select, e) {
+  handleFocus(select: Select, e: FocusEvent): void {
     if (this.args.onFocus) {
       this.args.onFocus(select, e);
     }
@@ -40,7 +35,7 @@ export default class PowerSelectMultiple extends Component {
   }
 
   @action
-  handleKeydown(select, e) {
+  handleKeydown(select: Select, e: KeyboardEvent): false | void {
     if (this.args.onKeydown && this.args.onKeydown(select, e) === false) {
       e.stopPropagation();
       return false;
@@ -62,7 +57,7 @@ export default class PowerSelectMultiple extends Component {
     }
   }
 
-  defaultBuildSelection(option, select) {
+  defaultBuildSelection(option: any, select: Select) {
     let newSelection = (select.selected || []).slice(0);
     let idx = -1;
     for (let i = 0; i < newSelection.length; i++) {
@@ -79,9 +74,9 @@ export default class PowerSelectMultiple extends Component {
     return newSelection;
   }
 
-  focusInput(select) {
+  focusInput(select: Select) {
     if (select) {
-      let input = document.querySelector(`#ember-power-select-trigger-multiple-input-${select.uniqueId}`);
+      let input = document.querySelector(`#ember-power-select-trigger-multiple-input-${select.uniqueId}`) as HTMLElement;
       if (input) {
         input.focus();
       }

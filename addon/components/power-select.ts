@@ -29,7 +29,7 @@ interface SelectActions extends DropdownActions {
   choose: (selected: any, e?: Event) => void
   scrollTo: (option: any) => void
 }
-interface Select extends Dropdown {
+export interface Select extends Dropdown {
   selected: any
   highlighted: any
   options: any[]
@@ -53,7 +53,7 @@ interface Arrayable<T> {
 interface Performable {
   perform: (...args: any[]) => void
 }
-interface Args {
+export interface PowerSelectArgs {
   highlightOnHover?: boolean
   placeholderComponent?: string
   searchMessage?: string
@@ -64,6 +64,9 @@ interface Args {
   closeOnSelect?: boolean
   defaultHighlighted?: any
   searchField?: string
+  searchEnabled?: boolean
+  tabindex?: number | string
+  triggerComponent?: string
   matcher?: MatcherFn
   initiallyOpened?: boolean
   typeAheadOptionMatcher?: MatcherFn
@@ -92,7 +95,7 @@ const isCancellablePromise = <T>(thing: any): thing is CancellablePromise<T> => 
   return typeof thing.cancel === 'function';
 }
 
-export default class PowerSelect extends Component<Args> {
+export default class PowerSelect extends Component<PowerSelectArgs> {
   // Untracked properties
   _publicAPIActions = {
     search: this._search,
@@ -119,7 +122,7 @@ export default class PowerSelect extends Component<Args> {
   storedAPI!: Select
 
   // Lifecycle hooks
-  constructor(owner: unknown, args: Args) {
+  constructor(owner: unknown, args: PowerSelectArgs) {
     super(owner, args);
     assert('<PowerSelect> requires an `@onChange` function', this.args.onChange && typeof this.args.onChange === 'function');
   }

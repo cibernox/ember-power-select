@@ -1,6 +1,6 @@
 import { computed } from '@ember/object';
 
-export default function computedFallbackIfUndefined(fallback) {
+export default function computedFallbackIfUndefined(fallback: any) {
   return computed({
     get() {
       return fallback;

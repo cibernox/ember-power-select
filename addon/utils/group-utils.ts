@@ -2,7 +2,6 @@ import { A } from '@ember/array';
 import { get } from '@ember/object';
 
 export type MatcherFn = (option: any, text: string) => number
-
 export function isGroup(entry: any): boolean {
   return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');
 }
