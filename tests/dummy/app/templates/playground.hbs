@@ -1,11 +1,12 @@
 <h1>Playground</h1>
 
 <PowerSelect
-  @options={{this.cities}}
-  @selected={{this.destination}}
-  @onChange={{fn (mut this.destination)}}
+  {{!-- @options={{this.cities}} --}}
+  @selected={{this.selected}}
+  @onChange={{fn (mut this.selected)}}
+  @search={{this.searchUsers}}
   @searchEnabled={{true}}
-  as |city|>
-  {{city}}
+  as |user|>
+  {{user.name}}
 </PowerSelect>
 
