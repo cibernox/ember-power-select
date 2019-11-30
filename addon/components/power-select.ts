@@ -53,6 +53,7 @@ interface Arrayable<T> {
 interface Performable {
   perform: (...args: any[]) => void
 }
+// Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs {
   highlightOnHover?: boolean
   placeholderComponent?: string
@@ -111,14 +112,14 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>
   @tracked private _resolvedOptions?: any[]
   @tracked private _resolvedSelected?: any
+  @tracked private _repeatingChar = ''
+  @tracked private _expirableSearchText = ''
+  @tracked private _searchResult?: any[]
   @tracked isActive = false
-  @tracked _repeatingChar = ''
-  @tracked _expirableSearchText = ''
   @tracked loading = false
   @tracked searchText = ''
   @tracked lastSearchedText = ''
   @tracked highlighted?: any
-  @tracked _searchResult?: any[]
   storedAPI!: Select
 
   // Lifecycle hooks
@@ -415,7 +416,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   _registerAPI(_: Element, [publicAPI]: [Select]) {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
-      scheduleOnce('actions', this, this.args.registerAPI, publicAPI);
+      scheduleOnce('actions', null, this.args.registerAPI, publicAPI);
     }
   }
 
