@@ -1,15 +1,22 @@
 import Component from '@glimmer/component';
 import { scheduleOnce, later } from '@ember/runloop';
 import { action } from '@ember/object';
+import { Select } from '../power-select';
 
-export default class BeforeOptions extends Component {
+interface Args {
+  select: Select,
+  onKeydown: (e: Event) => false | void
+  autofocus?: boolean
+}
+
+export default class BeforeOptions extends Component<Args> {
   @action
-  clearSearch() {
-    scheduleOnce('actions', this.args.select.actions.search, '');
+  clearSearch(): void {
+    scheduleOnce('actions', this.args.select.actions, 'search', '');
   }
 
   @action
-  handleKeydown(e) {
+  handleKeydown(e: KeyboardEvent): false | void {
     if (this.args.onKeydown(e) === false) {
       return false;
     }
@@ -19,7 +26,7 @@ export default class BeforeOptions extends Component {
   }
 
   @action
-  focusInput(el) {
+  focusInput(el: HTMLElement) {
     later(() => {
       if (this.args.autofocus !== false) {
         el.focus();

@@ -1,15 +1,16 @@
 import { A } from '@ember/array';
 import { get } from '@ember/object';
 
-export function isGroup(entry) {
+export type MatcherFn = (option: any, text: string) => number
+export function isGroup(entry: any): boolean {
   return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');
 }
 
-export function countOptions(collection) {
+export function countOptions(collection: any): number {
   let counter = 0;
-  (function walk(collection) {
+  (function walk(collection): void {
     if (!collection) {
-      return null;
+      return
     }
     for (let i = 0; i < get(collection, 'length'); i++) {
       let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
@@ -23,11 +24,11 @@ export function countOptions(collection) {
   return counter;
 }
 
-export function indexOfOption(collection, option) {
+export function indexOfOption(collection: any, option: any): number {
   let index = 0;
-  return (function walk(collection) {
+  return (function walk(collection): number {
     if (!collection) {
-      return null;
+      return -1;
     }
     for (let i = 0; i < get(collection, 'length'); i++) {
       let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
@@ -46,9 +47,9 @@ export function indexOfOption(collection, option) {
   })(collection);
 }
 
-export function optionAtIndex(originalCollection, index) {
+export function optionAtIndex(originalCollection: any, index: number): { disabled: boolean, option: any } {
   let counter = 0;
-  return (function walk(collection, ancestorIsDisabled) {
+  return (function walk(collection, ancestorIsDisabled): { disabled: boolean, option: any } | void {
     if (!collection || index < 0) {
       return { disabled: false, option: undefined };
     }
@@ -71,20 +72,22 @@ export function optionAtIndex(originalCollection, index) {
   })(originalCollection, false) || { disabled: false, option: undefined };
 }
 
-function copyGroup(group, suboptions) {
-  let groupCopy = { groupName: group.groupName, options: suboptions };
+interface Group { options: any[], disabled?: boolean, groupName: string }
+function copyGroup(group: Group, suboptions: any[]): Group {
+  let groupCopy: Group = { groupName: group.groupName, options: suboptions };
   if (group.hasOwnProperty('disabled')) {
     groupCopy.disabled = group.disabled;
   }
   return groupCopy;
 }
 
-export function findOptionWithOffset(options, text, matcher, offset, skipDisabled = false) {
+export function findOptionWithOffset(options: any, text: string, matcher: MatcherFn, offset: number, skipDisabled = false): any {
   let counter = 0;
-  let foundBeforeOffset, foundAfterOffset;
+  let foundBeforeOffset;
+  let foundAfterOffset = false;
   let canStop = () => !!foundAfterOffset;
 
-  (function walk(options, ancestorIsDisabled) {
+  (function walk(options: any, ancestorIsDisabled: boolean) : any{
     let length = get(options, 'length');
 
     for (let i = 0; i < length; i++) {
@@ -119,7 +122,7 @@ export function findOptionWithOffset(options, text, matcher, offset, skipDisable
   return foundAfterOffset ? foundAfterOffset : foundBeforeOffset;
 }
 
-export function filterOptions(options, text, matcher, skipDisabled = false) {
+export function filterOptions(options: any, text: string, matcher: MatcherFn, skipDisabled = false): any[] {
   let opts = A();
   let length = get(options, 'length');
   for (let i = 0; i < length; i++) {
@@ -138,7 +141,7 @@ export function filterOptions(options, text, matcher, skipDisabled = false) {
   return opts;
 }
 
-export function defaultHighlighted({ results, highlighted, selected }) {
+export function defaultHighlighted<T>({ results, highlighted, selected }: { results: T[], highlighted: T | undefined, selected: T | undefined}): T {
   let option = highlighted || selected;
   if (option === undefined || indexOfOption(results, option) === -1) {
     return advanceSelectableOption(results, option, 1);
@@ -146,7 +149,7 @@ export function defaultHighlighted({ results, highlighted, selected }) {
   return option;
 }
 
-export function advanceSelectableOption(options, currentOption, step) {
+export function advanceSelectableOption(options: any, currentOption: any, step: 1 | -1) {
   let resultsLength = countOptions(options);
   let startIndex = Math.min(Math.max(indexOfOption(options, currentOption) + step, 0), resultsLength - 1);
   let { disabled, option } = optionAtIndex(options, startIndex);
@@ -158,7 +161,7 @@ export function advanceSelectableOption(options, currentOption, step) {
   return option;
 }
 
-const DIACRITICS = {
+const DIACRITICS: Record<string, string> = {
   'Ⓐ': 'A',
   'Ａ': 'A',
   'À': 'A',
@@ -1001,19 +1004,19 @@ const DIACRITICS = {
 };
 
 // Copied from Select2
-export function stripDiacritics(text) {
+export function stripDiacritics(text: string) {
   // Used 'uni range + named function' from http://jsperf.com/diacritics/18
-  function match(a) {
+  function match(a: string) {
     return DIACRITICS[a] || a;
   }
 
   return `${text}`.replace(/[^\u0000-\u007E]/g, match); // eslint-disable-line
 }
 
-export function defaultMatcher(value, text) {
+export function defaultMatcher(value: string, text: string) {
   return stripDiacritics(value).toUpperCase().indexOf(stripDiacritics(text).toUpperCase());
 }
 
-export function defaultTypeAheadMatcher(value, text) {
+export function defaultTypeAheadMatcher(value: string, text: string) {
   return stripDiacritics(value).toUpperCase().startsWith(stripDiacritics(text).toUpperCase()) ? 1 : -1;
 }

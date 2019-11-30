@@ -1,21 +1,29 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { Select } from '../power-select';
+declare const FastBoot: any;
+
+interface Args {
+  select: Select
+  highlightOnHover?: boolean
+  options: any[]
+}
 
 const isTouchDevice = (!!window && 'ontouchstart' in window);
 if(typeof FastBoot === 'undefined'){
   (function(ElementProto) {
     if (typeof ElementProto.matches !== 'function') {
-      ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector;
+      ElementProto.matches = (ElementProto as any).msMatchesSelector || (ElementProto as any).mozMatchesSelector || ElementProto.webkitMatchesSelector;
     }
 
     if (typeof ElementProto.closest !== 'function') {
-      ElementProto.closest = function closest(selector) {
-        let element = this;
-        while (element && element.nodeType === 1) {
+      ElementProto.closest = function closest(selector: string) {
+        let element: Element | null = this;
+        while (element !== null && element.nodeType === 1) {
           if (element.matches(selector)) {
             return element;
           }
-          element = element.parentNode;
+          element = element.parentNode as Element;
         }
         return null;
       };
@@ -23,17 +31,19 @@ if(typeof FastBoot === 'undefined'){
   })(window.Element.prototype);
 }
 
-export default class Options extends Component {
-  isTouchDevice = isTouchDevice
+export default class Options extends Component<Args> {
+  private isTouchDevice = isTouchDevice
+  private hasMoved = false
 
   @action
-  addHandlers(element) {
+  addHandlers(element: Element) {
     let role = element.getAttribute('role');
     if (role === 'group') {
       return;
     }
-    let findOptionAndPerform = (action, select, e) => {
-      let optionItem = e.target.closest('[data-option-index]');
+    let findOptionAndPerform = (action: Function, select: Select, e: Event): void => {
+      if (e.target === null) return;
+      let optionItem = (e.target as Element).closest('[data-option-index]');
       if (!optionItem) {
         return;
       }
@@ -41,6 +51,7 @@ export default class Options extends Component {
         return; // Abort if the item or an ancestor is disabled
       }
       let optionIndex = optionItem.getAttribute('data-option-index');
+      if (optionIndex === null) return;
       action(this._optionFromIndex(optionIndex), select, e);
     };
     element.addEventListener('mouseup', (e) => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e));
@@ -59,12 +70,9 @@ export default class Options extends Component {
         element.addEventListener('touchmove', touchMoveHandler);
       });
       element.addEventListener('touchend', (e) => {
-        let optionItem = e.target.closest('[data-option-index]');
-
-        if (!optionItem) {
-          return;
-        }
-
+        if (e.target === null) return;
+        let optionItem = (e.target as Element).closest('[data-option-index]');
+        if (optionItem === null) return;
         e.preventDefault();
         if (this.hasMoved) {
           this.hasMoved = false;
@@ -76,6 +84,7 @@ export default class Options extends Component {
         }
 
         let optionIndex = optionItem.getAttribute('data-option-index');
+        if (optionIndex === null) return;
         this.args.select.actions.choose(this._optionFromIndex(optionIndex), e);
       });
     }
@@ -84,7 +93,7 @@ export default class Options extends Component {
     }
   }
 
-  _optionFromIndex(index) {
+  _optionFromIndex(index: string) {
     let parts = index.split('.');
     let option = this.args.options[parseInt(parts[0], 10)];
     for (let i = 1; i < parts.length; i++) {

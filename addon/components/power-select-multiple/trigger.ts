@@ -6,16 +6,34 @@ import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
+import { Select } from '../power-select';
+
+interface Args {
+  select: Select
+  placeholder?: string
+  searchField: string
+  onInput?: (e: InputEvent) => boolean
+  onKeydown?: (e: KeyboardEvent) => boolean
+  buildSelection: (lastSelection: any, select: Select) => any[]
+}
+interface IndexAccesible<T> {
+  objectAt(index: number): T;
+}
+const isIndexAccesible = <T>(target: any): target is IndexAccesible<T> => {
+  return typeof target.objectAt === 'function';
+}
 
 const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
-export default class Trigger extends Component {
-  @service textMeasurer
+export default class Trigger extends Component<Args> {
+  private inputFont?: string
+  private _lastIsOpen: boolean = this.args.select.isOpen
+  @service textMeasurer: any
 
   // Properties
   get triggerMultipleInputStyle() {
-    scheduleOnce('actions', this.args.select.actions.reposition);
+    scheduleOnce('actions', null, this.args.select.actions.reposition);
     if (!this.args.select.selected || get(this.args.select.selected, 'length') === 0) {
       return htmlSafe('width: 100%;');
     } else {
@@ -36,7 +54,7 @@ export default class Trigger extends Component {
 
   // Actions
   @action
-  openChanged(_el, [isOpen]) {
+  openChanged(_el: Element, [isOpen]: [boolean]) {
     if (isOpen === false && this._lastIsOpen === true) {
       scheduleOnce('actions', null, this.args.select.actions.search, '');
     }
@@ -44,24 +62,26 @@ export default class Trigger extends Component {
   }
 
   @action
-  storeInputStyles(input) {
+  storeInputStyles(input: Element) {
     let { fontStyle, fontVariant, fontWeight, fontSize, lineHeight, fontFamily } = window.getComputedStyle(input);
     this.inputFont = `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}/${lineHeight} ${fontFamily}`;
   }
 
   @action
-  chooseOption(e) {
-    let selectedIndex = e.target.getAttribute('data-selected-index');
+  chooseOption(e: Event) {
+    if (e.target === null) return;
+    let selectedIndex = (e.target as Element).getAttribute('data-selected-index');
     if (selectedIndex) {
+      let numericIndex = parseInt(selectedIndex, 10);
       e.stopPropagation();
       e.preventDefault();
-      let object = this.selectedObject(this.args.select.selected, selectedIndex);
+      let object = this.selectedObject(this.args.select.selected, numericIndex);
       this.args.select.actions.choose(object);
     }
   }
 
   @action
-  handleInput(e) {
+  handleInput(e: InputEvent): void {
     if (this.args.onInput && this.args.onInput(e) === false) {
       return;
     }
@@ -69,14 +89,15 @@ export default class Trigger extends Component {
   }
 
   @action
-  handleKeydown(e) {
+  handleKeydown(e: KeyboardEvent): false | void {
+    if (e.target === null) return;
     if (this.args.onKeydown && this.args.onKeydown(e) === false) {
       e.stopPropagation();
       return false;
     }
     if (e.keyCode === 8) {
       e.stopPropagation();
-      if (isBlank(e.target.value)) {
+      if (isBlank((e.target as HTMLInputElement).value)) {
         let lastSelection = this.args.select.selected[this.args.select.selected.length - 1];
         if (lastSelection) {
           this.args.select.actions.select(this.args.buildSelection(lastSelection, this.args.select), e);
@@ -94,11 +115,11 @@ export default class Trigger extends Component {
     }
   }
 
-  selectedObject(list, index) {
-    if (list.objectAt) {
+  selectedObject<T>(list: IndexAccesible<T> | T[], index: number): T {
+    if (isIndexAccesible(list)) {
       return list.objectAt(index);
     } else {
-      return get(list, index);
+      return get(list, index) as T;
     }
   }
 }
