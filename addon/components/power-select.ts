@@ -107,9 +107,6 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
   // Tracked properties
-  private _lastOptionsPromise?: PromiseProxy<any[]>
-  private _lastSelectedPromise?: PromiseProxy<any>
-  private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>
   @tracked private _resolvedOptions?: any[]
   @tracked private _resolvedSelected?: any
   @tracked private _repeatingChar = ''
@@ -121,6 +118,10 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @tracked lastSearchedText = ''
   @tracked highlighted?: any
   storedAPI!: Select
+  private _lastOptionsPromise?: PromiseProxy<any[]>
+  private _lastSelectedPromise?: PromiseProxy<any>
+  private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>
+  private _filterResultsCache: { results: any[], options: any[], searchText: string } = { results: [], options: [], searchText: this.searchText };
 
   // Lifecycle hooks
   constructor(owner: unknown, args: PowerSelectArgs) {
@@ -129,18 +130,18 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
   // Getters
-  get highlightOnHover() {
+  get highlightOnHover(): boolean {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
   }
-  get placeholderComponent() {
+  get placeholderComponent(): string {
     return this.args.placeholderComponent || 'power-select/placeholder';
   }
 
-  get searchMessage() {
+  get searchMessage(): string {
     return this.args.searchMessage === undefined ? 'Type to search' : this.args.searchMessage;
   }
 
-  get noMatchesMessage() {
+  get noMatchesMessage(): string {
     return this.args.noMatchesMessage === undefined ? 'No results found' : this.args.noMatchesMessage;
   }
 
@@ -148,20 +149,19 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     return this.args.matchTriggerWidth === undefined ? true : this.args.matchTriggerWidth;
   }
 
-  get mustShowSearchMessage() {
+  get mustShowSearchMessage(): boolean {
     return !this.loading && this.searchText.length === 0
       && !!this.args.search && !!this.searchMessage
       && this.resultsCount === 0;
   }
 
-  get mustShowNoMessages() {
+  get mustShowNoMessages(): boolean {
     return !this.loading
       && this.resultsCount === 0
       && (!this.args.search || this.lastSearchedText.length > 0);
   }
 
-  _filterResultsCache: { results: any[], options: any[], searchText: string } = { results: [], options: [], searchText: this.searchText };
-  get results() {
+  get results(): any[] {
     if (this.searchText.length > 0) {
       if (this.args.search) {
         return toPlainArray(this._searchResult || this.options);
@@ -180,7 +180,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     }
   }
 
-  get options() {
+  get options(): any[] {
     if (this._resolvedOptions) return this._resolvedOptions;
     if (this.args.options) {
       return toPlainArray(this.args.options as any[]);
@@ -189,11 +189,11 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     }
   }
 
-  get resultsCount() {
+  get resultsCount(): number {
     return countOptions(this.results);
   }
 
-  get selected() {
+  get selected(): any {
     if (this._resolvedSelected) {
       return this._resolvedSelected;
     } else if (this.args.selected && typeof this.args.selected.then !== 'function') {
@@ -328,7 +328,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
   @action
-  _updateSelected() {
+  _updateSelected(): void {
     if (!this.args.selected) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
@@ -352,7 +352,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     }
   }
 
-  _selectedObserverCallback() {
+  _selectedObserverCallback(): void {
     this._resolvedSelected = this._lastSelectedPromise;
     this._highlight(this._resolvedSelected)
   }
@@ -413,7 +413,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
   @action
-  _registerAPI(_: Element, [publicAPI]: [Select]) {
+  _registerAPI(_: Element, [publicAPI]: [Select]): void {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
       scheduleOnce('actions', null, this.args.registerAPI, publicAPI);
@@ -421,7 +421,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
   @action
-  _performSearch(_: any, [term]: [string]) {
+  _performSearch(_: any, [term]: [string]): void {
     if (!this.args.search) return;
     if (term === '') {
       this.loading = false;
@@ -533,7 +533,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
 
-  findWithOffset(options: any[], term: string, offset: number, skipDisabled = false) {
+  findWithOffset(options: any[], term: string, offset: number, skipDisabled = false): any {
     let typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
     return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
   }
@@ -595,7 +595,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 }
 
-function getOptionMatcher(matcher: MatcherFn, defaultMatcher: MatcherFn, searchField: string | undefined) {
+function getOptionMatcher(matcher: MatcherFn, defaultMatcher: MatcherFn, searchField: string | undefined): MatcherFn {
   if (searchField && matcher === defaultMatcher) {
     return (option: any, text: string) => matcher(get(option, searchField), text);
   } else {
@@ -606,7 +606,7 @@ function getOptionMatcher(matcher: MatcherFn, defaultMatcher: MatcherFn, searchF
   }
 }
 
-function isNumpadKeyEvent(e: KeyboardEvent) {
+function isNumpadKeyEvent(e: KeyboardEvent): boolean {
   return e.keyCode >= 96 && e.keyCode <= 105;
 }
 
