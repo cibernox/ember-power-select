@@ -1,5 +1,6 @@
 # Master
 
+# 4.0.0-beta.6
 - [BUGFIX] Multiple selects can receive an ember-data collection in the `@selected` attribute.
 
 # 4.0.0-beta.5
