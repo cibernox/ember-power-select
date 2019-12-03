@@ -1,5 +1,7 @@
 # Master
 
+- [BUGFIX] Multiple selects can receive an ember-data collection in the `@selected` attribute.
+
 # 4.0.0-beta.5
 - [BUGFIX] Fix component when the `@search` action return an ember-data collection
 - [CHORE] Convert addon to typescript.
