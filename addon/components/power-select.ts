@@ -181,7 +181,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
   get options(): any[] {
-    if (this._resolvedOptions) return this._resolvedOptions;
+    if (this._resolvedOptions) return toPlainArray(this._resolvedOptions);
     if (this.args.options) {
       return toPlainArray(this.args.options as any[]);
     } else {
@@ -195,7 +195,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
 
   get selected(): any {
     if (this._resolvedSelected) {
-      return this._resolvedSelected;
+      return toPlainArray(this._resolvedSelected);
     } else if (this.args.selected && typeof this.args.selected.then !== 'function') {
       return this.args.selected;
     }

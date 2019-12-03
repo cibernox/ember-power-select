@@ -90,4 +90,24 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is rendered');
     assert.dom('.ember-power-select-trigger').hasText('User 3', 'The 4th option was selected');
   });
+
+  test('passing an Ember-data collection to `@selected` of a multiple select works', async function (assert) {
+    this.server.createList('user', 10);
+    this.server.timing = 0;
+    this.options = this.store.findAll('user');
+    await this.options;
+    this.selected = this.options;
+    await render(hbs`
+      <PowerSelectMultiple @selected={{this.selected}} @options={{this.options}} @onChange={{action (mut this.selected)}} as |option|>
+        {{option.name}}
+      </PowerSelectMultiple>
+    `);
+    assert.dom('.ember-power-select-multiple-option ').exists({ count: 10 })
+    assert.dom('.ember-power-select-multiple-option:nth-child(4)').containsText('User 3');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option').exists({ count: 10 })
+    await click('.ember-power-select-option:nth-child(4)');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 9 })
+    assert.dom('.ember-power-select-multiple-option:nth-child(4)').containsText('User 4', 'The 4th selected option is not User 3 anymore');
+  });
 });
