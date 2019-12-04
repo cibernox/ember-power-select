@@ -47,7 +47,7 @@
         aria-labelledby={{@ariaLabelledBy}}
         aria-label={{@ariaLabel}}
         value={{@select.searchText}}
-        aria-controls={{@listboxId}}
+        aria-controls={{if @select.isOpen @listboxId}}
         style={{this.triggerMultipleInputStyle}}
         placeholder={{this.maybePlaceholder}}
         disabled={{@select.disabled}}
