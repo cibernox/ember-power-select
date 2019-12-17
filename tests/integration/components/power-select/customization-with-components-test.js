@@ -426,4 +426,54 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     assert.dom('.ember-power-select-trigger .cool-flag-icon').exists({ count: 1 }, 'The custom selectedItemComponent renders with the extra.coolFlagIcon customization option triggering some state change.');
   });
+
+  test('ebd trigger can be customized using _ebdTriggerComponent', async function(assert) {
+    assert.expect(3);
+
+    this.owner.register('component:custom-ebd-trigger', Component.extend({
+      layout: hbs`
+        <div class="my-custom-trigger">{{yield}}</div>
+      `
+    }));
+
+    this.countries = countries;
+    this.country = countries[1]; // Spain
+
+    await render(hbs`
+      <PowerSelect @options={{countries}} @selected={{country}} @_ebdTriggerComponent="custom-ebd-trigger" @onChange={{action (mut foo)}} as |country|>
+        {{country.name}}
+      </PowerSelect>
+    `);
+
+    assert.dom('.ember-basic-dropdown-trigger').doesNotExist('The default ebd trigger component is not rendered');
+    assert.dom('.my-custom-trigger').exists('The custom trigger is rendered.');
+    assert.dom('.my-custom-trigger').hasText('Spain', 'With the country name as the text.');
+  });
+
+  test('ebd content can be customized using _ebdContentComponent', async function(assert) {
+    assert.expect(3);
+    this.owner.register('component:custom-ebd-content', Component.extend({
+      layout: hbs`
+        {{#if @dropdown.isOpen}}
+          <div class="custom-content">
+            {{yield}}
+          </div>
+        {{/if}}
+      `
+    }));
+    this.countries = countries;
+    this.country = countries[1]; // Spain
+
+    await render(hbs`
+      <PowerSelect @options={{countries}} @selected={{country}} @_ebdContentComponent="custom-ebd-content" @onChange={{action (mut foo)}} as |country|>
+        {{country.name}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+
+    assert.dom('.ember-basic-dropdown-content').doesNotExist('The default ebd content component is not rendered');
+    assert.dom('.custom-content').exists('The custom content is rendered.');
+    assert.dom('.ember-power-select-option').exists({ count: countries.length }, 'The options are rendered inside.');
+  });
 });

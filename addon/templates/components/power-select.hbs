@@ -11,9 +11,11 @@
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
   @calculatePosition={{this.calculatePosition}}
+  @triggerComponent={{this._ebdTriggerComponent}}
+  @contentComponent={{this._ebdContentComponent}}
   ...attributes as |dropdown|>
   <dropdown.Trigger
-    @htmlTag={{this._triggerTagName}}
+    @htmlTag={{this._ebdTriggerTagName}}
     @eventType={{or @eventType "mousedown"}}
     {{on "keydown" this.handleTriggerKeydown}}
     {{on "focus" this.handleTriggerFocus}}
@@ -51,7 +53,7 @@
       </Trigger>
     {{/let}}
   </dropdown.Trigger>
-  <dropdown.Content @htmlTag={{this._contentTagName}} class={{this.concatenatedDropdownClasses}}>
+  <dropdown.Content @htmlTag={{this._ebdContentTagName}} class={{this.concatenatedDropdownClasses}}>
     {{#let (component this.beforeOptionsComponent) as |BeforeOptions|}}
       <BeforeOptions
         @animationEnabled={{@animationEnabled}}
