@@ -51,10 +51,12 @@
       </Trigger>
     {{/let}}
   </dropdown.Trigger>
-  <dropdown.Content @htmlTag={{this._contentTagName}} class={{this.concatenatedDropdownClasses}}>
+  <dropdown.Content
+    @htmlTag={{this._contentTagName}}
+    @animationEnabled={{@animationEnabled}}
+    class={{this.concatenatedDropdownClasses}}>
     {{#let (component this.beforeOptionsComponent) as |BeforeOptions|}}
       <BeforeOptions
-        @animationEnabled={{@animationEnabled}}
         @select={{this.publicAPI}}
         @searchEnabled={{@searchEnabled}}
         @searchPlaceholder={{@searchPlaceholder}}
