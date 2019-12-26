@@ -37,6 +37,13 @@
   <a href="https://github.com/cibernox/ember-power-select/blob/master/app/styles/ember-power-select/variables.scss">the source code</a>.
 </p>
 
+<p>
+  Additionally, if no preprocessor is found, Ember Power Select will include a pre-compiled CSS file to the app <code>vendor.css</code> by default.
+  To disable this behavior, you can set <code>theme</code> to <code>false</code> in <code>ember-cli-build.js</code>.
+</p>
+
+{{code-snippet name="skip-styles-config-js.js"}}
+
 <div class="doc-page-nav">
   <a href={{href-to "public-pages.docs.the-search"}} class="doc-page-nav-link-prev">&lt; The search</a>
   <a href={{href-to "public-pages.docs.custom-search-action"}} class="doc-page-nav-link-next">Advanced customization &gt;</a>
