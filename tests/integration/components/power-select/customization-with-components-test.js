@@ -272,6 +272,24 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-dropdown #custom-search-message-p-tag').exists('The custom component is rendered instead of the usual message');
   });
 
+  test('the no matches message can be customized passing `@noMatchesMessageComponent`', async function(assert) {
+    assert.expect(1);
+
+    this.options = [];
+    this.owner.register('component:custom-no-matches-message', Component.extend({
+      layout: hbs`<p id="custom-no-matches-message-p-tag">Customized no results!</p>`
+    }));
+
+    await render(hbs`
+      <PowerSelect @options={{options}} @noMatchesMessageComponent="custom-no-matches-message" @onChange={{action (mut foo)}} as |country|>
+        {{country.name}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+    assert.dom('.ember-power-select-dropdown #custom-no-matches-message-p-tag').exists('The custom component is rendered instead of the usual message');
+  });
+
   test('placeholder can be customized using `@placeholderComponent`', async function(assert) {
     assert.expect(2);
     this.owner.register('component:custom-placeholder', Component.extend({

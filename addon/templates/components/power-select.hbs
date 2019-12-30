@@ -78,11 +78,9 @@
       {{#if (hasBlock "inverse")}}
         {{yield to="inverse"}}
       {{else if noMatchesMessage}}
-        <ul class="ember-power-select-options" role="listbox">
-          <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
-            {{this.noMatchesMessage}}
-          </li>
-        </ul>
+        {{#let (component this.noMatchesMessageComponent) as |NoMatchesMessage|}}
+          <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{this.publicAPI}}/>
+        {{/let}}
       {{/if}}
     {{else}}
       {{#let (component this.optionsComponent) as |Options|}}
