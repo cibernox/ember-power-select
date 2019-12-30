@@ -1,5 +1,8 @@
 # Master
 
+# 3.0.6
+- [CHORE] Update Ember Basic Dropdown with a few improvements
+
 # 3.0.5
 - [BUGFIX] Update ember-basic-dropdown to remove bad assertion
 
