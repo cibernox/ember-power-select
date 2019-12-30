@@ -53,10 +53,12 @@
       </Trigger>
     {{/let}}
   </dropdown.Trigger>
-  <dropdown.Content @htmlTag={{this._ebdContentTagName}} class={{this.concatenatedDropdownClasses}}>
+  <dropdown.Content
+    @htmlTag={{this._ebdContentTagName}}
+    @animationEnabled={{@animationEnabled}}
+    class={{this.concatenatedDropdownClasses}}>
     {{#let (component this.beforeOptionsComponent) as |BeforeOptions|}}
       <BeforeOptions
-        @animationEnabled={{@animationEnabled}}
         @select={{this.publicAPI}}
         @searchEnabled={{@searchEnabled}}
         @searchPlaceholder={{@searchPlaceholder}}
@@ -78,11 +80,9 @@
       {{#if (hasBlock "inverse")}}
         {{yield to="inverse"}}
       {{else if noMatchesMessage}}
-        <ul class="ember-power-select-options" role="listbox">
-          <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
-            {{this.noMatchesMessage}}
-          </li>
-        </ul>
+        {{#let (component this.noMatchesMessageComponent) as |NoMatchesMessage|}}
+          <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{this.publicAPI}}/>
+        {{/let}}
       {{/if}}
     {{else}}
       {{#let (component this.optionsComponent) as |Options|}}
