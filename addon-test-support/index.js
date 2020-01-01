@@ -113,7 +113,11 @@ export async function removeMultipleOption(cssPath, value) {
     await click(elem);
     return settled();
   } catch(e) {
-    warn('css path to remove btn not found');
+    warn(
+      `You called "removeMultipleOption('${cssPath}', '${value}')" but no remove button was found using selector "${cssPath}" for value "${value}"`,
+      true,
+      { id: 'ember-power-select.path-to-remove-btn-not-found' }
+    );
     throw e;
   }
 }
@@ -124,7 +128,11 @@ export async function clearSelected(cssPath) {
     await click(elem);
     return settled();
   } catch(e) {
-    warn('css path to clear btn not found');
+    warn(
+      `You called "clearSelected('${cssPath}')" but no clear button was found using selector "${cssPath}"`,
+      true,
+      { id: 'ember-power-select.path-to-clear-btn-not-found' }
+    );
     throw e;
   }
 }
