@@ -6,7 +6,7 @@
   the styles of the addon.
 </p>
 
-{{code-snippet name="material-theme-1.scss" class="max-500-height"}}
+<CodeSnippet @name="material-theme-1.scss" class="max-500-height"/>
 
 <h3>Regular selects without search</h3>
 <div style="display: flex;">
@@ -14,11 +14,11 @@
     <PowerSelect
       @triggerClass="material-theme-trigger"
       @dropdownClass="material-theme-dropdown"
-      @options={{countries}}
-      @selected={{country}}
+      @options={{this.countries}}
+      @selected={{this.country}}
       @placeholder="Country"
       @searchField="name"
-      @onChange={{action (mut country)}} as |country|>
+      @onChange={{fn (mut this.country)}} as |country|>
       {{country.name}}
     </PowerSelect>
   </div>
@@ -26,11 +26,11 @@
     <PowerSelect
       @triggerClass="material-theme-trigger"
       @dropdownClass="material-theme-dropdown"
-      @options={{cities}}
-      @selected={{city}}
+      @options={{this.cities}}
+      @selected={{this.city}}
       @placeholder="City"
       @allowClear={{true}}
-      @onChange={{action (mut city)}} as |city|>
+      @onChange={{fn (mut this.city)}} as |city|>
       {{city}}
     </PowerSelect>
   </div>
@@ -40,12 +40,12 @@
 <PowerSelect
   @triggerClass="material-theme-trigger"
   @dropdownClass="material-theme-dropdown"
-  @options={{countries}}
-  @selected={{country2}}
+  @options={{this.countries}}
+  @selected={{this.country2}}
   @placeholder="Country"
   @searchField="name"
   @searchEnabled={{true}}
-  @onChange={{action (mut country2)}} as |country|>
+  @onChange={{fn (mut this.country2)}} as |country|>
   {{country.name}}
 </PowerSelect>
 
@@ -53,22 +53,22 @@
 <PowerSelectMultiple
   @triggerClass="material-theme-trigger"
   @dropdownClass="material-theme-dropdown"
-  @options={{countries}}
-  @selected={{selectedCountries}}
+  @options={{this.countries}}
+  @selected={{this.selectedCountries}}
   @placeholder="Country"
   @searchField="name"
   @searchEnabled={{true}}
-  @onChange={{action (mut selectedCountries)}} as |country|>
+  @onChange={{fn (mut this.selectedCountries)}} as |country|>
   {{country.name}}
 </PowerSelectMultiple>
 <h3>Groups</h3>
 <PowerSelect
   @triggerClass="material-theme-trigger"
   @dropdownClass="material-theme-dropdown"
-  @options={{groupedNumbers}}
-  @selected={{number}}
+  @options={{this.groupedNumbers}}
+  @selected={{this.number}}
   @placeholder="Choose a number"
-  @onChange={{action (mut number)}} as |num|>
+  @onChange={{fn (mut this.number)}} as |num|>
   {{num}}
 </PowerSelect>
 
@@ -76,13 +76,13 @@
 <PowerSelect
   @triggerClass="material-theme-trigger"
   @dropdownClass="material-theme-dropdown"
-  @options={{countries}}
-  @selected={{country3}}
+  @options={{this.countries}}
+  @selected={{this.country3}}
   @placeholder="Country"
   @searchField="name"
   @allowClear={{true}}
   @searchEnabled={{true}}
-  @onChange={{action (mut country3)}} as |country|>
+  @onChange={{fn (mut this.country3)}} as |country|>
   {{country.name}}
 </PowerSelect>
 <br>
@@ -94,14 +94,14 @@
 
 <p>To use it in your app, SASS users should import the theme before importing the main stylesheet:</p>
 
-{{code-snippet name="material-theme-2.scss"}}
+<CodeSnippet @name="material-theme-2.scss"/>
 
 <p>
   As with the bootstrap one, this skin comes pre-compiled in the app, apps that don't use
   SASS can include it from the <code>ember-cli-build.js</code> file.
 </p>
 
-{{code-snippet name="material-theme-1-js.js" class="max-500-height"}}
+<CodeSnippet @name="material-theme-1-js.js" class="max-500-height"/>
 
 <p>In the next section we're going to explain how come this select can be animated without any javascript!</p>
 

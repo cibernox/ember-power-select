@@ -12,11 +12,11 @@
       </LinkTo>
       <div class="main-header-select">
         <PowerSelect
-          @options={{mainSelectOptions}}
-          @selected={{mainSelected}}
-          @disabled={{disabled}}
+          @options={{this.mainSelectOptions}}
+          @selected={{this.mainSelected}}
+          @disabled={{this.disabled}}
           @triggerComponent="main-header-select-trigger"
-          @onChange={{action "changeOptions"}}
+          @onChange={{this.changeOptions}}
           @dropdownClass="main-header-select-dropdown" as |opt|>
           {{opt}}
         </PowerSelect>
@@ -39,4 +39,4 @@
   </div>
 </footer>
 
-{{remember-document-scroll key=router.currentRouteName}}
+<RememberDocumentScroll @key={{this.router.currentRouteName}} />

@@ -1,9 +1,9 @@
 <PowerSelect
   @searchEnabled={{false}}
-  @options={{countries}}
-  @selected={{country}}
+  @options={{this.countries}}
+  @selected={{this.country}}
   @searchField="name"
-  @onChange={{action (mut country)}}
+  @onChange={{fn (mut this.country)}}
   as |country|>
   {{country.name}}
 </PowerSelect>

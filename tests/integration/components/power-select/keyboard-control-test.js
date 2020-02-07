@@ -310,7 +310,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.selected = null;
     this.handleKeydown = (select, e) => {
-      assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
+      assert.ok(Object.prototype.hasOwnProperty.call(select, 'isOpen'), 'The yieded object has the `isOpen` key');
       assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
       assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
       assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
@@ -337,7 +337,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.selected = null;
     this.handleKeydown = (select, e) => {
-      assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
+      assert.ok(Object.prototype.hasOwnProperty.call(select, 'isOpen'), 'The yieded object has the `isOpen` key');
       assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
       assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
       assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
@@ -365,7 +365,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.selected = null;
     this.handleKeydown = (select, e) => {
-      assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
+      assert.ok(Object.prototype.hasOwnProperty.call(select, 'isOpen'), 'The yieded object has the `isOpen` key');
       assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
       assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
       assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');
@@ -414,7 +414,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.selectedNumbers = [];
     this.handleKeydown = (select, e) => {
-      assert.ok(select.hasOwnProperty('isOpen'), 'The yieded object has the `isOpen` key');
+      assert.ok(Object.prototype.hasOwnProperty.call(select, 'isOpen'), 'The yieded object has the `isOpen` key');
       assert.ok(select.actions.open, 'The yieded object has an `actions.open` key');
       assert.ok(select.actions.close, 'The yieded object has an `actions.close` key');
       assert.ok(select.actions.select, 'The yieded object has an `actions.select` key');

@@ -39,18 +39,18 @@
   You can also specify a destination div on a per component basis, using the <code>destination</code> property.
 </p>
 
-{{#code-example hbs="the-list-1.hbs" js="the-list-1-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-1.hbs" @js="the-list-1-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   The second option is to opt-out to render the dropdown in a different place. Just pass <code>renderInPlace=true</code>
   and the dropdown will be placed next to the trigger element in the DOM.
 </p>
 
-{{#code-example hbs="the-list-2.hbs" js="the-list-2-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-2.hbs" @js="the-list-2-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   When the component is not rendered in place the dropdown can be configured to be added below
@@ -64,9 +64,9 @@
   will rarely need to worry about this option.
 </p>
 
-{{#code-example hbs="the-list-3.hbs" js="the-list-3-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-3.hbs" @js="the-list-3-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <h3>The empty state</h3>
 
@@ -76,26 +76,26 @@
   that will appear after performing a search when there are no matching results.
 </p>
 
-{{#code-example hbs="the-list-4.hbs" js="the-list-4-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-4.hbs" @js="the-list-4-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   You can pass a different message using <code>noMatchesMessage="My message"</code>
 </p>
 
-{{#code-example hbs="the-list-5.hbs" js="the-list-5-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-5.hbs" @js="the-list-5-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 {{!-- <p>
   Or you can just use the <code>\{{else}}</code> block to just customize a totally
   different HTML content just like the <code>\{{each}}</code> helper.
 </p>
 
-{{#code-example hbs="the-list-6.hbs" js="the-list-6-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-6.hbs" @js="the-list-6-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}} --}}
+</CodeExample> --}}
 
 <h3>The loading state</h3>
 
@@ -114,9 +114,9 @@
   The component will show a default message but you can also customize passing <code>loadingMessage="Some text"</code>
 </p>
 
-{{#code-example hbs="the-list-7.hbs" js="the-list-7-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-7.hbs" @js="the-list-7-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <h3>Disabling specific options or groups</h3>
 
@@ -131,18 +131,18 @@
   can be highlighted using arrow navigation.
 </p>
 
-{{#code-example hbs="the-list-8.hbs" js="the-list-8-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-8.hbs" @js="the-list-8-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   This also works with groups. If a group has a property <code>disabled: true</code>, all options inside
   that group, including nested groups are considered disabled, without having to mark every option as disabled.
 </p>
 
-{{#code-example hbs="the-list-9.hbs" js="the-list-9-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-9.hbs" @js="the-list-9-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   You might have noticed that there is a part of the dropdown that wasn't mentioned in this chapter: The search.
@@ -159,9 +159,9 @@
 This is particularly useful if you want to add some kind of link or button inside the list of options and prevent the selection of the item when the user clicks on the link.
 </p>
 
-{{#code-example hbs="the-list-10.hbs" js="the-list-10-js.js" as |partialName|}}
+<CodeExample @hbs="the-list-10.hbs" @js="the-list-10-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <div class="doc-page-nav">
   <a href={{href-to "public-pages.docs.the-trigger"}} class="doc-page-nav-link-prev">&lt; The trigger</a>

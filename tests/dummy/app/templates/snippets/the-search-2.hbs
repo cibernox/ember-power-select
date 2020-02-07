@@ -2,8 +2,8 @@
 <br>
 <br>
 <PowerSelect
-  @options={{diacritics}}
-  @selected={{fellow}}
-  @onChange={{action (mut fellow)}} as |name|>
+  @options={{this.diacritics}}
+  @selected={{this.fellow}}
+  @onChange={{fn (mut this.fellow)}} as |name|>
   {{name}}
 </PowerSelect>

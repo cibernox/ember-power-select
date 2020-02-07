@@ -4,5 +4,5 @@
   <input type="search"
     tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
     aria-controls={{@listboxId}}
-    oninput={{action @select.actions.search value="target.value"}}>
+    {{on "input" (action @select.actions.search value="target.value")}}>
 {{/if}}

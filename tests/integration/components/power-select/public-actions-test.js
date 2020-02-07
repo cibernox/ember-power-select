@@ -15,8 +15,8 @@ function assertPublicAPIShape(assert, select) {
   assert.ok(select.options instanceof Array, 'select.options is an array');
   assert.ok(select.results instanceof Array, 'select.results is an array');
   assert.equal(typeof select.resultsCount, 'number', 'select.resultsCount is a number');
-  assert.ok(select.hasOwnProperty('selected'));
-  assert.ok(select.hasOwnProperty('highlighted'));
+  assert.ok(Object.prototype.hasOwnProperty.call(select, 'selected'));
+  assert.ok(Object.prototype.hasOwnProperty.call(select, 'highlighted'));
   assert.equal(typeof select.searchText, 'string', 'select.searchText is a string');
   assert.equal(typeof select.lastSearchedText, 'string', 'select.lastSearchedText is a string');
   assert.equal(typeof select.actions.open, 'function', 'select.actions.open is a function');

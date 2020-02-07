@@ -1,7 +1,7 @@
 <PowerSelect
-  @options={{names}}
-  @selected={{name}}
+  @options={{this.names}}
+  @selected={{this.name}}
   @allowClear={{true}}
-  @onChange={{action (mut name)}} as |name|>
+  @onChange={{fn (mut this.name)}} as |name|>
   {{name}}
 </PowerSelect>

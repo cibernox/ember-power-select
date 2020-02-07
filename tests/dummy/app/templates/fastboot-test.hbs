@@ -1,23 +1,23 @@
 <div id="single-select-without-selected">
-  <PowerSelect @options={{numbers}} @selected={{none}} @onChange={{action (mut none)}} as |num|>
+  <PowerSelect @options={{this.numbers}} @selected={{this.none}} @onChange={{fn (mut this.none)}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
 <div id="single-select-with-selected">
-  <PowerSelect @options={{numbers}} @selected={{singleSelected}} @onChange={{action (mut singleSelected)}} as |num|>
+  <PowerSelect @options={{this.numbers}} @selected={{this.singleSelected}} @onChange={{fn (mut this.singleSelected)}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
 <div id="multiple-select-without-selected">
-  <PowerSelectMultiple @options={{numbers}} @selected={{none}} @onChange={{action (mut none)}} as |num|>
+  <PowerSelectMultiple @options={{this.numbers}} @selected={{this.none}} @onChange={{fn (mut this.none)}} as |num|>
     {{num}}
   </PowerSelectMultiple>
 </div>
 
 <div id="multiple-select-with-selected">
-  <PowerSelectMultiple @options={{numbers}} @selected={{multipleSelected}} @onChange={{action (mut multipleSelected)}} as |num|>
+  <PowerSelectMultiple @options={{this.numbers}} @selected={{this.multipleSelected}} @onChange={{fn (mut this.multipleSelected)}} as |num|>
     {{num}}
   </PowerSelectMultiple>
 </div>

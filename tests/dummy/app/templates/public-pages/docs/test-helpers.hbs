@@ -17,7 +17,7 @@
   For that import the registration function and invoke it immedialty.
 </p>
 
-{{code-snippet name="test-helpers-1-js.js"}}
+<CodeSnippet @name="test-helpers-1-js.js"/>
 
 <p>
   However if you are using the new testing API described in
@@ -25,7 +25,7 @@
   helpers where needed (even in integration tests!)
 </p>
 
-{{code-snippet name="test-helpers-10-js.js"}}
+<CodeSnippet @name="test-helpers-10-js.js"/>
 
 <h3><code>selectChoose(cssPath, optionTextOrOptionSelector, index?)</code></h3>
 
@@ -34,12 +34,12 @@
   if the select is single or multiple or if it is opened or closed.
 </p>
 
-{{code-snippet name="test-helpers-2-js.js"}}
+<CodeSnippet @name="test-helpers-2-js.js"/>
 
 It also allows to pass a complex CSS selector where using the text of the option is not
 convenient:
 
-{{code-snippet name="test-helpers-3-js.js"}}
+<CodeSnippet @name="test-helpers-3-js.js"/>
 
 <h3><code>selectSearch(cssPath, searchText)</code></h3>
 
@@ -48,7 +48,7 @@ convenient:
   conjunction when the search perform some asynchronous operation
 </p>
 
-{{code-snippet name="test-helpers-4-js.js"}}
+<CodeSnippet @name="test-helpers-4-js.js"/>
 
 <h3><code>removeMultipleOption(cssPath, optionText)</code></h3>
 
@@ -56,7 +56,7 @@ convenient:
   Use this helper to remove an option from a multiple select.
 </p>
 
-{{code-snippet name="test-helpers-5-js.js"}}
+<CodeSnippet @name="test-helpers-5-js.js"/>
 
 <h3><code>clearSelected(cssPath, optionText)</code></h3>
 
@@ -64,7 +64,7 @@ convenient:
   Use this helper to remove an option from a single select when allowClear is set to true.
 </p>
 
-{{code-snippet name="test-helpers-6-js.js"}}
+<CodeSnippet @name="test-helpers-6-js.js"/>
 
 <p>
 <strong>Note:</strong> Remember to whitelist <code>selectChoose</code>, <code>selectSearch</code>, <code>removeMultipleOption</code> and <code>clearSelected</code> in the list of allowed
@@ -89,7 +89,7 @@ convenient:
   This helper opens the dropdown based on the class name (scope) defined on the power select.  Scope is optional if integration test renders only one power select.
 </p>
 
-{{code-snippet name="test-helpers-7-js.js"}}
+<CodeSnippet @name="test-helpers-7-js.js"/>
 
 <h3><code>typeInSearch(text)</code></h3>
 
@@ -97,7 +97,7 @@ convenient:
   This helper is used in conjunction with opening a power select dropdown as long as search is not disabled.
 </p>
 
-{{code-snippet name="test-helpers-8-js.js"}}
+<CodeSnippet @name="test-helpers-8-js.js"/>
 
 <h3><code>selectChoose(text)</code></h3>
 
@@ -106,7 +106,7 @@ convenient:
   a select and choosing one of its values witout you having to worry about the details.
 </p>
 
-{{code-snippet name="test-helpers-9-js.js"}}
+<CodeSnippet @name="test-helpers-9-js.js"/>
 
 <div class="doc-page-nav">
   <LinkTo @route="public-pages.docs.custom-search-action" class="doc-page-nav-link-prev">&lt; Custom search action</LinkTo>

@@ -1,7 +1,7 @@
 <PowerSelectMultiple
   @options={{this.options}}
   @selected={{this.selected}}
-  @onChange={{action (mut selected)}}
+  @onChange={{fn (mut this.selected)}}
   @searchEnabled={{true}}
   @onKeydown={{this.createOnEnter}} as |number|>
   {{number}}

@@ -2,6 +2,6 @@
   @search={{perform this.searchTask}}
   @searchEnabled={{true}}
   @selected={{this.selected}}
-  @onChange={{action (mut this.selected)}} as |repo|>
+  @onChange={{fn (mut this.selected)}} as |repo|>
   {{repo.full_name}}
 </PowerSelect>

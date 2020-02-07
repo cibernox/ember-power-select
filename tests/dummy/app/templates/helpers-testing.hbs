@@ -1,60 +1,60 @@
 <h3>Helpers testing</h3>
 <div class="select-choose">
-  <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} as |num|>
+  <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
 <div class="select-choose-onopen">
-  <PowerSelect @onOpen={{this.onOpenHandle}} @options={{optionz}} @selected={{selected}} @onChange={{action (mut selected)}} @allowClear={{true}} as |num|>
+  <PowerSelect @onOpen={{this.onOpenHandle}} @options={{this.optionz}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @allowClear={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
 <div class="select-choose-onopen-multiple">
-  <PowerSelectMultiple @onOpen={{this.onOpenHandle}} @options={{optionz}} @selected={{selected2}} @onChange={{action (mut selected2)}} as |num|>
+  <PowerSelectMultiple @onOpen={{this.onOpenHandle}} @options={{this.optionz}} @selected={{this.selected2}} @onChange={{fn (mut this.selected2)}} as |num|>
     {{num}}
   </PowerSelectMultiple>
 </div>
 
 <div>
-  <PowerSelect @triggerClass="select-with-class-in-trigger" @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} @searchEnabled={{true}} as |num|>
+  <PowerSelect @triggerClass="select-with-class-in-trigger" @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
-{{#if selected}}
-  <span class="select-choose-target">You've selected: {{selected}}</span>
+{{#if this.selected}}
+  <span class="select-choose-target">You've selected: {{this.selected}}</span>
 {{/if}}
 
 <div class="select-async">
-  <PowerSelect @selected={{selected}} @onChange={{action (mut selected)}} @search={{this.searchAsync}} @searchEnabled={{true}} as |num|>
+  <PowerSelect @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @search={{this.searchAsync}} @searchEnabled={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
 <div class="select-multiple">
-  <PowerSelectMultiple @options={{numbers}} @selected={{selectedList}} @onChange={{action (mut selectedList)}} @searchEnabled={{true}} as |num|>
+  <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedList}} @onChange={{fn (mut this.selectedList)}} @searchEnabled={{true}} as |num|>
     {{num}}
   </PowerSelectMultiple>
 </div>
 
 <div id="select-multiple-async">
-  <PowerSelectMultiple @options={{numbers}} @selected={{asyncSelectedList}} @onChange={{fn this.onChangeAsync "asyncSelectedList"}} as |num|>
+  <PowerSelectMultiple @options={{this.numbers}} @selected={{this.asyncSelectedList}} @onChange={{fn this.onChangeAsync "asyncSelectedList"}} as |num|>
     {{num}}
   </PowerSelectMultiple>
 </div>
 
 <div class="select-deselect-async">
-  <PowerSelect @options={{numbers}} @selected={{asyncSelected}} @onChange={{fn this.onChangeAsync "asyncSelected"}} @allowClear={{true}} as |num|>
+  <PowerSelect @options={{this.numbers}} @selected={{this.asyncSelected}} @onChange={{fn this.onChangeAsync "asyncSelected"}} @allowClear={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
 <h3>Customized component</h3>
 <div class="select-custom-search">
-  <PowerSelect @selected={{selected3}}
-    @onChange={{action (mut selected3)}}
+  <PowerSelect @selected={{this.selected3}}
+    @onChange={{fn (mut this.selected3)}}
     @search={{this.searchAsync}}
     @beforeOptionsComponent={{null}}
     @triggerComponent="custom-trigger-with-search" as |num|>

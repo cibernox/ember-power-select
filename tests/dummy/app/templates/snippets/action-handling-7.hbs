@@ -3,7 +3,7 @@
   @options={{this.numbers}}
   @class={{this.selectClass}}
   @dropdownClass={{this.selectClass}}
-  @onChange={{action (mut this.mandatoryNumber)}}
+  @onChange={{fn (mut this.mandatoryNumber)}}
   @onClose={{this.verifyPresence}}
   @placeholder={{"I really NEED this info"}} as |number|>
   {{number}}

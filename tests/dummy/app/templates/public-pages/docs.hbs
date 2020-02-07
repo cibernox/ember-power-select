@@ -24,7 +24,7 @@
     <LinkTo @route="public-pages.docs.api-reference" class="side-nav-link">API reference</LinkTo>
   </nav>
   <section class="doc-page">
-    <PowerSelect @selected={{currentSection}} @options={{groupedSections}} @onChange={{this.visit}} @searchField="text" @triggerClass="section-selector" as |option|>
+    <PowerSelect @selected={{this.currentSection}} @options={{this.groupedSections}} @onChange={{this.visit}} @searchField="text" @triggerClass="section-selector" as |option|>
       {{option.text}}
     </PowerSelect>
     {{outlet}}

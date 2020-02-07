@@ -3,9 +3,9 @@
   @dropdownClass="slide-fade bootstrap-theme-dropdown"
   @searchField="name"
   @searchEnabled={{true}}
-  @options={{options}}
-  @selected={{country}}
-  @onChange={{action (mut country)}} as |country|>
+  @options={{this.options}}
+  @selected={{this.country}}
+  @onChange={{fn (mut this.country)}} as |country|>
   <img src={{country.flagUrl}} class="icon-flag" alt="Flag of {{country.name}}">
   <strong>{{country.name}}</strong>
 </PowerSelect>
