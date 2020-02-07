@@ -1,8 +1,8 @@
 <PowerSelect
-  @options={{names}}
+  @options={{this.names}}
   @renderInPlace={{true}}
-  @selected={{name}}
-  @onChange={{action (mut name)}} as |name|>
+  @selected={{this.name}}
+  @onChange={{fn (mut this.name)}} as |name|>
   {{name}}
 </PowerSelect>
 (Looks the same but inspect the DOM to see the difference)

@@ -18,9 +18,9 @@
   Let's see the result:
 </p>
 
-{{#code-example hbs="navigable-select-1.hbs" js="navigable-select-1-js.js" as |partialName|}}
+<CodeExample @hbs="navigable-select-1.hbs" @js="navigable-select-1-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   Nice? It takes less code than you might think.
@@ -35,7 +35,7 @@
   The task consists basically of creating a grouped select like this:
 </p>
 <div style="margin: 0 auto; max-width: 250px;">
-  <PowerSelect @options={{groupedNumbers}} @selected={{selectedNumber}} @onChange={{action (mut selectedNumber)}} as |option|>
+  <PowerSelect @options={{this.groupedNumbers}} @selected={{this.selectedNumber}} @onChange={{fn (mut this.selectedNumber)}} as |option|>
     {{option}}
   </PowerSelect>
 </div>
@@ -84,7 +84,7 @@
   groups "levels".
 </p>
 
-{{code-snippet name="navigable-select-2.hbs"}}
+<CodeSnippet @name="navigable-select-2.hbs"/>
 
 <p>
   In the block we need to distinguish between 3 possible situations. The yielded object can be
@@ -96,7 +96,7 @@
   seems perfect because it will update if the options change.
 </p>
 
-{{code-snippet name="navigable-select-2-js.js"}}
+<CodeSnippet @name="navigable-select-2-js.js"/>
 
 <p>
   This tail-recursive solution is not straightforward, but in exchange it supports any depth level.
@@ -113,7 +113,7 @@
   The default list doesn't work for us, we need to create that "animated-options".
 </p>
 
-{{code-example hbs="navigable-select-3.hbs" js="navigable-select-3-js.js" showResult=false}}
+<CodeExample @hbs="navigable-select-3.hbs" @js="navigable-select-3-js.js" @showResult={{false}} />
 
 <p>
   The template uses liquid-fire's <code>liquid-bind</code> component to animate when we swap the list
@@ -126,15 +126,15 @@
   isn't a leaf node and provide custom search that we like:
 </p>
 
-{{code-snippet name="navigable-select-4-js.js"}}
+<CodeSnippet @name="navigable-select-4-js.js"/>
 
 <p>
   Check the full picture in github:
   <ul>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/animated-options.js" target="_blank" rel="noopener">app/components/animated-options.js</a></li>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/animated-options.hbs" target="_blank" rel="noopener">app/templates/components/animated-options.hbs</a></li>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/navigable-select.js" target="_blank" rel="noopener">app/components/navigable-select.js</a></li>
-    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/navigable-select.hbs" target="_blank" rel="noopener">app/templates/components/navigable-select.hbs</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/animated-options.js" target="_blank" rel="noreferrer noopener">app/components/animated-options.js</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/animated-options.hbs" target="_blank" rel="noreferrer noopener">app/templates/components/animated-options.hbs</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/components/navigable-select.js" target="_blank" rel="noreferrer noopener">app/components/navigable-select.js</a></li>
+    <li><a href="https://github.com/cibernox/ember-power-select/blob/master/tests/dummy/app/templates/components/navigable-select.hbs" target="_blank" rel="noreferrer noopener">app/templates/components/navigable-select.hbs</a></li>
   </ul>
 </p>
 

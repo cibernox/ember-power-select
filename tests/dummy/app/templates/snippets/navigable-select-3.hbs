@@ -1,11 +1,11 @@
-{{#liquid-bind options use=animation enableGrowth=enableGrowth as |currentOptions|}}
-  {{#each currentOptions as |opt|}}
+{{#liquid-bind @options use=this.animation enableGrowth=this.enableGrowth as |currentOptions|}}
+  {{#each this.currentOptions as |opt|}}
     <li class="ember-power-select-option"
-      aria-selected={{ember-power-select-is-selected opt selected}}
+      aria-selected={{ember-power-select-is-selected opt @selected}}
       aria-disabled={{opt.disabled}}
-      aria-current={{eq opt highlighted}}
-      {{on "click" (action select opt dropdown)}}
-      {{on "mouseover" (action highlight opt)}}>
+      aria-current={{eq opt @highlighted}}
+      {{on "click" (fn @select opt @dropdown)}}
+      {{on "mouseover" (fn @highlight opt)}}>
       {{yield opt}}
     </li>
   {{/each}}

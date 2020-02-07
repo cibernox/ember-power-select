@@ -1,18 +1,18 @@
-<button {{on "click" this.refreshCollection}}>Refresh collection</button>
+<button type="button" {{on "click" this.refreshCollection}}>Refresh collection</button>
 <br>
 Default loading message
 <PowerSelect
-  @options={{promise}}
-  @selected={{selected}}
-  @onChange={{action (mut selected)}} as |name|>
+  @options={{this.promise}}
+  @selected={{this.selected}}
+  @onChange={{fn (mut this.selected)}} as |name|>
   {{name}}
 </PowerSelect>
 <br>
 Custom loading message (press the <code>Refresh Collection</code> button and open this select)
 <PowerSelect
-  @options={{promise}}
+  @options={{this.promise}}
   @loadingMessage="Waiting for the server...."
-  @selected={{selected}}
-  @onChange={{action (mut selected)}} as |name|>
+  @selected={{this.selected}}
+  @onChange={{fn (mut this.selected)}} as |name|>
   {{name}}
 </PowerSelect>

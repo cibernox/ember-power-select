@@ -1,8 +1,8 @@
 <PowerSelect
-  @options={{emptyList}}
+  @options={{this.emptyList}}
   @noMatchesMessage="404 bro"
-  @selected={{selected}}
-  @onChange={{action (mut selected)}}
+  @selected={{this.selected}}
+  @onChange={{fn (mut this.selected)}}
   as |name|>
   {{name}}
 </PowerSelect>

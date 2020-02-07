@@ -1,10 +1,10 @@
 <h3>Helpers testing with single select</h3>
 <div class="select-choose">
-  <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} @searchEnabled={{true}} as |num|>
+  <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |num|>
     {{num}}
   </PowerSelect>
 </div>
 
-{{#if selected}}
-  <span class="select-choose-target">You've selected: {{selected}}</span>
+{{#if this.selected}}
+  <span class="select-choose-target">You've selected: {{this.selected}}</span>
 {{/if}}

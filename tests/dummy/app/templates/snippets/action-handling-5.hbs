@@ -4,7 +4,7 @@
 <PowerSelectMultiple
   @selected={{this.selected}}
   @options={{this.cities}}
-  @onChange={{action (mut this.selected)}}
+  @onChange={{fn (mut this.selected)}}
   @onFocus={{this.handleFocus}}
   @onBlur={{this.handleBlur}} as |name|>
   {{name}}

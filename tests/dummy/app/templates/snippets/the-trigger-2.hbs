@@ -1,10 +1,10 @@
 <PowerSelect
   @searchEnabled={{true}}
-  @options={{countries}}
-  @selected={{country}}
+  @options={{this.countries}}
+  @selected={{this.country}}
   @selectedItemComponent="selected-item-country"
   @searchField="name"
-  @onChange={{action (mut country)}}
+  @onChange={{fn (mut this.country)}}
   as |country|>
   <div class="country-detailed-info">
     <img src={{country.flagUrl}} class="country-flag" alt="Flag of {{country.name}}">

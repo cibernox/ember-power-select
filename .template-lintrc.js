@@ -8,6 +8,8 @@ module.exports = {
     'no-invalid-interactive': false,
     'attribute-indentation': false,
     'no-partial': false,
-    'no-inline-styles': false
+    'no-inline-styles': false,
+    'no-positive-tabindex': false,
+    'no-action': false
   }
 };

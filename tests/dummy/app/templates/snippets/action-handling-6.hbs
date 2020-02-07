@@ -4,7 +4,7 @@
   <PowerSelect
     @selected={{this.number}}
     @options={{this.numbers}}
-    @onChange={{action (mut this.number)}}
+    @onChange={{fn (mut this.number)}}
     @onOpen={{this.startSelfDestroyCountdown}}
     @placeholder="Once opened this component will destroy itself in 8 seconds" as |number|>
     {{number}}

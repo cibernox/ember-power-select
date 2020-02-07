@@ -1,8 +1,8 @@
 <PowerSelect
-  @options={{names}}
+  @options={{this.names}}
   @destination="customized-destination"
-  @selected={{name123}}
-  @onChange={{action (mut name123)}} as |name|>
+  @selected={{this.name123}}
+  @onChange={{fn (mut this.name123)}} as |name|>
   {{name}}
 </PowerSelect>
 <div id="customized-destination"></div>

@@ -14,9 +14,9 @@
 
 <p><strong>Selects in this page seem do not work. This is intended.</strong> See last paragraph.</p>
 
-{{#code-example hbs="how-to-use-it-1.hbs" js="how-to-use-it-1-js.js" as |partialName|}}
+<CodeExample @hbs="how-to-use-it-1.hbs" @js="how-to-use-it-1-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   The block of the component becomes the content of each option of the select and also the content
@@ -24,9 +24,9 @@
   selects with complex HTML inside very naturally.
 </p>
 
-{{#code-example hbs="how-to-use-it-2.hbs" js="how-to-use-it-2-js.js" as |partialName|}}
+<CodeExample @hbs="how-to-use-it-2.hbs" @js="how-to-use-it-2-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   <strong>Filtering in the above select also seems broken, but is also intended.</strong>
@@ -39,9 +39,9 @@
   computed property that returns the correct object based upon the Id.
 </p>
 
-{{#code-example hbs="how-to-use-it-3.hbs" js="how-to-use-it-3-js.js" as |partialName|}}
+<CodeExample @hbs="how-to-use-it-3.hbs" @js="how-to-use-it-3-js.js" as |partialName|>
   {{partial partialName}}
-{{/code-example}}
+</CodeExample>
 
 <p>
   You could alternatively do this using the <code><a href="https://github.com/DockYard/ember-composable-helpers#find-by">find-by</a></code>

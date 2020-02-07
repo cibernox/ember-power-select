@@ -1,6 +1,6 @@
 <PowerSelect
-  @options={{emptyList}}
-  @selected={{selected}}
-  @onChange={{action (mut selected)}} as |name|>
+  @options={{this.emptyList}}
+  @selected={{this.selected}}
+  @onChange={{fn (mut this.selected)}} as |name|>
   {{name}}
 </PowerSelect>

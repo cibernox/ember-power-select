@@ -1,7 +1,7 @@
 <PowerSelect
   @searchEnabled={{true}}
-  @options={{names}}
-  @selected={{selectedPersonName}}
-  @onChange={{action (mut selectedPersonName)}} as |name select|>
+  @options={{this.names}}
+  @selected={{this.selectedPersonName}}
+  @onChange={{fn (mut this.selectedPersonName)}} as |name select|>
   {{highlight-substr name select.lastSearchedText}}
 </PowerSelect>

@@ -1,7 +1,7 @@
 <PowerSelect
-  @options={{names}}
-  @selected={{aName}}
+  @options={{this.names}}
+  @selected={{this.aName}}
   @placeholderComponent="weird-placeholder"
-  @onChange={{action (mut aName)}} as |name|>
+  @onChange={{fn (mut this.aName)}} as |name|>
   {{name}}
 </PowerSelect>

@@ -11,7 +11,7 @@
     <LinkTo @route="public-pages.cookbook.navigable-select" class="side-nav-link">Navigable select</LinkTo>
   </nav>
   <section class="doc-page">
-    <PowerSelect @selected={{currentSection}} @options={{groupedSections}} @onChange={{this.visit}} @searchField="text" @triggerClass="section-selector" as |option|>
+    <PowerSelect @selected={{this.currentSection}} @options={{this.groupedSections}} @onChange={{this.visit}} @searchField="text" @triggerClass="section-selector" as |option|>
       {{option.text}}
     </PowerSelect>
     {{outlet}}

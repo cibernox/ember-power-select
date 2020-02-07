@@ -1,7 +1,7 @@
 <PowerSelect
-  @options={{groupedNumbers}}
-  @selected={{number}}
-  @onChange={{action (mut number)}}
+  @options={{this.groupedNumbers}}
+  @selected={{this.number}}
+  @onChange={{fn (mut this.number)}}
   as |num|>
   {{num}}
 </PowerSelect>
