@@ -7,7 +7,7 @@ import { countries } from '../constants';
 module('Integration | Component | Ember Power Select (Customization using attrs)', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('the `class` attribute is forwarded to the wrapper element', async function(assert) {
+  test('the `class` attribute is forwarded to the trigger element', async function(assert) {
     assert.expect(1);
 
     this.countries = countries;
@@ -19,7 +19,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
       </PowerSelect>
     `);
 
-    assert.dom('.ember-basic-dropdown').hasClass('foo', 'Class was added.');
+    assert.dom('.ember-basic-dropdown-trigger').hasClass('foo', 'Class was added.');
   });
 
   test('trigger on single selects can be customized using triggerClass', async function(assert) {
