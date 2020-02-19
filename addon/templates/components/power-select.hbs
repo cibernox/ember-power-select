@@ -10,6 +10,7 @@
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
   @calculatePosition={{@calculatePosition}}
+  @rootEventType={{or @eventType "mousedown"}}
   ...attributes as |dropdown|>
   {{#let (assign dropdown (hash
     selected=this.selected
