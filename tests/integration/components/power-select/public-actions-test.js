@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, triggerKeyEvent, focus } from '@ember/test-helpers';
+import { render, click, triggerKeyEvent, focus, blur } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
@@ -286,11 +286,10 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       <PowerSelect @options={{numbers}} @selected={{foo}} @onBlur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
-      <input type="text" id="other-element"/>
     `);
 
     await focus('.ember-power-select-trigger');
-    await focus('#other-element');
+    await blur('.ember-power-select-trigger');
   });
 
   test('The onBlur of multiple selects action receives the public API and the focus event', async function(assert) {
@@ -306,11 +305,10 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       <PowerSelectMultiple @options={{numbers}} @selected={{foo}} @onBlur={{handleBlur}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
-      <input type="text" id="other-element"/>
     `);
 
     await focus('.ember-power-select-trigger-multiple-input');
-    await focus('#other-element');
+    await blur('.ember-power-select-trigger-multiple-input');
   });
 
   test('The onBlur of multiple selects also gets called when the thing getting the focus is the searbox', async function(assert) {
@@ -324,11 +322,10 @@ module('Integration | Component | Ember Power Select (Public actions)', function
       <PowerSelect @options={{numbers}} @selected={{foo}} @onBlur={{handleBlur}} @onChange={{action (mut foo)}} as |number|>
         {{number}}
       </PowerSelect>
-      <input type="text" id="other-element"/>
     `);
 
     await clickTrigger();
-    await focus('#other-element');
+    await blur('.ember-power-select-trigger');
   });
 
   test('the `@onOpen` action is invoked just before the dropdown opens', async function(assert) {

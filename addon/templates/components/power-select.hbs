@@ -24,7 +24,7 @@
     actions=(assign dropdown.actions this._publicAPIActions)
   )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
     <dropdown.Trigger
-      @eventType={{or @eventType "mousedown"}}
+      @eventType={{or @eventType "click"}}
       {{did-insert this._updateOptions @options}}
       {{did-update this._updateOptions @options}}
       {{did-insert this._updateSelected @selected}}
