@@ -4791,10 +4791,10 @@ ember-auto-import@^1.2.19, ember-auto-import@^1.5.3:
     walk-sync "^0.3.3"
     webpack "~4.28"
 
-ember-basic-dropdown@^3.0.0-beta.9:
-  version "3.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-3.0.0-beta.9.tgz#0440266d746fe9e424279ee9ce5573f4b9c574b6"
-  integrity sha512-bcwizwlNKU//e4wNO1E3MVemSyqscz/1JoqgV/eYSsHHohxQKbHDeZCGrnjVA08bdHb7x6cScttGhaZjfG2z5g==
+ember-basic-dropdown@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-3.0.0.tgz#39e46679a4c0f47a54a0edfc01013b0da4146eaa"
+  integrity sha512-ZOcWRTgS/thpnXW6eZZcttzeksz3Lgb1Vseq+51/AkOGTdNFPLuPpFgJyCOzCYY6lqiGd/qXpck4ovgwfoNUjg==
   dependencies:
     "@ember/render-modifiers" "^1.0.2"
     "@glimmer/component" "^1.0.0"
