@@ -92,22 +92,27 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
   });
 
   test('passing an Ember-data collection to `@selected` of a multiple select works', async function (assert) {
-    this.server.createList('user', 10);
     this.server.timing = 0;
-    this.options = this.store.findAll('user');
-    await this.options;
-    this.selected = this.options;
+    this.server.create('user');
+    this.server.createList('pet', 3);
+    this.set('options', this.store.findAll('pet'));
+    this.set('selected', this.store.find('user', 1).get('pets'));
+
     await render(hbs`
-      <PowerSelectMultiple @selected={{this.selected}} @options={{this.options}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelectMultiple @selected={{selected}} @options={{options}} @onChange={{action (mut selected)}} as |option|>
         {{option.name}}
       </PowerSelectMultiple>
     `);
-    assert.dom('.ember-power-select-multiple-option ').exists({ count: 10 })
-    assert.dom('.ember-power-select-multiple-option:nth-child(4)').containsText('User 3');
+
+    assert.dom('.ember-power-select-multiple-option').doesNotExist();
     await clickTrigger();
-    assert.dom('.ember-power-select-option').exists({ count: 10 })
-    await click('.ember-power-select-option:nth-child(4)');
-    assert.dom('.ember-power-select-multiple-option').exists({ count: 9 })
-    assert.dom('.ember-power-select-multiple-option:nth-child(4)').containsText('User 4', 'The 4th selected option is not User 3 anymore');
+    assert.dom('.ember-power-select-option[aria-selected="false"]').exists({ count: 3 });
+    await click('.ember-power-select-option:nth-child(2)');
+    assert.dom('.ember-power-select-multiple-option').exists({ count: 1 });
+    assert.dom('.ember-power-select-multiple-option').containsText('Pet 1', 'The 2nd option Pet 1 is now selected');
+    await clickTrigger();
+    assert.dom('.ember-power-select-option:nth-child(2)').hasAttribute('aria-selected', 'true');
+    assert.dom('.ember-power-select-option[aria-selected="true"]').exists({ count: 1 });
+    assert.dom('.ember-power-select-option[aria-selected="false"]').exists({ count: 2 });
   });
 });
