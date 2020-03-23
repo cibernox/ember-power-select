@@ -197,7 +197,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (this._resolvedSelected) {
       return toPlainArray(this._resolvedSelected);
     } else if (this.args.selected && typeof this.args.selected.then !== 'function') {
-      return toPlainArray(this.args.selected);
+      return toPlainArray(this.args.selected as any[]);
     }
     return undefined;
   }

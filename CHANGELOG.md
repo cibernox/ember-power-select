@@ -1,4 +1,5 @@
 # Master
+- [BUGFIX] When `@selected` is an ember-data collection, transform to a plain array for the public API
 
 # 4.0.0-beta.6
 - [BUGFIX] Multiple selects can receive an ember-data collection in the `@selected` attribute.
@@ -506,7 +507,7 @@
   It broke in 1.0.0. Added test to prevent regression.
 
 # 1.0.0-alpha.8
-- [BUGFIX] ENTER/SPACE when no option is highlighted doesn’t selects undefined
+- [BUGFIX] ENTER/SPACE when no option is highlighted doesn't selects undefined
 
 # 1.0.0-alpha.7
 - [BUGFIX] Ensure `select.selected` is always an array in multiple selects, not undefined/null.
