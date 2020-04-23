@@ -1,0 +1,9 @@
+
+<li class="ember-power-select-option"
+  aria-selected="{{ember-power-select-is-selected @option @select.selected}}"
+  aria-disabled={{if @option.disabled "true"}}
+  aria-current="{{eq @option @select.highlighted}}"
+  data-option-index="{{@fullIndex}}"
+  role="option">
+  {{yield}}
+</li>

@@ -106,6 +106,7 @@
             @optionsComponent={{Options}}
             @extra={{@extra}}
             @highlightOnHover={{this.highlightOnHover}}
+            @optionComponent={{or @optionComponent "power-select/option"}}
             @groupComponent={{or @groupComponent "power-select/power-select-group"}}
             id={{listboxId}}
             class="ember-power-select-options" as |option select|>
