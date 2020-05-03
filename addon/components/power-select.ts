@@ -335,7 +335,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       let currentSelectedPromise: PromiseProxy<any> = this.args.selected;
       if (Object.hasOwnProperty.call(currentSelectedPromise, 'content')) { // seems a PromiseProxy
         if (this._lastSelectedPromise) {
-          removeObserver(this._lastSelectedPromise, 'content', this._selectedObserverCallback);
+          removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
         }
         addObserver(currentSelectedPromise, 'content', this, this._selectedObserverCallback);
       }
