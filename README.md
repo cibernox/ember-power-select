@@ -85,7 +85,7 @@ module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     'ember-cli-uglify': {
       uglify: {
-        // Looks like diacritics in Ember Power Select get unquoted and IE11 doesn't like that
+        // Prevent uglify from unquoting hash keys in production builds, causes issue with diacritics in EPS
         output: {
           keep_quoted_props: true,
         },
