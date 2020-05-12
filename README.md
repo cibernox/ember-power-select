@@ -68,8 +68,34 @@ one that you want to open source open a PR to include it in the list.
 
 ## Browser support
 
-This component was just tested it in modern browsers but there is no technical reason it
-wouldn't work in IE9+. If you find any problem please file an issue.
+This addon was tested in modern browsers and there is no technical reason it
+wouldn't work in IE9+. If you find a problem please file an issue.
+
+### IE 'Invalid character' issue
+
+You might run into a situation where your app doesn't work in IE11 when doing a production build with the error: `Invalid character`. This is due to uglifyjs stripping quotes out of object keys, and since we handle diacritics for you, those cause issues. Solution:
+
+```js
+// ember-cli-build.js
+'use strict';
+
+const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
+module.exports = function (defaults) {
+  let app = new EmberApp(defaults, {
+    'ember-cli-uglify': {
+      uglify: {
+        // Looks like diacritics in Ember Power Select get unquoted and IE11 doesn't like that
+        output: {
+          keep_quoted_props: true,
+        },
+      }
+    }
+  });
+  
+  return app.toTree();
+}
+```
 
 ## Testing
 
