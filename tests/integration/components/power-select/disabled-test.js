@@ -112,7 +112,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-disabled', 'true', 'The trigger has `aria-disabled=true`');
     this.set('shouldBeDisabled', false);
-    assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded')
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'false')
     assert.dom('.ember-power-select-trigger-multiple-input').doesNotHaveAttribute('disabled');
   });
 
