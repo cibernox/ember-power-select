@@ -205,7 +205,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       </PowerSelect>
     `);
 
-    assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded', 'Not expanded');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'false', 'Not expanded');
     await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'true', 'Expanded');
   });
@@ -220,7 +220,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
       </PowerSelectMultiple>
     `);
 
-    assert.dom('.ember-power-select-trigger').doesNotHaveAttribute('aria-expanded', 'Not expanded');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'false', 'Not expanded');
     await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'true', 'Expanded');
   });
