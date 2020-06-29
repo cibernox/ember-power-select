@@ -108,7 +108,7 @@
     "prember-crawler": "^1.0.0",
     "qunit-dom": "^1.2.0",
     "sass": "^1.26.9",
-    "simple-git": "^1.10.0",
+    "simple-git": "^2.11.0",
     "testdouble": "^3.16.0",
     "typescript": "~3.9.5"
   },
