@@ -55,5 +55,5 @@ Router.map(function() {
   this.route('playground');
 
   // Routes for fastboot tests
-  this.route('fastboot-test');
+  this.route('fastboot-testing');
 });
