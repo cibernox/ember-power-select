@@ -110,7 +110,7 @@
     "sass": "^1.26.9",
     "simple-git": "^1.10.0",
     "testdouble": "^3.16.0",
-    "typescript": "3.7.5"
+    "typescript": "~3.9.5"
   },
   "engines": {
     "node": "10.* || >= 12"
