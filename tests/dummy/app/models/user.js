@@ -1,7 +1,7 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
-  name: DS.attr('string'),
-  age: DS.attr('number'),
-  pets: DS.hasMany('pet', { inverse: 'owner' })
+export default Model.extend({
+  name: attr('string'),
+  age: attr('number'),
+  pets: hasMany('pet', { inverse: 'owner' })
 });

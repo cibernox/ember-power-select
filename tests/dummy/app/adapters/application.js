@@ -1,7 +1,7 @@
-import DS from 'ember-data';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import fetch from 'fetch';
 
-export default class extends DS.JSONAPIAdapter {
+export default class extends JSONAPIAdapter {
   _ajaxRequest(ajaxOptions) {
     return fetch(ajaxOptions.url).then((response) => {
       if (!response.ok) {
