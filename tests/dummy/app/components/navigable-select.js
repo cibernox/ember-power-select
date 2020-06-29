@@ -43,9 +43,9 @@ export default class extends Component {
     } else if (levelOrOption.parentLevel) {
       this.set('currentOptions', levelOrOption.parentLevel.options);
     } else {
-      this.get('onchange')(levelOrOption);
+      this.onchange(levelOrOption);
       dropdown.actions.close();
-      this.set('currentOptions', this.get('transformedOptions'));
+      this.set('currentOptions', this.transformedOptions);
     }
   }
 
