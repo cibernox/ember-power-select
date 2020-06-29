@@ -329,10 +329,10 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.owner.register('component:custom-group-component', Component.extend({
       init() {
         this._super(...arguments);
-        assert.ok(isPresent(this.get('select')));
-        assert.ok(isPresent(this.get('group.groupName')));
-        assert.ok(isPresent(this.get('group.options')));
-        assert.equal(this.get('extra'), extra);
+        assert.ok(isPresent(this.select));
+        assert.ok(isPresent(this.group.groupName));
+        assert.ok(isPresent(this.group.options));
+        assert.equal(this.extra, extra);
       }
     }));
 

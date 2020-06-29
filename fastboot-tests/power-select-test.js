@@ -5,7 +5,7 @@ moduleForFastboot('Basic rendering');
 QUnit.test('it renders', function(assert) {
   assert.expect(15);
 
-  return this.visit('/fastboot-test').then(function(data) {
+  return this.visit('/fastboot-testing').then(function(data) {
     var statusCode = data[0];
     var headers = data[1];
     var document = data[2];

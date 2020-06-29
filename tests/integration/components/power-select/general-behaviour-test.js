@@ -857,7 +857,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
 
-    await this.get('selected');
+    await this.selected;
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('four', 'The 4th element is highlighted');
     assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('four', 'The 4th element is highlighted');
     assert.dom('.ember-power-select-trigger').hasText('four', 'The trigger has the proper content');
@@ -1078,7 +1078,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
     let User = EmberObject.extend({
       isEqual(other) {
-        return get(this, 'name') === get(other, 'name');
+        return this.name === get(other, 'name');
       }
     });
 
@@ -1175,7 +1175,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     assert.dom('.ember-power-select-option[aria-selected="true"]').doesNotExist('no element is selected');
     assert.dom('.ember-power-select-trigger').hasText('', 'Nothing is selected yet');
 
-    await this.get('mainUser.bestie');
+    await this.mainUser.bestie;
     await settled();
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('Lucius', 'The 4th element is highlighted');
     assert.dom('.ember-power-select-option[aria-selected="true"]').hasText('Lucius', 'The 4th element is highlighted');
