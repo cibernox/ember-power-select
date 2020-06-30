@@ -1,5 +1,8 @@
 # Master
 
+# 4.0.3
+- Update `ember-concurrency-decorators` to 2.0
+
 # 4.0.0-beta.6
 - [BUGFIX] Multiple selects can receive an ember-data collection in the `@selected` attribute.
 
