@@ -124,7 +124,13 @@
             (component 'power-select/search-message')
           ) 
         as |SearchMessage|}}
-          <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
+          <SearchMessage 
+            @searchMessage={{this.searchMessage}}
+            @select={{publicAPI}}
+            id={{listboxId}} 
+            aria-label={{@ariaLabel}}
+            aria-labelledby={{@ariaLabelledBy}} 
+          /> 
         {{/let}}
       {{else if this.mustShowNoMessages}}
         {{#let 
@@ -134,7 +140,13 @@
             (component 'power-select/no-matches-message')
           ) 
          as |NoMatchesMessage|}}
-          <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{publicAPI}} />
+          <NoMatchesMessage 
+            @noMatchesMessage={{this.noMatchesMessage}} 
+            @select={{publicAPI}} 
+            id={{listboxId}} 
+            aria-label={{@ariaLabel}}
+            aria-labelledby={{@ariaLabelledBy}} 
+          />
         {{/let}}
       {{else}}
         {{#let 
