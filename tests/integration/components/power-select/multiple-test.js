@@ -715,7 +715,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
       </PowerSelectMultiple>
     `);
     await clickTrigger();
-    run(() => this.get('selected').pushObject(numbers[3]));
+    run(() => this.selected.pushObject(numbers[3]));
     await click('.ember-power-select-option');
     assert.dom('.ember-power-select-multiple-option').exists({ count: 2 }, 'Two elements are selected');
   });
@@ -794,7 +794,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
   test('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
     let User = EmberObject.extend({
       isEqual(other) {
-        return get(this, 'name') === get(other, 'name');
+        return this.name === get(other, 'name');
       }
     });
 

@@ -2,7 +2,7 @@
   <span class="ember-power-select-selected-item">{{yield @selected @lastSearchedText}}</span>
 {{else}}
   <input type="search"
-    tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+    tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck={{false}}
     aria-controls={{@listboxId}}
     {{on "input" (action @select.actions.search value="target.value")}}>
 {{/if}}

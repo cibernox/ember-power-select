@@ -14,7 +14,7 @@ The documentation website lives under `tests/dummy`. It is a simple
 ember app. You can run the website locally:
 
 ```
-yarn install
+npm install
 ember serve
 # visit localhost:4200
 ```
