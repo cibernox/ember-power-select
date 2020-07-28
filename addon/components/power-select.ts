@@ -457,6 +457,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     } else {
       this.lastSearchedText = term;
       this._searchResult = searchResult;
+      this._resetHighlighted();
     }
   }
 
