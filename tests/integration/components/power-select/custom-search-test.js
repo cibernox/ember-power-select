@@ -272,6 +272,25 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     await settled();
     assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first result is highlighted');
   });
+  test('On an empty select, when a syncronous search result complete, the first element is highlighted like with regular filtering', async function(assert) {
+    assert.expect(1);
+
+    this.searchFn = function(term) {
+      return numbers.filter((str) => str.indexOf(term) > -1);
+    };
+
+    await render(hbs`
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+        {{number}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+    typeInSearch('teen');
+
+    await settled();
+    assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first result is highlighted');
+  });
 
   test('On an select with a selected value, if after a search this value is not among the options the first element is highlighted', async function(assert) {
     assert.expect(2);
