@@ -52,7 +52,7 @@ export default class Options extends Component<Args> {
       }
       let optionIndex = optionItem.getAttribute('data-option-index');
       if (optionIndex === null) return;
-      action(this._optionFromIndex(optionIndex), select, e);
+      action(this._optionFromIndex(optionIndex), e);
     };
     element.addEventListener('mouseup', (e) => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e));
     if (this.args.highlightOnHover) {
