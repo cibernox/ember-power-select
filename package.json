@@ -48,7 +48,7 @@
   ],
   "dependencies": {
     "@ember-decorators/component": "^6.1.0",
-    "@glimmer/component": "^1.0.0",
+    "@glimmer/component": "^1.0.1",
     "@glimmer/tracking": "^1.0.0",
     "ember-assign-helper": "^0.3.0",
     "ember-basic-dropdown": "^3.0.3",
