@@ -88,7 +88,7 @@ const isArrayable = <T>(coll: any): coll is Arrayable<T> => {
   return typeof coll.toArray === 'function';
 }
 
-const isPromiseProxy = <T>(thing: any): thing is PromiseProxy<T> => {
+const isPromiseLike = <T>(thing: any): thing is Promise<T> => {
   return typeof thing.then === 'function';
 }
 
@@ -299,7 +299,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   _updateOptions(): void {
     if (!this.args.options) return
-    if (isPromiseProxy(this.args.options)) {
+    if (isPromiseLike(this.args.options)) {
       if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
       let currentOptionsPromise = this.args.options;
       this._lastOptionsPromise = currentOptionsPromise as PromiseProxy<any[]>;
@@ -435,7 +435,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       return;
     }
     let searchResult = this.args.search(term, this.storedAPI);
-    if (searchResult && isPromiseProxy(searchResult)) {
+    if (searchResult && isPromiseLike(searchResult)) {
       this.loading = true;
       if (this._lastSearchPromise !== undefined && isCancellablePromise(this._lastSearchPromise)) {
         this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
