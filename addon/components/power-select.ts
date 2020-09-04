@@ -92,6 +92,10 @@ const isPromiseLike = <T>(thing: any): thing is Promise<T> => {
   return typeof thing.then === 'function';
 }
 
+const isPromiseProxyLike = <T>(thing: any): thing is PromiseProxy<T> => {
+  return isPromiseLike(thing) && Object.hasOwnProperty.call(thing, 'content');
+}
+
 const isCancellablePromise = <T>(thing: any): thing is CancellablePromise<T> => {
   return typeof thing.cancel === 'function';
 }
@@ -333,7 +337,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
       let currentSelectedPromise: PromiseProxy<any> = this.args.selected;
-      if (Object.hasOwnProperty.call(currentSelectedPromise, 'content')) { // seems a PromiseProxy
+      if (isPromiseProxyLike(currentSelectedPromise)) {
         if (this._lastSelectedPromise) {
           removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
         }
