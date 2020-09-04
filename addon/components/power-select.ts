@@ -336,11 +336,12 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (!this.args.selected) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
+      if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
+        removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      }
+
       let currentSelectedPromise: PromiseProxy<any> = this.args.selected;
       if (isPromiseProxyLike(currentSelectedPromise)) {
-        if (this._lastSelectedPromise) {
-          removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
-        }
         addObserver(currentSelectedPromise, 'content', this, this._selectedObserverCallback);
       }
       this._lastSelectedPromise = currentSelectedPromise;
