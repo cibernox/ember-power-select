@@ -133,6 +133,14 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     assert('<PowerSelect> requires an `@onChange` function', this.args.onChange && typeof this.args.onChange === 'function');
   }
 
+  willDestroy() {
+    if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
+      removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      this._lastSelectedPromise = undefined;
+    }
+    super.willDestroy.apply(this, arguments);
+  }
+
   // Getters
   get highlightOnHover(): boolean {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
