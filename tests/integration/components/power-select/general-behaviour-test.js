@@ -1188,7 +1188,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       let promise = new RSVP.Promise((resolve) => {
         setTimeout(() => resolve(['one', 'two', 'three']), 500);
       });
-      this.set('options', PromiseArrayProxy.create({ content: [], promise }));
+      this.set('options', PromiseArrayProxy.create({ promise }));
     };
 
     await render(hbs`
@@ -1220,18 +1220,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
   test('Constant PromiseProxy references are tracked when .content changes', async function(assert) {
     let initial = null;
-    //initial = countries[1];
-    this.proxy = PromiseObject.create({content: initial, promise: Promise.resolve(initial)});
-    //this.proxy = ObjectProxy.create({content: initial});
-    //ObjectProxy does work, because they are not 'unpacked' by the .then
-    // and the {{#if select.selected}} in the trigger will correctly call the ObjectProxy.isTruthy
-    // which will setup the dep chain
+    this.proxy = PromiseObject.create({ promise: Promise.resolve(initial) });
     this.countries = countries;
     this.updateProxy = () => {
-      //this.set('proxy', countries[0]);
-      //this.set('proxy', PromiseObject.create({content: countries[0], promise: Promise.resolve(countries[0])}));
       this.proxy.set('content', countries[0]);
-      this.proxy.set('promise', Promise.resolve(countries[0]));
     };
 
     await render(hbs`
