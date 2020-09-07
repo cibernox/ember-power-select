@@ -1,5 +1,9 @@
 # Master
 
+# 4.0.4
+- [BUGFIX] Ensure observers set when selected/options are promise proxies are properly removed when
+  the component is destroyed, to prevent memory leaks.
+
 # 4.0.3
 - Update `ember-concurrency-decorators` to 2.0
 
