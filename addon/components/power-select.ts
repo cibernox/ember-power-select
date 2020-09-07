@@ -88,8 +88,12 @@ const isArrayable = <T>(coll: any): coll is Arrayable<T> => {
   return typeof coll.toArray === 'function';
 }
 
-const isPromiseProxy = <T>(thing: any): thing is PromiseProxy<T> => {
+const isPromiseLike = <T>(thing: any): thing is Promise<T> => {
   return typeof thing.then === 'function';
+}
+
+const isPromiseProxyLike = <T>(thing: any): thing is PromiseProxy<T> => {
+  return isPromiseLike(thing) && Object.hasOwnProperty.call(thing, 'content');
 }
 
 const isCancellablePromise = <T>(thing: any): thing is CancellablePromise<T> => {
@@ -127,6 +131,14 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   constructor(owner: unknown, args: PowerSelectArgs) {
     super(owner, args);
     assert('<PowerSelect> requires an `@onChange` function', this.args.onChange && typeof this.args.onChange === 'function');
+  }
+
+  willDestroy() {
+    if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
+      removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      this._lastSelectedPromise = undefined;
+    }
+    super.willDestroy.apply(this, arguments);
   }
 
   // Getters
@@ -299,7 +311,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   _updateOptions(): void {
     if (!this.args.options) return
-    if (isPromiseProxy(this.args.options)) {
+    if (isPromiseLike(this.args.options)) {
       if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
       let currentOptionsPromise = this.args.options;
       this._lastOptionsPromise = currentOptionsPromise as PromiseProxy<any[]>;
@@ -332,13 +344,18 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (!this.args.selected) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
-      let currentSelectedPromise: PromiseProxy<any> = this.args.selected;
-      if (Object.hasOwnProperty.call(currentSelectedPromise, 'content')) { // seems a PromiseProxy
-        if (this._lastSelectedPromise) {
-          removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
-        }
-        addObserver(currentSelectedPromise, 'content', this, this._selectedObserverCallback);
+      if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
+        removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
       }
+
+      let currentSelectedPromise: PromiseProxy<any> = this.args.selected;
+      currentSelectedPromise.then(() => {
+        if (this.isDestroyed || this.isDestroying) return;
+        if (isPromiseProxyLike(currentSelectedPromise)) {
+          addObserver(currentSelectedPromise, 'content', this, this._selectedObserverCallback);
+        }
+      });
+
       this._lastSelectedPromise = currentSelectedPromise;
       this._lastSelectedPromise.then(resolvedSelected => {
         if (this._lastSelectedPromise === currentSelectedPromise) {
@@ -435,7 +452,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       return;
     }
     let searchResult = this.args.search(term, this.storedAPI);
-    if (searchResult && isPromiseProxy(searchResult)) {
+    if (searchResult && isPromiseLike(searchResult)) {
       this.loading = true;
       if (this._lastSearchPromise !== undefined && isCancellablePromise(this._lastSearchPromise)) {
         this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
