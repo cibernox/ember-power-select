@@ -102,6 +102,15 @@ export default class Options extends Component<Args> {
     }
   }
 
+  @action
+  removeHandlers(element: Element) {
+    element.removeEventListener('mouseup', this.mouseUpHandler);
+    element.removeEventListener('mouseover', this.mouseOverHandler);
+    element.removeEventListener('touchstart', this.touchStartHandler);
+    element.removeEventListener('touchmove', this.touchMoveHandler);
+    element.removeEventListener('touchend', this.touchEndHandler);
+  }
+
   _optionFromIndex(index: string) {
     let parts = index.split('.');
     let option = this.args.options[parseInt(parts[0], 10)];
