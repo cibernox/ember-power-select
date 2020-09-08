@@ -34,6 +34,11 @@ if(typeof FastBoot === 'undefined'){
 export default class Options extends Component<Args> {
   private isTouchDevice = isTouchDevice
   private hasMoved = false
+  private mouseOverHandler = (_: MouseEvent): void => {}
+  private mouseUpHandler = (_: MouseEvent): void => {}
+  private touchEndHandler = (_: TouchEvent): void => {}
+  private touchMoveHandler = (_: TouchEvent): void => {}
+  private touchStartHandler = (_: TouchEvent): void => {}
 
   @action
   addHandlers(element: Element) {
@@ -54,22 +59,24 @@ export default class Options extends Component<Args> {
       if (optionIndex === null) return;
       action(this._optionFromIndex(optionIndex), select, e);
     };
-    element.addEventListener('mouseup', (e) => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e));
+    this.mouseUpHandler = (e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e);
+    element.addEventListener('mouseup', this.mouseUpHandler);
     if (this.args.highlightOnHover) {
-      element.addEventListener('mouseover', (e) => findOptionAndPerform(this.args.select.actions.highlight, this.args.select, e));
+      this.mouseOverHandler = (e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.highlight, this.args.select, e);
+      element.addEventListener('mouseover', this.mouseOverHandler);
     }
     if (this.isTouchDevice) {
-      let touchMoveHandler = () => {
+      this.touchMoveHandler = (_: TouchEvent): void => {
         this.hasMoved = true;
         if (element) {
-          element.removeEventListener('touchmove', touchMoveHandler);
+          element.removeEventListener('touchmove', this.touchMoveHandler);
         }
-      };
+      }
       // Add touch event handlers to detect taps
-      element.addEventListener('touchstart', () => {
-        element.addEventListener('touchmove', touchMoveHandler);
-      });
-      element.addEventListener('touchend', (e) => {
+      this.touchStartHandler = (_: TouchEvent): void => {
+        element.addEventListener('touchmove', this.touchMoveHandler);
+      }
+      this.touchEndHandler = (e: TouchEvent): void => {
         if (e.target === null) return;
         let optionItem = (e.target as Element).closest('[data-option-index]');
         if (optionItem === null) return;
@@ -86,7 +93,9 @@ export default class Options extends Component<Args> {
         let optionIndex = optionItem.getAttribute('data-option-index');
         if (optionIndex === null) return;
         this.args.select.actions.choose(this._optionFromIndex(optionIndex), e);
-      });
+      }
+      element.addEventListener('touchstart', this.touchStartHandler);
+      element.addEventListener('touchend', this.touchEndHandler);
     }
     if (role !== 'group') {
       this.args.select.actions.scrollTo(this.args.select.highlighted);
