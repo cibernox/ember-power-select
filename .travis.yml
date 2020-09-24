@@ -52,6 +52,8 @@ jobs:
     - env: EMBER_TRY_SCENARIO=ember-canary
     - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
     - env: EMBER_TRY_SCENARIO=node-tests
+    - env: EMBER_TRY_SCENARIO=ember-concurrency-1.x
+    - env: EMBER_TRY_SCENARIO=ember-concurrency-2.x
 
 script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
