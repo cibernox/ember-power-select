@@ -1,5 +1,8 @@
 # Master
 
+# 4.0.5
+- [BUGFIX] Remove event listeners on destroy.
+
 # 4.0.4
 - [BUGFIX] Ensure observers set when selected/options are promise proxies are properly removed when
   the component is destroyed, to prevent memory leaks.
