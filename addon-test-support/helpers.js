@@ -5,7 +5,8 @@ import {
   selectChoose as _selectChoose,
   selectSearch as _selectSearch,
   removeMultipleOption as _removeMultipleOption,
-  clearSelected as _clearSelected
+  clearSelected as _clearSelected,
+  getDropdownItems as _getDropdownItems
 } from './index';
 /**
  * @private
@@ -70,6 +71,10 @@ export async function touchTrigger() {
 
 export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex) {
   return _selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex);
+}
+
+export async function getDropdownItems(cssPathOrTrigger) {
+  return _getDropdownItems(cssPathOrTrigger);
 }
 
 export async function selectSearch(cssPathOrTrigger, value) {

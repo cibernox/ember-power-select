@@ -136,3 +136,38 @@ export async function clearSelected(cssPath) {
     throw e;
   }
 }
+
+export async function getDropdownItems(cssPathOrTrigger) {
+  let trigger;
+
+  if (cssPathOrTrigger instanceof HTMLElement) {
+    if (cssPathOrTrigger.classList.contains('ember-power-select-trigger')) {
+      trigger = cssPathOrTrigger;
+    } else {
+      trigger = cssPathOrTrigger.querySelector('.ember-power-select-trigger');
+    }
+  } else {
+    trigger = document.querySelector(`${cssPathOrTrigger} .ember-power-select-trigger`);
+
+    if (!trigger) {
+      trigger = document.querySelector(cssPathOrTrigger);
+    }
+
+    if (!trigger) {
+      throw new Error(`You called "getDropdownItems('${cssPathOrTrigger}'" but no select was found using selector "${cssPathOrTrigger}"`);
+    }
+  }
+
+  if (trigger.scrollIntoView) {
+    trigger.scrollIntoView();
+  }
+
+  let contentId = await openIfClosedAndGetContentId(trigger);
+  // Select the option with the given selector
+  let options = document.querySelectorAll(`#${contentId} .ember-power-select-option`);
+  let obtainedOptions = [];
+  if (options.length > 0) {
+    [].slice.apply(options).map((opt) => obtainedOptions.push(opt.textContent.trim()));
+  }
+  return obtainedOptions;
+}
