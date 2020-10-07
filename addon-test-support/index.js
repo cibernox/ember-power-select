@@ -164,10 +164,10 @@ export async function getDropdownItems(cssPathOrTrigger) {
 
   let contentId = await openIfClosedAndGetContentId(trigger);
   // Select the option with the given selector
-  let options = document.querySelectorAll(`#${contentId} .ember-power-select-option`);
-  let obtainedOptions = [];
-  if (options.length > 0) {
-    [].slice.apply(options).map((opt) => obtainedOptions.push(opt.textContent.trim()));
+  let rawOptions = document.querySelectorAll(`#${contentId} .ember-power-select-option`);
+  let extractedOptions = [];
+  if (rawOptions.length > 0) {
+    [].slice.apply(rawOptions).map((opt) => extractedOptions.push(opt.textContent.trim()));
   }
-  return obtainedOptions;
+  return extractedOptions;
 }
