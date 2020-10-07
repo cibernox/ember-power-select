@@ -136,3 +136,42 @@ export async function clearSelected(cssPath) {
     throw e;
   }
 }
+
+/* *
+ * @param {String} selector CSS3 selector of the elements to check the content
+ * @returns {Array} returns all the elements present in the dropdown
+ * */
+export async function getDropdownItems(cssPathOrTrigger) {
+  let trigger;
+
+  if (cssPathOrTrigger instanceof HTMLElement) {
+    if (cssPathOrTrigger.classList.contains('ember-power-select-trigger')) {
+      trigger = cssPathOrTrigger;
+    } else {
+      trigger = cssPathOrTrigger.querySelector('.ember-power-select-trigger');
+    }
+  } else {
+    trigger = document.querySelector(`${cssPathOrTrigger} .ember-power-select-trigger`);
+
+    if (!trigger) {
+      trigger = document.querySelector(cssPathOrTrigger);
+    }
+
+    if (!trigger) {
+      throw new Error(`You called "getDropdownItems('${cssPathOrTrigger}'" but no select was found using selector "${cssPathOrTrigger}"`);
+    }
+  }
+
+  if (trigger.scrollIntoView) {
+    trigger.scrollIntoView();
+  }
+
+  let contentId = await openIfClosedAndGetContentId(trigger);
+  // Select the option with the given selector
+  let rawOptions = document.querySelectorAll(`#${contentId} .ember-power-select-option`);
+  let extractedOptions = [];
+  if (rawOptions.length > 0) {
+    [].slice.apply(rawOptions).map((opt) => extractedOptions.push(opt.textContent.trim()));
+  }
+  return extractedOptions;
+}
