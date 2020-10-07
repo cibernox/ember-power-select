@@ -137,6 +137,10 @@ export async function clearSelected(cssPath) {
   }
 }
 
+/* *
+ * @param {String} selector CSS3 selector of the elements to check the content
+ * @returns {Array} returns all the elements present in the dropdown
+ * */
 export async function getDropdownItems(cssPathOrTrigger) {
   let trigger;
 

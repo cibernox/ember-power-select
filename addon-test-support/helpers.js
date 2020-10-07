@@ -73,6 +73,14 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
   return _selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex);
 }
 
+/* *
+ * @param {String} selector CSS3 selector of the elements to check the content
+ * @returns {Array} returns all the elements present in the dropdown
+ *
+ * Usage in tests:
+ * let options = await getDropdownItems('.ember-power-select-trigger');
+ * assert.deepEqual(options, [1, 2, 3]);
+ * */
 export async function getDropdownItems(cssPathOrTrigger) {
   return _getDropdownItems(cssPathOrTrigger);
 }
