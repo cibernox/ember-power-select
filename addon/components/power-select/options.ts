@@ -32,8 +32,8 @@ if(typeof FastBoot === 'undefined'){
 }
 
 export default class Options extends Component<Args> {
-  private isTouchDevice = isTouchDevice
-  private hasMoved = false
+  private isTouchDevice = (this.args as any)?.extra?._isTouchDevice || isTouchDevice
+  private touchMoveEvent?: TouchEvent
   private mouseOverHandler = (_: MouseEvent): void => {}
   private mouseUpHandler = (_: MouseEvent): void => {}
   private touchEndHandler = (_: TouchEvent): void => {}
@@ -66,8 +66,8 @@ export default class Options extends Component<Args> {
       element.addEventListener('mouseover', this.mouseOverHandler);
     }
     if (this.isTouchDevice) {
-      this.touchMoveHandler = (_: TouchEvent): void => {
-        this.hasMoved = true;
+      this.touchMoveHandler = (e: TouchEvent): void => {
+        this.touchMoveEvent = e;
         if (element) {
           element.removeEventListener('touchmove', this.touchMoveHandler);
         }
@@ -81,8 +81,8 @@ export default class Options extends Component<Args> {
         let optionItem = (e.target as Element).closest('[data-option-index]');
         if (optionItem === null) return;
         e.preventDefault();
-        if (this.hasMoved) {
-          this.hasMoved = false;
+        if (this._hasMoved(e)) {
+          this.touchMoveEvent = undefined;
           return;
         }
 
@@ -118,5 +118,20 @@ export default class Options extends Component<Args> {
       option = option.options[parseInt(parts[i], 10)];
     }
     return option;
+  }
+
+  _hasMoved(endEvent: TouchEvent): boolean {
+    let moveEvent = this.touchMoveEvent;
+    if (!moveEvent) {
+      return false;
+    }
+
+    if (!endEvent.changedTouches?.[0] || moveEvent.changedTouches[0].touchType !== 'stylus') {
+      return true;
+    }
+
+    let horizontalDistance = Math.abs(moveEvent.changedTouches[0].pageX - endEvent.changedTouches[0].pageX);
+    let verticalDistance = Math.abs(moveEvent.changedTouches[0].pageY - endEvent.changedTouches[0].pageY);
+    return horizontalDistance >= 5 || verticalDistance >= 5;
   }
 }
