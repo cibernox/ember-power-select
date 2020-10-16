@@ -280,7 +280,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
-      this.isActive = true;
+      scheduleOnce('actions', this, this._updateIsActive, true);
     }
     if (this.args.onFocus) {
       this.args.onFocus(this.storedAPI, event);
@@ -290,7 +290,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
-      this.isActive = false;
+      scheduleOnce('actions', this, this._updateIsActive, false);
     }
     if (this.args.onBlur) {
       this.args.onBlur(this.storedAPI, event);
@@ -476,6 +476,10 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       this._searchResult = searchResult;
       this._resetHighlighted();
     }
+  }
+
+  _updateIsActive(value: boolean) {
+    this.isActive = value;
   }
 
   _defaultBuildSelection(option: any): any {
