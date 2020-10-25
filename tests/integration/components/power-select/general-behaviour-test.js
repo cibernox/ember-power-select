@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, triggerKeyEvent, focus, settled, waitFor } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { typeInSearch, clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
-import EmberObject, { get } from '@ember/object';
+import EmberObject from '@ember/object';
 import { A } from '@ember/array';
 import { run, later } from '@ember/runloop';
 import { numbers, names, countries } from '../constants';
@@ -1078,7 +1078,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
     let User = EmberObject.extend({
       isEqual(other) {
-        return this.name === get(other, 'name');
+        return this.name === other.name;
       }
     });
 

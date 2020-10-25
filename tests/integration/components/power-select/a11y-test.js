@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerKeyEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
 import { clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 
