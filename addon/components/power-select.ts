@@ -280,7 +280,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
-      next(() => this.isActive = true);
+      scheduleOnce('actions', this, this._updateIsActive, true);
     }
     if (this.args.onFocus) {
       this.args.onFocus(this.storedAPI, event);
@@ -290,7 +290,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
-      next(() => this.isActive = false);
+      scheduleOnce('actions', this, this._updateIsActive, false);
     }
     if (this.args.onBlur) {
       this.args.onBlur(this.storedAPI, event);
@@ -550,6 +550,9 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 
+  _updateIsActive(value: boolean) {
+    this.isActive = value;
+  }
 
   findWithOffset(options: any[], term: string, offset: number, skipDisabled = false): any {
     let typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
