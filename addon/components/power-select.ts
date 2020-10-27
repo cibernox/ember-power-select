@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
 import { addObserver, removeObserver } from '@ember/object/observers';
-import { scheduleOnce } from '@ember/runloop';
+import { scheduleOnce, next } from '@ember/runloop';
 import { isEqual } from '@ember/utils';
 import { assert } from '@ember/debug';
 import {
@@ -280,7 +280,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
-      this.isActive = true;
+      scheduleOnce('actions', this, this._updateIsActive, true);
     }
     if (this.args.onFocus) {
       this.args.onFocus(this.storedAPI, event);
@@ -290,7 +290,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   @action
   handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
-      this.isActive = false;
+      scheduleOnce('actions', this, this._updateIsActive, false);
     }
     if (this.args.onBlur) {
       this.args.onBlur(this.storedAPI, event);
@@ -550,6 +550,9 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 
+  _updateIsActive(value: boolean) {
+    this.isActive = value;
+  }
 
   findWithOffset(options: any[], term: string, offset: number, skipDisabled = false): any {
     let typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
