@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { groupedNumbers } from '../constants';
 
@@ -18,7 +18,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
       </PowerSelect>
     `);
 
-    assert.notOk(find('.ember-power-select-dropdown'), 'Dropdown is not rendered');
+    assert.dom('.ember-power-select-dropdown').doesNotExist('Dropdown is not rendered');
 
     await clickTrigger();
 

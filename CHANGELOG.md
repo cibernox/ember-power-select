@@ -1,5 +1,10 @@
 # Master
 
+# 4.1.0
+- [ENHANCEMENT] Makes changed to aria roles so the currently highlighted option can be announced by assistive
+  technology like Voice Over.
+- [CHORE] Relax allowed versions of ember-truth-helpers so projects are less likely to have to resolve dependencies.
+
 # 4.0.5
 - [BUGFIX] Remove event listeners on destroy.
 
