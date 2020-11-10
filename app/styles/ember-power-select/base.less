@@ -70,16 +70,19 @@
 }
 
 // Multiple select
+.ember-power-select-multiple-list-item {
+  display: inline-block;
+  float: left;
+}
+
 .ember-power-select-trigger-multiple-input {
   font-family: inherit;
   font-size: inherit;
   border: none;
-  display: inline-block;
   line-height: inherit;
   -webkit-appearance: none;
   outline: none;
   padding: 0;
-  float: left;
   background-color: transparent;
   text-indent: 2px;
   &:disabled {
@@ -113,9 +116,7 @@
   color: @ember-power-select-multiple-selection-color;
   background-color: @ember-power-select-multiple-selection-background-color;
   padding: @ember-power-select-multiple-option-padding;
-  display: inline-block;
   line-height: @ember-power-select-multiple-option-line-height;
-  float: left;
   margin: 2px 0 2px 3px;
 }
 .ember-power-select-multiple-remove-btn {

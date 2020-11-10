@@ -1,12 +1,16 @@
 {{#if @searchEnabled}}
   <div class="ember-power-select-search">
-    <input type="search" autocomplete="off"
-      autocorrect="off" autocapitalize="off"
-      spellcheck={{false}} role="combobox"
+    <input type="search"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck={{false}}
       class="ember-power-select-search-input"
       value={{@select.searchText}}
       aria-controls={{@listboxId}}
       placeholder={{@searchPlaceholder}}
+      aria-label={{@ariaLabel}}
+      aria-labelledby={{@ariaLabelledBy}}
       {{on "input" @onInput}}
       {{on "focus" @onFocus}}
       {{on "blur" @onBlur}}

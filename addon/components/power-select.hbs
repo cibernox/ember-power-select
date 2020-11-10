@@ -62,6 +62,8 @@
           @onKeydown={{this.handleKeydown}}
           @placeholder={{@placeholder}}
           @placeholderComponent={{this.placeholderComponent}}
+          @ariaLabelledBy={{@ariaLabelledBy}}
+          @ariaLabel={{@ariaLabel}}
           as |opt term|>
           {{yield opt term}}
         </Trigger>
@@ -82,15 +84,29 @@
           @listboxId={{listboxId}}
           @selectedItemComponent={{@selectedItemComponent}}
           @searchPlaceholder={{@searchPlaceholder}}
+          @ariaLabel={{@ariaLabel}}
+          @ariaLabelledBy={{@ariaLabelledBy}}
           />
       {{/let}}
       {{#if this.mustShowSearchMessage}}
         {{#let (component (or @searchMessageComponent "power-select/search-message")) as |SearchMessage|}}
-          <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
+          <SearchMessage 
+            @searchMessage={{this.searchMessage}} 
+            @select={{publicAPI}} 
+            id={{listboxId}} 
+            aria-label={{@ariaLabel}}
+            aria-labelledby={{@ariaLabelledBy}}  
+          />
         {{/let}}
       {{else if this.mustShowNoMessages}}
         {{#if this.noMatchesMessage}}
-          <ul class="ember-power-select-options" role="listbox">
+          <ul 
+            class="ember-power-select-options" 
+            role="listbox" 
+            id={{listboxId}}
+            aria-label={{@ariaLabel}}
+            aria-labelledby={{@ariaLabelledBy}}
+          >
             <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
               {{this.noMatchesMessage}}
             </li>
