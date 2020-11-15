@@ -1,5 +1,8 @@
 # Master
 
+# 4.1.1
+- [ENHANCEMENT] Allow to customize what's displayed when no item matches the search by passing a `@noMatchesMessageComponent`.
+
 # 4.1.0
 - [ENHANCEMENT] Makes changed to aria roles so the currently highlighted option can be announced by assistive
   technology like Voice Over.
