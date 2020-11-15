@@ -89,13 +89,9 @@
           <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
         {{/let}}
       {{else if this.mustShowNoMessages}}
-        {{#if this.noMatchesMessage}}
-          <ul class="ember-power-select-options" role="listbox">
-            <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
-              {{this.noMatchesMessage}}
-            </li>
-          </ul>
-        {{/if}}
+        {{#let (component (or @noMatchesMessageComponent "power-select/no-matches-message")) as |NoMatchesMessage|}}
+          <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{publicAPI}} />
+        {{/let}}
       {{else}}
         {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
           <Options
