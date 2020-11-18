@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
 import { addObserver, removeObserver } from '@ember/object/observers';
-import { scheduleOnce, next } from '@ember/runloop';
+import { scheduleOnce } from '@ember/runloop';
 import { isEqual } from '@ember/utils';
 import { assert } from '@ember/debug';
 import {
