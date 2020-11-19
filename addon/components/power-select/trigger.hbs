@@ -1,6 +1,6 @@
 {{#if @select.selected}}
   {{#if @selectedItemComponent}}
-    {{component @selectedItemComponent extra=(readonly @extra) option=(readonly @select.selected) select=(readonly @select)}}
+    {{component (ensure-safe-component @selectedItemComponent) extra=(readonly @extra) option=(readonly @select.selected) select=(readonly @select)}}
   {{else}}
     <span class="ember-power-select-selected-item">{{yield @select.selected @select}}</span>
   {{/if}}
@@ -8,6 +8,6 @@
     <span class="ember-power-select-clear-btn" {{on "mousedown" this.clear}} {{on "touchstart" this.clear}}>&times;</span>
   {{/if}}
 {{else}}
-  {{component @placeholderComponent placeholder=@placeholder}}
+  {{component (ensure-safe-component @placeholderComponent) placeholder=@placeholder}}
 {{/if}}
 <span class="ember-power-select-status-icon"></span>
