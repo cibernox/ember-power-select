@@ -47,6 +47,7 @@
     "vendor"
   ],
   "dependencies": {
+    "@embroider/util": "0.31.0",
     "@glimmer/component": "^1.0.2",
     "@glimmer/tracking": "^1.0.2",
     "ember-assign-helper": "^0.3.0",

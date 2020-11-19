@@ -46,7 +46,7 @@
       id={{@triggerId}}
       tabindex={{and (not @disabled) (or @tabindex "0")}}
       >
-      {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
+      {{#let (component (or (ensure-safe-component @triggerComponent) "power-select/trigger")) as |Trigger|}}
         <Trigger
           @allowClear={{@allowClear}}
           @buildSelection={{@buildSelection}}
@@ -69,7 +69,7 @@
       {{/let}}
     </dropdown.Trigger>
     <dropdown.Content class="ember-power-select-dropdown{{if publicAPI.isActive " ember-power-select-dropdown--active"}} {{@dropdownClass}}">
-      {{#let (component (if (eq @beforeOptionsComponent undefined) "power-select/before-options" @beforeOptionsComponent)) as |BeforeOptions|}}
+      {{#let (component (if (eq @beforeOptionsComponent undefined) "power-select/before-options" (ensure-safe-component @beforeOptionsComponent))) as |BeforeOptions|}}
         <BeforeOptions
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
@@ -86,15 +86,15 @@
           />
       {{/let}}
       {{#if this.mustShowSearchMessage}}
-        {{#let (component (or @searchMessageComponent "power-select/search-message")) as |SearchMessage|}}
+        {{#let (component (or (ensure-safe-component @searchMessageComponent) "power-select/search-message")) as |SearchMessage|}}
           <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
         {{/let}}
       {{else if this.mustShowNoMessages}}
-        {{#let (component (or @noMatchesMessageComponent "power-select/no-matches-message")) as |NoMatchesMessage|}}
+        {{#let (component (or (ensure-safe-component @noMatchesMessageComponent) "power-select/no-matches-message")) as |NoMatchesMessage|}}
           <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{publicAPI}} />
         {{/let}}
       {{else}}
-        {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
+        {{#let (component (or (ensure-safe-component @optionsComponent) "power-select/options")) as |Options|}}
           <Options
             @loadingMessage={{or @loadingMessage "Loading options..."}}
             @select={{publicAPI}}
@@ -103,14 +103,14 @@
             @optionsComponent={{Options}}
             @extra={{@extra}}
             @highlightOnHover={{this.highlightOnHover}}
-            @groupComponent={{or @groupComponent "power-select/power-select-group"}}
+            @groupComponent={{or @groupComponent (component "power-select/power-select-group")}}
             id={{listboxId}}
             class="ember-power-select-options" as |option select|>
             {{yield option select}}
           </Options>
         {{/let}}
       {{/if}}
-      {{#let (component @afterOptionsComponent) as |AfterOptions|}}
+      {{#let (component (ensure-safe-component @afterOptionsComponent)) as |AfterOptions|}}
         <AfterOptions
           @extra={{@extra}}
           @select={{publicAPI}}
@@ -148,7 +148,7 @@
     aria-required={{@required}}
     title={{@title}}
     tabindex={{and (not @disabled) (or @tabindex "0")}}>
-    {{#let (component this.triggerComponent) as |Trigger|}}
+    {{#let (component (ensure-safe-component this.triggerComponent)) as |Trigger|}}
       <Trigger
         @htmlTag={{this._triggerTagName}}
         @allowClear={{@allowClear}}
@@ -171,7 +171,7 @@
     {{/let}}
   </dropdown.Trigger>
   <dropdown.Content @htmlTag={{this._contentTagName}} class={{this.concatenatedDropdownClasses}}>
-    {{#let (component this.beforeOptionsComponent) as |BeforeOptions|}}
+    {{#let (component (ensure-safe-component this.beforeOptionsComponent)) as |BeforeOptions|}}
       <BeforeOptions
         @animationEnabled={{@animationEnabled}}
         @select={{this.publicAPI}}
@@ -188,7 +188,7 @@
         @selectedItemComponent={{@selectedItemComponent}}/>
     {{/let}}
     {{#if this.mustShowSearchMessage}}
-      {{#let (component this.searchMessageComponent) as |SearchMessage|}}
+      {{#let (component (ensure-safe-component this.searchMessageComponent)) as |SearchMessage|}}
         <SearchMessage @searchMessage={{this.searchMessage}} @select={{this.publicAPI}}/>
       {{/let}}
     {{else if this.mustShowNoMessages}}
@@ -200,7 +200,7 @@
         </ul>
       {{/if}}
     {{else}}
-      {{#let (component this.optionsComponent) as |Options|}}
+      {{#let (component (ensure-safe-component this.optionsComponent)) as |Options|}}
         <Options
           @loadingMessage={{this.loadingMessage}}
           @groupIndex=""
@@ -216,7 +216,7 @@
         </Options>
       {{/let}}
     {{/if}}
-    {{#let (component this.afterOptionsComponent) as |AfterOptions|}}
+    {{#let (component (ensure-safe-component this.afterOptionsComponent)) as |AfterOptions|}}
       <AfterOptions @select={{this.publicAPI}} @extra={{@extra}}/>
     {{/let}}
   </dropdown.Content>
