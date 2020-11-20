@@ -46,7 +46,7 @@
       id={{@triggerId}}
       tabindex={{and (not @disabled) (or @tabindex "0")}}
       >
-      {{#let (component (or (ensure-safe-component @triggerComponent) "power-select/trigger")) as |Trigger|}}
+      {{#let (or (component (ensure-safe-component @triggerComponent)) (component "power-select/trigger")) as |Trigger|}}
         <Trigger
           @allowClear={{@allowClear}}
           @buildSelection={{@buildSelection}}
@@ -69,7 +69,7 @@
       {{/let}}
     </dropdown.Trigger>
     <dropdown.Content class="ember-power-select-dropdown{{if publicAPI.isActive " ember-power-select-dropdown--active"}} {{@dropdownClass}}">
-      {{#let (component (if (eq @beforeOptionsComponent undefined) "power-select/before-options" (ensure-safe-component @beforeOptionsComponent))) as |BeforeOptions|}}
+      {{#let (if (eq @beforeOptionsComponent undefined) (component "power-select/before-options") (component (ensure-safe-component @beforeOptionsComponent))) as |BeforeOptions|}}
         <BeforeOptions
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
@@ -86,15 +86,15 @@
           />
       {{/let}}
       {{#if this.mustShowSearchMessage}}
-        {{#let (component (or (ensure-safe-component @searchMessageComponent) "power-select/search-message")) as |SearchMessage|}}
+        {{#let (or (component (ensure-safe-component @searchMessageComponent)) (component "power-select/search-message")) as |SearchMessage|}}
           <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
         {{/let}}
       {{else if this.mustShowNoMessages}}
-        {{#let (component (or (ensure-safe-component @noMatchesMessageComponent) "power-select/no-matches-message")) as |NoMatchesMessage|}}
+        {{#let (or (component (ensure-safe-component @noMatchesMessageComponent)) (component "power-select/no-matches-message")) as |NoMatchesMessage|}}
           <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{publicAPI}} />
         {{/let}}
       {{else}}
-        {{#let (component (or (ensure-safe-component @optionsComponent) "power-select/options")) as |Options|}}
+        {{#let (or (component (ensure-safe-component @optionsComponent)) (component "power-select/options")) as |Options|}}
           <Options
             @loadingMessage={{or @loadingMessage "Loading options..."}}
             @select={{publicAPI}}
