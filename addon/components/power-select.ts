@@ -21,7 +21,6 @@ import { restartableTask } from 'ember-concurrency-decorators';
 // @ts-ignore
 import { timeout } from 'ember-concurrency';
 import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components/basic-dropdown';
-
 interface SelectActions extends DropdownActions {
   search: (term: string) => void
   highlight: (option: any) => void
@@ -144,9 +143,6 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   // Getters
   get highlightOnHover(): boolean {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
-  }
-  get placeholderComponent(): string {
-    return this.args.placeholderComponent || 'power-select/placeholder';
   }
 
   get searchMessage(): string {

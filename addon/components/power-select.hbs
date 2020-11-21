@@ -46,7 +46,7 @@
       id={{@triggerId}}
       tabindex={{and (not @disabled) (or @tabindex "0")}}
       >
-      {{#let (or (component (ensure-safe-component @triggerComponent)) (component "power-select/trigger")) as |Trigger|}}
+      {{#let (if (eq @triggerComponent undefined) (component "power-select/trigger") (component (ensure-safe-component @triggerComponent))) as |Trigger|}}
         <Trigger
           @allowClear={{@allowClear}}
           @buildSelection={{@buildSelection}}
@@ -62,7 +62,7 @@
           @onInput={{this.handleInput}}
           @onKeydown={{this.handleKeydown}}
           @placeholder={{@placeholder}}
-          @placeholderComponent={{this.placeholderComponent}}
+          @placeholderComponent={{if @placeholderComponent (component (ensure-safe-component @placeholderComponent)) (component 'power-select/placeholder')}}
           as |opt term|>
           {{yield opt term}}
         </Trigger>
@@ -78,7 +78,7 @@
           @onFocus={{this.handleFocus}}
           @onBlur={{this.handleBlur}}
           @placeholder={{@placeholder}}
-          @placeholderComponent={{this.placeholderComponent}}
+          @placeholderComponent={{if @placeholderComponent (component (ensure-safe-component @placeholderComponent)) (component 'power-select/placeholder')}}
           @extra={{@extra}}
           @listboxId={{listboxId}}
           @selectedItemComponent={{@selectedItemComponent}}
@@ -86,15 +86,15 @@
           />
       {{/let}}
       {{#if this.mustShowSearchMessage}}
-        {{#let (or (component (ensure-safe-component @searchMessageComponent)) (component "power-select/search-message")) as |SearchMessage|}}
+        {{#let (if (eq @searchMessageComponent undefined) (component "power-select/search-message") (component (ensure-safe-component @searchMessageComponent))) as |SearchMessage|}}
           <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
         {{/let}}
       {{else if this.mustShowNoMessages}}
-        {{#let (or (component (ensure-safe-component @noMatchesMessageComponent)) (component "power-select/no-matches-message")) as |NoMatchesMessage|}}
+        {{#let (if (eq @noMatchesMessageComponent undefined) (component "power-select/no-matches-message") (component (ensure-safe-component @noMatchesMessageComponent))) as |NoMatchesMessage|}}
           <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{publicAPI}} />
         {{/let}}
       {{else}}
-        {{#let (or (component (ensure-safe-component @optionsComponent)) (component "power-select/options")) as |Options|}}
+        {{#let (if (eq @optionsComponent undefined) (component "power-select/options") (component (ensure-safe-component @optionsComponent))) as |Options|}}
           <Options
             @loadingMessage={{or @loadingMessage "Loading options..."}}
             @select={{publicAPI}}
@@ -184,7 +184,7 @@
         @onBlur={{this.handleBlur}}
         @extra={{@extra}}
         @placeholder={{@placeholder}}
-        @placeholderComponent={{this.placeholderComponent}}
+        @placeholderComponent={{if @placeholderComponent (component (ensure-safe-component @placeholderComponent)) (component 'power-select/placeholder')}}
         @selectedItemComponent={{@selectedItemComponent}}/>
     {{/let}}
     {{#if this.mustShowSearchMessage}}
