@@ -66,7 +66,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @selectedItemComponent="selected-item-country" @onChange={{action (mut foo)}} as |country|>
+      <PowerSelect @options={{countries}} @selected={{country}} @selectedItemComponent={{component "selected-item-country"}} @onChange={{action (mut foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
