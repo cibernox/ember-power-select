@@ -19,4 +19,17 @@ module('Integration | Component | Ember Power Select (The opened property)', fun
 
     assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
   });
+
+  test('[BUGFIX] the select can be rendered already opened by passing `@initiallyOpened={{true}}` AND `@selected`', async function(assert) {
+    assert.expect(1);
+
+    this.numbers = numbers;
+    await render(hbs`
+      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @initiallyOpened={{true}} @selected="seven" as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+    assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
+  });
 });
