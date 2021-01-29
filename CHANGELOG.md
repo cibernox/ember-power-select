@@ -1,5 +1,8 @@
 # Master
 
+# 4.1.2
+- [BUGFIX] Fix problem when passing `@initiallyOpened` along with `@selected`.
+
 # 4.1.1
 - [ENHANCEMENT] Allow to customize what's displayed when no item matches the search by passing a `@noMatchesMessageComponent`.
 
