@@ -197,11 +197,14 @@ module('Integration | Component | Ember Power Select (Customization using compon
   test('the `@beforeOptionsComponent` and `@afterOptionsComponent` receive the `@extra` hash', async function(assert) {
     assert.expect(1);
     this.owner.register('component:custom-before-options2', Component.extend({
-      layout: hbs`<button class="custom-before-options2-button" onclick={{@extra.passedAction}}>Do something</button>`
+      layout: hbs`<button class="custom-before-options2-button" {{on "click" @extra.passedAction}}>Do something</button>`
     }));
-    this.owner.register('component:custom-after-options2', Component.extend({
-      layout: hbs`<button class="custom-after-options2-button" onclick={{@extra.passedAction}}>Do something</button>`
-    }));
+    this.owner.register(
+      "component:custom-after-options2",
+      Component.extend({
+        layout: hbs`<button class="custom-after-options2-button" {{on "click" @extra.passedAction}}>Do something</button>`,
+      })
+    );
     let counter = 0;
     this.countries = countries;
     this.country = countries[1]; // Spain
