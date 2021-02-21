@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { Select } from '../power-select';
 
 interface Args {
