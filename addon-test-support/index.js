@@ -7,7 +7,6 @@ async function openIfClosedAndGetContentId(trigger) {
   // If the dropdown is closed, open it
   if (!content || content.classList.contains('ember-basic-dropdown-content-placeholder')) {
     await click(trigger);
-    await settled();
     contentId = `${trigger.attributes['aria-owns'].value}`;
   }
   return contentId;
