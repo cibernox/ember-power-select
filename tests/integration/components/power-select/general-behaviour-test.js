@@ -1145,14 +1145,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--above', 'The dropdown is above');
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--right', 'The dropdown is in the right');
-    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 111px;right: 222px/, 'The style attribute is the expected one');
+    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 111px; right: 222px;/, 'The style attribute is the expected one');
     await clickTrigger();
 
     run(() => this.set('renderInPlace', true));
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--below', 'The dropdown is below');
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--left', 'The dropdown is in the left');
-    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 333px;right: 444px/, 'The style attribute is the expected one');
+    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 333px; right: 444px;/, 'The style attribute is the expected one');
   });
 
   test('The `selected` option can be a thenable', async function(assert) {

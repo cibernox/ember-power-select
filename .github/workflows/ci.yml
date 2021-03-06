@@ -1,0 +1,111 @@
+name: CI
+
+# based on:
+#  - https://github.com/NullVoxPopuli/eslint-plugin-decorator-position/blob/master/.github/workflows/lint.yml
+#  - https://github.com/NullVoxPopuli/ember-autostash-modifier/blob/master/.github/workflows/ci.yml
+#  - https://github.com/emberjs/ember-test-helpers/blob/master/.github/workflows/ci-build.yml
+#  - https://github.com/NullVoxPopuli/ember-jsqr/blob/master/.github/workflows/tests.yml
+on:
+  pull_request:
+  push:
+    # filtering branches here prevents duplicate builds from pull_request and push
+    branches:
+      - master
+  schedule:
+    - cron: '0 3 * * 0' # every Sunday at 3am
+
+env:
+  CI: true
+
+jobs:
+  tests:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    name: Base Tests
+    timeout-minutes: 35
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+        - "12"
+        - "14"
+    steps:
+    - uses: actions/checkout@v2
+    - uses: volta-cli/action@v1
+      with:
+        node-version: ${{ matrix.node }}
+
+    - run: npm ci
+
+    - name: Test with ${{ matrix.node }}
+      run: npm run test
+
+  floating-dependencies:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    name: Floating Dependencies
+    timeout-minutes: 35
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+        - "12"
+        - "14"
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - run: npm install
+
+      - name: Test with Node ${{ matrix.node }}
+        run: npm run test
+
+  try-scenarios:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    name: "Compatibility"
+    timeout-minutes: 35
+    runs-on: ubuntu-latest
+    needs: tests
+
+    strategy:
+      fail-fast: true
+      matrix:
+        ember-try-scenario:
+          - ember-lts-3.16
+          - ember-lts-3.20
+          - ember-release
+          - ember-beta
+          - ember-canary
+          - node-tests
+          # - embroider
+          # - ember-classic
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v1
+        with:
+          node-version: 12.x
+      - name: install dependencies
+        run: npm install
+      - name: test
+        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+
+
+  publish:
+    name: Release
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [tests, floating-dependencies, try-scenarios]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - uses: volta-cli/action@v1
+      - run: npm install
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm run semantic-release
