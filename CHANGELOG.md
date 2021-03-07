@@ -1,5 +1,9 @@
 # Master
 
+# 4.1.3
+- [CHORE] Move from travis to github actions, fixing the test suite along the way. This has also
+  updated the version of ember-basic-dropdown.
+
 # 4.1.2
 - [BUGFIX] Fix problem when passing `@initiallyOpened` along with `@selected`.
 
