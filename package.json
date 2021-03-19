@@ -81,7 +81,7 @@
     "ember-cli-sass": "^10.0.0",
     "ember-cli-terser": "^4.0.0",
     "ember-cli-typescript-blueprints": "^3.0.0",
-    "ember-code-example-component": "^0.2.0",
+    "ember-code-example-component": "^0.3.1",
     "ember-code-snippet": "^2.4.0",
     "ember-data": "^3.19.0",
     "ember-disable-prototype-extensions": "^1.1.3",
