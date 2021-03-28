@@ -21,7 +21,7 @@ jobs:
   tests:
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
     name: Base Tests
-    timeout-minutes: 45
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
       matrix:
