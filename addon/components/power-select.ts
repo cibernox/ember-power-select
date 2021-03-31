@@ -135,7 +135,9 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
 
   willDestroy() {
     if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
-      removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      try {
+        removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      } catch {}
       this._lastSelectedPromise = undefined;
     }
     super.willDestroy.apply(this, arguments);
