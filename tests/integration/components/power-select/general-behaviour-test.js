@@ -1192,7 +1192,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <button id="refresh-collection-btn" onclick={{action refreshCollection}}>Refresh collection</button>
+      <button id="refresh-collection-btn" {{on "click" (action refreshCollection)}}>Refresh collection</button>
       <br>
       <PowerSelect @options={{options}} @selected={{selected}} @onChange={{action (mut selected)}} as |name|>
         {{name}}
