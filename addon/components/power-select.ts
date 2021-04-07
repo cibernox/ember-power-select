@@ -367,7 +367,10 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       });
     } else {
       this._resolvedSelected = undefined;
-      this._highlight(this.args.selected)
+      // Don't highlight args.selected array on multi-select
+      if (!Array.isArray(this.args.selected)) {
+        this._highlight(this.args.selected);
+      }
     }
   }
 
