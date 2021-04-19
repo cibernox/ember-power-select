@@ -61,6 +61,10 @@ export default Component.extend({
     return `ember-power-select-trigger-${this.get('select.uniqueId')}`;
   }),
 
+  selectorClass: computed('select.uniqueId', function() {
+    return `ember-power-select-highlighted-option-${this.get('select.uniqueId')}`;
+  }),
+
   // Methods
   _addTouchEvents() {
     let touchMoveHandler = () => {

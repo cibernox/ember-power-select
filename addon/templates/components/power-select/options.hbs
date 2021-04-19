@@ -3,6 +3,7 @@
     <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">{{loadingMessage}}</li>
   {{/if}}
 {{/if}}
+<span class={{selectorClass}} aria-live="assertive">{{yield select.highlighted select}}</span>
 {{#each options as |opt index|}}
   {{#if (ember-power-select-is-group opt)}}
     {{#component groupComponent
