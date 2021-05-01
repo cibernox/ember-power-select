@@ -10,3 +10,13 @@
   {{user.name}}
 </PowerSelect>
 
+<h3>Multiple select inside a form</h3>
+<form action="/nonexistent">
+  <PowerSelectMultiple
+    @options={{this.cities}}
+    @selected={{this.chosenCities}}
+    @onChange={{fn (mut this.chosenCities)}}
+    @searchEnabled={{true}} as |city|>
+    {{city}}
+  </PowerSelectMultiple>
+</form>
