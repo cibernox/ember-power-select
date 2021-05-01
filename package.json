@@ -62,10 +62,11 @@
   "devDependencies": {
     "@ember-decorators/component": "^6.1.0",
     "@ember/optional-features": "^2.0.0",
+    "@embroider/test-setup": "^0.37.0",
     "@types/ember": "^3.16.0",
-    "@types/ember__test-helpers": "^1.7.0",
     "@types/ember-data": "^3.16.1",
     "@types/ember-qunit": "^3.4.9",
+    "@types/ember__test-helpers": "^1.7.0",
     "@types/qunit": "^2.9.1",
     "@types/rsvp": "^4.0.3",
     "babel-eslint": "^10.1.0",
