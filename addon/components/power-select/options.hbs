@@ -5,7 +5,7 @@
       <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">{{@loadingMessage}}</li>
     {{/if}}
   {{/if}}
-  {{#let (component @groupComponent) (component @optionsComponent) as |Group Options|}}
+  {{#let (component (ensure-safe-component @groupComponent)) (component (ensure-safe-component @optionsComponent)) as |Group Options|}}
     {{#each @options as |opt index|}}
       {{#if (ember-power-select-is-group opt)}}
         <Group @group={{opt}} @select={{@select}} @extra={{@extra}}>

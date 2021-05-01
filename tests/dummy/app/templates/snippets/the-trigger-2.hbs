@@ -2,7 +2,7 @@
   @searchEnabled={{true}}
   @options={{this.countries}}
   @selected={{this.country}}
-  @selectedItemComponent="selected-item-country"
+  @selectedItemComponent={{component "selected-item-country"}}
   @searchField="name"
   @onChange={{fn (mut this.country)}}
   as |country|>
