@@ -6,7 +6,7 @@
   {{on "mousedown" this.chooseOption}}
   ...attributes>
   {{#each @select.selected as |opt idx|}}
-    <li class="ember-power-select-multiple-option {{if opt.disabled "ember-power-select-multiple-option--disabled"}}">
+    <li class="ember-power-select-multiple-list-item ember-power-select-multiple-option {{if opt.disabled "ember-power-select-multiple-option--disabled"}}">
       {{#unless @select.disabled}}
         <span role="button"
           aria-label="remove element"
@@ -23,29 +23,33 @@
     </li>
   {{else}}
     {{#if (and @placeholder (not @searchEnabled))}}
-      <span class="ember-power-select-placeholder">{{@placeholder}}</span>
+      <li class="ember-power-select-multiple-list-item">
+        <span class="ember-power-select-placeholder">{{@placeholder}}</span>
+      </li>
     {{/if}}
   {{/each}}
   {{#if @searchEnabled}}
-    <input
-      type="search"
-      class="ember-power-select-trigger-multiple-input"
-      autocomplete="off"
-      autocorrect="off"
-      autocapitalize="off"
-      spellcheck={{false}}
-      id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
-      value={{@select.searchText}}
-      aria-controls={{@listboxId}}
-      style={{this.triggerMultipleInputStyle}}
-      placeholder={{this.maybePlaceholder}}
-      disabled={{@select.disabled}}
-      tabindex={{@tabindex}}
-      {{on "focus" @onFocus}}
-      {{on "blur" @onBlur}}
-      {{on "input" this.handleInput}}
-      {{on "keydown" this.handleKeydown}}
-      {{did-insert this.storeInputStyles}}>
+    <li class="ember-power-select-multiple-list-item">
+      <input
+        type="search"
+        class="ember-power-select-trigger-multiple-input"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck={{false}}
+        id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
+        value={{@select.searchText}}
+        aria-controls={{@listboxId}}
+        style={{this.triggerMultipleInputStyle}}
+        placeholder={{this.maybePlaceholder}}
+        disabled={{@select.disabled}}
+        tabindex={{@tabindex}}
+        {{on "focus" @onFocus}}
+        {{on "blur" @onBlur}}
+        {{on "input" this.handleInput}}
+        {{on "keydown" this.handleKeydown}}
+        {{did-insert this.storeInputStyles}}>
+    </li>
   {{/if}}
 </ul>
 <span class="ember-power-select-status-icon"></span>
