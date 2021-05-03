@@ -43,6 +43,21 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
     assert.dom('.ember-power-select-dropdown input').doesNotExist();
   });
 
+  test('The searchbox of multiple selects has type="search" and a form attribute to prevent submitting the wrapper form when pressing enter', async function(assert) {
+    assert.expect(2);
+
+    this.numbers = numbers;
+    await render(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{foo}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+    await clickTrigger();
+    assert.dom('.ember-power-select-trigger input').hasAttribute('type', 'search');
+    assert.dom('.ember-power-select-trigger input').hasAttribute('form');
+  });
+
   test('When the select opens, the search input (if any) in the trigger gets the focus', async function(assert) {
     assert.expect(1);
 

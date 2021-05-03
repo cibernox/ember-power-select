@@ -1,4 +1,8 @@
 # Master
+# 4.1.5
+- [ENHACEMENT] Update ember-basic-dropdown to 3.0.17 which includes updated `ember-element-helper` and should
+  be more friendly with embroider.
+- [BUGFIX] Ensure searchbox in multiple select doesn't submit its enclosing form when enter is pressed.
 
 # 4.1.4
 - [BUGFIX] Fix arrays appended to multiple selects' selected array (#1447)
