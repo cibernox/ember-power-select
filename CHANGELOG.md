@@ -1,4 +1,6 @@
 # Master
+- [ENHACEMENT] Update ember-basic-dropdown to 3.0.17 which includes updated `ember-element-helper` and should
+  be more friendly with embroider.
 
 # 4.1.4
 - [BUGFIX] Fix arrays appended to multiple selects' selected array (#1447)
