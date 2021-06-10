@@ -6,7 +6,7 @@ const crawl = require('prember-crawler');
 
 module.exports = function(defaults) {
   let checker = new VersionChecker(defaults);
-  let emberChecker = checker.forEmber();
+  let emberChecker = checker.for('ember-source');
   let options = {
     snippetPaths: ['tests/dummy/app/templates/snippets'],
     prember: {

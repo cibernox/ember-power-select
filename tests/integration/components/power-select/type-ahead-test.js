@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { optionAtIndex } from 'ember-power-select/utils/group-utils';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { namesStartingWithA } from '../constants';

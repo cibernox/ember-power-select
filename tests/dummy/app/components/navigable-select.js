@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { get, computed, action } from '@ember/object';
+import { computed, action } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import { A } from '@ember/array';
 
@@ -16,14 +16,14 @@ export default class extends Component {
       // via `===`.
       results.toArray = () => results;
 
-      let len = get(options, 'length');
+      let len = options.length;
       parentLevel = parentLevel || { root: true };
       for (let i = 0; i < len; i++) {
-        let opt = get(options, `${i}`);
-        let groupName = get(opt, 'groupName');
+        let opt = options[`${i}`];
+        let groupName = opt.groupName;
         if (groupName) {
           let level = { levelName: groupName };
-          let optionsWithBack = A([{ parentLevel }]).concat(get(opt, 'options'));
+          let optionsWithBack = A([{ parentLevel }]).concat(opt.options);
           level.options = walker(optionsWithBack, level);
           results.push(level);
         } else {
@@ -38,8 +38,8 @@ export default class extends Component {
   // Actions
   @action
   onchange(levelOrOption, dropdown) {
-    if (get(levelOrOption, 'levelName')) {
-      this.set('currentOptions', get(levelOrOption, 'options'));
+    if (levelOrOption.levelName) {
+      this.set('currentOptions', levelOrOption.options);
     } else if (levelOrOption.parentLevel) {
       this.set('currentOptions', levelOrOption.parentLevel.options);
     } else {
@@ -55,8 +55,8 @@ export default class extends Component {
     let results = this.currentOptions.filter(o => {
       if (o.parentLevel) {
         return normalizedTerm === '';
-      } else if (get(o, 'levelName')) {
-        return get(o, 'levelName').toLowerCase().indexOf(normalizedTerm) > -1;
+      } else if (o.levelName) {
+        return o.levelName.toLowerCase().indexOf(normalizedTerm) > -1;
       } else {
         return o.toLowerCase().indexOf(normalizedTerm) > -1;
       }

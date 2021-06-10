@@ -4,7 +4,7 @@ module.exports = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2021,
     sourceType: 'module',
     ecmaFeatures: {
       legacyDecorators: true
@@ -23,7 +23,12 @@ module.exports = {
   rules: {
     'no-console': 0,
     'ember/avoid-leaking-state-in-ember-objects': 0,
-    'ember/no-jquery': 'error'
+    'ember/no-jquery': 'error',
+    'ember/no-computed-properties-in-native-classes': 0,
+    'ember/no-classic-components': 0,
+    'ember/no-classic-classes': 0,
+    'ember/require-tagless-components': 0,
+    'ember/classic-decorator-no-classic-methods': 0
   },
   overrides: [
     // node files

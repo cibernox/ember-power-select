@@ -1,4 +1,32 @@
 # Master
+# 4.1.5
+- [ENHACEMENT] Update ember-basic-dropdown to 3.0.17 which includes updated `ember-element-helper` and should
+  be more friendly with embroider.
+- [BUGFIX] Ensure searchbox in multiple select doesn't submit its enclosing form when enter is pressed.
+
+# 4.1.4
+- [BUGFIX] Fix arrays appended to multiple selects' selected array (#1447)
+# 4.1.3
+- [CHORE] Move from travis to github actions, fixing the test suite along the way. This has also
+  updated the version of ember-basic-dropdown.
+
+# 4.1.2
+- [BUGFIX] Fix problem when passing `@initiallyOpened` along with `@selected`.
+
+# 4.1.1
+- [ENHANCEMENT] Allow to customize what's displayed when no item matches the search by passing a `@noMatchesMessageComponent`.
+
+# 4.1.0
+- [ENHANCEMENT] Makes changed to aria roles so the currently highlighted option can be announced by assistive
+  technology like Voice Over.
+- [CHORE] Relax allowed versions of ember-truth-helpers so projects are less likely to have to resolve dependencies.
+
+# 4.0.5
+- [BUGFIX] Remove event listeners on destroy.
+
+# 4.0.4
+- [BUGFIX] Ensure observers set when selected/options are promise proxies are properly removed when
+  the component is destroyed, to prevent memory leaks.
 
 # 4.0.3
 - Update `ember-concurrency-decorators` to 2.0

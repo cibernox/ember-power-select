@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, triggerKeyEvent, focus, settled, waitFor } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { typeInSearch, clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
-import EmberObject, { get } from '@ember/object';
+import EmberObject from '@ember/object';
 import { A } from '@ember/array';
 import { run, later } from '@ember/runloop';
 import { numbers, names, countries } from '../constants';
@@ -1078,7 +1078,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function(assert) {
     let User = EmberObject.extend({
       isEqual(other) {
-        return this.name === get(other, 'name');
+        return this.name === other.name;
       }
     });
 
@@ -1145,14 +1145,14 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--above', 'The dropdown is above');
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--right', 'The dropdown is in the right');
-    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 111px;right: 222px/, 'The style attribute is the expected one');
+    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 111px; right: 222px;/, 'The style attribute is the expected one');
     await clickTrigger();
 
     run(() => this.set('renderInPlace', true));
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--below', 'The dropdown is below');
     assert.dom('.ember-power-select-dropdown').hasClass('ember-basic-dropdown-content--left', 'The dropdown is in the left');
-    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 333px;right: 444px/, 'The style attribute is the expected one');
+    assert.dom('.ember-power-select-dropdown').hasAttribute('style', /top: 333px; right: 444px;/, 'The style attribute is the expected one');
   });
 
   test('The `selected` option can be a thenable', async function(assert) {
@@ -1188,7 +1188,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       let promise = new RSVP.Promise((resolve) => {
         setTimeout(() => resolve(['one', 'two', 'three']), 500);
       });
-      this.set('options', PromiseArrayProxy.create({ content: [], promise }));
+      this.set('options', PromiseArrayProxy.create({ promise }));
     };
 
     await render(hbs`
@@ -1220,18 +1220,10 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
   test('Constant PromiseProxy references are tracked when .content changes', async function(assert) {
     let initial = null;
-    //initial = countries[1];
-    this.proxy = PromiseObject.create({content: initial, promise: Promise.resolve(initial)});
-    //this.proxy = ObjectProxy.create({content: initial});
-    //ObjectProxy does work, because they are not 'unpacked' by the .then
-    // and the {{#if select.selected}} in the trigger will correctly call the ObjectProxy.isTruthy
-    // which will setup the dep chain
+    this.proxy = PromiseObject.create({ promise: Promise.resolve(initial) });
     this.countries = countries;
     this.updateProxy = () => {
-      //this.set('proxy', countries[0]);
-      //this.set('proxy', PromiseObject.create({content: countries[0], promise: Promise.resolve(countries[0])}));
       this.proxy.set('content', countries[0]);
-      this.proxy.set('promise', Promise.resolve(countries[0]));
     };
 
     await render(hbs`

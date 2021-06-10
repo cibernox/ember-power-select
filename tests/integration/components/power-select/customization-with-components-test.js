@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, focus } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
@@ -273,6 +273,27 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown #custom-search-message-p-tag').exists('The custom component is rendered instead of the usual message');
+  });
+
+  test('the no matches element can be customized passing `@noMatchesMessageComponent`', async function(assert) {
+    assert.expect(2);
+
+    this.owner.register('component:custom-no-matches-message', Component.extend({
+      layout: hbs`<p id="custom-no-matches-message-p-tag">{{@noMatchesMessage}}</p>`
+    }));
+
+    this.options = [];
+
+    await render(hbs`
+      <PowerSelect @options={{options}} @noMatchesMessageComponent="custom-no-matches-message" @noMatchesMessage="Nope" @onChange={{action (mut foo)}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+
+    assert.dom('.ember-power-select-dropdown #custom-no-matches-message-p-tag').exists('The custom component is rendered instead of the usual message');
+    assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
   });
 
   test('placeholder can be customized using `@placeholderComponent`', async function(assert) {

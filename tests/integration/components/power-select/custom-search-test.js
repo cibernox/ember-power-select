@@ -4,7 +4,7 @@ import { task, timeout } from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click, waitFor } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers, countries } from '../constants';
 import RSVP from 'rsvp';
@@ -258,6 +258,25 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
           resolve(numbers.filter((str) => str.indexOf(term) > -1));
         }, 100);
       });
+    };
+
+    await render(hbs`
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+        {{number}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+    typeInSearch('teen');
+
+    await settled();
+    assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first result is highlighted');
+  });
+  test('On an empty select, when a syncronous search result complete, the first element is highlighted like with regular filtering', async function(assert) {
+    assert.expect(1);
+
+    this.searchFn = function(term) {
+      return numbers.filter((str) => str.indexOf(term) > -1);
     };
 
     await render(hbs`

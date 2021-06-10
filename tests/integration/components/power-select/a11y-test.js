@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerKeyEvent } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
 import { clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 
@@ -40,7 +40,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     [].slice.call(nestedOptionList).forEach((e) => assert.dom(e).hasAttribute('role', 'group'));
   });
 
-  test('Single-select: All options have `role=option`', async function(assert) {
+  test('Single-select: All options have `role=option` except highlighted options which have `role=alert`', async function(assert) {
     assert.expect(15);
 
     this.groupedNumbers = groupedNumbers;
@@ -51,10 +51,17 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     `);
 
     await clickTrigger();
-    [].slice.call(document.querySelectorAll('.ember-power-select-option')).forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
+
+    [].slice.call(document.querySelectorAll('li.ember-power-select-option[aria-current="true"]')).forEach((e) => {
+      assert.dom(e).hasAttribute('role', 'alert');
+    });
+
+    [].slice.call(document.querySelectorAll('li.ember-power-select-option[aria-current="false"]')).forEach((e) => {
+      assert.dom(e).hasAttribute('role', 'option');
+    });
   });
 
-  test('Multiple-select: All options have `role=option`', async function(assert) {
+  test('Multiple-select: All options have `role=option` except highlighted options which have `role=alert`', async function(assert) {
     assert.expect(15);
 
     this.groupedNumbers = groupedNumbers;
@@ -65,7 +72,14 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     `);
 
     await clickTrigger();
-    [].slice.call(document.querySelectorAll('.ember-power-select-option')).forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
+
+    [].slice.call(document.querySelectorAll('li.ember-power-select-option[aria-current="true"]')).forEach((e) => {
+      assert.dom(e).hasAttribute('role', 'alert');
+    });
+
+    [].slice.call(document.querySelectorAll('li.ember-power-select-option[aria-current="false"]')).forEach((e) => {
+      assert.dom(e).hasAttribute('role', 'option');
+    });
   });
 
   test('Single-select: The selected option has `aria-selected=true` and the rest `aria-selected=false`', async function(assert) {
@@ -135,6 +149,42 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
     assert.dom(findContains('.ember-power-select-option', 'one')).hasAttribute('aria-current', 'false', 'the first option has now aria-current=false');
     assert.dom(findContains('.ember-power-select-option', 'two')).hasAttribute('aria-current', 'true', 'the second option has now aria-current=false');
+  });
+
+  test('Single-select: The highlighted option has `role=alert` and the rest have `role=option`', async function(assert) {
+    assert.expect(4);
+
+    this.numbers = numbers;
+    await render(hbs`
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} @searchEnabled={{true}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+    assert.dom(findContains('.ember-power-select-option', 'one')).hasAttribute('role', 'alert', 'the highlighted option has role=alert');
+    assert.dom('.ember-power-select-option[role="option"]').exists({ count: numbers.length - 1 }, 'All other options have role=option');
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+    assert.dom(findContains('.ember-power-select-option', 'one')).hasAttribute('role', 'option', 'the first option now has role=option');
+    assert.dom(findContains('.ember-power-select-option', 'two')).hasAttribute('role', 'alert', 'the second option now has role=alert');
+  });
+
+  test('Multiple-select: The highlighted option has `role=alert` and the rest `role=option`', async function(assert) {
+    assert.expect(4);
+
+    this.numbers = numbers;
+    await render(hbs`
+      <PowerSelect @options={{numbers}} @selected={{selected}} @onChange={{action (mut selected)}} @searchEnabled={{true}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+    assert.dom(findContains('.ember-power-select-option', 'one')).hasAttribute('role', 'alert', 'the highlighted option has role=alert');
+    assert.dom('.ember-power-select-option[role="option"]').exists({ count: numbers.length - 1 }, 'All other options have role=option');
+    await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+    assert.dom(findContains('.ember-power-select-option', 'one')).hasAttribute('role', 'option', 'the first option now has role=option');
+    assert.dom(findContains('.ember-power-select-option', 'two')).hasAttribute('role', 'alert', 'the second option now has role=alert');
   });
 
   test('Single-select: Options with a disabled field have `aria-disabled=true`', async function(assert) {

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers } from '../constants';
 import { click, triggerEvent } from '@ember/test-helpers';
@@ -45,12 +45,13 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
   });
 
   test('Clicking an item selects it, closes the dropdown and focuses the trigger', async function(assert) {
-    assert.expect(4);
+    assert.expect(5);
 
     this.numbers = numbers;
-    this.foo = (val, dropdown) => {
+    this.foo = (val, dropdown, event) => {
       assert.equal(val, 'four', 'The action is invoked with the selected value as first parameter');
       assert.ok(dropdown.actions.close, 'The action is invoked with the the dropdown object as second parameter');
+      assert.ok(event instanceof window.Event, 'The third argument is an event');
     };
     await render(hbs`
       <PowerSelect @options={{numbers}} @onChange={{foo}} as |option|>

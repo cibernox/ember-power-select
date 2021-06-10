@@ -10,6 +10,8 @@
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
   @calculatePosition={{@calculatePosition}}
+  @triggerComponent={{@ebdTriggerComponent}}
+  @contentComponent={{@ebdContentComponent}}
   as |dropdown|>
   {{#let (assign dropdown (hash
     selected=this.selected
@@ -29,6 +31,7 @@
       {{did-update this._updateOptions @options}}
       {{did-insert this._updateSelected @selected}}
       {{did-update this._updateSelected @selected}}
+      {{did-insert this._registerAPI publicAPI}}
       {{did-update this._registerAPI publicAPI}}
       {{did-update this._performSearch this.searchText}}
       {{on "keydown" this.handleTriggerKeydown}}
@@ -90,13 +93,9 @@
           <SearchMessage @searchMessage={{this.searchMessage}} @select={{publicAPI}}/>
         {{/let}}
       {{else if this.mustShowNoMessages}}
-        {{#if this.noMatchesMessage}}
-          <ul class="ember-power-select-options" role="listbox">
-            <li class="ember-power-select-option ember-power-select-option--no-matches-message" role="option">
-              {{this.noMatchesMessage}}
-            </li>
-          </ul>
-        {{/if}}
+        {{#let (component (or @noMatchesMessageComponent "power-select/no-matches-message")) as |NoMatchesMessage|}}
+          <NoMatchesMessage @noMatchesMessage={{this.noMatchesMessage}} @select={{publicAPI}} />
+        {{/let}}
       {{else}}
         {{#let (component (or @optionsComponent "power-select/options")) as |Options|}}
           <Options

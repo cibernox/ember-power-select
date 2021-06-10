@@ -1,4 +1,4 @@
-<ul role="listbox" aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} ...attributes>
+<ul role="listbox" aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} {{will-destroy this.removeHandlers}} ...attributes>
   {{! template-lint-disable no-unnecessary-concat }}
   {{#if @select.loading}}
     {{#if @loadingMessage}}
@@ -27,7 +27,7 @@
           aria-disabled={{if opt.disabled "true"}}
           aria-current="{{eq opt @select.highlighted}}"
           data-option-index="{{@groupIndex}}{{index}}"
-          role="option">
+          role={{if (eq opt @select.highlighted) "alert" "option"}}>
           {{yield opt @select}}
         </li>
       {{/if}}

@@ -1,11 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 import { triggerKeydown, clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
 import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled } from '../constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';
+import { A } from '@ember/array';
 
 module('Integration | Component | Ember Power Select (Keyboard control)', function(hooks) {
   setupRenderingTest(hooks);
@@ -793,5 +794,68 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       assert.ok(!events[1].defaultPrevented, 'The second event was default prevented');
       done();
     }, 50);
+  });
+
+  test('BUGFIX: when using ENTER to select an option in multiple select, the next ARROWDOWN should select the option after it', async function(assert) {
+    this.numbers = numbers;
+    this.selected = A();
+
+    await render(hbs`
+      <PowerSelectMultiple
+        @options={{this.numbers}}
+        @closeOnSelect={{false}}
+        @onChange={{action (mut selected)}}
+        @selected={{this.selected}}
+        as |option|
+      >
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+    await focus('.ember-power-select-multiple-trigger');
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'ArrowDown');
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'ArrowDown');
+    // Select second option (data-index=1)
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'Enter');
+    assert.dom('[data-option-index="1"][aria-current="true"]').exists();
+    // Next ArrowDown should highlight (data-index=2)
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'ArrowDown');
+    assert.dom('[data-option-index="2"][aria-current="true"]').exists();
+  });
+
+  test('BUGFIX: when pressing enter multiple times on the same selected element in a multiple select', async function(assert) {
+    this.numbers = numbers;
+    this.selected = null;
+    this.onChange = (selected) => {
+      this.set('selected', selected);
+    }
+
+    await render(hbs`
+      <PowerSelectMultiple
+        @options={{this.numbers}}
+        @closeOnSelect={{false}}
+        @onChange={{this.onChange}}
+        @selected={{this.selected}}
+        as |option|
+      >
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+    await focus('.ember-power-select-multiple-trigger');
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'ArrowDown');
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'Enter');
+    // select first
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'ArrowDown');
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'ArrowDown');
+    // Select second option
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'Enter');
+    assert.equal(this.selected.length, 2);
+    // Select second option 2 more times with Enter keydown
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'Enter');
+    await triggerKeyEvent('.ember-power-select-multiple-trigger', 'keydown', 'Enter');
+
+    assert.equal(this.selected.length, 2, 'it does not add additional elements to the selected array');
+    assert.equal(this.selected.some((selection) => Array.isArray(selection)), false, 'it does not add empty arrays to the selected array');
   });
 });
