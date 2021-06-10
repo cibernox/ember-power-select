@@ -12,7 +12,7 @@
   @calculatePosition={{@calculatePosition}}
   @triggerComponent={{@ebdTriggerComponent}}
   @contentComponent={{@ebdContentComponent}}
-  ...attributes as |dropdown|>
+  as |dropdown|>
   {{#let (assign dropdown (hash
     selected=this.selected
     highlighted=this.highlighted
@@ -47,6 +47,7 @@
       title={{@title}}
       id={{@triggerId}}
       tabindex={{and (not @disabled) (or @tabindex "0")}}
+      ...attributes
       >
       {{#let (component (or @triggerComponent "power-select/trigger")) as |Trigger|}}
         <Trigger
