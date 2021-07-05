@@ -1,4 +1,4 @@
-import { deprecate } from '@ember/debug';
+import { deprecate } from 'ember-deprecations';
 import { registerAsyncHelper } from '@ember/test';
 import { click, fillIn, triggerKeyEvent, triggerEvent } from '@ember/test-helpers';
 import {
