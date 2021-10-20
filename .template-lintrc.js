@@ -5,7 +5,6 @@ module.exports = {
   extends: 'octane',
   rules: {
     'block-indentation': false,
-    'no-invalid-interactive': false,
     'attribute-indentation': false,
     'no-partial': false,
     'no-inline-styles': false,

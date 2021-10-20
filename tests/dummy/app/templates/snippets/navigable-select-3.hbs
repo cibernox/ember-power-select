@@ -4,6 +4,7 @@
       aria-selected={{ember-power-select-is-selected opt @selected}}
       aria-disabled={{opt.disabled}}
       aria-current={{eq opt @highlighted}}
+      role="button"
       {{on "click" (fn @select opt @dropdown)}}
       {{on "mouseover" (fn @highlight opt)}}>
       {{yield opt}}
