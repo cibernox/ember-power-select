@@ -12,7 +12,7 @@ module('Integration | Helpers', function(hooks) {
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -27,11 +27,11 @@ module('Integration | Helpers', function(hooks) {
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelectMultiple @options={{numbers}} @onChange={{action (mut fooMultiple)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut fooMultiple)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
       <div id="single-select">
-        <PowerSelect @options={{numbers}} @renderInPlace={{true}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |number|>
+        <PowerSelect @options={{this.numbers}} @renderInPlace={{true}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
           {{number}}
         </PowerSelect>
       </div>

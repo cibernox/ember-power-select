@@ -362,6 +362,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       this._lastSelectedPromise.then(resolvedSelected => {
         if (this._lastSelectedPromise === currentSelectedPromise) {
           this._resolvedSelected = resolvedSelected;
+          debugger;
           this._highlight(resolvedSelected)
         }
       });
@@ -369,6 +370,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       this._resolvedSelected = undefined;
       // Don't highlight args.selected array on multi-select
       if (!Array.isArray(this.args.selected)) {
+        debugger;
         this._highlight(this.args.selected);
       }
     }
@@ -468,7 +470,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
           this._searchResult = results;
           this.loading = false;
           this.lastSearchedText = term;
-          this._resetHighlighted();
+          scheduleOnce('actions', this, this._resetHighlighted);
         }
       }).catch(() => {
         if (this._lastSearchPromise === searchResult) {
@@ -479,7 +481,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     } else {
       this.lastSearchedText = term;
       this._searchResult = searchResult;
-      this._resetHighlighted();
+      scheduleOnce('actions', this, this._resetHighlighted);
     }
   }
 

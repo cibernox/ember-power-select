@@ -14,7 +14,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelect @renderInPlace={{true}} class="foo" @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} as |country|>
+      <PowerSelect @renderInPlace={{true}} class="foo" @options={{countries}} @selected={{country}} @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -29,7 +29,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} @triggerClass="country-single-trigger" as |country|>
+      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut this.foo)}} @triggerClass="country-single-trigger" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -44,7 +44,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     this.country = [countries[1], countries[0]];
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} @triggerClass="country-multiple-trigger" as |country|>
+      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut this.foo)}} @triggerClass="country-multiple-trigger" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -74,7 +74,7 @@ module('Integration | Component | Ember Power Select (Customization using attrs)
     this.country = [countries[1], countries[0]];
 
     await render(hbs`
-      <PowerSelectMultiple @options={{countries}} @selected={{country}} @onChange={{action (mut foo)}} @triggerId="this-is-my-id" as |country|>
+      <PowerSelectMultiple @options={{countries}} @selected={{country}} @onChange={{action (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
         {{country.name}}
       </PowerSelectMultiple>
     `);

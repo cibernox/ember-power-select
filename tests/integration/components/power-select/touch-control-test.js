@@ -12,7 +12,7 @@ module('Integration | Component | Ember Power Select (Touch control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -26,7 +26,7 @@ module('Integration | Component | Ember Power Select (Touch control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -41,7 +41,7 @@ module('Integration | Component | Ember Power Select (Touch control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
         <div class="super-fancy">{{option}}</div>
       </PowerSelect>
     `);
@@ -57,7 +57,7 @@ module('Integration | Component | Ember Power Select (Touch control)', function(
     this.numbers = numbers;
     this.foo = 'one';
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @allowClear={{true}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @allowClear={{true}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);

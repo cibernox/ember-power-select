@@ -13,7 +13,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -48,7 +48,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
       { groupName: 'Eagles', initial: 'E' }
     ];
     await render(hbs`
-      <PowerSelect @options={{this.notQuiteGroups}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.notQuiteGroups}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.groupName}}
       </PowerSelect>
     `);
@@ -64,7 +64,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -84,7 +84,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -100,7 +100,7 @@ module('Integration | Component | Ember Power Select (Groups)', function(hooks) 
 
     this.groupedNumbers = groupedNumbers;
     await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);

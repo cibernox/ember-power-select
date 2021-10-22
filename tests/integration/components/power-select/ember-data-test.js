@@ -21,7 +21,7 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     this.server.timing = 200;
     this.users = [];
     await render(hbs`
-      <PowerSelect @options={{users}} @searchField="name" @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{users}} @searchField="name" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option.name}}
       </PowerSelect>
     `);
@@ -41,7 +41,7 @@ module('Integration | Component | Ember Power Select (Ember-data integration)', 
     this.server.timing = 200;
     this.users = [];
     await render(hbs`
-      <PowerSelect @options={{users}} @searchField="name" @onChange={{action (mut foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{users}} @searchField="name" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option.name}}
       </PowerSelect>
     `);
