@@ -49,7 +49,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.lastNumber = numbers[numbers.length - 1];
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{lastNumber}} @onChange={{action (mut lastNumber)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.lastNumber}} @onChange={{action (mut this.lastNumber)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -66,7 +66,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.numbers = numbers;
     this.firstNumber = numbers[0];
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{firstNumber}} @onChange={{action (mut firstNumber)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.firstNumber}} @onChange={{action (mut this.firstNumber)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -106,7 +106,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action changed}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action this.changed}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -151,7 +151,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       assert.ok(false, 'The handle change should not be called');
     };
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action handleChange}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action this.handleChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -177,7 +177,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action changed}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action this.changed}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -348,7 +348,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -376,7 +376,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -398,7 +398,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -425,7 +425,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{selectedNumbers}} @onChange={{action (mut this.foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -444,7 +444,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.handleKeydown = () => false;
 
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{selectedNumbers}} @onChange={{action (mut this.foo)}} @onKeydown={{action handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -526,7 +526,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.numerals = numerals;
     await render(hbs`
-      <PowerSelect @options={{numerals}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelect @options={{this.numerals}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -611,7 +611,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
 
     this.countries = countries;
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchField="name" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchField="name" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -650,7 +650,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
     this.countries = countriesWithDisabled.map((country) => Object.assign({}, country));
     this.countries[0].disabled = true;
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchField="name" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchField="name" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -723,7 +723,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       return false; // prevent the dropdown from opening
     };
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action handleOpen}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action this.handleOpen}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -751,7 +751,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       }
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action handleOpen}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action this.handleOpen}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -780,7 +780,7 @@ module('Integration | Component | Ember Power Select (Keyboard control)', functi
       return false; // prevent the dropdown from opening
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action handleOpen}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action this.handleOpen}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);

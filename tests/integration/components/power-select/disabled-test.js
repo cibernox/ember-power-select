@@ -43,7 +43,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      <PowerSelect @options={{countriesWithDisabled}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -58,7 +58,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      <PowerSelect @options={{countriesWithDisabled}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -89,7 +89,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.selectedNumbers = [numbers[2], numbers[4]];
 
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{selectedNumbers}} @onChange={{action (mut this.foo)}} @disabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{action (mut this.foo)}} @disabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -105,7 +105,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.set('shouldBeDisabled', true);
 
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{selectedNumbers}} @onChange={{action (mut this.foo)}} @disabled={{shouldBeDisabled}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{action (mut this.foo)}} @disabled={{this.shouldBeDisabled}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -121,7 +121,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     <PowerSelect @options={{countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |country|>
+     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);
@@ -139,7 +139,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     <PowerSelect @options={{countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |country|>
+     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);
@@ -158,7 +158,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled[0].disabled = true;
 
     await render(hbs`
-     <PowerSelect @options={{countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |country|>
+     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);
@@ -190,7 +190,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.options = options;
     await render(hbs`
-      <PowerSelect @options={{options}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.options}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -222,7 +222,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
 
     this.options = options;
     await render(hbs`
-      <PowerSelect @options={{options}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.options}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -243,7 +243,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.isDisabled = false;
     this.foo = numbers[0];
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @disabled={{isDisabled}} @onChange={{action (mut this.foo)}} as |option select|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @disabled={{this.isDisabled}} @onChange={{action (mut this.foo)}} as |option select|>
         {{if select.disabled 'disabled!' 'enabled!'}}
       </PowerSelect>
     `);
@@ -259,7 +259,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.numbers = numbers;
     this.isDisabled = false;
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @disabled={{isDisabled}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @disabled={{this.isDisabled}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -275,7 +275,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.numbers = numbers;
 
     await render(hbs`
-     <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} @disabled={{foo}}  as |opt|>
+     <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} @disabled={{this.foo}}  as |opt|>
        {{opt}}
      </PowerSelect>
     `);
@@ -291,7 +291,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.countriesWithDisabled = countriesWithDisabled;
 
     await render(hbs`
-     <PowerSelect @options={{countriesWithDisabled}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |country|>
+     <PowerSelect @options={{this.countriesWithDisabled}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);

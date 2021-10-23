@@ -192,7 +192,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      <PowerSelect @options={{countriesWithDisabled}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -206,7 +206,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
 
     this.countriesWithDisabled = countriesWithDisabled;
     await render(hbs`
-      <PowerSelectMultiple @options={{countriesWithDisabled}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelectMultiple @options={{this.countriesWithDisabled}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelectMultiple>
     `);
@@ -469,7 +469,7 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut this.foo)}} @triggerRole={{role}} as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.foo)}} @triggerRole={{this.role}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);

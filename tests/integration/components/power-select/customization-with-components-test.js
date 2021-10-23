@@ -16,8 +16,8 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     this.owner.register('component:selected-country', class extends Component {
       layout = hbs`
-        <img src={{select.selected.flagUrl}} class="icon-flag {{if extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{select.selected.name}}">
-        {{select.selected.name}}
+        <img src={{@select.selected.flagUrl}} class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{@select.selected.name}}">
+        {{@select.selected.name}}
       `
     });
 
@@ -25,7 +25,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @triggerComponent="selected-country" @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @triggerComponent="selected-country" @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -45,7 +45,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect
         @options={{this.countries}}
         @loadingMessage="hmmmm paella"
-        @selected={{country}}
+        @selected={{this.country}}
         @triggerComponent="custom-trigger-component"
         @onChange={{action (mut this.foo)}} as |country|>
         {{option}}
@@ -58,15 +58,15 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.expect(3);
     this.owner.register('component:selected-item-country', Component.extend({
       layout: hbs`
-        <img src={{select.selected.flagUrl}} class="icon-flag {{if extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{select.selected.name}}">
-        {{select.selected.name}}
+        <img src={{@select.selected.flagUrl}} class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{@select.selected.name}}">
+        {{@select.selected.name}}
       `
     }));
     this.countries = countries;
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @selectedItemComponent="selected-item-country" @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @selectedItemComponent="selected-item-country" @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -82,12 +82,12 @@ module('Integration | Component | Ember Power Select (Customization using compon
       layout: hbs`
         <p>Countries:</p>
         <ul>
-          {{#if extra.field}}
-            {{#each options as |option index|}}
-              <li>{{index}}. {{get option extra.field}}</li>
+          {{#if @extra.field}}
+            {{#each @options as |option index|}}
+              <li>{{index}}. {{get option @extra.field}}</li>
             {{/each}}
           {{else}}
-            {{#each options as |option index|}}
+            {{#each @options as |option index|}}
               <li>{{index}}. {{option.name}}</li>
             {{/each}}
           {{/if}}
@@ -98,7 +98,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @optionsComponent="list-of-countries" @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @optionsComponent="list-of-countries" @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -114,12 +114,12 @@ module('Integration | Component | Ember Power Select (Customization using compon
       layout: hbs`
         <p>Countries:</p>
         <ul>
-          {{#if extra.field}}
-            {{#each options as |option index|}}
-              <li>{{index}}. {{get option extra.field}}</li>
+          {{#if @extra.field}}
+            {{#each @options as |option index|}}
+              <li>{{index}}. {{get option @extra.field}}</li>
             {{/each}}
           {{else}}
-            {{#each options as |option index|}}
+            {{#each @options as |option index|}}
               <li>{{index}}. {{option.name}}</li>
             {{/each}}
           {{/if}}
@@ -130,7 +130,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @optionsComponent="list-of-countries" @onChange={{action (mut this.foo)}} @extra={{hash field="code"}} as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @optionsComponent="list-of-countries" @onChange={{action (mut this.foo)}} @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelect>
     `);
@@ -144,7 +144,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.expect(4);
     this.owner.register('component:custom-before-options', Component.extend({
       layout: hbs`
-        <p id="custom-before-options-p-tag">{{placeholder}}</p>
+        <p id="custom-before-options-p-tag">{{@placeholder}}</p>
         {{component @placeholderComponent placeholder=@placeholder}}
       `
     }));
@@ -153,8 +153,8 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     await render(hbs`
       <PowerSelect
-        @options={{countries}}
-        @selected={{country}}
+        @options={{this.countries}}
+        @selected={{this.country}}
         @beforeOptionsComponent="custom-before-options"
         @placeholder="inception"
         @placeholderComponent={{component "power-select/placeholder"}}
@@ -180,8 +180,8 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     await render(hbs`
       <PowerSelect
-        @options={{countries}}
-        @selected={{country}}
+        @options={{this.countries}}
+        @selected={{this.country}}
         @afterOptionsComponent="custom-after-options"
         @onChange={{action (mut this.foo)}}
         @searchEnabled={{true}} as |country|>
@@ -211,12 +211,12 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     await render(hbs`
       <PowerSelect
-        @options={{countries}}
-        @selected={{country}}
+        @options={{this.countries}}
+        @selected={{this.country}}
         @onChange={{action (mut this.selected)}}
         @afterOptionsComponent="custom-after-options2"
         @beforeOptionsComponent="custom-before-options2"
-        @extra={{hash passedAction=(action someAction)}} as |country|>
+        @extra={{hash passedAction=(action this.someAction)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -247,8 +247,8 @@ module('Integration | Component | Ember Power Select (Customization using compon
     };
     await render(hbs`
       <PowerSelect
-        @options={{countries}}
-        @selected={{country}}
+        @options={{this.countries}}
+        @selected={{this.country}}
         @onChange={{action (mut this.selected)}}
         @triggerComponent="custom-trigger-that-handles-focus"
         @onFocus={{this.didFocusInside}} as |country|>
@@ -266,7 +266,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     }));
     this.searchFn = function() {};
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @searchMessageComponent="custom-search-message" @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @search={{this.searchFn}} @searchMessageComponent="custom-search-message" @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -285,7 +285,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.options = [];
 
     await render(hbs`
-      <PowerSelect @options={{options}} @noMatchesMessageComponent="custom-no-matches-message" @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.options}} @noMatchesMessageComponent="custom-no-matches-message" @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -309,7 +309,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     await render(hbs`
       <PowerSelect
-        @options={{countries}}
+        @options={{this.countries}}
         @placeholder="test"
         @placeholderComponent="custom-placeholder"
         @onChange={{action (mut this.foo)}} as |country|>
@@ -358,7 +358,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     }));
 
     await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @groupComponent="custom-group-component" @extra={{extra}} @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @options={{this.groupedNumbers}} @groupComponent="custom-group-component" @extra={{this.extra}} @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -372,12 +372,12 @@ module('Integration | Component | Ember Power Select (Customization using compon
       layout: hbs`
         <p>Countries:</p>
         <ul>
-          {{#if extra.field}}
-            {{#each options as |option index|}}
-              <li>{{index}}. {{get option extra.field}}</li>
+          {{#if @extra.field}}
+            {{#each @options as |option index|}}
+              <li>{{index}}. {{get option @extra.field}}</li>
             {{/each}}
           {{else}}
-            {{#each options as |option index|}}
+            {{#each @options as |option index|}}
               <li>{{index}}. {{option.name}}</li>
             {{/each}}
           {{/if}}
@@ -388,7 +388,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.country = countries[1]; // Spain
 
     await render(hbs`
-      <PowerSelectMultiple @options={{countries}} @selected={{country}} @optionsComponent="list-of-countries" @onChange={{action (mut this.foo)}} @extra={{hash field="code"}} as |country|>
+      <PowerSelectMultiple @options={{this.countries}} @selected={{this.country}} @optionsComponent="list-of-countries" @onChange={{action (mut this.foo)}} @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
     `);
@@ -403,8 +403,8 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.expect(1);
     this.owner.register('component:selected-country', Component.extend({
       layout: hbs`
-        <img src={{select.selected.flagUrl}} class="icon-flag {{if extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{select.selected.name}}">
-        {{select.selected.name}}
+        <img src={{@select.selected.flagUrl}} class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{@select.selected.name}}">
+        {{@select.selected.name}}
       `
     }));
     this.countries = countries;
@@ -425,8 +425,8 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.expect(1);
     this.owner.register('component:selected-item-country', Component.extend({
       layout: hbs`
-        <img src={{select.selected.flagUrl}} class="icon-flag {{if extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{select.selected.name}}">
-        {{select.selected.name}}
+        <img src={{@select.selected.flagUrl}} class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" alt="Flag of {{@select.selected.name}}">
+        {{@select.selected.name}}
       `
     }));
     this.countries = countries;
@@ -435,8 +435,8 @@ module('Integration | Component | Ember Power Select (Customization using compon
     await render(hbs`
       <div class="select-box">
         <PowerSelectMultiple
-            @options={{countries}}
-            @selected={{country}}
+            @options={{this.countries}}
+            @selected={{this.country}}
             @selectedItemComponent="selected-item-country"
             @onChange={{action (mut this.selected)}}
             @extra={{hash coolFlagIcon=true}} as |country|>
