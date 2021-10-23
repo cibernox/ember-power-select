@@ -14,7 +14,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -31,7 +31,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @highlightOnHover={{false}} @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @highlightOnHover={{false}} @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -54,7 +54,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
       assert.ok(event instanceof window.Event, 'The third argument is an event');
     };
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{foo}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -70,7 +70,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>f
     `);
@@ -93,7 +93,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     };
     this.selected = 'three';
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{selected}} @allowClear={{true}} @onChange={{onChange}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @allowClear={{true}} @onChange={{onChange}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -111,7 +111,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     this.numbers = numbers;
     await render(hbs`
       <input type="text" id="other-thing">
-      <PowerSelect @options={{numbers}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -128,7 +128,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{numbers}} @inTesting={{false}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @inTesting={{false}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -153,7 +153,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     };
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @onChange={{foo}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{foo}} as |option|>
         <span class="special-class">{{option}}</span>
       </PowerSelect>
     `);
@@ -170,7 +170,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
         <span class="special-class">{{option}}</span>
       </PowerSelect>
     `);
@@ -187,7 +187,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelect @options={{numbers}} @selected={{foo}} @onChange={{action (mut foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
         <span class="special-class">{{option}}</span>
       </PowerSelect>
     `);
