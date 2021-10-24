@@ -119,7 +119,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.numbersPromise = [];
     await render(hbs`
-      <PowerSelect @options={{numbersPromise}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbersPromise}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -144,7 +144,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.numbersPromise = [];
 
     await render(hbs`
-      <PowerSelect @options={{numbersPromise}} @onChange={{action (mut this.foo)}} @loadingMessage={{false}} as |option|>
+      <PowerSelect @options={{this.numbersPromise}} @onChange={{action (mut this.foo)}} @loadingMessage={{false}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -202,7 +202,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action foo}} @selected={{this.selected}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{action this.foo}} @selected={{this.selected}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -300,8 +300,8 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     await render(hbs`
       <PowerSelect
-        @options={{proxy}}
-        @search={{action search}}
+        @options={{this.proxy}}
+        @search={{action this.search}}
         @searchEnabled={{true}}
         @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
@@ -334,7 +334,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(
-      hbs`<PowerSelect @options={{proxy}} @searchEnabled={{true}} @search={{action search}} @onChange={{action (mut this.foo)}} as |option|> {{option}} </PowerSelect>`
+      hbs`<PowerSelect @options={{this.proxy}} @searchEnabled={{true}} @search={{action this.search}} @onChange={{action (mut this.foo)}} as |option|> {{option}} </PowerSelect>`
     );
 
     await clickTrigger();
@@ -374,7 +374,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.options = [];
     await render(hbs`
-      <PowerSelect @options={{options}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} @dropdownClass="this-is-a-test-class" as |option|>
+      <PowerSelect @options={{this.options}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} @dropdownClass="this-is-a-test-class" as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -420,7 +420,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   test('If there is no search action and the options is empty the select shows the default "no options" message', async function(assert) {
     this.options = [];
     await render(hbs`
-      <PowerSelect @options={{options}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.options}} @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -449,7 +449,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   test('The default "no options" message can be customized passing `noMatchesMessage="other message"`', async function(assert) {
     this.options = [];
     await render(hbs`
-      <PowerSelect @options={{options}} @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.options}} @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -476,7 +476,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
   // skip('The content of the dropdown when there are no options can be completely customized using the inverse block', async function(assert) {
   //   this.options = [];
   //   await render(hbs`
-  //     <PowerSelect @options={{options}} @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
+  //     <PowerSelect @options={{this.options}} @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
   //       {{option}}
   //     {{else}}
   //       <span class="empty-option-foo">Foo bar</span>
@@ -602,7 +602,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
 
     this.countries = countries;
     await render(hbs`
-      <PowerSelect @options={{countries}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.countries}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -619,7 +619,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.countries = countries;
     this.country = countries[1]; // Spain
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -633,7 +633,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.countries = countries;
     this.country = countries[1]; // Spain
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut country)}} as |option|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.country)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -649,7 +649,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.countries = countries;
     this.country = countries[1]; // Spain
     await render(hbs`
-      <PowerSelect @options={{countries}} @selected={{country}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -672,7 +672,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     ];
 
     await render(hbs`
-      <PowerSelect @options={{people}} @searchField="name" @searchEnabled={{true}} @onChange={{action (mut this.foo)}} as |person|>
+      <PowerSelect @options={{this.people}} @searchField="name" @searchEnabled={{true}} @onChange={{action (mut this.foo)}} as |person|>
         {{person.name}} {{person.surname}}
       </PowerSelect>
     `);
@@ -708,7 +708,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <PowerSelect @options={{people}} @searchEnabled={{true}} @matcher={{nameOrSurnameNoDiacriticsCaseSensitive}} @onChange={{action (mut this.foo)}} as |person|>
+      <PowerSelect @options={{this.people}} @searchEnabled={{true}} @matcher={{this.nameOrSurnameNoDiacriticsCaseSensitive}} @onChange={{action (mut this.foo)}} as |person|>
         {{person.name}} {{person.surname}}
       </PowerSelect>
     `);
@@ -1024,7 +1024,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     this.selected = null;
     this.search = () => [];
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @searchEnabled={{true}} @onChange={{action (mut this.selected)}} @search={{search}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @searchEnabled={{true}} @onChange={{action (mut this.selected)}} @search={{this.search}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1094,9 +1094,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await render(hbs`
       <PowerSelect
         @selected={{this.selected}}
-        @onChange={{onChange}}
+        @onChange={{this.onChange}}
         @searchEnabled={{true}}
-        @search={{search}} as |user|>
+        @search={{this.search}} as |user|>
         {{user.name}}
       </PowerSelect>
     `);
@@ -1136,7 +1136,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
       }
     };
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @renderInPlace={{renderInPlace}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @calculatePosition={{calculatePosition}} as |num|>
+      <PowerSelect @options={{this.numbers}} @renderInPlace={{this.renderInPlace}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @calculatePosition={{this.calculatePosition}} as |num|>
        {{num}}
       </PowerSelect>
     `);
@@ -1191,9 +1191,9 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     };
 
     await render(hbs`
-      <button id="refresh-collection-btn" onclick={{action refreshCollection}}>Refresh collection</button>
+      <button id="refresh-collection-btn" onclick={{action this.refreshCollection}}>Refresh collection</button>
       <br>
-      <PowerSelect @options={{options}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |name|>
+      <PowerSelect @options={{this.options}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |name|>
         {{name}}
       </PowerSelect>
     `);
@@ -1228,7 +1228,7 @@ module('Integration | Component | Ember Power Select (General behavior)', functi
     await render(hbs`
       <button id="update-proxy-btn" {{on "click" this.updateProxy}}>Update proxy content</button>
       <br>
-      <PowerSelect @selected={{proxy}} @options={{countries}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @selected={{this.proxy}} @options={{this.countries}} @onChange={{action (mut this.foo)}} as |option|>
         {{option.name}}
       </PowerSelect>
     `);

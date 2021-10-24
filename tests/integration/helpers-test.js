@@ -27,7 +27,7 @@ module('Integration | Helpers', function(hooks) {
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut fooMultiple)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut this.fooMultiple)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
       <div id="single-select">

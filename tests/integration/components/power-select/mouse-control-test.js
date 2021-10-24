@@ -54,7 +54,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
       assert.ok(event instanceof window.Event, 'The third argument is an event');
     };
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{foo}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -93,7 +93,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     };
     this.selected = 'three';
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @allowClear={{true}} @onChange={{onChange}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @allowClear={{true}} @onChange={{this.onChange}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -153,7 +153,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     };
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{foo}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{this.foo}} as |option|>
         <span class="special-class">{{option}}</span>
       </PowerSelect>
     `);

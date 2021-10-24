@@ -18,7 +18,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     this.searchFn = function() {};
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -34,7 +34,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     this.searchFn = function() {};
 
     await render(hbs`
-      <PowerSelect @options={{options}} @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{this.options}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -55,7 +55,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
 
     this.searchFn = function() {};
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -70,7 +70,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
 
     this.searchFn = function() {};
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @searchMessage="Type the name of the thing" @onChange={{action (mut this.foo)}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @searchMessage="Type the name of the thing" @onChange={{action (mut this.foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -87,7 +87,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -109,7 +109,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -133,7 +133,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -158,7 +158,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -180,7 +180,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @noMatchesMessage="Meec. Try again" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @noMatchesMessage="Meec. Try again" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -203,7 +203,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     // await render(hbs`
-    //   <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+    //   <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
     //     {{number}}
     //   {{else}}
     //     <span class="foo-bar">Baz</span>
@@ -230,7 +230,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
   //   };
 
   //   this.render(hbs`
-  //     <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+  //     <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
   //       {{number}}
   //     </PowerSelect>
   //   `);
@@ -306,7 +306,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @search={{searchFn}} @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -327,7 +327,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
 
     await render(hbs`
       <div id="different-node"></div>
-      <PowerSelect @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -358,7 +358,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
 
     await render(hbs`
       <div id="different-node"></div>
-      <PowerSelect @options={{this.numbers}} @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -385,7 +385,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
 
     await render(hbs`
       <div id="different-node"></div>
-      <PowerSelect @options={{selectedOptions}} @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{this.selectedOptions}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -417,7 +417,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
 
   //   this.render(hbs`
   //     <div id="different-node"></div>
-  //     <PowerSelect @options={{selectedOptions}} @search={{searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+  //     <PowerSelect @options={{this.selectedOptions}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
   //       {{number}}
   //     </PowerSelect>
   //   `);
@@ -497,7 +497,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number select|>
+      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number select|>
         {{number}}:{{select.lastSearchedText}}
       </PowerSelect>
     `);
@@ -523,7 +523,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number select|>
+      <PowerSelectMultiple @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number select|>
         {{number}}:{{select.lastSearchedText}}
       </PowerSelectMultiple>
     `);
@@ -551,8 +551,8 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-      {{#if visible}}
-        <PowerSelectMultiple @options={{this.numbers}} @search={{searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
+      {{#if this.visible}}
+        <PowerSelectMultiple @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
           {{number}}:{{searchTerm}}
         </PowerSelectMultiple>
       {{/if}}
@@ -572,7 +572,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     };
 
     await render(hbs`
-     <PowerSelect @options={{numbersPromise}} @search={{searchFn}} selected=foo @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+     <PowerSelect @options={{this.numbersPromise}} @search={{this.searchFn}} selected=foo @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
        {{number}}
      </PowerSelect>
     `);
@@ -591,7 +591,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
       assert.equal(typeof option, 'object', 'The first argument received by the custom matches is the option itself');
     };
     await render(hbs`
-      <PowerSelectMultiple @options={{countries}} @matcher={{matcherFn}} @searchField="name" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
+      <PowerSelectMultiple @options={{this.countries}} @matcher={{this.matcherFn}} @searchField="name" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
         {{country.name}}
       </PowerSelectMultiple>
     `);
@@ -612,7 +612,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      <PowerSelect @search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -642,7 +642,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      <PowerSelect search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -672,8 +672,8 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      {{#unless hideSelect}}
-        <PowerSelect search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      {{#unless this.hideSelect}}
+        <PowerSelect search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
           {{number}}
         </PowerSelect>
       {{/unless}}
@@ -704,7 +704,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      <PowerSelect search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -734,7 +734,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      <PowerSelectMultiple @search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -764,7 +764,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      <PowerSelectMultiple search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -794,8 +794,8 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      {{#unless hideSelect}}
-        <PowerSelectMultiple search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      {{#unless this.hideSelect}}
+        <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
           {{number}}
         </PowerSelectMultiple>
       {{/unless}}
@@ -826,7 +826,7 @@ module('Integration | Component | Ember Power Select (Custom search function)', 
     }).create();
 
     await render(hbs`
-      <PowerSelectMultiple search={{perform obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
