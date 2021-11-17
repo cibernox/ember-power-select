@@ -15,6 +15,7 @@ import {
   advanceSelectableOption,
   defaultMatcher,
   defaultTypeAheadMatcher,
+  pathForOption,
   MatcherFn
 } from '../utils/group-utils';
 import { restartableTask } from 'ember-concurrency-decorators';
@@ -148,15 +149,10 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
   }
 
-  get highlightedIndex(): number {
+  get highlightedIndex(): string {
     let results = this.results;
     let highlighted = this.highlighted;
-
-    if (results) {
-      return indexOfOption(results, highlighted);
-    }
-
-    return 0;
+    return pathForOption(results, highlighted);
   }
 
   get placeholderComponent(): string {
