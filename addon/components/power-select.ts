@@ -147,6 +147,18 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   get highlightOnHover(): boolean {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
   }
+
+  get highlightedIndex(): number {
+    let results = this.results;
+    let highlighted = this.highlighted;
+
+    if (results) {
+      return indexOfOption(results, highlighted);
+    }
+
+    return 0;
+  }
+
   get placeholderComponent(): string {
     return this.args.placeholderComponent || 'power-select/placeholder';
   }
