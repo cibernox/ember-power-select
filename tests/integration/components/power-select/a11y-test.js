@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerKeyEvent } from '@ember/test-helpers';
+import { render, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
 import { clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
 
-module('Integration | Component | Ember Power Select (Accesibility)', function(hooks) {
+module('Integration | Component | Ember Power Select (Accessibility)', function(hooks) {
   setupRenderingTest(hooks);
 
   test('Single-select: The top-level options list have `role=listbox` and nested lists have `role=group`', async function(assert) {
@@ -333,34 +333,6 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('aria-controls', /^ember-power-select-options-ember\d+$/, 'The `aria-controls` points to the id of the listbox');
   });
 
-  test('Single-select: The listbox has `aria-controls=<id-of-the-trigger>`', async function(assert) {
-    assert.expect(1);
-
-    this.numbers = numbers;
-    await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-options').hasAttribute('aria-controls', /^ember-power-select-trigger-ember\d+$/, 'The listbox controls the trigger');
-  });
-
-  test('Multiple-select: The listbox has `aria-controls=<id-of-the-trigger>`', async function(assert) {
-    assert.expect(1);
-
-    this.numbers = numbers;
-    await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-options').hasAttribute('aria-controls', /^ember-power-select-trigger-ember\d+$/, 'The listbox controls the trigger');
-  });
-
   test('Multiple-select: The selected elements are <li>s inside an <ul>, and have an item with `role=button` with `aria-label="remove element"`', async function(assert) {
     assert.expect(12);
 
@@ -477,5 +449,43 @@ module('Integration | Component | Ember Power Select (Accesibility)', function(h
     assert.dom('.ember-power-select-trigger').hasAttribute('role', role, 'The `role` was added.');
     this.set('role', undefined);
     assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The `role` was defaults to `button`.');
+  });
+
+  test('Trigger has proper aria attributes to associate it with the options', async function(assert) {
+    assert.expect(2);
+    this.numbers = numbers;
+
+    await render(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |number|>
+        {{number}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-haspopup', 'listbox');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', document.querySelector('.ember-power-select-options').id);
+  });
+
+  test('Trigger has aria-activedescendant attribute for the highlighted option', async function(assert) {
+    assert.expect(4);
+    this.numbers = numbers;
+
+    await render(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |number|>
+        {{number}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+
+    // by default, the first option is highlighted and marked as aria-activedescendant
+    assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first element is highlighted');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-activedescendant', document.querySelector('.ember-power-select-option:nth-child(1)').id, 'The first element is the aria-activedescendant');
+
+    await triggerEvent('.ember-power-select-option:nth-child(4)', 'mouseover');
+
+    assert.dom('.ember-power-select-option:nth-child(4)').hasAttribute('aria-current', 'true', 'The 4th element is highlighted');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-activedescendant', document.querySelector('.ember-power-select-option:nth-child(4)').id, 'The 4th element is the aria-activedescendant');
   });
 });
