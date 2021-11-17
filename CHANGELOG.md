@@ -1,4 +1,7 @@
 # Master
+# 4.1.7
+- Forward in `@animationEnabled` from PowerSelectMultiple to inner select #1475
+- Remove debugger statements introduced by mistake
 # 4.1.5
 - [ENHACEMENT] Update ember-basic-dropdown to 3.0.17 which includes updated `ember-element-helper` and should
   be more friendly with embroider.
