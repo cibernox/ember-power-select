@@ -421,7 +421,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (this.args.scrollTo) {
       return this.args.scrollTo(option, select);
     }
-    let optionsList = document.querySelector(`#ember-power-select-options-${select.uniqueId}`) as HTMLElement;
+    let optionsList = document.getElementById(`ember-power-select-options-${select.uniqueId}`) as HTMLElement;
     if (!optionsList) {
       return;
     }

@@ -215,8 +215,8 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
     assert.dom('.ember-power-select-option[aria-disabled=true]').exists({ count: 3 }, 'Three of them are disabled');
   });
 
-  test('Single-select: The trigger has `role=button` and `aria-owns=<id-of-dropdown>`', async function(assert) {
-    assert.expect(2);
+  test('Single-select: The trigger has `role=button`', async function(assert) {
+    assert.expect(1);
 
     this.numbers = numbers;
     await render(hbs`
@@ -227,11 +227,10 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
 
     await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The trigger has role button');
-    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns points to the dropdown');
   });
 
-  test('Multiple-select: The trigger has `role=button` and `aria-owns=<id-of-dropdown>`', async function(assert) {
-    assert.expect(2);
+  test('Multiple-select: The trigger has `role=button`', async function(assert) {
+    assert.expect(1);
 
     this.numbers = numbers;
     await render(hbs`
@@ -242,7 +241,6 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
 
     await clickTrigger();
     assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The trigger has role button');
-    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', /^ember-basic-dropdown-content-ember\d+$/, 'aria-owns points to the dropdown');
   });
 
   test('Single-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', async function(assert) {
@@ -452,7 +450,7 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
   });
 
   test('Trigger has proper aria attributes to associate it with the options', async function(assert) {
-    assert.expect(2);
+    assert.expect(3);
     this.numbers = numbers;
 
     await render(hbs`
@@ -464,6 +462,7 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
     await clickTrigger();
 
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-haspopup', 'listbox');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', '');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', document.querySelector('.ember-power-select-options').id);
   });
 

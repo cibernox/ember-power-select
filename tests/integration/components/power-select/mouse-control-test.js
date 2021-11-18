@@ -193,7 +193,7 @@ module('Integration | Component | Ember Power Select (Mouse control)', function(
     `);
 
     await clickTrigger();
-    await triggerEvent('.ember-power-select-options', 'mouseover');
+    await triggerEvent('ul', 'mouseover');
   });
 });
 
