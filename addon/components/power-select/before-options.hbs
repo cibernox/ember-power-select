@@ -5,7 +5,9 @@
       spellcheck={{false}} role="combobox"
       class="ember-power-select-search-input"
       value={{@select.searchText}}
+      aria-activedescendant={{@ariaActiveDescendant}}
       aria-controls={{@listboxId}}
+      aria-haspopup="listbox"
       placeholder={{@searchPlaceholder}}
       {{on "input" @onInput}}
       {{on "focus" @onFocus}}

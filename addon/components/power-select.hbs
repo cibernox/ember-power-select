@@ -38,10 +38,14 @@
       {{on "focus" this.handleFocus}}
       {{on "blur" this.handleBlur}}
       class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
+      aria-activedescendant={{unless @searchEnabled (concat publicAPI.uniqueId "-" this.highlightedIndex)}}
+      aria-controls={{unless @searchEnabled listboxId}}
       aria-describedby={{@ariaDescribedBy}}
+      aria-haspopup={{unless @searchEnabled "listbox"}}
       aria-invalid={{@ariaInvalid}}
       aria-label={{@ariaLabel}}
       aria-labelledby={{@ariaLabelledBy}}
+      aria-owns=""
       aria-required={{@required}}
       role={{or @triggerRole "button"}}
       title={{@title}}
@@ -84,6 +88,7 @@
           @placeholderComponent={{this.placeholderComponent}}
           @extra={{@extra}}
           @listboxId={{listboxId}}
+          @ariaActiveDescendant={{concat publicAPI.uniqueId "-" this.highlightedIndex}}
           @selectedItemComponent={{@selectedItemComponent}}
           @searchPlaceholder={{@searchPlaceholder}}
           />

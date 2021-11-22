@@ -47,6 +47,26 @@ export function indexOfOption(collection: any, option: any): number {
   })(collection);
 }
 
+export function pathForOption(collection: any, option: any): string {
+  return (function walk(collection): string {
+    if (!collection) {
+      return '';
+    }
+    for (let i = 0; i < get(collection, 'length'); i++) {
+      let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
+      if (isGroup(entry)) {
+        let result = walk(get(entry, 'options'));
+        if (result.length > 0) {
+          return i + '.' + result;
+        }
+      } else if (entry === option) {
+        return i + '';
+      }
+    }
+    return '';
+  })(collection);
+}
+
 export function optionAtIndex(originalCollection: any, index: number): { disabled: boolean, option: any } {
   let counter = 0;
   return (function walk(collection, ancestorIsDisabled): { disabled: boolean, option: any } | void {

@@ -15,6 +15,7 @@ import {
   advanceSelectableOption,
   defaultMatcher,
   defaultTypeAheadMatcher,
+  pathForOption,
   MatcherFn
 } from '../utils/group-utils';
 import { restartableTask } from 'ember-concurrency-decorators';
@@ -147,6 +148,13 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   get highlightOnHover(): boolean {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
   }
+
+  get highlightedIndex(): string {
+    let results = this.results;
+    let highlighted = this.highlighted;
+    return pathForOption(results, highlighted);
+  }
+
   get placeholderComponent(): string {
     return this.args.placeholderComponent || 'power-select/placeholder';
   }
@@ -413,7 +421,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (this.args.scrollTo) {
       return this.args.scrollTo(option, select);
     }
-    let optionsList = document.querySelector(`[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`) as HTMLElement;
+    let optionsList = document.getElementById(`ember-power-select-options-${select.uniqueId}`) as HTMLElement;
     if (!optionsList) {
       return;
     }
