@@ -449,12 +449,18 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
     assert.dom('.ember-power-select-trigger').hasAttribute('role', 'button', 'The `role` was defaults to `button`.');
   });
 
-  test('Trigger has proper aria attributes to associate it with the options', async function(assert) {
+  test('Dropdown with search disabled has proper aria attributes to associate trigger with the options', async function(assert) {
     assert.expect(3);
     this.numbers = numbers;
 
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |number|>
+      <PowerSelect
+        @options={{this.numbers}}
+        @selected={{this.selected}}
+        @searchEnabled={{false}}
+        @onChange={{action (mut this.selected)}}
+        as |number|
+      >
         {{number}}
       </PowerSelect>
     `);
@@ -464,6 +470,31 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-haspopup', 'listbox');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', '');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', document.querySelector('.ember-power-select-options').id);
+  });
+
+  test('Dropdown with search enabled has proper aria attributes to associate search box with the options', async function(assert) {
+    assert.expect(5);
+    this.numbers = numbers;
+
+    await render(hbs`
+      <PowerSelect
+        @options={{this.numbers}}
+        @selected={{this.selected}}
+        @searchEnabled={{true}}
+        @onChange={{action (mut this.selected)}}
+        as |number|
+      >
+        {{number}}
+      </PowerSelect>
+    `);
+
+    await clickTrigger();
+
+    assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-haspopup');
+    assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-controls');
+    assert.dom('.ember-power-select-search-input').hasAttribute('role', 'combobox');
+    assert.dom('.ember-power-select-search-input').hasAttribute('aria-haspopup', 'listbox');
+    assert.dom('.ember-power-select-search-input').hasAttribute('aria-controls', document.querySelector('.ember-power-select-options').id);
   });
 
   test('Trigger has aria-activedescendant attribute for the highlighted option', async function(assert) {
