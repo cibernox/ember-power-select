@@ -1,7 +1,6 @@
 <ul
   id="ember-power-select-multiple-options-{{@select.uniqueId}}"
   aria-activedescendant={{if (and @select.isOpen (not @searchEnabled)) @ariaActiveDescendant}}
-  aria-haspopup={{unless @searchEnabled "listbox"}}
   class="ember-power-select-multiple-options"
   role="button"
   {{did-update this.openChanged @select.isOpen}}
