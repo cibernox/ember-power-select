@@ -70,6 +70,7 @@
           @onKeydown={{this.handleKeydown}}
           @placeholder={{@placeholder}}
           @placeholderComponent={{this.placeholderComponent}}
+          @ariaActiveDescendant={{concat publicAPI.uniqueId "-" this.highlightedIndex}}
           as |opt term|>
           {{yield opt term}}
         </Trigger>

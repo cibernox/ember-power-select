@@ -1,5 +1,7 @@
 <ul
   id="ember-power-select-multiple-options-{{@select.uniqueId}}"
+  aria-activedescendant={{if (and @select.isOpen (not @searchEnabled)) @ariaActiveDescendant}}
+  aria-haspopup={{unless @searchEnabled "listbox"}}
   class="ember-power-select-multiple-options"
   role="button"
   {{did-update this.openChanged @select.isOpen}}
@@ -33,7 +35,10 @@
     <input
       {{! template-lint-disable "no-nested-interactive" }}
       type="search"
+      role="combobox"
       class="ember-power-select-trigger-multiple-input"
+      aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
+      aria-haspopup="listbox"
       autocomplete="off"
       autocorrect="off"
       autocapitalize="off"
