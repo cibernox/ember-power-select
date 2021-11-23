@@ -498,7 +498,7 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
   });
 
   test('Trigger has aria-activedescendant attribute for the highlighted option', async function(assert) {
-    assert.expect(4);
+    assert.expect(5);
     this.numbers = numbers;
 
     await render(hbs`
@@ -506,6 +506,8 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
         {{number}}
       </PowerSelect>
     `);
+
+    assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-activedescendant', 'aria-activedescendant is not present when the dropdown is closed');
 
     await clickTrigger();
 
