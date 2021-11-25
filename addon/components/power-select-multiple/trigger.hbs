@@ -1,8 +1,8 @@
+{{! template-lint-disable "no-invalid-interactive" }}
 <ul
   id="ember-power-select-multiple-options-{{@select.uniqueId}}"
   aria-activedescendant={{if (and @select.isOpen (not @searchEnabled)) @ariaActiveDescendant}}
   class="ember-power-select-multiple-options"
-  role="button"
   {{did-update this.openChanged @select.isOpen}}
   {{on "touchstart" this.chooseOption}}
   {{on "mousedown" this.chooseOption}}
@@ -11,7 +11,6 @@
     <li class="ember-power-select-multiple-option {{if opt.disabled "ember-power-select-multiple-option--disabled"}}">
       {{#unless @select.disabled}}
         <span
-          {{! template-lint-disable "no-nested-interactive" }}
           role="button"
           aria-label="remove element"
           class="ember-power-select-multiple-remove-btn"
@@ -32,12 +31,12 @@
   {{/each}}
   {{#if @searchEnabled}}
     <input
-      {{! template-lint-disable "no-nested-interactive" }}
       type="search"
       role="combobox"
       class="ember-power-select-trigger-multiple-input"
       aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
       aria-haspopup="listbox"
+      aria-expanded={{if @select.isOpen "true" "false"}}
       autocomplete="off"
       autocorrect="off"
       autocapitalize="off"
