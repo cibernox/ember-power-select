@@ -50,7 +50,7 @@
   @eventType={{@eventType}}
   @title={{@title}}
   @triggerClass="ember-power-select-multiple-trigger {{@triggerClass}}"
-  @triggerComponent={{component (or @triggerComponent "power-select-multiple/trigger") tabindex=@tabindex}}
+  @triggerComponent={{component (ensure-safe-component (or @triggerComponent "power-select-multiple/trigger")) tabindex=@tabindex}}
   @triggerId={{@triggerId}}
   @verticalPosition={{@verticalPosition}}
   @tabindex={{this.computedTabIndex}}

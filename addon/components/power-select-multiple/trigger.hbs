@@ -19,7 +19,7 @@
         </span>
       {{/unless}}
       {{#if @selectedItemComponent}}
-        {{component @selectedItemComponent extra=@extra option=opt select=@select}}
+        {{component (ensure-safe-component @selectedItemComponent) extra=@extra option=opt select=@select}}
       {{else}}
         {{yield opt @select}}
       {{/if}}
