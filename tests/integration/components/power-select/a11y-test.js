@@ -554,7 +554,7 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
   });
 
   test('PowerSelectMultiple with search enabled has proper aria attributes', async function(assert) {
-    assert.expect(10);
+    assert.expect(11);
     this.numbers = numbers;
 
     await render(hbs`
@@ -578,6 +578,7 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('role', 'combobox', 'Multi select search box has role combobox');
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('aria-controls', /^ember-power-select-options-ember\d+$/, 'Multi select search box has aria-controls value');
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('aria-haspopup', 'listbox', 'Multi select search box has aria-haspopup value');
+    assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('aria-expanded', 'true', 'Multi select search box has aria-expanded value');
 
     // by default, the first option is highlighted and marked as aria-activedescendant
     assert.dom('.ember-power-select-option').hasAttribute('aria-current', 'true', 'The first element is highlighted');
