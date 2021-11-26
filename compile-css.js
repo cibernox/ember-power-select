@@ -1,4 +1,4 @@
-var sass = require('node-sass'); // eslint-disable-line
+var sass = require('sass'); // eslint-disable-line
 var fs = require('fs');
 var path = require('path');
 
