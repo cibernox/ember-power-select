@@ -13,7 +13,7 @@ module('Acceptance | All Public Pages', function(hooks) {
 
   test('visit every Cookbook page in order', async function(assert) {
     let urls = await keepClickingNext('/cookbook', '.doc-page-nav-link-next');
-    assert.equal(urls.length, 7);
+    assert.equal(urls.length, 6);
   });
 
   test('visit /addons', async function(assert) {
