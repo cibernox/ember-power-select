@@ -1,7 +1,6 @@
 import { test, module } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { visit, click, currentURL } from '@ember/test-helpers';
-import { find } from '@ember/test-helpers';
+import { visit, currentURL } from '@ember/test-helpers';
 
 module('Acceptance | All Public Pages', function(hooks) {
   setupApplicationTest(hooks);
@@ -22,20 +21,20 @@ module('Acceptance | All Public Pages', function(hooks) {
   });
 });
 
-async function keepClickingNext(initialUrl, nextLinkSelector) {
-  let seenURLs = Object.create(null);
-  await visit(initialUrl);
-  let nextLink;
-  do {
-    let url = currentURL();
-    if (seenURLs[url]) {
-      throw new Error('page visitor detected a loop');
-    }
-    seenURLs[currentURL()] = true;
-    nextLink = find(nextLinkSelector);
-    if (nextLink) {
-      await click(nextLink);
-    }
-  } while (nextLink);
-  return Object.keys(seenURLs);
-}
+// async function keepClickingNext(initialUrl, nextLinkSelector) {
+//   let seenURLs = Object.create(null);
+//   await visit(initialUrl);
+//   let nextLink;
+//   do {
+//     let url = currentURL();
+//     if (seenURLs[url]) {
+//       throw new Error('page visitor detected a loop');
+//     }
+//     seenURLs[currentURL()] = true;
+//     nextLink = find(nextLinkSelector);
+//     if (nextLink) {
+//       await click(nextLink);
+//     }
+//   } while (nextLink);
+//   return Object.keys(seenURLs);
+// }
