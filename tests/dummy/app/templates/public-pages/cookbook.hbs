@@ -7,8 +7,8 @@
     <LinkTo @route="public-pages.cookbook.css-animations" class="side-nav-link">CSS Animations</LinkTo>
     <LinkTo @route="public-pages.cookbook.debounce-searches" class="side-nav-link">Debounce searches</LinkTo>
     <LinkTo @route="public-pages.cookbook.create-custom-options" class="side-nav-link">Create custom options</LinkTo>
-    <header class="side-nav-header">Advanced recipes</header>
-    <LinkTo @route="public-pages.cookbook.navigable-select" class="side-nav-link">Navigable select</LinkTo>
+    {{!-- <header class="side-nav-header">Advanced recipes</header>
+    <LinkTo @route="public-pages.cookbook.navigable-select" class="side-nav-link">Navigable select</LinkTo> --}}
   </nav>
   <section class="doc-page">
     <PowerSelect @selected={{this.currentSection}} @options={{this.groupedSections}} @onChange={{this.visit}} @searchField="text" @triggerClass="section-selector" as |option|>

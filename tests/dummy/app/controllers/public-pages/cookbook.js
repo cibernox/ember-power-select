@@ -14,12 +14,12 @@ const groupedSections = [
       { route: 'public-pages.cookbook.create-custom-options', text: 'Create custom options' }
     ]
   },
-  {
-    groupName: 'Advanced recipes',
-    options: [
-      { route: 'public-pages.cookbook.navigable-select', text: 'Navigable select' }
-    ]
-  }
+  // {
+  //   groupName: 'Advanced recipes',
+  //   options: [
+  //     { route: 'public-pages.cookbook.navigable-select', text: 'Navigable select' }
+  //   ]
+  // }
 ];
 
 export default class extends Controller {
