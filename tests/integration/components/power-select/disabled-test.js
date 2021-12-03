@@ -4,7 +4,7 @@ import { render, triggerEvent, triggerKeyEvent, click, focus, tap } from '@ember
 import { hbs } from 'ember-cli-htmlbars';
 import { run } from '@ember/runloop';
 import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
-import { numbers, countriesWithDisabled } from '../constants';
+import { countries, countriesWithDisabled, numbers } from '../constants';
 
 module('Integration | Component | Ember Power Select (Disabled)', function(hooks) {
   setupRenderingTest(hooks);
@@ -69,7 +69,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     assert.dom('.ember-power-select-option[aria-current="true"]').hasText('LV: Latvia', 'The hovered option was not highlighted because it\'s disabled');
   });
 
-  test('When passed `@disabled={{true}}`, the input inside the trigger is also disabled', async function(assert) {
+  test('Multiple select: When passed `@disabled={{true}}`, the input inside the trigger is also disabled', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
@@ -82,7 +82,7 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     assert.dom('.ember-power-select-trigger-multiple-input').hasAttribute('disabled');
   });
 
-  test('When passed `disabled=true`, the options cannot be removed', async function(assert) {
+  test('Multiple select: When passed `@disabled={{true}}`, the options cannot be removed', async function(assert) {
     assert.expect(1);
 
     this.numbers = numbers;
@@ -114,6 +114,28 @@ module('Integration | Component | Ember Power Select (Disabled)', function(hooks
     this.set('shouldBeDisabled', false);
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-expanded', 'false')
     assert.dom('.ember-power-select-trigger-multiple-input').doesNotHaveAttribute('disabled');
+  });
+
+  test('Multiple select: Disabled options cannot be removed', async function(assert) {
+    assert.expect(1);
+
+    const clonedCountries = countries.map((country) => ({ ...country }));
+
+    this.options = clonedCountries;
+    this.selected = clonedCountries.slice(0, 2);
+
+    // disable all selected countries
+    this.selected.forEach((country) => {
+      country.disabled = true;
+    });
+
+    await render(hbs`
+      <PowerSelectMultiple @options={{this.options}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @disabled={{false}} as |option|>
+        {{option.name}}
+      </PowerSelectMultiple>
+    `);
+
+    assert.dom('.ember-power-select-multiple-remove-btn').doesNotExist('There is no button to remove selected elements');
   });
 
   test('BUGFIX: When after a search the only result is a disabled element, it isn\'t highlighted and cannot be selected', async function(assert) {

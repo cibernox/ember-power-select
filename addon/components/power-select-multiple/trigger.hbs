@@ -9,7 +9,7 @@
   ...attributes>
   {{#each @select.selected as |opt idx|}}
     <li class="ember-power-select-multiple-option {{if opt.disabled "ember-power-select-multiple-option--disabled"}}">
-      {{#unless @select.disabled}}
+      {{#if (and (not @select.disabled) (not opt.disabled))}}
         <span
           role="button"
           aria-label="remove element"
@@ -17,7 +17,7 @@
           data-selected-index={{idx}}>
           &times;
         </span>
-      {{/unless}}
+      {{/if}}
       {{#if @selectedItemComponent}}
         {{component @selectedItemComponent extra=@extra option=opt select=@select}}
       {{else}}
