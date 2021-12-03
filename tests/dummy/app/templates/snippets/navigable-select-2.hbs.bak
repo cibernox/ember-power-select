@@ -4,7 +4,7 @@
   @selected={{this.selected}}
   @closeOnSelect={{false}}
   @onChange={{this.onChange}}
-  @optionsComponent="animated-options"
+  @optionsComponent={{component "animated-options"}}
   @search={{this.search}} as |levelOrOption|>
   {{#if levelOrOption.parentLevel}}
     <strong>Back</strong>

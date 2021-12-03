@@ -1,4 +1,11 @@
-<PowerSelect @options={{this.currentOptions}} @selected={{this.selected}} @closeOnSelect={{false}} @onChange={{this.onchange}} @optionsComponent="animated-options" @search={{this.search}} as |levelOrOption|>
+<PowerSelect
+  @options={{this.currentOptions}}
+  @selected={{this.selected}}
+  @closeOnSelect={{false}}
+  @onChange={{this.onchange}}
+  @optionsComponent={{component "animated-options"}}
+  @search={{this.search}} as |levelOrOption|
+>
   {{#if levelOrOption.parentLevel}}
     <strong>&lt; Back</strong>
   {{else if levelOrOption.levelName}}

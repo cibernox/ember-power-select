@@ -15,7 +15,7 @@
           @options={{this.mainSelectOptions}}
           @selected={{this.mainSelected}}
           @disabled={{this.disabled}}
-          @triggerComponent="main-header-select-trigger"
+          @triggerComponent={{component "main-header-select-trigger"}}
           @onChange={{this.changeOptions}}
           @dropdownClass="main-header-select-dropdown" as |opt|>
           {{opt}}
