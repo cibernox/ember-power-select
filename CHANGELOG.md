@@ -1,7 +1,8 @@
 # Master
 
-# Unreleased
+# 5.0.1
 - (#1470) [ENHANCEMENT] For multiselects, ensure that, if an option is disabled, AND that option is selected, then we can't "remove" that option from the selection
+- Allow the addon to work with ember-basic-dropdown 3 and 4.
 
 # 5.0.0
 - (#1481) [MAYBE BREAKING] Big overhaul of the a11y of the component. Now it uses `aria-activedescendant` to properly announce highlighted options.
