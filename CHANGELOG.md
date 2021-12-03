@@ -1,5 +1,8 @@
 # Master
 
+# Unreleased
+- (#1470) [ENHANCEMENT] For multiselects, ensure that, if an option is disabled, AND that option is selected, then we can't "remove" that option from the selection
+
 # 5.0.0
 - (#1481) [MAYBE BREAKING] Big overhaul of the a11y of the component. Now it uses `aria-activedescendant` to properly announce highlighted options.
 - (#1483) [BREAKING] Now options always have `role=option`. Before the selected option had `role=alert` instead but with the recent
