@@ -59,7 +59,9 @@ export interface PowerSelectArgs {
   highlightOnHover?: boolean
   placeholderComponent?: string
   searchMessage?: string
+  searchMessageComponent?: string;
   noMatchesMessage?: string
+  noMatchesMessageComponent?: string;
   matchTriggerWidth?: boolean
   options: any[] | PromiseProxy<any[]>
   selected: any | PromiseProxy<any>
@@ -69,6 +71,9 @@ export interface PowerSelectArgs {
   searchEnabled?: boolean
   tabindex?: number | string
   triggerComponent?: string
+  beforeOptionsComponent?: string
+  optionsComponent?: string;
+  groupComponent?: string;
   matcher?: MatcherFn
   initiallyOpened?: boolean
   typeAheadOptionMatcher?: MatcherFn
@@ -153,10 +158,6 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     let results = this.results;
     let highlighted = this.highlighted;
     return pathForOption(results, highlighted);
-  }
-
-  get placeholderComponent(): string {
-    return this.args.placeholderComponent || 'power-select/placeholder';
   }
 
   get searchMessage(): string {
