@@ -1,4 +1,4 @@
-import { isGroup, indexOfOption, optionAtIndex, filterOptions, stripDiacritics, countOptions, defaultTypeAheadMatcher } from 'ember-power-select/utils/group-utils';
+import { isGroup, indexOfOption, pathForOption, optionAtIndex, filterOptions, stripDiacritics, countOptions, defaultTypeAheadMatcher } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
 const groupedOptions = [
@@ -56,6 +56,25 @@ module('Unit | Utility | Group utils', function() {
     assert.equal(indexOfOption(groupedOptions, 'thirteen'), 13);
     assert.equal(indexOfOption(groupedOptions, 'one thousand'), 15);
     assert.equal(indexOfOption(groupedOptions, null), -1);
+  });
+
+  test('#pathForOption works for simple lists with no nesting', function(assert) {
+    assert.equal(pathForOption(null, null), '');
+    assert.equal(pathForOption(basicOptions, null), '');
+    assert.equal(pathForOption(basicOptions, ''), '');
+    assert.equal(pathForOption(basicOptions, 'non-existant option'), '');
+    assert.equal(pathForOption(basicOptions, 'zero'), '0');
+    assert.equal(pathForOption(basicOptions, 'one'), '1');
+    assert.equal(pathForOption(basicOptions, 'five'), '5');
+  });
+
+  test('#pathForOption works for nested lists', function(assert) {
+    assert.equal(pathForOption(groupedOptions, 'zero'), '0.0');
+    assert.equal(pathForOption(groupedOptions, 'four'), '1.0');
+    assert.equal(pathForOption(groupedOptions, 'seven'), '2.0.0');
+    assert.equal(pathForOption(groupedOptions, 'ten'), '2.1.0');
+    assert.equal(pathForOption(groupedOptions, 'one hundred'), '3');
+    assert.equal(pathForOption(groupedOptions, 'one thousand'), '4');
   });
 
   test('#optionAtIndex returns an object `{ disabled, option }`, disabled being true if that option or any ancestor is disabled, and the option will be undefined if the index is out of range', function(assert) {

@@ -1,6 +1,6 @@
 {
   "name": "ember-power-select",
-  "version": "4.1.6",
+  "version": "5.0.0",
   "description": "The extensible select component built for ember",
   "keywords": [
     "ember-addon",
@@ -49,8 +49,8 @@
   "dependencies": {
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
-    "ember-assign-helper": "^0.3.0",
-    "ember-basic-dropdown": "^3.0.21",
+    "ember-assign-helper": "^0.4.0",
+    "ember-basic-dropdown": "^3.1.0",
     "ember-cli-babel": "^7.26.0",
     "ember-cli-htmlbars": "^6.0.0",
     "ember-cli-typescript": "^4.2.0",
@@ -71,28 +71,27 @@
     "@types/rsvp": "^4.0.3",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-auto-import": "^1.6.0",
+    "ember-auto-import": "^2.2.4",
     "ember-cli": "~3.28.3",
     "ember-cli-blueprint-test-helpers": "^0.19.2",
     "ember-cli-dependency-checker": "^3.2.0",
-    "ember-cli-deprecation-workflow": "^2.0.0",
-    "ember-cli-fastboot": "^2.2.3",
+    "ember-cli-deprecation-workflow": "^2.1.0",
+    "ember-cli-fastboot": "^3.2.0-beta.5",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-mirage": "^2.2.0",
     "ember-cli-sass": "^10.0.1",
     "ember-cli-terser": "^4.0.0",
     "ember-cli-typescript-blueprints": "^3.0.0",
-    "ember-code-example-component": "^0.3.1",
+    "ember-code-example-component": "^0.4.0",
     "ember-code-snippet": "^2.4.0",
-    "ember-data": "^3.19.0",
+    "ember-data": "^3.21.0",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.1.0",
-    "ember-href-to": "^4.1.0",
+    "ember-href-to": "^5.0.0",
     "ember-load-initializers": "^2.1.1",
     "ember-maybe-import-regenerator": "^1.0.0",
     "ember-qunit": "^5.1.5",
-    "ember-qunit-assert-helpers": "^0.2.2",
     "ember-resolver": "^8.0.2",
     "ember-source": "~3.28.4",
     "ember-source-channel-url": "^3.0.0",
@@ -101,22 +100,20 @@
     "eslint": "^7.20.0",
     "eslint-plugin-ember": "^10.5.7",
     "eslint-plugin-node": "^11.1.0",
-    "liquid-fire": "0.32.0",
     "loader.js": "^4.7.0",
-    "memory-scroll": "^1.0.0",
+    "memory-scroll": "cibernox/memory-scroll",
     "mocha": "^8.0.0",
     "npm-run-all": "^4.1.5",
-    "prember": "^1.0.5",
-    "prember-crawler": "^1.0.0",
     "qunit-dom": "^2.0.0",
     "qunit": "^2.17.2",
     "sass": "^1.43.0",
     "simple-git": "^2.11.0",
     "testdouble": "^3.16.0",
-    "typescript": "~4.4.0"
+    "typescript": "~4.4.0",
+    "webpack": "^5.0.0"
   },
   "engines": {
-    "node": "10.* || >= 12"
+    "node": ">= 12"
   },
   "ember": {
     "edition": "octane"
@@ -125,6 +122,6 @@
     "configPath": "tests/dummy/config"
   },
   "volta": {
-    "node": "14.18.1"
+    "node": "16.9.0"
   }
 }

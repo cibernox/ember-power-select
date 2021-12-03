@@ -1,4 +1,12 @@
 # Master
+
+# 5.0.0
+- (#1481) [MAYBE BREAKING] Big overhaul of the a11y of the component. Now it uses `aria-activedescendant` to properly announce highlighted options.
+- (#1483) [BREAKING] Now options always have `role=option`. Before the selected option had `role=alert` instead but with the recent
+  a11y enhancements this is more correct.
+# 4.1.7
+- Forward in `@animationEnabled` from PowerSelectMultiple to inner select #1475
+- Remove debugger statements introduced by mistake
 # 4.1.5
 - [ENHACEMENT] Update ember-basic-dropdown to 3.0.17 which includes updated `ember-element-helper` and should
   be more friendly with embroider.
