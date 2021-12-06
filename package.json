@@ -64,6 +64,7 @@
     "@ember-decorators/component": "^6.1.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.5.0",
+    "@embroider/test-setup": "^0.47.2",
     "@types/ember": "^3.16.0",
     "@types/ember__test-helpers": "^2.0.0",
     "@types/ember-data": "^3.16.1",
