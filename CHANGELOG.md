@@ -1,8 +1,8 @@
 # Master
 
-# Unreleased
+# 5.0.2
 - Make the component compatible with Embroider builds.
-
+- Revert #1470. It turned out to be a breaking change.
 # 5.0.1
 - (#1470) [ENHANCEMENT] For multiselects, ensure that, if an option is disabled, AND that option is selected, then we can't "remove" that option from the selection
 - Allow the addon to work with ember-basic-dropdown 3 and 4.
