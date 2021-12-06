@@ -90,7 +90,7 @@ jobs:
           - ember-beta
           # - ember-canary
           - node-tests
-          # - embroider
+          - embroider
           # - ember-classic
     steps:
       - uses: actions/checkout@v2
