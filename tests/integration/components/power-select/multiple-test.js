@@ -1,13 +1,18 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
 import { numbers, names, countries, countriesWithDisabled } from '../constants';
-import { click, tap, triggerKeyEvent, focus } from '@ember/test-helpers';
+import {
+  click,
+  tap,
+  triggerKeyEvent,
+  focus,
+  render,
+} from '@ember/test-helpers';
 import RSVP from 'rsvp';
 import EmberObject from '@ember/object';
 import { isEmpty } from '@ember/utils';
@@ -670,6 +675,31 @@ module(
       assert
         .dom('.ember-power-select-option')
         .exists({ count: 1 }, 'The list has been filtered');
+    });
+
+    test("Pressing BACKSPACE on the search input when it's empty doesnt trigger error", async function (assert) {
+      assert.expect(2);
+
+      this.numbers = numbers;
+      await render(hbs`
+        <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+          {{option}}
+        </PowerSelectMultiple>
+      `);
+
+      await clickTrigger();
+      await triggerKeyEvent(
+        '.ember-power-select-trigger-multiple-input',
+        'keydown',
+        8
+      );
+
+      assert
+        .dom('.ember-power-select-multiple-option')
+        .exists({ count: 0 }, 'There is no elements selected');
+      assert
+        .dom('.ember-power-select-dropdown')
+        .exists('The dropdown is still opened');
     });
 
     test('If the multiple component is focused, pressing KEYDOWN opens it', async function (assert) {
