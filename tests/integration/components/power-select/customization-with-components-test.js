@@ -32,7 +32,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @triggerComponent="selected-country"
+        @triggerComponent={{component "selected-country"}}
         @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -112,7 +112,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @selectedItemComponent="selected-country" 
+        @selectedItemComponent={{component "selected-country"}}
         @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -178,7 +178,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @optionsComponent="list-of-countries" 
+        @optionsComponent={{comnponent "list-of-countries"}}
         @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -277,7 +277,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @beforeOptionsComponent="custom-before-options"
+        @beforeOptionsComponent={{component "custom-before-options"}}
         @placeholder="inception"
         @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
@@ -333,7 +333,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @afterOptionsComponent="custom-after-options"
+        @afterOptionsComponent={{component "custom-after-options"}}
         @onChange={{action (mut this.foo)}}
         @searchEnabled={{true}} as |country|>
         {{country.name}}
@@ -441,7 +441,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     }));
     this.searchFn = function() {};
     await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @searchMessageComponent="custom-search-message" @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @search={{this.searchFn}} @searchMessageComponent={{component "custom-search-message"}} @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -479,7 +479,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     this.options = [];
 
     await render(hbs`
-      <PowerSelect @options={{this.options}} @noMatchesMessageComponent="custom-no-matches-message" @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.options}} @noMatchesMessageComponent={{component "custom-no-matches-message"}} @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -530,7 +530,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect
         @options={{this.countries}}
         @placeholder="test"
-        @placeholderComponent="custom-placeholder"
+        @placeholderComponent={{component "custom-placeholder"}}
         @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -574,7 +574,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
     }));
 
     await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @groupComponent="custom-group-component" @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @options={{this.groupedNumbers}} @groupComponent={{component "custom-group-component"}} @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);

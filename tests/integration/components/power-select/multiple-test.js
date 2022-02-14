@@ -876,7 +876,7 @@ module('Integration | Component | Ember Power Select (Multiple)', function(hooks
 
     await render(hbs`
       <PowerSelectMultiple
-        @triggerComponent={{undefined}}
+        @triggerComponent={{component (ensure-safe-component undefined)}}
         @options={{this.numbers}}
         @onChange={{action (mut this.selected)}}
         @selected={{this.selected}}

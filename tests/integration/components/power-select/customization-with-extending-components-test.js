@@ -101,7 +101,7 @@ module(
         Component.extend({
           layout: hbs`
         <p id="custom-before-options-p-tag">{{@placeholder}}</p>
-        {{component @placeholderComponent placeholder=@placeholder}}
+        {{component (ensure-safe-component @placeholderComponent) placeholder=@placeholder}}
       `,
         })
       );

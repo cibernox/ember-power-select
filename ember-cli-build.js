@@ -23,5 +23,37 @@ module.exports = function(defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  return app.toTree();
+  const safeDummyComponentsToIgnore = [
+    'custom-trigger-with-search',
+    'selected-country',
+    'custom-before-options',
+    'list-of-countries',
+    'custom-after-options',
+    'custom-search-message',
+    'custom-no-matches-message',
+    'custom-placeholder',
+    'custom-group-component',
+  ].reduce((acum, curr) => {
+    return {
+      ...acum,
+      [`{{component '${curr}'}}`]: {
+        safeToIgnore: true,
+      },
+    };
+  }, {});
+
+  const { maybeEmbroider } = require('@embroider/test-setup');
+  return maybeEmbroider(app, {
+    skipBabel: [
+      {
+        package: 'qunit',
+      },
+    ],
+    packageRules: [
+      {
+        package: 'dummy',
+        components: safeDummyComponentsToIgnore
+      },
+    ],
+  });
 };

@@ -56,8 +56,8 @@
   <PowerSelect @selected={{this.selected3}}
     @onChange={{fn (mut this.selected3)}}
     @search={{this.searchAsync}}
-    @beforeOptionsComponent={{null}}
-    @triggerComponent={{component "custom-trigger-with-search"}} as |num|>
+    @triggerComponent={{component "custom-trigger-with-search"}} 
+    as |num|>
     {{num}}
   </PowerSelect>
 </div>

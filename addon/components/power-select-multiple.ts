@@ -1,8 +1,8 @@
-
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import { PowerSelectArgs, Select } from './power-select';
+import PowerSelectTriggerComponent from '../components/power-select/trigger';
 
 interface PowerSelectMultipleArgs extends PowerSelectArgs {
  // any extra property for multiple selects?
@@ -15,6 +15,17 @@ export default class PowerSelectMultiple extends Component<PowerSelectMultipleAr
     } else {
       return this.args.tabindex || '0';
     }
+  }
+
+  get beforeOptionsComponent() {
+    if (this.args.beforeOptionsComponent !== null) {
+      return this.args.beforeOptionsComponent;
+    }
+    return null;
+  }
+
+  get triggerComponent() {
+    return this.args.triggerComponent || PowerSelectTriggerComponent;
   }
 
   // Actions
