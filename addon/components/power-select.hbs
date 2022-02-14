@@ -115,8 +115,8 @@
       {{#if (not-eq @beforeOptionsComponent null)}}
         {{#let
           (if
-            @beforeOptionsComponents
-            (component (ensure-safe-component @beforeOptionsComponents))
+            @beforeOptionsComponent
+            (component (ensure-safe-component @beforeOptionsComponent))
             (component "power-select/before-options")
           )
           as |BeforeOptions|

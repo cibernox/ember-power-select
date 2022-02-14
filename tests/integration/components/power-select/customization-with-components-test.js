@@ -178,7 +178,7 @@ module('Integration | Component | Ember Power Select (Customization using compon
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @optionsComponent={{comnponent "list-of-countries"}}
+        @optionsComponent={{component "list-of-countries"}}
         @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -260,35 +260,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     await clickTrigger();
     assert.dom('.ember-power-select-options').includesText('Countries:', 'The given component is rendered');
     assert.dom('.ember-power-select-options').includesText('3. RU', 'The component uses the field in the extra has to render the options');
-  });
-
-  test('the content before the list can be customized passing `@beforeOptionsComponent` as string', async function(assert) {
-    assert.expect(4);
-    this.owner.register('component:custom-before-options', Component.extend({
-      layout: hbs`
-        <p id="custom-before-options-p-tag">{{@placeholder}}</p>
-        {{component (ensure-safe-component @placeholderComponent) placeholder=@placeholder}}
-      `
-    }));
-    this.countries = countries;
-    this.country = countries[1]; // Spain
-
-    await render(hbs`
-      <PowerSelect
-        @options={{this.countries}}
-        @selected={{this.country}}
-        @beforeOptionsComponent={{component "custom-before-options"}}
-        @placeholder="inception"
-        @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-dropdown #custom-before-options-p-tag').exists('The custom component is rendered instead of the usual search bar');
-    assert.dom('.ember-power-select-dropdown #custom-before-options-p-tag').hasText('inception', 'The placeholder attribute is passed through.');
-    assert.dom('.ember-power-select-dropdown .ember-power-select-placeholder').exists('The placeholder component is passed through.');
-    assert.dom('.ember-power-select-search-input').doesNotExist('The search input is not visible');
   });
 
   test('the content before the list can be customized passing `@beforeOptionsComponent`', async function(assert) {
