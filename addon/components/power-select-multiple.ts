@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { isEqual } from '@ember/utils';
+import { isEqual, isPresent } from '@ember/utils';
 import { PowerSelectArgs, Select } from './power-select';
 
 interface PowerSelectMultipleArgs extends PowerSelectArgs {
@@ -17,7 +17,7 @@ export default class PowerSelectMultiple extends Component<PowerSelectMultipleAr
   }
 
   get beforeOptionsComponent() {
-    if (this.args.beforeOptionsComponent !== null) {
+    if (isPresent(this.args.beforeOptionsComponent)) {
       return this.args.beforeOptionsComponent;
     }
     return null;
