@@ -1,5 +1,7 @@
 # Master
 
+# 5.0.4
+- Improve compatibility with embroider
 # 5.0.2
 - Make the component compatible with Embroider builds.
 - Revert #1470. It turned out to be a breaking change.
