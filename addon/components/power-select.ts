@@ -430,7 +430,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (index === -1) {
       return;
     }
-    let optionElement = (optionsList.querySelectorAll('[data-option-index]') as NodeListOf<HTMLElement>).item(index);
+    let optionElement = optionsList.querySelector(`[data-option-index='${index}']`) as HTMLElement;
     if (!optionElement) {
       return;
     }
