@@ -375,6 +375,11 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
         }
       });
     } else {
+      if (this._lastSelectedPromise) {
+        // no longer using a promise
+        removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+        this._lastSelectedPromise = undefined;
+      }
       this._resolvedSelected = undefined;
       // Don't highlight args.selected array on multi-select
       if (!Array.isArray(this.args.selected)) {
