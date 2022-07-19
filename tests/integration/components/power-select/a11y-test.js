@@ -420,12 +420,12 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
     await clickTrigger();
 
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-haspopup', 'listbox');
-    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', '');
-    assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', document.querySelector('.ember-power-select-options').id);
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-owns', document.querySelector('.ember-power-select-dropdown').id);
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', document.querySelector('.ember-power-select-dropdown').id);
   });
 
   test('Dropdown with search enabled has proper aria attributes to associate search box with the options', async function(assert) {
-    assert.expect(5);
+    assert.expect(4);
     this.numbers = numbers;
 
     await render(hbs`
@@ -443,7 +443,6 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
     await clickTrigger();
 
     assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-haspopup');
-    assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-controls');
     assert.dom('.ember-power-select-search-input').hasAttribute('role', 'combobox');
     assert.dom('.ember-power-select-search-input').hasAttribute('aria-haspopup', 'listbox');
     assert.dom('.ember-power-select-search-input').hasAttribute('aria-controls', document.querySelector('.ember-power-select-options').id);
@@ -489,7 +488,7 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
       </PowerSelectMultiple>
     `);
 
-    assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', /^ember-power-select-options-ember\d+$/, 'The trigger has aria-controls value');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', /^ember-basic-dropdown-content-ember\d+$/, 'The trigger has aria-controls value');
     assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-activedescendant', 'aria-activedescendant is not present when the dropdown is closed');
     assert.dom('.ember-power-select-trigger').hasAttribute('aria-haspopup', 'listbox', 'aria-haspopup is present on the trigger');
 
@@ -521,7 +520,7 @@ module('Integration | Component | Ember Power Select (Accessibility)', function(
       </PowerSelectMultiple>
     `);
 
-    assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-controls', 'The trigger has no aria-controls value');
+    assert.dom('.ember-power-select-trigger').hasAttribute('aria-controls', /^ember-basic-dropdown-content-ember\d+$/, 'The trigger has aria-controls value');
     assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-activedescendant', 'aria-activedescendant is not present on the trigger');
     assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-haspopup', 'aria-haspopup is not present on the trigger');
 
