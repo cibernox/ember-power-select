@@ -36,15 +36,6 @@
     "prepublishOnly": "ember ts:precompile",
     "postpublish": "ember ts:clean"
   },
-  "files": [
-    "addon/",
-    "app/",
-    "blueprints/",
-    "addon-test-support/",
-    "test-support/",
-    "index.js",
-    "vendor"
-  ],
   "dependencies": {
     "@embroider/util": "^1.0.0",
     "@glimmer/component": "^1.0.4",
