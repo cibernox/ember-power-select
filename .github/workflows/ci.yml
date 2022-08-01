@@ -69,20 +69,15 @@ jobs:
           - embroider-safe
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - name: Reconfigure git to use HTTP authentication
-        run: >
-          git config --global url."https://github.com/".insteadOf
-          ssh://git@github.com/
-      - uses: volta-cli/action@v1
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - name: install dependencies
-        run: npm install
-      - name: test
-        run: node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
 
   publish:
     name: Release
