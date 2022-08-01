@@ -1,88 +1,69 @@
 name: CI
 
-# based on:
-#  - https://github.com/NullVoxPopuli/eslint-plugin-decorator-position/blob/master/.github/workflows/lint.yml
-#  - https://github.com/NullVoxPopuli/ember-autostash-modifier/blob/master/.github/workflows/ci.yml
-#  - https://github.com/emberjs/ember-test-helpers/blob/master/.github/workflows/ci-build.yml
-#  - https://github.com/NullVoxPopuli/ember-jsqr/blob/master/.github/workflows/tests.yml
 on:
-  pull_request:
   push:
-    # filtering branches here prevents duplicate builds from pull_request and push
     branches:
+      - main
       - master
+  pull_request: {}
   schedule:
     - cron: "0 3 * * 0" # every Sunday at 3am
-
-env:
-  CI: true
 
 concurrency:
   group: ci-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  tests:
+  test:
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
-    name: Base Tests
+    name: "Tests"
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node:
-          - "12"
-          - "14"
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
         with:
-          persist-credentials: false
-      - name: Reconfigure git to use HTTP authentication
-        run: >
-          git config --global url."https://github.com/".insteadOf
-          ssh://git@github.com/
-      - uses: volta-cli/action@v1
-        with:
-          node-version: ${{ matrix.node }}
-
-      - run: npm ci
-
-      - name: Ember Test with ${{ matrix.node }}
+          node-version: 14.x
+          cache: npm
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Run Tests
         run: npm run test:ember
 
-  floating-dependencies:
-    name: Floating Dependencies
-    timeout-minutes: 10
+  floating:
+    name: "Floating Dependencies"
     runs-on: ubuntu-latest
-    needs: tests
+    timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          persist-credentials: false
-      - name: Reconfigure git to use HTTP authentication
-        run: >
-          git config --global url."https://github.com/".insteadOf
-          ssh://git@github.com/
-      - uses: volta-cli/action@v1
-        with:
-          node-version: 14
-
-      - run: npm install --lock-file=false
-
-      - name: Ember Tests
+          node-version: 14.x
+          cache: npm
+      - name: Install Dependencies
+        run: npm install --no-shrinkwrap
+      - name: Run Tests
         run: npm run test:ember
 
   try-scenarios:
-    name: "Compatibility"
+    name: ${{ matrix.try-scenario }}
+    runs-on: ubuntu-latest
+    needs: "test"
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    needs: tests
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
-        ember-try-scenario:
+        try-scenario:
           - ember-lts-3.16
           - ember-lts-3.20
+          - ember-lts-3.24
+          - ember-lts-3.28
           - ember-release
           - ember-beta
           - ember-canary
@@ -98,17 +79,17 @@ jobs:
           ssh://git@github.com/
       - uses: volta-cli/action@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - name: install dependencies
         run: npm install
       - name: test
-        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+        run: node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup
 
   publish:
     name: Release
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    needs: [tests, floating-dependencies, try-scenarios]
+    needs: [test, floating, try-scenarios]
 
     steps:
       - uses: actions/checkout@v2
