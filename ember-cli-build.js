@@ -1,18 +1,11 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
-const VersionChecker = require('ember-cli-version-checker'); // eslint-disable-line
 
 module.exports = function(defaults) {
-  let checker = new VersionChecker(defaults);
-  let emberChecker = checker.for('ember-source');
   let options = {
     snippetPaths: ['tests/dummy/app/templates/snippets']
   };
-
-  if (process.env.DEPLOY_TARGET === undefined && emberChecker.isAbove('2.14.0')) {
-    options.vendorFiles = { 'jquery.js': null };
-  }
 
   let app = new EmberAddon(defaults, options);
 
