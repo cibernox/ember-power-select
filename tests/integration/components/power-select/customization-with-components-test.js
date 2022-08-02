@@ -16,19 +16,6 @@ module(
     test('selected option can be customized using triggerComponent', async function (assert) {
       assert.expect(3);
 
-      this.owner.register(
-        'component:selected-country',
-        class extends Component {
-          layout = hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}">
-        {{@select.selected.name}}
-      `;
-        }
-      );
-
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -56,12 +43,7 @@ module(
     test('triggerComponent receives loading message', async function (assert) {
       assert.expect(1);
       this.countries = countries;
-      this.owner.register(
-        'component:custom-trigger-component',
-        Component.extend({
-          layout: hbs`<div class="custom-trigger-component">{{@loadingMessage}}</div>`,
-        })
-      );
+
       await render(hbs`
       <PowerSelect
         @options={{this.countries}}
@@ -82,19 +64,7 @@ module(
 
     test('selected item option can be customized using `@selectedItemComponent`', async function (assert) {
       assert.expect(3);
-      this.owner.register(
-        'component:selected-country',
-        Component.extend({
-          layout: hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}"
-        >
-        {{@select.selected.name}}
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -121,25 +91,7 @@ module(
 
     test('the list of options can be customized using `@optionsComponent`', async function (assert) {
       assert.expect(2);
-      this.owner.register(
-        'component:list-of-countries',
-        Component.extend({
-          layout: hbs`
-        <p>Countries:</p>
-        <ul>
-          {{#if @extra.field}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{get option @extra.field}}</li>
-            {{/each}}
-          {{else}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{option.name}}</li>
-            {{/each}}
-          {{/if}}
-        </ul>
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -164,25 +116,7 @@ module(
 
     test('the `@optionsComponent` receives the `@extra` hash', async function (assert) {
       assert.expect(2);
-      this.owner.register(
-        'component:list-of-countries',
-        Component.extend({
-          layout: hbs`
-        <p>Countries:</p>
-        <ul>
-          {{#if @extra.field}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{get option @extra.field}}</li>
-            {{/each}}
-          {{else}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{option.name}}</li>
-            {{/each}}
-          {{/if}}
-        </ul>
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -211,15 +145,7 @@ module(
 
     test('the content before the list can be customized passing `@beforeOptionsComponent`', async function (assert) {
       assert.expect(4);
-      this.owner.register(
-        'component:custom-before-options',
-        Component.extend({
-          layout: hbs`
-        <p id="custom-before-options-p-tag">{{@placeholder}}</p>
-        {{component (ensure-safe-component @placeholderComponent) placeholder=@placeholder}}
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -254,12 +180,7 @@ module(
 
     test('the content after the list can be customized passing `@afterOptionsComponent`', async function (assert) {
       assert.expect(2);
-      this.owner.register(
-        'component:custom-after-options',
-        Component.extend({
-          layout: hbs`<p id="custom-after-options-p-tag">Customized after options!</p>`,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -287,18 +208,7 @@ module(
 
     test('the `@beforeOptionsComponent` and `@afterOptionsComponent` receive the `@extra` hash', async function (assert) {
       assert.expect(1);
-      this.owner.register(
-        'component:custom-before-options',
-        Component.extend({
-          layout: hbs`<button class="custom-before-options2-button" type="button" onclick={{@extra.passedAction}}>Do something</button>`,
-        })
-      );
-      this.owner.register(
-        'component:custom-after-options',
-        Component.extend({
-          layout: hbs`<button class="custom-after-options2-button" type="button" onclick={{@extra.passedAction}}>Do something</button>`,
-        })
-      );
+
       let counter = 0;
       this.countries = countries;
       this.country = countries[1]; // Spain
@@ -311,8 +221,8 @@ module(
         @options={{this.countries}}
         @selected={{this.country}}
         @onChange={{action (mut this.selected)}}
-        @afterOptionsComponent={{component "custom-after-options"}}
-        @beforeOptionsComponent={{component "custom-before-options"}}
+        @afterOptionsComponent={{component "custom-after-options-two"}}
+        @beforeOptionsComponent={{component "custom-before-options-two"}}
         @extra={{hash passedAction=(action this.someAction)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -330,12 +240,7 @@ module(
 
     test('the `@triggerComponent` receives the `@onFocus` action that triggers it', async function (assert) {
       assert.expect(9);
-      this.owner.register(
-        'component:custom-trigger-that-handles-focus',
-        Component.extend({
-          layout: hbs`<input type="text" id="focusable-input" onFocus={{@onFocus}}>`,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
       this.didFocusInside = function (select, event) {
@@ -400,12 +305,7 @@ module(
 
     test('the search message can be customized passing `@searchMessageComponent`', async function (assert) {
       assert.expect(1);
-      this.owner.register(
-        'component:custom-search-message',
-        Component.extend({
-          layout: hbs`<p id="custom-search-message-p-tag">Customized seach message!</p>`,
-        })
-      );
+
       this.searchFn = function () {};
       await render(hbs`
       <PowerSelect 
@@ -426,13 +326,6 @@ module(
 
     test('the no matches element can be customized passing `@noMatchesMessageComponent`', async function (assert) {
       assert.expect(2);
-
-      this.owner.register(
-        'component:custom-no-matches-message',
-        Component.extend({
-          layout: hbs`<p id="custom-no-matches-message-p-tag">{{@noMatchesMessage}}</p>`,
-        })
-      );
 
       this.options = [];
 
@@ -458,16 +351,7 @@ module(
 
     test('placeholder can be customized using `@placeholderComponent`', async function (assert) {
       assert.expect(2);
-      this.owner.register(
-        'component:custom-placeholder',
-        Component.extend({
-          layout: hbs`
-        <div class="ember-power-select-placeholder">
-          This is a very <span style="font-weight:bold">bold</span> placeholder
-        </div>
-      `,
-        })
-      );
+
       this.countries = countries;
 
       await render(hbs`
@@ -495,13 +379,6 @@ module(
       this.groupedNumbers = groupedNumbers;
       let numberOfGroups = 5; // number of groups in groupedNumber;
 
-      this.owner.register(
-        'component:custom-group-component',
-        Component.extend({
-          layout: hbs`<div class="custom-component">{{yield}}</div>`,
-        })
-      );
-
       await render(hbs`
       <PowerSelect 
         @options={{this.groupedNumbers}} 
@@ -525,24 +402,18 @@ module(
       let extra = { foo: 'bar' };
       this.extra = extra;
 
-      this.owner.register(
-        'component:custom-group-component',
-        Component.extend({
-          init() {
-            this._super(...arguments);
-            assert.ok(isPresent(this.select));
-            assert.ok(isPresent(this.group.groupName));
-            assert.ok(isPresent(this.group.options));
-            assert.strictEqual(this.extra, extra);
-          },
-        })
-      );
+      this.onInit = function () {
+        assert.ok(isPresent(this.select));
+        assert.ok(isPresent(this.group.groupName));
+        assert.ok(isPresent(this.group.options));
+        assert.strictEqual(this.extra, extra);
+      };
 
       await render(hbs`
       <PowerSelect 
         @options={{this.groupedNumbers}} 
-        @groupComponent={{component "custom-group-component"}} 
-        @extra={{this.extra}} 
+        @groupComponent={{component "custom-group-component" onInit=this.onInit}} 
+        @extra={{this.extra}}
         @onChange={{action (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -553,25 +424,7 @@ module(
 
     test('the power-select-multiple `optionsComponent` receives the `extra` hash', async function (assert) {
       assert.expect(2);
-      this.owner.register(
-        'component:list-of-countries',
-        Component.extend({
-          layout: hbs`
-        <p>Countries:</p>
-        <ul>
-          {{#if @extra.field}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{get option @extra.field}}</li>
-            {{/each}}
-          {{else}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{option.name}}</li>
-            {{/each}}
-          {{/if}}
-        </ul>
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -601,19 +454,7 @@ module(
 
     test('the power-select-multiple `@triggerComponent` receives the `@extra` hash', async function (assert) {
       assert.expect(1);
-      this.owner.register(
-        'component:selected-country',
-        Component.extend({
-          layout: hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}"
-        >
-        {{@select.selected.name}}
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -640,19 +481,7 @@ module(
 
     test('the power-select-multiple `@selectedItemComponent` receives the `extra` hash', async function (assert) {
       assert.expect(1);
-      this.owner.register(
-        'component:selected-country',
-        Component.extend({
-          layout: hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}"
-        >
-        {{@select.selected.name}}
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = [countries[1]]; // Spain
 
