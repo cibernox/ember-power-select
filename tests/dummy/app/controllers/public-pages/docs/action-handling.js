@@ -4,15 +4,37 @@ import { lte } from '@ember/object/computed';
 import { A } from '@ember/array';
 import { later } from '@ember/runloop';
 
-const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const numbers = [
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+];
 
 export default class extends Controller {
-  cities = ['Barcelona', 'London', 'New York', 'Porto', 'Coruña', 'Kracow', 'Siena', 'Portland', 'Springfield', 'Tokio']
-  destination = 'London'
-  selectedCities = A()
-  numbers = numbers
-  counter = 8
-  @lte('counter', 0) destroyed
+  cities = [
+    'Barcelona',
+    'London',
+    'New York',
+    'Porto',
+    'Coruña',
+    'Kracow',
+    'Siena',
+    'Portland',
+    'Springfield',
+    'Tokio',
+  ];
+  destination = 'London';
+  selectedCities = A();
+  numbers = numbers;
+  counter = 8;
+  @lte('counter', 0) destroyed;
 
   @action
   chooseDestination(city) {
@@ -35,7 +57,10 @@ export default class extends Controller {
     console.debug('EPS focused!');
     /* eslint-enable */
     let blurredEl = e.relatedTarget;
-    if (!blurredEl || !blurredEl.classList.contains('ember-power-select-search-input')) {
+    if (
+      !blurredEl ||
+      !blurredEl.classList.contains('ember-power-select-search-input')
+    ) {
       select.actions.open();
     }
   }

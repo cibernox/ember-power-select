@@ -7,5 +7,5 @@ export default Factory.extend({
 
   age(i) {
     return 20 + i;
-  }
+  },
 });

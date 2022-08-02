@@ -6,9 +6,9 @@ export default class Router extends EmberRouter {
   rootURL = config.rootURL;
 }
 
-Router.map(function() {
-  this.route('public-pages', { path: '' }, function() {
-    this.route('docs', function() {
+Router.map(function () {
+  this.route('public-pages', { path: '' }, function () {
+    this.route('docs', function () {
       // GETTING STARTED
       // index.hbs is "Overview"
       this.route('installation');
@@ -31,9 +31,8 @@ Router.map(function() {
       this.route('troubleshooting');
       this.route('architecture');
       this.route('api-reference');
-
     });
-    this.route('cookbook', function() {
+    this.route('cookbook', function () {
       this.route('bootstrap-theme');
       this.route('material-theme');
       this.route('css-animations');
@@ -42,8 +41,7 @@ Router.map(function() {
       this.route('create-custom-options');
     });
 
-    this.route('addons', function() {
-    });
+    this.route('addons', function () {});
     this.route('support-the-project');
   });
 

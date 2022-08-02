@@ -9,11 +9,11 @@ import {
   clickTrigger as _clickTrigger,
   nativeTouch as _nativeTouch,
   touchTrigger as _touchTrigger,
-  selectChoose as _selectChoose
+  selectChoose as _selectChoose,
 } from 'ember-power-select/test-support/helpers';
 
 function deprecateHelper(fn, name) {
-  return function(...args) {
+  return function (...args) {
     deprecate(
       `DEPRECATED \`import { ${name} } from '../../tests/helpers/ember-power-select';\` is deprecated. Please, replace it with \`import { ${name} } from 'ember-power-select/test-support/helpers';\``,
       false,
@@ -51,5 +51,5 @@ export {
   clickTrigger,
   nativeTouch,
   touchTrigger,
-  selectChoose
+  selectChoose,
 };

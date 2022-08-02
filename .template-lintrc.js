@@ -1,18 +1,14 @@
-/* eslint-env node */
 'use strict';
 
 module.exports = {
-  extends: 'octane',
+  extends: 'recommended',
   rules: {
-    'block-indentation': false,
-    'attribute-indentation': false,
-    'no-partial': false,
-    'no-inline-styles': false,
-    'no-positive-tabindex': false,
-    'no-action': false,
-    'no-unbalanced-curlies': false,
     'no-down-event-binding': false,
     'no-duplicate-landmark-elements': false,
-    'require-input-label': false
-  }
+    'no-inline-styles': false,
+    'no-partial': false,
+    'no-positive-tabindex': false,
+    'no-unbalanced-curlies': false,
+    'require-input-label': false,
+  },
 };

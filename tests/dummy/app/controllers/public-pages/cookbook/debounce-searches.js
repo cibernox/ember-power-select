@@ -12,11 +12,14 @@ export default class extends Controller {
     });
   }
 
-  @(task(function* (term) {
+  @task(function* (term) {
     yield timeout(600);
     let url = `https://api.github.com/search/repositories?q=${term}`;
-    return fetch(url).then((resp) => resp.json()).then((json) => json.items);
-  })) searchRepo
+    return fetch(url)
+      .then((resp) => resp.json())
+      .then((json) => json.items);
+  })
+  searchRepo;
 }
 
 function _performSearch(term, resolve, reject) {
@@ -24,6 +27,7 @@ function _performSearch(term, resolve, reject) {
     return resolve([]);
   }
   let url = `https://api.github.com/search/repositories?q=${term}`;
-  fetch(url).then((resp) => resp.json())
+  fetch(url)
+    .then((resp) => resp.json())
     .then((json) => resolve(json.items), reject);
 }

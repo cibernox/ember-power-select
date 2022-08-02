@@ -1,5 +1,5 @@
-import Controller from "@ember/controller";
-import { action } from "@ember/object";
+import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import RSVP from 'rsvp';
 const numbers = [
@@ -22,7 +22,7 @@ const numbers = [
   'seventeen',
   'eighteen',
   'nineteen',
-  'twenty'
+  'twenty',
 ];
 
 export default class HelpersTesting extends Controller {
@@ -33,8 +33,8 @@ export default class HelpersTesting extends Controller {
 
   @action
   searchAsync(term) {
-    return new RSVP.Promise(function(resolve) {
-      later(function() {
+    return new RSVP.Promise(function (resolve) {
+      later(function () {
         resolve(numbers.filter((n) => n.indexOf(term) > -1));
       }, 100);
     });

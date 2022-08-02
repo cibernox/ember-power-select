@@ -11,8 +11,10 @@ export default class extends JSONAPIAdapter {
         ajaxOptions.success(json, response.statusText, {
           status: response.status,
           getAllResponseHeaders() {
-            return Object.entries(response.headers.map).map(([k, v]) => `${k}:${v}`).join('\r\n');
-          }
+            return Object.entries(response.headers.map)
+              .map(([k, v]) => `${k}:${v}`)
+              .join('\r\n');
+          },
         });
         return json;
       });

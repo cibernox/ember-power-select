@@ -3,8 +3,19 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class extends Controller {
-  cities = ['Barcelona', 'London', 'New York', 'Porto', 'Coruña', 'Kracow', 'Siena', 'Portland', 'Springfield', 'Tokio']
-  @service store
+  cities = [
+    'Barcelona',
+    'London',
+    'New York',
+    'Porto',
+    'Coruña',
+    'Kracow',
+    'Siena',
+    'Portland',
+    'Springfield',
+    'Tokio',
+  ];
+  @service store;
 
   @action
   searchUsers() {
