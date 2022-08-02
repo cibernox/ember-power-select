@@ -157,7 +157,11 @@ module(
 
       this.numbers = numbers;
       this.handleChange = (selected, select) => {
-        assert.strictEqual(selected, 'one', 'The first option is the selected');
+        assert.strictEqual(
+          selected.trim(),
+          'one',
+          'The first option is the selected'
+        );
         assertPublicAPIShape(assert, select);
       };
 
@@ -176,7 +180,11 @@ module(
 
       this.numbers = numbers;
       this.handleChange = (selected, select) => {
-        assert.strictEqual(selected, 'one', 'The first option is the selected');
+        assert.strictEqual(
+          selected.trim(),
+          'one',
+          'The first option is the selected'
+        );
         assertPublicAPIShape(assert, select);
       };
 
