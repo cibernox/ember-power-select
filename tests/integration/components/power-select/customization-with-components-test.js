@@ -5,7 +5,6 @@ import { hbs } from 'ember-cli-htmlbars';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 
 module(

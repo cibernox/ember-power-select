@@ -1,8 +1,8 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 export default class CustomGroupComponent extends Component {
-  init(){
-    super.init(...arguments);
+  constructor() {
+    super(...arguments);
     this.onInit?.bind(this)();
   }
 }
