@@ -321,7 +321,7 @@ module(
       await clickTrigger();
       await click('.custom-before-options2-button');
       await click('.custom-after-options2-button');
-      assert.equal(
+      assert.strictEqual(
         counter,
         2,
         'The action inside the extra hash has been called twice'
@@ -339,42 +339,42 @@ module(
       this.countries = countries;
       this.country = countries[1]; // Spain
       this.didFocusInside = function (select, event) {
-        assert.equal(
+        assert.strictEqual(
           typeof select.isOpen,
           'boolean',
           'select.isOpen is a boolean'
         );
-        assert.equal(
+        assert.strictEqual(
           typeof select.searchText,
           'string',
           'select.searchText is a string'
         );
-        assert.equal(
+        assert.strictEqual(
           typeof select.actions.open,
           'function',
           'select.actions.open is a function'
         );
-        assert.equal(
+        assert.strictEqual(
           typeof select.actions.close,
           'function',
           'select.actions.close is a function'
         );
-        assert.equal(
+        assert.strictEqual(
           typeof select.actions.reposition,
           'function',
           'select.actions.reposition is a function'
         );
-        assert.equal(
+        assert.strictEqual(
           typeof select.actions.search,
           'function',
           'select.actions.search is a function'
         );
-        assert.equal(
+        assert.strictEqual(
           typeof select.actions.highlight,
           'function',
           'select.actions.highlight is a function'
         );
-        assert.equal(
+        assert.strictEqual(
           typeof select.actions.select,
           'function',
           'select.actions.select is a function'
@@ -533,7 +533,7 @@ module(
             assert.ok(isPresent(this.select));
             assert.ok(isPresent(this.group.groupName));
             assert.ok(isPresent(this.group.options));
-            assert.equal(this.extra, extra);
+            assert.strictEqual(this.extra, extra);
           },
         })
       );
