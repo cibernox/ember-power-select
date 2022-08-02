@@ -11,38 +11,6 @@ import { isPresent } from '@ember/utils';
 module('Integration | Component | Ember Power Select (Customization using components)', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('selected option can be customized using triggerComponent as string', async function(assert) {
-    assert.expect(3);
-
-    this.owner.register('component:selected-country', class extends Component {
-      layout = hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}"
-        >
-        {{@select.selected.name}}
-      `
-    });
-
-    this.countries = countries;
-    this.country = countries[1]; // Spain
-
-    await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @triggerComponent="selected-country"
-        @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    assert.dom('.ember-power-select-status-icon').doesNotExist('The provided trigger component is not rendered');
-    assert.dom('.ember-power-select-trigger .icon-flag').exists('The custom flag appears.');
-    assert.dom('.ember-power-select-trigger').hasText('Spain', 'With the country name as the text.');
-  });
-
   test('selected option can be customized using triggerComponent', async function(assert) {
     assert.expect(3);
 
@@ -93,36 +61,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.custom-trigger-component').hasText('hmmmm paella', 'The loading message is passed to the trigger component');
   });
 
-  test('selected item option can be customized using `@selectedItemComponent` as string', async function(assert) {
-    assert.expect(3);
-    this.owner.register('component:selected-country', Component.extend({
-      layout: hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}"
-        >
-        {{@select.selected.name}}
-      `
-    }));
-    this.countries = countries;
-    this.country = countries[1]; // Spain
-
-    await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @selectedItemComponent="selected-country" 
-        @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    assert.dom('.ember-power-select-status-icon').exists('The provided trigger component is rendered');
-    assert.dom('.ember-power-select-trigger .icon-flag').exists('The custom flag appears.');
-    assert.dom('.ember-power-select-trigger').hasText('Spain', 'With the country name as the text.');
-  });
-
   test('selected item option can be customized using `@selectedItemComponent`', async function(assert) {
     assert.expect(3);
     this.owner.register('component:selected-country', Component.extend({
@@ -151,42 +89,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-status-icon').exists('The provided trigger component is rendered');
     assert.dom('.ember-power-select-trigger .icon-flag').exists('The custom flag appears.');
     assert.dom('.ember-power-select-trigger').hasText('Spain', 'With the country name as the text.');
-  });
-
-  test('the list of options can be customized using `@optionsComponent` as string', async function(assert) {
-    assert.expect(2);
-    this.owner.register('component:list-of-countries', Component.extend({
-      layout: hbs`
-        <p>Countries:</p>
-        <ul>
-          {{#if @extra.field}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{get option @extra.field}}</li>
-            {{/each}}
-          {{else}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{option.name}}</li>
-            {{/each}}
-          {{/if}}
-        </ul>
-      `
-    }));
-    this.countries = countries;
-    this.country = countries[1]; // Spain
-
-    await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @optionsComponent="list-of-countries" 
-        @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-options').includesText('Countries:', 'The given component is rendered');
-    assert.dom('.ember-power-select-options').includesText('3. Russia', 'The component has access to the options');
   });
 
   test('the list of options can be customized using `@optionsComponent`', async function(assert) {
@@ -262,35 +164,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-options').includesText('3. RU', 'The component uses the field in the extra has to render the options');
   });
 
-  test('the content before the list can be customized passing `@beforeOptionsComponent` as string', async function(assert) {
-    assert.expect(4);
-    this.owner.register('component:custom-before-options', Component.extend({
-      layout: hbs`
-        <p id="custom-before-options-p-tag">{{@placeholder}}</p>
-        {{component (ensure-safe-component @placeholderComponent) placeholder=@placeholder}}
-      `
-    }));
-    this.countries = countries;
-    this.country = countries[1]; // Spain
-
-    await render(hbs`
-      <PowerSelect
-        @options={{this.countries}}
-        @selected={{this.country}}
-        @beforeOptionsComponent="custom-before-options"
-        @placeholder="inception"
-        @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-dropdown #custom-before-options-p-tag').exists('The custom component is rendered instead of the usual search bar');
-    assert.dom('.ember-power-select-dropdown #custom-before-options-p-tag').hasText('inception', 'The placeholder attribute is passed through.');
-    assert.dom('.ember-power-select-dropdown .ember-power-select-placeholder').exists('The placeholder component is passed through.');
-    assert.dom('.ember-power-select-search-input').doesNotExist('The search input is not visible');
-  });
-
   test('the content before the list can be customized passing `@beforeOptionsComponent`', async function(assert) {
     assert.expect(4);
     this.owner.register('component:custom-before-options', Component.extend({
@@ -319,30 +192,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('.ember-power-select-dropdown #custom-before-options-p-tag').hasText('inception', 'The placeholder attribute is passed through.');
     assert.dom('.ember-power-select-dropdown .ember-power-select-placeholder').exists('The placeholder component is passed through.');
     assert.dom('.ember-power-select-search-input').doesNotExist('The search input is not visible');
-  });
-
-  test('the content after the list can be customized passing `@afterOptionsComponent` as string', async function(assert) {
-    assert.expect(2);
-    this.owner.register('component:custom-after-options', Component.extend({
-      layout: hbs`<p id="custom-after-options-p-tag">Customized after options!</p>`
-    }));
-    this.countries = countries;
-    this.country = countries[1]; // Spain
-
-    await render(hbs`
-      <PowerSelect
-        @options={{this.countries}}
-        @selected={{this.country}}
-        @afterOptionsComponent="custom-after-options"
-        @onChange={{action (mut this.foo)}}
-        @searchEnabled={{true}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-dropdown #custom-after-options-p-tag').exists('The custom component is rendered instead of the usual search bar');
-    assert.dom('.ember-power-select-search-input').exists('The search input is still visible');
   });
 
   test('the content after the list can be customized passing `@afterOptionsComponent`', async function(assert) {
@@ -434,22 +283,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     await focus('#focusable-input');
   });
 
-  test('the search message can be customized passing `@searchMessageComponent` as string', async function(assert) {
-    assert.expect(1);
-    this.owner.register('component:custom-search-message', Component.extend({
-      layout: hbs`<p id="custom-search-message-p-tag">Customized seach message!</p>`
-    }));
-    this.searchFn = function() {};
-    await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @searchMessageComponent="custom-search-message" @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-dropdown #custom-search-message-p-tag').exists('The custom component is rendered instead of the usual message');
-  });
-
   test('the search message can be customized passing `@searchMessageComponent`', async function(assert) {
     assert.expect(1);
     this.owner.register('component:custom-search-message', Component.extend({
@@ -467,27 +300,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     await clickTrigger();
     assert.dom('.ember-power-select-dropdown #custom-search-message-p-tag').exists('The custom component is rendered instead of the usual message');
-  });
-
-  test('the no matches element can be customized passing `@noMatchesMessageComponent` as string', async function(assert) {
-    assert.expect(2);
-
-    this.owner.register('component:custom-no-matches-message', Component.extend({
-      layout: hbs`<p id="custom-no-matches-message-p-tag">{{@noMatchesMessage}}</p>`
-    }));
-
-    this.options = [];
-
-    await render(hbs`
-      <PowerSelect @options={{this.options}} @noMatchesMessageComponent="custom-no-matches-message" @noMatchesMessage="Nope" @onChange={{action (mut this.foo)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-
-    assert.dom('.ember-power-select-dropdown #custom-no-matches-message-p-tag').exists('The custom component is rendered instead of the usual message');
-    assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
   });
 
   test('the no matches element can be customized passing `@noMatchesMessageComponent`', async function(assert) {
@@ -515,31 +327,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
     assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
   });
 
-  test('placeholder can be customized using `@placeholderComponent` as string', async function(assert) {
-    assert.expect(2);
-    this.owner.register('component:custom-placeholder', Component.extend({
-      layout: hbs`
-        <div class="ember-power-select-placeholder">
-          This is a very <span style="font-weight:bold">bold</span> placeholder
-        </div>
-      `
-    }));
-    this.countries = countries;
-
-    await render(hbs`
-      <PowerSelect
-        @options={{this.countries}}
-        @placeholder="test"
-        @placeholderComponent="custom-placeholder"
-        @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    assert.dom('.ember-power-select-placeholder').exists('The placeholder appears.');
-    assert.dom('.ember-power-select-placeholder').hasText('This is a very bold placeholder', 'The placeholder content is equal.');
-  });
-
   test('placeholder can be customized using `@placeholderComponent`', async function(assert) {
     assert.expect(2);
     this.owner.register('component:custom-placeholder', Component.extend({
@@ -563,24 +350,6 @@ module('Integration | Component | Ember Power Select (Customization using compon
 
     assert.dom('.ember-power-select-placeholder').exists('The placeholder appears.');
     assert.dom('.ember-power-select-placeholder').hasText('This is a very bold placeholder', 'The placeholder content is equal.');
-  });
-
-  test('`@groupComponent` can be overridden as string', async function(assert) {
-    this.groupedNumbers = groupedNumbers;
-    let numberOfGroups = 5; // number of groups in groupedNumber;
-
-    this.owner.register('component:custom-group-component', Component.extend({
-      layout: hbs`<div class="custom-component">{{yield}}</div>`
-    }));
-
-    await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @groupComponent="custom-group-component" @onChange={{action (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    `);
-
-    await clickTrigger();
-    assert.dom('.ember-power-select-options .custom-component').exists({ count: numberOfGroups });
   });
 
   test('`@groupComponent` can be overridden', async function(assert) {
