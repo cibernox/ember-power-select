@@ -25,6 +25,7 @@ import {
   DropdownActions,
 } from 'ember-basic-dropdown/addon/components/basic-dropdown';
 import { ensureSafeComponent } from '@embroider/util';
+import BeforeOptions from './power-select/before-options';
 
 interface SelectActions extends DropdownActions {
   search: (term: string) => void;
@@ -170,6 +171,18 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   }
 
   // Getters
+
+  get beforeOptionsComponent() {
+    if (this.args.beforeOptionsComponent === null) {
+      return null;
+    }
+
+    return ensureSafeComponent(
+      this.args.beforeOptionsComponent || BeforeOptions,
+      this
+    );
+  }
+
   get highlightOnHover(): boolean {
     return this.args.highlightOnHover === undefined
       ? true
@@ -574,18 +587,6 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       this._searchResult = searchResult;
       scheduleOnce('actions', this, this._resetHighlighted);
     }
-  }
-
-  @action
-  beforeOptionsComponent() {
-    if (this.args.beforeOptionsComponent === null) {
-      return null;
-    }
-
-    return ensureSafeComponent(
-      this.args.beforeOptionsComponent || 'power-select/before-options',
-      this
-    );
   }
 
   _defaultBuildSelection(option: any): any {
