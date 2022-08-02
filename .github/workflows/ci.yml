@@ -66,6 +66,7 @@ jobs:
           - ember-beta
           - ember-canary
           - embroider-safe
+          - embroider-optimized
 
     steps:
       - uses: actions/checkout@v3
