@@ -33,7 +33,6 @@
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each",
-    "nodetest": "$(npm bin)/mocha node-tests --recursive",
     "prepublishOnly": "ember ts:precompile",
     "postpublish": "ember ts:clean"
   },
@@ -51,7 +50,7 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "ember-assign-helper": "^0.4.0",
-    "ember-basic-dropdown": "^3.1.0 || ^4.0.2",
+    "ember-basic-dropdown": "^3.1.0 || ^4.0.2 || ^5.0.0 || ^6.0.0",
     "ember-cli-babel": "^7.26.0",
     "ember-cli-htmlbars": "^6.0.0",
     "ember-cli-typescript": "^4.2.0",

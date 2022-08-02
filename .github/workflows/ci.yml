@@ -49,9 +49,6 @@ jobs:
       - name: Ember Test with ${{ matrix.node }}
         run: npm run test:ember
 
-      - name: Node Tests with Node ${{ matrix.node }}
-        run: npm run nodetest
-
   floating-dependencies:
     name: Floating Dependencies
     timeout-minutes: 10
@@ -74,9 +71,6 @@ jobs:
 
       - name: Ember Tests
         run: npm run test:ember
-
-      - name: Node Tests
-        run: npm run nodetest
 
   try-scenarios:
     name: "Compatibility"
