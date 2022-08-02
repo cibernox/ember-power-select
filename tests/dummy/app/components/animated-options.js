@@ -4,10 +4,12 @@ import { computed } from '@ember/object';
 export default class extends OptionsComponent {
   @computed
   get animationRules() {
-    return function() {
+    return function () {
       this.transition(
-        this.toValue(function(newOptions, oldOptions) {
-          return oldOptions === safeGet(newOptions, 0, 'parentLevel', 'options');
+        this.toValue(function (newOptions, oldOptions) {
+          return (
+            oldOptions === safeGet(newOptions, 0, 'parentLevel', 'options')
+          );
         }),
         this.use('toLeft'),
         this.reverse('toRight')

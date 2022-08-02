@@ -1,16 +1,27 @@
-import Controller from "@ember/controller";
+import Controller from '@ember/controller';
 
 const countries = [
-  { name: 'United States',  flagUrl: '/flags/us.svg' },
-  { name: 'Spain',          flagUrl: '/flags/es.svg' },
-  { name: 'Portugal',       flagUrl: '/flags/pt.svg' },
-  { name: 'Russia',         flagUrl: '/flags/ru.svg' },
-  { name: 'Latvia',         flagUrl: '/flags/lv.svg' },
-  { name: 'Brazil',         flagUrl: '/flags/br.svg' },
-  { name: 'United Kingdom', flagUrl: '/flags/gb.svg' }
+  { name: 'United States', flagUrl: '/flags/us.svg' },
+  { name: 'Spain', flagUrl: '/flags/es.svg' },
+  { name: 'Portugal', flagUrl: '/flags/pt.svg' },
+  { name: 'Russia', flagUrl: '/flags/ru.svg' },
+  { name: 'Latvia', flagUrl: '/flags/lv.svg' },
+  { name: 'Brazil', flagUrl: '/flags/br.svg' },
+  { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
 ];
 
-const cities = ['Barcelona', 'London', 'New York', 'Porto', 'Coruña', 'Kracow', 'Siena', 'Portland', 'Springfield', 'Tokio'];
+const cities = [
+  'Barcelona',
+  'London',
+  'New York',
+  'Porto',
+  'Coruña',
+  'Kracow',
+  'Siena',
+  'Portland',
+  'Springfield',
+  'Tokio',
+];
 
 const groupedNumbers = [
   { groupName: 'Smalls', options: ['one', 'two', 'three'] },
@@ -20,11 +31,11 @@ const groupedNumbers = [
     options: [
       { groupName: 'Fairly big', options: ['seven', 'eight', 'nine'] },
       { groupName: 'Really big', options: ['ten', 'eleven', 'twelve'] },
-      'thirteen'
-    ]
+      'thirteen',
+    ],
   },
   'one hundred',
-  'one thousand'
+  'one thousand',
 ];
 
 export default class MaterialTheme extends Controller {

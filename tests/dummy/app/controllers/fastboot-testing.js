@@ -20,11 +20,11 @@ const numbers = [
   'seventeen',
   'eighteen',
   'nineteen',
-  'twenty'
+  'twenty',
 ];
 
 export default class extends Controller {
-  numbers = numbers
-  singleSelected = 'four'
-  multipleSelected = ['two', 'six']
+  numbers = numbers;
+  singleSelected = 'four';
+  multipleSelected = ['two', 'six'];
 }

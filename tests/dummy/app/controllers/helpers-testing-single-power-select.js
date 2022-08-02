@@ -20,11 +20,11 @@ const numbers = [
   'seventeen',
   'eighteen',
   'nineteen',
-  'twenty'
+  'twenty',
 ];
 
 export default class extends Controller {
-  numbers = numbers
-  selectedList = []
-  optionz = []
+  numbers = numbers;
+  selectedList = [];
+  optionz = [];
 }

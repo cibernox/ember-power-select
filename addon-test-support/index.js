@@ -2,16 +2,25 @@ import { click, fillIn, settled } from '@ember/test-helpers';
 import { warn } from '@ember/debug';
 
 async function openIfClosedAndGetContentId(trigger) {
-  let contentId = `ember-basic-dropdown-content-${trigger.getAttribute('data-ebd-id').replace('-trigger', '')}`
+  let contentId = `ember-basic-dropdown-content-${trigger
+    .getAttribute('data-ebd-id')
+    .replace('-trigger', '')}`;
   let content = contentId ? document.querySelector(`#${contentId}`) : undefined;
   // If the dropdown is closed, open it
-  if (!content || content.classList.contains('ember-basic-dropdown-content-placeholder')) {
+  if (
+    !content ||
+    content.classList.contains('ember-basic-dropdown-content-placeholder')
+  ) {
     await click(trigger);
   }
   return contentId;
 }
 
-export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex) {
+export async function selectChoose(
+  cssPathOrTrigger,
+  valueOrSelector,
+  optionIndex
+) {
   let trigger, target;
   if (cssPathOrTrigger instanceof HTMLElement) {
     if (cssPathOrTrigger.classList.contains('ember-power-select-trigger')) {
@@ -20,14 +29,18 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
       trigger = cssPathOrTrigger.querySelector('.ember-power-select-trigger');
     }
   } else {
-    trigger = document.querySelector(`${cssPathOrTrigger} .ember-power-select-trigger`);
+    trigger = document.querySelector(
+      `${cssPathOrTrigger} .ember-power-select-trigger`
+    );
 
     if (!trigger) {
       trigger = document.querySelector(cssPathOrTrigger);
     }
 
     if (!trigger) {
-      throw new Error(`You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but no select was found using selector "${cssPathOrTrigger}"`);
+      throw new Error(
+        `You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but no select was found using selector "${cssPathOrTrigger}"`
+      );
     }
   }
 
@@ -37,13 +50,21 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
 
   let contentId = await openIfClosedAndGetContentId(trigger);
   // Select the option with the given text
-  let options = document.querySelectorAll(`#${contentId} .ember-power-select-option`);
-  let potentialTargets = [].slice.apply(options).filter((opt) => opt.textContent.indexOf(valueOrSelector) > -1);
+  let options = document.querySelectorAll(
+    `#${contentId} .ember-power-select-option`
+  );
+  let potentialTargets = [].slice
+    .apply(options)
+    .filter((opt) => opt.textContent.indexOf(valueOrSelector) > -1);
   if (potentialTargets.length === 0) {
-    potentialTargets = document.querySelectorAll(`#${contentId} ${valueOrSelector}`);
+    potentialTargets = document.querySelectorAll(
+      `#${contentId} ${valueOrSelector}`
+    );
   }
   if (potentialTargets.length > 1) {
-    let filteredTargets = [].slice.apply(potentialTargets).filter((t) => t.textContent.trim() === valueOrSelector);
+    let filteredTargets = [].slice
+      .apply(potentialTargets)
+      .filter((t) => t.textContent.trim() === valueOrSelector);
     if (optionIndex === undefined) {
       target = filteredTargets[0] || potentialTargets[0];
     } else {
@@ -53,7 +74,9 @@ export async function selectChoose(cssPathOrTrigger, valueOrSelector, optionInde
     target = potentialTargets[0];
   }
   if (!target) {
-    throw new Error(`You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`);
+    throw new Error(
+      `You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`
+    );
   }
   await click(target);
   return settled();
@@ -72,7 +95,9 @@ export async function selectSearch(cssPathOrTrigger, value) {
     }
 
     if (!trigger) {
-      throw new Error(`You called "selectSearch('${cssPathOrTrigger}', '${value}')" but no select was found using selector "${cssPathOrTrigger}"`);
+      throw new Error(
+        `You called "selectSearch('${cssPathOrTrigger}', '${value}')" but no select was found using selector "${cssPathOrTrigger}"`
+      );
     }
   }
 
@@ -80,21 +105,34 @@ export async function selectSearch(cssPathOrTrigger, value) {
     trigger.scrollIntoView();
   }
 
-  let isMultipleSelect = !!trigger.querySelector('.ember-power-select-trigger-multiple-input');
+  let isMultipleSelect = !!trigger.querySelector(
+    '.ember-power-select-trigger-multiple-input'
+  );
 
   let contentId = await openIfClosedAndGetContentId(trigger);
-  let isDefaultSingleSelect = !!document.querySelector('.ember-power-select-search-input');
+  let isDefaultSingleSelect = !!document.querySelector(
+    '.ember-power-select-search-input'
+  );
 
   if (isMultipleSelect) {
-    await fillIn(trigger.querySelector('.ember-power-select-trigger-multiple-input'), value);
+    await fillIn(
+      trigger.querySelector('.ember-power-select-trigger-multiple-input'),
+      value
+    );
   } else if (isDefaultSingleSelect) {
     await fillIn('.ember-power-select-search-input', value);
-  } else { // It's probably a customized version
-    let inputIsInTrigger = !!trigger.querySelector('.ember-power-select-trigger input[type=search]');
+  } else {
+    // It's probably a customized version
+    let inputIsInTrigger = !!trigger.querySelector(
+      '.ember-power-select-trigger input[type=search]'
+    );
     if (inputIsInTrigger) {
       await fillIn(trigger.querySelector('input[type=search]'), value);
     } else {
-      await fillIn(`#${contentId} .ember-power-select-search-input[type=search]`, 'input');
+      await fillIn(
+        `#${contentId} .ember-power-select-search-input[type=search]`,
+        'input'
+      );
     }
   }
   return settled();
@@ -102,15 +140,19 @@ export async function selectSearch(cssPathOrTrigger, value) {
 
 export async function removeMultipleOption(cssPath, value) {
   let elem;
-  let items = document.querySelectorAll(`${cssPath} .ember-power-select-multiple-options > li`);
-  let item = [].slice.apply(items).find((el) => el.textContent.indexOf(value) > -1);
+  let items = document.querySelectorAll(
+    `${cssPath} .ember-power-select-multiple-options > li`
+  );
+  let item = [].slice
+    .apply(items)
+    .find((el) => el.textContent.indexOf(value) > -1);
   if (item) {
     elem = item.querySelector('.ember-power-select-multiple-remove-btn');
   }
   try {
     await click(elem);
     return settled();
-  } catch(e) {
+  } catch (e) {
     warn(
       `You called "removeMultipleOption('${cssPath}', '${value}')" but no remove button was found using selector "${cssPath}" for value "${value}"`,
       true,
@@ -125,7 +167,7 @@ export async function clearSelected(cssPath) {
   try {
     await click(elem);
     return settled();
-  } catch(e) {
+  } catch (e) {
     warn(
       `You called "clearSelected('${cssPath}')" but no clear button was found using selector "${cssPath}"`,
       true,
@@ -149,14 +191,18 @@ export async function getDropdownItems(cssPathOrTrigger) {
       trigger = cssPathOrTrigger.querySelector('.ember-power-select-trigger');
     }
   } else {
-    trigger = document.querySelector(`${cssPathOrTrigger} .ember-power-select-trigger`);
+    trigger = document.querySelector(
+      `${cssPathOrTrigger} .ember-power-select-trigger`
+    );
 
     if (!trigger) {
       trigger = document.querySelector(cssPathOrTrigger);
     }
 
     if (!trigger) {
-      throw new Error(`You called "getDropdownItems('${cssPathOrTrigger}'" but no select was found using selector "${cssPathOrTrigger}"`);
+      throw new Error(
+        `You called "getDropdownItems('${cssPathOrTrigger}'" but no select was found using selector "${cssPathOrTrigger}"`
+      );
     }
   }
 
@@ -166,10 +212,14 @@ export async function getDropdownItems(cssPathOrTrigger) {
 
   let contentId = await openIfClosedAndGetContentId(trigger);
   // Select the option with the given selector
-  let rawOptions = document.querySelectorAll(`#${contentId} .ember-power-select-option`);
+  let rawOptions = document.querySelectorAll(
+    `#${contentId} .ember-power-select-option`
+  );
   let extractedOptions = [];
   if (rawOptions.length > 0) {
-    [].slice.apply(rawOptions).map((opt) => extractedOptions.push(opt.textContent.trim()));
+    [].slice
+      .apply(rawOptions)
+      .map((opt) => extractedOptions.push(opt.textContent.trim()));
   }
   return extractedOptions;
 }

@@ -6,13 +6,22 @@ const groupedSections = [
   {
     groupName: 'Basic recipes',
     options: [
-      { route: 'public-pages.cookbook.index',                 text: 'System-wide config' },
-      { route: 'public-pages.cookbook.bootstrap-theme',       text: 'Bootstrap theme' },
-      { route: 'public-pages.cookbook.material-theme',        text: 'Material theme' },
-      { route: 'public-pages.cookbook.css-animations',        text: 'CSS animations' },
-      { route: 'public-pages.cookbook.debounce-searches',     text: 'Debounce searches' },
-      { route: 'public-pages.cookbook.create-custom-options', text: 'Create custom options' }
-    ]
+      { route: 'public-pages.cookbook.index', text: 'System-wide config' },
+      {
+        route: 'public-pages.cookbook.bootstrap-theme',
+        text: 'Bootstrap theme',
+      },
+      { route: 'public-pages.cookbook.material-theme', text: 'Material theme' },
+      { route: 'public-pages.cookbook.css-animations', text: 'CSS animations' },
+      {
+        route: 'public-pages.cookbook.debounce-searches',
+        text: 'Debounce searches',
+      },
+      {
+        route: 'public-pages.cookbook.create-custom-options',
+        text: 'Create custom options',
+      },
+    ],
   },
   // {
   //   groupName: 'Advanced recipes',
@@ -23,8 +32,8 @@ const groupedSections = [
 ];
 
 export default class extends Controller {
-  @service router
-  groupedSections = groupedSections
+  @service router;
+  groupedSections = groupedSections;
 
   @computed('router.currentRouteName')
   get currentSection() {

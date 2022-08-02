@@ -3,12 +3,16 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { numbers } from './components/constants';
-import { clickTrigger, typeInSearch, findContains } from 'ember-power-select/test-support/helpers';
+import {
+  clickTrigger,
+  typeInSearch,
+  findContains,
+} from 'ember-power-select/test-support/helpers';
 
-module('Integration | Helpers', function(hooks) {
+module('Integration | Helpers', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('typeInSearch inputs the provided search string', async function(assert) {
+  test('typeInSearch inputs the provided search string', async function (assert) {
     this.numbers = numbers;
 
     await render(hbs`
@@ -23,7 +27,7 @@ module('Integration | Helpers', function(hooks) {
     assert.ok(findContains('.ember-power-select-option', 'one'));
   });
 
-  test('typeInSearch scopes the input to the provided one if the passed arguments are two', async function(assert) {
+  test('typeInSearch scopes the input to the provided one if the passed arguments are two', async function (assert) {
     this.numbers = numbers;
 
     await render(hbs`
