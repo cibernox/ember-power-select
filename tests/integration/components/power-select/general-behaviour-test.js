@@ -393,7 +393,7 @@ module(
         return new RSVP.Promise(function (resolve) {
           resolve(data);
           later(function () {
-            data.push('one');
+            data.pushObject('one'); // eslint-disable-line ember/no-array-prototype-extensions
           }, 100);
         });
       };
@@ -432,7 +432,7 @@ module(
         return new RSVP.Promise(function (resolve) {
           resolve(data);
           later(function () {
-            data.push('owner');
+            data.pushObject('owner'); // eslint-disable-line ember/no-array-prototype-extensions
           }, 100);
         });
       };
