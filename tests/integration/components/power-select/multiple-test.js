@@ -994,7 +994,7 @@ module(
       </PowerSelectMultiple>
     `);
       await clickTrigger();
-      run(() => this.selected.pushObject(numbers[3]));
+      run(() => this.selected.push(numbers[3]));
       await click('.ember-power-select-option');
       assert
         .dom('.ember-power-select-multiple-option')

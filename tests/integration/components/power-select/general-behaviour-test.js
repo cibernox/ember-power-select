@@ -393,7 +393,7 @@ module(
         return new RSVP.Promise(function (resolve) {
           resolve(data);
           later(function () {
-            data.pushObject('one');
+            data.push('one');
           }, 100);
         });
       };
@@ -432,7 +432,7 @@ module(
         return new RSVP.Promise(function (resolve) {
           resolve(data);
           later(function () {
-            data.pushObject('owner');
+            data.push('owner');
           }, 100);
         });
       };

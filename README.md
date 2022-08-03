@@ -1,32 +1,36 @@
+# ember-power-select
+
 [![CI](https://github.com/cibernox/ember-power-select/actions/workflows/ci.yml/badge.svg)](https://github.com/cibernox/ember-power-select/actions/workflows/ci.yml)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-power-select.svg)](http://emberobserver.com/addons/ember-power-select)
 [![Code Climate](https://codeclimate.com/github/cibernox/ember-power-select/badges/gpa.svg)](https://codeclimate.com/github/cibernox/ember-power-select)
 [![npm version](https://badge.fury.io/js/ember-power-select.svg)](https://badge.fury.io/js/ember-power-select)
 [![dependencies](https://david-dm.org/cibernox/ember-power-select.svg)](https://david-dm.org/cibernox/ember-power-select)
 
-# Ember-Power-Select
-
 Ember Power Select is a select component written in Ember with a focus in flexibility and extensibility.
 
 It is designed to work well with the way we build Ember apps, so it plays nicely with promises, ember-concurrency's tasks,
 ember-data collections and follows idiomatic patterns.
 
-## Installation
+## Compatibility
+
+* Ember.js v3.24 or above
+* Ember CLI v3.24 or above
+* Node.js v14 or above
 
 Ember Power Select 1.X works in Ember **2.3.1+**, beta and canary with no deprecations
 whatsoever. Any deprecation will be considered a bug.
+Ember Power Select 2.X requires Ember **2.10.0+**.
+Ember Power Select 3.X requires Ember **3.11.0+**.
+Ember Power Select 4.X requires Ember **3.13.0+**.
 
-As any other ember-cli addon, run:
+## Installation
 
 ```
 ember install ember-power-select
 ```
 
-Ember Power Select 2.X requires Ember **2.10.0+**.
-Ember Power Select 3.X requires Ember **3.11.0+**.
-Ember Power Select 4.X requires Ember **3.13.0+**.
-
 ## Features overview
+
 
 Ember Power Select wants to be as agnostic as possible about how you're going to use it, but it still provides
 some default implementations that will match 95% of your needs, and exposes actions to customize the other
@@ -49,7 +53,6 @@ Features include:
 * Disable the component or individual options
 * CSS animations and transitions
 * ... and anything else you want. Just replace parts of the selects with your own components.
-
 
 ## Usage
 
