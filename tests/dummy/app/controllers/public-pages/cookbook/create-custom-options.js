@@ -16,7 +16,7 @@ export default class extends Controller {
       !isBlank(select.searchText)
     ) {
       if (!this.selected.includes(select.searchText)) {
-        this.options.pushObject(select.searchText);
+        this.options.push(select.searchText);
         select.actions.choose(select.searchText);
       }
     }
