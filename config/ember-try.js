@@ -86,7 +86,11 @@ module.exports = async function () {
         },
       },
       embroiderSafe(),
-      embroiderOptimized(),
+      embroiderOptimized({
+        npm: {
+          devDependencies: { 'ember-data': '^4.6.0' },
+        },
+      }),
     ],
   };
 };
