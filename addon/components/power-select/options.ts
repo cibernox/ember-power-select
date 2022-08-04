@@ -126,13 +126,14 @@ export default class Options extends Component<Args> {
       return false;
     }
 
-    if (!endEvent.changedTouches?.[0] || moveEvent.changedTouches[0].touchType !== 'stylus') {
+    let changedTouch = moveEvent.changedTouches[0];
+    if (!endEvent.changedTouches?.[0] || (changedTouch as any).touchType !== 'stylus') {
       return true;
     }
 
     // Distinguish stylus scroll and tap: if touch "distance" < 5px, we consider it a tap
-    let horizontalDistance = Math.abs(moveEvent.changedTouches[0].pageX - endEvent.changedTouches[0].pageX);
-    let verticalDistance = Math.abs(moveEvent.changedTouches[0].pageY - endEvent.changedTouches[0].pageY);
+    let horizontalDistance = Math.abs(changedTouch.pageX - endEvent.changedTouches[0].pageX);
+    let verticalDistance = Math.abs(changedTouch.pageY - endEvent.changedTouches[0].pageY);
     return horizontalDistance >= 5 || verticalDistance >= 5;
   }
 }
