@@ -1,4 +1,3 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import { JSONAPISerializer } from 'miragejs';
 
-export default class extends JSONAPISerializer {
-}
+export default class extends JSONAPISerializer {}

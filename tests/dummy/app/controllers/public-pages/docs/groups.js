@@ -1,4 +1,4 @@
-import Controller from "@ember/controller";
+import Controller from '@ember/controller';
 
 export default class Groups extends Controller {
   groupedNumbers = [
@@ -9,10 +9,10 @@ export default class Groups extends Controller {
       options: [
         { groupName: 'Fairly big', options: ['seven', 'eight', 'nine'] },
         { groupName: 'Really big', options: ['ten', 'eleven', 'twelve'] },
-        'thirteen'
-      ]
+        'thirteen',
+      ],
     },
     'one hundred',
-    'one thousand'
+    'one thousand',
   ];
 }

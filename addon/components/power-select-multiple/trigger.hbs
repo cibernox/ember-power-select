@@ -1,5 +1,7 @@
+{{! template-lint-disable "no-invalid-interactive" }}
 <ul
   id="ember-power-select-multiple-options-{{@select.uniqueId}}"
+  aria-activedescendant={{if (and @select.isOpen (not @searchEnabled)) @ariaActiveDescendant}}
   class="ember-power-select-multiple-options"
   {{did-update this.openChanged @select.isOpen}}
   {{on "touchstart" this.chooseOption}}
@@ -8,7 +10,8 @@
   {{#each @select.selected as |opt idx|}}
     <li class="ember-power-select-multiple-option {{if opt.disabled "ember-power-select-multiple-option--disabled"}}">
       {{#unless @select.disabled}}
-        <span role="button"
+        <span
+          role="button"
           aria-label="remove element"
           class="ember-power-select-multiple-remove-btn"
           data-selected-index={{idx}}>
@@ -16,7 +19,7 @@
         </span>
       {{/unless}}
       {{#if @selectedItemComponent}}
-        {{component @selectedItemComponent extra=@extra option=opt select=@select}}
+        {{component (ensure-safe-component @selectedItemComponent) extra=@extra option=opt select=@select}}
       {{else}}
         {{yield opt @select}}
       {{/if}}
@@ -29,7 +32,11 @@
   {{#if @searchEnabled}}
     <input
       type="search"
+      role="combobox"
       class="ember-power-select-trigger-multiple-input"
+      aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
+      aria-haspopup="listbox"
+      aria-expanded={{if @select.isOpen "true" "false"}}
       autocomplete="off"
       autocorrect="off"
       autocapitalize="off"
@@ -41,6 +48,7 @@
       placeholder={{this.maybePlaceholder}}
       disabled={{@select.disabled}}
       tabindex={{@tabindex}}
+      form="power-select-fake-form"
       {{on "focus" @onFocus}}
       {{on "blur" @onBlur}}
       {{on "input" this.handleInput}}

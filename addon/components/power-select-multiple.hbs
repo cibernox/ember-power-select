@@ -1,12 +1,13 @@
 <PowerSelect
+  @animationEnabled={{@animationEnabled}}
   @triggerRole={{@triggerRole}}
   @ariaDescribedBy={{@ariaDescribedBy}}
   @ariaInvalid={{@ariaInvalid}}
   @ariaLabel={{@ariaLabel}}
   @ariaLabelledBy={{@ariaLabelledBy}}
-  @afterOptionsComponent={{@afterOptionsComponent}}
+  @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
   @allowClear={{@allowClear}}
-  @beforeOptionsComponent={{or @beforeOptionsComponent null}}
+  @beforeOptionsComponent={{if @beforeOptionsComponent (ensure-safe-component @beforeOptionsComponent) null}}
   @buildSelection={{or @buildSelection this.defaultBuildSelection}}
   @calculatePosition={{@calculatePosition}}
   @closeOnSelect={{@closeOnSelect}}
@@ -15,14 +16,14 @@
   @disabled={{@disabled}}
   @dropdownClass={{@dropdownClass}}
   @extra={{@extra}}
-  @groupComponent={{@groupComponent}}
+  @groupComponent={{ensure-safe-component @groupComponent}}
   @horizontalPosition={{@horizontalPosition}}
   @initiallyOpened={{@initiallyOpened}}
   @loadingMessage={{@loadingMessage}}
   @matcher={{@matcher}}
   @matchTriggerWidth={{@matchTriggerWidth}}
   @noMatchesMessage={{@noMatchesMessage}}
-  @noMatchesMessageComponent={{@noMatchesMessageComponent}}
+  @noMatchesMessageComponent={{ensure-safe-component @noMatchesMessageComponent}}
   @onBlur={{@onBlur}}
   @onChange={{@onChange}}
   @onClose={{@onClose}}
@@ -31,9 +32,9 @@
   @onKeydown={{this.handleKeydown}}
   @onOpen={{this.handleOpen}}
   @options={{@options}}
-  @optionsComponent={{@optionsComponent}}
+  @optionsComponent={{ensure-safe-component @optionsComponent}}
   @placeholder={{@placeholder}}
-  @placeholderComponent={{@placeholderComponent}}
+  @placeholderComponent={{ensure-safe-component @placeholderComponent}}
   @preventScroll={{@preventScroll}}
   @registerAPI={{@registerAPI}}
   @renderInPlace={{@renderInPlace}}
@@ -45,14 +46,21 @@
   @searchMessage={{@searchMessage}}
   @searchPlaceholder={{@searchPlaceholder}}
   @selected={{@selected}}
-  @selectedItemComponent={{@selectedItemComponent}}
+  @selectedItemComponent={{ensure-safe-component @selectedItemComponent}}
   @eventType={{@eventType}}
   @title={{@title}}
   @triggerClass="ember-power-select-multiple-trigger {{@triggerClass}}"
-  @triggerComponent={{component (or @triggerComponent "power-select-multiple/trigger") tabindex=@tabindex}}
+  @triggerComponent={{
+    if
+    @triggerComponent
+    (component (ensure-safe-component @triggerComponent) tabindex=@tabindex)
+    (component "power-select-multiple/trigger" tabindex=@tabindex)
+  }}
   @triggerId={{@triggerId}}
   @verticalPosition={{@verticalPosition}}
   @tabindex={{this.computedTabIndex}}
+  @ebdTriggerComponent={{ensure-safe-component @ebdTriggerComponent}}
+  @ebdContentComponent={{ensure-safe-component @ebdContentComponent}}
   ...attributes as |option select|>
   {{yield option select}}
 </PowerSelect>

@@ -16,7 +16,6 @@ module.exports = {
     let type;
     let importStatement = '\n@import "ember-power-select";\n';
 
-
     if ('ember-cli-sass' in dependencies) {
       type = 'scss';
     } else if ('ember-cli-less' in dependencies) {
@@ -38,6 +37,5 @@ module.exports = {
         this.ui.writeLine(`Created ${file}`);
       }
     }
-
-  }
+  },
 };

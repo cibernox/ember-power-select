@@ -1,20 +1,25 @@
-# Contributing
+# How To Contribute
 
-If you would like to contribute, you can fork the project, edit, and make a
-pull request.
+## Installation
 
-## Tests
+* `git clone <repository-url>`
+* `cd ember-power-select`
+* `npm install`
 
-Please make sure that the test pass by running `ember test`. If you had a new
-functionality, add tests for it.
+## Linting
 
-## Update the website & documentation
+* `npm run lint`
+* `npm run lint:fix`
 
-The documentation website lives under `tests/dummy`. It is a simple
-ember app. You can run the website locally:
+## Running tests
 
-```
-npm install
-ember serve
-# visit localhost:4200
-```
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `ember try:each` – Runs the test suite against multiple Ember versions
+
+## Running the dummy application
+
+* `ember serve`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+
+For more information on using ember-cli, visit [https://cli.emberjs.com/release/](https://cli.emberjs.com/release/).

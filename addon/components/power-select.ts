@@ -15,6 +15,7 @@ import {
   advanceSelectableOption,
   defaultMatcher,
   defaultTypeAheadMatcher,
+  pathForOption,
   MatcherFn
 } from '../utils/group-utils';
 import { restartableTask } from 'ember-concurrency-decorators';
@@ -58,7 +59,9 @@ export interface PowerSelectArgs {
   highlightOnHover?: boolean
   placeholderComponent?: string
   searchMessage?: string
+  searchMessageComponent?: string;
   noMatchesMessage?: string
+  noMatchesMessageComponent?: string;
   matchTriggerWidth?: boolean
   options: any[] | PromiseProxy<any[]>
   selected: any | PromiseProxy<any>
@@ -68,6 +71,9 @@ export interface PowerSelectArgs {
   searchEnabled?: boolean
   tabindex?: number | string
   triggerComponent?: string
+  beforeOptionsComponent?: string
+  optionsComponent?: string;
+  groupComponent?: string;
   matcher?: MatcherFn
   initiallyOpened?: boolean
   typeAheadOptionMatcher?: MatcherFn
@@ -135,7 +141,9 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
 
   willDestroy() {
     if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
-      removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      try {
+        removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      } catch {}
       this._lastSelectedPromise = undefined;
     }
     super.willDestroy.apply(this, arguments);
@@ -145,8 +153,11 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
   get highlightOnHover(): boolean {
     return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
   }
-  get placeholderComponent(): string {
-    return this.args.placeholderComponent || 'power-select/placeholder';
+
+  get highlightedIndex(): string {
+    let results = this.results;
+    let highlighted = this.highlighted;
+    return pathForOption(results, highlighted);
   }
 
   get searchMessage(): string {
@@ -365,7 +376,10 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       });
     } else {
       this._resolvedSelected = undefined;
-      this._highlight(this.args.selected)
+      // Don't highlight args.selected array on multi-select
+      if (!Array.isArray(this.args.selected)) {
+        this._highlight(this.args.selected);
+      }
     }
   }
 
@@ -408,7 +422,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (this.args.scrollTo) {
       return this.args.scrollTo(option, select);
     }
-    let optionsList = document.querySelector(`[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`) as HTMLElement;
+    let optionsList = document.getElementById(`ember-power-select-options-${select.uniqueId}`) as HTMLElement;
     if (!optionsList) {
       return;
     }
@@ -416,7 +430,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     if (index === -1) {
       return;
     }
-    let optionElement = (optionsList.querySelectorAll('[data-option-index]') as NodeListOf<HTMLElement>).item(index);
+    let optionElement = optionsList.querySelector(`[data-option-index='${index}']`) as HTMLElement;
     if (!optionElement) {
       return;
     }
@@ -463,7 +477,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
           this._searchResult = results;
           this.loading = false;
           this.lastSearchedText = term;
-          this._resetHighlighted();
+          scheduleOnce('actions', this, this._resetHighlighted);
         }
       }).catch(() => {
         if (this._lastSearchPromise === searchResult) {
@@ -474,7 +488,7 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
     } else {
       this.lastSearchedText = term;
       this._searchResult = searchResult;
-      this._resetHighlighted();
+      scheduleOnce('actions', this, this._resetHighlighted);
     }
   }
 

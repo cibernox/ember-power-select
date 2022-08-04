@@ -1,5 +1,35 @@
 # Master
 
+# 5.0.4
+- Improve compatibility with embroider
+# 5.0.2
+- Make the component compatible with Embroider builds.
+- Revert #1470. It turned out to be a breaking change.
+# 5.0.1
+- (#1470) [ENHANCEMENT] For multiselects, ensure that, if an option is disabled, AND that option is selected, then we can't "remove" that option from the selection
+- Allow the addon to work with ember-basic-dropdown 3 and 4.
+
+# 5.0.0
+- (#1481) [MAYBE BREAKING] Big overhaul of the a11y of the component. Now it uses `aria-activedescendant` to properly announce highlighted options.
+- (#1483) [BREAKING] Now options always have `role=option`. Before the selected option had `role=alert` instead but with the recent
+  a11y enhancements this is more correct.
+# 4.1.7
+- Forward in `@animationEnabled` from PowerSelectMultiple to inner select #1475
+- Remove debugger statements introduced by mistake
+# 4.1.5
+- [ENHACEMENT] Update ember-basic-dropdown to 3.0.17 which includes updated `ember-element-helper` and should
+  be more friendly with embroider.
+- [BUGFIX] Ensure searchbox in multiple select doesn't submit its enclosing form when enter is pressed.
+
+# 4.1.4
+- [BUGFIX] Fix arrays appended to multiple selects' selected array (#1447)
+# 4.1.3
+- [CHORE] Move from travis to github actions, fixing the test suite along the way. This has also
+  updated the version of ember-basic-dropdown.
+
+# 4.1.2
+- [BUGFIX] Fix problem when passing `@initiallyOpened` along with `@selected`.
+
 # 4.1.1
 - [ENHANCEMENT] Allow to customize what's displayed when no item matches the search by passing a `@noMatchesMessageComponent`.
 

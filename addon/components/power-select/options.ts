@@ -46,7 +46,7 @@ export default class Options extends Component<Args> {
     if (role === 'group') {
       return;
     }
-    let findOptionAndPerform = (action: Function, select: Select, e: Event): void => {
+    let findOptionAndPerform = (action: Function, e: Event): void => {
       if (e.target === null) return;
       let optionItem = (e.target as Element).closest('[data-option-index]');
       if (!optionItem) {
@@ -57,12 +57,12 @@ export default class Options extends Component<Args> {
       }
       let optionIndex = optionItem.getAttribute('data-option-index');
       if (optionIndex === null) return;
-      action(this._optionFromIndex(optionIndex), select, e);
+      action(this._optionFromIndex(optionIndex), e);
     };
-    this.mouseUpHandler = (e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.choose, this.args.select, e);
+    this.mouseUpHandler = (e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.choose, e);
     element.addEventListener('mouseup', this.mouseUpHandler);
     if (this.args.highlightOnHover) {
-      this.mouseOverHandler = (e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.highlight, this.args.select, e);
+      this.mouseOverHandler = (e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.highlight, e);
       element.addEventListener('mouseover', this.mouseOverHandler);
     }
     if (this.isTouchDevice) {
