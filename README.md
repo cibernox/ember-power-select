@@ -13,8 +13,8 @@ ember-data collections and follows idiomatic patterns.
 
 ## Compatibility
 
-* Ember.js v3.24 or above
-* Ember CLI v3.24 or above
+* Ember.js v3.16 or above
+* Ember CLI v3.16 or above
 * Node.js v14 or above
 
 Ember Power Select 1.X works in Ember **2.3.1+**, beta and canary with no deprecations
