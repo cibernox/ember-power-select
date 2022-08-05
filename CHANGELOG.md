@@ -1,3 +1,26 @@
+
+## v6.0.0 (2022-08-05)
+
+#### :boom: Breaking Change
+* [#1533](https://github.com/cibernox/ember-power-select/pull/1533) Require node >= 14, Ember >= 3.24 ([@rwwagner90](https://github.com/rwwagner90))
+* [#1526](https://github.com/cibernox/ember-power-select/pull/1526) Delete files array to fix TS, require ember-basic-dropdown 6+ ([@rwwagner90](https://github.com/rwwagner90))
+
+#### :rocket: Enhancement
+* [#1530](https://github.com/cibernox/ember-power-select/pull/1530) embroider-optimized support ([@rwwagner90](https://github.com/rwwagner90))
+* [#1529](https://github.com/cibernox/ember-power-select/pull/1529) Allow a wider range of ember-basic-dropdown versions ([@cibernox](https://github.com/cibernox))
+
+#### :house: Internal
+* [#1535](https://github.com/cibernox/ember-power-select/pull/1535) Add rwjblue release-it ([@rwwagner90](https://github.com/rwwagner90))
+* [#1532](https://github.com/cibernox/ember-power-select/pull/1532) Fix embroider-optimized ([@rwwagner90](https://github.com/rwwagner90))
+* [#1531](https://github.com/cibernox/ember-power-select/pull/1531) Update linting config, comply with prettier ([@rwwagner90](https://github.com/rwwagner90))
+* [#1506](https://github.com/cibernox/ember-power-select/pull/1506) Cleans up scrollTo's element finding ([@matthew-robertson](https://github.com/matthew-robertson))
+
+#### Committers: 4
+- Chris Manson ([@mansona](https://github.com/mansona))
+- Matthew Robertson ([@matthew-robertson](https://github.com/matthew-robertson))
+- Miguel Camba ([@cibernox](https://github.com/cibernox))
+- Robert Wagner ([@rwwagner90](https://github.com/rwwagner90))
+
 # Master
 
 # 5.0.4
