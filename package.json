@@ -10,6 +10,7 @@
     "dropdown",
     "ember-power"
   ],
+  "homepage": "http://www.ember-power-select.com",
   "repository": {
     "type": "git",
     "url": "http://github.com/cibernox/ember-power-select.git"
@@ -23,7 +24,6 @@
     "doc": "doc",
     "test": "tests"
   },
-  "homepage": "http://www.ember-power-select.com",
   "scripts": {
     "build": "ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
@@ -104,6 +104,8 @@
     "prettier": "^2.7.1",
     "qunit": "^2.19.1",
     "qunit-dom": "^2.0.0",
+    "release-it": "^14.2.1",
+    "release-it-lerna-changelog": "^3.1.0",
     "sass": "^1.43.0",
     "testdouble": "^3.16.0",
     "typescript": "~4.4.0",
@@ -112,11 +114,29 @@
   "engines": {
     "node": "14.* || >= 16"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "ember": {
     "edition": "octane"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md",
+        "launchEditor": true
+      }
+    },
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
+    }
   },
   "volta": {
     "node": "16.9.0"
