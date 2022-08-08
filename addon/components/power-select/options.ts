@@ -7,6 +7,7 @@ interface Args {
   select: Select
   highlightOnHover?: boolean
   options: any[]
+  extra: any
 }
 
 const isTouchDevice = (!!window && 'ontouchstart' in window);
@@ -32,7 +33,7 @@ if(typeof FastBoot === 'undefined'){
 }
 
 export default class Options extends Component<Args> {
-  private isTouchDevice = (this.args as any)?.extra?._isTouchDevice || isTouchDevice
+  private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice
   private touchMoveEvent?: TouchEvent
   private mouseOverHandler = (_: MouseEvent): void => {}
   private mouseUpHandler = (_: MouseEvent): void => {}
