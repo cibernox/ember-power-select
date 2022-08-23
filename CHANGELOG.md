@@ -1,4 +1,13 @@
 
+
+## v6.0.1 (2022-08-23)
+
+#### :rocket: Enhancement
+* [#1406](https://github.com/cibernox/ember-power-select/pull/1406) Add support for stylus (Apple Pencil) ([@krasnoukhov](https://github.com/krasnoukhov))
+
+#### Committers: 1
+- Dmitry Krasnoukhov ([@krasnoukhov](https://github.com/krasnoukhov))
+
 ## v6.0.0 (2022-08-05)
 
 #### :boom: Breaking Change
