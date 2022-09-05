@@ -111,6 +111,8 @@
             @ariaActiveDescendant={{concat publicAPI.uniqueId "-" this.highlightedIndex}}
             @selectedItemComponent={{ensure-safe-component @selectedItemComponent}}
             @searchPlaceholder={{@searchPlaceholder}}
+            @ariaLabel={{@ariaLabel}}
+            @ariaLabelledBy={{@ariaLabelledBy}}
           />
         {{/let}}
       {{/if}}

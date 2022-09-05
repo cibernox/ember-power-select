@@ -652,7 +652,7 @@ module(
     });
 
     test('Dropdown with search enabled has proper aria attributes to associate search box with the options', async function (assert) {
-      assert.expect(5);
+      assert.expect(4);
       this.numbers = numbers;
 
       await render(hbs`
@@ -676,9 +676,7 @@ module(
           'aria-controls',
           document.querySelector('.ember-power-select-dropdown').id
         );
-      assert
-        .dom('.ember-power-select-search-input')
-        .hasAttribute('role', 'combobox');
+
       assert
         .dom('.ember-power-select-search-input')
         .hasAttribute('aria-haspopup', 'listbox');
