@@ -815,7 +815,7 @@ module(
     });
 
     test('PowerSelectMultiple with search enabled has proper aria attributes', async function (assert) {
-      assert.expect(11);
+      assert.expect(10);
       this.numbers = numbers;
 
       await render(hbs`
@@ -852,13 +852,6 @@ module(
 
       await clickTrigger();
 
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute(
-          'role',
-          'combobox',
-          'Multi select search box has role combobox'
-        );
       assert
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(

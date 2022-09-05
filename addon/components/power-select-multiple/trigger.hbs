@@ -35,7 +35,6 @@
     <li>
       <input
         type="search"
-        role="combobox"
         class="ember-power-select-trigger-multiple-input"
         aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
         aria-haspopup="listbox"
@@ -45,6 +44,8 @@
         autocapitalize="off"
         spellcheck={{false}}
         id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
+        aria-labelledby={{@ariaLabelledBy}}
+        aria-label={{@ariaLabel}}
         value={{@select.searchText}}
         aria-controls={{@listboxId}}
         style={{this.triggerMultipleInputStyle}}

@@ -81,6 +81,8 @@
             (component 'power-select/placeholder')
           }}
           @ariaActiveDescendant={{concat publicAPI.uniqueId "-" this.highlightedIndex}}
+          @ariaLabelledBy={{@ariaLabelledBy}}
+          @ariaLabel={{@ariaLabel}}
           as |opt term|>
           {{yield opt term}}
         </Trigger>
