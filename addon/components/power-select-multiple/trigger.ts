@@ -98,7 +98,7 @@ export default class Trigger extends Component<Args> {
     if (e.keyCode === 8) {
       e.stopPropagation();
       if (isBlank((e.target as HTMLInputElement).value)) {
-        let lastSelection = this.args.select.selected[this.args.select.selected.length - 1];
+        let lastSelection = this.args.select.selected && this.args.select.selected[this.args.select.selected.length - 1];
         if (lastSelection) {
           this.args.select.actions.select(this.args.buildSelection(lastSelection, this.args.select), e);
           if (typeof lastSelection === 'string') {
