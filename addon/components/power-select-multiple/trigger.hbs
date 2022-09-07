@@ -26,34 +26,38 @@
     </li>
   {{else}}
     {{#if (and @placeholder (not @searchEnabled))}}
-      <span class="ember-power-select-placeholder">{{@placeholder}}</span>
+      <li>
+        <span class="ember-power-select-placeholder">{{@placeholder}}</span>
+      </li>
     {{/if}}
   {{/each}}
   {{#if @searchEnabled}}
-    <input
-      type="search"
-      role="combobox"
-      class="ember-power-select-trigger-multiple-input"
-      aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
-      aria-haspopup="listbox"
-      aria-expanded={{if @select.isOpen "true" "false"}}
-      autocomplete="off"
-      autocorrect="off"
-      autocapitalize="off"
-      spellcheck={{false}}
-      id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
-      value={{@select.searchText}}
-      aria-controls={{@listboxId}}
-      style={{this.triggerMultipleInputStyle}}
-      placeholder={{this.maybePlaceholder}}
-      disabled={{@select.disabled}}
-      tabindex={{@tabindex}}
-      form="power-select-fake-form"
-      {{on "focus" @onFocus}}
-      {{on "blur" @onBlur}}
-      {{on "input" this.handleInput}}
-      {{on "keydown" this.handleKeydown}}
-      {{did-insert this.storeInputStyles}}>
+    <li>
+      <input
+        type="search"
+        role="combobox"
+        class="ember-power-select-trigger-multiple-input"
+        aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
+        aria-haspopup="listbox"
+        aria-expanded={{if @select.isOpen "true" "false"}}
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck={{false}}
+        id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
+        value={{@select.searchText}}
+        aria-controls={{@listboxId}}
+        style={{this.triggerMultipleInputStyle}}
+        placeholder={{this.maybePlaceholder}}
+        disabled={{@select.disabled}}
+        tabindex={{@tabindex}}
+        form="power-select-fake-form"
+        {{on "focus" @onFocus}}
+        {{on "blur" @onBlur}}
+        {{on "input" this.handleInput}}
+        {{on "keydown" this.handleKeydown}}
+        {{did-insert this.storeInputStyles}}>
+    </li>
   {{/if}}
 </ul>
 <span class="ember-power-select-status-icon"></span>
