@@ -5,6 +5,9 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     snippetPaths: ['tests/dummy/app/templates/snippets/'],
+    'ember-prism': {
+      components: ['scss', 'javascript'], //needs to be an array, or undefined.
+    },
   });
 
   /*

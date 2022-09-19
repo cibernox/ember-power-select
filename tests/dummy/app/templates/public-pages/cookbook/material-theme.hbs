@@ -6,7 +6,9 @@
   the styles of the addon.
 </p>
 
-<CodeSnippet @name="material-theme-1.scss" class="max-500-height"/>
+<div class="max-500-height">
+  <CodeSnippet @name="material-theme-1.scss" />
+</div>
 
 <h3>Regular selects without search</h3>
 <div style="display: flex;">
@@ -18,7 +20,9 @@
       @selected={{this.country}}
       @placeholder="Country"
       @searchField="name"
-      @onChange={{fn (mut this.country)}} as |country|>
+      @onChange={{fn (mut this.country)}}
+      as |country|
+    >
       {{country.name}}
     </PowerSelect>
   </div>
@@ -30,7 +34,9 @@
       @selected={{this.city}}
       @placeholder="City"
       @allowClear={{true}}
-      @onChange={{fn (mut this.city)}} as |city|>
+      @onChange={{fn (mut this.city)}}
+      as |city|
+    >
       {{city}}
     </PowerSelect>
   </div>
@@ -45,7 +51,9 @@
   @placeholder="Country"
   @searchField="name"
   @searchEnabled={{true}}
-  @onChange={{fn (mut this.country2)}} as |country|>
+  @onChange={{fn (mut this.country2)}}
+  as |country|
+>
   {{country.name}}
 </PowerSelect>
 
@@ -58,7 +66,9 @@
   @placeholder="Country"
   @searchField="name"
   @searchEnabled={{true}}
-  @onChange={{fn (mut this.selectedCountries)}} as |country|>
+  @onChange={{fn (mut this.selectedCountries)}}
+  as |country|
+>
   {{country.name}}
 </PowerSelectMultiple>
 <h3>Groups</h3>
@@ -68,7 +78,9 @@
   @options={{this.groupedNumbers}}
   @selected={{this.number}}
   @placeholder="Choose a number"
-  @onChange={{fn (mut this.number)}} as |num|>
+  @onChange={{fn (mut this.number)}}
+  as |num|
+>
   {{num}}
 </PowerSelect>
 
@@ -82,30 +94,42 @@
   @searchField="name"
   @allowClear={{true}}
   @searchEnabled={{true}}
-  @onChange={{fn (mut this.country3)}} as |country|>
+  @onChange={{fn (mut this.country3)}}
+  as |country|
+>
   {{country.name}}
 </PowerSelect>
-<br>
-<br>
+<br />
+<br />
 <p>
-  This theme doesn't attempt to provide totally accurate replica of the angular directive,
-  but it's a good start.
+  This theme doesn't attempt to provide totally accurate replica of the angular
+  directive, but it's a good start.
 </p>
 
-<p>To use it in your app, SASS users should import the theme before importing the main stylesheet:</p>
+<p>To use it in your app, SASS users should import the theme before importing
+  the main stylesheet:</p>
 
-<CodeSnippet @name="material-theme-2.scss"/>
+<CodeSnippet @name="material-theme-2.scss" />
 
 <p>
-  As with the bootstrap one, this skin comes pre-compiled in the app, apps that don't use
-  SASS can include it from the <code>ember-cli-build.js</code> file.
+  As with the bootstrap one, this skin comes pre-compiled in the app, apps that
+  don't use SASS can include it from the
+  <code>ember-cli-build.js</code>
+  file.
 </p>
 
-<CodeSnippet @name="material-theme-1-js.js" class="max-500-height"/>
+<CodeSnippet @name="material-theme-1-js.js" />
 
-<p>In the next section we're going to explain how come this select can be animated without any javascript!</p>
+<p>In the next section we're going to explain how come this select can be
+  animated without any javascript!</p>
 
 <div class="doc-page-nav">
-  <LinkTo @route="public-pages.cookbook.bootstrap-theme" class="doc-page-nav-link-prev">&lt; Bootstrap theme</LinkTo>
-  <LinkTo @route="public-pages.cookbook.css-animations" class="doc-page-nav-link-next">CSS animations &gt;</LinkTo>
+  <LinkTo
+    @route="public-pages.cookbook.bootstrap-theme"
+    class="doc-page-nav-link-prev"
+  >&lt; Bootstrap theme</LinkTo>
+  <LinkTo
+    @route="public-pages.cookbook.css-animations"
+    class="doc-page-nav-link-next"
+  >CSS animations &gt;</LinkTo>
 </div>
