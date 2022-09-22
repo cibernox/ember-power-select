@@ -77,7 +77,7 @@
     "ember-cli-sass": "^10.0.1",
     "ember-cli-terser": "^4.0.0",
     "ember-cli-typescript-blueprints": "^3.0.0",
-    "ember-code-example-component": "github:cibernox/ember-code-example-component#24be4ddb0cf998a0dd77faff779ea9cd1da88859",
+    "ember-code-example-component": "^0.4.1",
     "ember-code-snippet": "^3.0.0",
     "ember-data": "^3.28.9",
     "ember-disable-prototype-extensions": "^1.1.3",
