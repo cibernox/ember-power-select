@@ -25,7 +25,9 @@ module(
 
       await clickTrigger();
       assert
-        .dom('.ember-power-select-dropdown > .ember-power-select-options')
+        .dom(
+          '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options'
+        )
         .hasAttribute(
           'role',
           'listbox',
@@ -51,7 +53,9 @@ module(
 
       await clickTrigger();
       assert
-        .dom('.ember-power-select-dropdown > .ember-power-select-options')
+        .dom(
+          '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options'
+        )
         .hasAttribute(
           'role',
           'listbox',
