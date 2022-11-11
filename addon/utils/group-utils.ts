@@ -92,7 +92,7 @@ export function optionAtIndex(originalCollection: any, index: number): { disable
   })(originalCollection, false) || { disabled: false, option: undefined };
 }
 
-interface Group { options: any[], disabled?: boolean, groupName: string }
+export interface Group { options: any[], disabled?: boolean, groupName: string }
 function copyGroup(group: Group, suboptions: any[]): Group {
   let groupCopy: Group = { groupName: group.groupName, options: suboptions };
   if (group.hasOwnProperty('disabled')) {
