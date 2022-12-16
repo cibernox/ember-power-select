@@ -21,7 +21,7 @@ import {
 import { restartableTask } from 'ember-concurrency-decorators';
 // @ts-ignore
 import { timeout } from 'ember-concurrency';
-import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components/basic-dropdown';
+import { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
 
 interface SelectActions extends DropdownActions {
   search: (term: string) => void
