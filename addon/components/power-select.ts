@@ -48,8 +48,8 @@ interface PromiseProxy<T> extends Promise<T> {
 interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void
 }
-interface Arrayable<T> {
-  toArray(): T[];
+interface Sliceable<T> {
+  slice(): T[];
 }
 interface Performable {
   perform: (...args: any[]) => void
@@ -90,8 +90,8 @@ export interface PowerSelectArgs {
   registerAPI?: (select: Select) => void
 }
 
-const isArrayable = <T>(coll: any): coll is Arrayable<T> => {
-  return typeof coll.toArray === 'function';
+const isSliceable = <T>(coll: any): coll is Sliceable<T> => {
+  return typeof coll.slice === 'function';
 }
 
 const isPromiseLike = <T>(thing: any): thing is Promise<T> => {
@@ -645,9 +645,9 @@ function isNumpadKeyEvent(e: KeyboardEvent): boolean {
   return e.keyCode >= 96 && e.keyCode <= 105;
 }
 
-const toPlainArray = <T>(collection: T[] | Arrayable<T>): T[] => {
-  if (isArrayable<T>(collection)) {
-    return collection.toArray();
+const toPlainArray = <T>(collection: T[] | Sliceable<T>): T[] => {
+  if (isSliceable<T>(collection)) {
+    return collection.slice();
   } else {
     return collection;
   }
