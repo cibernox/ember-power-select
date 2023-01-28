@@ -27,7 +27,14 @@
   {{else}}
     {{#if (and @placeholder (not @searchEnabled))}}
       <li>
-        <span class="ember-power-select-placeholder">{{@placeholder}}</span>
+        {{#if @placeholderComponent}}
+          {{component
+            (ensure-safe-component @placeholderComponent)
+            placeholder=@placeholder
+          }}
+        {{else}}
+          <span class="ember-power-select-placeholder">{{@placeholder}}</span>
+        {{/if}}
       </li>
     {{/if}}
   {{/each}}

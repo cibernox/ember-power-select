@@ -421,6 +421,32 @@ module(
       await clickTrigger();
     });
 
+    test('the power-select-multiple placeholder can be customized using `@placeholderComponent`', async function (assert) {
+      assert.expect(2);
+
+      this.countries = countries;
+
+      await render(hbs`
+        <PowerSelectMultiple
+          @options={{this.countries}}
+          @placeholder="test"
+          @placeholderComponent={{component "custom-placeholder"}}
+          @onChange={{action (mut this.foo)}} as |country|>
+          {{country.name}}
+        </PowerSelectMultiple>
+      `);
+
+      assert
+        .dom('.ember-power-select-placeholder')
+        .exists('The placeholder appears.');
+      assert
+        .dom('.ember-power-select-placeholder')
+        .hasText(
+          'This is a very bold placeholder',
+          'The placeholder content is equal.'
+        );
+    });
+
     test('the power-select-multiple `optionsComponent` receives the `extra` hash', async function (assert) {
       assert.expect(2);
 
