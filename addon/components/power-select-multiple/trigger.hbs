@@ -38,35 +38,48 @@
       {{/if}}
     </li>
   {{else}}
-    {{#if (and @placeholder (not @select.searchText))}}
+    {{#if (and @placeholder (not @searchEnabled))}}
       <li>
-        {{#if @placeholderComponent}}
-          {{component
-            (ensure-safe-component @placeholderComponent)
-            placeholder=@placeholder
-          }}
-        {{else}}
-          <span class="ember-power-select-placeholder">{{@placeholder}}</span>
-        {{/if}}
+        {{component
+          (ensure-safe-component @placeholderComponent)
+          placeholder=@placeholder
+        }}
       </li>
     {{/if}}
   {{/each}}
   {{#if @searchEnabled}}
     <li>
-      <PowerSelectMultiple::Input
-        @select={{@select}}
-        @ariaActiveDescendant={{@ariaActiveDescendant}}
-        @ariaLabelledBy={{@ariaLabelledBy}}
-        @ariaLabel={{@ariaLabel}}
-        @listboxId={{@listboxId}}
-        @tabindex={{@tabindex}}
-        @buildSelection={{@buildSelection}}
-        @searchField={{@searchField}}
-        @onFocus={{@onFocus}}
-        @onBlur={{@onBlur}}
-        @onKeydown={{@onKeydown}}
-        @onInput={{@onInput}}
-      />
+      {{#let
+        (component
+          "power-select-multiple/input"
+          select=@select
+          ariaActiveDescendant=@ariaActiveDescendant
+          ariaLabelledBy=@ariaLabelledBy
+          ariaLabel=@ariaLabel
+          listboxId=@listboxId
+          tabindex=@tabindex
+          buildSelection=@buildSelection
+          placeholder=@placeholder
+          placeholderComponent=@placeholderComponent
+          searchField=@searchField
+          onFocus=@onFocus
+          onBlur=@onBlur
+          onKeydown=@onKeydown
+          onInput=@onInput
+        )
+        as |InputComponent|
+      }}
+        {{component
+          (ensure-safe-component @placeholderComponent)
+          select=@select
+          placeholder=@placeholder
+          isMutlipleWithSearch=true
+          inputComponent=InputComponent
+          displayPlaceholder=(and
+            (not @select.searchText) (not @select.selected)
+          )
+        }}
+      {{/let}}
     </li>
   {{/if}}
 </ul>

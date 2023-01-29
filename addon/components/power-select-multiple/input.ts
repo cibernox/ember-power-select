@@ -12,10 +12,15 @@ interface Args {
   select: Select;
   placeholder?: string;
   searchField: string;
+  placeholderComponent?: string;
+  isDefaultPlaceholder?: boolean;
   onInput?: (e: InputEvent) => boolean;
   onKeydown?: (e: KeyboardEvent) => boolean;
   buildSelection: (lastSelection: any, select: Select) => any[];
 }
+
+const ua = window && window.navigator ? window.navigator.userAgent : '';
+const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
 export default class PowerSelectMultipleInput extends Component<Args> {
   private inputFont?: string;
@@ -39,6 +44,16 @@ export default class PowerSelectMultipleInput extends Component<Args> {
       }
       return htmlSafe(`width: ${textWidth + 25}px`);
     }
+  }
+
+  get maybePlaceholder() {
+    if (isIE || !this.args.isDefaultPlaceholder) {
+      return undefined;
+    }
+    return !this.args.select.selected ||
+      get(this.args.select.selected, 'length') === 0
+      ? this.args.placeholder || ''
+      : '';
   }
 
   // Actions
