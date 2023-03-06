@@ -912,7 +912,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelectMultiple @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @search={{fn this.search}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @search={{this.search}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -975,7 +975,7 @@ module(
         assert.ok(false, 'The handle change should not be called');
       };
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn this.handleChange}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{this.handleChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);

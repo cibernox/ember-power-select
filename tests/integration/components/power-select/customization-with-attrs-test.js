@@ -67,7 +67,7 @@ module(
       this.country = [countries[1], countries[0]];
 
       await render(hbs`
-      <PowerSelect @options=countries @selected={{this.country}} @onChange={{fn (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{fn (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
         {{country.name}}
       </PowerSelect>
     `);

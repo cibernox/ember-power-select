@@ -222,7 +222,7 @@ module(
         @onChange={{fn (mut this.selected)}}
         @afterOptionsComponent={{component "custom-after-options-two"}}
         @beforeOptionsComponent={{component "custom-before-options-two"}}
-        @extra={{hash passedAction=(action this.someAction)}} as |country|>
+        @extra={{hash passedAction=this.someAction}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);

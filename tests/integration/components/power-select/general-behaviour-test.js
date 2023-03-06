@@ -277,7 +277,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{fn this.foo}} @selected={{this.selected}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{this.foo}} @selected={{this.selected}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -401,7 +401,7 @@ module(
       await render(hbs`
       <PowerSelect
         @options={{this.proxy}}
-        @search={{fn this.search}}
+        @search={{this.search}}
         @searchEnabled={{true}}
         @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
@@ -438,7 +438,7 @@ module(
       };
 
       await render(
-        hbs`<PowerSelect @options={{this.proxy}} @searchEnabled={{true}} @search={{fn this.search}} @onChange={{fn (mut this.foo)}} as |option|> {{option}} </PowerSelect>`
+        hbs`<PowerSelect @options={{this.proxy}} @searchEnabled={{true}} @search={{this.search}} @onChange={{fn (mut this.foo)}} as |option|> {{option}} </PowerSelect>`
       );
 
       await clickTrigger();
@@ -1022,7 +1022,7 @@ module(
       this.numbers = numbers;
       this.foo = numbers[2];
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @allowClear={{true}} disabled=true as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @allowClear={{true}} disabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1555,7 +1555,7 @@ module(
       };
 
       await render(hbs`
-      <button id="refresh-collection-btn" onclick={{fn this.refreshCollection}}>Refresh collection</button>
+      <button type="button" id="refresh-collection-btn" onclick={{this.refreshCollection}}>Refresh collection</button>
       <br>
       <PowerSelect @options={{this.options}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |name|>
         {{name}}
@@ -1594,7 +1594,7 @@ module(
       };
 
       await render(hbs`
-      <button id="update-proxy-btn" {{on "click" this.updateProxy}}>Update proxy content</button>
+      <button type="button" id="update-proxy-btn" {{on "click" this.updateProxy}}>Update proxy content</button>
       <br>
       <PowerSelect @selected={{this.proxy}} @options={{this.countries}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option.name}}

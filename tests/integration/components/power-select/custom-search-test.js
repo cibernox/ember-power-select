@@ -705,7 +705,7 @@ module(
       };
 
       await render(hbs`
-     <PowerSelect @options={{this.numbersPromise}} @search={{this.searchFn}} selected=foo @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
+     <PowerSelect @options={{this.numbersPromise}} @search={{this.searchFn}} selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
        {{number}}
      </PowerSelect>
     `);
@@ -734,7 +734,7 @@ module(
         );
       };
       await render(hbs`
-      <PowerSelectMultiple @options={{this.countries}} @matcher={{this.matcherFn}} @searchField="name" @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
+      <PowerSelectMultiple @options={{this.countries}} @matcher={{this.matcherFn}} @searchField="name" @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |country|>
         {{country.name}}
       </PowerSelectMultiple>
     `);
