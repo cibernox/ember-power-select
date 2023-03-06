@@ -4,7 +4,7 @@ module.exports = {
   extends: 'recommended',
   rules: {
     'no-autofocus-attribute': false,
-    'no-down-event-binding': false,
+    'no-pointer-down-event-binding': false,
     'no-duplicate-landmark-elements': false,
     'no-inline-styles': false,
     'no-partial': false,
