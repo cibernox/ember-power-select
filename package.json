@@ -98,7 +98,7 @@
     "loader.js": "^4.7.0",
     "memory-scroll": "^1.0.2",
     "miragejs": "^0.1.47",
-    "mocha": "^8.0.0",
+    "mocha": "^10.2.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.4",
     "qunit": "^2.19.4",
