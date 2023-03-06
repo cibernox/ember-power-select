@@ -23,7 +23,7 @@ module(
       this.searchFn = function () {};
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -44,7 +44,7 @@ module(
       this.searchFn = function () {};
 
       await render(hbs`
-      <PowerSelect @options={{this.options}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{this.options}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -78,7 +78,7 @@ module(
 
       this.searchFn = function () {};
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -98,7 +98,7 @@ module(
 
       this.searchFn = function () {};
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @searchMessage="Type the name of the thing" @onChange={{action (mut this.foo)}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @searchMessage="Type the name of the thing" @onChange={{fn (mut this.foo)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -117,7 +117,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -139,7 +139,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -163,7 +163,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -205,7 +205,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -232,7 +232,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @noMatchesMessage="Meec. Try again" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @noMatchesMessage="Meec. Try again" @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -260,7 +260,7 @@ module(
       };
 
       // await render(hbs`
-      //   <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      //   <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
       //     {{number}}
       //   {{else}}
       //     <span class="foo-bar">Baz</span>
@@ -289,7 +289,7 @@ module(
     //   };
 
     //   this.render(hbs`
-    //     <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+    //     <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} as |number|>
     //       {{number}}
     //     </PowerSelect>
     //   `);
@@ -320,7 +320,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -345,7 +345,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -377,7 +377,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @search={{this.searchFn}} @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -406,7 +406,7 @@ module(
 
       await render(hbs`
       <div id="different-node"></div>
-      <PowerSelect @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -443,7 +443,7 @@ module(
 
       await render(hbs`
       <div id="different-node"></div>
-      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -485,7 +485,7 @@ module(
 
       await render(hbs`
       <div id="different-node"></div>
-      <PowerSelect @options={{this.selectedOptions}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @options={{this.selectedOptions}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -519,7 +519,7 @@ module(
 
     //   this.render(hbs`
     //     <div id="different-node"></div>
-    //     <PowerSelect @options={{this.selectedOptions}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} as |number|>
+    //     <PowerSelect @options={{this.selectedOptions}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} as |number|>
     //       {{number}}
     //     </PowerSelect>
     //   `);
@@ -567,7 +567,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number select|>
+      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number select|>
         {{number}}:{{select.lastSearchedText}}
       </PowerSelect>
     `);
@@ -606,7 +606,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number select|>
+      <PowerSelect @options={{this.numbers}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number select|>
         {{number}}:{{select.lastSearchedText}}
       </PowerSelect>
     `);
@@ -644,7 +644,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number select|>
+      <PowerSelectMultiple @options={{this.numbers}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number select|>
         {{number}}:{{select.lastSearchedText}}
       </PowerSelectMultiple>
     `);
@@ -685,7 +685,7 @@ module(
 
       await render(hbs`
       {{#if this.visible}}
-        <PowerSelectMultiple @options={{this.numbers}} @search={{this.searchFn}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
+        <PowerSelectMultiple @options={{this.numbers}} @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
           {{number}}:{{searchTerm}}
         </PowerSelectMultiple>
       {{/if}}
@@ -705,7 +705,7 @@ module(
       };
 
       await render(hbs`
-     <PowerSelect @options={{this.numbersPromise}} @search={{this.searchFn}} selected=foo @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+     <PowerSelect @options={{this.numbersPromise}} @search={{this.searchFn}} selected=foo @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
        {{number}}
      </PowerSelect>
     `);
@@ -734,7 +734,7 @@ module(
         );
       };
       await render(hbs`
-      <PowerSelectMultiple @options={{this.countries}} @matcher={{this.matcherFn}} @searchField="name" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
+      <PowerSelectMultiple @options={{this.countries}} @matcher={{this.matcherFn}} @searchField="name" @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number searchTerm|>
         {{country.name}}
       </PowerSelectMultiple>
     `);
@@ -755,7 +755,7 @@ module(
       }).create();
 
       await render(hbs`
-      <PowerSelect @search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect @search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -785,7 +785,7 @@ module(
       }).create();
 
       await render(hbs`
-      <PowerSelect search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -816,7 +816,7 @@ module(
 
       await render(hbs`
       {{#unless this.hideSelect}}
-        <PowerSelect search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+        <PowerSelect search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
           {{number}}
         </PowerSelect>
       {{/unless}}
@@ -847,7 +847,7 @@ module(
       }).create();
 
       await render(hbs`
-      <PowerSelect search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelect search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -877,7 +877,7 @@ module(
       }).create();
 
       await render(hbs`
-      <PowerSelectMultiple @search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -907,7 +907,7 @@ module(
       }).create();
 
       await render(hbs`
-      <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -938,7 +938,7 @@ module(
 
       await render(hbs`
       {{#unless this.hideSelect}}
-        <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+        <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
           {{number}}
         </PowerSelectMultiple>
       {{/unless}}
@@ -969,7 +969,7 @@ module(
       }).create();
 
       await render(hbs`
-      <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);

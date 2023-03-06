@@ -2,7 +2,7 @@
 {{!-- <PowerSelect
   @options={{emptyList}}
   @selected={{this.selected}}
-  @onChange={{action (mut this.selected)}} as |name|>
+  @onChange={{fn (mut this.selected)}} as |name|>
   {{name}}
 {{else}}
   <div class="text-center">

@@ -16,7 +16,7 @@ module('Integration | Helpers | selectChoose', function (hooks) {
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -35,7 +35,7 @@ module('Integration | Helpers | selectChoose', function (hooks) {
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -62,7 +62,7 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -80,7 +80,7 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
 
     this.numbers = numbers;
     await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);

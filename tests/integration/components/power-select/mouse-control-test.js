@@ -16,7 +16,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -44,7 +44,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @highlightOnHover={{false}} @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @highlightOnHover={{false}} @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -116,7 +116,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>f
     `);
@@ -174,7 +174,7 @@ module(
       this.numbers = numbers;
       await render(hbs`
       <input type="text" id="other-thing">
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -193,7 +193,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @inTesting={{false}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @inTesting={{false}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -249,7 +249,7 @@ module(
       this.numbers = numbers;
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         <span class="special-class">{{option}}</span>
       </PowerSelect>
     `);
@@ -273,7 +273,7 @@ module(
       this.numbers = numbers;
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         <span class="special-class">{{option}}</span>
       </PowerSelect>
     `);

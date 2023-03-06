@@ -36,7 +36,7 @@ module(
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -80,7 +80,7 @@ module(
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -113,7 +113,7 @@ module(
         @options={{this.countries}}
         @selected={{this.country}}
         @placeholder="inception"
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -147,7 +147,7 @@ module(
       await render(hbs`
       <PowerSelect 
         @search={{this.searchFn}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -176,7 +176,7 @@ module(
       <PowerSelect 
         @options={{this.options}} 
         @noMatchesMessage="Nope" 
-        @onChange={{action (mut this.foo)}} as |option|>
+        @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -209,7 +209,7 @@ module(
       <PowerSelect
         @options={{this.countries}}
         @placeholder="test"
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -239,7 +239,7 @@ module(
       await render(hbs`
       <PowerSelect 
         @options={{this.groupedNumbers}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -272,7 +272,7 @@ module(
       <PowerSelectMultiple 
         @options={{this.countries}}
         @selected={{this.country}} 
-        @onChange={{action (mut this.foo)}} 
+        @onChange={{fn (mut this.foo)}} 
         @extra={{hash coolFlagIcon=true}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
