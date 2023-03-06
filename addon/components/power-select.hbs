@@ -88,7 +88,10 @@
         </Trigger>
       {{/let}}
     </dropdown.Trigger>
-    <dropdown.Content class="ember-power-select-dropdown{{if publicAPI.isActive " ember-power-select-dropdown--active"}} {{@dropdownClass}}">
+    <dropdown.Content
+      class="ember-power-select-dropdown{{if publicAPI.isActive " ember-power-select-dropdown--active"}} {{@dropdownClass}}"
+      @animationEnabled={{@animationEnabled}}
+    >
       {{#if (not-eq @beforeOptionsComponent null)}}
         {{#let 
           (if 
