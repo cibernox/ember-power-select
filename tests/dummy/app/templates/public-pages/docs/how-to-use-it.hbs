@@ -14,8 +14,8 @@
 
 <p><strong>Selects in this page seem do not work. This is intended.</strong> See last paragraph.</p>
 
-<CodeExample @hbs="how-to-use-it-1.hbs" @js="how-to-use-it-1-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="how-to-use-it-1.hbs" @js="how-to-use-it-1.js">
+  {{component (ensure-safe-component this.howToUseIt1)}}
 </CodeExample>
 
 <p>
@@ -24,8 +24,8 @@
   selects with complex HTML inside very naturally.
 </p>
 
-<CodeExample @hbs="how-to-use-it-2.hbs" @js="how-to-use-it-2-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="how-to-use-it-2.hbs" @js="how-to-use-it-2.js">
+  {{component (ensure-safe-component this.howToUseIt2)}}
 </CodeExample>
 
 <p>
@@ -39,8 +39,8 @@
   computed property that returns the correct object based upon the Id.
 </p>
 
-<CodeExample @hbs="how-to-use-it-3.hbs" @js="how-to-use-it-3-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="how-to-use-it-3.hbs" @js="how-to-use-it-3.js">
+  {{component (ensure-safe-component this.howToUseIt3)}}
 </CodeExample>
 
 <p>

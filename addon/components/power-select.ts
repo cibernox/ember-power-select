@@ -18,9 +18,8 @@ import {
   pathForOption,
   MatcherFn
 } from '../utils/group-utils';
-import { restartableTask } from 'ember-concurrency-decorators';
 // @ts-ignore
-import { timeout } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
 
 interface SelectActions extends DropdownActions {
