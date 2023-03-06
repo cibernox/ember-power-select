@@ -2,8 +2,10 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { A } from '@ember/array';
+import CreateCustomOptions1 from '../../../components/snippets/create-custom-options-1';
 
 export default class extends Controller {
+  createCustomOptions1 = CreateCustomOptions1;
   options = A(['Barcelona', 'London', 'New York', 'Porto']);
   selected = [];
 

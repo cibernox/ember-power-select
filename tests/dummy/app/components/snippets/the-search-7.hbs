@@ -1,0 +1,8 @@
+<PowerSelect
+  @searchEnabled={{true}}
+  @options={{this.diacritics}}
+  @searchPlaceholder="Type to name..."
+  @selected={{this.person}}
+  @onChange={{fn (mut this.person)}} as |name|>
+  {{name}}
+</PowerSelect>

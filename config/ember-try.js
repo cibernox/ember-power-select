@@ -7,37 +7,28 @@ module.exports = async function () {
   return {
     scenarios: [
       {
-        name: 'ember-lts-3.16',
-
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.16.0',
-          },
-        },
-      },
-      {
-        name: 'ember-lts-3.20',
-
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.20.0',
-          },
-        },
-      },
-      {
-        name: 'ember-lts-3.24',
-
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.24.3',
-          },
-        },
-      },
-      {
         name: 'ember-lts-3.28',
         npm: {
           devDependencies: {
+            'ember-resolver': '^8.0.0',
             'ember-source': '~3.28.0',
+          },
+        },
+      },
+      {
+        name: 'ember-lts-4.4',
+        npm: {
+          devDependencies: {
+            'ember-resolver': '^8.0.0',
+            'ember-source': '~4.4.0',
+          },
+        },
+      },
+      {
+        name: 'ember-lts-4.8',
+        npm: {
+          devDependencies: {
+            'ember-source': '~4.8.0',
           },
         },
       },
@@ -76,6 +67,7 @@ module.exports = async function () {
         },
         npm: {
           devDependencies: {
+            'ember-resolver': '^8.0.0',
             'ember-source': '~3.28.0',
           },
           ember: {
@@ -84,11 +76,7 @@ module.exports = async function () {
         },
       },
       embroiderSafe(),
-      embroiderOptimized({
-        npm: {
-          devDependencies: { 'ember-data': '^4.6.0' },
-        },
-      }),
+      embroiderOptimized(),
     ],
   };
 };

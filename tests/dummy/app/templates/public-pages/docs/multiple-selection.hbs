@@ -6,8 +6,8 @@
 
 <p>Apart from the different name, the options are identical</p>
 
-<CodeExample @hbs="multiple-selection-1.hbs" @js="multiple-selection-1-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="multiple-selection-1.hbs" @js="multiple-selection-1.js">
+  {{component (ensure-safe-component this.multipleSelection1)}}
 </CodeExample>
 
 <p>

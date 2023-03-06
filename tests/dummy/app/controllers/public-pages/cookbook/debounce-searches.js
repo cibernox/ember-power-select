@@ -4,8 +4,12 @@ import { debounce } from '@ember/runloop';
 import fetch from 'fetch';
 import RSVP from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
+import DebounceSearches1 from '../../../components/snippets/debounce-searches-1';
+import DebounceSearches2 from '../../../components/snippets/debounce-searches-2';
 
 export default class extends Controller {
+  debounceSearches1 = DebounceSearches1;
+  debounceSearches2 = DebounceSearches2;
   searchRepo(term) {
     return new RSVP.Promise((resolve, reject) => {
       debounce(_performSearch, term, resolve, reject, 600);

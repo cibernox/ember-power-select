@@ -14,7 +14,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -28,7 +28,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -43,7 +43,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         <div class="super-fancy">{{option}}</div>
       </PowerSelect>
     `);
@@ -59,7 +59,7 @@ module(
       this.numbers = numbers;
       this.foo = 'one';
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @allowClear={{true}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @allowClear={{true}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -73,7 +73,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-        <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @extra={{hash _isTouchDevice=true}} @onChange={{action (mut this.foo)}} as |option|>
+        <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @extra={{hash _isTouchDevice=true}} @onChange={{fn (mut this.foo)}} as |option|>
           {{option}}
         </PowerSelect>
       `);
@@ -95,7 +95,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-        <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @extra={{hash _isTouchDevice=true}} @onChange={{action (mut this.foo)}} as |option|>
+        <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @extra={{hash _isTouchDevice=true}} @onChange={{fn (mut this.foo)}} as |option|>
           {{option}}
         </PowerSelect>
       `);

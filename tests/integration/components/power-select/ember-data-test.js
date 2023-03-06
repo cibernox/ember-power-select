@@ -26,7 +26,7 @@ module(
       this.server.timing = 200;
       this.users = [];
       await render(hbs`
-      <PowerSelect @options={{this.users}} @searchField="name" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.users}} @searchField="name" @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option.name}}
       </PowerSelect>
     `);
@@ -58,7 +58,7 @@ module(
       this.server.timing = 200;
       this.users = [];
       await render(hbs`
-      <PowerSelect @options={{this.users}} @searchField="name" @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.users}} @searchField="name" @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option.name}}
       </PowerSelect>
     `);
@@ -89,7 +89,7 @@ module(
       this.server.createList('user', 10);
       this.users = [];
       await render(hbs`
-      <PowerSelectMultiple @options={{this.users}} @searchField="name" @selected={{this.users}} @onChange={{action (mut this.users)}} as |option|>
+      <PowerSelectMultiple @options={{this.users}} @searchField="name" @selected={{this.users}} @onChange={{fn (mut this.users)}} as |option|>
         {{option.name}}
       </PowerSelectMultiple>
     `);
@@ -113,7 +113,7 @@ module(
         return this.store.findAll('user');
       };
       await render(hbs`
-      <PowerSelect @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchEnabled={{true}} @search={{this.search}} as |option|>
+      <PowerSelect @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} @search={{this.search}} as |option|>
         {{option.name}}
       </PowerSelect>
     `);
@@ -136,7 +136,7 @@ module(
       await this.options;
       this.selected = this.options;
       await render(hbs`
-      <PowerSelectMultiple @selected={{this.selected}} @options={{this.options}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelectMultiple @selected={{this.selected}} @options={{this.options}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option.name}}
       </PowerSelectMultiple>
     `);

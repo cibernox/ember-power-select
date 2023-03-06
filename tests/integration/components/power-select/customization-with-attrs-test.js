@@ -16,7 +16,7 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect @renderInPlace={{true}} class="foo" @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.foo)}} as |country|>
+      <PowerSelect @renderInPlace={{true}} class="foo" @options={{this.countries}} @selected={{this.country}} @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -33,7 +33,7 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.foo)}} @triggerClass="country-single-trigger" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{fn (mut this.foo)}} @triggerClass="country-single-trigger" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -50,7 +50,7 @@ module(
       this.country = [countries[1], countries[0]];
 
       await render(hbs`
-      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.foo)}} @triggerClass="country-multiple-trigger" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{fn (mut this.foo)}} @triggerClass="country-multiple-trigger" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -67,7 +67,7 @@ module(
       this.country = [countries[1], countries[0]];
 
       await render(hbs`
-      <PowerSelect @options=countries @selected={{this.country}} @onChange={{action (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{fn (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -84,7 +84,7 @@ module(
       this.country = [countries[1], countries[0]];
 
       await render(hbs`
-      <PowerSelectMultiple @options={{this.countries}} @selected={{this.country}} @onChange={{action (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
+      <PowerSelectMultiple @options={{this.countries}} @selected={{this.country}} @onChange={{fn (mut this.foo)}} @triggerId="this-is-my-id" as |country|>
         {{country.name}}
       </PowerSelectMultiple>
     `);

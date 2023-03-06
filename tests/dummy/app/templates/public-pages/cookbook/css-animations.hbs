@@ -39,8 +39,8 @@
 
 <p>Lets add some slide and fade in animation to a select that uses the bootstrap theme.</p>
 
-<CodeExample @hbs="css-animation-1.hbs" @css="css-animation-1.scss" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="css-animation-1.hbs" @css="css-animation-1.scss">
+  {{component (ensure-safe-component this.cssAnimation1)}}
 </CodeExample>
 
 <p>

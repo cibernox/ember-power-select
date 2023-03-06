@@ -18,7 +18,7 @@ module(
 
       this.groupedNumbers = groupedNumbers;
       await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -87,7 +87,7 @@ module(
         { groupName: 'Eagles', initial: 'E' },
       ];
       await render(hbs`
-      <PowerSelect @options={{this.notQuiteGroups}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.notQuiteGroups}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option.groupName}}
       </PowerSelect>
     `);
@@ -105,7 +105,7 @@ module(
 
       this.groupedNumbers = groupedNumbers;
       await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -143,7 +143,7 @@ module(
 
       this.groupedNumbers = groupedNumbers;
       await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @selected={{this.foo}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -165,7 +165,7 @@ module(
 
       this.groupedNumbers = groupedNumbers;
       await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);

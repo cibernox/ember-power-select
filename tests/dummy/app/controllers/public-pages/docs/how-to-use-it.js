@@ -1,21 +1,10 @@
 import Controller from '@ember/controller';
-import { action } from '@ember/object';
-
-const countries = [
-  { name: 'United States', flagUrl: '/flags/us.svg' },
-  { name: 'Spain', flagUrl: '/flags/es.svg' },
-  { name: 'Portugal', flagUrl: '/flags/pt.svg' },
-  { name: 'Russia', flagUrl: '/flags/ru.svg' },
-  { name: 'Latvia', flagUrl: '/flags/lv.svg' },
-  { name: 'Brazil', flagUrl: '/flags/br.svg' },
-  { name: 'United Kingdom', flagUrl: '/flags/gb.svg' },
-];
+import HowToUseIt1 from '../../../components/snippets/how-to-use-it-1';
+import HowToUseIt2 from '../../../components/snippets/how-to-use-it-2';
+import HowToUseIt3 from '../../../components/snippets/how-to-use-it-3';
 
 export default class HowToUseIt extends Controller {
-  names = ['Stefan', 'Miguel', 'Tomster', 'Pluto'];
-  countries = countries;
-  destination = countries[2];
-
-  @action
-  foo() {}
+  howToUseIt1 = HowToUseIt1;
+  howToUseIt2 = HowToUseIt2;
+  howToUseIt3 = HowToUseIt3;
 }
