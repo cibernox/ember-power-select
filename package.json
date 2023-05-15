@@ -44,11 +44,11 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "ember-assign-helper": "^0.4.0",
-    "ember-basic-dropdown": "^7.0.1",
+    "ember-basic-dropdown": "^7.1.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-htmlbars": "^6.1.0",
     "ember-cli-typescript": "^5.0.0",
-    "ember-concurrency": "^2.0.0",
+    "ember-concurrency": "^3.0.0",
     "ember-text-measurer": "^0.6.0",
     "ember-truth-helpers": "^3.1.0"
   },
@@ -114,7 +114,7 @@
     "crypto"
   ],
   "engines": {
-    "node": "14.* || >= 16"
+    "node": "16.* || >= 18"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -141,6 +141,6 @@
     }
   },
   "volta": {
-    "node": "16.9.0"
+    "node": "16.19.0"
   }
 }
