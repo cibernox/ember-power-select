@@ -20,7 +20,7 @@ import {
 } from '../utils/group-utils';
 // @ts-ignore
 import { restartableTask, timeout } from 'ember-concurrency';
-import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components/basic-dropdown';
+import type { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
 
 interface SelectActions extends DropdownActions {
   search: (term: string) => void
