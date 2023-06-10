@@ -23,7 +23,7 @@ module(
         @options={{this.countries}} 
         @selected={{this.country}} 
         @triggerComponent={{component "selected-country"}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -49,7 +49,7 @@ module(
         @loadingMessage="hmmmm paella"
         @selected={{this.country}}
         @triggerComponent={{component "custom-trigger-component"}}
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country}}
       </PowerSelect>
     `);
@@ -72,7 +72,7 @@ module(
         @options={{this.countries}} 
         @selected={{this.country}} 
         @selectedItemComponent={{component "selected-country"}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -99,7 +99,7 @@ module(
         @options={{this.countries}} 
         @selected={{this.country}} 
         @optionsComponent={{component "list-of-countries"}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -124,7 +124,7 @@ module(
         @options={{this.countries}} 
         @selected={{this.country}} 
         @optionsComponent={{component "list-of-countries"}} 
-        @onChange={{action (mut this.foo)}} 
+        @onChange={{fn (mut this.foo)}} 
         @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelect>
@@ -155,7 +155,7 @@ module(
         @options={{this.countries}}
         @placeholder="inception"
         @placeholderComponent={{component "power-select/placeholder"}}
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -188,7 +188,7 @@ module(
         @options={{this.countries}}
         @selected={{this.country}}
         @afterOptionsComponent={{component "custom-after-options"}}
-        @onChange={{action (mut this.foo)}}
+        @onChange={{fn (mut this.foo)}}
         @searchEnabled={{true}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -219,10 +219,10 @@ module(
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @onChange={{action (mut this.selected)}}
+        @onChange={{fn (mut this.selected)}}
         @afterOptionsComponent={{component "custom-after-options-two"}}
         @beforeOptionsComponent={{component "custom-before-options-two"}}
-        @extra={{hash passedAction=(action this.someAction)}} as |country|>
+        @extra={{hash passedAction=this.someAction}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -292,7 +292,7 @@ module(
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @onChange={{action (mut this.selected)}}
+        @onChange={{fn (mut this.selected)}}
         @triggerComponent={{component "custom-trigger-that-handles-focus"}}
         @onFocus={{this.didFocusInside}} as |country|>
         {{country.name}}
@@ -310,7 +310,7 @@ module(
       <PowerSelect 
         @search={{this.searchFn}} 
         @searchMessageComponent={{component "custom-search-message"}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -333,7 +333,7 @@ module(
         @options={{this.options}} 
         @noMatchesMessageComponent={{component "custom-no-matches-message"}} 
         @noMatchesMessage="Nope" 
-        @onChange={{action (mut this.foo)}} as |option|>
+        @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -358,7 +358,7 @@ module(
         @options={{this.countries}}
         @placeholder="test"
         @placeholderComponent={{component "custom-placeholder"}}
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -382,7 +382,7 @@ module(
       <PowerSelect 
         @options={{this.groupedNumbers}} 
         @groupComponent={{component "custom-group-component"}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -413,7 +413,7 @@ module(
         @options={{this.groupedNumbers}} 
         @groupComponent={{component "custom-group-component" onInit=this.onInit}} 
         @extra={{this.extra}}
-        @onChange={{action (mut this.foo)}} as |country|>
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -487,7 +487,7 @@ module(
         @options={{this.countries}} 
         @selected={{this.country}} 
         @optionsComponent={{component "list-of-countries"}} 
-        @onChange={{action (mut this.foo)}} 
+        @onChange={{fn (mut this.foo)}} 
         @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
@@ -517,7 +517,7 @@ module(
         @options={{this.countries}} 
         @selected={{this.country}} 
         @triggerComponent={{component "selected-country"}} 
-        @onChange={{action (mut this.foo)}} 
+        @onChange={{fn (mut this.foo)}} 
         @extra={{hash coolFlagIcon=true}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
@@ -545,7 +545,7 @@ module(
             @options={{this.countries}}
             @selected={{this.country}}
             @selectedItemComponent={{component "selected-country"}}
-            @onChange={{action (mut this.selected)}}
+            @onChange={{fn (mut this.selected)}}
             @extra={{hash coolFlagIcon=true}} as |country|>
           {{country.code}}
         </PowerSelectMultiple>

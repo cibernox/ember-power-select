@@ -10,8 +10,8 @@
   You can do that yourself with a few lines of code:
 </p>
 
-<CodeExample @hbs="debounce-searches-1.hbs" @js="debounce-searches-1-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="debounce-searches-1.hbs" @js="debounce-searches-1.js">
+  {{component (ensure-safe-component this.debounceSearches1)}}
 </CodeExample>
 
 <p>
@@ -33,8 +33,8 @@
   bookeeping of promises and debounce times.
 </p>
 
-<CodeExample @hbs="debounce-searches-2.hbs" @js="debounce-searches-2-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="debounce-searches-2.hbs" @js="debounce-searches-2.js">
+  {{component (ensure-safe-component this.debounceSearches2)}}
 </CodeExample>
 
 <p>That's it. Three lines of code for debounced searches with automatic cancellation.</p>

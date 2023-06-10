@@ -29,7 +29,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -49,7 +49,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected="three" @onChange={{action (mut this.selected)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected="three" @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -70,7 +70,7 @@ module(
       this.numbers = numbers;
       this.lastNumber = numbers[numbers.length - 1];
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.lastNumber}} @onChange={{action (mut this.lastNumber)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.lastNumber}} @onChange={{fn (mut this.lastNumber)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -91,7 +91,7 @@ module(
       this.numbers = numbers;
       this.firstNumber = numbers[0];
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.firstNumber}} @onChange={{action (mut this.firstNumber)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.firstNumber}} @onChange={{fn (mut this.firstNumber)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -111,7 +111,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected="seven" @onChange={{action (mut this.selected)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected="seven" @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -153,7 +153,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action this.changed}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.changed}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -217,7 +217,7 @@ module(
         assert.ok(false, 'The handle change should not be called');
       };
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action this.handleChange}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.handleChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -259,7 +259,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action this.changed}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.changed}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -283,7 +283,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -307,7 +307,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -321,7 +321,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -343,7 +343,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -365,7 +365,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -383,7 +383,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -401,7 +401,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -455,7 +455,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -506,7 +506,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -560,7 +560,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -590,7 +590,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -641,7 +641,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{fn (mut this.foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -666,7 +666,7 @@ module(
       this.handleKeydown = () => false;
 
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{action (mut this.foo)}} @onKeydown={{action this.handleKeydown}} @searchEnabled={{true}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{fn (mut this.foo)}} @onKeydown={{this.handleKeydown}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -688,7 +688,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -714,7 +714,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -746,7 +746,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -781,7 +781,7 @@ module(
 
       this.numerals = numerals;
       await render(hbs`
-      <PowerSelect @options={{this.numerals}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelect @options={{this.numerals}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -814,7 +814,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -849,7 +849,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -884,7 +884,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -914,7 +914,7 @@ module(
 
       this.countries = countries;
       await render(hbs`
-      <PowerSelect @options={{this.countries}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchField="name" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchField="name" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -942,7 +942,7 @@ module(
 
       this.groupedNumbers = groupedNumbers;
       await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |number|>
+      <PowerSelect @options={{this.groupedNumbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -973,7 +973,7 @@ module(
       );
       this.countries[0].disabled = true;
       await render(hbs`
-      <PowerSelect @options={{this.countries}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} @searchField="name" as |country|>
+      <PowerSelect @options={{this.countries}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchField="name" as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -1000,7 +1000,7 @@ module(
 
       this.numbers = groupedNumbersWithDisabled;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{action (mut this.selected)}} as |number|>
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -1035,7 +1035,7 @@ module(
         }
       };
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{this.handleOpen}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @onOpen={{this.handleOpen}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1070,7 +1070,7 @@ module(
         return false; // prevent the dropdown from opening
       };
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action this.handleOpen}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @onOpen={{this.handleOpen}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -1104,7 +1104,7 @@ module(
         }
       };
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action this.handleOpen}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @onOpen={{this.handleOpen}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1139,7 +1139,7 @@ module(
         return false; // prevent the dropdown from opening
       };
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{action (mut this.foo)}} @onOpen={{action this.handleOpen}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @onOpen={{this.handleOpen}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1169,7 +1169,7 @@ module(
       <PowerSelectMultiple
         @options={{this.numbers}}
         @closeOnSelect={{false}}
-        @onChange={{action (mut this.selected)}}
+        @onChange={{fn (mut this.selected)}}
         @selected={{this.selected}}
         as |option|
       >

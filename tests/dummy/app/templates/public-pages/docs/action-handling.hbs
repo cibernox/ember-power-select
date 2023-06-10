@@ -29,8 +29,8 @@
 </p>
 
 
-<CodeExample @hbs="action-handling-1.hbs" @js="action-handling-1-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="action-handling-1.hbs" @js="action-handling-1.js">
+  {{component (ensure-safe-component this.actionHandling1)}}
 </CodeExample>
 
 <p>
@@ -39,8 +39,8 @@
   <code>mut</code> helper.
 </p>
 
-<CodeExample @hbs="action-handling-2.hbs" @js="action-handling-2-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="action-handling-2.hbs" @js="action-handling-2.js">
+  {{component (ensure-safe-component this.actionHandling2)}}
 </CodeExample>
 
 <p>
@@ -71,8 +71,8 @@
   user introduces free text.
 </p>
 
-<CodeExample @hbs="action-handling-3.hbs" @js="action-handling-3-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="action-handling-3.hbs" @js="action-handling-3.js">
+  {{component (ensure-safe-component this.actionHandling3)}}
 </CodeExample>
 
 <h3><code>onInput</code> Action</h3>
@@ -93,8 +93,8 @@
   Let's create a select that searches only if the length of the search is bigger than 3 chars.
 </p>
 
-<CodeExample @hbs="action-handling-4.hbs" @js="action-handling-4-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="action-handling-4.hbs" @js="action-handling-4.js">
+  {{component (ensure-safe-component this.actionHandling4)}}
 </CodeExample>
 
 <h3><code>onFocus/onBlur</code> Actions</h3>
@@ -108,8 +108,8 @@
   perhaps the most straightforward use case is to automatically open the component on focus.
 </p>
 
-<CodeExample @hbs="action-handling-5.hbs" @js="action-handling-5-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="action-handling-5.hbs" @js="action-handling-5.js">
+  {{component (ensure-safe-component this.actionHandling5)}}
 </CodeExample>
 
 <p>
@@ -132,8 +132,8 @@
   want to show a useless example: The select components for spies!
 </p>
 
-<CodeExample @hbs="action-handling-6.hbs" @js="action-handling-6-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="action-handling-6.hbs" @js="action-handling-6.js">
+  {{component (ensure-safe-component this.actionHandling6)}}
 </CodeExample>
 
 <p>
@@ -143,8 +143,8 @@
   the styles of the component.
 </p>
 
-<CodeExample @hbs="action-handling-7.hbs" @js="action-handling-7-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="action-handling-7.hbs" @js="action-handling-7.js">
+  {{component (ensure-safe-component this.actionHandling7)}}
 </CodeExample>
 
 <p>

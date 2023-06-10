@@ -14,7 +14,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @initiallyOpened={{true}} as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @initiallyOpened={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -27,7 +27,7 @@ module(
 
       this.numbers = numbers;
       await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{action (mut this.foo)}} @initiallyOpened={{true}} @selected="seven" as |option|>
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @initiallyOpened={{true}} @selected="seven" as |option|>
         {{option}}
       </PowerSelect>
     `);

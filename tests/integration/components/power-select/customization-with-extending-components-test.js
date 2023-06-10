@@ -5,7 +5,6 @@ import { hbs } from 'ember-cli-htmlbars';
 import { countries } from '../constants';
 import { groupedNumbers } from '../constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import Component from '@ember/component';
 
 module(
   'Integration | Component | Ember Power Select (Customization with overwriting components)',
@@ -15,20 +14,6 @@ module(
     test('overwriting `power-select/trigger` works', async function (assert) {
       assert.expect(3);
 
-      this.owner.register(
-        'component:power-select/trigger',
-        class extends Component {
-          layout = hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}"
-        >
-        {{@select.selected.name}}
-      `;
-        }
-      );
-
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -36,7 +21,8 @@ module(
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @triggerComponent={{component "selected-country"}} 
+        @onChange={{fn (mut this.country)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -54,25 +40,7 @@ module(
 
     test('overwriting `power-select/options` works', async function (assert) {
       assert.expect(2);
-      this.owner.register(
-        'component:power-select/options',
-        Component.extend({
-          layout: hbs`
-        <p>Countries:</p>
-        <ul>
-          {{#if @extra.field}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{get option @extra.field}}</li>
-            {{/each}}
-          {{else}}
-            {{#each @options as |option index|}}
-              <li>{{index}}. {{option.name}}</li>
-            {{/each}}
-          {{/if}}
-        </ul>
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -80,7 +48,8 @@ module(
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @optionsComponent={{component "list-of-countries"}} 
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -96,24 +65,18 @@ module(
 
     test('overwriting `power-select/before-options` works', async function (assert) {
       assert.expect(4);
-      this.owner.register(
-        'component:power-select/before-options',
-        Component.extend({
-          layout: hbs`
-        <p id="custom-before-options-p-tag">{{@placeholder}}</p>
-        {{component (ensure-safe-component @placeholderComponent) placeholder=@placeholder}}
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
       await render(hbs`
       <PowerSelect
         @options={{this.countries}}
+        @beforeOptionsComponent={{component "custom-before-options"}}
         @selected={{this.country}}
         @placeholder="inception"
-        @onChange={{action (mut this.foo)}} as |country|>
+        @placeholderComponent={{component "power-select/placeholder"}}
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -137,17 +100,13 @@ module(
 
     test('overwriting `power-select/search-message` works', async function (assert) {
       assert.expect(1);
-      this.owner.register(
-        'component:power-select/search-message',
-        Component.extend({
-          layout: hbs`<p id="custom-search-message-p-tag">Customized seach message!</p>`,
-        })
-      );
+
       this.searchFn = function () {};
       await render(hbs`
       <PowerSelect 
         @search={{this.searchFn}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @searchMessageComponent={{component "custom-search-message"}}
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -163,20 +122,14 @@ module(
     test('overwriting `power-select/no-matches-message` works', async function (assert) {
       assert.expect(2);
 
-      this.owner.register(
-        'component:power-select/no-matches-message',
-        Component.extend({
-          layout: hbs`<p id="custom-no-matches-message-p-tag">{{@noMatchesMessage}}</p>`,
-        })
-      );
-
       this.options = [];
 
       await render(hbs`
       <PowerSelect 
         @options={{this.options}} 
+        @noMatchesMessageComponent={{component "custom-no-matches-message"}}
         @noMatchesMessage="Nope" 
-        @onChange={{action (mut this.foo)}} as |option|>
+        @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -193,23 +146,15 @@ module(
 
     test('overwriting `power-select/placeholder` works', async function (assert) {
       assert.expect(2);
-      this.owner.register(
-        'component:power-select/placeholder',
-        Component.extend({
-          layout: hbs`
-        <div class="ember-power-select-placeholder">
-          This is a very <span style="font-weight:bold">bold</span> placeholder
-        </div>
-      `,
-        })
-      );
+
       this.countries = countries;
 
       await render(hbs`
       <PowerSelect
         @options={{this.countries}}
         @placeholder="test"
-        @onChange={{action (mut this.foo)}} as |country|>
+        @placeholderComponent={{component "custom-placeholder"}}
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -229,17 +174,11 @@ module(
       this.groupedNumbers = groupedNumbers;
       let numberOfGroups = 5; // number of groups in groupedNumber;
 
-      this.owner.register(
-        'component:power-select/power-select-group',
-        Component.extend({
-          layout: hbs`<div class="custom-component">{{yield}}</div>`,
-        })
-      );
-
       await render(hbs`
       <PowerSelect 
         @options={{this.groupedNumbers}} 
-        @onChange={{action (mut this.foo)}} as |country|>
+        @groupComponent={{component "custom-group-component"}}
+        @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -252,19 +191,7 @@ module(
 
     test('overwriting `power-select-multiple/trigger` works', async function (assert) {
       assert.expect(1);
-      this.owner.register(
-        'component:power-select-multiple/trigger',
-        Component.extend({
-          layout: hbs`
-        <img 
-          src={{@select.selected.flagUrl}} 
-          class="icon-flag {{if @extra.coolFlagIcon "cool-flag-icon"}}" 
-          alt="Flag of {{@select.selected.name}}"
-        >
-        {{@select.selected.name}}
-      `,
-        })
-      );
+
       this.countries = countries;
       this.country = countries[1]; // Spain
 
@@ -272,7 +199,8 @@ module(
       <PowerSelectMultiple 
         @options={{this.countries}}
         @selected={{this.country}} 
-        @onChange={{action (mut this.foo)}} 
+        @triggerComponent={{component "selected-country"}}
+        @onChange={{fn (mut this.foo)}} 
         @extra={{hash coolFlagIcon=true}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>

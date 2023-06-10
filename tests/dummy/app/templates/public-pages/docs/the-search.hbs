@@ -10,8 +10,8 @@
   <code>Søren</code> and so on.
 </p>
 
-<CodeExample @hbs="the-search-1.hbs" @js="the-search-1-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="the-search-1.hbs" @js="the-search-1.js">
+  {{component (ensure-safe-component this.theSearch1)}}
 </CodeExample>
 
 <p>
@@ -21,8 +21,8 @@
 
 <p>Try focusing the next component and typing, while it's opened and also while it's closed.</p>
 
-<CodeExample @hbs="the-search-2.hbs" @js="the-search-2-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="the-search-2.hbs" @js="the-search-2.js">
+  {{component (ensure-safe-component this.theSearch2)}}
 </CodeExample>
 
 <h3>Customize the search field</h3>
@@ -32,8 +32,8 @@
   objects you need to tell the component what field it should match against using the <code>searchField</code> option.
 </p>
 
-<CodeExample @hbs="the-search-3.hbs" @js="the-search-3-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="the-search-3.hbs" @js="the-search-3.js">
+  {{component (ensure-safe-component this.theSearch3)}}
 </CodeExample>
 
 <p>
@@ -54,8 +54,8 @@
   <code>autofocus</code> parameter to the default <code>beforeOptions</code> component.
 </p>
 
-<CodeExample @hbs="the-search-4.hbs" @js="the-search-4-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="the-search-4.hbs" @js="the-search-4.js">
+  {{component (ensure-safe-component this.theSearch4)}}
 </CodeExample>
 <h3>Pass a custom matcher</h3>
 
@@ -66,8 +66,8 @@
   inside as long as it returns <code>-1</code> if it doesn't match and a positive number if it does.
 </p>
 
-<CodeExample @hbs="the-search-5.hbs" @js="the-search-5-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="the-search-5.hbs" @js="the-search-5.js">
+  {{component (ensure-safe-component this.theSearch5)}}
 </CodeExample>
 
 <p>
@@ -84,8 +84,8 @@
   API contains <code>searchText</code> and <code>lastSearchedText</code>.
 </p>
 
-<CodeExample @hbs="the-search-6.hbs" @js="the-search-6-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="the-search-6.hbs" @js="the-search-6.js">
+  {{component (ensure-safe-component this.theSearch6)}}
 </CodeExample>
 
 <p>
@@ -110,10 +110,10 @@
 
 <h3>Search box placeholder</h3>
 
-<p>Pass <code>searchPlaceholder="Type your name"</code> to show a placeholder in the search box</p>
+<p>Pass <code>searchPlaceholder="Type your name..."</code> to show a placeholder in the search box</p>
 
-<CodeExample @hbs="the-search-7.hbs" @js="the-search-7-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="the-search-7.hbs" @js="the-search-7.js">
+  {{component (ensure-safe-component this.theSearch7)}}
 </CodeExample>
 
 In the default multiple select without searchbox you can use the <code>placeholder</code> property

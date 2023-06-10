@@ -69,7 +69,7 @@ module(
       test(`(${state}) Repeating the first character cycles through the results`, async function (assert) {
         this.names = namesStartingWithA;
         await render(hbs`
-        <PowerSelect @options={{this.names}} @onChange={{action (mut this.selected)}} @selected={{this.selected}} as |option|>
+        <PowerSelect @options={{this.names}} @onChange={{fn (mut this.selected)}} @selected={{this.selected}} as |option|>
           {{option}}
         </PowerSelect>
       `);
@@ -87,7 +87,7 @@ module(
       test(`(${state}) When going over all the possible results, it goes back to the first`, async function (assert) {
         this.names = namesStartingWithA;
         await render(hbs`
-        <PowerSelect @options={{this.names}} @onChange={{action (mut this.selected)}} @selected={{this.selected}} as |option|>
+        <PowerSelect @options={{this.names}} @onChange={{fn (mut this.selected)}} @selected={{this.selected}} as |option|>
           {{option}}
         </PowerSelect>
       `);
@@ -109,7 +109,7 @@ module(
       test(`(${state}) Though repeating the first char, the whole search term is remembered`, async function (assert) {
         this.names = namesStartingWithA;
         await render(hbs`
-        <PowerSelect @options={{this.names}} @onChange={{action (mut this.selected)}} @selected={{this.selected}} as |option|>
+        <PowerSelect @options={{this.names}} @onChange={{fn (mut this.selected)}} @selected={{this.selected}} as |option|>
           {{option}}
         </PowerSelect>
       `);
@@ -130,7 +130,7 @@ module(
       test(`(${state}) Typing the first character after typing a different one does not set again the cycling behaviour`, async function (assert) {
         this.names = namesStartingWithA;
         await render(hbs`
-        <PowerSelect @options={{this.names}} @onChange={{action (mut this.selected)}} @selected={{this.selected}} as |option|>
+        <PowerSelect @options={{this.names}} @onChange={{fn (mut this.selected)}} @selected={{this.selected}} as |option|>
           {{option}}
         </PowerSelect>
       `);
@@ -153,7 +153,7 @@ module(
           },
         ];
         await render(hbs`
-        <PowerSelect @options={{this.names}} @onChange={{action (mut this.selected)}} @selected={{this.selected}} as |option|>
+        <PowerSelect @options={{this.names}} @onChange={{fn (mut this.selected)}} @selected={{this.selected}} as |option|>
           {{option}}
         </PowerSelect>
       `);

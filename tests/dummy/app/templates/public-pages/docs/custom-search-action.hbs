@@ -36,8 +36,8 @@
   </ul>
 </p>
 
-<CodeExample @hbs="custom-search-action-1.hbs" @js="custom-search-action-1-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="custom-search-action-1.hbs" @js="custom-search-action-1.js">
+  {{component (ensure-safe-component this.customSearchAction1)}}
 </CodeExample>
 
 <h3>Handling of thenables and cancellables (p.e. ember-concurrecy)</h3>
@@ -64,8 +64,8 @@
   And if before those 1500ms you clear the search or close the select, <strong>no request is made at all!</strong>
 </p>
 
-<CodeExample @hbs="custom-search-action-2.hbs" @js="custom-search-action-2-js.js" as |partialName|>
-  {{partial partialName}}
+<CodeExample @hbs="custom-search-action-2.hbs" @js="custom-search-action-2.js">
+  {{component (ensure-safe-component this.customSearchAction2)}}
 </CodeExample>
 
 <p>
