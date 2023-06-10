@@ -431,7 +431,7 @@ module(
           @options={{this.countries}}
           @placeholder="test"
           @placeholderComponent={{component "custom-placeholder"}}
-          @onChange={{action (mut this.foo)}} as |country|>
+          @onChange={{fn (mut this.foo)}} as |country|>
           {{country.name}}
         </PowerSelectMultiple>
       `);
@@ -460,7 +460,7 @@ module(
           @selected={{this.country}}
           @placeholder="test"
           @placeholderComponent={{component "custom-multiple-search-placeholder"}}
-          @onChange={{action (mut this.country)}} as |country|>
+          @onChange={{fn (mut this.country)}} as |country|>
           {{country.name}}
         </PowerSelectMultiple>
       `);
