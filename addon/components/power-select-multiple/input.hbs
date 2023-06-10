@@ -1,0 +1,28 @@
+{{!-- template-lint-disable require-aria-activedescendant-tabindex --}}
+<input
+  type="search"
+  class="ember-power-select-trigger-multiple-input"
+  aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
+  aria-haspopup="listbox"
+  aria-expanded={{if @select.isOpen "true" "false"}}
+  autocomplete="off"
+  autocorrect="off"
+  autocapitalize="off"
+  spellcheck={{false}}
+  id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
+  aria-labelledby={{@ariaLabelledBy}}
+  aria-label={{@ariaLabel}}
+  value={{@select.searchText}}
+  aria-controls={{if @select.isOpen @listboxId}}
+  style={{this.triggerMultipleInputStyle}}
+  placeholder={{this.maybePlaceholder}}
+  disabled={{@select.disabled}}
+  tabindex={{@tabindex}}
+  form="power-select-fake-form"
+  {{on "focus" @onFocus}}
+  {{on "blur" @onBlur}}
+  {{on "input" this.handleInput}}
+  {{on "keydown" this.handleKeydown}}
+  {{did-insert this.storeInputStyles}}
+  ...attributes
+/>
