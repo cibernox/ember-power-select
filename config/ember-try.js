@@ -45,7 +45,6 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('release'),
-            '@ember/test-helpers': '^3.0.3',
           },
         },
       },
@@ -54,7 +53,6 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('beta'),
-            '@ember/test-helpers': '^3.0.3',
           },
         },
       },
@@ -63,7 +61,6 @@ module.exports = async function () {
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('canary'),
-            '@ember/test-helpers': '^3.0.3',
           },
         },
       },
