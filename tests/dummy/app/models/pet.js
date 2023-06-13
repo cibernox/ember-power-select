@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default Model.extend({
-  name: attr('string'),
-  age: attr('number'),
-  owner: belongsTo('user'),
-});
+export default class PetModel extends Model {
+  @attr('string') name;
+  @attr('number') age;
+  @belongsTo('user', { async: true, inverse: 'pets' }) owner;
+}
