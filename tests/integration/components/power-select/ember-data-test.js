@@ -31,7 +31,7 @@ module(
       </PowerSelect>
     `);
 
-      this.set('users', await this.store.findAll('user'));
+      this.set('users', this.store.findAll('user'));
       let promise = clickTrigger();
       await waitFor('.ember-power-select-option');
       assert
@@ -94,7 +94,7 @@ module(
       </PowerSelectMultiple>
     `);
 
-      this.set('users', await this.store.findAll('user'));
+      this.set('users', this.store.findAll('user'));
       await settled();
       await click('.ember-power-select-multiple-remove-btn');
       assert
@@ -109,8 +109,8 @@ module(
       this.server.createList('user', 10);
       this.server.timing = 0;
       this.selected = undefined;
-      this.search = async () => {
-        return await this.store.findAll('user');
+      this.search = () => {
+        return this.store.findAll('user');
       };
       await render(hbs`
       <PowerSelect @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} @search={{this.search}} as |option|>
@@ -132,7 +132,7 @@ module(
     test('passing an Ember-data collection to `@selected` of a multiple select works', async function (assert) {
       this.server.createList('user', 10);
       this.server.timing = 0;
-      this.options = await this.store.findAll('user');
+      this.options = this.store.findAll('user');
       await this.options;
       this.selected = this.options;
       await render(hbs`
