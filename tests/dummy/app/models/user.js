@@ -1,7 +1,7 @@
 import Model, { attr, hasMany } from '@ember-data/model';
 
-export default Model.extend({
-  name: attr('string'),
-  age: attr('number'),
-  pets: hasMany('pet', { inverse: 'owner' }),
-});
+export default class UserModel extends Model {
+  @attr('string') name;
+  @attr('number') age;
+  @hasMany('pet', { async: true, inverse: 'owner' }) pets;
+}
