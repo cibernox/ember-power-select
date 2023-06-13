@@ -350,7 +350,7 @@ module(
       };
 
       await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onFocus={{handleFocus}} @onChange={{fn (mut this.foo)}} as |number|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onFocus={{this.handleFocus}} @onChange={{fn (mut this.foo)}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -370,7 +370,7 @@ module(
 
       await render(hbs`
       <input type="text" autofocus>
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onFocus={{handleFocus}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onFocus={{this.handleFocus}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
