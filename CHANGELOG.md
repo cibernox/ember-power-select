@@ -1,5 +1,7 @@
 
 
+## v7.1.0
+- Make it compatible with Ember 5.
 ## v6.0.1 (2022-08-23)
 
 #### :rocket: Enhancement
