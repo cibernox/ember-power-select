@@ -23,8 +23,9 @@ module.exports = {
 
     this._super.included.apply(this, arguments);
 
-    let hasSass = !!app.registry.availablePlugins['ember-cli-sass'];
-    let hasLess = !!app.registry.availablePlugins['ember-cli-less'];
+    const addons = app.project?.addonPackages || app.registry?.availablePlugins;
+    const hasSass = !!addons['ember-cli-sass'];
+    const hasLess = !!addons['ember-cli-less'];
 
     // Don't include the precompiled css file if the user uses a supported CSS preprocessor
     if (!hasSass && !hasLess) {
