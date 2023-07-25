@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { MatcherFn } from '../utils/group-utils';
-import { Dropdown, DropdownActions } from 'ember-basic-dropdown/addon/components/basic-dropdown';
+import type { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
 interface SelectActions extends DropdownActions {
     search: (term: string) => void;
     highlight: (option: any) => void;
