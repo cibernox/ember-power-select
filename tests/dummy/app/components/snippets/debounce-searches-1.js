@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { debounce } from '@ember/runloop';
-import fetch from 'fetch';
 import RSVP from 'rsvp';
 
 export default class extends Component {
