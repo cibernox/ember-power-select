@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import Component from '@glimmer/component';
 import { task, timeout } from 'ember-concurrency';
-import fetch from 'fetch';
 
 export default class extends Component {
   @(task(function* (term) {
