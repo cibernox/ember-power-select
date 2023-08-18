@@ -1,5 +1,17 @@
 
 
+
+## v7.1.1 (2023-08-18)
+
+#### :bug: Bug Fix
+* [#1589](https://github.com/cibernox/ember-power-select/pull/1589) fix: Update invalid type imports ([@HeroicEric](https://github.com/HeroicEric))
+
+#### :house: Internal
+* [#1591](https://github.com/cibernox/ember-power-select/pull/1591) build: Fix embroider optimized CI builds ([@HeroicEric](https://github.com/HeroicEric))
+
+#### Committers: 1
+- Eric Kelly ([@HeroicEric](https://github.com/HeroicEric))
+
 ## v7.1.0
 - Make it compatible with Ember 5.
 ## v6.0.1 (2022-08-23)
