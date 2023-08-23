@@ -1,6 +1,9 @@
 
 
 
+## v7.1.2 (2023-08-23)
+- Update ember-basic-dropdown which uses a newer ember-element-helper.
+
 ## v7.1.1 (2023-08-18)
 
 #### :bug: Bug Fix
