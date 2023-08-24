@@ -48,9 +48,9 @@ export default Component.extend({
       let optionIndex = optionItem.getAttribute('data-option-index');
       action(this._optionFromIndex(optionIndex), e);
     };
-    this.element.addEventListener('mouseup', (e) => findOptionAndPerform(this.get('select.actions.choose'), e));
+    this.element.addEventListener('mouseup', (e) => findOptionAndPerform(this.get('select').actions.choose, e));
     if (this.get('highlightOnHover')) {
-      this.element.addEventListener('mouseover', (e) => findOptionAndPerform(this.get('select.actions.highlight'), e));
+      this.element.addEventListener('mouseover', (e) => findOptionAndPerform(this.get('select').actions.highlight, e));
     }
     if (this.get('isTouchDevice')) {
       this._addTouchEvents();
