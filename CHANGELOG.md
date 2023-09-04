@@ -30,7 +30,7 @@
 * [#1545](https://github.com/cibernox/ember-power-select/pull/1545) chore: snippet improvements ([@wozny1989](https://github.com/wozny1989))
 * [#1542](https://github.com/cibernox/ember-power-select/pull/1542) fix: display code snippets in documentation ([@wozny1989](https://github.com/wozny1989))
 * [#1540](https://github.com/cibernox/ember-power-select/pull/1540) be more permissive on ember-truth-helpers ([@miguelcobain](https://github.com/miguelcobain))
-* [#1305](https://github.com/cibernox/ember-power-select/pull/1305) Ensure multiple select <ul> has only <li> children ([@mydea](https://github.com/mydea))
+* [#1305](https://github.com/cibernox/ember-power-select/pull/1305) Ensure multiple select ul has only li children ([@mydea](https://github.com/mydea))
 * [#1495](https://github.com/cibernox/ember-power-select/pull/1495) Fix error when pressing backspace in empty multiple-select component ([@gvdp](https://github.com/gvdp))
 
 ## v6.0.1 (2022-08-23)
