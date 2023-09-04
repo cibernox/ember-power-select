@@ -45,13 +45,14 @@
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "ember-assign-helper": "^0.4.0",
+    "ember-auto-import": "^2.6.3",
     "ember-basic-dropdown": "^7.2.2",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-htmlbars": "^6.2.0",
     "ember-cli-typescript": "^5.0.0",
     "ember-concurrency": "^2.0.0 || ^3.0.0",
     "ember-text-measurer": "^0.6.0",
-    "ember-truth-helpers": "^3.1.0"
+    "ember-truth-helpers": "^3.1.0 || ^4.0.0"
   },
   "devDependencies": {
     "@ember-decorators/component": "^6.1.1",
@@ -66,7 +67,6 @@
     "@types/rsvp": "^4.0.4",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-auto-import": "^2.6.3",
     "ember-cli": "~4.12.1",
     "ember-cli-blueprint-test-helpers": "^0.19.2",
     "ember-cli-dependency-checker": "^3.3.1",
