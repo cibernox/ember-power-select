@@ -17,6 +17,22 @@
 
 ## v7.1.0
 - Make it compatible with Ember 5.
+
+## v7.0.0 (2023-03-06)
+* [#1572](https://github.com/cibernox/ember-power-select/pull/1572) Fix tests for embroider-optimized ([@mkszepp](https://github.com/mkszepp))
+* [#1570](https://github.com/cibernox/ember-power-select/pull/1570) Update to ember 4.8 & packages. Require node >= 16, Ember >= 3.28 ([@mkszepp](https://github.com/mkszepp))
+* [#1564](https://github.com/cibernox/ember-power-select/pull/1564) Remove ember-data array deprecation ([@mkszepp](https://github.com/mkszepp))
+* [#1567](https://github.com/cibernox/ember-power-select/pull/1567) Pass along the @animationEnabled argument to dropdown.Content, bump ember-basic-dropdown ([@ArnaudWeyts](https://github.com/ArnaudWeyts))
+* [#1560](https://github.com/cibernox/ember-power-select/pull/1560) Fix import from ember-basic-dropdown ([@wagenet](https://github.com/wagenet))
+* [#1548](https://github.com/cibernox/ember-power-select/pull/1548) Add type declarations ([@charlesfries](https://github.com/charlesfries))
+* [#1544](https://github.com/cibernox/ember-power-select/pull/1544) fix: redirects in netlify ([@wozny1989](https://github.com/wozny1989))
+* [#1306](https://github.com/cibernox/ember-power-select/pull/1306) Fix a11y issues with inputs ([@mydea](https://github.com/mydea))
+* [#1545](https://github.com/cibernox/ember-power-select/pull/1545) chore: snippet improvements ([@wozny1989](https://github.com/wozny1989))
+* [#1542](https://github.com/cibernox/ember-power-select/pull/1542) fix: display code snippets in documentation ([@wozny1989](https://github.com/wozny1989))
+* [#1540](https://github.com/cibernox/ember-power-select/pull/1540) be more permissive on ember-truth-helpers ([@miguelcobain](https://github.com/miguelcobain))
+* [#1305](https://github.com/cibernox/ember-power-select/pull/1305) Ensure multiple select ul has only li children ([@mydea](https://github.com/mydea))
+* [#1495](https://github.com/cibernox/ember-power-select/pull/1495) Fix error when pressing backspace in empty multiple-select component ([@gvdp](https://github.com/gvdp))
+
 ## v6.0.1 (2022-08-23)
 
 #### :rocket: Enhancement
