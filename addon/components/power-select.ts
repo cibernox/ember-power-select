@@ -55,38 +55,39 @@ interface Performable {
 }
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs {
-  highlightOnHover?: boolean
-  placeholderComponent?: string
-  searchMessage?: string
+  highlightOnHover?: boolean;
+  placeholderComponent?: string;
+  searchMessage?: string;
   searchMessageComponent?: string;
-  noMatchesMessage?: string
+  noMatchesMessage?: string;
   noMatchesMessageComponent?: string;
-  matchTriggerWidth?: boolean
-  options: any[] | PromiseProxy<any[]>
-  selected: any | PromiseProxy<any>
-  closeOnSelect?: boolean
-  defaultHighlighted?: any
-  searchField?: string
-  searchEnabled?: boolean
-  tabindex?: number | string
-  triggerComponent?: string
-  beforeOptionsComponent?: string
+  matchTriggerWidth?: boolean;
+  options: any[] | PromiseProxy<any[]>;
+  selected: any | PromiseProxy<any>;
+  closeOnSelect?: boolean;
+  defaultHighlighted?: any;
+  searchField?: string;
+  searchEnabled?: boolean;
+  tabindex?: number | string;
+  triggerComponent?: string;
+  beforeOptionsComponent?: string;
   optionsComponent?: string;
   groupComponent?: string;
-  matcher?: MatcherFn
-  initiallyOpened?: boolean
-  typeAheadOptionMatcher?: MatcherFn
-  buildSelection?: (selected: any, select: Select) => any
-  onChange: (selection: any, select: Select, event?: Event) => void
-  search?: (term: string, select: Select) => any[] | PromiseProxy<any[]>
-  onOpen?: (select: Select, e: Event) => boolean | undefined
-  onClose?: (select: Select, e: Event) => boolean | undefined
-  onInput?: (term: string, select: Select, e: Event) => string | false | void
-  onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined
-  onFocus?: (select: Select, event: FocusEvent) => void
-  onBlur?: (select: Select, event: FocusEvent) => void
-  scrollTo?: (option: any, select: Select) => void
-  registerAPI?: (select: Select) => void
+  matcher?: MatcherFn;
+  initiallyOpened?: boolean;
+  typeAheadOptionMatcher?: MatcherFn;
+  renderInPlace?: boolean;
+  buildSelection?: (selected: any, select: Select) => any;
+  onChange: (selection: any, select: Select, event?: Event) => void;
+  search?: (term: string, select: Select) => any[] | PromiseProxy<any[]>;
+  onOpen?: (select: Select, e: Event) => boolean | undefined;
+  onClose?: (select: Select, e: Event) => boolean | undefined;
+  onInput?: (term: string, select: Select, e: Event) => string | false | void;
+  onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined;
+  onFocus?: (select: Select, event: FocusEvent) => void;
+  onBlur?: (select: Select, event: FocusEvent) => void;
+  scrollTo?: (option: any, select: Select) => void;
+  registerAPI?: (select: Select) => void;
 }
 
 const isSliceable = <T>(coll: any): coll is Sliceable<T> => {
