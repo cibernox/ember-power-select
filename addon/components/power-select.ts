@@ -145,7 +145,8 @@ export default class PowerSelect extends Component<PowerSelectArgs> {
       } catch {}
       this._lastSelectedPromise = undefined;
     }
-    super.willDestroy.apply(this, arguments);
+
+    super.willDestroy();
   }
 
   // Getters
