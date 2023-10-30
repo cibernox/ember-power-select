@@ -23,7 +23,7 @@ const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
 export default class PowerSelectMultipleInput extends Component<Args> {
-  private inputFont?: string;
+  protected inputFont?: string;
   @service textMeasurer: any;
 
   // Properties
