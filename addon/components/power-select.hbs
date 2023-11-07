@@ -111,7 +111,7 @@
             @placeholderComponent={{or @placeholderComponent (component 'power-select/placeholder')}}
             @extra={{@extra}}
             @listboxId={{listboxId}}
-            @ariaActiveDescendant={{concat publicAPI.uniqueId "-" this.highlightedIndex}}
+            @ariaActiveDescendant={{if this.highlightedIndex (concat publicAPI.uniqueId "-" this.highlightedIndex)}}
             @selectedItemComponent={{ensure-safe-component @selectedItemComponent}}
             @searchPlaceholder={{@searchPlaceholder}}
             @ariaLabel={{@ariaLabel}}
