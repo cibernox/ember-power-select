@@ -21,6 +21,7 @@ import {
 // @ts-ignore
 import { restartableTask, timeout } from 'ember-concurrency';
 import type { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
+import { isArray } from '@ember/array';
 
 interface SelectActions extends DropdownActions {
   search: (term: string) => void
@@ -90,7 +91,7 @@ export interface PowerSelectArgs {
 }
 
 const isSliceable = <T>(coll: any): coll is Sliceable<T> => {
-  return typeof coll.slice === 'function' && typeof coll.sort === 'function';
+  return isArray(coll);
 }
 
 const isPromiseLike = <T>(thing: any): thing is Promise<T> => {
