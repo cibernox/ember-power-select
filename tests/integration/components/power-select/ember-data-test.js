@@ -41,6 +41,8 @@ module(
           'The loading message appears while the promise is pending'
         );
       await promise;
+      await this.users;
+      await settled();
       assert
         .dom('.ember-power-select-option')
         .exists(
@@ -73,6 +75,8 @@ module(
           'The loading message appears while the promise is pending'
         );
       await promise;
+      await this.users;
+      await settled();
       assert
         .dom('.ember-power-select-option')
         .exists(
@@ -95,6 +99,7 @@ module(
     `);
 
       this.set('users', this.store.findAll('user'));
+      await this.users;
       await settled();
       await click('.ember-power-select-multiple-remove-btn');
       assert
@@ -120,6 +125,7 @@ module(
 
       await clickTrigger();
       await typeInSearch('anything');
+      await settled();
       await click('.ember-power-select-option:nth-child(4)');
       assert
         .dom('.ember-power-select-dropdown')
