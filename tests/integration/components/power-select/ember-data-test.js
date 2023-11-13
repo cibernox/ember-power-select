@@ -7,7 +7,7 @@ import {
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
 import emberDataInitializer from '../../../../initializers/ember-data';
-import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module(
   'Integration | Component | Ember Power Select (Ember-data integration)',

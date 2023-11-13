@@ -4,7 +4,10 @@ import { createServer } from 'miragejs';
 export default function (config) {
   let finalConfig = {
     ...config,
-    models: { ...discoverEmberDataModels(), ...config.models },
+    models: {
+      ...discoverEmberDataModels(config.store),
+      ...config.models,
+    },
     routes,
   };
 
@@ -18,11 +21,4 @@ function routes() {
   this.passthrough('http://api.github.com/search/repositories');
 
   this.pretender.get('/*passthrough', this.pretender.passthrough);
-}
-
-export function testConfig() {
-  this.get('/users');
-  this.get('/users/:id');
-  this.get('/pets');
-  this.get('/pets/:id');
 }
