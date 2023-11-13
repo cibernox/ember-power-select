@@ -41,6 +41,8 @@ module(
           'The loading message appears while the promise is pending'
         );
       await promise;
+      await this.users;
+      await settled();
       assert
         .dom('.ember-power-select-option')
         .exists(
@@ -73,6 +75,8 @@ module(
           'The loading message appears while the promise is pending'
         );
       await promise;
+      await this.users;
+      await settled();
       assert
         .dom('.ember-power-select-option')
         .exists(
