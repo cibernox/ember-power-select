@@ -99,6 +99,7 @@ module(
     `);
 
       this.set('users', this.store.findAll('user'));
+      await this.users;
       await settled();
       await click('.ember-power-select-multiple-remove-btn');
       assert
@@ -124,6 +125,7 @@ module(
 
       await clickTrigger();
       await typeInSearch('anything');
+      await settled();
       await click('.ember-power-select-option:nth-child(4)');
       assert
         .dom('.ember-power-select-dropdown')
