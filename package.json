@@ -40,6 +40,7 @@
     "postpublish": "ember ts:clean"
   },
   "dependencies": {
+    "@ember/render-modifiers": "^2.1.0",
     "@embroider/util": "^1.11.0",
     "@ember/string": "^3.1.1",
     "@glimmer/component": "^1.1.2",
