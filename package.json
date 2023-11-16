@@ -61,6 +61,7 @@
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.0.3",
     "@embroider/test-setup": "^3.0.1",
+    "@release-it-plugins/lerna-changelog": "^6.0.0",
     "@glint/template": "^1.0.2",
     "@types/ember": "^4.0.3",
     "@types/ember-data": "^4.4.10",
@@ -103,8 +104,7 @@
     "prettier": "^2.8.8",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
-    "release-it": "^15.11.0",
-    "release-it-lerna-changelog": "^5.0.0",
+    "release-it": "^16.0.0",
     "sass": "^1.63.3",
     "testdouble": "^3.18.0",
     "typescript": "~4.9.5",
@@ -127,9 +127,8 @@
   },
   "release-it": {
     "plugins": {
-      "release-it-lerna-changelog": {
-        "infile": "CHANGELOG.md",
-        "launchEditor": true
+      "@release-it-plugins/lerna-changelog": {
+        "infile": "CHANGELOG.md"
       }
     },
     "git": {
