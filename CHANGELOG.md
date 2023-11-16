@@ -1,6 +1,27 @@
 
 
 
+
+## v7.2.0 (2023-11-16)
+
+#### :rocket: Enhancement
+* [#1593](https://github.com/cibernox/ember-power-select/pull/1593) Allow `ember-truth-helpers` v4 as dependency ([@mkszepp](https://github.com/mkszepp))
+
+#### :bug: Bug Fix
+* [#1612](https://github.com/cibernox/ember-power-select/pull/1612) Add missing dependency `@ember/render-modifiers` ([@mkszepp](https://github.com/mkszepp))
+* [#1603](https://github.com/cibernox/ember-power-select/pull/1603) isSliceable is not working for ember data 3.x hasmany relationships ([@betocantu93](https://github.com/betocantu93))
+
+#### :house: Internal
+* [#1613](https://github.com/cibernox/ember-power-select/pull/1613) Update release-it to v16 ([@mkszepp](https://github.com/mkszepp))
+* [#1610](https://github.com/cibernox/ember-power-select/pull/1610) Use ember-data 3.28 in ember 3.28 test & add ember 5 test ([@mkszepp](https://github.com/mkszepp))
+* [#1609](https://github.com/cibernox/ember-power-select/pull/1609) Update `ember-cli-mirage` to stable v3 ([@mkszepp](https://github.com/mkszepp))
+* [#1595](https://github.com/cibernox/ember-power-select/pull/1595) Update compatibility in readme ([@mkszepp](https://github.com/mkszepp))
+* [#1594](https://github.com/cibernox/ember-power-select/pull/1594) Add missing release notes for v7 ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 2
+- Alberto Cantú Gómez ([@betocantu93](https://github.com/betocantu93))
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v7.1.2 (2023-08-23)
 - Update ember-basic-dropdown which uses a newer ember-element-helper.
 
