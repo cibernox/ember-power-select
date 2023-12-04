@@ -30,19 +30,19 @@ module(
       await clickTrigger();
 
       let rootLevelGroups = document.querySelectorAll(
-        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group'
+        ' .ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-group'
       );
       let rootLevelOptions = document.querySelectorAll(
-        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option'
+        ' .ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-option'
       );
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group'
+          ' .ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-group'
         )
         .exists({ count: 3 }, 'There is 3 groups in the root level');
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option'
+          ' .ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-option'
         )
         .exists({ count: 2 }, 'There is 2 options in the root level');
       assert
