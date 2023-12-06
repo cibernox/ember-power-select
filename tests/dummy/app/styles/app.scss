@@ -11,7 +11,9 @@
 @import 'components/side-nav';
 @import 'components/docs';
 @import 'components/cookbook';
-@import 'ember-code-example';
+
+// Docs
+@import 'docs/code-example';
 @include ember-code-example($brand-color);
 
 // Legacy demo
