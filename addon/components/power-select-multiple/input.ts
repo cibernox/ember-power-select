@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
-import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
@@ -24,7 +23,6 @@ const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
 export default class PowerSelectMultipleInput extends Component<Args> {
   private inputFont?: string;
-  @service textMeasurer: any;
 
   // Properties
   get triggerMultipleInputStyle() {
@@ -37,7 +35,7 @@ export default class PowerSelectMultipleInput extends Component<Args> {
     } else {
       let textWidth = 0;
       if (this.inputFont) {
-        textWidth = this.textMeasurer.width(
+        textWidth = this.measureWidth(
           this.args.select.searchText,
           this.inputFont
         );
@@ -114,5 +112,17 @@ export default class PowerSelectMultipleInput extends Component<Args> {
       // Keys 0-9, a-z or SPACE
       e.stopPropagation();
     }
+  }
+  
+  measureWidth(string: string, font?: string) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) {
+      return 0;
+    }
+    
+    if (font) { ctx.font = font; }
+    return ctx.measureText(string).width;
   }
 }
