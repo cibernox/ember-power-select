@@ -14,7 +14,6 @@ interface IndexAccesible<T> {
 export default class Trigger extends Component<Args> {
     private inputFont?;
     private _lastIsOpen;
-    textMeasurer: any;
     get triggerMultipleInputStyle(): import("@ember/template/-private/handlebars").SafeString;
     get maybePlaceholder(): string | undefined;
     openChanged(_el: Element, [isOpen]: [boolean]): void;
