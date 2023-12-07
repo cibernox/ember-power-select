@@ -33,7 +33,7 @@ module(
         .dom('.ember-power-select-option')
         .hasText(
           'Type to search',
-          'The dropdown shows the "type to search" message'
+          'The dropdown shows the "type to search" message',
         );
     });
 
@@ -55,7 +55,7 @@ module(
           later(function () {
             resolve(numbers);
           }, 100);
-        })
+        }),
       );
       clickTrigger();
       await waitFor('.ember-power-select-dropdown');
@@ -63,13 +63,13 @@ module(
         .dom('.ember-power-select-dropdown')
         .doesNotIncludeText(
           'Type to search',
-          "The type to search message doesn't show"
+          "The type to search message doesn't show",
         );
       assert
         .dom('.ember-power-select-dropdown')
         .includesText(
           'Loading options...',
-          '"Loading options..." message appears'
+          '"Loading options..." message appears',
         );
     });
 
@@ -89,7 +89,7 @@ module(
         .dom('.ember-power-select-option')
         .hasClass(
           'ember-power-select-option--search-message',
-          'The option with the search message has a special class'
+          'The option with the search message has a special class',
         );
     });
 
@@ -173,23 +173,23 @@ module(
         .dom('.ember-power-select-dropdown')
         .includesText(
           'Type to search',
-          'The type to search message is displayed'
+          'The type to search message is displayed',
         );
       typeInSearch('teen');
       await waitFor(
-        '.ember-power-select-option:not(.ember-power-select-option--search-message)'
+        '.ember-power-select-option:not(.ember-power-select-option--search-message)',
       );
       assert
         .dom('.ember-power-select-dropdown')
         .doesNotIncludeText(
           'Type to search',
-          'The type to search message dissapeared'
+          'The type to search message dissapeared',
         );
       assert
         .dom('.ember-power-select-dropdown')
         .includesText(
           'Loading options...',
-          '"Loading options..." message appears'
+          '"Loading options..." message appears',
         );
     });
 
@@ -216,7 +216,7 @@ module(
         .dom('.ember-power-select-option')
         .includesText(
           'No results found',
-          'The default "No results" message renders'
+          'The default "No results" message renders',
         );
     });
 
@@ -244,7 +244,7 @@ module(
         .dom('.ember-power-select-option')
         .includesText(
           'Meec. Try again',
-          'The customized "No results" message renders'
+          'The customized "No results" message renders',
         );
     });
 
@@ -334,7 +334,7 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first result is highlighted'
+          'The first result is highlighted',
         );
     });
     test('On an empty select, when a syncronous search result complete, the first element is highlighted like with regular filtering', async function (assert) {
@@ -359,7 +359,7 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first result is highlighted'
+          'The first result is highlighted',
         );
     });
 
@@ -394,7 +394,7 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first result is highlighted'
+          'The first result is highlighted',
         );
     });
 
@@ -458,7 +458,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: 21 },
-          'All the options are shown and also the loading message'
+          'All the options are shown and also the loading message',
         );
       assert.dom('.ember-power-select-option').hasText('Loading options...');
       await settled();
@@ -466,7 +466,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: 7 },
-          'All the options are shown but no the loading message'
+          'All the options are shown but no the loading message',
         );
     });
 
@@ -478,7 +478,7 @@ module(
         later(() => {
           this.set(
             'selectedOptions',
-            numbers.filter((str) => str.indexOf(term) > -1)
+            numbers.filter((str) => str.indexOf(term) > -1),
           );
         }, 20);
       };
@@ -585,7 +585,7 @@ module(
           .dom('.ember-power-select-option')
           .exists(
             { count: numbers.length },
-            'All the options are displayed after clearing the search'
+            'All the options are displayed after clearing the search',
           );
         assert
           .dom('.ember-power-select-option:nth-child(2)')
@@ -617,7 +617,7 @@ module(
         .dom('.ember-power-select-option')
         .hasText(
           'thirteen:teen',
-          'The results and the lastSearchedText have updated'
+          'The results and the lastSearchedText have updated',
         );
       typeInSearch('four');
       await waitFor('.ember-power-select-option--loading-message');
@@ -628,7 +628,7 @@ module(
         .dom('.ember-power-select-option:nth-child(2)')
         .hasText(
           'thirteen:teen',
-          'The results and the lastSearchedText are still the same because the search has not finished yet'
+          'The results and the lastSearchedText are still the same because the search has not finished yet',
         );
     });
 
@@ -655,7 +655,7 @@ module(
         .dom('.ember-power-select-option')
         .hasText(
           'thirteen:teen',
-          'The results and the searchTerm have updated'
+          'The results and the searchTerm have updated',
         );
       typeInSearch('four');
       await waitFor('.ember-power-select-option--loading-message');
@@ -666,7 +666,7 @@ module(
         .dom('.ember-power-select-option:nth-child(2)')
         .hasText(
           'thirteen:teen',
-          'The results and the searchTerm are still the same because the search has not finished yet'
+          'The results and the searchTerm are still the same because the search has not finished yet',
         );
     });
 
@@ -730,7 +730,7 @@ module(
         assert.strictEqual(
           typeof option,
           'object',
-          'The first argument received by the custom matches is the option itself'
+          'The first argument received by the custom matches is the option itself',
         );
       };
       await render(hbs`
@@ -985,5 +985,5 @@ module(
         done();
       }, 250);
     });
-  }
+  },
 );

@@ -93,5 +93,5 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute('id', 'this-is-my-id', 'The `id` was added.');
     });
-  }
+  },
 );

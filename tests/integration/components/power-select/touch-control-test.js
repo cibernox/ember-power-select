@@ -123,5 +123,5 @@ module(
       });
       assert.dom('.ember-power-select-selected-item').hasText('four');
     });
-  }
+  },
 );

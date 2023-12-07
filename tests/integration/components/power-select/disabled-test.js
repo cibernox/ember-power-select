@@ -57,7 +57,7 @@ module(
         .dom('.ember-power-select-trigger')
         .doesNotHaveAttribute(
           'tabindex',
-          "The trigger has no tabindex so it can't be focused"
+          "The trigger has no tabindex so it can't be focused",
         );
     });
 
@@ -74,14 +74,14 @@ module(
       await clickTrigger();
       await triggerEvent(
         '.ember-power-select-option[aria-disabled="true"]',
-        'mouseover'
+        'mouseover',
       );
       assert
         .dom('.ember-power-select-option[aria-disabled="true"]')
         .hasAttribute(
           'aria-current',
           'false',
-          "The hovered option was not highlighted because it's disabled"
+          "The hovered option was not highlighted because it's disabled",
         );
     });
 
@@ -102,7 +102,7 @@ module(
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText(
           'LV: Latvia',
-          "The hovered option was not highlighted because it's disabled"
+          "The hovered option was not highlighted because it's disabled",
         );
     });
 
@@ -156,7 +156,7 @@ module(
         .hasAttribute(
           'aria-disabled',
           'true',
-          'The trigger has `aria-disabled=true`'
+          'The trigger has `aria-disabled=true`',
         );
       this.set('shouldBeDisabled', false);
       assert
@@ -216,14 +216,14 @@ module(
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText(
           'United Kingdom',
-          'The first non-disabled element is highlighted'
+          'The first non-disabled element is highlighted',
         );
     });
 
     test('BUGFIX: When searching by pressing keys on a focused & closed select, disabled options are ignored', async function (assert) {
       assert.expect(3);
       this.countriesWithDisabled = countriesWithDisabled.map((country) =>
-        Object.assign({}, country)
+        Object.assign({}, country),
       );
       this.countriesWithDisabled[0].disabled = true;
 
@@ -320,7 +320,7 @@ module(
         .doesNotExist('No option is selected');
       await triggerEvent(
         document.querySelectorAll('.ember-power-select-option')[8],
-        'mouseover'
+        'mouseover',
       );
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
@@ -347,14 +347,14 @@ module(
         .dom('.ember-power-select-trigger')
         .hasText(
           'enabled!',
-          'The `disabled` attribute in the public API is false'
+          'The `disabled` attribute in the public API is false',
         );
       run(() => this.set('isDisabled', true));
       assert
         .dom('.ember-power-select-trigger')
         .hasText(
           'disabled!',
-          'The `disabled` attribute in the public API is true'
+          'The `disabled` attribute in the public API is true',
         );
     });
 
@@ -421,5 +421,5 @@ module(
         .dom('.ember-power-select-trigger')
         .hasText('', 'Nothing is selected');
     });
-  }
+  },
 );

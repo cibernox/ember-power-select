@@ -14,7 +14,7 @@ module.exports = async function () {
             'ember-source': '~3.28.0',
             '@ember/test-helpers': '^2.9.3',
             'ember-qunit': '^6.2.0',
-            "qunit-dom": "^2.0.0",
+            'qunit-dom': '^2.0.0',
             'ember-data': '~3.28.0',
           },
         },

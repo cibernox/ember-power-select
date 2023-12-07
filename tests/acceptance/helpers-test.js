@@ -92,7 +92,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
 
     await selectChoose(
       '.select-with-class-in-trigger',
-      '.ember-power-select-option:nth-child(3)'
+      '.ember-power-select-option:nth-child(3)',
     );
     assert
       .dom('.select-choose')
@@ -123,7 +123,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
 
     await selectChoose(
       this.element.querySelector('.select-with-class-in-trigger'),
-      'three'
+      'three',
     );
     assert
       .dom('.select-choose')
@@ -141,7 +141,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     await selectChoose(
       this.element.querySelector('.select-with-class-in-trigger'),
       '.ember-power-select-option',
-      2
+      2,
     );
     assert
       .dom('.select-choose')
@@ -162,7 +162,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         error.message,
-        'You called "selectChoose(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"'
+        'You called "selectChoose(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"',
       );
     }
   });
@@ -177,7 +177,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         error.message,
-        "You called \"selectChoose('.select-choose', 'non-existent-option')\" but \"non-existent-option\" didn't match any option"
+        "You called \"selectChoose('.select-choose', 'non-existent-option')\" but \"non-existent-option\" didn't match any option",
       );
     }
   });
@@ -251,9 +251,9 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
 
     await selectSearch(
       this.element.querySelector(
-        '.select-multiple .ember-power-select-trigger'
+        '.select-multiple .ember-power-select-trigger',
       ),
-      'three'
+      'three',
     );
     assert.dom('.ember-power-select-options').hasText('three');
   });
@@ -274,7 +274,7 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         error.message,
-        'You called "selectSearch(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"'
+        'You called "selectSearch(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"',
       );
     }
   });
@@ -290,21 +290,21 @@ module('Acceptance | helpers | removeMultipleOption', function (hooks) {
     await selectChoose('.select-choose-onopen-multiple', 'four');
     assert
       .dom(
-        '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li'
+        '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li',
       )
       .exists({ count: 2 }, 'Multiple options selected');
 
     await removeMultipleOption('.select-choose-onopen-multiple', 'three');
     assert
       .dom(
-        '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li'
+        '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li',
       )
       .exists({ count: 1 }, 'One option removed');
 
     await removeMultipleOption('.select-choose-onopen-multiple', 'four');
     assert
       .dom(
-        '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li'
+        '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li',
       )
       .exists({ count: 0 }, 'Last option removed');
   });

@@ -38,7 +38,7 @@ module(
         .dom('.ember-power-select-option')
         .hasText(
           'Loading options...',
-          'The loading message appears while the promise is pending'
+          'The loading message appears while the promise is pending',
         );
       await promise;
       await this.users;
@@ -47,7 +47,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: 10 },
-          'Once the collection resolves the options render normally'
+          'Once the collection resolves the options render normally',
         );
       await typeInSearch('2');
       assert
@@ -72,7 +72,7 @@ module(
         .dom('.ember-power-select-option')
         .hasText(
           'Loading options...',
-          'The loading message appears while the promise is pending'
+          'The loading message appears while the promise is pending',
         );
       await promise;
       await this.users;
@@ -81,7 +81,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: 10 },
-          'Once the collection resolves the options render normally'
+          'Once the collection resolves the options render normally',
         );
       await typeInSearch('2');
       assert
@@ -106,7 +106,7 @@ module(
         .dom('.ember-power-select-multiple-remove-btn')
         .exists(
           { count: 9 },
-          'Once the collection resolves the options render normally'
+          'Once the collection resolves the options render normally',
         );
     });
 
@@ -158,8 +158,8 @@ module(
         .dom('.ember-power-select-multiple-option:nth-child(4)')
         .containsText(
           'User 4',
-          'The 4th selected option is not User 3 anymore'
+          'The 4th selected option is not User 3 anymore',
         );
     });
-  }
+  },
 );

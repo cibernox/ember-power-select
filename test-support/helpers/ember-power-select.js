@@ -17,7 +17,7 @@ function deprecateHelper(fn, name) {
     deprecate(
       `DEPRECATED \`import { ${name} } from '../../tests/helpers/ember-power-select';\` is deprecated. Please, replace it with \`import { ${name} } from 'ember-power-select/test-support/helpers';\``,
       false,
-      { until: '1.11.0', id: `ember-power-select-test-support-${name}` }
+      { until: '1.11.0', id: `ember-power-select-test-support-${name}` },
     );
     return fn(...args);
   };
@@ -37,7 +37,7 @@ export default function deprecatedRegisterHelpers() {
   deprecate(
     "DEPRECATED `import registerPowerSelectHelpers from '../../tests/helpers/ember-power-select';` is deprecated. Please, replace it with `import registerPowerSelectHelpers from 'ember-power-select/test-support/helpers';`",
     false,
-    { until: '1.11.0', id: 'ember-power-select-test-support-register-helpers' }
+    { until: '1.11.0', id: 'ember-power-select-test-support-register-helpers' },
   );
   return _registerHelpers();
 }

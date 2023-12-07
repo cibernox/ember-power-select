@@ -238,7 +238,7 @@ module('Unit | Utility | Group utils', function () {
     assert.deepEqual(filterOptions(groupedOptions, 'imposible', matcher), []);
     assert.deepEqual(
       filterOptions(groupedOptions, '', matcher),
-      groupedOptions
+      groupedOptions,
     );
   });
 
@@ -248,19 +248,19 @@ module('Unit | Utility | Group utils', function () {
     };
     assert.deepEqual(
       filterOptions(groupedOptionsWithDisabledThings, 'zero', matcher, true),
-      [{ groupName: 'Smalls', options: ['zero'] }]
+      [{ groupName: 'Smalls', options: ['zero'] }],
     );
     assert.deepEqual(
       filterOptions(groupedOptionsWithDisabledThings, 'one', matcher, true),
-      ['one hundred', 'one thousand']
+      ['one hundred', 'one thousand'],
     );
     assert.deepEqual(
       filterOptions(groupedOptionsWithDisabledThings, 'ele', matcher, true),
-      []
+      [],
     );
     assert.deepEqual(
       filterOptions(groupedOptionsWithDisabledThings, 't', matcher, true),
-      [{ groupName: 'Smalls', options: ['two', 'three'] }, 'one thousand']
+      [{ groupName: 'Smalls', options: ['two', 'three'] }, 'one thousand'],
     );
 
     assert.deepEqual(
@@ -268,9 +268,9 @@ module('Unit | Utility | Group utils', function () {
         groupedOptionsWithDisabledThings,
         'imposible',
         matcher,
-        true
+        true,
       ),
-      []
+      [],
     );
     assert.deepEqual(
       filterOptions(groupedOptionsWithDisabledThings, '', matcher, true),
@@ -285,7 +285,7 @@ module('Unit | Utility | Group utils', function () {
         },
         'one hundred',
         'one thousand',
-      ]
+      ],
     );
   });
 
@@ -310,7 +310,7 @@ test('#defaultTypeAheadMatcher', function (assert) {
     assert.strictEqual(
       defaultTypeAheadMatcher(value, text),
       1,
-      `${value} is matched by ${text}`
+      `${value} is matched by ${text}`,
     );
   });
 
@@ -318,7 +318,7 @@ test('#defaultTypeAheadMatcher', function (assert) {
     assert.strictEqual(
       defaultTypeAheadMatcher(value, text),
       -1,
-      `${value} is not matched by ${text}`
+      `${value} is not matched by ${text}`,
     );
   });
 });

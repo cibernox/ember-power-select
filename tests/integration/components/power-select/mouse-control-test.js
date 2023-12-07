@@ -27,11 +27,11 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first element is highlighted'
+          'The first element is highlighted',
         );
       await triggerEvent(
         '.ember-power-select-option:nth-child(4)',
-        'mouseover'
+        'mouseover',
       );
       assert
         .dom('.ember-power-select-option:nth-child(4)')
@@ -55,11 +55,11 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first element is highlighted'
+          'The first element is highlighted',
         );
       await triggerEvent(
         '.ember-power-select-option:nth-child(4)',
-        'mouseover'
+        'mouseover',
       );
 
       assert
@@ -67,14 +67,14 @@ module(
         .hasAttribute(
           'aria-current',
           'false',
-          'The 4th element is not highlighted'
+          'The 4th element is not highlighted',
         );
       assert
         .dom('.ember-power-select-option:nth-child(1)')
         .hasAttribute(
           'aria-current',
           'true',
-          'The 1st element is still highlighted'
+          'The 1st element is still highlighted',
         );
     });
 
@@ -86,15 +86,15 @@ module(
         assert.strictEqual(
           val,
           'four',
-          'The action is invoked with the selected value as first parameter'
+          'The action is invoked with the selected value as first parameter',
         );
         assert.ok(
           dropdown.actions.close,
-          'The action is invoked with the the dropdown object as second parameter'
+          'The action is invoked with the the dropdown object as second parameter',
         );
         assert.ok(
           event instanceof window.Event,
-          'The third argument is an event'
+          'The third argument is an event',
         );
       };
       await render(hbs`
@@ -138,11 +138,11 @@ module(
         assert.strictEqual(
           selected,
           null,
-          'The onchange action was called with the new selection (null)'
+          'The onchange action was called with the new selection (null)',
         );
         assert.ok(
           dropdown.actions.close,
-          'The onchange action was called with the dropdown object as second argument'
+          'The onchange action was called with the dropdown object as second argument',
         );
         this.set('selected', selected);
       };
@@ -204,7 +204,7 @@ module(
       await triggerEvent(
         '.ember-power-select-option:nth-child(2)',
         'mousedown',
-        { clientY: 124 }
+        { clientY: 124 },
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -260,7 +260,7 @@ module(
         .hasText('one', 'The first element is highlighted');
       await triggerEvent(
         document.querySelectorAll('.special-class')[3],
-        'mouseover'
+        'mouseover',
       );
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
@@ -281,5 +281,5 @@ module(
       await clickTrigger();
       await triggerEvent('ul', 'mouseover');
     });
-  }
+  },
 );

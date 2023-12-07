@@ -119,7 +119,7 @@ module(
         assert.deepEqual(
           values,
           ['two'],
-          'The onchange action is fired with the list of values'
+          'The onchange action is fired with the list of values',
         );
       };
 
@@ -142,7 +142,7 @@ module(
         assert.deepEqual(
           values,
           ['four', 'two'],
-          'The onchange action is fired with the list of values'
+          'The onchange action is fired with the list of values',
         );
         this.set('selectedNumbers', values);
       };
@@ -187,14 +187,14 @@ module(
         .hasAttribute(
           'aria-selected',
           'true',
-          'The second option is styled as selected'
+          'The second option is styled as selected',
         );
       assert
         .dom('.ember-power-select-option:nth-child(4)')
         .hasAttribute(
           'aria-selected',
           'true',
-          'The 4th option is styled as selected'
+          'The 4th option is styled as selected',
         );
     });
 
@@ -219,7 +219,7 @@ module(
         .exists({ count: 1 }, 'There is one element selected');
       assert
         .dom(
-          '.ember-power-select-option[aria-current="true"][aria-selected="true"]'
+          '.ember-power-select-option[aria-current="true"][aria-selected="true"]',
         )
         .doesNotExist('They are not the same');
       assert
@@ -380,7 +380,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        27
+        27,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -389,7 +389,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
     });
@@ -430,12 +430,12 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        40
+        40,
       );
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       assert
         .dom('.ember-power-select-trigger')
@@ -508,12 +508,12 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        40
+        40,
       );
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       assert
         .dom('.ember-power-select-trigger')
@@ -544,7 +544,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        8
+        8,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -561,7 +561,7 @@ module(
         this.set('selected', val);
         assert.ok(
           dropdown.actions.close,
-          'The dropdown API is received as second argument'
+          'The dropdown API is received as second argument',
         );
       };
       await render(hbs`
@@ -576,7 +576,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        8
+        8,
       );
       assert
         .dom('.ember-power-select-multiple-option')
@@ -591,7 +591,7 @@ module(
         .dom('.ember-power-select-option')
         .exists({ count: 1 }, 'The list has been filtered');
       let input = this.element.querySelector(
-        '.ember-power-select-trigger-multiple-input'
+        '.ember-power-select-trigger-multiple-input',
       );
       assert.strictEqual(input.selectionStart, 3);
       assert.strictEqual(input.selectionEnd, 3);
@@ -606,12 +606,12 @@ module(
         assert.deepEqual(
           val,
           [countries[2]],
-          'The selected item was unselected'
+          'The selected item was unselected',
         );
         this.set('country', val);
         assert.ok(
           dropdown.actions.close,
-          'The dropdown API is received as second argument'
+          'The dropdown API is received as second argument',
         );
       };
       await render(hbs`
@@ -626,7 +626,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        8
+        8,
       );
       assert
         .dom('.ember-power-select-multiple-option')
@@ -661,7 +661,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        8
+        8,
       );
       assert
         .dom('.ember-power-select-multiple-option')
@@ -691,7 +691,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        8
+        8,
       );
 
       assert
@@ -716,7 +716,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        27
+        27,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -724,7 +724,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        40
+        40,
       );
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
     });
@@ -743,7 +743,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        27
+        27,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -751,7 +751,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        38
+        38,
       );
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
     });
@@ -771,7 +771,7 @@ module(
         .hasAttribute(
           'placeholder',
           'Select stuff here',
-          'There is a placeholder'
+          'There is a placeholder',
         );
       await clickTrigger();
       await click('.ember-power-select-option:nth-child(2)');
@@ -820,7 +820,7 @@ module(
         .hasAttribute(
           'placeholder',
           '',
-          'Input still does not have a placeholder'
+          'Input still does not have a placeholder',
         );
       await click('.ember-power-select-multiple-remove-btn');
       assert
@@ -828,7 +828,7 @@ module(
         .hasAttribute(
           'placeholder',
           '',
-          'Input still does not have a placeholder'
+          'Input still does not have a placeholder',
         );
     });
 
@@ -851,7 +851,7 @@ module(
         .hasAttribute(
           'placeholder',
           '',
-          'Input still does not have a placeholder'
+          'Input still does not have a placeholder',
         );
       assert
         .dom('.ember-power-select-multiple-option')
@@ -877,7 +877,7 @@ module(
         .hasAttribute(
           'placeholder',
           '',
-          'Input still does not have a placeholder'
+          'Input still does not have a placeholder',
         );
       assert
         .dom('.ember-power-select-multiple-option')
@@ -986,7 +986,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -1007,7 +1007,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasClass(
           'ember-power-select-multiple-trigger',
-          'The trigger has the default class'
+          'The trigger has the default class',
         );
       assert
         .dom('.ember-power-select-trigger')
@@ -1045,20 +1045,20 @@ module(
         .dom('.ember-power-select-trigger')
         .doesNotHaveClass(
           'ember-power-select-trigger--active',
-          'The trigger does not have the class'
+          'The trigger does not have the class',
         );
       await clickTrigger();
       assert
         .dom('.ember-power-select-trigger')
         .hasClass(
           'ember-power-select-trigger--active',
-          'The trigger has the class'
+          'The trigger has the class',
         );
       assert
         .dom('.ember-power-select-dropdown')
         .hasClass(
           'ember-power-select-dropdown--active',
-          'The dropdown has the class'
+          'The dropdown has the class',
         );
     });
 
@@ -1126,7 +1126,7 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText(
           'four',
-          'the given defaultHighlighted element is highlighted instead of the first, as usual'
+          'the given defaultHighlighted element is highlighted instead of the first, as usual',
         );
     });
 
@@ -1161,7 +1161,7 @@ module(
         .hasAttribute(
           'aria-selected',
           'true',
-          'The item in the list is marked as selected'
+          'The item in the list is marked as selected',
         );
       await click('.ember-power-select-option'); // select the same user again should remove it
       assert.dom('.ember-power-select-multiple-option').exists({ count: 0 });
@@ -1182,7 +1182,7 @@ module(
       assert.notEqual(
         disabledNumCountries,
         0,
-        'There is at least one disabled option'
+        'There is at least one disabled option',
       );
       this.foo = countriesWithDisabled;
       await render(hbs`
@@ -1192,11 +1192,11 @@ module(
     `);
       assert
         .dom(
-          '.ember-power-select-multiple-options .ember-power-select-multiple-option--disabled'
+          '.ember-power-select-multiple-options .ember-power-select-multiple-option--disabled',
         )
         .exists(
           { count: disabledNumCountries },
-          'The class "ember-power-select-multiple-option--disabled" is added to disabled options'
+          'The class "ember-power-select-multiple-option--disabled" is added to disabled options',
         );
     });
 
@@ -1257,5 +1257,5 @@ module(
         .dom('.ember-power-select-multiple-option')
         .exists({ count: 1 }, 'Shows selected option');
     });
-  }
+  },
 );
