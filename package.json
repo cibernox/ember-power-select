@@ -125,9 +125,6 @@
   "ember-addon": {
     "configPath": "tests/dummy/config"
   },
-  "overrides": {
-    "ember-source": "$ember-source"
-  },
   "release-it": {
     "plugins": {
       "@release-it-plugins/lerna-changelog": {
