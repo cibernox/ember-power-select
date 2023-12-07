@@ -135,7 +135,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: numbers.length },
-          'There is as many options in the markup as in the supplied array'
+          'There is as many options in the markup as in the supplied array',
         );
       assert.dom('.ember-power-select-option:nth-child(1)').hasText('one');
       assert.dom('.ember-power-select-option:nth-child(10)').hasText('ten');
@@ -160,7 +160,7 @@ module(
           later(function () {
             resolve(numbers);
           }, 150);
-        })
+        }),
       );
 
       clickTrigger();
@@ -169,13 +169,13 @@ module(
         .dom('.ember-power-select-option')
         .hasText(
           'Loading options...',
-          'The loading message appears while the promise is pending'
+          'The loading message appears while the promise is pending',
         );
       assert
         .dom('.ember-power-select-option')
         .hasClass(
           'ember-power-select-option--loading-message',
-          'The row has a special class to differentiate it from regular options'
+          'The row has a special class to differentiate it from regular options',
         );
       await settled();
       assert
@@ -185,7 +185,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: 20 },
-          'The results appear when the promise is resolved'
+          'The results appear when the promise is resolved',
         );
     });
 
@@ -205,7 +205,7 @@ module(
           later(function () {
             resolve(numbers);
           }, 100);
-        })
+        }),
       );
       clickTrigger();
 
@@ -217,7 +217,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: 20 },
-          'The results appear when the promise is resolved'
+          'The results appear when the promise is resolved',
         );
     });
 
@@ -235,7 +235,7 @@ module(
         .dom('.ember-power-select-trigger .ember-power-select-placeholder')
         .hasText(
           'abracadabra',
-          'The placeholder is rendered when there is no element'
+          'The placeholder is rendered when there is no element',
         );
       await clickTrigger();
       await click('.ember-power-select-option:nth-child(4)');
@@ -263,7 +263,7 @@ module(
         .hasAttribute(
           'placeholder',
           'foobar yo!',
-          'The searchbox has the proper placeholder'
+          'The searchbox has the proper placeholder',
         );
     });
 
@@ -319,7 +319,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasText(
           'three',
-          '"three" has been selected because a change came from the outside'
+          '"three" has been selected because a change came from the outside',
         );
     });
 
@@ -415,7 +415,7 @@ module(
           .dom('.ember-power-select-option')
           .exists(
             { count: 1 },
-            'The dropdown is opened and results shown after proxy is updated'
+            'The dropdown is opened and results shown after proxy is updated',
           );
         assert.dom('.ember-power-select-option').hasText('one');
         done();
@@ -438,7 +438,7 @@ module(
       };
 
       await render(
-        hbs`<PowerSelect @options={{this.proxy}} @searchEnabled={{true}} @search={{this.search}} @onChange={{fn (mut this.foo)}} as |option|> {{option}} </PowerSelect>`
+        hbs`<PowerSelect @options={{this.proxy}} @searchEnabled={{true}} @search={{this.search}} @onChange={{fn (mut this.foo)}} as |option|> {{option}} </PowerSelect>`,
       );
 
       await clickTrigger();
@@ -446,7 +446,7 @@ module(
       assert
         .dom('.ember-power-select-option')
         .exists(
-          'The dropdown is opened and results shown with initial proxy contents'
+          'The dropdown is opened and results shown with initial proxy contents',
         );
       assert.dom('.ember-power-select-option').hasText('one');
 
@@ -457,7 +457,7 @@ module(
           .dom('.ember-power-select-option')
           .exists(
             { count: 2 },
-            'The dropdown is opened and results shown after proxy is updated'
+            'The dropdown is opened and results shown after proxy is updated',
           );
         assert.dom('.ember-power-select-option:nth-child(1)').hasText('one');
         assert.dom('.ember-power-select-option:nth-child(2)').hasText('owner');
@@ -522,7 +522,7 @@ module(
         .dom('.ember-power-select-option')
         .exists(
           { count: numbers.length },
-          'the dropdown has shows all results'
+          'the dropdown has shows all results',
         );
     });
 
@@ -561,7 +561,7 @@ module(
         .dom('.ember-power-select-option')
         .hasClass(
           'ember-power-select-option--no-matches-message',
-          'The row has a special class to differentiate it from regular options'
+          'The row has a special class to differentiate it from regular options',
         );
     });
 
@@ -665,7 +665,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasText(
           'Selected: three',
-          'The selected option uses the same yielded block as the options'
+          'The selected option uses the same yielded block as the options',
         );
     });
 
@@ -704,7 +704,7 @@ module(
         .hasAttribute(
           'aria-selected',
           'true',
-          'The third option is marked as selected'
+          'The third option is marked as selected',
         );
     });
 
@@ -800,7 +800,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasText(
           'ES: Spain',
-          'The selected country is rendered in the trigger'
+          'The selected country is rendered in the trigger',
         );
     });
 
@@ -838,14 +838,14 @@ module(
       await clickTrigger();
       let selectedOption = findContains(
         '.ember-power-select-option',
-        'ES: Spain'
+        'ES: Spain',
       );
       assert
         .dom(selectedOption)
         .hasAttribute(
           'aria-selected',
           'true',
-          'The second option is marked as selected'
+          'The second option is marked as selected',
         );
     });
 
@@ -976,7 +976,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        40
+        40,
       );
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
@@ -1045,7 +1045,7 @@ module(
         'selected',
         new RSVP.Promise(function (resolve) {
           later(resolve, numbers[3], 100);
-        })
+        }),
       );
       clickTrigger();
       await waitFor('.ember-power-select-options');
@@ -1097,7 +1097,7 @@ module(
         'selected',
         new RSVP.Promise(function (resolve) {
           later(resolve, numbers[3], 100);
-        })
+        }),
       );
 
       clickTrigger();
@@ -1254,7 +1254,7 @@ module(
         .dom('.ember-power-select-trigger')
         .doesNotHaveClass(
           'ember-power-select-trigger--active',
-          "The select doesn't have the class yet"
+          "The select doesn't have the class yet",
         );
       await clickTrigger();
       await focus('.ember-power-select-search-input');
@@ -1262,7 +1262,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasClass(
           'ember-power-select-trigger--active',
-          'The select has the class now'
+          'The select has the class now',
         );
     });
 
@@ -1282,7 +1282,7 @@ module(
         .hasText('nine');
       assert.ok(
         document.querySelector('.ember-power-select-options').scrollTop > 0,
-        'The list has scrolled'
+        'The list has scrolled',
       );
     });
 
@@ -1347,7 +1347,7 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText(
           'five',
-          'the given element is highlighted instead of the first, as usual'
+          'the given element is highlighted instead of the first, as usual',
         );
     });
 
@@ -1374,7 +1374,7 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText(
           'five',
-          'the given element is highlighted instead of the first, as usual'
+          'the given element is highlighted instead of the first, as usual',
         );
     });
 
@@ -1417,7 +1417,7 @@ module(
         .hasAttribute(
           'aria-selected',
           'true',
-          'The item in the list is marked as selected'
+          'The item in the list is marked as selected',
         );
       await click('.ember-power-select-option:nth-child(1)');
       assert.strictEqual(onChangeInvocationsCount, 1);
@@ -1458,20 +1458,20 @@ module(
         .dom('.ember-power-select-dropdown')
         .hasClass(
           'ember-basic-dropdown-content--above',
-          'The dropdown is above'
+          'The dropdown is above',
         );
       assert
         .dom('.ember-power-select-dropdown')
         .hasClass(
           'ember-basic-dropdown-content--right',
-          'The dropdown is in the right'
+          'The dropdown is in the right',
         );
       assert
         .dom('.ember-power-select-dropdown')
         .hasAttribute(
           'style',
           /top: 111px; right: 222px;/,
-          'The style attribute is the expected one'
+          'The style attribute is the expected one',
         );
       await clickTrigger();
 
@@ -1481,20 +1481,20 @@ module(
         .dom('.ember-power-select-dropdown')
         .hasClass(
           'ember-basic-dropdown-content--below',
-          'The dropdown is below'
+          'The dropdown is below',
         );
       assert
         .dom('.ember-power-select-dropdown')
         .hasClass(
           'ember-basic-dropdown-content--left',
-          'The dropdown is in the left'
+          'The dropdown is in the left',
         );
       assert
         .dom('.ember-power-select-dropdown')
         .hasAttribute(
           'style',
           /top: 333px; right: 444px;/,
-          'The style attribute is the expected one'
+          'The style attribute is the expected one',
         );
     });
 
@@ -1518,7 +1518,7 @@ module(
         'mainUser.bestie',
         new RSVP.Promise(function (resolve) {
           setTimeout(() => resolve(pets[2]), 90);
-        })
+        }),
       );
 
       await clickTrigger();
@@ -1615,5 +1615,5 @@ module(
 
       //TODO: also try starting from non-null value and maybe also going back to null?
     });
-  }
+  },
 );

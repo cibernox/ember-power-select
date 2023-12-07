@@ -79,7 +79,7 @@ export async function touchTrigger() {
 export async function selectChoose(
   cssPathOrTrigger,
   valueOrSelector,
-  optionIndex
+  optionIndex,
 ) {
   return _selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex);
 }
@@ -116,10 +116,10 @@ export default function () {
       deprecate(
         'Using the implicit global async helper `selectChoose` is deprecated. Please, import it explicitly with `import { selectChoose } from "ember-power-select/test-support"`',
         true,
-        { id: 'ember-power-select-global-select-choose', until: '2.0.0' }
+        { id: 'ember-power-select-global-select-choose', until: '2.0.0' },
       );
       return _selectChoose(cssPathOrTrigger, valueOrSelector, optionIndex);
-    }
+    },
   );
 
   registerAsyncHelper(
@@ -128,10 +128,10 @@ export default function () {
       deprecate(
         'Using the implicit global async helper `selectSearch` is deprecated. Please, import it explicitly with `import { selectSearch } from "ember-power-select/test-support"`',
         true,
-        { id: 'ember-power-select-global-select-search', until: '2.0.0' }
+        { id: 'ember-power-select-global-select-search', until: '2.0.0' },
       );
       return _selectSearch(cssPathOrTrigger, value);
-    }
+    },
   );
 
   registerAsyncHelper(
@@ -143,17 +143,17 @@ export default function () {
         {
           id: 'ember-power-select-global-remove-multiple-option',
           until: '2.0.0',
-        }
+        },
       );
       return _removeMultipleOption(cssPath, value);
-    }
+    },
   );
 
   registerAsyncHelper('clearSelected', async function (app, cssPath) {
     deprecate(
       'Using the implicit global async helper `clearSelected` is deprecated. Please, import it explicitly with `import { clearSelected } from "ember-power-select/test-support"`',
       true,
-      { id: 'ember-power-select-global-clear-selected', until: '2.0.0' }
+      { id: 'ember-power-select-global-clear-selected', until: '2.0.0' },
     );
     return _clearSelected(cssPath);
   });

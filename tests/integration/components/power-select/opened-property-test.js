@@ -34,5 +34,5 @@ module(
 
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
     });
-  }
+  },
 );

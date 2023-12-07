@@ -6,7 +6,7 @@ var inputFile = path.join(
   __dirname,
   'app',
   'styles',
-  'ember-power-select.scss'
+  'ember-power-select.scss',
 );
 var outputFile = path.join(__dirname, 'vendor', 'ember-power-select.css');
 var themesFolder = path.join(
@@ -14,7 +14,7 @@ var themesFolder = path.join(
   'app',
   'styles',
   'ember-power-select',
-  'themes'
+  'themes',
 );
 var buf = fs.readFileSync(inputFile, 'utf8');
 
@@ -41,7 +41,7 @@ themes.forEach(function (theme) {
   var destinationFile = path.join(
     __dirname,
     'vendor',
-    'ember-power-select-' + parts[0] + '.css'
+    'ember-power-select-' + parts[0] + '.css',
   );
   fs.writeFileSync(destinationFile, out.css);
 });

@@ -29,10 +29,10 @@ module(
         .hasAttribute(
           'role',
           'listbox',
-          'The top-level list has `role=listbox`'
+          'The top-level list has `role=listbox`',
         );
       let nestedOptionList = document.querySelectorAll(
-        '.ember-power-select-options .ember-power-select-options'
+        '.ember-power-select-options .ember-power-select-options',
       );
       [].slice
         .call(nestedOptionList)
@@ -55,10 +55,10 @@ module(
         .hasAttribute(
           'role',
           'listbox',
-          'The top-level list has `role=listbox`'
+          'The top-level list has `role=listbox`',
         );
       let nestedOptionList = document.querySelectorAll(
-        '.ember-power-select-options .ember-power-select-options'
+        '.ember-power-select-options .ember-power-select-options',
       );
       [].slice
         .call(nestedOptionList)
@@ -116,13 +116,13 @@ module(
         .hasAttribute(
           'aria-selected',
           'true',
-          'the selected option has aria-selected=true'
+          'the selected option has aria-selected=true',
         );
       assert
         .dom('.ember-power-select-option[aria-selected="false"]')
         .exists(
           { count: numbers.length - 1 },
-          'All other options have aria-selected=false'
+          'All other options have aria-selected=false',
         );
     });
 
@@ -143,20 +143,20 @@ module(
         .hasAttribute(
           'aria-selected',
           'true',
-          'the first selected option has aria-selected=true'
+          'the first selected option has aria-selected=true',
         );
       assert
         .dom(findContains('.ember-power-select-option', 'four'))
         .hasAttribute(
           'aria-selected',
           'true',
-          'the second selected option has aria-selected=true'
+          'the second selected option has aria-selected=true',
         );
       assert
         .dom('.ember-power-select-option[aria-selected="false"]')
         .exists(
           { count: numbers.length - 2 },
-          'All other options have aria-selected=false'
+          'All other options have aria-selected=false',
         );
     });
 
@@ -176,13 +176,13 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'the highlighted option has aria-current=true'
+          'the highlighted option has aria-current=true',
         );
       assert
         .dom('.ember-power-select-option[aria-current="false"]')
         .exists(
           { count: numbers.length - 1 },
-          'All other options have aria-current=false'
+          'All other options have aria-current=false',
         );
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
       assert
@@ -190,14 +190,14 @@ module(
         .hasAttribute(
           'aria-current',
           'false',
-          'the first option has now aria-current=false'
+          'the first option has now aria-current=false',
         );
       assert
         .dom(findContains('.ember-power-select-option', 'two'))
         .hasAttribute(
           'aria-current',
           'true',
-          'the second option has now aria-current=false'
+          'the second option has now aria-current=false',
         );
     });
 
@@ -217,13 +217,13 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'the highlighted option has aria-current=true'
+          'the highlighted option has aria-current=true',
         );
       assert
         .dom('.ember-power-select-option[aria-current="false"]')
         .exists(
           { count: numbers.length - 1 },
-          'All other options have aria-current=false'
+          'All other options have aria-current=false',
         );
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
       assert
@@ -231,14 +231,14 @@ module(
         .hasAttribute(
           'aria-current',
           'false',
-          'the first option has now aria-current=false'
+          'the first option has now aria-current=false',
         );
       assert
         .dom(findContains('.ember-power-select-option', 'two'))
         .hasAttribute(
           'aria-current',
           'true',
-          'the second option has now aria-current=false'
+          'the second option has now aria-current=false',
         );
     });
 
@@ -360,7 +360,7 @@ module(
         .hasAttribute(
           'id',
           /^ember-power-select-options-ember\d+$/,
-          'The search has a unique id'
+          'The search has a unique id',
         );
     });
 
@@ -380,7 +380,7 @@ module(
         .hasAttribute(
           'id',
           /^ember-power-select-options-ember\d+$/,
-          'The search has a unique id'
+          'The search has a unique id',
         );
     });
 
@@ -403,7 +403,7 @@ module(
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
-          'The `aria-controls` points to the id of the listbox'
+          'The `aria-controls` points to the id of the listbox',
         );
     });
 
@@ -426,7 +426,7 @@ module(
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
-          'The `aria-controls` points to the id of the listbox'
+          'The `aria-controls` points to the id of the listbox',
         );
     });
 
@@ -448,24 +448,24 @@ module(
           assert.strictEqual(
             e.parentElement.tagName,
             'UL',
-            'The parent element is a list'
+            'The parent element is a list',
           );
           let closeButton = e.querySelector(
-            '.ember-power-select-multiple-remove-btn'
+            '.ember-power-select-multiple-remove-btn',
           );
           assert
             .dom(closeButton)
             .hasAttribute(
               'role',
               'button',
-              'The role of the close button is "button"'
+              'The role of the close button is "button"',
             );
           assert
             .dom(closeButton)
             .hasAttribute(
               'aria-label',
               'remove element',
-              'The close button has a helpful aria label'
+              'The close button has a helpful aria label',
             );
         });
     });
@@ -491,7 +491,7 @@ module(
         .hasAttribute(
           'aria-label',
           'ariaLabelString',
-          'aria-label set correctly'
+          'aria-label set correctly',
         );
       assert
         .dom('.ember-power-select-trigger')
@@ -522,7 +522,7 @@ module(
         .hasAttribute(
           'aria-label',
           'ariaLabelString',
-          'aria-label set correctly'
+          'aria-label set correctly',
         );
       assert
         .dom('.ember-power-select-trigger')
@@ -552,14 +552,14 @@ module(
         .hasAttribute(
           'aria-describedby',
           'ariaDescribedByString',
-          'aria-describedby set correctly'
+          'aria-describedby set correctly',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-labelledby',
           'ariaLabelledByString',
-          'aria-required set correctly'
+          'aria-required set correctly',
         );
     });
 
@@ -583,14 +583,14 @@ module(
         .hasAttribute(
           'aria-describedby',
           'ariaDescribedByString',
-          'aria-describedby set correctly'
+          'aria-describedby set correctly',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-labelledby',
           'ariaLabelledByString',
-          'aria-required set correctly'
+          'aria-required set correctly',
         );
     });
 
@@ -641,13 +641,13 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-owns',
-          document.querySelector('.ember-power-select-dropdown').id
+          document.querySelector('.ember-power-select-dropdown').id,
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-dropdown').id
+          document.querySelector('.ember-power-select-dropdown').id,
         );
     });
 
@@ -674,7 +674,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-dropdown').id
+          document.querySelector('.ember-power-select-dropdown').id,
         );
 
       assert
@@ -684,7 +684,7 @@ module(
         .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-options').id
+          document.querySelector('.ember-power-select-options').id,
         );
     });
 
@@ -702,7 +702,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasNoAttribute(
           'aria-activedescendant',
-          'aria-activedescendant is not present when the dropdown is closed'
+          'aria-activedescendant is not present when the dropdown is closed',
         );
 
       await clickTrigger();
@@ -713,19 +713,19 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first element is highlighted'
+          'The first element is highlighted',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(1)').id,
-          'The first element is the aria-activedescendant'
+          'The first element is the aria-activedescendant',
         );
 
       await triggerEvent(
         '.ember-power-select-option:nth-child(4)',
-        'mouseover'
+        'mouseover',
       );
 
       assert
@@ -736,7 +736,7 @@ module(
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(4)').id,
-          'The 4th element is the aria-activedescendant'
+          'The 4th element is the aria-activedescendant',
         );
     });
 
@@ -761,20 +761,20 @@ module(
         .hasAttribute(
           'aria-controls',
           /^ember-basic-dropdown-content-ember\d+$/,
-          'The trigger has aria-controls value'
+          'The trigger has aria-controls value',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasNoAttribute(
           'aria-activedescendant',
-          'aria-activedescendant is not present when the dropdown is closed'
+          'aria-activedescendant is not present when the dropdown is closed',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-haspopup',
           'listbox',
-          'aria-haspopup is present on the trigger'
+          'aria-haspopup is present on the trigger',
         );
 
       await clickTrigger();
@@ -785,19 +785,19 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first element is highlighted'
+          'The first element is highlighted',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(1)').id,
-          'The first element is the aria-activedescendant'
+          'The first element is the aria-activedescendant',
         );
 
       await triggerEvent(
         '.ember-power-select-option:nth-child(4)',
-        'mouseover'
+        'mouseover',
       );
 
       assert
@@ -808,7 +808,7 @@ module(
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(4)').id,
-          'The 4th element is the aria-activedescendant'
+          'The 4th element is the aria-activedescendant',
         );
     });
 
@@ -833,19 +833,19 @@ module(
         .hasAttribute(
           'aria-controls',
           /^ember-basic-dropdown-content-ember\d+$/,
-          'The trigger has aria-controls value'
+          'The trigger has aria-controls value',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasNoAttribute(
           'aria-activedescendant',
-          'aria-activedescendant is not present on the trigger'
+          'aria-activedescendant is not present on the trigger',
         );
       assert
         .dom('.ember-power-select-trigger')
         .hasNoAttribute(
           'aria-haspopup',
-          'aria-haspopup is not present on the trigger'
+          'aria-haspopup is not present on the trigger',
         );
 
       await clickTrigger();
@@ -855,21 +855,21 @@ module(
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
-          'Multi select search box has aria-controls value'
+          'Multi select search box has aria-controls value',
         );
       assert
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(
           'aria-haspopup',
           'listbox',
-          'Multi select search box has aria-haspopup value'
+          'Multi select search box has aria-haspopup value',
         );
       assert
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(
           'aria-expanded',
           'true',
-          'Multi select search box has aria-expanded value'
+          'Multi select search box has aria-expanded value',
         );
 
       // by default, the first option is highlighted and marked as aria-activedescendant
@@ -878,19 +878,19 @@ module(
         .hasAttribute(
           'aria-current',
           'true',
-          'The first element is highlighted'
+          'The first element is highlighted',
         );
       assert
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(1)').id,
-          'The first element is the aria-activedescendant'
+          'The first element is the aria-activedescendant',
         );
 
       await triggerEvent(
         '.ember-power-select-option:nth-child(4)',
-        'mouseover'
+        'mouseover',
       );
 
       assert
@@ -901,8 +901,8 @@ module(
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(4)').id,
-          'The 4th element is the aria-activedescendant'
+          'The 4th element is the aria-activedescendant',
         );
     });
-  }
+  },
 );

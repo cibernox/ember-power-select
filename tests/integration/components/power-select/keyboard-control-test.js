@@ -123,7 +123,7 @@ module(
       assert.strictEqual(
         document.querySelector('.ember-power-select-options').scrollTop,
         0,
-        'The list is not scrolled'
+        'The list is not scrolled',
       );
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
       assert
@@ -131,7 +131,7 @@ module(
         .hasText('eight', 'The next option is highlighted now');
       assert.ok(
         document.querySelector('.ember-power-select-options').scrollTop > 0,
-        'The list has scrolled'
+        'The list has scrolled',
       );
     });
 
@@ -143,12 +143,12 @@ module(
         assert.strictEqual(
           val,
           'two',
-          'The onchange action is triggered with the selected value'
+          'The onchange action is triggered with the selected value',
         );
         this.set('selected', val);
         assert.ok(
           dropdown.actions.close,
-          'The action receives the dropdown as second argument'
+          'The action receives the dropdown as second argument',
         );
       };
 
@@ -180,12 +180,12 @@ module(
         assert.strictEqual(
           val,
           'two',
-          'The onchange action is triggered with the selected value'
+          'The onchange action is triggered with the selected value',
         );
         this.set('selected', val);
         assert.ok(
           dropdown.actions.close,
-          'The action receives the dropdown as second argument'
+          'The action receives the dropdown as second argument',
         );
       };
 
@@ -245,16 +245,16 @@ module(
         assert.strictEqual(
           val,
           'two',
-          'The onchange action is triggered with the selected value'
+          'The onchange action is triggered with the selected value',
         );
         this.set('selected', val);
         assert.ok(
           e.defaultPrevented,
-          'The event has been defaultPrevented to avoid page scroll'
+          'The event has been defaultPrevented to avoid page scroll',
         );
         assert.ok(
           dropdown.actions.close,
-          'The action receives the dropdown as second argument'
+          'The action receives the dropdown as second argument',
         );
       };
 
@@ -425,32 +425,32 @@ module(
       this.handleKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),
-          'The yieded object has the `isOpen` key'
+          'The yieded object has the `isOpen` key',
         );
         assert.ok(
           select.actions.open,
-          'The yieded object has an `actions.open` key'
+          'The yieded object has an `actions.open` key',
         );
         assert.ok(
           select.actions.close,
-          'The yieded object has an `actions.close` key'
+          'The yieded object has an `actions.close` key',
         );
         assert.ok(
           select.actions.select,
-          'The yieded object has an `actions.select` key'
+          'The yieded object has an `actions.select` key',
         );
         assert.ok(
           select.actions.highlight,
-          'The yieded object has an `actions.highlight` key'
+          'The yieded object has an `actions.highlight` key',
         );
         assert.ok(
           select.actions.search,
-          'The yieded object has an `actions.search` key'
+          'The yieded object has an `actions.search` key',
         );
         assert.strictEqual(
           e.keyCode,
           13,
-          'The event is received as second argument'
+          'The event is received as second argument',
         );
       };
 
@@ -476,32 +476,32 @@ module(
       this.handleKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),
-          'The yieded object has the `isOpen` key'
+          'The yieded object has the `isOpen` key',
         );
         assert.ok(
           select.actions.open,
-          'The yieded object has an `actions.open` key'
+          'The yieded object has an `actions.open` key',
         );
         assert.ok(
           select.actions.close,
-          'The yieded object has an `actions.close` key'
+          'The yieded object has an `actions.close` key',
         );
         assert.ok(
           select.actions.select,
-          'The yieded object has an `actions.select` key'
+          'The yieded object has an `actions.select` key',
         );
         assert.ok(
           select.actions.highlight,
-          'The yieded object has an `actions.highlight` key'
+          'The yieded object has an `actions.highlight` key',
         );
         assert.ok(
           select.actions.search,
-          'The yieded object has an `actions.search` key'
+          'The yieded object has an `actions.search` key',
         );
         assert.strictEqual(
           e.keyCode,
           32,
-          'The event is received as second argument'
+          'The event is received as second argument',
         );
       };
 
@@ -530,32 +530,32 @@ module(
       this.handleKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),
-          'The yieded object has the `isOpen` key'
+          'The yieded object has the `isOpen` key',
         );
         assert.ok(
           select.actions.open,
-          'The yieded object has an `actions.open` key'
+          'The yieded object has an `actions.open` key',
         );
         assert.ok(
           select.actions.close,
-          'The yieded object has an `actions.close` key'
+          'The yieded object has an `actions.close` key',
         );
         assert.ok(
           select.actions.select,
-          'The yieded object has an `actions.select` key'
+          'The yieded object has an `actions.select` key',
         );
         assert.ok(
           select.actions.highlight,
-          'The yieded object has an `actions.highlight` key'
+          'The yieded object has an `actions.highlight` key',
         );
         assert.ok(
           select.actions.search,
-          'The yieded object has an `actions.search` key'
+          'The yieded object has an `actions.search` key',
         );
         assert.strictEqual(
           e.keyCode,
           32,
-          'The event is received as second argument'
+          'The event is received as second argument',
         );
       };
 
@@ -570,7 +570,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        32
+        32,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -611,32 +611,32 @@ module(
       this.handleKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),
-          'The yieded object has the `isOpen` key'
+          'The yieded object has the `isOpen` key',
         );
         assert.ok(
           select.actions.open,
-          'The yieded object has an `actions.open` key'
+          'The yieded object has an `actions.open` key',
         );
         assert.ok(
           select.actions.close,
-          'The yieded object has an `actions.close` key'
+          'The yieded object has an `actions.close` key',
         );
         assert.ok(
           select.actions.select,
-          'The yieded object has an `actions.select` key'
+          'The yieded object has an `actions.select` key',
         );
         assert.ok(
           select.actions.highlight,
-          'The yieded object has an `actions.highlight` key'
+          'The yieded object has an `actions.highlight` key',
         );
         assert.ok(
           select.actions.search,
-          'The yieded object has an `actions.search` key'
+          'The yieded object has an `actions.search` key',
         );
         assert.strictEqual(
           e.keyCode,
           13,
-          'The event is received as second argument'
+          'The event is received as second argument',
         );
       };
 
@@ -651,7 +651,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -676,7 +676,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -756,7 +756,7 @@ module(
       assert.strictEqual(
         document.querySelector('.ember-power-select-options').scrollTop,
         0,
-        'The list is not scrolled'
+        'The list is not scrolled',
       );
       triggerKeydown('.ember-power-select-trigger', 78); // n
       triggerKeydown('.ember-power-select-trigger', 73); // i
@@ -769,7 +769,7 @@ module(
         .hasText('nine', 'The option containing "nine" has been highlighted');
       assert.ok(
         document.querySelector('.ember-power-select-options').scrollTop > 0,
-        'The list has scrolled'
+        'The list has scrolled',
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -791,7 +791,7 @@ module(
       assert.strictEqual(
         document.querySelector('.ember-power-select-options').scrollTop,
         0,
-        'The list is not scrolled'
+        'The list is not scrolled',
       );
       await triggerKeydown('.ember-power-select-trigger', 104); // Numpad 8
       assert
@@ -802,7 +802,7 @@ module(
         .hasText('853', 'The option containing "853" has been highlighted');
       assert.ok(
         document.querySelector('.ember-power-select-options').scrollTop > 0,
-        'The list has scrolled'
+        'The list has scrolled',
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -824,7 +824,7 @@ module(
       assert.strictEqual(
         document.querySelector('.ember-power-select-options').scrollTop,
         0,
-        'The list is not scrolled'
+        'The list is not scrolled',
       );
       triggerKeydown('.ember-power-select-trigger', 78); // n
       triggerKeydown('.ember-power-select-trigger', 73); // i
@@ -837,7 +837,7 @@ module(
         .hasText('nine', 'The option containing "nine" has been highlighted');
       assert.ok(
         document.querySelector('.ember-power-select-options').scrollTop > 0,
-        'The list has scrolled'
+        'The list has scrolled',
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -872,7 +872,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasText(
           'one',
-          '"one" has been selected, instead of "two", because the typing started over'
+          '"one" has been selected, instead of "two", because the typing started over',
         );
       assert
         .dom('.ember-power-select-dropdown')
@@ -905,7 +905,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasText(
           'nine',
-          'nine is still selected because "ninew" gave no results'
+          'nine is still selected because "ninew" gave no results',
         );
     });
 
@@ -930,7 +930,7 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText(
           'Portugal',
-          'The option containing "Portugal" has been highlighted'
+          'The option containing "Portugal" has been highlighted',
         );
       assert
         .dom('.ember-power-select-dropdown')
@@ -958,7 +958,7 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText(
           'eleven',
-          'The option containing "eleven" has been highlighted'
+          'The option containing "eleven" has been highlighted',
         );
       assert
         .dom('.ember-power-select-dropdown')
@@ -969,7 +969,7 @@ module(
       assert.expect(4);
 
       this.countries = countriesWithDisabled.map((country) =>
-        Object.assign({}, country)
+        Object.assign({}, country),
       );
       this.countries[0].disabled = true;
       await render(hbs`
@@ -988,7 +988,7 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText(
           'United Kingdom',
-          'The option containing "United Kingdom" has been highlighted'
+          'The option containing "United Kingdom" has been highlighted',
         );
       assert
         .dom('.ember-power-select-dropdown')
@@ -1016,7 +1016,7 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText(
           'twelve',
-          'The option containing "United Kingdom" has been highlighted'
+          'The option containing "United Kingdom" has been highlighted',
         );
       assert
         .dom('.ember-power-select-dropdown')
@@ -1047,11 +1047,11 @@ module(
       setTimeout(function () {
         assert.ok(
           events[0].defaultPrevented,
-          'The first event was default prevented'
+          'The first event was default prevented',
         );
         assert.ok(
           events[1].defaultPrevented,
-          'The second event was default prevented'
+          'The second event was default prevented',
         );
         done();
       }, 50);
@@ -1082,11 +1082,11 @@ module(
       setTimeout(function () {
         assert.notOk(
           events[0].defaultPrevented,
-          'The first event was default prevented'
+          'The first event was default prevented',
         );
         assert.notOk(
           events[1].defaultPrevented,
-          'The second event was default prevented'
+          'The second event was default prevented',
         );
         done();
       }, 50);
@@ -1116,11 +1116,11 @@ module(
       setTimeout(function () {
         assert.ok(
           events[0].defaultPrevented,
-          'The first event was default prevented'
+          'The first event was default prevented',
         );
         assert.ok(
           events[1].defaultPrevented,
-          'The second event was default prevented'
+          'The second event was default prevented',
         );
         done();
       }, 50);
@@ -1151,11 +1151,11 @@ module(
       setTimeout(function () {
         assert.notOk(
           events[0].defaultPrevented,
-          'The first event was default prevented'
+          'The first event was default prevented',
         );
         assert.notOk(
           events[1].defaultPrevented,
-          'The second event was default prevented'
+          'The second event was default prevented',
         );
         done();
       }, 50);
@@ -1181,25 +1181,25 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'ArrowDown'
+        'ArrowDown',
       );
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'ArrowDown'
+        'ArrowDown',
       );
       // Select second option (data-index=1)
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'Enter'
+        'Enter',
       );
       assert.dom('[data-option-index="1"][aria-current="true"]').exists();
       // Next ArrowDown should highlight (data-index=2)
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'ArrowDown'
+        'ArrowDown',
       );
       assert.dom('[data-option-index="2"][aria-current="true"]').exists();
     });
@@ -1227,52 +1227,52 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'ArrowDown'
+        'ArrowDown',
       );
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'Enter'
+        'Enter',
       );
       // select first
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'ArrowDown'
+        'ArrowDown',
       );
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'ArrowDown'
+        'ArrowDown',
       );
       // Select second option
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'Enter'
+        'Enter',
       );
       assert.strictEqual(this.selected.length, 2);
       // Select second option 2 more times with Enter keydown
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'Enter'
+        'Enter',
       );
       await triggerKeyEvent(
         '.ember-power-select-multiple-trigger',
         'keydown',
-        'Enter'
+        'Enter',
       );
 
       assert.strictEqual(
         this.selected.length,
         2,
-        'it does not add additional elements to the selected array'
+        'it does not add additional elements to the selected array',
       );
       assert.false(
         this.selected.some((selection) => Array.isArray(selection)),
-        'it does not add empty arrays to the selected array'
+        'it does not add empty arrays to the selected array',
       );
     });
-  }
+  },
 );

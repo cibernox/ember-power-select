@@ -57,7 +57,7 @@ module(
         .dom('.custom-trigger-component')
         .hasText(
           'hmmmm paella',
-          'The loading message is passed to the trigger component'
+          'The loading message is passed to the trigger component',
         );
     });
 
@@ -138,7 +138,7 @@ module(
         .dom('.ember-power-select-options')
         .includesText(
           '3. RU',
-          'The component uses the field in the extra has to render the options'
+          'The component uses the field in the extra has to render the options',
         );
     });
 
@@ -164,7 +164,7 @@ module(
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
         .exists(
-          'The custom component is rendered instead of the usual search bar'
+          'The custom component is rendered instead of the usual search bar',
         );
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
@@ -198,7 +198,7 @@ module(
       assert
         .dom('.ember-power-select-dropdown #custom-after-options-p-tag')
         .exists(
-          'The custom component is rendered instead of the usual search bar'
+          'The custom component is rendered instead of the usual search bar',
         );
       assert
         .dom('.ember-power-select-search-input')
@@ -233,7 +233,7 @@ module(
       assert.strictEqual(
         counter,
         2,
-        'The action inside the extra hash has been called twice'
+        'The action inside the extra hash has been called twice',
       );
     });
 
@@ -246,46 +246,46 @@ module(
         assert.strictEqual(
           typeof select.isOpen,
           'boolean',
-          'select.isOpen is a boolean'
+          'select.isOpen is a boolean',
         );
         assert.strictEqual(
           typeof select.searchText,
           'string',
-          'select.searchText is a string'
+          'select.searchText is a string',
         );
         assert.strictEqual(
           typeof select.actions.open,
           'function',
-          'select.actions.open is a function'
+          'select.actions.open is a function',
         );
         assert.strictEqual(
           typeof select.actions.close,
           'function',
-          'select.actions.close is a function'
+          'select.actions.close is a function',
         );
         assert.strictEqual(
           typeof select.actions.reposition,
           'function',
-          'select.actions.reposition is a function'
+          'select.actions.reposition is a function',
         );
         assert.strictEqual(
           typeof select.actions.search,
           'function',
-          'select.actions.search is a function'
+          'select.actions.search is a function',
         );
         assert.strictEqual(
           typeof select.actions.highlight,
           'function',
-          'select.actions.highlight is a function'
+          'select.actions.highlight is a function',
         );
         assert.strictEqual(
           typeof select.actions.select,
           'function',
-          'select.actions.select is a function'
+          'select.actions.select is a function',
         );
         assert.ok(
           event instanceof window.Event,
-          'The second argument is an event'
+          'The second argument is an event',
         );
       };
       await render(hbs`
@@ -319,7 +319,7 @@ module(
       assert
         .dom('.ember-power-select-dropdown #custom-search-message-p-tag')
         .exists(
-          'The custom component is rendered instead of the usual message'
+          'The custom component is rendered instead of the usual message',
         );
     });
 
@@ -343,7 +343,7 @@ module(
       assert
         .dom('.ember-power-select-dropdown #custom-no-matches-message-p-tag')
         .exists(
-          'The custom component is rendered instead of the usual message'
+          'The custom component is rendered instead of the usual message',
         );
       assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
     });
@@ -370,7 +370,7 @@ module(
         .dom('.ember-power-select-placeholder')
         .hasText(
           'This is a very bold placeholder',
-          'The placeholder content is equal.'
+          'The placeholder content is equal.',
         );
     });
 
@@ -443,7 +443,7 @@ module(
         .dom('.ember-power-select-placeholder')
         .hasText(
           'This is a very bold placeholder',
-          'The placeholder content is equal.'
+          'The placeholder content is equal.',
         );
     });
 
@@ -472,7 +472,7 @@ module(
         .dom('.ember-power-select-placeholder')
         .hasText(
           'This is a very bold placeholder',
-          'The placeholder content is equal.'
+          'The placeholder content is equal.',
         );
     });
 
@@ -502,7 +502,7 @@ module(
         .dom('.ember-power-select-options')
         .includesText(
           '3. RU',
-          'The component uses the field option in the `extra` hash to render the options'
+          'The component uses the field option in the `extra` hash to render the options',
         );
     });
 
@@ -529,7 +529,7 @@ module(
         .dom('.ember-power-select-trigger .cool-flag-icon')
         .exists(
           { count: 1 },
-          'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.'
+          'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.',
         );
     });
 
@@ -556,8 +556,8 @@ module(
         .dom('.ember-power-select-trigger .cool-flag-icon')
         .exists(
           { count: 1 },
-          'The custom selectedItemComponent renders with the extra.coolFlagIcon.'
+          'The custom selectedItemComponent renders with the extra.coolFlagIcon.',
         );
     });
-  }
+  },
 );

@@ -85,7 +85,7 @@ module(
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
         .exists(
-          'The custom component is rendered instead of the usual search bar'
+          'The custom component is rendered instead of the usual search bar',
         );
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
@@ -115,7 +115,7 @@ module(
       assert
         .dom('.ember-power-select-dropdown #custom-search-message-p-tag')
         .exists(
-          'The custom component is rendered instead of the usual message'
+          'The custom component is rendered instead of the usual message',
         );
     });
 
@@ -139,7 +139,7 @@ module(
       assert
         .dom('.ember-power-select-dropdown #custom-no-matches-message-p-tag')
         .exists(
-          'The custom component is rendered instead of the usual message'
+          'The custom component is rendered instead of the usual message',
         );
       assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
     });
@@ -166,7 +166,7 @@ module(
         .dom('.ember-power-select-placeholder')
         .hasText(
           'This is a very bold placeholder',
-          'The placeholder content is equal.'
+          'The placeholder content is equal.',
         );
     });
 
@@ -212,8 +212,8 @@ module(
         .dom('.ember-power-select-trigger .cool-flag-icon')
         .exists(
           { count: 1 },
-          'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.'
+          'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.',
         );
     });
-  }
+  },
 );

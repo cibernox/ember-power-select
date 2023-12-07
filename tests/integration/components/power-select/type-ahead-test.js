@@ -80,7 +80,7 @@ module(
         helpers.checkSelectedValue(
           helpers.valueAt(this.names, 'aaa'.length),
           trigger,
-          assert
+          assert,
         );
       });
 
@@ -102,7 +102,7 @@ module(
         helpers.checkSelectedValue(
           helpers.valueAt(this.names, length + 1),
           trigger,
-          assert
+          assert,
         );
       });
 
@@ -123,7 +123,7 @@ module(
         assert.notEqual(
           helpers.valueAt(this.names, 'aar'.length),
           'Aaran',
-          'Aaran would not be selected unless aa was remembered'
+          'Aaran would not be selected unless aa was remembered',
         );
       });
 
@@ -169,5 +169,5 @@ module(
         helpers.checkSelectedValue('Fbb', trigger, assert);
       });
     });
-  }
+  },
 );

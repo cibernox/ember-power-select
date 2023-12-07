@@ -13,91 +13,91 @@ function assertPublicAPIShape(assert, select) {
   assert.strictEqual(
     typeof select.uniqueId,
     'string',
-    'select.uniqueId is a string'
+    'select.uniqueId is a string',
   );
   assert.strictEqual(
     typeof select.isOpen,
     'boolean',
-    'select.isOpen is a boolean'
+    'select.isOpen is a boolean',
   );
   assert.strictEqual(
     typeof select.disabled,
     'boolean',
-    'select.disabled is a boolean'
+    'select.disabled is a boolean',
   );
   assert.strictEqual(
     typeof select.isActive,
     'boolean',
-    'select.isActive is a boolean'
+    'select.isActive is a boolean',
   );
   assert.strictEqual(
     typeof select.loading,
     'boolean',
-    'select.loading is a boolean'
+    'select.loading is a boolean',
   );
   assert.ok(select.options instanceof Array, 'select.options is an array');
   assert.ok(select.results instanceof Array, 'select.results is an array');
   assert.strictEqual(
     typeof select.resultsCount,
     'number',
-    'select.resultsCount is a number'
+    'select.resultsCount is a number',
   );
   assert.ok(Object.prototype.hasOwnProperty.call(select, 'selected'));
   assert.ok(Object.prototype.hasOwnProperty.call(select, 'highlighted'));
   assert.strictEqual(
     typeof select.searchText,
     'string',
-    'select.searchText is a string'
+    'select.searchText is a string',
   );
   assert.strictEqual(
     typeof select.lastSearchedText,
     'string',
-    'select.lastSearchedText is a string'
+    'select.lastSearchedText is a string',
   );
   assert.strictEqual(
     typeof select.actions.open,
     'function',
-    'select.actions.open is a function'
+    'select.actions.open is a function',
   );
   assert.strictEqual(
     typeof select.actions.close,
     'function',
-    'select.actions.close is a function'
+    'select.actions.close is a function',
   );
   assert.strictEqual(
     typeof select.actions.toggle,
     'function',
-    'select.actions.toggle is a function'
+    'select.actions.toggle is a function',
   );
   assert.strictEqual(
     typeof select.actions.reposition,
     'function',
-    'select.actions.reposition is a function'
+    'select.actions.reposition is a function',
   );
   assert.strictEqual(
     typeof select.actions.search,
     'function',
-    'select.actions.search is a function'
+    'select.actions.search is a function',
   );
   assert.strictEqual(
     typeof select.actions.highlight,
     'function',
-    'select.actions.highlight is a function'
+    'select.actions.highlight is a function',
   );
   assert.strictEqual(
     typeof select.actions.select,
     'function',
-    'select.actions.select is a function'
+    'select.actions.select is a function',
   );
   assert.strictEqual(
     typeof select.actions.choose,
     'function',
-    'select.actions.choose is a function'
+    'select.actions.choose is a function',
   );
   assert.strictEqual(
     typeof select.actions.scrollTo,
     'function',
-    'select.actions.scrollTo is a function'
+    'select.actions.scrollTo is a function',
   );
 }
 
@@ -114,7 +114,7 @@ module(
         assert.strictEqual(
           term,
           'el',
-          'The search term is received as 1st argument'
+          'The search term is received as 1st argument',
         );
         assertPublicAPIShape(assert, select);
       };
@@ -137,7 +137,7 @@ module(
         assert.strictEqual(
           term,
           'el',
-          'The search term is received as 1st argument'
+          'The search term is received as 1st argument',
         );
         assertPublicAPIShape(assert, select);
       };
@@ -258,12 +258,12 @@ module(
       triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        65
+        65,
       );
     });
 
@@ -314,7 +314,7 @@ module(
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
-        13
+        13,
       );
       assert
         .dom('.ember-power-select-dropdown')
@@ -583,12 +583,12 @@ module(
         assert.strictEqual(
           value,
           'tw',
-          'The first argument is the value of the input'
+          'The first argument is the value of the input',
         );
         assert.strictEqual(
           select.searchText,
           '',
-          'select.searchText is still empty'
+          'select.searchText is still empty',
         );
         assertPublicAPIShape(assert, select);
         assert.ok(e instanceof window.Event, 'The third argument is an event');
@@ -618,12 +618,12 @@ module(
         assert.strictEqual(
           value,
           'tw',
-          'The first argument is the value of the input'
+          'The first argument is the value of the input',
         );
         assert.strictEqual(
           select.searchText,
           '',
-          'select.searchText is still empty'
+          'select.searchText is still empty',
         );
         assertPublicAPIShape(assert, select);
         assert.ok(e instanceof window.Event, 'The third argument is an event');
@@ -757,12 +757,12 @@ module(
         assert.strictEqual(
           term,
           'el',
-          'The search term is received as 1st argument'
+          'The search term is received as 1st argument',
         );
         assert.strictEqual(
           select.searchText,
           'el',
-          'the public API object has the searchText up to date'
+          'the public API object has the searchText up to date',
         );
       };
 
@@ -814,7 +814,7 @@ module(
         assert.strictEqual(
           opt,
           'three',
-          'It receives the element we want to scroll to as first argument'
+          'It receives the element we want to scroll to as first argument',
         );
         assertPublicAPIShape(assert, select);
       };
@@ -837,7 +837,7 @@ module(
         assert.strictEqual(
           opt,
           'three',
-          'It receives the element we want to scroll to as first argument'
+          'It receives the element we want to scroll to as first argument',
         );
         assertPublicAPIShape(assert, select);
       };
@@ -849,5 +849,5 @@ module(
 
       run(() => this.selectAPI.actions.scrollTo('three'));
     });
-  }
+  },
 );

@@ -12,7 +12,7 @@ export default class extends OptionsComponent {
           );
         }),
         this.use('toLeft'),
-        this.reverse('toRight')
+        this.reverse('toRight'),
       );
     };
   }

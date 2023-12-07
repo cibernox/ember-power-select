@@ -30,19 +30,19 @@ module(
       await clickTrigger();
 
       let rootLevelGroups = document.querySelectorAll(
-        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group'
+        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
       );
       let rootLevelOptions = document.querySelectorAll(
-        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option'
+        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option',
       );
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group'
+          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
         )
         .exists({ count: 3 }, 'There is 3 groups in the root level');
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option'
+          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option',
         )
         .exists({ count: 2 }, 'There is 2 options in the root level');
       assert
@@ -68,12 +68,12 @@ module(
       assert.strictEqual(
         bigGroups.length,
         2,
-        'There is 2 sub-groups in the "bigs" group'
+        'There is 2 sub-groups in the "bigs" group',
       );
       assert.strictEqual(
         bigOptions.length,
         1,
-        'There is 1 option in the "bigs" group'
+        'There is 1 option in the "bigs" group',
       );
     });
 
@@ -112,29 +112,29 @@ module(
       await clickTrigger();
       await typeInSearch('ve');
       let groupNames = Array.from(
-        document.querySelectorAll('.ember-power-select-group-name')
+        document.querySelectorAll('.ember-power-select-group-name'),
       ).map((e) => e.textContent.trim());
       let optionValues = Array.from(
-        document.querySelectorAll('.ember-power-select-option')
+        document.querySelectorAll('.ember-power-select-option'),
       ).map((e) => e.textContent.trim());
       assert.deepEqual(
         groupNames,
         ['Mediums', 'Bigs', 'Fairly big', 'Really big'],
-        'Only the groups with matching options are shown'
+        'Only the groups with matching options are shown',
       );
       assert.deepEqual(
         optionValues,
         ['five', 'seven', 'eleven', 'twelve'],
-        'Only the matching options are shown'
+        'Only the matching options are shown',
       );
       await typeInSearch('lve');
       groupNames = Array.from(
-        document.querySelectorAll('.ember-power-select-group-name')
+        document.querySelectorAll('.ember-power-select-group-name'),
       ).map((e) => e.textContent.trim());
       assert.deepEqual(
         groupNames,
         ['Bigs', 'Really big'],
-        'With no depth level'
+        'With no depth level',
       );
     });
 
@@ -149,7 +149,7 @@ module(
     `);
       await clickTrigger();
       let option = Array.from(
-        document.querySelectorAll('.ember-power-select-option')
+        document.querySelectorAll('.ember-power-select-option'),
       ).find((e) => e.textContent.indexOf('four') > -1);
       await click(option);
       assert
@@ -172,11 +172,11 @@ module(
 
       await clickTrigger();
       await click(
-        document.querySelectorAll('.ember-power-select-group-name')[1]
+        document.querySelectorAll('.ember-power-select-group-name')[1],
       );
       assert
         .dom('.ember-power-select-dropdown')
         .exists('The select is still opened');
     });
-  }
+  },
 );

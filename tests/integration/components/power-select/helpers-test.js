@@ -71,7 +71,7 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
     assert.deepEqual(
       options,
       numbers,
-      'elements from the dropdown should be same as passed elements'
+      'elements from the dropdown should be same as passed elements',
     );
   });
 
@@ -91,7 +91,7 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
       assert.strictEqual(
         error.message,
         'You called "getDropdownItems(\'.fake-ember-power-select-trigger\'" but no select was found using selector ".fake-ember-power-select-trigger"',
-        'elements from the dropdown should be same as passed elements'
+        'elements from the dropdown should be same as passed elements',
       );
     }
   });
