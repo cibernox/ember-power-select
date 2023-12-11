@@ -1,6 +1,0 @@
-<NavigableSelect
-  @options={{this.groupedNumbers}}
-  @selected={{this.selectedNumber}}
-  @onChange={{fn (mut this.selectedNumber)}} as |option|>
-  {{option}}
-</NavigableSelect>
