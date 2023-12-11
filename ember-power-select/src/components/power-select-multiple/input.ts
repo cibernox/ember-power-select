@@ -35,17 +35,14 @@ export default class PowerSelectMultipleInputComponent extends Component<Args> {
   // Properties
   get triggerMultipleInputStyle() {
     scheduleOnce('actions', null, this.args.select.actions.reposition);
-    if (
-      !this.args.select.selected ||
-      get(this.args.select.selected, 'length') === 0
-    ) {
+    if (!this.args.select.selected || this.args.select.selected.length === 0) {
       return htmlSafe('width: 100%;');
     } else {
       let textWidth = 0;
       if (this.inputFont) {
         textWidth = this.measureWidth(
           this.args.select.searchText,
-          this.inputFont
+          this.inputFont,
         );
       }
       return htmlSafe(`width: ${textWidth + 25}px`);
@@ -56,8 +53,7 @@ export default class PowerSelectMultipleInputComponent extends Component<Args> {
     if (isIE || !this.args.isDefaultPlaceholder) {
       return undefined;
     }
-    return !this.args.select.selected ||
-      get(this.args.select.selected, 'length') === 0
+    return !this.args.select.selected || this.args.select.selected.length === 0
       ? this.args.placeholder || ''
       : '';
   }
@@ -65,7 +61,7 @@ export default class PowerSelectMultipleInputComponent extends Component<Args> {
   // Actions
   @action
   storeInputStyles(input: Element) {
-    let {
+    const {
       fontStyle,
       fontVariant,
       fontWeight,
@@ -96,23 +92,23 @@ export default class PowerSelectMultipleInputComponent extends Component<Args> {
     if (e.keyCode === 8) {
       e.stopPropagation();
       if (isBlank((e.target as HTMLInputElement).value)) {
-        let lastSelection =
+        const lastSelection =
           this.args.select.selected &&
           this.args.select.selected[this.args.select.selected.length - 1];
         if (lastSelection) {
           this.args.select.actions.select(
             this.args.buildSelection(lastSelection, this.args.select),
-            e
+            e,
           );
           if (typeof lastSelection === 'string') {
             this.args.select.actions.search(lastSelection);
           } else {
             assert(
               '`<PowerSelectMultiple>` requires a `@searchField` when the options are not strings to remove options using backspace',
-              this.args.searchField
+              this.args.searchField,
             );
             this.args.select.actions.search(
-              get(lastSelection, this.args.searchField)
+              get(lastSelection, this.args.searchField),
             );
           }
           this.args.select.actions.open(e);
@@ -123,16 +119,18 @@ export default class PowerSelectMultipleInputComponent extends Component<Args> {
       e.stopPropagation();
     }
   }
-  
+
   measureWidth(string: string, font?: string) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    
+
     if (!ctx) {
       return 0;
     }
-    
-    if (font) { ctx.font = font; }
+
+    if (font) {
+      ctx.font = font;
+    }
     return ctx.measureText(string).width;
   }
 }

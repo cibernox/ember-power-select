@@ -7,6 +7,6 @@ export default function computedFallbackIfUndefined(fallback: any) {
     },
     set(_, v) {
       return v === undefined ? fallback : v;
-    }
+    },
   });
 }

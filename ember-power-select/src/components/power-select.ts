@@ -17,55 +17,54 @@ import {
   pathForOption,
   type MatcherFn,
 } from '../utils/group-utils.ts';
-// @ts-ignore
 import { restartableTask, timeout } from 'ember-concurrency';
-import type { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
+import type {
+  Dropdown,
+  DropdownActions,
+} from 'ember-basic-dropdown/components/basic-dropdown';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 import { isArray } from '@ember/array';
 import type { ComponentLike } from '@glint/template';
 
 interface SelectActions extends DropdownActions {
-  search: (term: string) => void
-  highlight: (option: any) => void
-  select: (selected: any, e?: Event) => void
-  choose: (selected: any, e?: Event) => void
-  scrollTo: (option: any) => void
+  search: (term: string) => void;
+  highlight: (option: any) => void;
+  select: (selected: any, e?: Event) => void;
+  choose: (selected: any, e?: Event) => void;
+  scrollTo: (option: any) => void;
 }
 export interface Select extends Dropdown {
-  selected: any
-  highlighted: any
-  options: any[]
-  results: any[]
-  resultsCount: number
-  loading: boolean
-  isActive: boolean
-  searchText: string
-  lastSearchedText: string
-  actions: SelectActions
+  selected: any;
+  highlighted: any;
+  options: any[];
+  results: any[];
+  resultsCount: number;
+  loading: boolean;
+  isActive: boolean;
+  searchText: string;
+  lastSearchedText: string;
+  actions: SelectActions;
 }
 interface PromiseProxy<T> extends Promise<T> {
-  content: any
+  content: any;
 }
 interface CancellablePromise<T> extends Promise<T> {
-  cancel: () => void
+  cancel: () => void;
 }
 interface Sliceable<T> {
   slice(): T[];
 }
 interface Performable {
-  perform: (...args: any[]) => void
+  perform: (...args: any[]) => void;
 }
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs {
   Element: HTMLElement;
   highlightOnHover?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   placeholderComponent?: string | ComponentLike<any>;
   searchMessage?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchMessageComponent?: string | ComponentLike<any>;
   noMatchesMessage?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   noMatchesMessageComponent?: string | ComponentLike<any>;
   matchTriggerWidth?: boolean;
   options: any[] | PromiseProxy<any[]>;
@@ -98,23 +97,14 @@ export interface PowerSelectArgs {
   eventType?: string;
   ariaDescribedBy?: string;
   calculatePosition?: CalculatePosition;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ebdTriggerComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ebdContentComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   triggerComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selectedItemComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   beforeOptionsComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   optionsComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   groupComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   afterOptionsComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   extra?: any;
   matcher?: MatcherFn;
   initiallyOpened?: boolean;
@@ -137,19 +127,21 @@ export interface PowerSelectArgs {
 
 const isSliceable = <T>(coll: any): coll is Sliceable<T> => {
   return isArray(coll);
-}
+};
 
 const isPromiseLike = <T>(thing: any): thing is Promise<T> => {
   return typeof thing.then === 'function';
-}
+};
 
 const isPromiseProxyLike = <T>(thing: any): thing is PromiseProxy<T> => {
   return isPromiseLike(thing) && Object.hasOwnProperty.call(thing, 'content');
-}
+};
 
-const isCancellablePromise = <T>(thing: any): thing is CancellablePromise<T> => {
+const isCancellablePromise = <T>(
+  thing: any,
+): thing is CancellablePromise<T> => {
   return typeof thing.cancel === 'function';
-}
+};
 
 export default class PowerSelectComponent extends Component<PowerSelectArgs> {
   // Untracked properties
@@ -158,36 +150,52 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
     highlight: this._highlight,
     select: this._select,
     choose: this._choose,
-    scrollTo: this._scrollTo
-  }
+    scrollTo: this._scrollTo,
+  };
 
   // Tracked properties
-  @tracked private _resolvedOptions?: any[]
-  @tracked private _resolvedSelected?: any
-  @tracked private _repeatingChar = ''
-  @tracked private _expirableSearchText = ''
-  @tracked private _searchResult?: any[]
-  @tracked isActive = false
-  @tracked loading = false
-  @tracked searchText = ''
-  @tracked lastSearchedText = ''
-  @tracked highlighted?: any
-  storedAPI!: Select
-  private _lastOptionsPromise?: PromiseProxy<any[]>
-  private _lastSelectedPromise?: PromiseProxy<any>
-  private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>
-  private _filterResultsCache: { results: any[], options: any[], searchText: string } = { results: [], options: [], searchText: this.searchText };
+  @tracked private _resolvedOptions?: any[];
+  @tracked private _resolvedSelected?: any;
+  @tracked private _repeatingChar = '';
+  @tracked private _expirableSearchText = '';
+  @tracked private _searchResult?: any[];
+  @tracked isActive = false;
+  @tracked loading = false;
+  @tracked searchText = '';
+  @tracked lastSearchedText = '';
+  @tracked highlighted?: any;
+  storedAPI!: Select;
+  private _lastOptionsPromise?: PromiseProxy<any[]>;
+  private _lastSelectedPromise?: PromiseProxy<any>;
+  private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>;
+  private _filterResultsCache: {
+    results: any[];
+    options: any[];
+    searchText: string;
+  } = { results: [], options: [], searchText: this.searchText };
 
   // Lifecycle hooks
   constructor(owner: unknown, args: PowerSelectArgs) {
     super(owner, args);
-    assert('<PowerSelect> requires an `@onChange` function', this.args.onChange && typeof this.args.onChange === 'function');
+    assert(
+      '<PowerSelect> requires an `@onChange` function',
+      this.args.onChange && typeof this.args.onChange === 'function',
+    );
   }
 
   willDestroy() {
-    if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
+    if (
+      this._lastSelectedPromise &&
+      isPromiseProxyLike(this._lastSelectedPromise)
+    ) {
       try {
-        removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+        removeObserver(
+          this._lastSelectedPromise,
+          'content',
+          this,
+          this._selectedObserverCallback,
+        );
+        // eslint-disable-next-line no-empty
       } catch {}
       this._lastSelectedPromise = undefined;
     }
@@ -196,37 +204,51 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
   // Getters
   get highlightOnHover(): boolean {
-    return this.args.highlightOnHover === undefined ? true : this.args.highlightOnHover
+    return this.args.highlightOnHover === undefined
+      ? true
+      : this.args.highlightOnHover;
   }
 
   get highlightedIndex(): string {
-    let results = this.results;
-    let highlighted = this.highlighted;
+    const results = this.results;
+    const highlighted = this.highlighted;
     return pathForOption(results, highlighted);
   }
 
   get searchMessage(): string {
-    return this.args.searchMessage === undefined ? 'Type to search' : this.args.searchMessage;
+    return this.args.searchMessage === undefined
+      ? 'Type to search'
+      : this.args.searchMessage;
   }
 
   get noMatchesMessage(): string {
-    return this.args.noMatchesMessage === undefined ? 'No results found' : this.args.noMatchesMessage;
+    return this.args.noMatchesMessage === undefined
+      ? 'No results found'
+      : this.args.noMatchesMessage;
   }
 
   get matchTriggerWidth() {
-    return this.args.matchTriggerWidth === undefined ? true : this.args.matchTriggerWidth;
+    return this.args.matchTriggerWidth === undefined
+      ? true
+      : this.args.matchTriggerWidth;
   }
 
   get mustShowSearchMessage(): boolean {
-    return !this.loading && this.searchText.length === 0
-      && !!this.args.search && !!this.searchMessage
-      && this.resultsCount === 0;
+    return (
+      !this.loading &&
+      this.searchText.length === 0 &&
+      !!this.args.search &&
+      !!this.searchMessage &&
+      this.resultsCount === 0
+    );
   }
 
   get mustShowNoMessages(): boolean {
-    return !this.loading
-      && this.resultsCount === 0
-      && (!this.args.search || this.lastSearchedText.length > 0);
+    return (
+      !this.loading &&
+      this.resultsCount === 0 &&
+      (!this.args.search || this.lastSearchedText.length > 0)
+    );
   }
 
   get results(): any[] {
@@ -234,13 +256,21 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
       if (this.args.search) {
         return toPlainArray(this._searchResult || this.options);
       } else {
-        if (this._filterResultsCache.options === this.options && this._filterResultsCache.searchText === this.searchText) {
+        if (
+          this._filterResultsCache.options === this.options &&
+          this._filterResultsCache.searchText === this.searchText
+        ) {
           // This is an optimization to avoid filtering several times, which may be a bit expensive
           // if there are many options, if neither the options nor the searchtext have changed
           return this._filterResultsCache.results;
         }
-        let results = this._filter(this.options, this.searchText);
-        this._filterResultsCache = { results, options: this.options, searchText: this.searchText };
+        const results = this._filter(this.options, this.searchText);
+        // eslint-disable-next-line ember/no-side-effects
+        this._filterResultsCache = {
+          results,
+          options: this.options,
+          searchText: this.searchText,
+        };
         return results;
       }
     } else {
@@ -264,7 +294,10 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
   get selected(): any {
     if (this._resolvedSelected) {
       return toPlainArray(this._resolvedSelected);
-    } else if (this.args.selected && typeof this.args.selected.then !== 'function') {
+    } else if (
+      this.args.selected &&
+      typeof this.args.selected.then !== 'function'
+    ) {
       return toPlainArray(this.args.selected);
     }
     return undefined;
@@ -277,7 +310,11 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
       return false;
     }
     if (e) {
-      if (e instanceof KeyboardEvent && e.type === 'keydown' && (e.keyCode === 38 || e.keyCode === 40)) {
+      if (
+        e instanceof KeyboardEvent &&
+        e.type === 'keydown' &&
+        (e.keyCode === 38 || e.keyCode === 40)
+      ) {
         e.preventDefault();
       }
     }
@@ -295,7 +332,7 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
   @action
   handleInput(e: InputEvent): void {
     if (e.target === null) return;
-    let term = (e.target as HTMLInputElement).value;
+    const term = (e.target as HTMLInputElement).value;
     let correctedTerm;
     if (this.args.onInput) {
       correctedTerm = this.args.onInput(term, this.storedAPI, e);
@@ -303,12 +340,17 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
         return;
       }
     }
-    this._publicAPIActions.search(typeof correctedTerm === 'string' ? correctedTerm : term);
+    this._publicAPIActions.search(
+      typeof correctedTerm === 'string' ? correctedTerm : term,
+    );
   }
 
   @action
   handleKeydown(e: KeyboardEvent) {
-    if (this.args.onKeydown && this.args.onKeydown(this.storedAPI, e) === false) {
+    if (
+      this.args.onKeydown &&
+      this.args.onKeydown(this.storedAPI, e) === false
+    ) {
       return false;
     }
     return this._routeKeydown(this.storedAPI, e);
@@ -316,7 +358,10 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
   @action
   handleTriggerKeydown(e: KeyboardEvent) {
-    if (this.args.onKeydown && this.args.onKeydown(this.storedAPI, e) === false) {
+    if (
+      this.args.onKeydown &&
+      this.args.onKeydown(this.storedAPI, e) === false
+    ) {
       e.stopImmediatePropagation();
       return;
     }
@@ -324,9 +369,11 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
       e.stopImmediatePropagation();
       return;
     }
-    if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) { // Keys 0-9, a-z or numpad keys
+    if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) {
+      // Keys 0-9, a-z or numpad keys
       (this.triggerTypingTask as unknown as Performable).perform(e);
-    } else if (e.keyCode === 32) {  // Space
+    } else if (e.keyCode === 32) {
+      // Space
       this._handleKeySpace(this.storedAPI, e);
     } else {
       return this._routeKeydown(this.storedAPI, e);
@@ -366,23 +413,25 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
   @action
   _updateOptions(): void {
-    if (!this.args.options) return
+    if (!this.args.options) return;
     if (isPromiseLike(this.args.options)) {
       if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
-      let currentOptionsPromise = this.args.options;
+      const currentOptionsPromise = this.args.options;
       this._lastOptionsPromise = currentOptionsPromise as PromiseProxy<any[]>;
       this.loading = true;
-      this._lastOptionsPromise.then(resolvedOptions => {
-        if (this._lastOptionsPromise === currentOptionsPromise) {
-          this.loading = false;
-          this._resolvedOptions = resolvedOptions;
-          this._resetHighlighted();
-        }
-      }).catch(() => {
-        if (this._lastOptionsPromise === currentOptionsPromise) {
-          this.loading = false;
-        }
-      });
+      this._lastOptionsPromise
+        .then((resolvedOptions) => {
+          if (this._lastOptionsPromise === currentOptionsPromise) {
+            this.loading = false;
+            this._resolvedOptions = resolvedOptions;
+            this._resetHighlighted();
+          }
+        })
+        .catch(() => {
+          if (this._lastOptionsPromise === currentOptionsPromise) {
+            this.loading = false;
+          }
+        });
     } else {
       scheduleOnce('actions', this, this._resetHighlighted);
     }
@@ -400,23 +449,37 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
     if (!this.args.selected) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
-      if (this._lastSelectedPromise && isPromiseProxyLike(this._lastSelectedPromise)) {
-        removeObserver(this._lastSelectedPromise, 'content', this, this._selectedObserverCallback);
+      if (
+        this._lastSelectedPromise &&
+        isPromiseProxyLike(this._lastSelectedPromise)
+      ) {
+        removeObserver(
+          this._lastSelectedPromise,
+          'content',
+          this,
+          this._selectedObserverCallback,
+        );
       }
 
-      let currentSelectedPromise: PromiseProxy<any> = this.args.selected;
+      const currentSelectedPromise: PromiseProxy<any> = this.args.selected;
       currentSelectedPromise.then(() => {
         if (this.isDestroyed || this.isDestroying) return;
         if (isPromiseProxyLike(currentSelectedPromise)) {
-          addObserver(currentSelectedPromise, 'content', this, this._selectedObserverCallback);
+          // eslint-disable-next-line ember/no-observers
+          addObserver(
+            currentSelectedPromise,
+            'content',
+            this,
+            this._selectedObserverCallback,
+          );
         }
       });
 
       this._lastSelectedPromise = currentSelectedPromise;
-      this._lastSelectedPromise.then(resolvedSelected => {
+      this._lastSelectedPromise.then((resolvedSelected) => {
         if (this._lastSelectedPromise === currentSelectedPromise) {
           this._resolvedSelected = resolvedSelected;
-          this._highlight(resolvedSelected)
+          this._highlight(resolvedSelected);
         }
       });
     } else {
@@ -430,12 +493,12 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
   _selectedObserverCallback(): void {
     this._resolvedSelected = this._lastSelectedPromise;
-    this._highlight(this._resolvedSelected)
+    this._highlight(this._resolvedSelected);
   }
 
   @action
   _highlight(opt: any): void {
-    if (opt && get(opt, 'disabled')) {
+    if (opt && opt.disabled) {
       return;
     }
     this.highlighted = opt;
@@ -450,7 +513,9 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
   @action
   _choose(selected: any, e?: Event): void {
-    let selection = this.args.buildSelection ? this.args.buildSelection(selected, this.storedAPI) : selected;
+    const selection = this.args.buildSelection
+      ? this.args.buildSelection(selected, this.storedAPI)
+      : selected;
     this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
       this.storedAPI.actions.close(e);
@@ -460,27 +525,31 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
   @action
   _scrollTo(option: any): void {
-    let select = this.storedAPI;
+    const select = this.storedAPI;
     if (!document || !option) {
       return;
     }
     if (this.args.scrollTo) {
       return this.args.scrollTo(option, select);
     }
-    let optionsList = document.getElementById(`ember-power-select-options-${select.uniqueId}`) as HTMLElement;
+    const optionsList = document.getElementById(
+      `ember-power-select-options-${select.uniqueId}`,
+    ) as HTMLElement;
     if (!optionsList) {
       return;
     }
-    let index = indexOfOption(select.results, option);
+    const index = indexOfOption(select.results, option);
     if (index === -1) {
       return;
     }
-    let optionElement = optionsList.querySelector(`[data-option-index='${index}']`) as HTMLElement;
+    const optionElement = optionsList.querySelector(
+      `[data-option-index='${index}']`,
+    ) as HTMLElement;
     if (!optionElement) {
       return;
     }
-    let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
-    let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+    const optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+    const optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
     if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
       optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
     } else if (optionTopScroll < optionsList.scrollTop) {
@@ -510,26 +579,31 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
       }
       return;
     }
-    let searchResult = this.args.search(term, this.storedAPI);
+    const searchResult = this.args.search(term, this.storedAPI);
     if (searchResult && isPromiseLike(searchResult)) {
       this.loading = true;
-      if (this._lastSearchPromise !== undefined && isCancellablePromise(this._lastSearchPromise)) {
+      if (
+        this._lastSearchPromise !== undefined &&
+        isCancellablePromise(this._lastSearchPromise)
+      ) {
         this._lastSearchPromise.cancel(); // Cancel ember-concurrency tasks
       }
       this._lastSearchPromise = searchResult;
-      searchResult.then(results => {
-        if (this._lastSearchPromise === searchResult) {
-          this._searchResult = results;
-          this.loading = false;
-          this.lastSearchedText = term;
-          scheduleOnce('actions', this, this._resetHighlighted);
-        }
-      }).catch(() => {
-        if (this._lastSearchPromise === searchResult) {
-          this.loading = false;
-          this.lastSearchedText = term;
-        }
-      });
+      searchResult
+        .then((results) => {
+          if (this._lastSearchPromise === searchResult) {
+            this._searchResult = results;
+            this.loading = false;
+            this.lastSearchedText = term;
+            scheduleOnce('actions', this, this._resetHighlighted);
+          }
+        })
+        .catch(() => {
+          if (this._lastSearchPromise === searchResult) {
+            this.loading = false;
+            this.lastSearchedText = term;
+          }
+        });
     } else {
       this.lastSearchedText = term;
       this._searchResult = searchResult;
@@ -538,17 +612,21 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
   }
 
   _defaultBuildSelection(option: any): any {
-    return option
+    return option;
   }
 
   _routeKeydown(select: Select, e: KeyboardEvent): boolean | void {
-    if (e.keyCode === 38 || e.keyCode === 40) { // Up & Down
+    if (e.keyCode === 38 || e.keyCode === 40) {
+      // Up & Down
       return this._handleKeyUpDown(select, e);
-    } else if (e.keyCode === 13) {  // ENTER
+    } else if (e.keyCode === 13) {
+      // ENTER
       return this._handleKeyEnter(select, e);
-    } else if (e.keyCode === 9) {   // Tab
+    } else if (e.keyCode === 9) {
+      // Tab
       return this._handleKeyTab(select, e);
-    } else if (e.keyCode === 27) {  // ESC
+    } else if (e.keyCode === 27) {
+      // ESC
       return this._handleKeyESC(select, e);
     }
   }
@@ -570,7 +648,10 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
   }
 
   _handleKeySpace(select: Select, e: KeyboardEvent): void {
-    if (e.target !== null && ['TEXTAREA', 'INPUT'].includes((e.target as Element).nodeName)) {
+    if (
+      e.target !== null &&
+      ['TEXTAREA', 'INPUT'].includes((e.target as Element).nodeName)
+    ) {
       e.stopImmediatePropagation();
     } else if (select.isOpen && select.highlighted !== undefined) {
       e.stopImmediatePropagation();
@@ -583,8 +664,12 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
     if (select.isOpen) {
       e.preventDefault();
       e.stopPropagation();
-      let step: 1 | -1 = e.keyCode === 40 ? 1 : -1;
-      let newHighlighted = advanceSelectableOption(select.results, select.highlighted, step);
+      const step: 1 | -1 = e.keyCode === 40 ? 1 : -1;
+      const newHighlighted = advanceSelectableOption(
+        select.results,
+        select.highlighted,
+        step,
+      );
       select.actions.highlight(newHighlighted);
       select.actions.scrollTo(newHighlighted);
     } else {
@@ -594,18 +679,26 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
   _resetHighlighted(): void {
     let highlighted;
-    let defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
+    const defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
-      highlighted = defHighlighted({ results: this.results, highlighted: this.highlighted, selected: this.selected});
+      highlighted = defHighlighted({
+        results: this.results,
+        highlighted: this.highlighted,
+        selected: this.selected,
+      });
     } else {
-      highlighted = defHighlighted
+      highlighted = defHighlighted;
     }
     this._highlight(highlighted);
   }
 
   _filter(options: any[], term: string, skipDisabled = false): any[] {
-    let matcher = this.args.matcher || defaultMatcher;
-    let optionMatcher = getOptionMatcher(matcher, defaultMatcher, this.args.searchField);
+    const matcher = this.args.matcher || defaultMatcher;
+    const optionMatcher = getOptionMatcher(
+      matcher,
+      defaultMatcher,
+      this.args.searchField,
+    );
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
   }
 
@@ -613,9 +706,24 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
     this.isActive = value;
   }
 
-  findWithOffset(options: any[], term: string, offset: number, skipDisabled = false): any {
-    let typeAheadOptionMatcher = getOptionMatcher(this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher, defaultTypeAheadMatcher, this.args.searchField);
-    return findOptionWithOffset(options || [], term, typeAheadOptionMatcher, offset, skipDisabled);
+  findWithOffset(
+    options: any[],
+    term: string,
+    offset: number,
+    skipDisabled = false,
+  ): any {
+    const typeAheadOptionMatcher = getOptionMatcher(
+      this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher,
+      defaultTypeAheadMatcher,
+      this.args.searchField,
+    );
+    return findOptionWithOffset(
+      options || [],
+      term,
+      typeAheadOptionMatcher,
+      offset,
+      skipDisabled,
+    );
   }
 
   // Tasks
@@ -631,7 +739,7 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
     let term;
 
     // Check if user intends to cycle through results. _repeatingChar can only be the first character.
-    let c = String.fromCharCode(charCode);
+    const c = String.fromCharCode(charCode);
     if (c === this._repeatingChar) {
       term = c;
     } else {
@@ -649,7 +757,10 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
 
     // When the select is open, the "selection" is just highlighted.
     if (this.storedAPI.isOpen && this.storedAPI.highlighted) {
-      searchStartOffset += indexOfOption(this.storedAPI.options, this.storedAPI.highlighted);
+      searchStartOffset += indexOfOption(
+        this.storedAPI.options,
+        this.storedAPI.highlighted,
+      );
     } else if (!this.storedAPI.isOpen && this.selected) {
       searchStartOffset += indexOfOption(this.storedAPI.options, this.selected);
     } else {
@@ -660,7 +771,12 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
     // if "Aa" would cycle through the results.
     this._expirableSearchText = this._expirableSearchText + c;
     this._repeatingChar = repeatingChar;
-    let match = this.findWithOffset(this.storedAPI.options, term, searchStartOffset, true);
+    const match = this.findWithOffset(
+      this.storedAPI.options,
+      term,
+      searchStartOffset,
+      true,
+    );
     if (match !== undefined) {
       if (this.storedAPI.isOpen) {
         this.storedAPI.actions.highlight(match);
@@ -675,12 +791,20 @@ export default class PowerSelectComponent extends Component<PowerSelectArgs> {
   }
 }
 
-function getOptionMatcher(matcher: MatcherFn, defaultMatcher: MatcherFn, searchField: string | undefined): MatcherFn {
+function getOptionMatcher(
+  matcher: MatcherFn,
+  defaultMatcher: MatcherFn,
+  searchField: string | undefined,
+): MatcherFn {
   if (searchField && matcher === defaultMatcher) {
-    return (option: any, text: string) => matcher(get(option, searchField), text);
+    return (option: any, text: string) =>
+      matcher(get(option, searchField), text);
   } else {
     return (option: any, text: string) => {
-      assert('<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`', matcher !== defaultMatcher || typeof option === 'string');
+      assert(
+        '<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`',
+        matcher !== defaultMatcher || typeof option === 'string',
+      );
       return matcher(option, text);
     };
   }
@@ -696,4 +820,4 @@ const toPlainArray = <T>(collection: T[] | Sliceable<T>): T[] => {
   } else {
     return collection;
   }
-}
+};

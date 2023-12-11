@@ -12,24 +12,26 @@ interface Args {
   loadingMessage: string;
   options: any[];
   extra: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   groupComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   optionsComponent?: string | ComponentLike<any>;
   Blocks: {
     default: [opt: Args, select: Select];
   };
 }
 
-const isTouchDevice = (!!window && 'ontouchstart' in window);
-if(typeof FastBoot === 'undefined'){
-  (function(ElementProto) {
+const isTouchDevice = !!window && 'ontouchstart' in window;
+if (typeof FastBoot === 'undefined') {
+  (function (ElementProto) {
     if (typeof ElementProto.matches !== 'function') {
-      ElementProto.matches = (ElementProto as any).msMatchesSelector || (ElementProto as any).mozMatchesSelector || ElementProto.webkitMatchesSelector;
+      ElementProto.matches =
+        (ElementProto as any).msMatchesSelector ||
+        (ElementProto as any).mozMatchesSelector ||
+        ElementProto.webkitMatchesSelector;
     }
 
     if (typeof ElementProto.closest !== 'function') {
       ElementProto.closest = function closest(selector: string) {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         let element: Element | null = this;
         while (element !== null && element.nodeType === 1) {
           if (element.matches(selector)) {
@@ -46,35 +48,59 @@ if(typeof FastBoot === 'undefined'){
 export default class OptionsComponent extends Component<Args> {
   private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice;
   private touchMoveEvent?: TouchEvent;
-  private mouseOverHandler: EventListener = ((_: MouseEvent): void => {}) as EventListener;
-  private mouseUpHandler: EventListener = ((_: MouseEvent): void => {}) as EventListener;
-  private touchEndHandler: EventListener = ((_: TouchEvent): void => {}) as EventListener;
-  private touchMoveHandler: EventListener = ((_: TouchEvent): void => {}) as EventListener;
-  private touchStartHandler: EventListener = ((_: TouchEvent): void => {}) as EventListener;
+  private mouseOverHandler: EventListener = ((
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: MouseEvent,
+  ): void => {}) as EventListener;
+  private mouseUpHandler: EventListener = ((
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: MouseEvent,
+  ): void => {}) as EventListener;
+  private touchEndHandler: EventListener = ((
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: TouchEvent,
+  ): void => {}) as EventListener;
+  private touchMoveHandler: EventListener = ((
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: TouchEvent,
+  ): void => {}) as EventListener;
+  private touchStartHandler: EventListener = ((
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: TouchEvent,
+  ): void => {}) as EventListener;
 
   @action
   addHandlers(element: Element) {
-    let role = element.getAttribute('role');
+    const role = element.getAttribute('role');
     if (role === 'group') {
       return;
     }
-    let findOptionAndPerform = (action: Function, e: MouseEvent): void => {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    const findOptionAndPerform = (action: Function, e: MouseEvent): void => {
       if (e.target === null) return;
-      let optionItem = (e.target as Element).closest('[data-option-index]');
+      const optionItem = (e.target as Element).closest('[data-option-index]');
       if (!optionItem) {
         return;
       }
       if (optionItem.closest('[aria-disabled=true]')) {
         return; // Abort if the item or an ancestor is disabled
       }
-      let optionIndex = optionItem.getAttribute('data-option-index');
+      const optionIndex = optionItem.getAttribute('data-option-index');
       if (optionIndex === null) return;
       action(this._optionFromIndex(optionIndex), e);
     };
-    this.mouseUpHandler = ((e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.choose, e)) as EventListener;
+    this.mouseUpHandler = ((e: MouseEvent): void =>
+      findOptionAndPerform(
+        this.args.select.actions.choose,
+        e,
+      )) as EventListener;
     element.addEventListener('mouseup', this.mouseUpHandler);
     if (this.args.highlightOnHover) {
-      this.mouseOverHandler = ((e: MouseEvent): void => findOptionAndPerform(this.args.select.actions.highlight, e)) as EventListener;
+      this.mouseOverHandler = ((e: MouseEvent): void =>
+        findOptionAndPerform(
+          this.args.select.actions.highlight,
+          e,
+        )) as EventListener;
       element.addEventListener('mouseover', this.mouseOverHandler);
     }
     if (this.isTouchDevice) {
@@ -85,12 +111,13 @@ export default class OptionsComponent extends Component<Args> {
         }
       }) as EventListener;
       // Add touch event handlers to detect taps
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       this.touchStartHandler = ((_: TouchEvent): void => {
         element.addEventListener('touchmove', this.touchMoveHandler);
       }) as EventListener;
       this.touchEndHandler = ((e: TouchEvent): void => {
         if (e.target === null) return;
-        let optionItem = (e.target as Element).closest('[data-option-index]');
+        const optionItem = (e.target as Element).closest('[data-option-index]');
         if (optionItem === null) return;
         e.preventDefault();
         if (this._hasMoved(e)) {
@@ -144,7 +171,6 @@ export default class OptionsComponent extends Component<Args> {
 
     if (
       !endEvent.changedTouches?.[0] ||
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (moveEvent.changedTouches[0] as any).touchType !== 'stylus'
     ) {
       return true;

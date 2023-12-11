@@ -16,11 +16,8 @@ interface Args {
   ariaLabel?: string;
   ariaLabelledBy?: string;
   ariaActiveDescendant: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   extra?: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   placeholderComponent?: string | ComponentLike<any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selectedItemComponent?: string | ComponentLike<any>;
   onInput?: (e: InputEvent) => boolean;
   onKeydown?: (e: KeyboardEvent) => boolean;
@@ -53,14 +50,17 @@ export default class TriggerComponent extends Component<Args> {
   @action
   chooseOption(e: Event) {
     if (e.target === null) return;
-    let selectedIndex = (e.target as Element).getAttribute(
-      'data-selected-index'
+    const selectedIndex = (e.target as Element).getAttribute(
+      'data-selected-index',
     );
     if (selectedIndex) {
-      let numericIndex = parseInt(selectedIndex, 10);
+      const numericIndex = parseInt(selectedIndex, 10);
       e.stopPropagation();
       e.preventDefault();
-      let object = this.selectedObject(this.args.select.selected, numericIndex);
+      const object = this.selectedObject(
+        this.args.select.selected,
+        numericIndex,
+      );
       this.args.select.actions.choose(object);
     }
   }

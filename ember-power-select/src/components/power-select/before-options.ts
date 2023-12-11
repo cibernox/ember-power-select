@@ -33,7 +33,7 @@ export default class BeforeOptionsComponent extends Component<Args> {
       this.args.select.actions.close(e);
     }
   }
-  
+
   @action
   handleInput(event: Event): false | void {
     const e = event as InputEvent;

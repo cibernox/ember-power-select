@@ -3,7 +3,6 @@ import '@glint/environment-ember-loose';
 import type EmberTruthRegistry from 'ember-truth-helpers/template-registry';
 
 export interface ReadonlyRegistry {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 

@@ -1,11 +1,10 @@
-
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import type { PowerSelectArgs, Select } from './power-select';
 
 interface PowerSelectMultipleArgs extends PowerSelectArgs {
- // any extra property for multiple selects?
+  // any extra property for multiple selects?
 }
 
 export default class PowerSelectMultipleComponent extends Component<PowerSelectMultipleArgs> {
@@ -43,7 +42,10 @@ export default class PowerSelectMultipleComponent extends Component<PowerSelectM
     if (e.keyCode === 13 && select.isOpen) {
       e.stopPropagation();
       if (select.highlighted !== undefined) {
-        if (!select.selected || select.selected.indexOf(select.highlighted) === -1) {
+        if (
+          !select.selected ||
+          select.selected.indexOf(select.highlighted) === -1
+        ) {
           select.actions.choose(select.highlighted, e);
           return false;
         } else {
@@ -58,7 +60,7 @@ export default class PowerSelectMultipleComponent extends Component<PowerSelectM
   }
 
   defaultBuildSelection(option: any, select: Select) {
-    let newSelection = (select.selected || []).slice(0);
+    const newSelection = (select.selected || []).slice(0);
     let idx = -1;
     for (let i = 0; i < newSelection.length; i++) {
       if (isEqual(newSelection[i], option)) {
@@ -76,7 +78,9 @@ export default class PowerSelectMultipleComponent extends Component<PowerSelectM
 
   focusInput(select: Select) {
     if (select) {
-      let input = document.querySelector(`#ember-power-select-trigger-multiple-input-${select.uniqueId}`) as HTMLElement;
+      const input = document.querySelector(
+        `#ember-power-select-trigger-multiple-input-${select.uniqueId}`,
+      ) as HTMLElement;
       if (input) {
         input.focus();
       }
