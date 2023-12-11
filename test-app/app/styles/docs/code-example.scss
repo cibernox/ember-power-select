@@ -1,0 +1,35 @@
+// Docs
+.code-example {
+  margin-bottom: 1rem;
+}
+
+.code-example-tabs {
+  display: flex;
+}
+.code-example-tab {
+  padding: 0.2rem 0.5rem;
+  background-color: white;
+  text-transform: capitalize;
+  &:not(.active) {
+    color: #999;
+    cursor: pointer;
+  }
+  &.active {
+    cursor: normal;
+  }
+}
+.code-example-snippet {
+  margin-bottom: 0;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  &:not(.active) {
+    display: none;
+  }
+}
+
+@mixin ember-code-example($color) {
+  .code-example-tab.active {
+    border-bottom: 2px solid $color;
+    color: $color;
+  }
+}

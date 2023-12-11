@@ -1,0 +1,17 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.important-announcement {
+  padding: 5px;
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-top: 1px solid #faebcc;
+}

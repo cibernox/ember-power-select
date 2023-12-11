@@ -1,0 +1,13 @@
+{{#if @displayPlaceholder}}
+  <div class="ember-power-select-placeholder">
+    This is a very
+    <span style="font-weight:bold">
+      bold
+    </span>
+    placeholder
+  </div>
+{{/if}}
+
+<@inputComponent
+  style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}}
+/>

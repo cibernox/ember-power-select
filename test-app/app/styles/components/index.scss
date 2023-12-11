@@ -1,0 +1,87 @@
+// Headline
+.main-page-headline {
+  background: $brand-color linear-gradient($brand-color, $brand-color-brighter);
+  height: 300px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media only screen and (max-width: $medium-breakpoint) {
+    height: 200px;
+  }
+}
+.main-page-headline-content {
+  margin: 0;
+  text-align: center;
+  color: inherit;
+  max-width: 530px;
+  font-weight: 200;
+  img { vertical-align: top; }
+  @media only screen and (max-width: $small-breakpoint) {
+    font-size: 34px;
+    img { height: 40px; }
+  }
+  @media only screen and (min-width: $small-breakpoint) {
+    font-size: 42px;
+    img { height: 48px; }
+  }
+}
+// Selling points
+.selling-points {
+  @extend %wrapper;
+  display: flex;
+  @media only screen and (max-width: $small-breakpoint) {
+    flex-direction: column;
+  }
+}
+.selling-point {
+  display: flex;
+  padding: 2rem 0.5rem;
+  flex: 1;
+  flex-direction: column;
+}
+.selling-point-icon {
+  width: 150px;
+  height: auto;
+  margin: 25px auto;
+}
+.selling-point-code {
+  color: #CCC;
+  padding: 0;
+  font-size: 25px;
+  font-family: monospace;
+  padding: 80px 0;
+  white-space: nowrap;
+  text-align: center;
+  @media only screen and (min-width: 520px) and (max-width: 768px) {
+    font-size: 18px;
+  }
+}
+.selling-point-text {
+  color: $gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: justify;
+  h2 {
+    font-weight: 400;
+    font-size: 1.5em;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+}
+
+// get-started-button
+.get-started-button {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid $brand-color;
+  border-radius: 4px;
+  padding: 0.5rem 2rem;
+  display: inline-block;
+}
+
+// Getting started area
+.get-started {
+  flex-grow: 1;
+}

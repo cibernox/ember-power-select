@@ -1,0 +1,23 @@
+// Utility classes
+.text-center {
+  text-align: center;
+}
+// My own placeholders
+%clearfix {
+  &::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+  display: block;
+}
+%wrapper {
+  max-width: 1024px; // not 960px because it's 2015
+  padding-left: $wrapper-padding;
+  padding-right: $wrapper-padding;
+  margin-left: auto;
+  margin-right: auto;
+}

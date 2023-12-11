@@ -1,0 +1,13 @@
+{{! template-lint-disable no-unnecessary-concat }}
+{{#liquid-bind @options rules=this.animationRules enableGrowth=this.enableGrowth as |currentOptions|}}
+  {{#each currentOptions as |opt index|}}
+    <li class="ember-power-select-option"
+      aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
+      aria-disabled={{if opt.disabled "true"}}
+      aria-current="{{eq opt @select.highlighted}}"
+      data-option-index="{{@groupIndex}}{{index}}"
+      role="option">
+      {{yield opt @select}}
+    </li>
+  {{/each}}
+{{/liquid-bind}}

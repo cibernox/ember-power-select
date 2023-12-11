@@ -1,0 +1,64 @@
+
+// Docs
+.docs {
+  @extend %wrapper;
+  flex: 1;
+  display: flex;
+  padding-top: 1rem;
+}
+// Doc page
+.doc-page {
+  flex: 1;
+  min-width: 0; // Flexbox issue in chrome??
+}
+.doc-page-title {
+  margin-top: 0;
+}
+.doc-page-nav {
+  @extend %clearfix;
+  margin-bottom: 1rem;
+}
+.doc-page-nav-link-next, .doc-page-nav-link-prev {
+  border: 1px solid $brand-color;
+  padding: 0.2rem 0.5rem;
+  font-weight: 600;
+  border-radius: 4px;
+}
+.doc-page-nav-link-next {
+  float: right;
+}
+.doc-page-nav-link-prev {
+  float: left;
+}
+.section-selector {
+  margin-bottom: 1rem;
+  @media only screen and (min-width: $medium-breakpoint) {
+    display: none;
+  }
+}
+.branded-graph {
+  color: $brand-color;
+  font-size: 38px;
+  .shape-element {
+    fill: $brand-color;
+  }
+}
+
+@keyframes shake {
+  0%   { transform: translateX(0px); }
+  20%   { transform: translateX(-20px); }
+  40%   { transform: translateX(20px); }
+  60%   { transform: translateX(-20px); }
+  80%   { transform: translateX(20px); }
+  100% { transform: translateX(0px); }
+}
+.ember-power-select-dropdown.has-error {
+  border: 1px solid red;
+  animation: shake .5s;
+  &.ember-basic-dropdown--above {
+    border-top: 1px solid red;
+  }
+  &.ember-basic-dropdown--below {
+    border-bottom: 1px solid red;
+  }
+}

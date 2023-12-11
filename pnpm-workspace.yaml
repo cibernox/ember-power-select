@@ -1,0 +1,4 @@
+packages:
+  - 'ember-power-select'
+  - 'test-app'
+  # - 'docs'

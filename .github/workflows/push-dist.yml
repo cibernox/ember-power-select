@@ -1,0 +1,30 @@
+# Because this library needs to be built,
+# we can't easily point package.json files at the git repo for easy cross-repo testing.
+#
+# This workflow brings back that capability by placing the compiled assets on a "dist" branch
+# (configurable via the "branch" option below)
+name: Push dist
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  push-dist:
+    name: Push dist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+      - name: Install Dependencies
+        run: npm ci
+      - uses: kategengler/put-built-npm-package-contents-on-branch@v2.0.0
+        with:
+          branch: dist
+          token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: ember-power-select

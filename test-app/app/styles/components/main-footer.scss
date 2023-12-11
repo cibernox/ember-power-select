@@ -1,0 +1,35 @@
+// Main footer
+.main-footer {
+  color: $gray;
+  background-color: $light-gray;
+  border-top: 1px solid #bbb;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.main-footer-content {
+  @extend %wrapper;
+  padding: 1rem 0;
+}
+@media only screen and (min-width: $medium-breakpoint) {
+  .icons-attributions {
+    float: right;
+  }
+}
+
+.contribute-call-to-action a {
+  border-radius: 4px;
+  padding: 5px 10px;
+  text-align: center;
+  background-color: $brand-color;
+  color: white;
+  border: 1px solid darken($brand-color, 12%);
+  box-shadow: 0 2px darken($brand-color, 18%);
+  &:hover {
+    background-color: darken($brand-color, 5%);
+  }
+}
+@media only screen and (min-width: $small-breakpoint) {
+  .contribute-call-to-action {
+    float: right;
+  }
+}

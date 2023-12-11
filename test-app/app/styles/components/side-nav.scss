@@ -1,0 +1,40 @@
+$side-nav-color: #777;
+.side-nav {
+  width: 200px;
+  color: $side-nav-color;
+  flex: 0 0 25%;
+  margin-right: 2rem;
+  @media only screen and (max-width: $medium-breakpoint) {
+    display: none;
+  }
+}
+.side-nav-header {
+  font-size: 18px;
+  font-weight: 300;
+  color: #777;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(153, 153, 153, 0.2);
+  &:not(:first-child) {
+    margin-top: 1.5rem;
+  }
+}
+.side-nav-link {
+  display: block;
+  color: #999;
+  padding-left: 16px;
+  .beta-label {
+    color: white;
+    background-color: #999;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 80%;
+  }
+  &.active {
+    border-left: 3px solid $brand-color;
+    color: $brand-color;
+    padding-left: 16px - 3px;
+    .beta-label {
+      background-color: $brand-color;
+    }
+  }
+}
