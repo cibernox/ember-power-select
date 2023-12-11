@@ -10,12 +10,12 @@
     "email": "miguel.camba@gmail.com"
   },
   "scripts": {
-    "build": "pnpm run --filter ember-basic-dropdown build",
+    "build": "pnpm run --filter ember-power-dropdown build",
     "build:docs": "pnpm run --filter docs build",
     "lint": "pnpm run --filter '*' lint",
     "lint:fix": "pnpm run --filter '*' lint:fix",
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
-    "start:addon": "pnpm run --filter ember-basic-dropdown start --no-watch.clearScreen",
+    "start:addon": "pnpm run --filter ember-power-dropdown start --no-watch.clearScreen",
     "start:docs": "pnpm run --filter docs start --preserveWatchOutput",
     "start:test-app": "pnpm run --filter test-app start"
   },
@@ -26,7 +26,8 @@
   },
   "workspaces": [
     "ember-power-select",
-    "test-app"
+    "test-app",
+    "docs"
   ],
   "engines": {
     "node": ">= 18"
