@@ -35,6 +35,7 @@
     "@embroider/test-setup": "3.0.3",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@glint/core": "^1.0.2",
     "@glint/environment-ember-loose": "^1.2.1",
     "@glint/template": "^1.2.1",
     "@tsconfig/ember": "^3.0.2",
