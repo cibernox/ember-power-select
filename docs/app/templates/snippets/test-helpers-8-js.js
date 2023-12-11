@@ -1,2 +1,2 @@
-clickTrigger(".t-select-foo");
-typeInSearch("wat");
+clickTrigger('.t-select-foo');
+typeInSearch('wat');

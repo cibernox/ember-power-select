@@ -3,9 +3,9 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default class extends EmberPowerSelect {
-  @service intl
-  searchEnabled = false
-  allowClear = true
+  @service intl;
+  searchEnabled = false;
+  allowClear = true;
 
   // You can even use computed properties to do other stuff, like apply intl, that wouldn't be
   // possible with static configuration.
