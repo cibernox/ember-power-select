@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 
 interface Args {
   Element: HTMLElement;
-  isMutlipleWithSearch: any;
+  isMultipleWithSearch: boolean;
   placeholder: any;
   inputComponent?: any;
 }
