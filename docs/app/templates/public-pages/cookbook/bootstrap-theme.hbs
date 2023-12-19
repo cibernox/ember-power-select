@@ -38,22 +38,11 @@
 </div>
 
 <p>
-  If your project is not using sass, you can still use the precompiled bootstrap theme instead of
-  the default one with just a couple lines of configuration when creating your app on the
-  <code>ember-cli-build.js</code> file.
+  If your project is not using sass/less, you can still use the precompiled bootstrap theme instead of
+  the default one by replacing the styles import in <code>app.js</code> to:
 </p>
 
-<CodeSnippet @name="bootstrap-theme-1-js.js"/>
-
-<p>
-  Alternatively you can disable styling altogether by setting the theme to false.
-</p>
-
-<CodeSnippet @name="bootstrap-theme-2-js.js"/>
-
-<p>
-  Remember to restart ember-cli to pick up the changes.
-</p>
+<CodeBlock @language="css" @code="import 'ember-power-select/themes/bootstrap';" />
 
 <div class="doc-page-nav">
   <LinkTo @route="public-pages.cookbook.index" class="doc-page-nav-link-prev">&lt; System-wide config</LinkTo>

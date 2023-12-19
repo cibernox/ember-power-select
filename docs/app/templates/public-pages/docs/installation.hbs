@@ -7,32 +7,37 @@
 
 <div class="highlight">
   <pre>
-    <code class="language-text" data-lang="text">
-      $ ember install ember-power-select
-    </code>
+    <code class="language-text" data-lang="text">$ ember install ember-power-select</code>
   </pre>
 </div>
 
 <p>
-  If you use just vanilla css, you're good to go. Ember-power-select will add the default styles
-  to your vendor css file.
+  After the installation you need to add the following lines somewhere in your templates where you want to render the power select content into e.g. your <code>application.hbs</code>.
+  In this component will be rendered the power select content.
 </p>
 
-<p>
-  However, if you are using SASS or LESS the addon won't do that. Instead you need to import the
-  addon styles yourself.
-</p>
-
-<div class="highlight">
+<div class='highlight'>
   <pre>
-    <code class="language-sass" data-lang="sass">
-      @import "ember-power-select";
-    </code>
+    <code class='language-text' data-lang='text'>&lt;BasicDropdownWormhole /&gt;</code>
   </pre>
 </div>
 
 <p>
-  When installing this through <pre>ember install</pre> the addon will add the snippet above
+  If you use vanilla CSS, you need to add the following line into <code>app.js</code>:
+</p>
+
+<CodeBlock @language="css" @code="import 'ember-power-select/styles';" />
+
+<p>
+  However, if you are using SASS or LESS you need to add an import statement to your styles.
+</p>
+
+{{#let (get-code-snippet "installation-1.scss") as |snippet|}}
+  <CodeBlock @language="scss" @code={{snippet.source}} />
+{{/let}}
+
+<p>
+  When installing this through <code>ember install</code> the addon will add the snippet above
   automatically for you in your <code>app.scss</code> or <code>app.less</code>.
 </p>
 
@@ -41,6 +46,7 @@
   customize the appearance of ember-power-select using variables. This is easier and generates less
   code than overriding styles you don't like.
 </p>
+
 <p>
   More information about style in <LinkTo @route="public-pages.docs.styles">Basic customization: Styles</LinkTo>
 </p>
