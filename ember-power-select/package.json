@@ -23,7 +23,18 @@
       "types": "./declarations/*.d.ts",
       "default": "./dist/*.js"
     },
-    "./addon-main.js": "./addon-main.cjs"
+    "./addon-main.js": "./addon-main.cjs",
+    "./_index.less": "./_index.less",
+    "./_index.scss": "./_index.scss",
+    "./less/base.less": "./less/base.less",
+    "./scss/base.scss": "./scss/base.scss",
+    "./less/variables.less": "./less/variables.less",
+    "./scss/variables.scss": "./scss/variables.scss",
+    "./themes/bootstrap.less": "./less/themes/bootstrap.less",
+    "./themes/bootstrap.scss": "./scss/themes/bootstrap.scss",
+    "./themes/material.less": "./less/themes/material.less",
+    "./themes/material.scss": "./scss/themes/material.scss",
+    "./vendor/*": "./vendor/*"
   },
   "typesVersions": {
     "*": {
@@ -33,9 +44,14 @@
     }
   },
   "files": [
+    "_index.scss",
+    "_index.less",
     "addon-main.cjs",
     "declarations",
-    "dist"
+    "dist",
+    "less",
+    "scss",
+    "vendor"
   ],
   "scripts": {
     "build": "concurrently 'npm:build:*'",
@@ -114,10 +130,13 @@
     "eslint-plugin-ember": "^11.11.1",
     "eslint-plugin-n": "^16.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "node-sass": "^9.0.0",
+    "postcss": "^8.4.32",
     "prettier": "^3.0.3",
     "prettier-plugin-ember-template-tag": "^1.1.0",
     "rollup": "^3.21.8",
-    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-styles": "^4.0.0",
+    "sass": "^1.69.5",
     "typescript": "^5.0.4"
   },
   "peerDependencies": {

@@ -5,6 +5,7 @@
 # compiled output
 /dist
 /declarations
+/vendor
 
 # npm/pnpm/yarn pack output
 *.tgz
