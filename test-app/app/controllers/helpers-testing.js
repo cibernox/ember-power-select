@@ -1,7 +1,9 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
+import { tracked } from '@glimmer/tracking';
 import RSVP from 'rsvp';
+
 const numbers = [
   'one',
   'two',
@@ -27,9 +29,9 @@ const numbers = [
 
 export default class HelpersTesting extends Controller {
   numbers = numbers;
-  selectedList = [];
-  asyncSelectedList = [];
-  optionz = [];
+  @tracked selectedList = [];
+  @tracked asyncSelectedList = [];
+  @tracked optionz = [];
 
   @action
   searchAsync(term) {
@@ -43,14 +45,14 @@ export default class HelpersTesting extends Controller {
   @action
   onOpenHandle() {
     later(() => {
-      this.set('optionz', numbers);
+      this.optionz = numbers;
     }, 100);
   }
 
   @action
   onChangeAsync(key, selected) {
     later(() => {
-      this.set(key, selected);
+      this[key] = selected;
     }, 100);
   }
 }

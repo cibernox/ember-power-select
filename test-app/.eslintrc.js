@@ -18,8 +18,6 @@ module.exports = {
   rules: {
     'ember/no-classic-classes': 'off',
     'ember/no-classic-components': 'off',
-    'ember/classic-decorator-no-classic-methods': 'off',
-    'ember/no-computed-properties-in-native-classes': 'off',
   },
   overrides: [
     // ts files
