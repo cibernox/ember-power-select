@@ -33,6 +33,7 @@ export default class HelpersTesting extends Controller {
   @tracked asyncSelected;
   @tracked asyncSelectedList = [];
   @tracked optionz = [];
+  @tracked selected3;
 
   @action
   searchAsync(term) {
