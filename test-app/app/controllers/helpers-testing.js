@@ -30,6 +30,7 @@ const numbers = [
 export default class HelpersTesting extends Controller {
   numbers = numbers;
   @tracked selectedList = [];
+  @tracked asyncSelected;
   @tracked asyncSelectedList = [];
   @tracked optionz = [];
 
