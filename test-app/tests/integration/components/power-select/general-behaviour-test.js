@@ -15,7 +15,7 @@ import {
   findContains,
 } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { run, later } from '@ember/runloop';
 import { numbers, names, countries } from '../constants';
@@ -1379,16 +1379,22 @@ module(
     });
 
     test('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function (assert) {
-      let User = EmberObject.extend({
+      class User {
+        @tracked name;
+
+        constructor(name) {
+          this.name = name;
+        }
+
         isEqual(other) {
           return this.name === other.name;
-        },
-      });
+        }
+      }
 
       this.search = (term) => {
         return names
           .filter((n) => n.indexOf(term) > -1)
-          .map((name) => User.create({ name }));
+          .map((name) => new User(name));
       };
 
       let onChangeInvocationsCount = 0;

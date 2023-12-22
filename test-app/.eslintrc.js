@@ -15,9 +15,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {
-    'ember/no-classic-classes': 'off',
-  },
+  rules: {},
   overrides: [
     // ts files
     {

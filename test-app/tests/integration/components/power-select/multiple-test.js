@@ -14,7 +14,7 @@ import {
   render,
 } from '@ember/test-helpers';
 import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import { run, later } from '@ember/runloop';
 import { A } from '@ember/array';
@@ -1131,16 +1131,22 @@ module(
     });
 
     test('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', async function (assert) {
-      let User = EmberObject.extend({
+      class User {
+        @tracked name;
+
+        constructor(name) {
+          this.name = name;
+        }
+
         isEqual(other) {
           return this.name === other.name;
-        },
-      });
+        }
+      }
 
       this.search = (term) => {
         return names
           .filter((n) => n.indexOf(term) > -1)
-          .map((name) => User.create({ name }));
+          .map((name) => new User(name));
       };
 
       await render(hbs`
