@@ -1,8 +1,6 @@
 import OptionsComponent from 'ember-power-select/components/power-select/options';
-import { computed } from '@ember/object';
 
 export default class extends OptionsComponent {
-  @computed
   get animationRules() {
     return function () {
       this.transition(
@@ -19,7 +17,7 @@ export default class extends OptionsComponent {
 
   didReceiveAttrs() {
     super.didReceiveAttrs(...arguments);
-    this.set('enableGrowth', !this.options.fromSearch);
+    this.enableGrowth = !this.options.fromSearch;
   }
 }
 

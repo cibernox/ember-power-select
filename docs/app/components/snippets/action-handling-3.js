@@ -19,13 +19,13 @@ export default class extends Component {
   @tracked selectedCities = A();
 
   @action
-  handleKeydown(dropdown, e) {
+  handleKeydown(_dropdown, e) {
     if (e.keyCode !== 13) {
       return;
     }
     let text = e.target.value;
     if (text.length > 0 && this.cities.indexOf(text) === -1) {
-      this.set('selectedCities', this.selectedCities.concat([text]));
+      this.selectedCities = this.selectedCities.concat([text]);
     }
   }
 }

@@ -15,10 +15,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {
-    'ember/classic-decorator-no-classic-methods': 'off',
-    'ember/no-computed-properties-in-native-classes': 'off',
-  },
+  rules: {},
   overrides: [
     // ts files
     {

@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 const groupedSections = [
@@ -51,7 +51,6 @@ export default class Docs extends Controller {
 
   groupedSections = groupedSections;
 
-  @computed('router.currentRouteName')
   get currentSection() {
     let currentRouteName = this.router.currentRouteName;
     for (let i = 0; i < groupedSections.length; i++) {
@@ -68,6 +67,6 @@ export default class Docs extends Controller {
 
   @action
   visit(section) {
-    this.transitionToRoute(section.route);
+    this.router.transitionTo(section.route);
   }
 }
