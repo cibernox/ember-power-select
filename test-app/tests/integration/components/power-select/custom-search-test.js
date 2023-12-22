@@ -1,4 +1,3 @@
-import EmberObject from '@ember/object';
 import { later } from '@ember/runloop';
 import { task, timeout } from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
@@ -746,13 +745,16 @@ module(
       assert.expect(1);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(100);
           assert.strictEqual(term, 'nin', 'The second search gets executed');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       <PowerSelect @search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
@@ -776,13 +778,16 @@ module(
       assert.expect(0);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(100);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       <PowerSelect search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
@@ -806,13 +811,16 @@ module(
       assert.expect(0);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(100).linked();
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       {{#unless this.hideSelect}}
@@ -838,13 +846,16 @@ module(
       assert.expect(0);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(100);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       <PowerSelect search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
@@ -868,13 +879,16 @@ module(
       assert.expect(1);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(100);
           assert.strictEqual(term, 'nin', 'The second search gets executed');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       <PowerSelectMultiple @search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
@@ -898,13 +912,16 @@ module(
       assert.expect(0);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(100);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
@@ -928,13 +945,16 @@ module(
       assert.expect(0);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(100).linked();
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       {{#unless this.hideSelect}}
@@ -960,13 +980,16 @@ module(
       assert.expect(0);
       let done = assert.async();
 
-      this.obj = EmberObject.extend({
-        searchTask: task(function* (term) {
+      class testObj {
+        @(task(function* (term) {
           yield timeout(150);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }),
-      }).create();
+        }).restartable())
+        searchTask;
+      }
+
+      this.obj = new testObj();
 
       await render(hbs`
       <PowerSelectMultiple search={{perform this.obj.searchTask}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
