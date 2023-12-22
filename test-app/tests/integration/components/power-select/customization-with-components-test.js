@@ -396,7 +396,6 @@ module(
     test('`@groupComponent` has extension points', async function (assert) {
       this.groupedNumbers = groupedNumbers;
       let numberOfGroups = 5; // number of groups in groupedNumbers
-      assert.expect(4 * numberOfGroups);
 
       let extra = { foo: 'bar' };
       this.extra = extra;
@@ -419,6 +418,10 @@ module(
     `);
 
       await clickTrigger();
+
+      assert
+        .dom('.ember-power-select-options .custom-component')
+        .exists({ count: numberOfGroups });
     });
 
     test('the power-select-multiple placeholder can be customized using `@placeholderComponent`', async function (assert) {

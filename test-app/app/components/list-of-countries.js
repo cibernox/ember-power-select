@@ -1,4 +1,3 @@
-/* eslint-disable ember/require-tagless-components */
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
 export default class ListOfCountriesComponent extends Component {}

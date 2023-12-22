@@ -1,9 +1,9 @@
-/* eslint-disable ember/classic-decorator-hooks, ember/require-tagless-components */
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
 export default class CustomGroupComponent extends Component {
-  init() {
-    super.init(...arguments);
+  @action
+  setup() {
     this.onInit?.bind(this)();
   }
 }

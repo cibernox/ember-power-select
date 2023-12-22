@@ -48,13 +48,14 @@ module(
       <PowerSelect 
         @options={{this.countries}} 
         @selected={{this.country}} 
-        @optionsComponent={{component "list-of-countries"}} 
+        @optionsComponent={{component "list-of-countries"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
 
       await clickTrigger();
+
       assert
         .dom('.ember-power-select-options')
         .includesText('Countries:', 'The given component is rendered');
