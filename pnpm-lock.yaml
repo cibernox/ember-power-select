@@ -163,8 +163,8 @@ importers:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.2.1)(webpack@5.89.0)
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.0
-        version: 8.0.0-beta.0(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
+        specifier: 8.0.0-beta.1
+        version: 8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
       ember-cli:
         specifier: ~5.4.1
         version: 5.4.1
@@ -325,8 +325,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.0
-        version: 8.0.0-beta.0(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
+        specifier: 8.0.0-beta.1
+        version: 8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
       ember-concurrency:
         specifier: ^3.1.1
         version: 3.1.1(@babel/core@7.23.2)(ember-source@5.4.0)
@@ -636,8 +636,8 @@ importers:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.2.1)(webpack@5.89.0)
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.0
-        version: 8.0.0-beta.0(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
+        specifier: 8.0.0-beta.1
+        version: 8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
       ember-cli:
         specifier: ~5.4.1
         version: 5.4.1
@@ -876,7 +876,7 @@ packages:
     resolution: {integrity: sha512-LvBTxu8bQSQkcyKOU+a1btnNFQ1dMAd0R6PyW3arXes06F6QLWLIrd681bxRPIXlrMGR3XYnW9JyML7dP3qgxg==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.23.5
+      '@babel/types': 7.23.6
 
   /@babel/helper-builder-binary-assignment-operator-visitor@7.22.15:
     resolution: {integrity: sha512-QkBXwGgaoC2GtGZRoma6kv7Szfv06khvhFav67ZExau2RaXzy8MpHSMO2PNoP2XtmQphJQRHFfg77Bq731Yizw==}
@@ -2583,8 +2583,8 @@ packages:
     engines: {node: 12.* || 14.* || >= 16}
     dependencies:
       '@babel/core': 7.23.7
-      '@babel/parser': 7.23.5
-      '@babel/traverse': 7.23.5
+      '@babel/parser': 7.23.6
+      '@babel/traverse': 7.23.7
       '@embroider/macros': 1.13.3(@glint/template@1.2.1)
       '@embroider/shared-internals': 2.5.1
       assert-never: 1.2.1
@@ -7024,8 +7024,8 @@ packages:
       - supports-color
       - webpack
 
-  /ember-basic-dropdown@8.0.0-beta.0(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0):
-    resolution: {integrity: sha512-OS3GLm3eKZtvjxnRGAfKsWqQL7dOyS0EF6KMyE0RrnIrDWTljUUH5PNfqne4bkNfnTI6CRI3PAYRj4Na8zw4aw==}
+  /ember-basic-dropdown@8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0):
+    resolution: {integrity: sha512-Not+/AjGn4QZ8FN6aMyfDvSO0d3fYiPa+Kv7/JvJ+OGgqdxg8uEowPNe0DRBwwX7j/jsJZgAPTP36m6MPX1YGQ==}
     peerDependencies:
       '@ember/test-helpers': ^2.9.4 || ^3.2.1
       ember-source: ^3.28.0 || ^4.0.0 || >=5.0.0
