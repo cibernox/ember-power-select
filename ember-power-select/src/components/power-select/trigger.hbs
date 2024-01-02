@@ -1,0 +1,23 @@
+{{#if @select.selected}}
+  {{#if @selectedItemComponent}}
+    {{#let (component (ensure-safe-component @selectedItemComponent)) as |SelectedItemComponent|}}
+      <SelectedItemComponent
+        @extra={{readonly @extra}}
+        @option={{readonly @select.selected}}
+        @select={{readonly @select}}
+      />
+    {{/let}}
+  {{else}}
+    <span class="ember-power-select-selected-item">{{yield @select.selected @select}}</span>
+  {{/if}}
+  {{#if (and @allowClear (not @select.disabled))}}
+    <span class="ember-power-select-clear-btn" role="button" {{on "mousedown" this.clear}} {{on "touchstart" this.clear}}>&times;</span>
+  {{/if}}
+{{else}}
+  {{#let (component (ensure-safe-component @placeholderComponent)) as |PlaceholderComponent|}}
+    <PlaceholderComponent
+      @placeholder={{@placeholder}}
+    />
+  {{/let}}
+{{/if}}
+<span class="ember-power-select-status-icon"></span>
