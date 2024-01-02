@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import {
   selectChoose,
   getDropdownItems,
-} from 'ember-power-select/test-support/helpers';
+} from 'ember-power-select/test-support';
 import { numbers } from '../constants';
 
 module('Integration | Helpers | selectChoose', function (hooks) {
