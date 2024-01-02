@@ -2,6 +2,23 @@
 
 
 
+
+## v8.0.0-beta.0 (2024-01-02)
+
+#### :boom: Breaking Change
+* [#1619](https://github.com/cibernox/ember-power-select/pull/1619) Addon to v2 ([@mkszepp](https://github.com/mkszepp))
+* [#1615](https://github.com/cibernox/ember-power-select/pull/1615) Update ember cli v4.12.1 to v5.4.1 & drop node v16 ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#1621](https://github.com/cibernox/ember-power-select/pull/1621) Fix doc ([@mkszepp](https://github.com/mkszepp))
+* [#1618](https://github.com/cibernox/ember-power-select/pull/1618) Remove overrides in `package.json` ([@mkszepp](https://github.com/mkszepp))
+* [#1617](https://github.com/cibernox/ember-power-select/pull/1617) Update typescript, drop mocha, testdouble (unused) ([@mkszepp](https://github.com/mkszepp))
+* [#1616](https://github.com/cibernox/ember-power-select/pull/1616) Drop `ember-text-measurer` from dependencies ([@mkszepp](https://github.com/mkszepp))
+* [#1614](https://github.com/cibernox/ember-power-select/pull/1614) Drop outdated devDependencies ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v7.2.0 (2023-11-16)
 
 #### :rocket: Enhancement
