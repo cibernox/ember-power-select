@@ -15,8 +15,10 @@ module.exports = {
   afterInstall() {
     let dependencies = this.project.dependencies();
 
+    const promises = [];
+
     if (!('ember-basic-dropdown' in dependencies)) {
-      this.addPackageToProject('ember-basic-dropdown', 'beta');
+      promises.push(this.addPackageToProject('ember-basic-dropdown', 'beta'));
     }
 
     let type;
@@ -37,7 +39,7 @@ module.exports = {
       }
       if (fs.existsSync(file)) {
         this.ui.writeLine(`Added import statement to ${file}`);
-        this.insertIntoFile(file, importStatement, {});
+        promises.push(this.insertIntoFile(file, importStatement, {}));
       } else {
         fs.writeFileSync(file, importStatement);
         this.ui.writeLine(`Created ${file}`);
@@ -49,9 +51,11 @@ module.exports = {
       }
       if (fs.existsSync(file)) {
         this.ui.writeLine(`Added import statement to ${file}`);
-        this.insertIntoFile(file, "import 'ember-power-select/styles';", {
-          after: "config/environment';" + EOL,
-        });
+        promises.push(
+          this.insertIntoFile(file, "import 'ember-power-select/styles';", {
+            after: "config/environment';" + EOL,
+          }),
+        );
       }
     }
 
@@ -59,11 +63,16 @@ module.exports = {
     let applicationFile = path.join(templatePath, `application.hbs`);
     if (fs.existsSync(applicationFile)) {
       this.ui.writeLine(`Added wormhole statement to ${applicationFile}`);
-      this.insertIntoFile(
-        applicationFile,
-        `${EOL}<BasicDropdownWormhole />`,
-        {},
+
+      promises.push(
+        this.insertIntoFile(
+          applicationFile,
+          `${EOL}<BasicDropdownWormhole />`,
+          {},
+        ),
       );
     }
+
+    return Promise.all(promises);
   },
 };
