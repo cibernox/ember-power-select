@@ -32,7 +32,7 @@ Ember Power Select 7.X & 8.X requires Ember **3.28.0+**.
 ## Installation
 
 ```
-ember install ember-basic-dropdown ember-power-select
+ember install ember-power-select
 ```
 
 ## Features overview

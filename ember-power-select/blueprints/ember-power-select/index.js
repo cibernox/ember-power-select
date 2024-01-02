@@ -14,6 +14,11 @@ module.exports = {
 
   afterInstall() {
     let dependencies = this.project.dependencies();
+
+    if (!('ember-basic-dropdown' in dependencies)) {
+      this.addPackageToProject('ember-basic-dropdown');
+    }
+
     let type;
     let importStatement = '\n@import "ember-power-select";\n';
 
