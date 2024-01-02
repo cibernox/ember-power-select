@@ -1,4 +1,13 @@
 
+
+## v8.0.0-beta.2 (2024-01-02)
+
+#### :bug: Bug Fix
+* [#1626](https://github.com/cibernox/ember-power-select/pull/1626) Fix blueprint ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.0-beta.1 (2024-01-02)
 
 #### :bug: Bug Fix
