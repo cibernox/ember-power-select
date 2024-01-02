@@ -7,9 +7,16 @@
 
 <div class="highlight">
   <pre>
-    <code class="language-text" data-lang="text">$ ember install ember-power-select</code>
+    <code class="language-text" data-lang="text">$ ember install ember-basic-dropdown ember-power-select</code>
   </pre>
 </div>
+
+<p>
+  When installing this through <code>ember install</code> the addon will add the necessary snippet above
+  automatically in your app.
+</p>
+
+<h3>Manual installation</h3>
 
 <p>
   After the installation you need to add the following lines somewhere in your templates where you want to render the power select content into e.g. your <code>application.hbs</code>.
@@ -35,11 +42,6 @@
 {{#let (get-code-snippet "installation-1.scss") as |snippet|}}
   <CodeBlock @language="scss" @code={{snippet.source}} />
 {{/let}}
-
-<p>
-  When installing this through <code>ember install</code> the addon will add the snippet above
-  automatically for you in your <code>app.scss</code> or <code>app.less</code>.
-</p>
 
 <p>
   This explicit import is needed because using css preprocessors like SASS and LESS allows you to

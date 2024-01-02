@@ -3,6 +3,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const EOL = require('os').EOL;
 
 module.exports = {
   normalizeEntityName() {
@@ -31,11 +32,33 @@ module.exports = {
       }
       if (fs.existsSync(file)) {
         this.ui.writeLine(`Added import statement to ${file}`);
-        return this.insertIntoFile(file, importStatement, {});
+        this.insertIntoFile(file, importStatement, {});
       } else {
         fs.writeFileSync(file, importStatement);
         this.ui.writeLine(`Created ${file}`);
       }
+    } else {
+      let file = path.join('app', `app.js`);
+      if (!fs.existsSync(file)) {
+        file = path.join('app', `app.ts`);
+      }
+      if (fs.existsSync(file)) {
+        this.ui.writeLine(`Added import statement to ${file}`);
+        this.insertIntoFile(file, "import 'ember-power-select/styles';", {
+          after: "config/environment';" + EOL,
+        });
+      }
+    }
+
+    let templatePath = path.join('app', 'templates');
+    let applicationFile = path.join(templatePath, `application.hbs`);
+    if (fs.existsSync(applicationFile)) {
+      this.ui.writeLine(`Added wormhole statement to ${applicationFile}`);
+      this.insertIntoFile(
+        applicationFile,
+        `${EOL}<BasicDropdownWormhole />`,
+        {},
+      );
     }
   },
 };
