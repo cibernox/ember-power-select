@@ -20,9 +20,12 @@
     "start:test-app": "pnpm run --filter test-app start"
   },
   "devDependencies": {
+    "@release-it-plugins/lerna-changelog": "^6.0.0",
+    "@release-it-plugins/workspaces": "^4.0.0",
     "concurrently": "^8.2.0",
     "prettier": "^3.0.3",
-    "prettier-plugin-ember-template-tag": "^1.1.0"
+    "prettier-plugin-ember-template-tag": "^1.1.0",
+    "release-it": "^16.3.0"
   },
   "workspaces": [
     "ember-power-select",
@@ -31,5 +34,25 @@
   ],
   "engines": {
     "node": ">= 18"
+  },
+  "release-it": {
+    "plugins": {
+      "@release-it-plugins/workspaces": {
+        "workspaces": [
+          "ember-power-select"
+        ]
+      },
+      "@release-it-plugins/lerna-changelog": {
+        "infile": "CHANGELOG.md"
+      }
+    },
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
+    },
+    "npm": false
   }
 }

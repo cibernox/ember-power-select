@@ -172,19 +172,5 @@
       "./utils/computed-fallback-if-undefined.js": "./dist/_app_/utils/computed-fallback-if-undefined.js",
       "./utils/group-utils.js": "./dist/_app_/utils/group-utils.js"
     }
-  },
-  "release-it": {
-    "plugins": {
-      "@release-it-plugins/lerna-changelog": {
-        "infile": "CHANGELOG.md"
-      }
-    },
-    "git": {
-      "tagName": "v${version}"
-    },
-    "github": {
-      "release": true,
-      "tokenRef": "GITHUB_AUTH"
-    }
   }
 }
