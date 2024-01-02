@@ -169,7 +169,6 @@
       "./helpers/ember-power-select-is-group.js": "./dist/_app_/helpers/ember-power-select-is-group.js",
       "./helpers/ember-power-select-is-selected.js": "./dist/_app_/helpers/ember-power-select-is-selected.js",
       "./test-support/helpers.js": "./dist/_app_/test-support/helpers.js",
-      "./test-support/index.js": "./dist/_app_/test-support/index.js",
       "./utils/computed-fallback-if-undefined.js": "./dist/_app_/utils/computed-fallback-if-undefined.js",
       "./utils/group-utils.js": "./dist/_app_/utils/group-utils.js"
     }

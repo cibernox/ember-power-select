@@ -6,7 +6,7 @@ import {
   selectSearch,
   removeMultipleOption,
   clearSelected,
-} from 'ember-power-select/test-support/helpers';
+} from 'ember-power-select/test-support';
 
 module('Acceptance | helpers | selectChoose', function (hooks) {
   setupApplicationTest(hooks);
