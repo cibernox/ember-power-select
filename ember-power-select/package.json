@@ -47,6 +47,7 @@
     "_index.scss",
     "_index.less",
     "addon-main.cjs",
+    "blueprints",
     "declarations",
     "dist",
     "less",
@@ -154,7 +155,6 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
-      "./blueprints/ember-power-select/index.js": "./dist/_app_/blueprints/ember-power-select/index.js",
       "./components/power-select-multiple.js": "./dist/_app_/components/power-select-multiple.js",
       "./components/power-select-multiple/input.js": "./dist/_app_/components/power-select-multiple/input.js",
       "./components/power-select-multiple/trigger.js": "./dist/_app_/components/power-select-multiple/trigger.js",
