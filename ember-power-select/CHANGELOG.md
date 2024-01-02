@@ -1,7 +1,12 @@
 
+## v8.0.0-beta.1 (2024-01-02)
 
+#### :bug: Bug Fix
+* [#1625](https://github.com/cibernox/ember-power-select/pull/1625) Fix test-support export & remove deprecated code ([@mkszepp](https://github.com/mkszepp))
+* [#1624](https://github.com/cibernox/ember-power-select/pull/1624) Fix blueprint export ([@mkszepp](https://github.com/mkszepp))
 
-
+#### Committers: 1
+- [@mkszepp](https://github.com/mkszepp)
 
 ## v8.0.0-beta.0 (2024-01-02)
 
