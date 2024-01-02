@@ -163,8 +163,8 @@ importers:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.2.1)(webpack@5.89.0)
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.1
-        version: 8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
+        specifier: 8.0.0-beta.3
+        version: 8.0.0-beta.3(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
       ember-cli:
         specifier: ~5.4.1
         version: 5.4.1
@@ -325,8 +325,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.1
-        version: 8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
+        specifier: 8.0.0-beta.3
+        version: 8.0.0-beta.3(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
       ember-concurrency:
         specifier: ^3.1.1
         version: 3.1.1(@babel/core@7.23.2)(ember-source@5.4.0)
@@ -636,8 +636,8 @@ importers:
         specifier: ^2.6.3
         version: 2.6.3(@glint/template@1.2.1)(webpack@5.89.0)
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.1
-        version: 8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
+        specifier: 8.0.0-beta.3
+        version: 8.0.0-beta.3(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0)
       ember-cli:
         specifier: ~5.4.1
         version: 5.4.1
@@ -1938,7 +1938,7 @@ packages:
     dependencies:
       '@babel/compat-data': 7.23.5
       '@babel/core': 7.23.2
-      '@babel/helper-compilation-targets': 7.22.15
+      '@babel/helper-compilation-targets': 7.23.6
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-validator-option': 7.23.5
       '@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression': 7.23.3(@babel/core@7.23.2)
@@ -7024,8 +7024,8 @@ packages:
       - supports-color
       - webpack
 
-  /ember-basic-dropdown@8.0.0-beta.1(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0):
-    resolution: {integrity: sha512-Not+/AjGn4QZ8FN6aMyfDvSO0d3fYiPa+Kv7/JvJ+OGgqdxg8uEowPNe0DRBwwX7j/jsJZgAPTP36m6MPX1YGQ==}
+  /ember-basic-dropdown@8.0.0-beta.3(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glint/environment-ember-loose@1.2.1)(@glint/template@1.2.1)(ember-source@5.4.0)(webpack@5.89.0):
+    resolution: {integrity: sha512-PyA5OZ6VixT0HqYphTsfN0hLprTDyZyV2igbWHrJooHTjz2T9nOXo3SUFolsRxYg2Gc2gxYMHMfONbtI2gnQXA==}
     peerDependencies:
       '@ember/test-helpers': ^2.9.4 || ^3.2.1
       ember-source: ^3.28.0 || ^4.0.0 || >=5.0.0

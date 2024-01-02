@@ -16,7 +16,7 @@ module.exports = {
     let dependencies = this.project.dependencies();
 
     if (!('ember-basic-dropdown' in dependencies)) {
-      this.addPackageToProject('ember-basic-dropdown');
+      this.addPackageToProject('ember-basic-dropdown', 'beta');
     }
 
     let type;
