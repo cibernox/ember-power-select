@@ -7,7 +7,7 @@ module.exports = function (defaults) {
     'ember-cli-babel': { enableTypeScriptTransform: true },
     snippetPaths: ['app/components/snippets', 'app/templates/snippets/'],
     'ember-prism': {
-      components: ['scss', 'javascript'], //needs to be an array, or undefined.
+      components: ['scss', 'javascript', 'handlebars', 'markup-templating'], //needs to be an array, or undefined.
     },
     autoImport: {
       watchDependencies: ['ember-power-select'],

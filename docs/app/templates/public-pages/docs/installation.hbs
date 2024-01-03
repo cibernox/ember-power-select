@@ -6,9 +6,7 @@
 </p>
 
 <div class="highlight">
-  <pre>
-    <code class="language-text" data-lang="text">$ ember install ember-power-select</code>
-  </pre>
+  <pre class="language-command"><code class="language-command">$ ember install ember-power-select</code></pre>
 </div>
 
 <p>
@@ -27,17 +25,20 @@
   In this component will be rendered the power select content.
 </p>
 
-<div class='highlight'>
-  <pre>
-    <code class='language-text' data-lang='text'>&lt;BasicDropdownWormhole /&gt;</code>
-  </pre>
-</div>
+<CodeBlock @language="hbs" @code="<BasicDropdownWormhole />" />
 
 <p>
-  If you use vanilla CSS, you need to add the following line into <code>app.js</code>:
+  If you use vanilla CSS, you need to add the following line into <code>app.js</code> or in any route/controller/component <code>.js/.ts</code> file:
 </p>
 
-<CodeBlock @language="css" @code="import 'ember-power-select/styles';" />
+<CodeBlock @language="js" @code="import 'ember-power-select/styles';" />
+
+<p>
+  Instead of adding the styling in an <code>.js</code> file and depending from your build config you can also add the css in any template/component css file by using following line
+</p>
+
+{{!-- template-lint-disable no-potential-path-strings --}}
+<CodeBlock @language="css" @code="@import 'ember-power-select/vendor/ember-power-select.css';" />
 
 <p>
   However, if you are using SASS or LESS you need to add an import statement to your styles.
