@@ -30,10 +30,7 @@
     "./scss/base.scss": "./scss/base.scss",
     "./less/variables.less": "./less/variables.less",
     "./scss/variables.scss": "./scss/variables.scss",
-    "./themes/bootstrap.less": "./less/themes/bootstrap.less",
-    "./themes/bootstrap.scss": "./scss/themes/bootstrap.scss",
-    "./themes/material.less": "./less/themes/material.less",
-    "./themes/material.scss": "./scss/themes/material.scss",
+    "./themes/*": "./themes/*",
     "./vendor/*": "./vendor/*"
   },
   "typesVersions": {
@@ -52,6 +49,7 @@
     "dist",
     "less",
     "scss",
+    "themes",
     "vendor"
   ],
   "scripts": {
