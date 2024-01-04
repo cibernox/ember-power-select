@@ -30,10 +30,7 @@
     "./scss/base.scss": "./scss/base.scss",
     "./less/variables.less": "./less/variables.less",
     "./scss/variables.scss": "./scss/variables.scss",
-    "./themes/bootstrap.less": "./less/themes/bootstrap.less",
-    "./themes/bootstrap.scss": "./scss/themes/bootstrap.scss",
-    "./themes/material.less": "./less/themes/material.less",
-    "./themes/material.scss": "./scss/themes/material.scss",
+    "./themes/*": "./themes/*",
     "./vendor/*": "./vendor/*"
   },
   "typesVersions": {
@@ -52,6 +49,7 @@
     "dist",
     "less",
     "scss",
+    "themes",
     "vendor"
   ],
   "scripts": {
@@ -142,7 +140,7 @@
   "peerDependencies": {
     "ember-source": "^3.28.0 || ^4.0.0 || >=5.0.0",
     "@ember/test-helpers": "^2.9.4 || ^3.2.1",
-    "ember-basic-dropdown": "8.0.0-beta.3"
+    "ember-basic-dropdown": "8.0.0-beta.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

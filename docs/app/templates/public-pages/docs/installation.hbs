@@ -49,6 +49,14 @@
 {{/let}}
 
 <p>
+  If you are using LESS there is also necessary to register the <code>paths</code> in <code>lessOptions</code>
+</p>
+
+{{#let (get-code-snippet "installation-2.js") as |snippet|}}
+  <CodeBlock @language="js" @code={{snippet.source}} />
+{{/let}}
+
+<p>
   This explicit import is needed because using css preprocessors like SASS and LESS allows you to
   customize the appearance of ember-power-select using variables. This is easier and generates less
   code than overriding styles you don't like.
