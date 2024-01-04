@@ -1,5 +1,17 @@
 
 
+
+## v8.0.0-beta.3 (2024-01-04)
+
+#### :bug: Bug Fix
+* [#1628](https://github.com/cibernox/ember-power-select/pull/1628) Fix theme export for SCSS/LESS & fix primary less file ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1627](https://github.com/cibernox/ember-power-select/pull/1627) DOCS: Add additional option for css import ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.0-beta.2 (2024-01-02)
 
 #### :bug: Bug Fix
