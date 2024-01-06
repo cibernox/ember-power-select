@@ -69,7 +69,7 @@ export interface PowerSelectArgs {
   matchTriggerWidth?: boolean;
   options: any[] | PromiseProxy<any[]>;
   selected: any | PromiseProxy<any>;
-  destination: string;
+  destination?: string;
   closeOnSelect?: boolean;
   renderInPlace?: boolean;
   preventScroll?: boolean;
