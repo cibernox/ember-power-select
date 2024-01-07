@@ -1,13 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
-import type { PowerSelectArgs, Select } from './power-select';
+import type { PowerSelectSignature, Select } from './power-select';
 
-interface PowerSelectMultipleArgs extends PowerSelectArgs {
+interface PowerSelectMultipleSignature extends PowerSelectSignature {
   // any extra property for multiple selects?
 }
 
-export default class PowerSelectMultipleComponent extends Component<PowerSelectMultipleArgs> {
+export default class PowerSelectMultipleComponent extends Component<PowerSelectMultipleSignature> {
   get computedTabIndex() {
     if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
       return '-1';

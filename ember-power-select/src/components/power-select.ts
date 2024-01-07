@@ -59,7 +59,6 @@ interface Performable {
 }
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs {
-  Element: HTMLElement;
   highlightOnHover?: boolean;
   placeholderComponent?: string | ComponentLike<any>;
   searchMessage?: string;
@@ -120,6 +119,11 @@ export interface PowerSelectArgs {
   onBlur?: (select: Select, event: FocusEvent) => void;
   scrollTo?: (option: any, select: Select) => void;
   registerAPI?: (select: Select) => void;
+}
+
+export interface PowerSelectSignature {
+  Element: HTMLElement;
+  Args: PowerSelectArgs;
   Blocks: {
     default: [option: any, select: Select];
   };
@@ -143,7 +147,7 @@ const isCancellablePromise = <T>(
   return typeof thing.cancel === 'function';
 };
 
-export default class PowerSelectComponent extends Component<PowerSelectArgs> {
+export default class PowerSelectComponent extends Component<PowerSelectSignature> {
   // Untracked properties
   _publicAPIActions = {
     search: this._search,
