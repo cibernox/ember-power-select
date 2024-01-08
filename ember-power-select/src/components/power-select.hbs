@@ -83,8 +83,8 @@
           @ariaActiveDescendant={{concat publicAPI.uniqueId "-" this.highlightedIndex}}
           @ariaLabelledBy={{@ariaLabelledBy}}
           @ariaLabel={{@ariaLabel}}
-          as |opt term|>
-          {{yield opt term}}
+          as |opt select|>
+          {{yield opt select}}
         </Trigger>
       {{/let}}
     </dropdown.Trigger>
