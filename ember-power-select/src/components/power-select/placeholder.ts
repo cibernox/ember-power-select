@@ -1,10 +1,12 @@
-import Component from '@glimmer/component';
+﻿import Component from '@glimmer/component';
 
-interface Args {
+interface PowerSelectPlaceholderSignature {
   Element: HTMLElement;
-  isMultipleWithSearch: boolean;
-  placeholder: any;
-  inputComponent?: any;
+  Args: {
+    isMultipleWithSearch: boolean;
+    placeholder: any;
+    inputComponent?: any;
+  };
 }
 
-export default class PlaceholderComponent extends Component<Args> {}
+export default class PowerSelectPlaceholderComponent extends Component<PowerSelectPlaceholderSignature> {}

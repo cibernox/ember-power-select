@@ -5,29 +5,33 @@ import { scheduleOnce } from '@ember/runloop';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 
-interface Args {
+interface PowerSelectMultipleTriggerSignature {
   Element: HTMLElement;
-  select: Select;
-  searchEnabled: boolean;
-  placeholder?: string;
-  searchField: string;
-  listboxId?: string;
-  tabindex?: string;
-  ariaLabel?: string;
-  ariaLabelledBy?: string;
-  ariaActiveDescendant: string;
-  extra?: any;
-  placeholderComponent?: string | ComponentLike<any>;
-  selectedItemComponent?: string | ComponentLike<any>;
-  onInput?: (e: InputEvent) => boolean;
-  onKeydown?: (e: KeyboardEvent) => boolean;
-  onFocus?: (e: FocusEvent) => void;
-  onBlur?: (e: FocusEvent) => void;
-  buildSelection: (lastSelection: any, select: Select) => any[];
+  Args: {
+    Element: HTMLElement;
+    select: Select;
+    searchEnabled: boolean;
+    placeholder?: string;
+    searchField: string;
+    listboxId?: string;
+    tabindex?: string;
+    ariaLabel?: string;
+    ariaLabelledBy?: string;
+    ariaActiveDescendant: string;
+    extra?: any;
+    placeholderComponent?: string | ComponentLike<any>;
+    selectedItemComponent?: string | ComponentLike<any>;
+    onInput?: (e: InputEvent) => boolean;
+    onKeydown?: (e: KeyboardEvent) => boolean;
+    onFocus?: (e: FocusEvent) => void;
+    onBlur?: (e: FocusEvent) => void;
+    buildSelection: (lastSelection: any, select: Select) => any[];
+  };
   Blocks: {
     default: [opt: any, select: Select];
   };
 }
+
 interface IndexAccesible<T> {
   objectAt(index: number): T;
 }
@@ -35,7 +39,7 @@ const isIndexAccesible = <T>(target: any): target is IndexAccesible<T> => {
   return typeof target.objectAt === 'function';
 };
 
-export default class TriggerComponent extends Component<Args> {
+export default class TriggerComponent extends Component<PowerSelectMultipleTriggerSignature> {
   private _lastIsOpen: boolean = this.args.select.isOpen;
 
   // Actions

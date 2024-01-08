@@ -3,22 +3,25 @@ import { scheduleOnce, later } from '@ember/runloop';
 import { action } from '@ember/object';
 import type { Select } from '../power-select';
 
-interface Args {
-  select: Select;
-  searchEnabled: boolean;
-  ariaLabel?: string;
-  ariaLabelledBy?: string;
-  searchPlaceholder?: string;
-  ariaActiveDescendant?: string;
-  listboxId?: string;
-  onKeydown: (e: KeyboardEvent) => false | void;
-  onBlur: (e: FocusEvent) => void;
-  onFocus: (e: FocusEvent) => void;
-  onInput: (e: InputEvent) => boolean;
-  autofocus?: boolean;
+interface PowerSelectBeforeOptionsSignature {
+  Element: HTMLElement;
+  Args: {
+    select: Select;
+    searchEnabled: boolean;
+    ariaLabel?: string;
+    ariaLabelledBy?: string;
+    searchPlaceholder?: string;
+    ariaActiveDescendant?: string;
+    listboxId?: string;
+    onKeydown: (e: KeyboardEvent) => false | void;
+    onBlur: (e: FocusEvent) => void;
+    onFocus: (e: FocusEvent) => void;
+    onInput: (e: InputEvent) => boolean;
+    autofocus?: boolean;
+  };
 }
 
-export default class BeforeOptionsComponent extends Component<Args> {
+export default class PowerSelectBeforeOptionsComponent extends Component<PowerSelectBeforeOptionsSignature> {
   @action
   clearSearch(): void {
     scheduleOnce('actions', this.args.select.actions, 'search', '');
