@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
 
-interface Args {
-  noMatchesMessage: any;
+interface PowerSelectNoMatchesMessageSignature {
+  Element: HTMLElement;
+  Args: {
+    noMatchesMessage: any;
+  };
 }
 
-export default class NoMatchesMessageComponent extends Component<Args> {}
+export default class PowerSelectNoMatchesMessageComponent extends Component<PowerSelectNoMatchesMessageSignature> {}

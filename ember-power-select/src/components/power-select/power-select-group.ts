@@ -1,10 +1,13 @@
 import Component from '@glimmer/component';
 
-interface Args {
-  group: any;
+interface PowerSelectPowerSelectGroupSignature {
+  Element: HTMLElement;
+  Args: {
+    group: any;
+  };
   Blocks: {
     default: [];
   };
 }
 
-export default class PowerSelectGroupComponent extends Component<Args> {}
+export default class PowerSelectPowerSelectGroupComponent extends Component<PowerSelectPowerSelectGroupSignature> {}

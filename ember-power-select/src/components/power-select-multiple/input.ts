@@ -7,29 +7,31 @@ import { isBlank } from '@ember/utils';
 import { htmlSafe } from '@ember/template';
 import type { Select } from '../power-select';
 
-interface Args {
+interface PowerSelectMultipleInputSignature {
   Element: HTMLElement;
-  select: Select;
-  placeholder?: string;
-  searchField: string;
-  tabindex?: string;
-  listboxId?: string;
-  ariaLabel?: string;
-  ariaActiveDescendant?: string;
-  ariaLabelledBy?: string;
-  placeholderComponent?: string;
-  isDefaultPlaceholder?: boolean;
-  onInput?: (e: InputEvent) => boolean;
-  onKeydown?: (e: KeyboardEvent) => boolean;
-  onFocus: (e: FocusEvent) => void;
-  onBlur: (e: FocusEvent) => void;
-  buildSelection: (lastSelection: any, select: Select) => any[];
+  Args: {
+    select: Select;
+    placeholder?: string;
+    searchField: string;
+    tabindex?: string;
+    listboxId?: string;
+    ariaLabel?: string;
+    ariaActiveDescendant?: string;
+    ariaLabelledBy?: string;
+    placeholderComponent?: string;
+    isDefaultPlaceholder?: boolean;
+    onInput?: (e: InputEvent) => boolean;
+    onKeydown?: (e: KeyboardEvent) => boolean;
+    onFocus: (e: FocusEvent) => void;
+    onBlur: (e: FocusEvent) => void;
+    buildSelection: (lastSelection: any, select: Select) => any[];
+  };
 }
 
 const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
-export default class PowerSelectMultipleInputComponent extends Component<Args> {
+export default class PowerSelectMultipleInputComponent extends Component<PowerSelectMultipleInputSignature> {
   private inputFont?: string;
 
   // Properties

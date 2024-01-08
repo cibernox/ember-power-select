@@ -4,8 +4,15 @@ import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 declare const FastBoot: any;
 
-interface Args {
+interface PowerSelectOptionsSignature {
   Element: HTMLElement;
+  Args: PowerSelectOptionsArgs;
+  Blocks: {
+    default: [opt: PowerSelectOptionsArgs, select: Select];
+  };
+}
+
+interface PowerSelectOptionsArgs {
   select: Select;
   highlightOnHover?: boolean;
   groupIndex: string;
@@ -14,9 +21,6 @@ interface Args {
   extra: any;
   groupComponent?: string | ComponentLike<any>;
   optionsComponent?: string | ComponentLike<any>;
-  Blocks: {
-    default: [opt: Args, select: Select];
-  };
 }
 
 const isTouchDevice = !!window && 'ontouchstart' in window;
@@ -45,7 +49,7 @@ if (typeof FastBoot === 'undefined') {
   })(window.Element.prototype);
 }
 
-export default class OptionsComponent extends Component<Args> {
+export default class PowerSelectOptionsComponent extends Component<PowerSelectOptionsSignature> {
   private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice;
   private touchMoveEvent?: TouchEvent;
   private mouseOverHandler: EventListener = ((

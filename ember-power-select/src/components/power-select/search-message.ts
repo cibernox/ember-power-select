@@ -1,8 +1,10 @@
 import Component from '@glimmer/component';
 
-interface Args {
+interface PowerSelectSearchMessageSignature {
   Element: HTMLElement;
-  searchMessage: string;
+  Args: {
+    searchMessage: string;
+  };
 }
 
-export default class SearchMessageComponent extends Component<Args> {}
+export default class PowerSelectSearchMessageComponent extends Component<PowerSelectSearchMessageSignature> {}
