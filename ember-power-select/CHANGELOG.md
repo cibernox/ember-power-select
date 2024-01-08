@@ -228,6 +228,9 @@
 - [BREAKING] All actions starting with `on` (e.g. `onchange` and `onopen`) are now spelled with camelCase (`@onChange` and `@onOpen`)
 - [BREAKING] @searchEnabled is now false by default
 
+# 2.3.5
+- [BUGFIX] Could not find module ember-compatibility-helpers
+
 # 2.3.4
 - [BUGFIX] Add back node 6 in the list of supported engines
 
