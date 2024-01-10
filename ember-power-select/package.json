@@ -166,8 +166,8 @@
       "./components/power-select/power-select-group.js": "./dist/_app_/components/power-select/power-select-group.js",
       "./components/power-select/search-message.js": "./dist/_app_/components/power-select/search-message.js",
       "./components/power-select/trigger.js": "./dist/_app_/components/power-select/trigger.js",
+      "./helpers/ember-power-select-is-equal.js": "./dist/_app_/helpers/ember-power-select-is-equal.js",
       "./helpers/ember-power-select-is-group.js": "./dist/_app_/helpers/ember-power-select-is-group.js",
-      "./helpers/ember-power-select-is-selected.js": "./dist/_app_/helpers/ember-power-select-is-selected.js",
       "./test-support/helpers.js": "./dist/_app_/test-support/helpers.js",
       "./utils/computed-fallback-if-undefined.js": "./dist/_app_/utils/computed-fallback-if-undefined.js",
       "./utils/group-utils.js": "./dist/_app_/utils/group-utils.js"

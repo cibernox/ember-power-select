@@ -3,7 +3,7 @@ import { isArray as isEmberArray } from '@ember/array';
 import { isEqual } from '@ember/utils';
 
 // TODO: Make it private or scoped to the component
-export function emberPowerSelectIsSelected(
+export function emberPowerSelectIsEqual(
   [option, selected]: [any, any] /* , hash*/,
 ): boolean {
   if (selected === undefined || selected === null) {
@@ -21,4 +21,4 @@ export function emberPowerSelectIsSelected(
   }
 }
 
-export default helper(emberPowerSelectIsSelected);
+export default helper(emberPowerSelectIsEqual);

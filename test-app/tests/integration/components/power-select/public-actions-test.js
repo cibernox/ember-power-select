@@ -6,8 +6,9 @@ import {
   clickTrigger,
   typeInSearch,
 } from 'ember-power-select/test-support/helpers';
-import { numbers } from '../constants';
+import { names, numbers } from '../constants';
 import { run } from '@ember/runloop';
+import { tracked } from '@glimmer/tracking';
 
 function assertPublicAPIShape(assert, select) {
   assert.strictEqual(
@@ -848,6 +849,72 @@ module(
     `);
 
       run(() => this.selectAPI.actions.scrollTo('three'));
+    });
+
+    test('The programmer can use the received public API to highlight an option', async function (assert) {
+      this.numbers = numbers;
+      const highlightedOption = numbers[1];
+      this.highlightOption = (select) => {
+        select.actions.highlight(highlightedOption);
+      };
+
+      await render(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onOpen={{this.highlightOption}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
+        {{number}}
+      </PowerSelectMultiple>
+    `);
+
+      await clickTrigger();
+
+      assert
+        .dom('[aria-current="true"]')
+        .hasText(
+          highlightedOption,
+          'The current option is the one highlighted programmatically',
+        );
+    });
+
+    test('if the options of a single select implement `isEqual`, it is possible to highlight it programmatically', async function (assert) {
+      class User {
+        @tracked name;
+
+        constructor(name) {
+          this.name = name;
+        }
+
+        isEqual(other) {
+          return this.name === other?.name;
+        }
+      }
+
+      const users = names.map((name) => new User(name));
+      const highlightedOption = users[1];
+
+      this.users = users;
+      this.highlightOption = (select) => {
+        select.actions.highlight(new User(highlightedOption.name));
+      };
+
+      await render(hbs`
+      <PowerSelect
+        @options={{this.users}}
+        @selected={{this.foo}}
+        @onOpen={{this.highlightOption}}
+        @onChange={{fn (mut this.foo)}}
+        as |user|
+      >
+        {{user.name}}
+      </PowerSelect>
+    `);
+
+      await clickTrigger();
+
+      assert
+        .dom('[aria-current="true"]')
+        .hasText(
+          highlightedOption.name,
+          'The current option is the one highlighted programmatically',
+        );
     });
   },
 );
