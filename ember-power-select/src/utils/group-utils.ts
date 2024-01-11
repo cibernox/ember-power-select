@@ -1,4 +1,5 @@
 import { A } from '@ember/array';
+import { isEqual } from '@ember/utils';
 
 export type MatcherFn = (option: any, text: string) => number;
 export function isGroup(entry: any): boolean {
@@ -40,7 +41,7 @@ export function indexOfOption(collection: any, option: any): number {
         if (result > -1) {
           return result;
         }
-      } else if (entry === option) {
+      } else if (isEqual(entry, option)) {
         return index;
       } else {
         index++;
@@ -64,7 +65,7 @@ export function pathForOption(collection: any, option: any): string {
         if (result.length > 0) {
           return i + '.' + result;
         }
-      } else if (entry === option) {
+      } else if (isEqual(entry, option)) {
         return i + '';
       }
     }

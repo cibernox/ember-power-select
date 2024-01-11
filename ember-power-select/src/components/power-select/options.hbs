@@ -4,9 +4,9 @@
       <li class="ember-power-select-option ember-power-select-option--loading-message" role="option" aria-selected={{false}}>{{@loadingMessage}}</li>
     {{/if}}
   {{/if}}
-  {{#let 
-    (component (ensure-safe-component @groupComponent)) 
-    (component (ensure-safe-component @optionsComponent)) 
+  {{#let
+    (component (ensure-safe-component @groupComponent))
+    (component (ensure-safe-component @optionsComponent))
   as |Group Options|}}
     {{#each @options as |opt index|}}
       {{#if (ember-power-select-is-group opt)}}
@@ -26,9 +26,9 @@
       {{else}}
         <li class="ember-power-select-option"
           id="{{@select.uniqueId}}-{{@groupIndex}}{{index}}"
-          aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
+          aria-selected="{{ember-power-select-is-equal opt @select.selected}}"
           aria-disabled={{if opt.disabled "true"}}
-          aria-current="{{eq opt @select.highlighted}}"
+          aria-current="{{ember-power-select-is-equal opt @select.highlighted}}"
           data-option-index="{{@groupIndex}}{{index}}"
           role="option">
           {{yield opt @select}}

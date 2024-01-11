@@ -1139,7 +1139,7 @@ module(
         }
 
         isEqual(other) {
-          return this.name === other.name;
+          return this.name === other?.name;
         }
       }
 
