@@ -66,7 +66,7 @@ export interface PowerSelectArgs {
   noMatchesMessage?: string;
   noMatchesMessageComponent?: string | ComponentLike<any>;
   matchTriggerWidth?: boolean;
-  options: any[] | PromiseProxy<any[]>;
+  options?: any[] | PromiseProxy<any[]>;
   selected?: any | PromiseProxy<any>;
   destination?: string;
   closeOnSelect?: boolean;
