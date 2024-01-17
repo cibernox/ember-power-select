@@ -11,6 +11,7 @@
     <span class="ember-power-select-selected-item">{{yield @select.selected @select}}</span>
   {{/if}}
   {{#if (and @allowClear (not @select.disabled))}}
+    {{!-- template-lint-disable no-pointer-down-event-binding --}}
     <span class="ember-power-select-clear-btn" role="button" {{on "mousedown" this.clear}} {{on "touchstart" this.clear}}>&times;</span>
   {{/if}}
 {{else}}

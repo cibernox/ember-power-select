@@ -25,6 +25,7 @@
     lastSearchedText=this.lastSearchedText
     actions=(assign dropdown.actions this._publicAPIActions)
   )) (concat "ember-power-select-options-" dropdown.uniqueId) as |publicAPI listboxId|}}
+    {{!-- template-lint-disable no-positive-tabindex --}}
     <dropdown.Trigger
       @eventType={{or @eventType "mousedown"}}
       {{did-insert this._updateOptions @options}}
