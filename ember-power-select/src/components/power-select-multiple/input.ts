@@ -86,18 +86,4 @@ export default class PowerSelectMultipleInputComponent extends Component<PowerSe
       e.stopPropagation();
     }
   }
-
-  measureWidth(string: string, font?: string) {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    if (!ctx) {
-      return 0;
-    }
-
-    if (font) {
-      ctx.font = font;
-    }
-    return ctx.measureText(string).width;
-  }
 }
