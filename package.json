@@ -24,7 +24,7 @@
     "@release-it-plugins/workspaces": "^4.0.0",
     "concurrently": "^8.2.0",
     "prettier": "^3.0.3",
-    "prettier-plugin-ember-template-tag": "^1.1.0",
+    "prettier-plugin-ember-template-tag": "^2.0.0",
     "release-it": "^17.0.1"
   },
   "workspaces": [
