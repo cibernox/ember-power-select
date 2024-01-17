@@ -1,10 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
-import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
-import { htmlSafe } from '@ember/template';
 import type { Select } from '../power-select';
 
 interface PowerSelectMultipleInputSignature {
@@ -32,25 +30,6 @@ const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
 export default class PowerSelectMultipleInputComponent extends Component<PowerSelectMultipleInputSignature> {
-  private inputFont?: string;
-
-  // Properties
-  get triggerMultipleInputStyle() {
-    scheduleOnce('actions', null, this.args.select.actions.reposition);
-    if (!this.args.select.selected || this.args.select.selected.length === 0) {
-      return htmlSafe('width: 100%;');
-    } else {
-      let textWidth = 0;
-      if (this.inputFont) {
-        textWidth = this.measureWidth(
-          this.args.select.searchText,
-          this.inputFont,
-        );
-      }
-      return htmlSafe(`width: ${textWidth + 25}px`);
-    }
-  }
-
   get maybePlaceholder() {
     if (isIE || !this.args.isDefaultPlaceholder) {
       return undefined;
@@ -58,20 +37,6 @@ export default class PowerSelectMultipleInputComponent extends Component<PowerSe
     return !this.args.select.selected || this.args.select.selected.length === 0
       ? this.args.placeholder || ''
       : '';
-  }
-
-  // Actions
-  @action
-  storeInputStyles(input: Element) {
-    const {
-      fontStyle,
-      fontVariant,
-      fontWeight,
-      fontSize,
-      lineHeight,
-      fontFamily,
-    } = window.getComputedStyle(input);
-    this.inputFont = `${fontStyle} ${fontVariant} ${fontWeight} ${fontSize}/${lineHeight} ${fontFamily}`;
   }
 
   @action
