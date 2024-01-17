@@ -12,7 +12,6 @@
           "isBaseBlueprint": true,
           "options": [
             "--no-welcome",
-            "--ci-provider=travis",
             "--typescript"
           ]
         }
