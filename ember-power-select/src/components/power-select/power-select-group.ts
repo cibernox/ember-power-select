@@ -1,4 +1,4 @@
-import Component from '@glimmer/component';
+import templateOnly from '@ember/component/template-only';
 
 interface PowerSelectPowerSelectGroupSignature {
   Element: HTMLElement;
@@ -10,4 +10,4 @@ interface PowerSelectPowerSelectGroupSignature {
   };
 }
 
-export default class PowerSelectPowerSelectGroupComponent extends Component<PowerSelectPowerSelectGroupSignature> {}
+export default templateOnly<PowerSelectPowerSelectGroupSignature>();

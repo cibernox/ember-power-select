@@ -1,4 +1,4 @@
-import Component from '@glimmer/component';
+import templateOnly from '@ember/component/template-only';
 
 interface PowerSelectNoMatchesMessageSignature {
   Element: HTMLElement;
@@ -7,4 +7,4 @@ interface PowerSelectNoMatchesMessageSignature {
   };
 }
 
-export default class PowerSelectNoMatchesMessageComponent extends Component<PowerSelectNoMatchesMessageSignature> {}
+export default templateOnly<PowerSelectNoMatchesMessageSignature>();
