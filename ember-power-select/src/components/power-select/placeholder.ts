@@ -1,4 +1,4 @@
-﻿import Component from '@glimmer/component';
+﻿import templateOnly from '@ember/component/template-only';
 
 interface PowerSelectPlaceholderSignature {
   Element: HTMLElement;
@@ -9,4 +9,4 @@ interface PowerSelectPlaceholderSignature {
   };
 }
 
-export default class PowerSelectPlaceholderComponent extends Component<PowerSelectPlaceholderSignature> {}
+export default templateOnly<PowerSelectPlaceholderSignature>();
