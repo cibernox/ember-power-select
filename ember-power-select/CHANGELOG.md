@@ -1,6 +1,34 @@
 
 
 
+
+## v8.0.0-beta.5 (2024-01-18)
+
+#### :boom: Breaking Change
+* [#1641](https://github.com/cibernox/ember-power-select/pull/1641) Fix input width in PowerSelectMultiple ([@mkszepp](https://github.com/mkszepp))
+* [#1630](https://github.com/cibernox/ember-power-select/pull/1630) types: Separate Args and Signature ([@johanrd](https://github.com/johanrd))
+
+#### :rocket: Enhancement
+* [#1650](https://github.com/cibernox/ember-power-select/pull/1650) Set `args.selected` as optional ([@johanrd](https://github.com/johanrd))
+* [#1649](https://github.com/cibernox/ember-power-select/pull/1649) Set `args.options` as optional ([@johanrd](https://github.com/johanrd))
+* [#1637](https://github.com/cibernox/ember-power-select/pull/1637) Allow to highlight an object option without use the same reference ([@rogeraraujo90](https://github.com/rogeraraujo90))
+* [#1632](https://github.com/cibernox/ember-power-select/pull/1632) Add option to use `ember-power-select.scss` ([@mkszepp](https://github.com/mkszepp))
+
+#### :bug: Bug Fix
+* [#1641](https://github.com/cibernox/ember-power-select/pull/1641) Fix input width in PowerSelectMultiple ([@mkszepp](https://github.com/mkszepp))
+* [#1638](https://github.com/cibernox/ember-power-select/pull/1638) Update appReexports & remove unused util ([@mkszepp](https://github.com/mkszepp))
+* [#1631](https://github.com/cibernox/ember-power-select/pull/1631) Define `destination` as optional ([@johanrd](https://github.com/johanrd))
+* [#1630](https://github.com/cibernox/ember-power-select/pull/1630) types: Separate Args and Signature ([@johanrd](https://github.com/johanrd))
+
+#### :memo: Documentation
+* [#1640](https://github.com/cibernox/ember-power-select/pull/1640) DOCS: Remove `ember-href-to` package & replace usings ([@mkszepp](https://github.com/mkszepp))
+* [#1635](https://github.com/cibernox/ember-power-select/pull/1635) DOCS: Fix typo & usings ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 3
+- Roger ([@rogeraraujo90](https://github.com/rogeraraujo90))
+- [@johanrd](https://github.com/johanrd)
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.0-beta.4 (2024-01-04)
 
 ## v8.0.0-beta.3 (2024-01-04)
