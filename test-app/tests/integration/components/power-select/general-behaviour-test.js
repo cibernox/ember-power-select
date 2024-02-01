@@ -18,7 +18,7 @@ import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { A } from '@ember/array';
 import { run, later } from '@ember/runloop';
-import { numbers, names, countries } from '../constants';
+import { numbers, names, countries, digits } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
@@ -1620,6 +1620,37 @@ module(
         .hasText(countries[0].name, 'The trigger has the proper content');
 
       //TODO: also try starting from non-null value and maybe also going back to null?
+    });
+
+    test('works with numbers', async function (assert) {
+      assert.expect(3);
+
+      this.selected = digits[0];
+      this.digits = digits;
+      await render(hbs`
+      <PowerSelect @options={{this.digits}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+      assert
+        .dom('.ember-power-select-trigger')
+        .hasText(`${digits[0]}`, 'number "0" is shown in the trigger');
+
+      await clickTrigger();
+
+      assert
+        .dom('.ember-power-select-option[aria-current=true]')
+        .hasText(
+          `${digits[0]}`,
+          'The option containing "0" has been highlighted',
+        );
+
+      await click('.ember-power-select-option:nth-child(4)');
+
+      assert
+        .dom('.ember-power-select-trigger')
+        .hasText(`${digits[3]}`, 'number "5" is shown in the trigger');
     });
   },
 );

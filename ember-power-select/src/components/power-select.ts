@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
 import { addObserver, removeObserver } from '@ember/object/observers';
 import { scheduleOnce } from '@ember/runloop';
-import { isEqual } from '@ember/utils';
+import { isEqual, isNone } from '@ember/utils';
 import { assert } from '@ember/debug';
 import {
   indexOfOption,
@@ -299,7 +299,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     if (this._resolvedSelected) {
       return toPlainArray(this._resolvedSelected);
     } else if (
-      this.args.selected &&
+      !isNone(this.args.selected) &&
       typeof this.args.selected.then !== 'function'
     ) {
       return toPlainArray(this.args.selected);
@@ -450,7 +450,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   @action
   _updateSelected(): void {
-    if (!this.args.selected) return;
+    if (isNone(this.args.selected)) return;
     if (typeof this.args.selected.then === 'function') {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
       if (
@@ -502,7 +502,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   @action
   _highlight(opt: any): void {
-    if (opt && opt.disabled) {
+    if (!isNone(opt) && opt.disabled) {
       return;
     }
     this.highlighted = opt;
@@ -765,7 +765,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
         this.storedAPI.options,
         this.storedAPI.highlighted,
       );
-    } else if (!this.storedAPI.isOpen && this.selected) {
+    } else if (!this.storedAPI.isOpen && !isNone(this.selected)) {
       searchStartOffset += indexOfOption(this.storedAPI.options, this.selected);
     } else {
       searchStartOffset = 0;

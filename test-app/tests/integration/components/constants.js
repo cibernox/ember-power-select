@@ -34,6 +34,8 @@ export const numerals = [
   '853',
 ];
 
+export const digits = [0, 2, 3, 5, 7, 11, 13, 17, 19, 23, 853];
+
 export const names = [
   'María',
   'Søren Larsen',

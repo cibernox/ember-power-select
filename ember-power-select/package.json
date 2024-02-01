@@ -164,7 +164,8 @@
       "./components/power-select/search-message.js": "./dist/_app_/components/power-select/search-message.js",
       "./components/power-select/trigger.js": "./dist/_app_/components/power-select/trigger.js",
       "./helpers/ember-power-select-is-equal.js": "./dist/_app_/helpers/ember-power-select-is-equal.js",
-      "./helpers/ember-power-select-is-group.js": "./dist/_app_/helpers/ember-power-select-is-group.js"
+      "./helpers/ember-power-select-is-group.js": "./dist/_app_/helpers/ember-power-select-is-group.js",
+      "./helpers/ember-power-select-is-selected-present.js": "./dist/_app_/helpers/ember-power-select-is-selected-present.js"
     }
   }
 }
