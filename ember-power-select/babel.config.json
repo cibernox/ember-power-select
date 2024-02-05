@@ -4,6 +4,7 @@
     "@embroider/addon-dev/template-colocation-plugin",
     ["@babel/plugin-transform-typescript", { "allowDeclareFields": true }],
     ["@babel/plugin-proposal-decorators", { "version": "legacy" }],
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    "./node_modules/ember-concurrency/lib/babel-plugin-transform-ember-concurrency-async-tasks"
   ]
 }

@@ -54,9 +54,6 @@ interface CancellablePromise<T> extends Promise<T> {
 interface Sliceable<T> {
   slice(): T[];
 }
-interface Performable {
-  perform: (...args: any[]) => void;
-}
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs {
   highlightOnHover?: boolean;
@@ -375,7 +372,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
     if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) {
       // Keys 0-9, a-z or numpad keys
-      (this.triggerTypingTask as unknown as Performable).perform(e);
+      this.triggerTypingTask.perform(e);
     } else if (e.keyCode === 32) {
       // Space
       this._handleKeySpace(this.storedAPI, e);
@@ -731,8 +728,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   // Tasks
-  @restartableTask
-  *triggerTypingTask(this: PowerSelectComponent, e: KeyboardEvent) {
+  triggerTypingTask = restartableTask(async (e: KeyboardEvent) => {
     // In general, a user doing this interaction means to have a different result.
     let searchStartOffset = 1;
     let repeatingChar = this._repeatingChar;
@@ -789,10 +785,10 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
         this.storedAPI.actions.select(match, e);
       }
     }
-    yield timeout(1000);
+    await timeout(1000);
     this._expirableSearchText = '';
     this._repeatingChar = '';
-  }
+  });
 }
 
 function getOptionMatcher(
