@@ -26,7 +26,10 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
       ],
-      rules: {},
+      rules: {
+        // Add any custom rules here
+        '@typescript-eslint/no-explicit-any': 0,
+      },
     },
     // node files
     {
