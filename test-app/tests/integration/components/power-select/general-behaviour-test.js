@@ -1113,6 +1113,7 @@ module(
         .hasText('', 'Nothing is selected yet');
 
       await this.selected;
+      await waitFor('.ember-power-select-options');
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('four', 'The 4th element is highlighted');

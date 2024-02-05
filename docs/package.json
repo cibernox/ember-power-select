@@ -113,6 +113,7 @@
     "prettier": "^3.2.5",
     "qunit": "^2.20.0",
     "qunit-dom": "^3.0.0",
+    "rsvp": "^4.8.5",
     "sass": "^1.69.7",
     "stylelint": "^16.2.1",
     "stylelint-config-standard": "^36.0.0",
