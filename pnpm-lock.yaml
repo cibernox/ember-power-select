@@ -37,8 +37,8 @@ importers:
         specifier: ^7.23.9
         version: 7.23.9
       '@babel/eslint-parser':
-        specifier: ^7.23.9
-        version: 7.23.9(@babel/core@7.23.9)(eslint@8.56.0)
+        specifier: ^7.23.10
+        version: 7.23.10(@babel/core@7.23.9)(eslint@8.56.0)
       '@babel/plugin-proposal-decorators':
         specifier: ^7.23.9
         version: 7.23.9(@babel/core@7.23.9)
@@ -498,8 +498,8 @@ importers:
         specifier: ^7.23.9
         version: 7.23.9
       '@babel/eslint-parser':
-        specifier: ^7.23.9
-        version: 7.23.9(@babel/core@7.23.9)(eslint@8.56.0)
+        specifier: ^7.23.10
+        version: 7.23.10(@babel/core@7.23.9)(eslint@8.56.0)
       '@babel/plugin-proposal-decorators':
         specifier: ^7.23.9
         version: 7.23.9(@babel/core@7.23.9)
@@ -797,8 +797,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@babel/eslint-parser@7.23.9(@babel/core@7.23.9)(eslint@8.56.0):
-    resolution: {integrity: sha512-xPndlO7qxiJbn0ATvfXQBjCS7qApc9xmKHArgI/FTEFxXas5dnjC/VqM37lfZun9dclRYcn+YQAr6uDFy0bB2g==}
+  /@babel/eslint-parser@7.23.10(@babel/core@7.23.9)(eslint@8.56.0):
+    resolution: {integrity: sha512-3wSYDPZVnhseRnxRJH6ZVTNknBz76AEnyC+AYYhasjP3Yy23qz0ERR7Fcd2SHmYuSFJ2kY9gaaDd3vyqU09eSw==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
       '@babel/core': ^7.11.0
@@ -7832,7 +7832,7 @@ packages:
       typescript: ^5.3.3
     dependencies:
       '@babel/core': 7.23.9
-      '@babel/eslint-parser': 7.23.9(@babel/core@7.23.9)(eslint@8.56.0)
+      '@babel/eslint-parser': 7.23.10(@babel/core@7.23.9)(eslint@8.56.0)
       '@glimmer/syntax': 0.85.13
       '@typescript-eslint/parser': 6.19.1(eslint@8.56.0)(typescript@5.3.3)
       '@typescript-eslint/scope-manager': 6.19.1
