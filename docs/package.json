@@ -104,7 +104,7 @@
     "loader.js": "^4.7.0",
     "memory-scroll": "^1.0.2",
     "miragejs": "^0.1.48",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "qunit": "^2.20.0",
     "qunit-dom": "^3.0.0",
     "sass": "^1.69.7",
