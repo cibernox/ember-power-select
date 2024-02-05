@@ -5,7 +5,7 @@ export interface SelectedCountrySignature {
   Args: {
     select: any;
     extra: any;
-  }
+  };
 }
 
 export default templateOnly<SelectedCountrySignature>();

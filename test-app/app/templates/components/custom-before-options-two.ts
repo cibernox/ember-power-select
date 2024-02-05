@@ -4,7 +4,7 @@ export interface CustomBeforeOptionsTwoSignature {
   Element: Element;
   Args: {
     extra: any;
-  }
+  };
 }
 
 export default templateOnly<CustomBeforeOptionsTwoSignature>();

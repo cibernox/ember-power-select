@@ -5,7 +5,7 @@ export interface ListOfCountriesSignature {
   Args: {
     extra: any;
     options: any;
-  }
+  };
 }
 
 export default templateOnly<ListOfCountriesSignature>();

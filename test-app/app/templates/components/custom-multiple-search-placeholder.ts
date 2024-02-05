@@ -6,7 +6,7 @@ export interface CustomMultipleSearchPlaceholderSignature {
   Args: {
     displayPlaceholder: boolean;
     inputComponent: ComponentLike<any>;
-  }
+  };
 }
 
 export default templateOnly<CustomMultipleSearchPlaceholderSignature>();

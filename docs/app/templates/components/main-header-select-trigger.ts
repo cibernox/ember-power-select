@@ -4,7 +4,7 @@ export interface MainHeaderSelectTriggerSignature {
   Element: Element;
   Args: {
     disabled: boolean;
-  }
+  };
 }
 
 export default templateOnly<MainHeaderSelectTriggerSignature>();

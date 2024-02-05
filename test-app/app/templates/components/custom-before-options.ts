@@ -6,7 +6,7 @@ export interface CustomBeforeOptionsSignature {
   Args: {
     placeholder: string;
     placeholderComponent: ComponentLike<any>;
-  }
+  };
 }
 
 export default templateOnly<CustomBeforeOptionsSignature>();

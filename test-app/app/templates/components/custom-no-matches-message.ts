@@ -4,7 +4,7 @@ export interface CustomNoMatchesMessageSignature {
   Element: Element;
   Args: {
     noMatchesMessage: string;
-  }
+  };
 }
 
 export default templateOnly<CustomNoMatchesMessageSignature>();

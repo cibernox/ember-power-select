@@ -4,7 +4,7 @@ export interface CodeSnippetSignature {
   Element: Element;
   Args: {
     name: string;
-  }
+  };
 }
 
 export default templateOnly<CodeSnippetSignature>();

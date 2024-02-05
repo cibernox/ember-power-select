@@ -4,7 +4,7 @@ export interface CustomAfterOptionsTwoSignature {
   Element: Element;
   Args: {
     extra: any;
-  }
+  };
 }
 
 export default templateOnly<CustomAfterOptionsTwoSignature>();
