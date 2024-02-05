@@ -8,6 +8,7 @@
   </div>
 {{/if}}
 
-<@inputComponent
-  style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}}
-/>
+{{#let (component @inputComponent) as |ComponentName|}}
+  {{! @glint-nocheck: Argument of type 'unknown' is not assignable to parameter of type 'Element'. }}
+  <ComponentName style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}} />
+{{/let}}

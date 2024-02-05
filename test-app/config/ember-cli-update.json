@@ -12,6 +12,7 @@
           "isBaseBlueprint": true,
           "options": [
             "--no-welcome",
+            "--pnpm",
             "--typescript"
           ]
         }
