@@ -7,6 +7,6 @@
       "transforms": []
     }],
     ["module:decorator-transforms", { "runtime": { "import": "decorator-transforms/runtime" } }],
-    "./node_modules/ember-concurrency/lib/babel-plugin-transform-ember-concurrency-async-tasks"
+    "./node_modules/ember-concurrency/async-arrow-task-transform"
   ]
 }
