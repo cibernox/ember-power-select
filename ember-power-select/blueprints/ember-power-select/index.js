@@ -21,6 +21,10 @@ module.exports = {
       promises.push(this.addPackageToProject('ember-basic-dropdown', 'beta'));
     }
 
+    if (!('ember-concurrency' in dependencies)) {
+      promises.push(this.addPackageToProject('ember-concurrency'));
+    }
+
     let type;
     let importStatement = '\n@import "ember-power-select";\n';
 
