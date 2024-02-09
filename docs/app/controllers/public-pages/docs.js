@@ -36,6 +36,15 @@ const groupedSections = [
     ],
   },
   {
+    groupName: 'Migration',
+    options: [
+      {
+        route: 'public-pages.docs.migrate-7-0-to-8-0',
+        text: 'Migrate from 7.0 to 8.0',
+      },
+    ],
+  },
+  {
     groupName: 'Other',
     options: [
       { route: 'public-pages.docs.test-helpers', text: 'Test helpers' },
