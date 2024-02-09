@@ -26,6 +26,9 @@ Router.map(function () {
       // ADVANCED CUSTOMIZATION
       this.route('custom-search-action');
 
+      // Migrate
+      this.route('migrate-7-0-to-8-0');
+
       // OTHER
       this.route('test-helpers');
       this.route('troubleshooting');
