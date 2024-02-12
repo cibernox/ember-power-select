@@ -2,6 +2,33 @@
 
 
 
+
+## v8.0.0-beta.7 (2024-02-12)
+
+## v8.0.0-beta.6 (2024-02-12)
+
+#### :boom: Breaking Change
+* [#1685](https://github.com/cibernox/ember-power-select/pull/1685) Update ember-concurrency to v4 and move to peerDependencies ([@mkszepp](https://github.com/mkszepp))
+
+#### :rocket: Enhancement
+* [#1683](https://github.com/cibernox/ember-power-select/pull/1683) Add `template-registry` and activate glint in `docs` / `test-app` ([@mkszepp](https://github.com/mkszepp))
+* [#1682](https://github.com/cibernox/ember-power-select/pull/1682) Convert `@task` to the async-arrow fn ([@mkszepp](https://github.com/mkszepp))
+
+#### :bug: Bug Fix
+* [#1687](https://github.com/cibernox/ember-power-select/pull/1687) Forward @highlightOnHover & @typeAheadOptionMatcher on multiple select ([@mkszepp](https://github.com/mkszepp))
+* [#1674](https://github.com/cibernox/ember-power-select/pull/1674) fix: support numbers selection for `PowerSelect` component ([@artemgurzhii](https://github.com/artemgurzhii))
+
+#### :memo: Documentation
+* [#1686](https://github.com/cibernox/ember-power-select/pull/1686) DOCS: Add section "Migrate from 7.0 to 8.0" ([@mkszepp](https://github.com/mkszepp))
+* [#1660](https://github.com/cibernox/ember-power-select/pull/1660) DOCS: Fix scss import statement ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#1684](https://github.com/cibernox/ember-power-select/pull/1684) Stricter dep management ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 2
+- Artem Hurzhii ([@artemgurzhii](https://github.com/artemgurzhii))
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.0-beta.5 (2024-01-18)
 
 #### :boom: Breaking Change

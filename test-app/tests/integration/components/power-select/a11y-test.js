@@ -651,7 +651,9 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-dropdown').id,
+          document.querySelector(
+            '.ember-power-select-dropdown .ember-power-select-options',
+          ).id,
         );
     });
 
@@ -764,7 +766,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-controls',
-          /^ember-basic-dropdown-content-ember\d+$/,
+          /^ember-power-select-options-ember\d+$/,
           'The trigger has aria-controls value',
         );
       assert
