@@ -171,8 +171,8 @@ importers:
         specifier: ^2.7.2
         version: 2.7.2(@glint/template@1.3.0)(webpack@5.90.1)
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.6
-        version: 8.0.0-beta.6(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0)
+        specifier: 8.0.0-beta.7
+        version: 8.0.0-beta.7(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0)
       ember-cli:
         specifier: ~5.6.0
         version: 5.6.0
@@ -448,8 +448,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.6
-        version: 8.0.0-beta.6(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0)
+        specifier: 8.0.0-beta.7
+        version: 8.0.0-beta.7(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0)
       ember-concurrency:
         specifier: ^4.0.0
         version: 4.0.0(@babel/core@7.23.9)(@glimmer/tracking@1.1.2)(@glint/template@1.3.0)(ember-source@5.6.0)
@@ -652,8 +652,8 @@ importers:
         specifier: ^2.7.2
         version: 2.7.2(@glint/template@1.3.0)(webpack@5.90.1)
       ember-basic-dropdown:
-        specifier: 8.0.0-beta.6
-        version: 8.0.0-beta.6(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0)
+        specifier: 8.0.0-beta.7
+        version: 8.0.0-beta.7(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0)
       ember-cli:
         specifier: ~5.6.0
         version: 5.6.0
@@ -7154,8 +7154,8 @@ packages:
       - supports-color
       - webpack
 
-  /ember-basic-dropdown@8.0.0-beta.6(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0):
-    resolution: {integrity: sha512-4NDkUd1lUhUwRjqbZ5ZnIofCFMr/MBq/IcviRNQbW6ONaGvpjfI3x4jy3SSXNHmhAJK4A4HppKVpztG81vGBdA==}
+  /ember-basic-dropdown@8.0.0-beta.7(@ember/string@3.1.1)(@ember/test-helpers@3.2.1)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.3.0)(@glint/template@1.3.0)(ember-source@5.6.0):
+    resolution: {integrity: sha512-wBcg+Hc66baxtBm3La40RVHb5V7Lr/AAjYERbQru6ejJ6dYNCWWwJR2j2qQ/oeiKrV20v1d18uJrqzb86blguA==}
     peerDependencies:
       '@ember/test-helpers': ^2.9.4 || ^3.2.1
       '@glimmer/component': ^1.1.2
