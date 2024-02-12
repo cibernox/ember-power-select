@@ -13,7 +13,7 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test('Single-select: The top-level options list have `role=listbox` and nested lists have `role=group`', async function (assert) {
+    test('Single-select: The top-level options list have `role=listbox` and nested lists have `role=presentation`', async function (assert) {
       assert.expect(6);
 
       this.groupedNumbers = groupedNumbers;
@@ -36,10 +36,10 @@ module(
       );
       [].slice
         .call(nestedOptionList)
-        .forEach((e) => assert.dom(e).hasAttribute('role', 'group'));
+        .forEach((e) => assert.dom(e).hasAttribute('role', 'presentation'));
     });
 
-    test('Multiple-select: The top-level options list have `role=listbox` and nested lists have `role=group`', async function (assert) {
+    test('Multiple-select: The top-level options list have `role=listbox` and nested lists have `role=presentation`', async function (assert) {
       assert.expect(6);
 
       this.groupedNumbers = groupedNumbers;
@@ -62,7 +62,7 @@ module(
       );
       [].slice
         .call(nestedOptionList)
-        .forEach((e) => assert.dom(e).hasAttribute('role', 'group'));
+        .forEach((e) => assert.dom(e).hasAttribute('role', 'presentation'));
     });
 
     test('Single-select: All options have `role=option`', async function (assert) {
@@ -274,7 +274,7 @@ module(
         .exists({ count: 3 }, 'Three of them are disabled');
     });
 
-    test('Single-select: The trigger has `role=button`', async function (assert) {
+    test('Single-select: The trigger has `role=combobox`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
@@ -287,10 +287,10 @@ module(
       await clickTrigger();
       assert
         .dom('.ember-power-select-trigger')
-        .hasAttribute('role', 'button', 'The trigger has role button');
+        .hasAttribute('role', 'combobox', 'The trigger has role combobox');
     });
 
-    test('Multiple-select: The trigger has `role=button`', async function (assert) {
+    test('Multiple-select: The trigger has `role=combobox`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
@@ -303,7 +303,7 @@ module(
       await clickTrigger();
       assert
         .dom('.ember-power-select-trigger')
-        .hasAttribute('role', 'button', 'The trigger has role button');
+        .hasAttribute('role', 'combobox', 'The trigger has role combobox');
     });
 
     test('Single-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', async function (assert) {
@@ -613,7 +613,11 @@ module(
       this.set('role', undefined);
       assert
         .dom('.ember-power-select-trigger')
-        .hasAttribute('role', 'button', 'The `role` was defaults to `button`.');
+        .hasAttribute(
+          'role',
+          'combobox',
+          'The `role` was defaults to `combobox`.',
+        );
     });
 
     test('Dropdown with search disabled has proper aria attributes to associate trigger with the options', async function (assert) {

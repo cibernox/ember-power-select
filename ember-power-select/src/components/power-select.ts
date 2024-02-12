@@ -63,6 +63,7 @@ export interface PowerSelectArgs {
   noMatchesMessage?: string;
   noMatchesMessageComponent?: string | ComponentLike<any>;
   matchTriggerWidth?: boolean;
+  resultCountMessage?: (resultCount: number) => string;
   options?: any[] | PromiseProxy<any[]>;
   selected?: any | PromiseProxy<any>;
   destination?: string;
@@ -228,6 +229,18 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
       : this.args.noMatchesMessage;
   }
 
+  get resultCountMessage(): string {
+    if (typeof this.args.resultCountMessage === 'function') {
+      return this.args.resultCountMessage(this.resultsCount);
+    }
+
+    if (this.resultsCount === 1) {
+      return `${this.resultsCount} result`;
+    }
+
+    return `${this.resultsCount} results`;
+  }
+
   get matchTriggerWidth() {
     return this.args.matchTriggerWidth === undefined
       ? true
@@ -302,6 +315,10 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
       return toPlainArray(this.args.selected);
     }
     return undefined;
+  }
+
+  get ariaMultiSelectable() {
+    return isArray(this.args.selected);
   }
 
   // Actions

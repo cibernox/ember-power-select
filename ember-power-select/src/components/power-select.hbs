@@ -40,15 +40,17 @@
       {{on "blur" this.handleBlur}}
       class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
       aria-activedescendant={{if dropdown.isOpen (unless @searchEnabled (concat publicAPI.uniqueId "-" this.highlightedIndex))}}
-      aria-controls={{unless @searchEnabled listboxId}}
+      aria-controls={{if (and dropdown.isOpen (not @searchEnabled)) listboxId}}
       aria-describedby={{@ariaDescribedBy}}
       aria-haspopup={{unless @searchEnabled "listbox"}}
       aria-invalid={{@ariaInvalid}}
       aria-label={{@ariaLabel}}
       aria-labelledby={{@ariaLabelledBy}}
-      aria-owns=""
+      aria-owns={{if (and dropdown.isOpen (not @searchEnabled)) listboxId}}
       aria-required={{@required}}
-      role={{or @triggerRole "button"}}
+      aria-autocomplete={{if @searchEnabled "list"}}
+      aria-multiselectable={{if this.ariaMultiSelectable "true"}}
+      role={{or @triggerRole "combobox"}}
       title={{@title}}
       id={{@triggerId}}
       tabindex={{and (not @disabled) (or @tabindex "0")}}
@@ -189,6 +191,9 @@
           />
         {{/let}}
       {{/if}}
+      <div role="status" aria-live="polite" aria-atomic="true" class="ember-power-select-visually-hidden">
+        {{this.resultCountMessage}}
+      </div>
     </dropdown.Content>
   {{/let}}
 </BasicDropdown>
