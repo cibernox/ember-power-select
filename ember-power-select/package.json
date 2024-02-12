@@ -132,7 +132,7 @@
     "postcss": "^8.4.33",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.0",
-    "rollup": "^4.9.6",
+    "rollup": "^4.10.0",
     "rollup-plugin-styles": "^4.0.0",
     "rsvp": "^4.8.5",
     "sass": "^1.69.7",
