@@ -645,7 +645,9 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-owns',
-          document.querySelector('.ember-power-select-dropdown').id,
+          document.querySelector(
+            '.ember-power-select-dropdown .ember-power-select-options',
+          ).id,
         );
       assert
         .dom('.ember-power-select-trigger')
@@ -764,13 +766,6 @@ module(
 
       assert
         .dom('.ember-power-select-trigger')
-        .hasAttribute(
-          'aria-controls',
-          /^ember-power-select-options-ember\d+$/,
-          'The trigger has aria-controls value',
-        );
-      assert
-        .dom('.ember-power-select-trigger')
         .hasNoAttribute(
           'aria-activedescendant',
           'aria-activedescendant is not present when the dropdown is closed',
@@ -784,6 +779,14 @@ module(
         );
 
       await clickTrigger();
+
+      assert
+        .dom('.ember-power-select-trigger')
+        .hasAttribute(
+          'aria-controls',
+          /^ember-power-select-options-ember\d+$/,
+          'The trigger has aria-controls value',
+        );
 
       // by default, the first option is highlighted and marked as aria-activedescendant
       assert
