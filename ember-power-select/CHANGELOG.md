@@ -3,6 +3,8 @@
 
 
 
+## v8.0.0-beta.7 (2024-02-12)
+
 ## v8.0.0-beta.6 (2024-02-12)
 
 #### :boom: Breaking Change
