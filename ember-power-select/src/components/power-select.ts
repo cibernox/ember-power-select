@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { addObserver, removeObserver } from '@ember/object/observers';
 import { scheduleOnce } from '@ember/runloop';
 import { isEqual, isNone } from '@ember/utils';
@@ -32,6 +33,7 @@ interface SelectActions extends DropdownActions {
   select: (selected: any, e?: Event) => void;
   choose: (selected: any, e?: Event) => void;
   scrollTo: (option: any) => void;
+  labelClick: (e: MouseEvent) => void;
 }
 export interface Select extends Dropdown {
   selected: any;
@@ -72,6 +74,9 @@ export interface PowerSelectArgs {
   preventScroll?: boolean;
   defaultHighlighted?: any;
   searchField?: string;
+  labelClass?: string;
+  labelText?: string;
+  labelClickAction?: TLabelClickAction;
   ariaLabel?: string;
   ariaLabelledBy?: string;
   loadingMessage?: string;
@@ -96,6 +101,7 @@ export interface PowerSelectArgs {
   calculatePosition?: CalculatePosition;
   ebdTriggerComponent?: string | ComponentLike<any>;
   ebdContentComponent?: string | ComponentLike<any>;
+  labelComponent?: string | ComponentLike<any>;
   triggerComponent?: string | ComponentLike<any>;
   selectedItemComponent?: string | ComponentLike<any>;
   beforeOptionsComponent?: string | ComponentLike<any>;
@@ -118,6 +124,8 @@ export interface PowerSelectArgs {
   scrollTo?: (option: any, select: Select) => void;
   registerAPI?: (select: Select) => void;
 }
+
+export type TLabelClickAction = 'focus' | 'open';
 
 export interface PowerSelectSignature {
   Element: HTMLElement;
@@ -153,6 +161,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     select: this._select,
     choose: this._choose,
     scrollTo: this._scrollTo,
+    labelClick: this._labelClick,
   };
 
   // Tracked properties
@@ -167,6 +176,8 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   @tracked lastSearchedText = '';
   @tracked highlighted?: any;
   storedAPI!: Select;
+
+  private _uid = guidFor(this);
   private _lastOptionsPromise?: PromiseProxy<any[]>;
   private _lastSelectedPromise?: PromiseProxy<any>;
   private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>;
@@ -209,6 +220,12 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return this.args.highlightOnHover === undefined
       ? true
       : this.args.highlightOnHover;
+  }
+
+  get labelClickAction(): TLabelClickAction {
+    return this.args.labelClickAction === undefined
+      ? 'focus'
+      : this.args.labelClickAction;
   }
 
   get highlightedIndex(): string {
@@ -317,8 +334,28 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return undefined;
   }
 
-  get ariaMultiSelectable() {
+  get ariaMultiSelectable(): boolean {
     return isArray(this.args.selected);
+  }
+
+  get triggerId(): string {
+    return this.args.triggerId || `${this._uid}-trigger`;
+  }
+
+  get labelId(): string {
+    return `${this._uid}-label`;
+  }
+
+  get ariaLabelledBy(): string {
+    if (this.args.ariaLabelledBy) {
+      return this.args.ariaLabelledBy;
+    }
+
+    if (this.args.labelText || this.args.labelComponent) {
+      return this.labelId;
+    }
+
+    return '';
   }
 
   // Actions
@@ -396,6 +433,35 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     } else {
       return this._routeKeydown(this.storedAPI, e);
     }
+  }
+
+  @action
+  _labelClick(event: MouseEvent) {
+    if (!this.storedAPI) {
+      return;
+    }
+
+    // Double-click, do nothing
+    if (event.detail > 1) {
+      return;
+    }
+
+    if (this.labelClickAction === 'open') {
+      this.storedAPI.actions.open();
+      return;
+    } else if (this.labelClickAction === 'focus') {
+      const trigger = document.querySelector(
+        `[data-ebd-id="${this.storedAPI.uniqueId}-trigger"]`,
+      ) as HTMLElement;
+
+      if (!trigger) {
+        return;
+      }
+
+      trigger.focus();
+    }
+
+    return true;
   }
 
   @action

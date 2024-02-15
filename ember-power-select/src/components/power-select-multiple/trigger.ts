@@ -17,6 +17,8 @@ interface PowerSelectMultipleTriggerSignature {
     tabindex?: string;
     ariaLabel?: string;
     ariaLabelledBy?: string;
+    ariaDescribedBy?: string;
+    role?: string;
     ariaActiveDescendant: string;
     extra?: any;
     placeholderComponent?: string | ComponentLike<any>;
