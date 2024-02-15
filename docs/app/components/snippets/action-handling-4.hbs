@@ -2,6 +2,7 @@
   @selected={{this.selectedCities}}
   @options={{this.cities}}
   @onChange={{fn (mut this.selectedCities)}}
+  @labelText="Country"
   @onInput={{this.checkLength}} as |name|>
   {{name}}
 </PowerSelectMultiple>
