@@ -1263,5 +1263,30 @@ module(
         .dom('.ember-power-select-multiple-option')
         .exists({ count: 1 }, 'Shows selected option');
     });
+
+    test('Multiple selects: The label was rendered when it was passed with `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+      assert.expect(3);
+
+      this.numbers = numbers;
+      await render(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @onChange={{fn (mut this.foo)}} as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+      assert.dom('.ember-power-select-label').exists('Label is present');
+
+      assert.dom('.ember-power-select-label').hasText('Label for select');
+
+      assert
+        .dom('.ember-power-select-trigger')
+        .hasAttribute(
+          'id',
+          document
+            .querySelector('.ember-power-select-label')
+            .getAttribute('for'),
+          'The for from label is matching with id of trigger',
+        );
+    });
   },
 );
