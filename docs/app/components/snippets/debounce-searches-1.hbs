@@ -2,6 +2,7 @@
   @search={{this.searchRepo}}
   @selected={{this.selected}}
   @onChange={{fn (mut this.selected)}}
+  @labelText="Repository"
   @searchEnabled={{true}} as |repo|>
   {{repo.full_name}}
 </PowerSelect>

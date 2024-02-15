@@ -5,17 +5,19 @@
   @selected={{this.selected}}
   @onChange={{fn (mut this.selected)}}
   @search={{this.searchUsers}}
+  @labelText="User"
   @searchEnabled={{true}}
   as |user|>
   {{user.name}}
 </PowerSelect>
 
-<h3>Multiple select inside a form</h3>
+<h2 class="t3">Multiple select inside a form</h2>
 <form action="/nonexistent">
   <PowerSelectMultiple
     @options={{this.cities}}
     @selected={{this.chosenCities}}
     @onChange={{fn (mut this.chosenCities)}}
+    @labelText="Country"
     @searchEnabled={{true}} as |city|>
     {{city}}
   </PowerSelectMultiple>

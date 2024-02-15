@@ -4,7 +4,7 @@
   If there's a key area of the component that must be absolutely customizable, it's the dropdown with the list. This is probably the most dense chapter so far so we recommend that you read it cover to cover.
 </p>
 
-<h3>Position and destination</h3>
+<h2 class="t3">Position and destination</h2>
 
 <p>
   The dropdown in Ember Power Select is pretty smart. By default this component inserts the dropdown
@@ -68,7 +68,7 @@
   {{component (ensure-safe-component this.theList3)}}
 </CodeExample>
 
-<h3>The empty state</h3>
+<h2 class="t3">The empty state</h2>
 
 <p>
   What happens when the collection you pass to the component is empty?
@@ -97,7 +97,7 @@
   {{component (ensure-safe-component this.theList6)}}
 </CodeExample> --}}
 
-<h3>The loading state</h3>
+<h2 class="t3">The loading state</h2>
 
 <p>
   In the first chapter we mentioned that the options of this component can be any collection,
@@ -118,7 +118,7 @@
   {{component (ensure-safe-component this.theList7)}}
 </CodeExample>
 
-<h3>Disabling specific options or groups</h3>
+<h2 class="t3">Disabling specific options or groups</h2>
 
 <p>
   In <LinkTo @route="public-pages.docs.the-trigger" class="doc-page-nav-link-prev">The trigger</LinkTo> we saw how to disable the entire component,
@@ -149,7 +149,7 @@
   This is because it deserves an entire chapter of its own.
 </p>
 
-<h3>Prevent click propagation inside the list</h3>
+<h2 class="t3">Prevent click propagation inside the list</h2>
 
 <p>
  The options inside the list are selected with mousedown, a good way to prevent the selection is intercepting <code>mouseup</code> and calling <code>stopPropagation</code> on the event.

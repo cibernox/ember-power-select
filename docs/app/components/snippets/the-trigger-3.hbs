@@ -4,6 +4,7 @@
   @placeholder="Please, select one destination"
   @selected={{this.selected}}
   @searchField="name"
+  @labelText="Destination"
   @onChange={{fn (mut this.selected)}} as |country|>
   {{country.name}}
 </PowerSelect>

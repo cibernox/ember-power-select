@@ -4,6 +4,7 @@
 <PowerSelect
   @options={{this.diacritics}}
   @selected={{this.fellow}}
+  @labelText="Name"
   @onChange={{fn (mut this.fellow)}} as |name|>
   {{name}}
 </PowerSelect>
