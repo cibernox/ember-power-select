@@ -30,8 +30,10 @@
 .doc-page-nav-link-prev {
   float: left;
 }
-.section-selector {
-  margin-bottom: 1rem;
+.doc-submenu {
+  .section-selector {
+    margin-bottom: 1rem;
+  }
   @media only screen and (min-width: $medium-breakpoint) {
     display: none;
   }
