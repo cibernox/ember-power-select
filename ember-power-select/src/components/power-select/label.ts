@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import type { Select } from '../power-select';
 
-interface PowerSelectLabelSignature {
+export interface PowerSelectLabelSignature {
   Element: HTMLElement;
   Args: {
     select: Select;
