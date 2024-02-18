@@ -22,6 +22,26 @@
       <td>When truthy, single selects allow to nullify the selection</td>
     </tr>
     <tr>
+      <td>labelText</td>
+      <td><code>string</code></td>
+      <td>Adds a <code>&lt;label&gt;</code> for the select field. The benefit to use this is, that <code>aria-*</code> attributes are already automatically correct like defined by <a href="https://www.w3.org/TR/wai-aria-1.2/" target="_blank" rel="noopener noreferrer">1.2 specs</a></td>
+    </tr>
+    <tr>
+      <td>labelClass</td>
+      <td><code>string</code></td>
+      <td>Adds custom class on the <code>&lt;label&gt;</code> tag</td>
+    </tr>
+    <tr>
+      <td>labelClickAction</td>
+      <td><code>string</code></td>
+      <td>Action which should be happen by clicking on label. Possible values: 'focus' or 'open'. Default is focus</td>
+    </tr>
+    <tr>
+      <td>labelComponent</td>
+      <td><code>string/contextual-component</code></td>
+      <td>Overrides the default label component</td>
+    </tr>
+    <tr>
       <td>animationEnabled</td>
       <td><code>boolean</code></td>
       <td>Flag to determine whether the content will allow CSS animations. Defaults to true</td>
@@ -171,6 +191,11 @@
       <td>noMatchesMessageComponent</td>
       <td><code>string</code></td>
       <td>The component to render instead of the default one around the no matches message.</td>
+    </tr>
+    <tr>
+      <td>resultCountMessage</td>
+      <td><code>function</code></td>
+      <td>This text is only for readers. For example '10 results'. The function is passing the count as number. Consumer should return a string</td>
     </tr>
     <tr>
       <td>onBlur</td>

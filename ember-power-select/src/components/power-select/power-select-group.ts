@@ -1,4 +1,5 @@
-import templateOnly from '@ember/component/template-only';
+import Component from '@glimmer/component';
+import { guidFor } from '@ember/object/internals';
 
 interface PowerSelectPowerSelectGroupSignature {
   Element: HTMLElement;
@@ -10,4 +11,6 @@ interface PowerSelectPowerSelectGroupSignature {
   };
 }
 
-export default templateOnly<PowerSelectPowerSelectGroupSignature>();
+export default class PowerSelectGroupComponent extends Component<PowerSelectPowerSelectGroupSignature> {
+  uniqueId = guidFor(this);
+}

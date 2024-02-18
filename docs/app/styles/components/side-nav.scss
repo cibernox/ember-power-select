@@ -1,4 +1,4 @@
-$side-nav-color: #777;
+$side-nav-color: #343434;
 .side-nav {
   width: 200px;
   color: $side-nav-color;
@@ -10,8 +10,8 @@ $side-nav-color: #777;
 }
 .side-nav-header {
   font-size: 18px;
-  font-weight: 300;
-  color: #777;
+  font-weight: 400;
+  color: #343434;
   margin-bottom: 10px;
   border-bottom: 1px solid rgba(153, 153, 153, 0.2);
   &:not(:first-child) {
@@ -20,7 +20,7 @@ $side-nav-color: #777;
 }
 .side-nav-link {
   display: block;
-  color: #999;
+  color: #686868;
   padding-left: 16px;
   .beta-label {
     color: white;

@@ -83,6 +83,31 @@ module(
         .doesNotExist('The search box is NOT rendered');
     });
 
+    test('The label was rendered when it was passed with `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+      assert.expect(3);
+
+      this.numbers = numbers;
+      await render(hbs`
+      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @onChange={{fn (mut this.foo)}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+      assert.dom('.ember-power-select-label').exists('Label is present');
+
+      assert.dom('.ember-power-select-label').hasText('Label for select');
+
+      assert
+        .dom('.ember-power-select-trigger')
+        .hasAttribute(
+          'id',
+          document
+            .querySelector('.ember-power-select-label')
+            .getAttribute('for'),
+          'The for from label is matching with id of trigger',
+        );
+    });
+
     test('The search functionality can be enabled by passing `@searchEnabled={{true}}`', async function (assert) {
       assert.expect(2);
 

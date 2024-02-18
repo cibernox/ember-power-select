@@ -5,6 +5,10 @@
   border-top: 1px solid #bbb;
   padding-left: 1rem;
   padding-right: 1rem;
+
+  a {
+    color: $link-gray;
+  }
 }
 .main-footer-content {
   @extend %wrapper;

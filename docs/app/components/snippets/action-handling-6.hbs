@@ -6,6 +6,7 @@
     @options={{this.numbers}}
     @onChange={{fn (mut this.number)}}
     @onOpen={{this.startSelfDestroyCountdown}}
+    @labelText="Country"
     @placeholder="Once opened this component will destroy itself in 8 seconds" as |number|>
     {{number}}
   </PowerSelect>

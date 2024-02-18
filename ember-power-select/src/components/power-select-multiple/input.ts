@@ -16,6 +16,8 @@ interface PowerSelectMultipleInputSignature {
     ariaLabel?: string;
     ariaActiveDescendant?: string;
     ariaLabelledBy?: string;
+    ariaDescribedBy?: string;
+    role?: string;
     placeholderComponent?: string;
     isDefaultPlaceholder?: boolean;
     onInput?: (e: InputEvent) => boolean;

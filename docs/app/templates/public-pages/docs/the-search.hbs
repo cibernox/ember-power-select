@@ -1,6 +1,6 @@
 <h1 class="doc-page-title">The search</h1>
 
-<h3>The default behavior</h3>
+<h2 class="t3">The default behavior</h2>
 
 <p>
   The default select has no searchbox, but you can pass <code>@searchEnabled={{true}}</code> to enable a search that is surprisingly smart.
@@ -25,7 +25,7 @@
   {{component (ensure-safe-component this.theSearch2)}}
 </CodeExample>
 
-<h3>Customize the search field</h3>
+<h2 class="t3">Customize the search field</h2>
 
 <p>
   The default search works great when your options are just strings but when your options are
@@ -46,7 +46,7 @@
   the focus.
 </p>
 
-<h3>Prevent autofocus</h3>
+<h2 class="t3">Prevent autofocus</h2>
 
 <p>
   Sometimes you want to disable the default behavior of the search box,
@@ -57,7 +57,7 @@
 <CodeExample @hbs="the-search-4.hbs" @js="the-search-4.js">
   {{component (ensure-safe-component this.theSearch4)}}
 </CodeExample>
-<h3>Pass a custom matcher</h3>
+<h2 class="t3">Pass a custom matcher</h2>
 
 <p>
   Sometimes the default matcher is not enough for you, for example if you need to match against several
@@ -75,7 +75,7 @@
   the focus.
 </p>
 
-<h3>Using the search term inside the block</h3>
+<h2 class="t3">Using the search term inside the block</h2>
 
 <p>
   Is very common to need the search term from withing the block used to render each one of the options,
@@ -108,7 +108,7 @@
   </li>
 </ul>
 
-<h3>Search box placeholder</h3>
+<h2 class="t3">Search box placeholder</h2>
 
 <p>Pass <code>searchPlaceholder="Type your name..."</code> to show a placeholder in the search box</p>
 

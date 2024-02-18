@@ -77,11 +77,11 @@
   flex-wrap: wrap;
   align-items: center;
   list-style: none;
-  
+
   & li.ember-power-select-trigger-multiple-input-container {
     flex-grow: 1;
     display: flex;
-    
+
     & input {
       flex-grow: 1;
     }
@@ -274,6 +274,13 @@
   }
 }
 
+.ember-power-select-visually-hidden {
+  height: 1px;
+  left: -9999px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
 
 .ember-power-select-dropdown[dir=rtl] {
   .ember-power-select-group {

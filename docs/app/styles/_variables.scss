@@ -43,7 +43,12 @@ $brand-color-brighter: #FD6868;
 $link-color: $brand-color;
 
 $light-gray: #ddd;
-$gray: #888;
+$gray: #5f5f5f;
+$link-gray: #200101;
 
 // Paddings
 $wrapper-padding: 0.5rem;
+
+// Override colors for accessibility and set opacity
+$ember-power-select-placeholder-color: #333 !default;
+$ember-power-select-disabled-option-color: #333 !default;

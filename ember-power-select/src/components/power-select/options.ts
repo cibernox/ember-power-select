@@ -15,6 +15,7 @@ interface PowerSelectOptionsSignature {
 interface PowerSelectOptionsArgs {
   select: Select;
   highlightOnHover?: boolean;
+  listboxId: string;
   groupIndex: string;
   loadingMessage: string;
   options: any[];
@@ -75,8 +76,8 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
 
   @action
   addHandlers(element: Element) {
-    const role = element.getAttribute('role');
-    if (role === 'group') {
+    const isGroup = element.getAttribute('data-optgroup') === 'true';
+    if (isGroup) {
       return;
     }
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -140,9 +141,8 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
       element.addEventListener('touchstart', this.touchStartHandler);
       element.addEventListener('touchend', this.touchEndHandler);
     }
-    if (role !== 'group') {
-      this.args.select.actions.scrollTo(this.args.select.highlighted);
-    }
+
+    this.args.select.actions.scrollTo(this.args.select.highlighted);
   }
 
   @action

@@ -19,10 +19,10 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @triggerComponent={{component "selected-country"}} 
+      <PowerSelect
+        @options={{this.countries}}
+        @selected={{this.country}}
+        @triggerComponent={{component "selected-country"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -68,10 +68,10 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @selectedItemComponent={{component "selected-country"}} 
+      <PowerSelect
+        @options={{this.countries}}
+        @selected={{this.country}}
+        @selectedItemComponent={{component "selected-country"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -95,10 +95,10 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @optionsComponent={{component "list-of-countries"}} 
+      <PowerSelect
+        @options={{this.countries}}
+        @selected={{this.country}}
+        @optionsComponent={{component "list-of-countries"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -120,11 +120,11 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @optionsComponent={{component "list-of-countries"}} 
-        @onChange={{fn (mut this.foo)}} 
+      <PowerSelect
+        @options={{this.countries}}
+        @selected={{this.country}}
+        @optionsComponent={{component "list-of-countries"}}
+        @onChange={{fn (mut this.foo)}}
         @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelect>
@@ -307,9 +307,9 @@ module(
 
       this.searchFn = function () {};
       await render(hbs`
-      <PowerSelect 
-        @search={{this.searchFn}} 
-        @searchMessageComponent={{component "custom-search-message"}} 
+      <PowerSelect
+        @search={{this.searchFn}}
+        @searchMessageComponent={{component "custom-search-message"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -329,10 +329,10 @@ module(
       this.options = [];
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.options}} 
-        @noMatchesMessageComponent={{component "custom-no-matches-message"}} 
-        @noMatchesMessage="Nope" 
+      <PowerSelect
+        @options={{this.options}}
+        @noMatchesMessageComponent={{component "custom-no-matches-message"}}
+        @noMatchesMessage="Nope"
         @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
@@ -379,9 +379,9 @@ module(
       let numberOfGroups = 5; // number of groups in groupedNumber;
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.groupedNumbers}} 
-        @groupComponent={{component "custom-group-component"}} 
+      <PowerSelect
+        @options={{this.groupedNumbers}}
+        @groupComponent={{component "custom-group-component"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -408,9 +408,9 @@ module(
       };
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.groupedNumbers}} 
-        @groupComponent={{component "custom-group-component" onInit=this.onInit}} 
+      <PowerSelect
+        @options={{this.groupedNumbers}}
+        @groupComponent={{component "custom-group-component" onInit=this.onInit}}
         @extra={{this.extra}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
@@ -422,6 +422,40 @@ module(
       assert
         .dom('.ember-power-select-options .custom-component')
         .exists({ count: numberOfGroups });
+    });
+
+    test('The `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+      assert.expect(3);
+
+      this.countries = countries;
+
+      await render(hbs`
+      <PowerSelect
+        @options={{this.countries}}
+        @labelComponent={{component "custom-label-component"}}
+        @labelText="Label for select"
+        @onChange={{fn (mut this.foo)}} as |country|>
+        {{country.name}}
+      </PowerSelect>
+    `);
+
+      assert
+        .dom('.ember-power-select-custom-label-component')
+        .exists('Label is present');
+
+      assert
+        .dom('.ember-power-select-custom-label-component')
+        .hasText('Label for select');
+
+      assert
+        .dom('.ember-power-select-trigger')
+        .hasAttribute(
+          'id',
+          document
+            .querySelector('.ember-power-select-custom-label-component')
+            .getAttribute('for'),
+          'The for from label is matching with id of trigger',
+        );
     });
 
     test('the power-select-multiple placeholder can be customized using `@placeholderComponent`', async function (assert) {
@@ -486,11 +520,11 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelectMultiple 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @optionsComponent={{component "list-of-countries"}} 
-        @onChange={{fn (mut this.foo)}} 
+      <PowerSelectMultiple
+        @options={{this.countries}}
+        @selected={{this.country}}
+        @optionsComponent={{component "list-of-countries"}}
+        @onChange={{fn (mut this.foo)}}
         @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
@@ -516,11 +550,11 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelectMultiple 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @triggerComponent={{component "selected-country"}} 
-        @onChange={{fn (mut this.foo)}} 
+      <PowerSelectMultiple
+        @options={{this.countries}}
+        @selected={{this.country}}
+        @triggerComponent={{component "selected-country"}}
+        @onChange={{fn (mut this.foo)}}
         @extra={{hash coolFlagIcon=true}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
@@ -560,6 +594,40 @@ module(
         .exists(
           { count: 1 },
           'The custom selectedItemComponent renders with the extra.coolFlagIcon.',
+        );
+    });
+
+    test('The power-select-multiple `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+      assert.expect(3);
+
+      this.countries = countries;
+
+      await render(hbs`
+      <PowerSelectMultiple
+        @options={{this.countries}}
+        @labelComponent={{component "custom-label-component"}}
+        @labelText="Label for select"
+        @onChange={{fn (mut this.foo)}} as |country|>
+        {{country.name}}
+      </PowerSelectMultiple>
+    `);
+
+      assert
+        .dom('.ember-power-select-custom-label-component')
+        .exists('Label is present');
+
+      assert
+        .dom('.ember-power-select-custom-label-component')
+        .hasText('Label for select');
+
+      assert
+        .dom('.ember-power-select-trigger')
+        .hasAttribute(
+          'id',
+          document
+            .querySelector('.ember-power-select-custom-label-component')
+            .getAttribute('for'),
+          'The for from label is matching with id of trigger',
         );
     });
   },

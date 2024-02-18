@@ -10,6 +10,8 @@ interface PowerSelectBeforeOptionsSignature {
     searchEnabled: boolean;
     ariaLabel?: string;
     ariaLabelledBy?: string;
+    ariaDescribedBy?: string;
+    role?: string;
     searchPlaceholder?: string;
     ariaActiveDescendant?: string;
     listboxId?: string;

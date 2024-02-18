@@ -1,4 +1,5 @@
-<ul role="listbox" {{did-insert this.addHandlers}} {{will-destroy this.removeHandlers}} ...attributes>
+{{!-- template-lint-disable require-context-role --}}
+<ul {{did-insert this.addHandlers}} {{will-destroy this.removeHandlers}} ...attributes>
   {{#if @select.loading}}
     {{#if @loadingMessage}}
       <li class="ember-power-select-option ember-power-select-option--loading-message" role="option" aria-selected={{false}}>{{@loadingMessage}}</li>
@@ -18,7 +19,8 @@
             @optionsComponent={{@optionsComponent}}
             @groupComponent={{@groupComponent}}
             @extra={{@extra}}
-            role="group"
+            role="presentation"
+            data-optgroup="true"
             class="ember-power-select-options" as |option|>
             {{yield option @select}}
           </Options>
@@ -30,7 +32,8 @@
           aria-disabled={{if opt.disabled "true"}}
           aria-current="{{ember-power-select-is-equal opt @select.highlighted}}"
           data-option-index="{{@groupIndex}}{{index}}"
-          role="option">
+          role="option"
+        >
           {{yield opt @select}}
         </li>
       {{/if}}

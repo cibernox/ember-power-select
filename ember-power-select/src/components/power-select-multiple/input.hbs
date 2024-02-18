@@ -12,9 +12,13 @@
   spellcheck={{false}}
   id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
   aria-labelledby={{@ariaLabelledBy}}
+  aria-describedby={{@ariaDescribedBy}}
   aria-label={{@ariaLabel}}
   value={{@select.searchText}}
+  role={{or @role "combobox"}}
+  aria-owns={{if @select.isOpen @listboxId}}
   aria-controls={{if @select.isOpen @listboxId}}
+  aria-autocomplete="list"
   placeholder={{this.maybePlaceholder}}
   disabled={{@select.disabled}}
   tabindex={{@tabindex}}
