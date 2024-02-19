@@ -225,8 +225,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.6.0)
       ember-page-title:
-        specifier: ^8.2.1
-        version: 8.2.1(ember-source@5.6.0)
+        specifier: ^8.2.2
+        version: 8.2.2(ember-source@5.6.0)
       ember-power-select:
         specifier: workspace:*
         version: link:../ember-power-select
@@ -703,8 +703,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.6.0)
       ember-page-title:
-        specifier: ^8.2.1
-        version: 8.2.1(ember-source@5.6.0)
+        specifier: ^8.2.2
+        version: 8.2.2(ember-source@5.6.0)
       ember-power-select:
         specifier: workspace:*
         version: link:../ember-power-select
@@ -4458,9 +4458,6 @@ packages:
 
   /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependenciesMeta:
-      ajv:
-        optional: true
     dependencies:
       ajv: 8.12.0
 
@@ -7984,8 +7981,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /ember-page-title@8.2.1(ember-source@5.6.0):
-    resolution: {integrity: sha512-B2c/mQgzJHcr88rSEroLmUUAX3agYCowOf7mPtZei6wYusWDXoDMLT8Wls75iDwaNOKsPa2cF/KxPJGBuKiOSQ==}
+  /ember-page-title@8.2.2(ember-source@5.6.0):
+    resolution: {integrity: sha512-DpIVgDaYstMSvHuhjG8QRnyfFD+E9/uy9GXO35kzmHaCg2hGB4e5Z6jcfitk8qh/lp5VRX8Tpl4HTBX+CKwMWw==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       ember-source: '>= 3.28.0'
