@@ -112,7 +112,7 @@
     "@types/ember__runloop": "^4.0.9",
     "@types/ember__service": "^4.0.9",
     "@types/ember__string": "^3.16.3",
-    "@types/ember__template": "^4.0.6",
+    "@types/ember__template": "^4.0.7",
     "@types/ember__test": "^4.0.6",
     "@types/ember__utils": "^4.0.7",
     "@typescript-eslint/eslint-plugin": "^7.0.1",
