@@ -141,8 +141,8 @@ importers:
         specifier: ^3.16.3
         version: 3.16.3
       '@types/ember__template':
-        specifier: ^4.0.6
-        version: 4.0.6
+        specifier: ^4.0.7
+        version: 4.0.7
       '@types/ember__test':
         specifier: ^4.0.6
         version: 4.0.6(@babel/core@7.23.9)
@@ -427,8 +427,8 @@ importers:
         specifier: ^3.16.3
         version: 3.16.3
       '@types/ember__template':
-        specifier: ^4.0.6
-        version: 4.0.6
+        specifier: ^4.0.7
+        version: 4.0.7
       '@types/ember__test':
         specifier: ^4.0.6
         version: 4.0.6(@babel/core@7.23.9)
@@ -622,8 +622,8 @@ importers:
         specifier: ^3.16.3
         version: 3.16.3
       '@types/ember__template':
-        specifier: ^4.0.6
-        version: 4.0.6
+        specifier: ^4.0.7
+        version: 4.0.7
       '@types/ember__test':
         specifier: ^4.0.6
         version: 4.0.6(@babel/core@7.23.9)
@@ -3793,7 +3793,7 @@ packages:
       '@types/ember__runloop': 4.0.10(@babel/core@7.23.9)
       '@types/ember__service': 4.0.9(@babel/core@7.23.9)
       '@types/ember__string': 3.16.3
-      '@types/ember__template': 4.0.6
+      '@types/ember__template': 4.0.7
       '@types/ember__test': 4.0.6(@babel/core@7.23.9)
       '@types/ember__utils': 4.0.7(@babel/core@7.23.9)
       '@types/rsvp': 4.0.9
@@ -3931,10 +3931,10 @@ packages:
   /@types/ember__string@3.16.3:
     resolution: {integrity: sha512-0T9ofzm9LL/bSG5u1SxKx/j2h/bHKkl5NKjGCNbFQxEKBw4f2cs6+AMDgWke9z+qrRRIz9vGEtMXnA3yJrO2xA==}
     dependencies:
-      '@types/ember__template': 4.0.6
+      '@types/ember__template': 4.0.7
 
-  /@types/ember__template@4.0.6:
-    resolution: {integrity: sha512-s7yTfDFtdKzxwWi3zzDIlhbMETSB+eGGmvpxhl8cnw2JX8Xj5T66NRACm4q2jJ1kJfIXhECdduw5JnIyny00vw==}
+  /@types/ember__template@4.0.7:
+    resolution: {integrity: sha512-jv4hhG+8d1zdma+jhbCdJ3Ak7C22YNatGyWWvB3N9zbXq358AAPXaJoyNY8QTDbD/RIR9P6yoRk4u9vLbF6zfA==}
 
   /@types/ember__test@4.0.6(@babel/core@7.23.9):
     resolution: {integrity: sha512-Nswm/epfTepXknT8scZvWyyop1aqJcZcyzY4THGHFcXvYQQfA9rgmgrx6vo9vCJmYHh3jm0TTAIAIfoCvGaX5g==}
