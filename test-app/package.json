@@ -112,7 +112,7 @@
     "qunit": "^2.20.1",
     "qunit-dom": "^3.0.0",
     "rsvp": "^4.8.5",
-    "sass": "^1.71.0",
+    "sass": "^1.71.1",
     "stylelint": "^16.2.1",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-prettier": "^5.0.0",
