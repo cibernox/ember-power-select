@@ -60,7 +60,9 @@ export default class PowerSelectMultipleComponent extends Component<PowerSelectM
   }
 
   defaultBuildSelection(option: any, select: Select) {
-    const newSelection = (select.selected || []).slice(0);
+    const newSelection = Array.isArray(select.selected)
+      ? select.selected.slice(0)
+      : [];
     let idx = -1;
     for (let i = 0; i < newSelection.length; i++) {
       if (isEqual(newSelection[i], option)) {
