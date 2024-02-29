@@ -14,6 +14,7 @@
       aria-owns={{@listboxId}}
       aria-autocomplete="list"
       aria-haspopup="listbox"
+      aria-expanded={{if @select.isOpen "true" "false"}}
       placeholder={{@searchPlaceholder}}
       aria-label={{@ariaLabel}}
       aria-labelledby={{@ariaLabelledBy}}
