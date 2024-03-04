@@ -81,7 +81,7 @@
     "ember-truth-helpers": "^4.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@babel/plugin-transform-typescript": "^7.23.6",
     "@babel/runtime": "^7.24.0",
     "@ember/string": "^3.1.1",
