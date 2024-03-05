@@ -56,13 +56,13 @@
       {{on "blur" this.handleBlur}}
       class="ember-power-select-trigger {{@triggerClass}}{{if publicAPI.isActive " ember-power-select-trigger--active"}}"
       aria-activedescendant={{if dropdown.isOpen (unless @searchEnabled (concat publicAPI.uniqueId "-" this.highlightedIndex))}}
-      aria-controls={{if (and dropdown.isOpen (not @searchEnabled)) listboxId ""}}
+      aria-controls={{if (and dropdown.isOpen (not @searchEnabled)) listboxId}}
       aria-describedby={{@ariaDescribedBy}}
       aria-haspopup={{unless @searchEnabled "listbox"}}
       aria-invalid={{@ariaInvalid}}
       aria-label={{@ariaLabel}}
       aria-labelledby={{this.ariaLabelledBy}}
-      aria-owns={{if (and dropdown.isOpen (not @searchEnabled)) listboxId ""}}
+      aria-owns={{if (and dropdown.isOpen (not @searchEnabled)) listboxId}}
       aria-required={{@required}}
       aria-autocomplete={{if @searchEnabled "list"}}
       role={{or @triggerRole "combobox"}}
