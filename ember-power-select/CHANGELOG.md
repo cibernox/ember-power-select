@@ -3,6 +3,27 @@
 
 
 
+
+## v8.0.0-beta.8 (2024-03-05)
+
+#### :rocket: Enhancement
+* [#1690](https://github.com/cibernox/ember-power-select/pull/1690) Improve a11y & make easier to fullfill all requirements out of the box ([@mkszepp](https://github.com/mkszepp))
+
+#### :bug: Bug Fix
+* [#1717](https://github.com/cibernox/ember-power-select/pull/1717) Fix `BeforeOptions` search input having invalid `aria-activedescendant` when no results are found ([@alex-ju](https://github.com/alex-ju))
+* [#1716](https://github.com/cibernox/ember-power-select/pull/1716) Fix `BeforeOptions` search input missing `aria-expanded` ([@alex-ju](https://github.com/alex-ju))
+* [#1715](https://github.com/cibernox/ember-power-select/pull/1715) Fix `NoMatchesMessage` component missing splattributes ([@alex-ju](https://github.com/alex-ju))
+* [#1714](https://github.com/cibernox/ember-power-select/pull/1714) fix: `Type error: (n.selected || []).slice is not a function` in multiple select ([@johanrd](https://github.com/johanrd))
+
+#### :memo: Documentation
+* [#1694](https://github.com/cibernox/ember-power-select/pull/1694) docs: update repo link to variables ([@derrabauke](https://github.com/derrabauke))
+
+#### Committers: 4
+- Alex ([@alex-ju](https://github.com/alex-ju))
+- Falk Neumann ([@derrabauke](https://github.com/derrabauke))
+- [@johanrd](https://github.com/johanrd)
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.0-beta.7 (2024-02-12)
 
 ## v8.0.0-beta.6 (2024-02-12)
