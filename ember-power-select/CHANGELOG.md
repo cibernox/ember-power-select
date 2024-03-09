@@ -6,6 +6,9 @@
 
 ## v8.0.0-beta.8 (2024-03-05)
 
+#### :boom: Breaking Change
+* [#1690](https://github.com/cibernox/ember-power-select/pull/1690) Improve a11y & make easier to fullfill all requirements out of the box ([@mkszepp](https://github.com/mkszepp))
+
 #### :rocket: Enhancement
 * [#1690](https://github.com/cibernox/ember-power-select/pull/1690) Improve a11y & make easier to fullfill all requirements out of the box ([@mkszepp](https://github.com/mkszepp))
 

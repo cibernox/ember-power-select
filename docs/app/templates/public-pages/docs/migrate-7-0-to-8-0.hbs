@@ -1,6 +1,6 @@
 <h1 class="doc-page-title">Migrate from 7.0 to 8.0</h1>
 
-<p>The addon is now a <a href="https://rfcs.emberjs.com/id/0507-embroider-v2-package-format/">V2 Embroider Addon</a>. The following changes were braking:</p>
+<p>The addon is now a <a href="https://rfcs.emberjs.com/id/0507-embroider-v2-package-format/">V2 Embroider Addon</a>. The following changes are necessary:</p>
 
 <ul>
   <li>
@@ -13,6 +13,13 @@
   <li>
     <p>Add following line to your <code>application.hbs</code> (necessary because <code>ember-basic-dropdown</code> is a V2 addon)</p>
     <CodeBlock @language="hbs" @code="<BasicDropdownWormhole />" />
+  </li>
+  <li>
+    <p>OptionsComponent: Group options were detected over js since now with <code>role="group"</code>.
+    To fix a11y we have replaced the role on options with <code>role="presentation"</code>.
+    If you have passed <code>@optionsComponent</code> add in your component on the options <code>data-optgroup="true"</code>.
+    See our <a href="https://github.com/cibernox/ember-power-select/blob/8ffe2bc74373f7b1ec8e244bff218c39ba70c19e/ember-power-select/src/components/power-select/options.hbs#L23" target="_blank" rel="noopener noreferrer">options.hbs</a>
+    </p>
   </li>
   <li>
     <p>Vanilla JS: If you have used vanilla js you must now import the css in <code>app.js</code> manually like (for other css adding examples see under installation)</p>
