@@ -76,7 +76,7 @@
     "concurrently": "^8.2.2",
     "ember-auto-import": "^2.7.2",
     "ember-basic-dropdown": "8.0.0-beta.8",
-    "ember-cli": "~5.6.0",
+    "ember-cli": "~5.7.0",
     "ember-cli-app-version": "^6.0.1",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-clean-css": "^3.0.0",
