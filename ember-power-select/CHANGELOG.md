@@ -4,6 +4,18 @@
 
 
 
+
+## v8.0.0 (2024-03-12)
+
+For upgrade from v7 to v8 see [here](https://ember-power-select.com/docs/migrate-7-0-to-8-0)
+
+#### :memo: Documentation
+* [#1727](https://github.com/cibernox/ember-power-select/pull/1727) Minor Typo correction. ([@incredible-dev](https://github.com/incredible-dev))
+
+#### Committers: 2
+- Sanjeev Singh ([@incredible-dev](https://github.com/incredible-dev))
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.0-beta.8 (2024-03-05)
 
 #### :boom: Breaking Change
