@@ -5,6 +5,18 @@
 
 
 
+
+## v8.0.1 (2024-03-12)
+
+#### :bug: Bug Fix
+* [#1739](https://github.com/cibernox/ember-power-select/pull/1739) Fix rollup config (style.js -> styles.js) ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1740](https://github.com/cibernox/ember-power-select/pull/1740) Mark ember-power-select-is-equal as public & add as note in migrate docs ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.0 (2024-03-12)
 
 For upgrade from v7 to v8 see [here](https://ember-power-select.com/docs/migrate-7-0-to-8-0)
