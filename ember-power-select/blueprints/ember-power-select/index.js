@@ -18,7 +18,7 @@ module.exports = {
     const promises = [];
 
     if (!('ember-basic-dropdown' in dependencies)) {
-      promises.push(this.addPackageToProject('ember-basic-dropdown', 'beta'));
+      promises.push(this.addPackageToProject('ember-basic-dropdown'));
     }
 
     if (!('ember-concurrency' in dependencies)) {
