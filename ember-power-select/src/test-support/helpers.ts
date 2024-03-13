@@ -11,25 +11,34 @@ import {
  * @returns HTMLElement The first element that maches the given selector and contains the
  *                      given text
  */
-export function findContains(selector, text) {
-  return [].slice.apply(document.querySelectorAll(selector)).filter((e) => {
-    return e.textContent.trim().indexOf(text) > -1;
+export function findContains(selector: string, text: string) {
+  return Array.from(document.querySelectorAll(selector)).filter((e) => {
+    return (e.textContent ?? '').indexOf(text) > -1;
   })[0];
 }
 
-export async function nativeMouseDown(selectorOrDomElement, options) {
+export async function nativeMouseDown(
+  selectorOrDomElement: Parameters<typeof triggerEvent>[0],
+  options?: Parameters<typeof triggerEvent>[2],
+) {
   return triggerEvent(selectorOrDomElement, 'mousedown', options);
 }
 
-export async function nativeMouseUp(selectorOrDomElement, options) {
+export async function nativeMouseUp(
+  selectorOrDomElement: Parameters<typeof triggerEvent>[0],
+  options?: Parameters<typeof triggerEvent>[2],
+) {
   return triggerEvent(selectorOrDomElement, 'mouseup', options);
 }
 
-export async function triggerKeydown(domElement, k) {
+export async function triggerKeydown(
+  domElement: Parameters<typeof triggerKeyEvent>[0],
+  k: Parameters<typeof triggerKeyEvent>[2],
+) {
   return triggerKeyEvent(domElement, 'keydown', k);
 }
 
-export function typeInSearch(scopeOrText, text) {
+export function typeInSearch(scopeOrText: string, text?: string) {
   let scope = '';
 
   if (typeof text === 'undefined') {
@@ -38,7 +47,7 @@ export function typeInSearch(scopeOrText, text) {
     scope = scopeOrText;
   }
 
-  let selectors = [
+  const selectors = [
     '.ember-power-select-search-input',
     '.ember-power-select-search input',
     '.ember-power-select-trigger-multiple-input',
@@ -50,7 +59,10 @@ export function typeInSearch(scopeOrText, text) {
   return fillIn(selectors, text);
 }
 
-export async function clickTrigger(scope, options = {}) {
+export async function clickTrigger(
+  scope?: string,
+  options?: Parameters<typeof click>[1],
+) {
   let selector = '.ember-power-select-trigger';
   if (scope) {
     selector = `${scope} ${selector}`;
@@ -58,7 +70,9 @@ export async function clickTrigger(scope, options = {}) {
   return click(selector, options);
 }
 
-export async function nativeTouch(selectorOrDomElement) {
+export async function nativeTouch(
+  selectorOrDomElement: Parameters<typeof triggerEvent>[1],
+) {
   triggerEvent(selectorOrDomElement, 'touchstart');
   return triggerEvent(selectorOrDomElement, 'touchend');
 }
