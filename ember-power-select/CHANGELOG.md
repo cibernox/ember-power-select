@@ -6,6 +6,15 @@
 
 
 
+
+## v8.0.2 (2024-03-13)
+
+#### :bug: Bug Fix
+* [#1742](https://github.com/cibernox/ember-power-select/pull/1742) Fix theme imports for vanilla js ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- [@mkszepp](https://github.com/mkszepp)
+
 ## v8.0.1 (2024-03-12)
 
 #### :bug: Bug Fix
