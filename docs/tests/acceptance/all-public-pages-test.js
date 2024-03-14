@@ -1,5 +1,5 @@
 import { test, module } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'docs/tests/helpers';
 import { visit, currentURL } from '@ember/test-helpers';
 
 module('Acceptance | All Public Pages', function (hooks) {

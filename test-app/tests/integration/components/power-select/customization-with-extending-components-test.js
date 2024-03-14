@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { countries } from '../constants';
@@ -18,10 +18,10 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
-        @triggerComponent={{component "selected-country"}} 
+      <PowerSelect
+        @options={{this.countries}}
+        @selected={{this.country}}
+        @triggerComponent={{component "selected-country"}}
         @onChange={{fn (mut this.country)}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -45,9 +45,9 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.countries}} 
-        @selected={{this.country}} 
+      <PowerSelect
+        @options={{this.countries}}
+        @selected={{this.country}}
         @optionsComponent={{component "list-of-countries"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
@@ -104,8 +104,8 @@ module(
 
       this.searchFn = function () {};
       await render(hbs`
-      <PowerSelect 
-        @search={{this.searchFn}} 
+      <PowerSelect
+        @search={{this.searchFn}}
         @searchMessageComponent={{component "custom-search-message"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
@@ -126,10 +126,10 @@ module(
       this.options = [];
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.options}} 
+      <PowerSelect
+        @options={{this.options}}
         @noMatchesMessageComponent={{component "custom-no-matches-message"}}
-        @noMatchesMessage="Nope" 
+        @noMatchesMessage="Nope"
         @onChange={{fn (mut this.foo)}} as |option|>
         {{option}}
       </PowerSelect>
@@ -176,8 +176,8 @@ module(
       let numberOfGroups = 5; // number of groups in groupedNumber;
 
       await render(hbs`
-      <PowerSelect 
-        @options={{this.groupedNumbers}} 
+      <PowerSelect
+        @options={{this.groupedNumbers}}
         @groupComponent={{component "custom-group-component"}}
         @onChange={{fn (mut this.foo)}} as |country|>
         {{country.name}}
@@ -197,11 +197,11 @@ module(
       this.country = countries[1]; // Spain
 
       await render(hbs`
-      <PowerSelectMultiple 
+      <PowerSelectMultiple
         @options={{this.countries}}
-        @selected={{this.country}} 
+        @selected={{this.country}}
         @triggerComponent={{component "selected-country"}}
-        @onChange={{fn (mut this.foo)}} 
+        @onChange={{fn (mut this.foo)}}
         @extra={{hash coolFlagIcon=true}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>

@@ -1,12 +1,20 @@
 import { test, module } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
-import { click, visit, currentURL } from '@ember/test-helpers';
+import { setupApplicationTest } from 'test-app/tests/helpers';
+import { click, visit, currentURL, find } from '@ember/test-helpers';
 import {
   selectChoose,
   selectSearch,
   removeMultipleOption,
   clearSelected,
 } from 'ember-power-select/test-support';
+
+function findElement(selector: string): HTMLElement {
+  const element = find(selector);
+  if (!element) {
+    throw new Error(`${selector} not found`);
+  }
+  return element as HTMLElement;
+}
 
 module('Acceptance | helpers | selectChoose', function (hooks) {
   setupApplicationTest(hooks);
@@ -121,10 +129,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     await visit('/helpers-testing');
     assert.strictEqual(currentURL(), '/helpers-testing');
 
-    await selectChoose(
-      this.element.querySelector('.select-with-class-in-trigger'),
-      'three',
-    );
+    await selectChoose(findElement('.select-with-class-in-trigger'), 'three');
     assert
       .dom('.select-choose')
       .hasText('three', 'The proper value has been selected');
@@ -139,7 +144,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     assert.strictEqual(currentURL(), '/helpers-testing');
 
     await selectChoose(
-      this.element.querySelector('.select-with-class-in-trigger'),
+      findElement('.select-with-class-in-trigger'),
       '.ember-power-select-option',
       2,
     );
@@ -161,7 +166,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
       await selectChoose('.there-is-no-select', 'three');
     } catch (error) {
       assert.strictEqual(
-        error.message,
+        (error as Error).message,
         'You called "selectChoose(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"',
       );
     }
@@ -176,7 +181,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
       await selectChoose('.select-choose', 'non-existent-option');
     } catch (error) {
       assert.strictEqual(
-        error.message,
+        (error as Error).message,
         "You called \"selectChoose('.select-choose', 'non-existent-option')\" but \"non-existent-option\" didn't match any option",
       );
     }
@@ -250,9 +255,7 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
     assert.strictEqual(currentURL(), '/helpers-testing');
 
     await selectSearch(
-      this.element.querySelector(
-        '.select-multiple .ember-power-select-trigger',
-      ),
+      findElement('.select-multiple .ember-power-select-trigger'),
       'three',
     );
     assert.dom('.ember-power-select-options').hasText('three');
@@ -273,7 +276,7 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
       await selectSearch('.there-is-no-select', 'three');
     } catch (error) {
       assert.strictEqual(
-        error.message,
+        (error as Error).message,
         'You called "selectSearch(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"',
       );
     }
@@ -340,7 +343,7 @@ module('Acceptance | helpers | clearSelected', function (hooks) {
       .dom('.select-choose-onopen .ember-power-select-selected-item')
       .hasText('three', 'The proper value has been selected');
 
-    await clearSelected('.select-choose-onopen', 'three');
+    await clearSelected('.select-choose-onopen');
     assert
       .dom('.select-choose-onopen .ember-power-select-clear-btn')
       .doesNotExist();
@@ -359,7 +362,7 @@ module('Acceptance | helpers | clearSelected', function (hooks) {
       .dom('.select-deselect-async .ember-power-select-selected-item')
       .hasText('three', 'The proper value has been selected');
 
-    await clearSelected('.select-deselect-async', 'three');
+    await clearSelected('.select-deselect-async');
     assert
       .dom('.select-deselect-async .ember-power-select-clear-btn')
       .doesNotExist();

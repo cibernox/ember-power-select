@@ -1,7 +1,7 @@
 import { later } from '@ember/runloop';
 import { task, timeout } from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, settled, click, waitFor } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import {
