@@ -14,7 +14,6 @@ ember-data collections and follows idiomatic patterns.
 
 * Ember.js v3.28 or above
 * Ember CLI v3.28 or above
-* Node.js v18 or above
 
 Version 1.X works in Ember **2.3.1+**, beta and canary with no deprecations
 whatsoever. Any deprecation will be considered a bug.
