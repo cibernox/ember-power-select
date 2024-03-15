@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'test-app/tests/helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { optionAtIndex } from 'ember-power-select/utils/group-utils';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';

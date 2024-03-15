@@ -1081,7 +1081,7 @@ const DIACRITICS: Record<string, string> = {
 };
 
 // Copied from Select2
-export function stripDiacritics(text: string) {
+export function stripDiacritics(text: string | number) {
   // Used 'uni range + named function' from http://jsperf.com/diacritics/18
   function match(a: string) {
     return DIACRITICS[a] || a;

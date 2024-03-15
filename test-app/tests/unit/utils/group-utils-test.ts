@@ -7,6 +7,7 @@ import {
   stripDiacritics,
   countOptions,
   defaultTypeAheadMatcher,
+  type MatcherFn,
 } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
@@ -183,7 +184,7 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function (assert) {
-    let matcher = function (value, searchText) {
+    const matcher: MatcherFn = function (value, searchText) {
       return new RegExp(searchText, 'i').test(value) ? 0 : -1;
     };
     assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [
@@ -210,7 +211,7 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function (assert) {
-    let matcher = function (value, searchText) {
+    const matcher: MatcherFn = function (value, searchText) {
       return new RegExp(searchText, 'i').test(value) ? 0 : -1;
     };
     assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [
@@ -243,7 +244,7 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions skips disabled options and groups if it receives a truty values as 4th arguments', function (assert) {
-    let matcher = function (value, searchText) {
+    const matcher: MatcherFn = function (value, searchText) {
       return new RegExp(searchText, 'i').test(value) ? 0 : -1;
     };
     assert.deepEqual(
@@ -303,22 +304,20 @@ module('Unit | Utility | Group utils', function () {
 });
 
 test('#defaultTypeAheadMatcher', function (assert) {
-  [
-    ['Aaron', 'Aa'],
-    ['Álvaro', 'alv'],
-  ].forEach(([value, text]) => {
-    assert.strictEqual(
-      defaultTypeAheadMatcher(value, text),
-      1,
-      `${value} is matched by ${text}`,
-    );
-  });
+  assert.strictEqual(
+    defaultTypeAheadMatcher('Aaron', 'Aa'),
+    1,
+    `Aaron is matched by Aa`,
+  );
+  assert.strictEqual(
+    defaultTypeAheadMatcher('Álvaro', 'alv'),
+    1,
+    `Álvaro is matched by alv`,
+  );
 
-  [['Fabiola', 'Ab']].forEach(([value, text]) => {
-    assert.strictEqual(
-      defaultTypeAheadMatcher(value, text),
-      -1,
-      `${value} is not matched by ${text}`,
-    );
-  });
+  assert.strictEqual(
+    defaultTypeAheadMatcher('Fabiola', 'Ab'),
+    -1,
+    `Fabiola is not matched by Ab`,
+  );
 });
