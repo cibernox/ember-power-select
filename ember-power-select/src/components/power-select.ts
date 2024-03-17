@@ -38,8 +38,8 @@ interface SelectActions extends DropdownActions {
 export interface Select extends Dropdown {
   selected: any;
   highlighted: any;
-  options: any[];
-  results: any[];
+  options: readonly any[];
+  results: readonly any[];
   resultsCount: number;
   loading: boolean;
   isActive: boolean;
@@ -66,7 +66,7 @@ export interface PowerSelectArgs {
   noMatchesMessageComponent?: string | ComponentLike<any>;
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
-  options?: any[] | PromiseProxy<any[]>;
+  options?: readonly any[] | PromiseProxy<readonly any[]>;
   selected?: any | PromiseProxy<any>;
   destination?: string;
   closeOnSelect?: boolean;
@@ -114,7 +114,10 @@ export interface PowerSelectArgs {
   typeAheadOptionMatcher?: MatcherFn;
   buildSelection?: (selected: any, select: Select) => any;
   onChange: (selection: any, select: Select, event?: Event) => void;
-  search?: (term: string, select: Select) => any[] | PromiseProxy<any[]>;
+  search?: (
+    term: string,
+    select: Select,
+  ) => readonly any[] | PromiseProxy<readonly any[]>;
   onOpen?: (select: Select, e: Event) => boolean | undefined;
   onClose?: (select: Select, e: Event) => boolean | undefined;
   onInput?: (term: string, select: Select, e: Event) => string | false | void;
@@ -165,11 +168,11 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   };
 
   // Tracked properties
-  @tracked private _resolvedOptions?: any[];
+  @tracked private _resolvedOptions?: readonly any[];
   @tracked private _resolvedSelected?: any;
   @tracked private _repeatingChar = '';
   @tracked private _expirableSearchText = '';
-  @tracked private _searchResult?: any[];
+  @tracked private _searchResult?: readonly any[];
   @tracked isActive = false;
   @tracked loading = false;
   @tracked searchText = '';
@@ -178,9 +181,11 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   storedAPI!: Select;
 
   private _uid = guidFor(this);
-  private _lastOptionsPromise?: PromiseProxy<any[]>;
+  private _lastOptionsPromise?: PromiseProxy<readonly any[]>;
   private _lastSelectedPromise?: PromiseProxy<any>;
-  private _lastSearchPromise?: PromiseProxy<any[]> | CancellablePromise<any[]>;
+  private _lastSearchPromise?:
+    | PromiseProxy<readonly any[]>
+    | CancellablePromise<readonly any[]>;
   private _filterResultsCache: {
     results: any[];
     options: any[];
@@ -791,7 +796,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   findWithOffset(
-    options: any[],
+    options: readonly any[],
     term: string,
     offset: number,
     skipDisabled = false,
