@@ -21,8 +21,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.0(prettier@3.2.5)
+        specifier: ^2.0.1
+        version: 2.0.1(prettier@3.2.5)
       release-it:
         specifier: ^17.1.1
         version: 17.1.1
@@ -484,8 +484,8 @@ importers:
         specifier: ^3.2.5
         version: 3.2.5
       prettier-plugin-ember-template-tag:
-        specifier: ^2.0.0
-        version: 2.0.0(prettier@3.2.5)
+        specifier: ^2.0.1
+        version: 2.0.1(prettier@3.2.5)
       rollup:
         specifier: ^4.12.0
         version: 4.13.0
@@ -14048,8 +14048,8 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
-  /prettier-plugin-ember-template-tag@2.0.0(prettier@3.2.5):
-    resolution: {integrity: sha512-n2iIQedT5r/kvoTfhjThPECE1y0Ji3DupNpCtENP1Dm974M2NoKhaT5QynfBdn+WXlPhvFE4A/2uDSsZfx373A==}
+  /prettier-plugin-ember-template-tag@2.0.1(prettier@3.2.5):
+    resolution: {integrity: sha512-CLoCdQ0cWPMq9dOmqbcBhOURSFd8X2+wXK2TJ4UIMNfG7G3Bxu91MY3VHILQrvRyva+XNF28n6y5oMxfNqyiNw==}
     engines: {node: 18.* || >= 20}
     peerDependencies:
       prettier: '>= 3.0.0'
