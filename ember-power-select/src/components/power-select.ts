@@ -66,7 +66,7 @@ export interface PowerSelectArgs {
   noMatchesMessageComponent?: string | ComponentLike<any>;
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
-  options?: readonly any[] | PromiseProxy<readonly any[]>;
+  options?: readonly any[] | Promise<readonly any[]>;
   selected?: any | PromiseProxy<any>;
   destination?: string;
   closeOnSelect?: boolean;
@@ -117,7 +117,7 @@ export interface PowerSelectArgs {
   search?: (
     term: string,
     select: Select,
-  ) => readonly any[] | PromiseProxy<readonly any[]>;
+  ) => readonly any[] | Promise<readonly any[]>;
   onOpen?: (select: Select, e: Event) => boolean | undefined;
   onClose?: (select: Select, e: Event) => boolean | undefined;
   onInput?: (term: string, select: Select, e: Event) => string | false | void;
@@ -181,10 +181,10 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   storedAPI!: Select;
 
   private _uid = guidFor(this);
-  private _lastOptionsPromise?: PromiseProxy<readonly any[]>;
+  private _lastOptionsPromise?: Promise<readonly any[]>;
   private _lastSelectedPromise?: PromiseProxy<any>;
   private _lastSearchPromise?:
-    | PromiseProxy<readonly any[]>
+    | Promise<readonly any[]>
     | CancellablePromise<readonly any[]>;
   private _filterResultsCache: {
     results: any[];
@@ -506,7 +506,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     if (isPromiseLike(this.args.options)) {
       if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
       const currentOptionsPromise = this.args.options;
-      this._lastOptionsPromise = currentOptionsPromise as PromiseProxy<any[]>;
+      this._lastOptionsPromise = currentOptionsPromise;
       this.loading = true;
       this._lastOptionsPromise
         .then((resolvedOptions) => {
