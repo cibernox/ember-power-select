@@ -1,11 +1,18 @@
 
 
+## v8.1.0 (2024-03-18)
 
+#### :rocket: Enhancement
+* [#1746](https://github.com/cibernox/ember-power-select/pull/1746) Type improvements ([@bendemboski](https://github.com/bendemboski))
+* [#1743](https://github.com/cibernox/ember-power-select/pull/1743) Migrate test helpers to TypeScript ([@andreyfel](https://github.com/andreyfel))
 
+#### :house: Internal
+* [#1744](https://github.com/cibernox/ember-power-select/pull/1744) Remove NodeJs info (not necessary for v2 addon) ([@mkszepp](https://github.com/mkszepp))
 
-
-
-
+#### Committers: 3
+- Andrey Fel ([@andreyfel](https://github.com/andreyfel))
+- Ben Demboski ([@bendemboski](https://github.com/bendemboski))
+- [@mkszepp](https://github.com/mkszepp)
 
 ## v8.0.2 (2024-03-13)
 
