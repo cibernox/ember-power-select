@@ -496,7 +496,7 @@ module(
           @options={{this.countries}}
           @selected={{this.country}}
           @placeholder="test"
-          @placeholderComponent={{component "custom-multiple-search-placeholder"}}
+          @placeholderComponent={{component "custom-placeholder"}}
           @onChange={{fn (mut this.country)}} as |country|>
           {{country.name}}
         </PowerSelectMultiple>

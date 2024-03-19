@@ -42,7 +42,7 @@
       {{/if}}
     </li>
   {{else}}
-    {{#if (and @placeholder (not @searchEnabled))}}
+    {{#if @placeholder}}
       <li>
         {{#let (component (ensure-safe-component @placeholderComponent)) as |PlaceholderComponent|}}
           <PlaceholderComponent
