@@ -40,8 +40,8 @@ module(
         .doesNotExist('There is no search box');
     });
 
-    test('Multiple selects have a search box in the trigger when the search is enabled', async function (assert) {
-      assert.expect(2);
+    test('Multiple selects have a search box in the dropdown when the search is enabled', async function (assert) {
+      assert.expect(1);
 
       this.numbers = numbers;
       await render(hbs`
@@ -51,25 +51,7 @@ module(
     `);
 
       await clickTrigger();
-      assert.dom('.ember-power-select-trigger input').exists();
-      assert.dom('.ember-power-select-dropdown input').doesNotExist();
-    });
-
-    test('The searchbox of multiple selects has type="search" and a form attribute to prevent submitting the wrapper form when pressing enter', async function (assert) {
-      assert.expect(2);
-
-      this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      await clickTrigger();
-      assert
-        .dom('.ember-power-select-trigger input')
-        .hasAttribute('type', 'search');
-      assert.dom('.ember-power-select-trigger input').hasAttribute('form');
+      assert.dom('.ember-power-select-dropdown input').exists();
     });
 
     test('When the select opens, the search input (if any) in the trigger gets the focus', async function (assert) {
@@ -83,7 +65,7 @@ module(
     `);
 
       await clickTrigger();
-      assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
+      assert.dom('.ember-power-select-search-input').isFocused();
     });
 
     test("Click on an element selects it and closes the dropdown and focuses the trigger's input", async function (assert) {
@@ -97,7 +79,7 @@ module(
     `);
 
       await clickTrigger();
-      assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
+      assert.dom('.ember-power-select-search-input').isFocused();
 
       await click('.ember-power-select-option:nth-child(2)');
       assert
@@ -367,7 +349,7 @@ module(
     });
 
     test('Pressing ENTER when the select is closed opens and nothing is written on the box opens it', async function (assert) {
-      assert.expect(3);
+      assert.expect(2);
 
       this.numbers = numbers;
       await render(hbs`
@@ -378,16 +360,15 @@ module(
 
       await clickTrigger();
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-trigger',
         'keydown',
         27,
       );
       assert
         .dom('.ember-power-select-dropdown')
         .doesNotExist('Dropdown is not rendered');
-      assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-trigger',
         'keydown',
         13,
       );
@@ -428,12 +409,12 @@ module(
 
       await clickTrigger();
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         40,
       );
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         13,
       );
@@ -490,7 +471,7 @@ module(
     });
 
     test('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', async function (assert) {
-      assert.expect(3);
+      assert.expect(2);
 
       this.numbers = numbers;
       this.selected = ['two'];
@@ -506,12 +487,12 @@ module(
 
       await clickTrigger();
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         40,
       );
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         13,
       );
@@ -521,7 +502,6 @@ module(
       assert
         .dom('.ember-power-select-dropdown')
         .doesNotExist('Dropdown is not rendered');
-      assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
     });
 
     test('Pressing BACKSPACE on the search input when there is text on it does nothing special', async function (assert) {
@@ -542,164 +522,13 @@ module(
       await clickTrigger();
       await typeInSearch('four');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         8,
       );
       assert
         .dom('.ember-power-select-dropdown')
         .exists('The dropown is still opened');
-    });
-
-    test("Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediately, opening the select if closed", async function (assert) {
-      assert.expect(9);
-
-      this.numbers = numbers;
-      this.selected = ['two'];
-      this.didChange = (val, dropdown) => {
-        assert.deepEqual(val, [], 'The selected item was unselected');
-        this.set('selected', val);
-        assert.ok(
-          dropdown.actions.close,
-          'The dropdown API is received as second argument',
-        );
-      };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.didChange}} @selected={{this.selected}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      assert
-        .dom('.ember-power-select-multiple-option')
-        .exists({ count: 1 }, 'There is one element selected');
-      await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
-        'keydown',
-        8,
-      );
-      assert
-        .dom('.ember-power-select-multiple-option')
-        .exists({ count: 0 }, 'There is no elements selected');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasValue('two', 'The text of the seach input is two now');
-      assert
-        .dom('.ember-power-select-dropdown')
-        .exists('The dropown has been opened');
-      assert
-        .dom('.ember-power-select-option')
-        .exists({ count: 1 }, 'The list has been filtered');
-      let input = this.element.querySelector(
-        '.ember-power-select-trigger-multiple-input',
-      );
-      assert.strictEqual(input.selectionStart, 3);
-      assert.strictEqual(input.selectionEnd, 3);
-    });
-
-    test("Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediatly (when options are not strings)", async function (assert) {
-      assert.expect(7);
-
-      this.countries = countries;
-      this.country = [countries[2], countries[4]];
-      this.didChange = (val, dropdown) => {
-        assert.deepEqual(
-          val,
-          [countries[2]],
-          'The selected item was unselected',
-        );
-        this.set('country', val);
-        assert.ok(
-          dropdown.actions.close,
-          'The dropdown API is received as second argument',
-        );
-      };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.countries}} @selected={{this.country}} @onChange={{this.didChange}} @searchField="name" @searchEnabled={{true}} as |c|>
-        {{c.name}}
-      </PowerSelectMultiple>
-    `);
-      await clickTrigger();
-      assert
-        .dom('.ember-power-select-multiple-option')
-        .exists({ count: 2 }, 'There is two elements selected');
-      await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
-        'keydown',
-        8,
-      );
-      assert
-        .dom('.ember-power-select-multiple-option')
-        .exists({ count: 1 }, 'There is one element selected');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasValue('Latvia', 'The text of the seach input is two "Latvia"');
-      assert
-        .dom('.ember-power-select-dropdown')
-        .exists('The dropown is still opened');
-      assert
-        .dom('.ember-power-select-option')
-        .exists({ count: 1 }, 'The list has been filtered');
-    });
-
-    test("Pressing BACKSPACE on the search input when it's empty removes the last selection ALSO when that option didn't come from the outside", async function (assert) {
-      assert.expect(5);
-
-      this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      await clickTrigger();
-      await click('.ember-power-select-option:nth-child(3)');
-      await clickTrigger();
-      assert
-        .dom('.ember-power-select-multiple-option')
-        .exists({ count: 1 }, 'There is one element selected');
-      await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
-        'keydown',
-        8,
-      );
-      assert
-        .dom('.ember-power-select-multiple-option')
-        .exists({ count: 0 }, 'There is no elements selected');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasValue('three', 'The text of the seach input is three now');
-      assert
-        .dom('.ember-power-select-dropdown')
-        .exists('The dropown is still opened');
-      assert
-        .dom('.ember-power-select-option')
-        .exists({ count: 1 }, 'The list has been filtered');
-    });
-
-    test("Pressing BACKSPACE on the search input when it's empty doesnt trigger error", async function (assert) {
-      assert.expect(2);
-
-      this.numbers = numbers;
-      await render(hbs`
-        <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
-          {{option}}
-        </PowerSelectMultiple>
-      `);
-
-      await clickTrigger();
-      await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
-        'keydown',
-        8,
-      );
-
-      assert
-        .dom('.ember-power-select-multiple-option')
-        .exists({ count: 0 }, 'There is no elements selected');
-      assert
-        .dom('.ember-power-select-dropdown')
-        .exists('The dropdown is still opened');
     });
 
     test('If the multiple component is focused, pressing KEYDOWN opens it', async function (assert) {
@@ -714,7 +543,7 @@ module(
 
       await clickTrigger();
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-trigger',
         'keydown',
         27,
       );
@@ -722,7 +551,7 @@ module(
         .dom('.ember-power-select-dropdown')
         .doesNotExist('The select is closed');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-trigger',
         'keydown',
         40,
       );
@@ -741,7 +570,7 @@ module(
 
       await clickTrigger();
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-trigger',
         'keydown',
         27,
       );
@@ -749,91 +578,15 @@ module(
         .dom('.ember-power-select-dropdown')
         .doesNotExist('The select is closed');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-trigger',
         'keydown',
         38,
       );
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
     });
 
-    test('The placeholder is only visible when no options are selected', async function (assert) {
-      assert.expect(2);
-
-      this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @placeholder="Select stuff here" @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute(
-          'placeholder',
-          'Select stuff here',
-          'There is a placeholder',
-        );
-      await clickTrigger();
-      await click('.ember-power-select-option:nth-child(2)');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute('placeholder', '', 'The placeholder is gone');
-    });
-
-    test('The placeholder is visible when no options are selected and search is disabled', async function (assert) {
-      assert.expect(2);
-
-      this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @placeholder="Select stuff here" as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      assert
-        .dom('.ember-power-select-placeholder')
-        .hasText('Select stuff here', 'There is a placeholder');
-      await clickTrigger();
-      await click('.ember-power-select-option:nth-child(2)');
-      assert
-        .dom('.ember-power-select-placeholder')
-        .doesNotExist('The placeholder is gone');
-    });
-
-    test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', async function (assert) {
-      assert.expect(3);
-
-      this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute('placeholder', '', 'Input does not have a placeholder');
-      await clickTrigger();
-      await click('.ember-power-select-option:nth-child(2)');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute(
-          'placeholder',
-          '',
-          'Input still does not have a placeholder',
-        );
-      await click('.ember-power-select-multiple-remove-btn');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute(
-          'placeholder',
-          '',
-          'Input still does not have a placeholder',
-        );
-    });
-
     test('Selecting and removing should result in desired behavior', async function (assert) {
-      assert.expect(3);
+      assert.expect(2);
       this.numbers = numbers;
       await render(hbs`
       <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
@@ -847,19 +600,12 @@ module(
         .exists({ count: 1 }, 'Should add selected option');
       await click('.ember-power-select-multiple-remove-btn');
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute(
-          'placeholder',
-          '',
-          'Input still does not have a placeholder',
-        );
-      assert
         .dom('.ember-power-select-multiple-option')
         .exists({ count: 0 }, 'Should remove selected option');
     });
 
     test('Selecting and removing can also be done with touch events', async function (assert) {
-      assert.expect(3);
+      assert.expect(2);
       this.numbers = numbers;
       await render(hbs`
       <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
@@ -872,13 +618,6 @@ module(
         .dom('.ember-power-select-multiple-option')
         .exists({ count: 1 }, 'Should add selected option');
       await tap('.ember-power-select-multiple-remove-btn');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute(
-          'placeholder',
-          '',
-          'Input still does not have a placeholder',
-        );
       assert
         .dom('.ember-power-select-multiple-option')
         .exists({ count: 0 }, 'Should remove selected option');
@@ -894,6 +633,7 @@ module(
       </PowerSelectMultiple>
     `);
 
+      await clickTrigger();
       await typeInSearch('fo');
       assert
         .dom('.ember-power-select-option')
@@ -917,6 +657,7 @@ module(
       </PowerSelectMultiple>
     `);
 
+      await clickTrigger();
       await typeInSearch('fo');
       let done = assert.async();
 
@@ -962,14 +703,15 @@ module(
       await typeInSearch('asjdnah');
       assert.dom('.ember-power-select-option').hasText('No results found');
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasValue('asjdnah');
       await click('#other-thing');
-      assert.dom('.ember-power-select-trigger-multiple-input').hasValue('');
+      await clickTrigger();
+      assert.dom('.ember-power-select-search-input').hasValue('');
     });
 
     test('When hitting ENTER after a search with no results, the component is closed but the onchange function is not invoked', async function (assert) {
-      assert.expect(3);
+      assert.expect(2);
       this.numbers = numbers;
       this.handleChange = () => {
         assert.ok(false, 'The handle change should not be called');
@@ -984,14 +726,13 @@ module(
       await typeInSearch('asjdnah');
       assert.dom('.ember-power-select-option').hasText('No results found');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         13,
       );
       assert
         .dom('.ember-power-select-dropdown')
         .doesNotExist('The dropdown is closed');
-      assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
     });
 
     test('The trigger of multiple selects have a special class to distinguish them from regular ones, even if you pass them another one', async function (assert) {
@@ -1092,24 +833,6 @@ module(
         .hasAttribute('tabindex', '0', 'The trigger has tabindex=0');
     });
 
-    test('When the power select multiple uses the default component and the search is enabled, and the component receives an specific tabindex, the trigger has tabindex=-1, and the tabindex is applied to the searchbox inside', async function (assert) {
-      assert.expect(2);
-
-      this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @tabindex="3" @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      assert
-        .dom('.ember-power-select-trigger')
-        .hasAttribute('tabindex', '-1', 'The trigger has tabindex=1');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute('tabindex', '3', 'The searchbox has tabindex=3');
-    });
-
     test('Multiple selects honor the `defaultHighlighted` option', async function (assert) {
       assert.expect(1);
 
@@ -1159,8 +882,10 @@ module(
       </PowerSelectMultiple>
     `);
 
+      await clickTrigger();
       await typeInSearch('M');
       await click('.ember-power-select-option:nth-child(2)');
+      await clickTrigger();
       await typeInSearch('Mi');
       assert
         .dom('.ember-power-select-option')

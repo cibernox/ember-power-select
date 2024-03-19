@@ -106,21 +106,6 @@ module(
         );
     });
 
-    test('When passed `@disabled={{true}}`, the input inside the trigger is also disabled', async function (assert) {
-      assert.expect(1);
-
-      this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @disabled={{true}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .hasAttribute('disabled');
-    });
-
     test('When passed `disabled=true`, the options cannot be removed', async function (assert) {
       assert.expect(1);
 
@@ -139,7 +124,7 @@ module(
     });
 
     test('Multiple select: When passed `@disabled={{prop}}`, enabling and disabling that property changes the component', async function (assert) {
-      assert.expect(3);
+      assert.expect(2);
 
       this.numbers = numbers;
       this.selectedNumbers = [numbers[2], numbers[4]];
@@ -162,9 +147,6 @@ module(
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute('aria-expanded', 'false');
-      assert
-        .dom('.ember-power-select-trigger-multiple-input')
-        .doesNotHaveAttribute('disabled');
     });
 
     test("BUGFIX: When after a search the only result is a disabled element, it isn't highlighted and cannot be selected", async function (assert) {

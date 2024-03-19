@@ -999,7 +999,7 @@ module(
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('one', 'The first element is highlighted');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         40,
       );

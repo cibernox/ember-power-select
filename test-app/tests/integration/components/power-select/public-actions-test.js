@@ -257,12 +257,12 @@ module(
 
       await clickTrigger();
       triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         13,
       );
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         65,
       );
@@ -293,33 +293,6 @@ module(
       assert
         .dom('.ember-power-select-trigger')
         .doesNotIncludeText('two', 'nothing was selected');
-    });
-
-    test('returning false from the `@onKeydown` action prevents the default behaviour in multiple selects', async function (assert) {
-      assert.expect(24);
-
-      this.numbers = numbers;
-      this.handleKeyDown = (select, e) => {
-        assert.false(select.isOpen, 'select.isOpen is still false');
-        assertPublicAPIShape(assert, select);
-        assert.ok(e instanceof window.Event, 'The second argument is an event');
-        return false;
-      };
-
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @onKeydown={{this.handleKeyDown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    `);
-
-      await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
-        'keydown',
-        13,
-      );
-      assert
-        .dom('.ember-power-select-dropdown')
-        .doesNotExist('Dropdown is still closed');
     });
 
     test('The onFocus of single selects action receives the public API and the focus event', async function (assert) {
@@ -376,7 +349,7 @@ module(
       </PowerSelectMultiple>
     `);
 
-      await focus('.ember-power-select-trigger-multiple-input');
+      await focus('.ember-power-select-search-input');
     });
 
     test('The onBlur of single selects action receives the public API and the event', async function (assert) {
@@ -396,26 +369,6 @@ module(
     `);
 
       await focus('.ember-power-select-trigger');
-      await focus('#other-element');
-    });
-
-    test('The onBlur of multiple selects action receives the public API and the focus event', async function (assert) {
-      assert.expect(22);
-
-      this.numbers = numbers;
-      this.handleBlur = (select, e) => {
-        assertPublicAPIShape(assert, select);
-        assert.ok(e instanceof window.Event, 'The second argument is an event');
-      };
-
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onBlur={{this.handleBlur}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-      <input type="text" id="other-element"/>
-    `);
-
-      await focus('.ember-power-select-trigger-multiple-input');
       await focus('#other-element');
     });
 
@@ -729,7 +682,7 @@ module(
         .hasValue('hello', 'The search text contains the searched string');
     });
 
-    test('The programmer can use the received public API to perform searches in mutiple selects', async function (assert) {
+    test('The programmer can use the received public API to perform searches in multiple selects', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
@@ -746,7 +699,7 @@ module(
 
       await clickTrigger();
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasValue('hello', 'The search text contains the searched string');
     });
 

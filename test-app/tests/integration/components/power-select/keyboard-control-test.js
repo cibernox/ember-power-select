@@ -568,7 +568,7 @@ module(
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         32,
       );
@@ -649,7 +649,7 @@ module(
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         13,
       );
@@ -674,7 +674,7 @@ module(
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
       await triggerKeyEvent(
-        '.ember-power-select-trigger-multiple-input',
+        '.ember-power-select-search-input',
         'keydown',
         13,
       );

@@ -419,10 +419,10 @@ module(
 
       await clickTrigger();
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasAttribute('type', 'search', 'The type of the input is `search`');
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
@@ -860,21 +860,21 @@ module(
       await clickTrigger();
 
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
           'Multi select search box has aria-controls value',
         );
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-haspopup',
           'listbox',
           'Multi select search box has aria-haspopup value',
         );
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-expanded',
           'true',
@@ -890,7 +890,7 @@ module(
           'The first element is highlighted',
         );
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(1)').id,
@@ -906,7 +906,7 @@ module(
         .dom('.ember-power-select-option:nth-child(4)')
         .hasAttribute('aria-current', 'true', 'The 4th element is highlighted');
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-activedescendant',
           document.querySelector('.ember-power-select-option:nth-child(4)').id,

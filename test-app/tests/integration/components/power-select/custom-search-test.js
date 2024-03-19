@@ -737,7 +737,7 @@ module(
         {{country.name}}
       </PowerSelectMultiple>
     `);
-
+      await clickTrigger();
       await typeInSearch('po');
     });
 
