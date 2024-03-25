@@ -136,7 +136,7 @@
     "rollup-plugin-styles": "^4.0.0",
     "rsvp": "^4.8.5",
     "sass": "^1.72.0",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.3",
     "webpack": "^5.91.0"
   },
   "peerDependencies": {
