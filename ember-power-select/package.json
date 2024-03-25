@@ -137,7 +137,7 @@
     "rsvp": "^4.8.5",
     "sass": "^1.72.0",
     "typescript": "^5.4.2",
-    "webpack": "^5.90.3"
+    "webpack": "^5.91.0"
   },
   "peerDependencies": {
     "@ember/test-helpers": "^2.9.4 || ^3.2.1",
