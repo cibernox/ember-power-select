@@ -70,7 +70,7 @@
     "@types/ember__utils": "^4.0.7",
     "@types/qunit": "^2.19.10",
     "@types/rsvp": "^4.0.9",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.2",
