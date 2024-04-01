@@ -210,8 +210,8 @@ importers:
         specifier: git+https://git@github.com/ef4/ember-code-snippet.git#d054b697098ad52481c94a952ccf8d89ba1f25fe
         version: github.com/ef4/ember-code-snippet/d054b697098ad52481c94a952ccf8d89ba1f25fe
       ember-concurrency:
-        specifier: ^4.0.1
-        version: 4.0.1(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0)
+        specifier: ^4.0.2
+        version: 4.0.2(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0)
       ember-data:
         specifier: ~5.3.3
         version: 5.3.3(@babel/core@7.24.3)(@ember/string@3.1.1)(@glint/template@1.4.0)(ember-source@5.7.0)
@@ -451,8 +451,8 @@ importers:
         specifier: ^8.0.4
         version: 8.0.4(@ember/string@3.1.1)(@ember/test-helpers@3.3.0)(@glimmer/component@1.1.2)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-source@5.7.0)
       ember-concurrency:
-        specifier: ^4.0.1
-        version: 4.0.1(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0)
+        specifier: ^4.0.2
+        version: 4.0.2(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0)
       ember-source:
         specifier: ~5.7.0
         version: 5.7.0(@babel/core@7.24.3)(@glimmer/component@1.1.2)(@glint/template@1.4.0)(rsvp@4.8.5)(webpack@5.91.0)
@@ -688,8 +688,8 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2
       ember-concurrency:
-        specifier: ^4.0.1
-        version: 4.0.1(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0)
+        specifier: ^4.0.2
+        version: 4.0.2(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0)
       ember-data:
         specifier: ~5.3.3
         version: 5.3.3(@babel/core@7.24.3)(@ember/string@3.1.1)(@glint/template@1.4.0)(ember-source@5.7.0)
@@ -8440,13 +8440,16 @@ packages:
       - '@babel/core'
       - supports-color
 
-  /ember-concurrency@4.0.1(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0):
-    resolution: {integrity: sha512-U6tEmQRPJg+qUAFM2Ub1pSSqa2AtaGZreCB6bsR3IkpiMPn19HpeebOwOIqgdE+10eUHYTXHgcsopWmPyYkHnA==}
+  /ember-concurrency@4.0.2(@babel/core@7.24.3)(@glimmer/tracking@1.1.2)(@glint/template@1.4.0)(ember-source@5.7.0):
+    resolution: {integrity: sha512-enmStRE8bHIeF/kPZoDZlzP9YINN7H8l3Myk1sVkqo235ph0Vjee37AGCw44eRq6cBRvcdQmb5K3pkzVY7A6WA==}
     engines: {node: 16.* || >= 18}
     peerDependencies:
       '@glimmer/tracking': ^1.1.2
       '@glint/template': '>= 1.0.0'
       ember-source: ^3.28.0 || ^4.0.0 || >=5.0.0
+    peerDependenciesMeta:
+      '@glint/template':
+        optional: true
     dependencies:
       '@babel/helper-plugin-utils': 7.24.0
       '@babel/types': 7.24.0
