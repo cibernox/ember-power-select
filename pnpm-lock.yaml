@@ -1817,18 +1817,6 @@ packages:
       '@babel/core': 7.24.3
       '@babel/helper-plugin-utils': 7.24.0
 
-  /@babel/plugin-transform-typescript@7.23.6(@babel/core@7.24.3):
-    resolution: {integrity: sha512-6cBG5mBvUu4VUD04OHKnYzbuHNP8huDsD3EDqqpIpsswTDoqHCjLoHb6+QgsV1WsT2nipRqCPgxD3LXnEO7XfA==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.3
-      '@babel/helper-annotate-as-pure': 7.22.5
-      '@babel/helper-create-class-features-plugin': 7.24.1(@babel/core@7.24.3)
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/plugin-syntax-typescript': 7.24.1(@babel/core@7.24.3)
-
   /@babel/plugin-transform-typescript@7.24.1(@babel/core@7.24.3):
     resolution: {integrity: sha512-liYSESjX2fZ7JyBFkYG78nfvHlMKE6IpNdTVnxmlYUR+j5ZLsitFbaAE+eJSK2zPPkNWNw4mXL51rQ8WrvdK0w==}
     engines: {node: '>=6.9.0'}
@@ -7943,7 +7931,7 @@ packages:
       '@babel/plugin-transform-class-static-block': 7.23.4(@babel/core@7.24.3)
       '@babel/plugin-transform-modules-amd': 7.23.3(@babel/core@7.24.3)
       '@babel/plugin-transform-runtime': 7.24.0(@babel/core@7.24.3)
-      '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.24.3)
+      '@babel/plugin-transform-typescript': 7.24.1(@babel/core@7.24.3)
       '@babel/preset-env': 7.24.0(@babel/core@7.24.3)
       '@babel/runtime': 7.12.18
       amd-name-resolver: 1.3.1
