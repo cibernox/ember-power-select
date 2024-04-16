@@ -87,6 +87,7 @@ export interface PowerSelectArgs {
   animationEnabled?: boolean;
   tabindex?: number | string;
   searchPlaceholder?: string;
+  searchFieldPosition?: string;
   verticalPosition?: string;
   horizontalPosition?: string;
   triggerId?: string;
@@ -361,6 +362,12 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
 
     return '';
+  }
+
+  get searchFieldPosition(): string {
+    return this.args.searchFieldPosition === undefined
+      ? 'before-options'
+      : this.args.searchFieldPosition;
   }
 
   // Actions

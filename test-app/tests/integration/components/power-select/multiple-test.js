@@ -55,6 +55,21 @@ module(
       assert.dom('.ember-power-select-dropdown input').doesNotExist();
     });
 
+    test('Multiple selects have a search box in the dropdown when the search is enabled and search position is `after-options`', async function (assert) {
+      assert.expect(2);
+
+      this.numbers = numbers;
+      await render(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @searchFieldPosition="before-options" as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+      await clickTrigger();
+      assert.dom('.ember-power-select-trigger input').doesNotExist();
+      assert.dom('.ember-power-select-dropdown input').exists();
+    });
+
     test('The searchbox of multiple selects has type="search" and a form attribute to prevent submitting the wrapper form when pressing enter', async function (assert) {
       assert.expect(2);
 
@@ -84,6 +99,20 @@ module(
 
       await clickTrigger();
       assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
+    });
+
+    test('When the select opens and search position is `after-options`, the search input (if any) in the dropdown gets the focus', async function (assert) {
+      assert.expect(1);
+
+      this.numbers = numbers;
+      await render(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @searchFieldPosition="before-options" as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+      await clickTrigger();
+      assert.dom('.ember-power-select-search-input').isFocused();
     });
 
     test("Click on an element selects it and closes the dropdown and focuses the trigger's input", async function (assert) {
