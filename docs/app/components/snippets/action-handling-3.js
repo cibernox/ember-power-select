@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { A } from '@ember/array';
 import { tracked } from '@glimmer/tracking';
 
 export default class extends Component {
@@ -16,7 +15,7 @@ export default class extends Component {
     'Springfield',
     'Tokio',
   ];
-  @tracked selectedCities = A();
+  @tracked selectedCities = [];
 
   @action
   handleKeydown(_dropdown, e) {

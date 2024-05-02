@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isBlank } from '@ember/utils';
-import { A } from '@ember/array';
 
 export default class extends Component {
-  options = A(['Barcelona', 'London', 'New York', 'Porto']);
+  @tracked options = ['Barcelona', 'London', 'New York', 'Porto'];
+
   selected = [];
 
   @action
@@ -16,7 +17,7 @@ export default class extends Component {
       !isBlank(select.searchText)
     ) {
       if (!this.selected.includes(select.searchText)) {
-        this.options.pushObject(select.searchText);
+        this.options = [...this.options, select.searchText];
         select.actions.choose(select.searchText);
       }
     }

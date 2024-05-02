@@ -16,12 +16,12 @@ import {
 } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
-import { A } from '@ember/array';
 import { run, later } from '@ember/runloop';
 import { numbers, names, countries, digits } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
+import { TrackedArray } from 'tracked-built-ins/.';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 const PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
@@ -412,13 +412,13 @@ module(
       let done = assert.async();
       assert.expect(2);
 
-      let data = [];
-      this.proxy = A(data);
+      let data = new TrackedArray();
+      this.proxy = data;
       this.search = () => {
         return new RSVP.Promise(function (resolve) {
           resolve(data);
           later(function () {
-            data.pushObject('one'); // eslint-disable-line ember/no-array-prototype-extensions
+            data.push('one'); // eslint-disable-line ember/no-array-prototype-extensions
           }, 100);
         });
       };
@@ -451,13 +451,13 @@ module(
       let done = assert.async();
       assert.expect(5);
 
-      let data = ['one'];
-      this.proxy = A(data);
+      let data = new TrackedArray(['one']);
+      this.proxy = data;
       this.search = () => {
         return new RSVP.Promise(function (resolve) {
           resolve(data);
           later(function () {
-            data.pushObject('owner'); // eslint-disable-line ember/no-array-prototype-extensions
+            data.push('owner');
           }, 100);
         });
       };

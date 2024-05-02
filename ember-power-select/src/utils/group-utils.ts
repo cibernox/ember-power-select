@@ -1,4 +1,3 @@
-import { A } from '@ember/array';
 import { isEqual } from '@ember/utils';
 
 export type MatcherFn = (option: any, text: string) => number;
@@ -180,7 +179,7 @@ export function filterOptions(
   matcher: MatcherFn,
   skipDisabled = false,
 ): any[] {
-  const opts = A();
+  const opts = [];
   const length = options.length;
   for (let i = 0; i < length; i++) {
     const entry = options.objectAt ? options.objectAt(i) : options[i];
