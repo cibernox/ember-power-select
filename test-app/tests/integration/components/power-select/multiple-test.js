@@ -17,7 +17,7 @@ import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import { run, later } from '@ember/runloop';
-import { A } from '@ember/array';
+import { TrackedArray } from 'tracked-built-ins';
 
 module(
   'Integration | Component | Ember Power Select (Multiple)',
@@ -1016,15 +1016,16 @@ module(
 
     test('The component works when the array of selected elements is mutated in place instead of replaced', async function (assert) {
       assert.expect(1);
+      
       this.numbers = numbers;
-      this.selected = A();
+      this.selected = new TrackedArray();
       await render(hbs`
       <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
       await clickTrigger();
-      run(() => this.selected.pushObject(numbers[3])); // eslint-disable-line ember/no-array-prototype-extensions
+      run(() => (this.selected.push(numbers[3])));
       await click('.ember-power-select-option');
       assert
         .dom('.ember-power-select-multiple-option')

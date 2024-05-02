@@ -17,7 +17,6 @@ import {
 } from '../constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';
-import { A } from '@ember/array';
 
 module(
   'Integration | Component | Ember Power Select (Keyboard control)',
@@ -1163,7 +1162,7 @@ module(
 
     test('BUGFIX: when using ENTER to select an option in multiple select, the next ARROWDOWN should select the option after it', async function (assert) {
       this.numbers = numbers;
-      this.selected = A();
+      this.selected = [];
 
       await render(hbs`
       <PowerSelectMultiple

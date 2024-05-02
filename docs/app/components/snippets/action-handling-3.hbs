@@ -2,6 +2,7 @@
   @selected={{this.selectedCities}}
   @options={{this.cities}}
   @onChange={{fn (mut this.selectedCities)}}
+  @searchEnabled={{true}}
   @labelText="Country"
   @onKeydown={{this.handleKeydown}} as |name|>
   {{name}}
