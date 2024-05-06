@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { later } from '@ember/runloop';
+import { runTask } from 'ember-lifeline';
 import { tracked } from '@glimmer/tracking';
 
 const numbers = [
@@ -29,9 +29,9 @@ export default class extends Component {
     let tick = () => {
       this.counter--;
       if (!this.destroyed) {
-        later(tick, 1000);
+        runTask(this, tick, 1000);
       }
     };
-    this.countdown = later(tick, 1000);
+    this.countdown = runTask(this, tick, 1000);
   }
 }

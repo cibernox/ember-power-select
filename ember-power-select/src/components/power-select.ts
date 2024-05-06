@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { addObserver, removeObserver } from '@ember/object/observers';
-import { scheduleOnce } from '@ember/runloop';
+import { scheduleTask } from 'ember-lifeline';
 import { isEqual, isNone } from '@ember/utils';
 import { assert, deprecate } from '@ember/debug';
 import {
@@ -473,7 +473,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   @action
   handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
-      scheduleOnce('actions', this, this._updateIsActive, true);
+      scheduleTask(this, 'actions', this._updateIsActive, true);
     }
     if (this.args.onFocus) {
       this.args.onFocus(this.storedAPI, event);
@@ -483,7 +483,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   @action
   handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
-      scheduleOnce('actions', this, this._updateIsActive, false);
+      scheduleTask(this, 'actions', this._updateIsActive, false);
     }
     if (this.args.onBlur) {
       this.args.onBlur(this.storedAPI, event);
@@ -707,7 +707,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
           }
         });
     } else {
-      scheduleOnce('actions', this, this._resetHighlighted);
+      scheduleTask(this, 'actions', this._resetHighlighted);
     }
   }
 
@@ -760,7 +760,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   private __registerAPI(_: Element, [publicAPI]: [Select]): void {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
-      scheduleOnce('actions', null, this.args.registerAPI, publicAPI);
+      scheduleTask(this, 'actions', this.args.registerAPI, publicAPI);
     }
   }
 
@@ -793,7 +793,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
             this._searchResult = results;
             this.loading = false;
             this.lastSearchedText = term;
-            scheduleOnce('actions', this, this._resetHighlighted);
+            scheduleTask(this, 'actions', this._resetHighlighted);
           }
         })
         .catch(() => {
@@ -805,7 +805,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     } else {
       this.lastSearchedText = term;
       this._searchResult = searchResult;
-      scheduleOnce('actions', this, this._resetHighlighted);
+      scheduleTask(this, 'actions', this._resetHighlighted);
     }
   }
 

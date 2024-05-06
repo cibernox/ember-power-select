@@ -1,4 +1,4 @@
-import { later } from '@ember/runloop';
+import { runTask } from 'ember-lifeline';
 import { task, timeout } from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
@@ -50,10 +50,14 @@ module(
 
       this.set(
         'options',
-        new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers);
-          }, 100);
+        new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers);
+            },
+            100,
+          );
         }),
       );
       clickTrigger();
@@ -130,10 +134,14 @@ module(
       assert.expect(1);
 
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -154,10 +162,14 @@ module(
       assert.expect(3);
 
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -196,10 +208,14 @@ module(
       assert.expect(1);
 
       this.searchFn = function () {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve([]);
-          }, 10);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve([]);
+            },
+            10,
+          );
         });
       };
 
@@ -223,10 +239,14 @@ module(
       assert.expect(1);
 
       this.searchFn = function () {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve([]);
-          }, 10);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve([]);
+            },
+            10,
+          );
         });
       };
 
@@ -251,10 +271,14 @@ module(
       assert.expect(1);
 
       this.searchFn = function () {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve([]);
-          }, 10);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve([]);
+            },
+            10,
+          );
         });
       };
 
@@ -283,7 +307,7 @@ module(
 
     //   this.searchFn = function() {
     //     return new RSVP.Promise(function(resolve) {
-    //       later(function() { resolve(numbers); }, 100);
+    //       runTask(this, function() { resolve(numbers); }, 100);
     //     });
     //   };
 
@@ -311,10 +335,14 @@ module(
       assert.expect(1);
 
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -368,10 +396,14 @@ module(
       this.numbers = numbers;
       this.selected = numbers[2];
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -433,10 +465,14 @@ module(
 
       this.numbers = numbers;
       this.searchFn = (term) => {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 150);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            150,
+          );
         });
       };
 
@@ -474,12 +510,16 @@ module(
 
       this.selectedOptions = numbers;
       this.searchFn = (term) => {
-        later(() => {
-          this.set(
-            'selectedOptions',
-            numbers.filter((str) => str.indexOf(term) > -1),
-          );
-        }, 20);
+        runTask(
+          this,
+          () => {
+            this.set(
+              'selectedOptions',
+              numbers.filter((str) => str.indexOf(term) > -1),
+            );
+          },
+          20,
+        );
       };
 
       await render(hbs`
@@ -509,7 +549,7 @@ module(
     //   this.searchFn = (term) => {
     //     searchCalls++;
     //     let promise = new RSVP.Promise(function(resolve) {
-    //       later(() => {
+    //       runTask(this, () => {
     //         resolve(numbers.filter((str) => str.indexOf(term) > -1));
     //       }, 30);
     //     });
@@ -558,7 +598,7 @@ module(
       assert.expect(2);
       this.numbers = numbers;
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
+        return new RSVP.Promise((resolve) => {
           setTimeout(function () {
             resolve(numbers.filter((str) => str.indexOf(term) > -1));
           }, 100);
@@ -597,10 +637,14 @@ module(
       assert.expect(3);
       this.numbers = numbers;
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -635,10 +679,14 @@ module(
       assert.expect(3);
       this.numbers = numbers;
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -675,10 +723,14 @@ module(
       this.visible = true;
 
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 200);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            200,
+          );
         });
       };
 

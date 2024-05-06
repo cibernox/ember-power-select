@@ -9,7 +9,6 @@ import {
   tap,
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { run } from '@ember/runloop';
 import {
   clickTrigger,
   typeInSearch,
@@ -349,7 +348,7 @@ module(
           'enabled!',
           'The `disabled` attribute in the public API is false',
         );
-      run(() => this.set('isDisabled', true));
+      this.set('isDisabled', true);
       assert
         .dom('.ember-power-select-trigger')
         .hasText(
@@ -371,7 +370,7 @@ module(
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is open');
-      run(() => this.set('isDisabled', true));
+      this.set('isDisabled', true);
       assert
         .dom('.ember-power-select-dropdown')
         .doesNotExist('The select is now closed');

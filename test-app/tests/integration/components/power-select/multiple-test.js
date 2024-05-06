@@ -16,7 +16,7 @@ import {
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
-import { run, later } from '@ember/runloop';
+import { runTask } from 'ember-lifeline';
 import { TrackedArray } from 'tracked-built-ins';
 
 module(
@@ -344,10 +344,14 @@ module(
       assert.expect(1);
 
       this.searchFn = function (term) {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -904,10 +908,14 @@ module(
       assert.expect(1);
 
       this.search = (term) => {
-        return new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers.filter((str) => str.indexOf(term) > -1));
-          }, 100);
+        return new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers.filter((str) => str.indexOf(term) > -1));
+            },
+            100,
+          );
         });
       };
 
@@ -1016,7 +1024,7 @@ module(
 
     test('The component works when the array of selected elements is mutated in place instead of replaced', async function (assert) {
       assert.expect(1);
-      
+
       this.numbers = numbers;
       this.selected = new TrackedArray();
       await render(hbs`
@@ -1025,7 +1033,7 @@ module(
       </PowerSelectMultiple>
     `);
       await clickTrigger();
-      run(() => (this.selected.push(numbers[3])));
+      this.selected.push(numbers[3]);
       await click('.ember-power-select-option');
       assert
         .dom('.ember-power-select-multiple-option')

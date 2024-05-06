@@ -7,7 +7,6 @@ import {
   typeInSearch,
 } from 'ember-power-select/test-support/helpers';
 import { names, numbers } from '../constants';
-import { run } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 
 function assertPublicAPIShape(assert, select) {
@@ -825,7 +824,7 @@ module(
       </PowerSelect>
     `);
 
-      run(() => this.selectAPI.actions.scrollTo('three'));
+      this.selectAPI.actions.scrollTo('three');
     });
 
     test('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function (assert) {
@@ -848,7 +847,7 @@ module(
       </PowerSelectMultiple>
     `);
 
-      run(() => this.selectAPI.actions.scrollTo('three'));
+      this.selectAPI.actions.scrollTo('three');
     });
 
     test('The programmer can use the received public API to highlight an option', async function (assert) {

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
-import { scheduleOnce } from '@ember/runloop';
+import { scheduleTask } from 'ember-lifeline';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { modifier } from 'ember-modifier';
@@ -90,7 +90,9 @@ export default class TriggerComponent extends Component<PowerSelectMultipleTrigg
 
   private _openChanged(_el: Element, [isOpen]: [boolean]) {
     if (isOpen === false && this._lastIsOpen === true) {
-      scheduleOnce('actions', null, this.args.select.actions.search, '');
+      scheduleTask(this, 'actions', () => {
+        this.args.select.actions?.search('');
+      });
     }
     this._lastIsOpen = isOpen;
   }
