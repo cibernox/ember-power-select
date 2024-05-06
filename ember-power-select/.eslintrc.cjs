@@ -15,9 +15,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {
-    'ember/no-runloop': 0,
-  },
+  rules: {},
   overrides: [
     // ts files
     {
