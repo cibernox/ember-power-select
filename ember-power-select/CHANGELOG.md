@@ -1,5 +1,16 @@
 
 
+
+## v8.2.0 (2024-05-06)
+
+#### :rocket: Enhancement
+* [#1802](https://github.com/cibernox/ember-power-select/pull/1802) Replace `@ember/runloop` with `ember-lifeline` ([@mkszepp](https://github.com/mkszepp))
+* [#1801](https://github.com/cibernox/ember-power-select/pull/1801) Use `ember-modifier` instead of `@ember/render-modifiers` ([@mkszepp](https://github.com/mkszepp))
+* [#1795](https://github.com/cibernox/ember-power-select/pull/1795) Remove last Ember.Array (A()) using in addon, examples & tests ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.1.0 (2024-03-18)
 
 #### :rocket: Enhancement
