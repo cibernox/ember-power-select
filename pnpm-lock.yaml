@@ -218,6 +218,9 @@ importers:
       ember-fetch:
         specifier: ^8.1.2
         version: 8.1.2
+      ember-lifeline:
+        specifier: ^7.0.0
+        version: 7.0.0(@ember/test-helpers@3.3.0)
       ember-load-initializers:
         specifier: ^2.1.2
         version: 2.1.2(@babel/core@7.24.3)
@@ -326,6 +329,9 @@ importers:
       ember-assign-helper:
         specifier: ^0.5.0
         version: 0.5.0(ember-source@5.7.0)
+      ember-lifeline:
+        specifier: ^7.0.0
+        version: 7.0.0(@ember/test-helpers@3.3.0)
       ember-modifier:
         specifier: ^4.1.0
         version: 4.1.0(ember-source@5.7.0)
@@ -696,6 +702,9 @@ importers:
       ember-fetch:
         specifier: ^8.1.2
         version: 8.1.2
+      ember-lifeline:
+        specifier: ^7.0.0
+        version: 7.0.0(@ember/test-helpers@3.3.0)
       ember-load-initializers:
         specifier: ^2.1.2
         version: 2.1.2(@babel/core@7.24.3)
@@ -2538,7 +2547,6 @@ packages:
       - '@glint/template'
       - supports-color
       - webpack
-    dev: true
 
   /@ember/test-waiters@3.1.0:
     resolution: {integrity: sha512-bb9h95ktG2wKY9+ja1sdsFBdOms2lB19VWs8wmNpzgHv1NCetonBoV5jHBV4DHt0uS1tg9z66cZqhUVlYs96KQ==}
@@ -2550,7 +2558,6 @@ packages:
       semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@embroider/addon-dev@4.2.1(@glint/template@1.4.0)(rollup@4.13.2):
     resolution: {integrity: sha512-oMNlVqsqNjtNu7sFGGgo4igOy+Xa7g1I1aXMf7XRbYKWBCiYKX7C7lDKZ65qgsEpRKV3LtbC+XIYiGfHiqhFAg==}
@@ -7677,7 +7684,6 @@ packages:
 
   /dom-element-descriptors@0.5.0:
     resolution: {integrity: sha512-CVzntLid1oFVHTKdTp/Qu7Kz+wSm8uO30TSQyAJ6n4Dz09yTzVQn3S1oRhVhUubxdMuKs1DjDqt88pubHagbPw==}
-    dev: true
 
   /dom-serializer@1.4.1:
     resolution: {integrity: sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==}
@@ -8612,6 +8618,20 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /ember-lifeline@7.0.0(@ember/test-helpers@3.3.0):
+    resolution: {integrity: sha512-2l51NzgH5vjN972zgbs+32rnXnnEFKB7qsSpJF+lBI4V5TG6DMy4SfowC72ZEuAtS58OVfwITbOO+RnM21EdpA==}
+    engines: {node: 16.* || >= 18}
+    peerDependencies:
+      '@ember/test-helpers': '>= 1.0.0'
+    peerDependenciesMeta:
+      '@ember/test-helpers':
+        optional: true
+    dependencies:
+      '@ember/test-helpers': 3.3.0(@glint/template@1.4.0)(ember-source@5.7.0)(webpack@5.91.0)
+      '@embroider/addon-shim': 1.8.7
+    transitivePeerDependencies:
+      - supports-color
 
   /ember-load-initializers@2.1.2(@babel/core@7.24.3):
     resolution: {integrity: sha512-CYR+U/wRxLbrfYN3dh+0Tb6mFaxJKfdyz+wNql6cqTrA0BBi9k6J3AaKXj273TqvEpyyXegQFFkZEiuZdYtgJw==}

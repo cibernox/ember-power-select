@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { later } from '@ember/runloop';
+import { runTask } from 'ember-lifeline';
 import { tracked } from '@glimmer/tracking';
 import RSVP from 'rsvp';
 
@@ -37,24 +37,36 @@ export default class HelpersTesting extends Controller {
 
   @action
   searchAsync(term) {
-    return new RSVP.Promise(function (resolve) {
-      later(function () {
-        resolve(numbers.filter((n) => n.indexOf(term) > -1));
-      }, 100);
+    return new RSVP.Promise((resolve) => {
+      runTask(
+        this,
+        () => {
+          resolve(numbers.filter((n) => n.indexOf(term) > -1));
+        },
+        100,
+      );
     });
   }
 
   @action
   onOpenHandle() {
-    later(() => {
-      this.optionz = numbers;
-    }, 100);
+    runTask(
+      this,
+      () => {
+        this.optionz = numbers;
+      },
+      100,
+    );
   }
 
   @action
   onChangeAsync(key, selected) {
-    later(() => {
-      this[key] = selected;
-    }, 100);
+    runTask(
+      this,
+      () => {
+        this[key] = selected;
+      },
+      100,
+    );
   }
 }

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { scheduleOnce, later } from '@ember/runloop';
+import { runTask } from 'ember-lifeline';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type { Select } from '../power-select';
@@ -44,7 +44,7 @@ export default class PowerSelectBeforeOptionsComponent extends Component<PowerSe
       },
     );
 
-    scheduleOnce('actions', this.args.select.actions, 'search', '');
+    this.args.select.actions?.search('');
   }
 
   @action
@@ -94,8 +94,9 @@ export default class PowerSelectBeforeOptionsComponent extends Component<PowerSe
 
       this._focusInput(el);
 
-      return () =>
-        scheduleOnce('actions', this.args.select.actions, 'search', '');
+      return () => {
+        this.args.select.actions?.search('');
+      };
     },
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -103,10 +104,14 @@ export default class PowerSelectBeforeOptionsComponent extends Component<PowerSe
   );
 
   private _focusInput(el: HTMLElement) {
-    later(() => {
-      if (this.args.autofocus !== false) {
-        el.focus();
-      }
-    }, 0);
+    runTask(
+      this,
+      () => {
+        if (this.args.autofocus !== false) {
+          el.focus();
+        }
+      },
+      0,
+    );
   }
 }

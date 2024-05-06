@@ -16,7 +16,7 @@ import {
 } from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
-import { run, later } from '@ember/runloop';
+import { runTask } from 'ember-lifeline';
 import { numbers, names, countries, digits } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
@@ -181,10 +181,14 @@ module(
 
       this.set(
         'numbersPromise',
-        new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers);
-          }, 150);
+        new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers);
+            },
+            150,
+          );
         }),
       );
 
@@ -226,10 +230,14 @@ module(
 
       this.set(
         'numbersPromise',
-        new RSVP.Promise(function (resolve) {
-          later(function () {
-            resolve(numbers);
-          }, 100);
+        new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers);
+            },
+            100,
+          );
         }),
       );
       clickTrigger();
@@ -307,7 +315,7 @@ module(
       </PowerSelect>
     `);
 
-      run(() => this.set('selected', 'three'));
+      this.set('selected', 'three');
       assert
         .dom('.ember-power-select-trigger')
         .hasText('three', 'The `three` element is selected');
@@ -339,7 +347,7 @@ module(
       assert
         .dom('.ember-power-select-trigger')
         .hasText('four', '"four" has been selected');
-      run(() => this.set('selected', 'three'));
+      this.set('selected', 'three');
       assert
         .dom('.ember-power-select-trigger')
         .hasText(
@@ -415,11 +423,15 @@ module(
       let data = new TrackedArray();
       this.proxy = data;
       this.search = () => {
-        return new RSVP.Promise(function (resolve) {
+        return new RSVP.Promise((resolve) => {
           resolve(data);
-          later(function () {
-            data.push('one'); // eslint-disable-line ember/no-array-prototype-extensions
-          }, 100);
+          runTask(
+            this,
+            function () {
+              data.push('one'); // eslint-disable-line ember/no-array-prototype-extensions
+            },
+            100,
+          );
         });
       };
 
@@ -454,11 +466,15 @@ module(
       let data = new TrackedArray(['one']);
       this.proxy = data;
       this.search = () => {
-        return new RSVP.Promise(function (resolve) {
+        return new RSVP.Promise((resolve) => {
           resolve(data);
-          later(function () {
-            data.push('owner');
-          }, 100);
+          runTask(
+            this,
+            function () {
+              data.push('owner');
+            },
+            100,
+          );
         });
       };
 
@@ -504,7 +520,7 @@ module(
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('two', 'The second options is highlighted');
-      run(() => this.set('numbers', ['foo', 'bar', 'baz']));
+      this.set('numbers', ['foo', 'bar', 'baz']);
       await settled();
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
@@ -1016,10 +1032,14 @@ module(
     test('If the passed options is a promise that is resolved, searching should filter the results from a promise', async function (assert) {
       assert.expect(5);
 
-      this.numbersPromise = new RSVP.Promise(function (resolve) {
-        later(function () {
-          resolve(numbers);
-        }, 100);
+      this.numbersPromise = new RSVP.Promise((resolve) => {
+        runTask(
+          this,
+          function () {
+            resolve(numbers);
+          },
+          100,
+        );
       });
 
       await render(hbs`
@@ -1068,8 +1088,14 @@ module(
 
       this.set(
         'selected',
-        new RSVP.Promise(function (resolve) {
-          later(resolve, numbers[3], 100);
+        new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers[3]);
+            },
+            100,
+          );
         }),
       );
       clickTrigger();
@@ -1120,8 +1146,14 @@ module(
     `);
       this.set(
         'selected',
-        new RSVP.Promise(function (resolve) {
-          later(resolve, numbers[3], 100);
+        new RSVP.Promise((resolve) => {
+          runTask(
+            this,
+            function () {
+              resolve(numbers[3]);
+            },
+            100,
+          );
         }),
       );
 
@@ -1160,16 +1192,36 @@ module(
       </PowerSelect>
     `);
 
-      let promise1 = new RSVP.Promise(function (resolve) {
-        later(resolve, numbers[3], 400);
+      let promise1 = new RSVP.Promise((resolve) => {
+        runTask(
+          this,
+          function () {
+            resolve(numbers[3]);
+          },
+          400,
+        );
       });
 
-      let promise2 = new RSVP.Promise(function (resolve) {
-        later(resolve, numbers[4], 300);
+      let promise2 = new RSVP.Promise((resolve) => {
+        runTask(
+          this,
+          function () {
+            resolve(numbers[4]);
+          },
+          300,
+        );
       });
 
       this.set('selected', promise1);
-      await new RSVP.Promise((resolve) => later(resolve, 20));
+      await new RSVP.Promise((resolve) =>
+        runTask(
+          this,
+          function () {
+            resolve();
+          },
+          20,
+        ),
+      );
       this.set('selected', promise2);
 
       clickTrigger();
@@ -1350,7 +1402,7 @@ module(
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('two');
-      run(() => this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']));
+      this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']);
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('one');
@@ -1507,7 +1559,7 @@ module(
         );
       await clickTrigger();
 
-      run(() => this.set('renderInPlace', true));
+      this.set('renderInPlace', true);
       await clickTrigger();
       assert
         .dom('.ember-power-select-dropdown')
@@ -1548,7 +1600,7 @@ module(
 
       this.set(
         'mainUser.bestie',
-        new RSVP.Promise(function (resolve) {
+        new RSVP.Promise((resolve) => {
           setTimeout(() => resolve(pets[2]), 90);
         }),
       );
