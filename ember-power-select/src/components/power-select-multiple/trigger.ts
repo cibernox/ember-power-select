@@ -4,6 +4,8 @@ import { get } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
+import { modifier } from 'ember-modifier';
+import { deprecate } from '@ember/debug';
 
 interface PowerSelectMultipleTriggerSignature {
   Element: HTMLElement;
@@ -46,11 +48,22 @@ export default class TriggerComponent extends Component<PowerSelectMultipleTrigg
 
   // Actions
   @action
-  openChanged(_el: Element, [isOpen]: [boolean]) {
-    if (isOpen === false && this._lastIsOpen === true) {
-      scheduleOnce('actions', null, this.args.select.actions.search, '');
-    }
-    this._lastIsOpen = isOpen;
+  openChanged(element: Element, [isOpen]: [boolean]) {
+    deprecate(
+      'You are using a power-select-multiple trigger with ember/render-modifier. Replace {{did-update this.openChanged @select.isOpen}} with {{this.openChange @select.isOpen}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
+    this._openChanged(element, [isOpen]);
   }
 
   @action
@@ -69,6 +82,17 @@ export default class TriggerComponent extends Component<PowerSelectMultipleTrigg
       );
       this.args.select.actions.choose(object);
     }
+  }
+
+  openChange = modifier((element: Element, [isOpen]: [boolean]) => {
+    this._openChanged(element, [isOpen]);
+  });
+
+  private _openChanged(_el: Element, [isOpen]: [boolean]) {
+    if (isOpen === false && this._lastIsOpen === true) {
+      scheduleOnce('actions', null, this.args.select.actions.search, '');
+    }
+    this._lastIsOpen = isOpen;
   }
 
   selectedObject<T>(list: IndexAccesible<T> | T[], index: number): T {

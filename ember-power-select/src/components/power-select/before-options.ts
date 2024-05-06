@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 import { scheduleOnce, later } from '@ember/runloop';
 import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 import type { Select } from '../power-select';
+import { deprecate } from '@ember/debug';
 
 interface PowerSelectBeforeOptionsSignature {
   Element: HTMLElement;
@@ -24,8 +26,24 @@ interface PowerSelectBeforeOptionsSignature {
 }
 
 export default class PowerSelectBeforeOptionsComponent extends Component<PowerSelectBeforeOptionsSignature> {
+  didSetup: boolean = false;
+
   @action
   clearSearch(): void {
+    deprecate(
+      'You are using power-select before-option component with ember/render-modifier. Replace {{will-destroy this.clearSearch}} with {{this.setupInput}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
     scheduleOnce('actions', this.args.select.actions, 'search', '');
   }
 
@@ -49,6 +67,42 @@ export default class PowerSelectBeforeOptionsComponent extends Component<PowerSe
 
   @action
   focusInput(el: HTMLElement) {
+    deprecate(
+      'You are using power-select before-option component with ember/render-modifier. Replace {{did-insert this.focusInput}} with {{this.setupInput}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
+    this._focusInput(el);
+  }
+
+  setupInput = modifier(
+    (el: HTMLElement) => {
+      if (this.didSetup) {
+        return;
+      }
+
+      this.didSetup = true;
+
+      this._focusInput(el);
+
+      return () =>
+        scheduleOnce('actions', this.args.select.actions, 'search', '');
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  private _focusInput(el: HTMLElement) {
     later(() => {
       if (this.args.autofocus !== false) {
         el.focus();

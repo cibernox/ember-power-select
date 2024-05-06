@@ -9,7 +9,7 @@
     @ariaActiveDescendant
   }}
   class="ember-power-select-multiple-options"
-  {{did-update this.openChanged @select.isOpen}}
+  {{this.openChange @select.isOpen}}
   {{on "touchstart" this.chooseOption}}
   {{on "mousedown" this.chooseOption}}
   ...attributes

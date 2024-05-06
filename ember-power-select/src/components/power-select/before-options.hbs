@@ -23,7 +23,7 @@
       {{on "focus" @onFocus}}
       {{on "blur" @onBlur}}
       {{on "keydown" this.handleKeydown}}
-      {{did-insert this.focusInput}}
-      {{will-destroy this.clearSearch}}>
+      {{this.setupInput}}
+    >
   </div>
 {{/if}}
