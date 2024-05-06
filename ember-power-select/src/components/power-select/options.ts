@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
+import { deprecate } from '@ember/debug';
 declare const FastBoot: any;
 
 interface PowerSelectOptionsSignature {
@@ -81,12 +82,96 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
   willDestroy(): void {
     super.willDestroy();
     if (this._listElement) {
-      this.removeHandlers(this._listElement);
+      this._removeHandlers(this._listElement);
     }
   }
 
   @action
   addHandlers(element: Element) {
+    deprecate(
+      'You are using power-select options component with ember/render-modifier. Replace {{did-insert this.addHandlers}} with {{this.setupHandlers}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
+    this._addHandlers(element);
+  }
+
+  @action
+  removeHandlers(element: Element) {
+    deprecate(
+      'You are using power-select options component with ember/render-modifier. Replace {{will-destroy this.removeHandlers}} with {{this.setupHandlers}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
+    this._removeHandlers(element);
+  }
+
+  setupHandlers = modifier((element: Element) => {
+    if (this._didHandlerSetup) {
+      return;
+    }
+    this._didHandlerSetup = true;
+    this._listElement = element;
+    this._addHandlers(element);
+  });
+
+  _optionFromIndex(index: string) {
+    const parts = index.split('.');
+    let option = this.args.options[parseInt(parts[0] ?? '', 10)];
+    for (let i = 1; i < parts.length; i++) {
+      option = option.options[parseInt(parts[i] ?? '', 10)];
+    }
+    return option;
+  }
+
+  _hasMoved(endEvent: TouchEvent): boolean {
+    const moveEvent = this.touchMoveEvent;
+    if (!moveEvent) {
+      return false;
+    }
+
+    if (!moveEvent.changedTouches) {
+      return false;
+    }
+
+    if (
+      !endEvent.changedTouches?.[0] ||
+      (moveEvent.changedTouches[0] as any).touchType !== 'stylus'
+    ) {
+      return true;
+    }
+
+    const changedTouch = moveEvent.changedTouches[0];
+
+    // Distinguish stylus scroll and tap: if touch "distance" < 5px, we consider it a tap
+    const horizontalDistance = Math.abs(
+      (changedTouch?.pageX ?? 0) - endEvent.changedTouches[0].pageX,
+    );
+    const verticalDistance = Math.abs(
+      (changedTouch?.pageY ?? 0) - endEvent.changedTouches[0].pageY,
+    );
+    return horizontalDistance >= 5 || verticalDistance >= 5;
+  }
+
+  private _addHandlers(element: Element) {
     const isGroup = element.getAttribute('data-optgroup') === 'true';
     if (isGroup) {
       return;
@@ -156,59 +241,11 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
     this.args.select.actions.scrollTo(this.args.select.highlighted);
   }
 
-  @action
-  removeHandlers(element: Element) {
+  private _removeHandlers(element: Element) {
     element.removeEventListener('mouseup', this.mouseUpHandler);
     element.removeEventListener('mouseover', this.mouseOverHandler);
     element.removeEventListener('touchstart', this.touchStartHandler);
     element.removeEventListener('touchmove', this.touchMoveHandler);
     element.removeEventListener('touchend', this.touchEndHandler);
-  }
-
-  setupHandlers = modifier((element: Element) => {
-    if (this._didHandlerSetup) {
-      return;
-    }
-    this._didHandlerSetup = true;
-    this._listElement = element;
-    this.addHandlers(element);
-  });
-
-  _optionFromIndex(index: string) {
-    const parts = index.split('.');
-    let option = this.args.options[parseInt(parts[0] ?? '', 10)];
-    for (let i = 1; i < parts.length; i++) {
-      option = option.options[parseInt(parts[i] ?? '', 10)];
-    }
-    return option;
-  }
-
-  _hasMoved(endEvent: TouchEvent): boolean {
-    const moveEvent = this.touchMoveEvent;
-    if (!moveEvent) {
-      return false;
-    }
-
-    if (!moveEvent.changedTouches) {
-      return false;
-    }
-
-    if (
-      !endEvent.changedTouches?.[0] ||
-      (moveEvent.changedTouches[0] as any).touchType !== 'stylus'
-    ) {
-      return true;
-    }
-
-    const changedTouch = moveEvent.changedTouches[0];
-
-    // Distinguish stylus scroll and tap: if touch "distance" < 5px, we consider it a tap
-    const horizontalDistance = Math.abs(
-      (changedTouch?.pageX ?? 0) - endEvent.changedTouches[0].pageX,
-    );
-    const verticalDistance = Math.abs(
-      (changedTouch?.pageY ?? 0) - endEvent.changedTouches[0].pageY,
-    );
-    return horizontalDistance >= 5 || verticalDistance >= 5;
   }
 }

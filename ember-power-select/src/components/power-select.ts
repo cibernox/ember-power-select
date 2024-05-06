@@ -5,7 +5,7 @@ import { guidFor } from '@ember/object/internals';
 import { addObserver, removeObserver } from '@ember/object/observers';
 import { scheduleOnce } from '@ember/runloop';
 import { isEqual, isNone } from '@ember/utils';
-import { assert } from '@ember/debug';
+import { assert, deprecate } from '@ember/debug';
 import {
   indexOfOption,
   filterOptions,
@@ -503,28 +503,21 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   @action
   _updateOptions(): void {
-    if (!this.args.options) return;
-    if (isPromiseLike(this.args.options)) {
-      if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
-      const currentOptionsPromise = this.args.options;
-      this._lastOptionsPromise = currentOptionsPromise;
-      this.loading = true;
-      this._lastOptionsPromise
-        .then((resolvedOptions) => {
-          if (this._lastOptionsPromise === currentOptionsPromise) {
-            this.loading = false;
-            this._resolvedOptions = resolvedOptions;
-            this._resetHighlighted();
-          }
-        })
-        .catch(() => {
-          if (this._lastOptionsPromise === currentOptionsPromise) {
-            this.loading = false;
-          }
-        });
-    } else {
-      scheduleOnce('actions', this, this._resetHighlighted);
-    }
+    deprecate(
+      'You are using power-select with ember/render-modifier. Replace {{did-insert this._updateOptions @options}} and {{did-update this._updateOptions @options}} with {{this.updateOptions @options}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
+    this.__updateOptions();
   }
 
   @action
@@ -536,49 +529,21 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   @action
   _updateSelected(): void {
-    if (isNone(this.args.selected)) return;
-    if (typeof this.args.selected.then === 'function') {
-      if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
-      if (
-        this._lastSelectedPromise &&
-        isPromiseProxyLike(this._lastSelectedPromise)
-      ) {
-        removeObserver(
-          this._lastSelectedPromise,
-          'content',
-          this,
-          this._selectedObserverCallback,
-        );
-      }
+    deprecate(
+      'You are using power-select with ember/render-modifier. Replace {{did-insert this._updateSelected @selected}} and {{did-update this._updateSelected @selected}} with {{this.updateSelected @selected}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
 
-      const currentSelectedPromise: PromiseProxy<any> = this.args.selected;
-      currentSelectedPromise.then(() => {
-        if (this.isDestroyed || this.isDestroying) return;
-        if (isPromiseProxyLike(currentSelectedPromise)) {
-          // eslint-disable-next-line ember/no-observers
-          addObserver(
-            currentSelectedPromise,
-            'content',
-            this,
-            this._selectedObserverCallback,
-          );
-        }
-      });
-
-      this._lastSelectedPromise = currentSelectedPromise;
-      this._lastSelectedPromise.then((resolvedSelected) => {
-        if (this._lastSelectedPromise === currentSelectedPromise) {
-          this._resolvedSelected = resolvedSelected;
-          this._highlight(resolvedSelected);
-        }
-      });
-    } else {
-      this._resolvedSelected = undefined;
-      // Don't highlight args.selected array on multi-select
-      if (!Array.isArray(this.args.selected)) {
-        this._highlight(this.args.selected);
-      }
-    }
+    this.__updateSelected();
   }
 
   _selectedObserverCallback(): void {
@@ -648,15 +613,158 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   @action
-  _registerAPI(_: Element, [publicAPI]: [Select]): void {
+  _registerAPI(triggerElement: Element, [publicAPI]: [Select]): void {
+    deprecate(
+      'You are using power-select with ember/render-modifier. Replace {{did-insert this._registerAPI publicAPI}} and {{did-update this._registerAPI publicAPI}} with {{this.updateRegisterAPI publicAPI}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
+    this.__registerAPI(triggerElement, [publicAPI]);
+  }
+
+  @action
+  _performSearch(triggerElement: Element, [term]: [string]): void {
+    deprecate(
+      'You are using power-select with ember/render-modifier. Replace {{did-update this._performSearch this.searchText}} with {{this.updatePerformSearch this.searchText}}.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.no-at-ember-render-modifiers',
+        since: {
+          enabled: '8.1',
+          available: '8.1',
+        },
+        until: '9.0.0',
+      },
+    );
+
+    this.__performSearch(triggerElement, [term]);
+  }
+
+  updateOptions = modifier(
+    () => {
+      this.__updateOptions();
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  updateSelected = modifier(
+    () => {
+      this.__updateSelected();
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  updateRegisterAPI = modifier(
+    (triggerElement: Element, [publicAPI]: [Select]) => {
+      this.__registerAPI(triggerElement, [publicAPI]);
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  updatePerformSearch = modifier(
+    (triggerElement: Element, [term]: [string]) => {
+      this.__performSearch(triggerElement, [term]);
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  private __updateOptions() {
+    if (!this.args.options) return;
+    if (isPromiseLike(this.args.options)) {
+      if (this._lastOptionsPromise === this.args.options) return; // promise is still the same
+      const currentOptionsPromise = this.args.options;
+      this._lastOptionsPromise = currentOptionsPromise;
+      this.loading = true;
+      this._lastOptionsPromise
+        .then((resolvedOptions) => {
+          if (this._lastOptionsPromise === currentOptionsPromise) {
+            this.loading = false;
+            this._resolvedOptions = resolvedOptions;
+            this._resetHighlighted();
+          }
+        })
+        .catch(() => {
+          if (this._lastOptionsPromise === currentOptionsPromise) {
+            this.loading = false;
+          }
+        });
+    } else {
+      scheduleOnce('actions', this, this._resetHighlighted);
+    }
+  }
+
+  private __updateSelected(): void {
+    if (isNone(this.args.selected)) return;
+    if (typeof this.args.selected.then === 'function') {
+      if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
+      if (
+        this._lastSelectedPromise &&
+        isPromiseProxyLike(this._lastSelectedPromise)
+      ) {
+        removeObserver(
+          this._lastSelectedPromise,
+          'content',
+          this,
+          this._selectedObserverCallback,
+        );
+      }
+
+      const currentSelectedPromise: PromiseProxy<any> = this.args.selected;
+      currentSelectedPromise.then(() => {
+        if (this.isDestroyed || this.isDestroying) return;
+        if (isPromiseProxyLike(currentSelectedPromise)) {
+          // eslint-disable-next-line ember/no-observers
+          addObserver(
+            currentSelectedPromise,
+            'content',
+            this,
+            this._selectedObserverCallback,
+          );
+        }
+      });
+
+      this._lastSelectedPromise = currentSelectedPromise;
+      this._lastSelectedPromise.then((resolvedSelected) => {
+        if (this._lastSelectedPromise === currentSelectedPromise) {
+          this._resolvedSelected = resolvedSelected;
+          this._highlight(resolvedSelected);
+        }
+      });
+    } else {
+      this._resolvedSelected = undefined;
+      // Don't highlight args.selected array on multi-select
+      if (!Array.isArray(this.args.selected)) {
+        this._highlight(this.args.selected);
+      }
+    }
+  }
+
+  private __registerAPI(_: Element, [publicAPI]: [Select]): void {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
       scheduleOnce('actions', null, this.args.registerAPI, publicAPI);
     }
   }
 
-  @action
-  _performSearch(_: Element, [term]: [string]): void {
+  private __performSearch(_: Element, [term]: [string]): void {
     if (!this.args.search) return;
     if (term === '') {
       this.loading = false;
@@ -700,42 +808,6 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
       scheduleOnce('actions', this, this._resetHighlighted);
     }
   }
-
-  updateOptions = modifier(
-    () => {
-      this._updateOptions();
-    },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    { eager: false },
-  );
-
-  updateSelected = modifier(
-    () => {
-      this._updateSelected();
-    },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    { eager: false },
-  );
-
-  updateRegisterAPI = modifier(
-    (triggerElement: Element, [publicAPI]: [Select]) => {
-      this._registerAPI(triggerElement, [publicAPI]);
-    },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    { eager: false },
-  );
-
-  updatePerformSearch = modifier(
-    (triggerElement: Element, [term]: [string]) => {
-      this._performSearch(triggerElement, [term]);
-    },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    { eager: false },
-  );
 
   _defaultBuildSelection(option: any): any {
     return option;
