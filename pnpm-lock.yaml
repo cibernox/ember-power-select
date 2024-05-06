@@ -324,8 +324,8 @@ importers:
         specifier: ^1.13.1
         version: 1.13.1(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-source@5.8.0)
       decorator-transforms:
-        specifier: ^1.1.0
-        version: 1.2.1(@babel/core@7.24.5)
+        specifier: ^2.0.0
+        version: 2.0.0(@babel/core@7.24.5)
       ember-assign-helper:
         specifier: ^0.5.0
         version: 0.5.0(ember-source@5.8.0)
@@ -7494,6 +7494,16 @@ packages:
       babel-import-util: 2.1.1
     transitivePeerDependencies:
       - '@babel/core'
+    dev: true
+
+  /decorator-transforms@2.0.0(@babel/core@7.24.5):
+    resolution: {integrity: sha512-ETfQccGcotK01YJsoB0AGTdUp7kS9jI93mBzrRY5Oyo+bOJfa2UKTSjCNf+iRNwAWBmBKlbiCcyL4tkY4C4dZQ==}
+    dependencies:
+      '@babel/plugin-syntax-decorators': 7.24.1(@babel/core@7.24.5)
+      babel-import-util: 3.0.0
+    transitivePeerDependencies:
+      - '@babel/core'
+    dev: false
 
   /deep-extend@0.6.0:
     resolution: {integrity: sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==}
