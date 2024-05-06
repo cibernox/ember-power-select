@@ -1,9 +1,15 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 
 export default class CustomGroupComponent extends Component {
-  @action
-  setup() {
+  didSetup = false;
+
+  setup = modifier(() => {
+    if (this.didSetup) {
+      return;
+    }
+
+    this.didSetup = true;
     this.onInit?.bind(this)();
-  }
+  });
 }

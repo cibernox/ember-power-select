@@ -1,5 +1,5 @@
 {{!-- template-lint-disable require-context-role --}}
-<ul {{did-insert this.addHandlers}} {{will-destroy this.removeHandlers}} ...attributes>
+<ul {{this.setupHandlers}} ...attributes>
   {{#if @select.loading}}
     {{#if @loadingMessage}}
       <li class="ember-power-select-option ember-power-select-option--loading-message" role="option" aria-selected={{false}}>{{@loadingMessage}}</li>

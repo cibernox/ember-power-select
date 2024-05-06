@@ -19,6 +19,7 @@ import {
   type MatcherFn,
 } from '../utils/group-utils.ts';
 import { restartableTask, timeout } from 'ember-concurrency';
+import { modifier } from 'ember-modifier';
 import type {
   Dropdown,
   DropdownActions,
@@ -655,7 +656,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   @action
-  _performSearch(_: any, [term]: [string]): void {
+  _performSearch(_: Element, [term]: [string]): void {
     if (!this.args.search) return;
     if (term === '') {
       this.loading = false;
@@ -699,6 +700,42 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
       scheduleOnce('actions', this, this._resetHighlighted);
     }
   }
+
+  updateOptions = modifier(
+    () => {
+      this._updateOptions();
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  updateSelected = modifier(
+    () => {
+      this._updateSelected();
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  updateRegisterAPI = modifier(
+    (triggerElement: Element, [publicAPI]: [Select]) => {
+      this._registerAPI(triggerElement, [publicAPI]);
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
+
+  updatePerformSearch = modifier(
+    (triggerElement: Element, [term]: [string]) => {
+      this._performSearch(triggerElement, [term]);
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
 
   _defaultBuildSelection(option: any): any {
     return option;

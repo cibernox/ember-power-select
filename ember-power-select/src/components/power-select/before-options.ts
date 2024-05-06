@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { scheduleOnce, later } from '@ember/runloop';
 import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 import type { Select } from '../power-select';
 
 interface PowerSelectBeforeOptionsSignature {
@@ -24,6 +25,8 @@ interface PowerSelectBeforeOptionsSignature {
 }
 
 export default class PowerSelectBeforeOptionsComponent extends Component<PowerSelectBeforeOptionsSignature> {
+  didSetup: boolean = false;
+
   @action
   clearSearch(): void {
     scheduleOnce('actions', this.args.select.actions, 'search', '');
@@ -55,4 +58,21 @@ export default class PowerSelectBeforeOptionsComponent extends Component<PowerSe
       }
     }, 0);
   }
+
+  setupInput = modifier(
+    (el: HTMLElement) => {
+      if (this.didSetup) {
+        return;
+      }
+
+      this.didSetup = true;
+
+      this.focusInput(el);
+
+      return () => this.clearSearch();
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    { eager: false },
+  );
 }

@@ -4,6 +4,7 @@ import { get } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
+import { modifier } from 'ember-modifier';
 
 interface PowerSelectMultipleTriggerSignature {
   Element: HTMLElement;
@@ -70,6 +71,10 @@ export default class TriggerComponent extends Component<PowerSelectMultipleTrigg
       this.args.select.actions.choose(object);
     }
   }
+
+  openChange = modifier((element: Element, [isOpen]: [boolean]) => {
+    this.openChanged(element, [isOpen]);
+  });
 
   selectedObject<T>(list: IndexAccesible<T> | T[], index: number): T {
     if (isIndexAccesible(list)) {

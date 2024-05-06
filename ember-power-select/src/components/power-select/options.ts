@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { modifier } from 'ember-modifier';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 declare const FastBoot: any;
@@ -73,6 +74,16 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _: TouchEvent,
   ): void => {}) as EventListener;
+
+  private _listElement: Element | null = null;
+  private _didHandlerSetup: boolean = false;
+
+  willDestroy(): void {
+    super.willDestroy();
+    if (this._listElement) {
+      this.removeHandlers(this._listElement);
+    }
+  }
 
   @action
   addHandlers(element: Element) {
@@ -153,6 +164,15 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
     element.removeEventListener('touchmove', this.touchMoveHandler);
     element.removeEventListener('touchend', this.touchEndHandler);
   }
+
+  setupHandlers = modifier((element: Element) => {
+    if (this._didHandlerSetup) {
+      return;
+    }
+    this._didHandlerSetup = true;
+    this._listElement = element;
+    this.addHandlers(element);
+  });
 
   _optionFromIndex(index: string) {
     const parts = index.split('.');
