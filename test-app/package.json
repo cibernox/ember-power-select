@@ -27,7 +27,7 @@
     "test:ember-try": "ember try:one"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.4",
     "@babel/eslint-parser": "^7.24.1",
     "@babel/plugin-proposal-decorators": "^7.24.1",
     "@ember/optional-features": "^2.1.0",
@@ -76,7 +76,7 @@
     "concurrently": "^8.2.2",
     "ember-auto-import": "^2.7.2",
     "ember-basic-dropdown": "^8.0.4",
-    "ember-cli": "~5.7.0",
+    "ember-cli": "~5.8.1",
     "ember-cli-app-version": "^6.0.1",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-clean-css": "^3.0.0",
@@ -93,11 +93,11 @@
     "ember-lifeline": "^7.0.0",
     "ember-load-initializers": "^2.1.2",
     "ember-modifier": "^4.1.0",
-    "ember-page-title": "^8.2.2",
+    "ember-page-title": "^8.2.3",
     "ember-power-select": "workspace:*",
     "ember-qunit": "^8.0.2",
     "ember-resolver": "^11.0.1",
-    "ember-source": "~5.7.0",
+    "ember-source": "~5.8.0",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^5.13.0",
     "ember-try": "^3.0.0",
@@ -118,7 +118,7 @@
     "stylelint-config-standard": "^36.0.0",
     "stylelint-prettier": "^5.0.0",
     "tracked-built-ins": "^3.3.0",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.5",
     "webpack": "^5.91.0"
   },
   "engines": {
