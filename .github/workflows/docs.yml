@@ -7,6 +7,12 @@ on:
       - master
   pull_request:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
   lint:
     name: Lint
@@ -36,19 +42,64 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      
       - uses: pnpm/action-setup@v3
         with:
           version: 8
-
+      
       - name: Install Node
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
           cache: pnpm
-
+      
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-
+      
       - name: Run Tests
         run: pnpm --filter docs test:ember
+
+  build-documentation:
+    name: Build documentation
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    timeout-minutes: 5
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/master'))
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: pnpm
+          
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Run Tests
+        run: pnpm --filter docs build
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs/dist'
+
+  deploy-documentation:
+    name: Deploy documentation
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: [lint, test, build-documentation]
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
