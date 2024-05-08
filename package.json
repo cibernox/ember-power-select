@@ -28,7 +28,8 @@
     "concurrently": "^8.2.2",
     "prettier": "^3.2.5",
     "prettier-plugin-ember-template-tag": "^2.0.2",
-    "release-it": "^17.2.1"
+    "release-it": "^17.2.1",
+    "typescript": "^5.4.5"
   },
   "workspaces": [
     "ember-power-select",
