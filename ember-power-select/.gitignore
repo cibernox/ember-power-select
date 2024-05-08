@@ -1,11 +1,18 @@
 # The authoritative copies of these live in the monorepo root (because they're
 # more useful on github that way), but the build copies them into here so they
 # will also appear in published NPM packages.
+/README.md
+/LICENSE.md
 
 # compiled output
-/dist
-/declarations
-/vendor
+dist/
+declarations/
+vendor/
 
 # npm/pnpm/yarn pack output
 *.tgz
+
+# deps & caches
+node_modules/
+.eslintcache
+.prettiercache
