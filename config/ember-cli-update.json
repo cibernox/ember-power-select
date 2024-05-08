@@ -4,7 +4,7 @@
   "packages": [
     {
       "name": "@embroider/addon-blueprint",
-      "version": "2.0.0",
+      "version": "2.16.0",
       "blueprints": [
         {
           "name": "@embroider/addon-blueprint",

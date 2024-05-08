@@ -14,12 +14,14 @@
     "build:docs": "pnpm run --filter docs build",
     "lint": "pnpm run --filter '*' lint",
     "lint:fix": "pnpm run --filter '*' lint:fix",
-    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "pnpm run --filter ember-power-select start --no-watch.clearScreen",
     "start:docs": "pnpm run --filter docs start --preserveWatchOutput",
-    "start:test-app": "pnpm run --filter test-app start"
+    "start:test-app": "pnpm run --filter test-app start",
+    "test:ember": "pnpm --filter '*' test:ember"
   },
   "devDependencies": {
+    "@glint/core": "^1.2.1",
     "@release-it-plugins/lerna-changelog": "^6.1.0",
     "@release-it-plugins/workspaces": "^4.2.0",
     "concurrently": "^8.2.2",
