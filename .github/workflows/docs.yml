@@ -83,7 +83,10 @@ jobs:
         
       - name: Run Tests
         run: pnpm --filter docs build
-        
+      
+      - name: Copy 404 page
+        run: cp ./docs/404.html ./docs/dist/404.html
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
       
