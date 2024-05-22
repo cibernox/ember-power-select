@@ -53,12 +53,12 @@
       tabindex={{and (not @disabled) (or @tabindex "0")}}
       ...attributes
     >
-      {{#let 
-        (if 
-          @triggerComponent 
-          (component (ensure-safe-component @triggerComponent)) 
+      {{#let
+        (if
+          @triggerComponent
+          (component (ensure-safe-component @triggerComponent))
           (component 'power-select/trigger')
-        ) 
+        )
       as |Trigger|}}
         <Trigger
           @allowClear={{@allowClear}}
@@ -75,9 +75,9 @@
           @onInput={{this.handleInput}}
           @onKeydown={{this.handleKeydown}}
           @placeholder={{@placeholder}}
-          @placeholderComponent={{if 
-            @placeholderComponent 
-            (ensure-safe-component @placeholderComponent) 
+          @placeholderComponent={{if
+            @placeholderComponent
+            (ensure-safe-component @placeholderComponent)
             (component 'power-select/placeholder')
           }}
           @ariaActiveDescendant={{concat publicAPI.uniqueId "-" this.highlightedIndex}}
@@ -93,12 +93,12 @@
       @animationEnabled={{@animationEnabled}}
     >
       {{#if (not-eq @beforeOptionsComponent null)}}
-        {{#let 
-          (if 
-            @beforeOptionsComponent 
+        {{#let
+          (if
+            @beforeOptionsComponent
             (component (ensure-safe-component @beforeOptionsComponent))
             (component 'power-select/before-options')
-          ) 
+          )
         as |BeforeOptions|}}
           <BeforeOptions
             @select={{publicAPI}}
@@ -120,49 +120,49 @@
         {{/let}}
       {{/if}}
       {{#if this.mustShowSearchMessage}}
-        {{#let 
-          (if 
-            @searchMessageComponent 
+        {{#let
+          (if
+            @searchMessageComponent
             (component (ensure-safe-component @searchMessageComponent))
             (component 'power-select/search-message')
-          ) 
+          )
         as |SearchMessage|}}
-          <SearchMessage 
+          <SearchMessage
             @searchMessage={{this.searchMessage}}
             @select={{publicAPI}}
-            id={{listboxId}} 
-            aria-label={{@ariaLabel}}
-            aria-labelledby={{@ariaLabelledBy}} 
-          /> 
+            id={{listboxId}}
+            @ariaLabel={{@ariaLabel}}
+            @ariaLabelledBy={{@ariaLabelledBy}}
+          />
         {{/let}}
       {{else if this.mustShowNoMessages}}
-        {{#let 
-          (if 
+        {{#let
+          (if
             @noMatchesMessageComponent
             (component (ensure-safe-component @noMatchesMessageComponent))
             (component 'power-select/no-matches-message')
-          ) 
+          )
          as |NoMatchesMessage|}}
-          <NoMatchesMessage 
-            @noMatchesMessage={{this.noMatchesMessage}} 
-            @select={{publicAPI}} 
-            id={{listboxId}} 
+          <NoMatchesMessage
+            @noMatchesMessage={{this.noMatchesMessage}}
+            @select={{publicAPI}}
+            id={{listboxId}}
             aria-label={{@ariaLabel}}
-            aria-labelledby={{@ariaLabelledBy}} 
+            aria-labelledby={{@ariaLabelledBy}}
           />
         {{/let}}
       {{else}}
-        {{#let 
-          (if 
+        {{#let
+          (if
             @optionsComponent
             (component (ensure-safe-component @optionsComponent))
             (component 'power-select/options')
-          ) 
-          (if 
+          )
+          (if
             @groupComponent
             (component (ensure-safe-component @groupComponent))
             (component 'power-select/power-select-group')
-          ) 
+          )
         as |Options Group|}}
           <Options
             @loadingMessage={{or @loadingMessage "Loading options..."}}
@@ -179,7 +179,7 @@
           </Options>
         {{/let}}
       {{/if}}
-      
+
       {{#if @afterOptionsComponent}}
         {{#let (component (ensure-safe-component @afterOptionsComponent)) as |AfterOptions|}}
           <AfterOptions
