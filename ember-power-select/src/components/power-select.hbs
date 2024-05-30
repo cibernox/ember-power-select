@@ -28,6 +28,7 @@
   @calculatePosition={{@calculatePosition}}
   @triggerComponent={{ensure-safe-component @ebdTriggerComponent}}
   @contentComponent={{ensure-safe-component @ebdContentComponent}}
+  @rootEventType={{or @rootEventType "mousedown"}}
   as |dropdown|>
   {{#let (assign dropdown (hash
     selected=this.selected
