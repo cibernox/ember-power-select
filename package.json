@@ -22,13 +22,13 @@
     "test:ember": "pnpm --filter '*' test:ember"
   },
   "devDependencies": {
-    "@glint/core": "^1.2.1",
+    "@glint/core": "^1.4.0",
     "@release-it-plugins/lerna-changelog": "^7.0.0",
     "@release-it-plugins/workspaces": "^4.2.0",
     "concurrently": "^8.2.2",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.1",
     "prettier-plugin-ember-template-tag": "^2.0.2",
-    "release-it": "^17.2.1",
+    "release-it": "^17.3.0",
     "typescript": "^5.4.5"
   },
   "workspaces": [
