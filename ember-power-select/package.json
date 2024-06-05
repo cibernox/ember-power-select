@@ -74,7 +74,7 @@
   "dependencies": {
     "@embroider/addon-shim": "^1.8.7",
     "@embroider/util": "^1.13.1",
-    "decorator-transforms": "^1.1.0",
+    "decorator-transforms": "^2.0.0",
     "ember-assign-helper": "^0.5.0",
     "ember-lifeline": "^7.0.0",
     "ember-modifier": "^4.1.0",
