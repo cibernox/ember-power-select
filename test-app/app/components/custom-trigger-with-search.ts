@@ -1,4 +1,5 @@
-import templateOnly from '@ember/component/template-only';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
 
 export interface CustomTriggerWithSearchSignature {
   Element: Element;
@@ -13,4 +14,11 @@ export interface CustomTriggerWithSearchSignature {
   };
 }
 
-export default templateOnly<CustomTriggerWithSearchSignature>();
+export default class CustomGroupComponent extends Component<CustomTriggerWithSearchSignature> {
+  didSetup = false;
+
+  @action
+  onSearch(evt: Event) {
+    this.args.select.actions.search((evt.target as HTMLInputElement).value ?? '');
+  }
+}
