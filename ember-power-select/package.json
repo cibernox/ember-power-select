@@ -121,7 +121,7 @@
     "concurrently": "^8.2.2",
     "ember-basic-dropdown": "^8.1.0",
     "ember-concurrency": "^4.0.2",
-    "ember-source": "~5.8.0",
+    "ember-source": "~5.9.0",
     "ember-template-lint": "^6.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",

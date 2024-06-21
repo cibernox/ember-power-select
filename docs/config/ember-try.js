@@ -32,6 +32,7 @@ module.exports = async function () {
         name: 'ember-lts-4.8',
         npm: {
           devDependencies: {
+            'ember-resolver': '^11.0.0',
             'ember-source': '~4.8.0',
           },
         },
