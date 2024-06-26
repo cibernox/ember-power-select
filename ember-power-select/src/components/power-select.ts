@@ -98,6 +98,7 @@ export interface PowerSelectArgs {
   triggerClass?: string;
   ariaInvalid?: string;
   eventType?: string;
+  rootEventType?: string;
   ariaDescribedBy?: string;
   calculatePosition?: CalculatePosition;
   ebdTriggerComponent?: string | ComponentLike<any>;
