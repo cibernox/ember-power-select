@@ -1,4 +1,4 @@
-{{#if @searchEnabled}}
+{{#if (and @searchEnabled (eq @searchFieldPosition 'before-options'))}}
   <div class="ember-power-select-search">
     {{!-- template-lint-disable require-input-label --}}
     <input type="search"

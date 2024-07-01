@@ -15,6 +15,7 @@ interface PowerSelectMultipleTriggerSignature {
     searchEnabled: boolean;
     placeholder?: string;
     searchField: string;
+    searchFieldPosition?: string;
     listboxId?: string;
     tabindex?: string;
     ariaLabel?: string;
