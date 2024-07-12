@@ -119,7 +119,7 @@ export interface Group {
   groupName: string;
 }
 function copyGroup(group: Group, suboptions: any[]): Group {
-  const groupCopy: Group = { groupName: group.groupName, options: suboptions };
+  const groupCopy: Group = { ...group, options: suboptions };
   if (Object.prototype.hasOwnProperty.call(group, 'disabled')) {
     groupCopy.disabled = group.disabled;
   }
