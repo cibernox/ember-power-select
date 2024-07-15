@@ -118,7 +118,7 @@ export interface Group {
   disabled?: boolean;
   groupName: string;
 }
-function copyGroup(group: Group, suboptions: any[]): Group {
+export function copyGroup(group: Group, suboptions: any[]): Group {
   const groupCopy: Group = { ...group, options: suboptions };
   if (Object.prototype.hasOwnProperty.call(group, 'disabled')) {
     groupCopy.disabled = group.disabled;

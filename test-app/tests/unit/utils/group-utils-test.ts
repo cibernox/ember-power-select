@@ -7,6 +7,7 @@ import {
   stripDiacritics,
   countOptions,
   defaultTypeAheadMatcher,
+  copyGroup,
   type MatcherFn,
 } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
@@ -300,6 +301,28 @@ module('Unit | Utility | Group utils', function () {
 
   test('#countOptions returns the number of options, transversing the groups with no depth level', function (assert) {
     assert.strictEqual(countOptions(groupedOptions), 16);
+  });
+
+  test('#copyGroup returns a new group with the same name, options and disabled', function (assert) {
+    const group = {
+      groupName: 'Smalls',
+      options: ['zero', 'one', 'two'],
+      disabled: true,
+    };
+    const copy = copyGroup(group, group.options);
+    assert.deepEqual(copy, group);
+    assert.notStrictEqual(copy, group);
+  });
+
+  test('#copyGroup returns a new group with the same name, options and disabled, as well as any other custom properties', function (assert) {
+    const group = {
+      groupName: 'Smalls',
+      options: ['zero', 'one', 'two'],
+      custom: 'property',
+    };
+    const copy = copyGroup(group, group.options);
+    assert.deepEqual(copy, group);
+    assert.notStrictEqual(copy, group);
   });
 });
 
