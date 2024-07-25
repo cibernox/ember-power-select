@@ -95,6 +95,34 @@ export const groupedNumbersWithDisabled = [
   'one thousand',
 ];
 
+export const groupedNumbersWithCustomProperty = [
+  { groupName: 'Smalls', variant: 'Primary', options: ['one', 'two', 'three'] },
+  {
+    groupName: 'Mediums',
+    variant: 'Secondary',
+    options: ['four', 'five', 'six'],
+  },
+  {
+    groupName: 'Bigs',
+    variant: 'Primary',
+    options: [
+      {
+        groupName: 'Fairly big',
+        variant: 'Secondary',
+        options: ['seven', 'eight', 'nine'],
+      },
+      {
+        groupName: 'Really big',
+        variant: 'Primary',
+        options: ['ten', 'eleven', 'twelve'],
+      },
+      'thirteen',
+    ],
+  },
+  'one hundred',
+  'one thousand',
+];
+
 export const namesStartingWithA = [
   'Abigail',
   'Abril',
