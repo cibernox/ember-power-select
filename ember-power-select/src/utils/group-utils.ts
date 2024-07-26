@@ -114,9 +114,10 @@ export function optionAtIndex(
 }
 
 export interface Group {
+  groupName: string;
   options: any[];
   disabled?: boolean;
-  groupName: string;
+  [key: string]: unknown;
 }
 function copyGroup(group: Group, suboptions: any[]): Group {
   const groupCopy: Group = { ...group, options: suboptions };
