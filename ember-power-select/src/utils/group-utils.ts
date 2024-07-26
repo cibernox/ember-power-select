@@ -114,12 +114,13 @@ export function optionAtIndex(
 }
 
 export interface Group {
+  groupName: string;
   options: any[];
   disabled?: boolean;
-  groupName: string;
+  [key: string]: unknown;
 }
 function copyGroup(group: Group, suboptions: any[]): Group {
-  const groupCopy: Group = { groupName: group.groupName, options: suboptions };
+  const groupCopy: Group = { ...group, options: suboptions };
   if (Object.prototype.hasOwnProperty.call(group, 'disabled')) {
     groupCopy.disabled = group.disabled;
   }

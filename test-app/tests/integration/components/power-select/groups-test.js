@@ -6,7 +6,7 @@ import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
-import { groupedNumbers } from '../constants';
+import { groupedNumbers, groupedNumbersWithCustomProperty } from '../constants';
 
 module(
   'Integration | Component | Ember Power Select (Groups)',
@@ -136,6 +136,70 @@ module(
         ['Bigs', 'Really big'],
         'With no depth level',
       );
+    });
+
+    test('When filtering, all properties of the options remain available for a single select', async function (assert) {
+      this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
+
+      await render(hbs`
+        <PowerSelect @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{component "custom-group-component-with-variant"}} as |option|>
+          {{option}}
+        </PowerSelect>
+      `);
+
+      await clickTrigger();
+
+      const variants = Array.from(
+        document.querySelectorAll('[data-test-id="group-component-variant"]'),
+      ).map((e) => e.textContent.trim());
+
+      assert.deepEqual(variants, [
+        'Primary',
+        'Secondary',
+        'Primary',
+        'Secondary',
+        'Primary',
+      ]);
+
+      await typeInSearch('one');
+
+      assert
+        .dom('[data-test-id="group-component-variant"]')
+        .exists({ count: 1 });
+
+      assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
+    });
+
+    test('When filtering, all properties of the options remain available for a multi select', async function (assert) {
+      this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
+
+      await render(hbs`
+       <PowerSelectMultiple @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{component "custom-group-component-with-variant"}} as |option|>
+          {{option}}
+        </PowerSelectMultiple>
+      `);
+
+      await clickTrigger();
+
+      const variants = Array.from(
+        document.querySelectorAll('[data-test-id="group-component-variant"]'),
+      ).map((e) => e.textContent.trim());
+
+      assert.deepEqual(variants, [
+        'Primary',
+        'Secondary',
+        'Primary',
+        'Secondary',
+        'Primary',
+      ]);
+
+      await typeInSearch('one');
+
+      assert
+        .dom('[data-test-id="group-component-variant"]')
+        .exists({ count: 1 });
+
+      assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
     });
 
     test('Click on an option of a group select selects the option and closes the dropdown', async function (assert) {
