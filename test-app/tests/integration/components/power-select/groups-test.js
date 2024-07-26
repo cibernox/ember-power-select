@@ -142,7 +142,7 @@ module(
       this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
 
       await render(hbs`
-        <PowerSelect @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{ensure-safe-component "custom-group-component-with-variant"}} as |option|>
+        <PowerSelect @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{component "custom-group-component-with-variant"}} as |option|>
           {{option}}
         </PowerSelect>
       `);
@@ -174,7 +174,7 @@ module(
       this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
 
       await render(hbs`
-       <PowerSelectMultiple @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{ensure-safe-component "custom-group-component-with-variant"}} as |option|>
+       <PowerSelectMultiple @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{component "custom-group-component-with-variant"}} as |option|>
           {{option}}
         </PowerSelectMultiple>
       `);
