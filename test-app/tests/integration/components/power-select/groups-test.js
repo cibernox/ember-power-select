@@ -138,7 +138,39 @@ module(
       );
     });
 
-    test('When filtering, all properties of the options remain available', async function (assert) {
+    test('When filtering, all properties of the options remain available for a single select', async function (assert) {
+      this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
+
+      await render(hbs`
+        <PowerSelect @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{ensure-safe-component "custom-group-component-with-variant"}} as |option|>
+          {{option}}
+        </PowerSelect>
+      `);
+
+      await clickTrigger();
+
+      const variants = Array.from(
+        document.querySelectorAll('[data-test-id="group-component-variant"]'),
+      ).map((e) => e.textContent.trim());
+
+      assert.deepEqual(variants, [
+        'Primary',
+        'Secondary',
+        'Primary',
+        'Secondary',
+        'Primary',
+      ]);
+
+      await typeInSearch('one');
+
+      assert
+        .dom('[data-test-id="group-component-variant"]')
+        .exists({ count: 1 });
+
+      assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
+    });
+
+    test('When filtering, all properties of the options remain available for a multi select', async function (assert) {
       this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
 
       await render(hbs`
