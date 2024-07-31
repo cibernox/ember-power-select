@@ -23,6 +23,7 @@ import { modifier } from 'ember-modifier';
 import type {
   Dropdown,
   DropdownActions,
+  TRootEventType,
 } from 'ember-basic-dropdown/components/basic-dropdown';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 import { isArray } from '@ember/array';
@@ -98,7 +99,7 @@ export interface PowerSelectArgs {
   triggerClass?: string;
   ariaInvalid?: string;
   eventType?: string;
-  rootEventType?: string;
+  rootEventType?: TRootEventType;
   ariaDescribedBy?: string;
   calculatePosition?: CalculatePosition;
   ebdTriggerComponent?: string | ComponentLike<any>;
