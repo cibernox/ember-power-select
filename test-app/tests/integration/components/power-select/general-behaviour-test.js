@@ -21,7 +21,7 @@ import { numbers, names, countries, digits } from '../constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
-import { TrackedArray } from 'tracked-built-ins/.';
+import { TrackedArray } from 'tracked-built-ins';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 const PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
