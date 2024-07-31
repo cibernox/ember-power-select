@@ -1,6 +1,31 @@
 
 
 
+
+## v8.3.0 (2024-07-31)
+
+#### :rocket: Enhancement
+* [#1843](https://github.com/cibernox/ember-power-select/pull/1843) Copy custom group properties in `group-utils` copyGroup function ([@lukasnys](https://github.com/lukasnys))
+
+#### :bug: Bug Fix
+* [#1846](https://github.com/cibernox/ember-power-select/pull/1846) Use correct typing for rootEventType ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1842](https://github.com/cibernox/ember-power-select/pull/1842) Docs: remove test helper setup ([@wozny1989](https://github.com/wozny1989))
+* [#1841](https://github.com/cibernox/ember-power-select/pull/1841) Add `ember-inflector` in docs to fix docs page (cause ember-data bug) ([@mkszepp](https://github.com/mkszepp))
+* [#1810](https://github.com/cibernox/ember-power-select/pull/1810) Fix direct links to sub pages ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#1840](https://github.com/cibernox/ember-power-select/pull/1840) Add push dist workflow ([@mkszepp](https://github.com/mkszepp))
+* [#1806](https://github.com/cibernox/ember-power-select/pull/1806) Add missing addon blueprint config & update blueprint ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 5
+- Adam Woźny ([@wozny1989](https://github.com/wozny1989))
+- Arnaud Weyts ([@ArnaudWeyts](https://github.com/ArnaudWeyts))
+- Lukas Nys ([@lukasnys](https://github.com/lukasnys))
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+- Yelin Zhang ([@Yelinz](https://github.com/Yelinz))
+
 ## v8.2.0 (2024-05-06)
 
 #### :rocket: Enhancement
