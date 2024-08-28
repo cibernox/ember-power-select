@@ -176,7 +176,7 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
     if (isGroup) {
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const findOptionAndPerform = (action: Function, e: MouseEvent): void => {
       if (e.target === null) return;
       const optionItem = (e.target as Element).closest('[data-option-index]');
