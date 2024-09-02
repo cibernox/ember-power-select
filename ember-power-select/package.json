@@ -85,7 +85,7 @@
     "@babel/plugin-transform-typescript": "^7.25.2",
     "@babel/runtime": "^7.25.0",
     "@ember/string": "^4.0.0",
-    "@ember/test-helpers": "^4.0.2",
+    "@ember/test-helpers": "4.0.0",
     "@embroider/addon-dev": "^5.0.0",
     "@glint/core": "^1.4.0",
     "@glint/environment-ember-loose": "^1.4.0",
@@ -142,7 +142,7 @@
     "webpack": "^5.93.0"
   },
   "peerDependencies": {
-    "@ember/test-helpers": "^2.9.4 || ^3.2.1",
+    "@ember/test-helpers": "^2.9.4 || ^3.2.1 || ^4.0.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
     "ember-basic-dropdown": "^8.2.0",
