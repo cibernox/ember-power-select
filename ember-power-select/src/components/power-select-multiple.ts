@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import type { PowerSelectSignature, Select } from './power-select';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface PowerSelectMultipleSignature extends PowerSelectSignature {
   // any extra property for multiple selects?
 }
