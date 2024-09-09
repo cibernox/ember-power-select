@@ -2,6 +2,15 @@
 
 
 
+
+## v8.3.1 (2024-09-09)
+
+#### :rocket: Enhancement
+* [#1853](https://github.com/cibernox/ember-power-select/pull/1853) Allow `@ember/test-helpers` to v4 ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.3.0 (2024-07-31)
 
 #### :rocket: Enhancement
