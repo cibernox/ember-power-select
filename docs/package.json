@@ -27,6 +27,11 @@
     "test:ember-try": "ember try:one",
     "test:ember-compatibility": "ember try:each"
   },
+  "dependenciesMeta": {
+    "ember-power-select": {
+      "injected": true
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
@@ -38,7 +43,7 @@
     "@ember-data/tracking": "5.3.8",
     "@ember/optional-features": "^2.1.0",
     "@ember/string": "^4.0.0",
-    "@ember/test-helpers": "^3.3.1",
+    "@ember/test-helpers": "^4.0.2",
     "@ember/test-waiters": "^3.1.0",
     "@embroider/test-setup": "^4.0.0",
     "@glimmer/component": "^1.1.2",

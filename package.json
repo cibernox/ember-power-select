@@ -14,7 +14,6 @@
     "build:docs": "pnpm run --filter docs build",
     "lint": "pnpm run --filter '*' lint",
     "lint:fix": "pnpm run --filter '*' lint:fix",
-    "prepare": "pnpm run build",
     "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "pnpm run --filter ember-power-select start --no-watch.clearScreen",
     "start:docs": "pnpm run --filter docs start --preserveWatchOutput",
