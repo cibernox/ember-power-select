@@ -13,9 +13,6 @@ module.exports = function (defaults) {
       ],
     },
     'ember-cli-babel': { enableTypeScriptTransform: true },
-    'ember-prism': {
-      components: ['scss', 'javascript', 'handlebars', 'markup-templating'], //needs to be an array, or undefined.
-    },
     snippetPaths: ['app/components/snippets', 'app/templates/snippets/'],
   });
 
