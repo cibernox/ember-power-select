@@ -1,6 +1,7 @@
 import { babel } from '@rollup/plugin-babel';
 import { Addon } from '@embroider/addon-dev/rollup';
-import styles from 'rollup-plugin-styles';
+import sass from 'rollup-plugin-sass';
+import postcss from 'postcss';
 import path from 'path';
 
 const addon = new Addon({
@@ -17,11 +18,45 @@ export default [
       assetFileNames: '[name][extname]',
     },
     plugins: [
-      styles({
-        mode: ['extract', 'ember-power-select.css'],
-        sass: {
+      sass({
+        options: {
           includePaths: [path.resolve('node_modules')],
         },
+        output: './vendor/ember-power-select.css',
+      })
+    ],
+  },
+  {
+    input: './_index.scss',
+    output: {
+      file: './vendor/ember-power-select.js',
+      assetFileNames: '[name][extname]',
+    },
+    plugins: [
+      sass({
+        options: {
+          includePaths: [path.resolve('node_modules')],
+        },
+        processor: css => postcss()
+          .process(css, {
+            from: undefined,
+          })
+          .then(result => result.css)
+      })
+    ]
+  },
+  {
+    input: './scss/bootstrap-complete.scss',
+    output: {
+      file: './vendor/ember-power-select-bootstrap.js',
+      assetFileNames: '[name][extname]',
+    },
+    plugins: [
+      sass({
+        options: {
+          includePaths: [path.resolve('node_modules')],
+        },
+        output: './vendor/ember-power-select-bootstrap.css',
       }),
     ],
   },
@@ -32,11 +67,30 @@ export default [
       assetFileNames: '[name][extname]',
     },
     plugins: [
-      styles({
-        mode: ['extract', 'ember-power-select-bootstrap.css'],
-        sass: {
+      sass({
+        options: {
           includePaths: [path.resolve('node_modules')],
         },
+        processor: css => postcss()
+          .process(css, {
+            from: undefined,
+          })
+          .then(result => result.css)
+      })
+    ]
+  },
+  {
+    input: './scss/material-complete.scss',
+    output: {
+      file: './vendor/ember-power-select-material.js',
+      assetFileNames: '[name][extname]',
+    },
+    plugins: [
+      sass({
+        options: {
+          includePaths: [path.resolve('node_modules')],
+        },
+        output: './vendor/ember-power-select-material.css',
       }),
     ],
   },
@@ -47,13 +101,17 @@ export default [
       assetFileNames: '[name][extname]',
     },
     plugins: [
-      styles({
-        mode: ['extract', 'ember-power-select-material.css'],
-        sass: {
+      sass({
+        options: {
           includePaths: [path.resolve('node_modules')],
         },
-      }),
-    ],
+        processor: css => postcss()
+          .process(css, {
+            from: undefined,
+          })
+          .then(result => result.css)
+      })
+    ]
   },
   {
     // This provides defaults that work well alongside `publicEntrypoints` below.
