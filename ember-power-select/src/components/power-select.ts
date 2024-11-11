@@ -25,6 +25,7 @@ import type {
   DropdownActions,
   TRootEventType,
 } from 'ember-basic-dropdown/components/basic-dropdown';
+import Owner from '@ember/application';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 import { isArray } from '@ember/array';
 import type { ComponentLike } from '@glint/template';
@@ -196,7 +197,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   } = { results: [], options: [], searchText: this.searchText };
 
   // Lifecycle hooks
-  constructor(owner: unknown, args: PowerSelectArgs) {
+  constructor(owner: Owner, args: PowerSelectArgs) {
     super(owner, args);
     assert(
       '<PowerSelect> requires an `@onChange` function',
