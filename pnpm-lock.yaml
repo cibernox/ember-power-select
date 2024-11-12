@@ -198,8 +198,8 @@ importers:
         specifier: ^2.10.0
         version: 2.10.0(@glint/template@1.5.0)(webpack@5.96.1)
       ember-basic-dropdown:
-        specifier: ^8.3.0
-        version: 8.3.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
+        specifier: ^8.4.0
+        version: 8.4.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
       ember-cli:
         specifier: ~5.12.0
         version: 5.12.0
@@ -262,7 +262,7 @@ importers:
         version: 8.2.3(ember-source@5.12.0)
       ember-power-select:
         specifier: workspace:*
-        version: file:ember-power-select(@babel/core@7.26.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-basic-dropdown@8.3.0)(ember-concurrency@4.0.2)(ember-source@5.12.0)
+        version: file:ember-power-select(@babel/core@7.26.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-basic-dropdown@8.4.0)(ember-concurrency@4.0.2)(ember-source@5.12.0)
       ember-qunit:
         specifier: ^8.1.1
         version: 8.1.1(@ember/test-helpers@4.0.4)(@glint/template@1.5.0)(ember-source@5.12.0)(qunit@2.22.0)
@@ -490,8 +490,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0
       ember-basic-dropdown:
-        specifier: ^8.3.0
-        version: 8.3.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
+        specifier: ^8.4.0
+        version: 8.4.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
       ember-concurrency:
         specifier: ^4.0.2
         version: 4.0.2(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(@glint/template@1.5.0)(ember-source@5.12.0)
@@ -718,8 +718,8 @@ importers:
         specifier: ^2.10.0
         version: 2.10.0(@glint/template@1.5.0)(webpack@5.96.1)
       ember-basic-dropdown:
-        specifier: ^8.3.0
-        version: 8.3.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
+        specifier: ^8.4.0
+        version: 8.4.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
       ember-cli:
         specifier: ~5.12.0
         version: 5.12.0
@@ -776,7 +776,7 @@ importers:
         version: 8.2.3(ember-source@5.12.0)
       ember-power-select:
         specifier: workspace:*
-        version: file:ember-power-select(@babel/core@7.26.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-basic-dropdown@8.3.0)(ember-concurrency@4.0.2)(ember-source@5.12.0)
+        version: file:ember-power-select(@babel/core@7.26.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-basic-dropdown@8.4.0)(ember-concurrency@4.0.2)(ember-source@5.12.0)
       ember-qunit:
         specifier: ^8.1.1
         version: 8.1.1(@ember/test-helpers@4.0.4)(@glint/template@1.5.0)(ember-source@5.12.0)(qunit@2.22.0)
@@ -6858,11 +6858,11 @@ packages:
       - supports-color
       - webpack
 
-  /ember-basic-dropdown@8.3.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0):
-    resolution: {integrity: sha512-zDyyRIPAV2m/anuvomQvrNh2rSgv/M/mVc7XKzQl2dQOw+LKNAFwVurbpk5wy7QnQZZQM+1ObGNtIOUIYf/UgQ==}
+  /ember-basic-dropdown@8.4.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0):
+    resolution: {integrity: sha512-vaK0ypA6J8hduvIrctquMpIoAsgp1Uz/W2RGQJ1KsvvgAttowuDBBuGFEmubzhnnKJM2LGBX7+miRXnn36kBTA==}
     peerDependencies:
       '@ember/test-helpers': ^2.9.4 || ^3.2.1 || ^4.0.2
-      '@glimmer/component': ^1.1.2
+      '@glimmer/component': ^1.1.2 || ^2.0.0
       '@glimmer/tracking': ^1.1.2
       ember-source: ^3.28.0 || ^4.0.0 || >=5.0.0
     dependencies:
@@ -15120,7 +15120,7 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
-  file:ember-power-select(@babel/core@7.26.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-basic-dropdown@8.3.0)(ember-concurrency@4.0.2)(ember-source@5.12.0):
+  file:ember-power-select(@babel/core@7.26.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-basic-dropdown@8.4.0)(ember-concurrency@4.0.2)(ember-source@5.12.0):
     resolution: {directory: ember-power-select, type: directory}
     id: file:ember-power-select
     name: ember-power-select
@@ -15139,7 +15139,7 @@ packages:
       '@glimmer/tracking': 1.1.2
       decorator-transforms: 2.3.0(@babel/core@7.26.0)
       ember-assign-helper: 0.5.0(ember-source@5.12.0)
-      ember-basic-dropdown: 8.3.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
+      ember-basic-dropdown: 8.4.0(@ember/string@4.0.0)(@ember/test-helpers@4.0.4)(@glimmer/component@2.0.0)(@glimmer/tracking@1.1.2)(@glint/environment-ember-loose@1.5.0)(@glint/template@1.5.0)(ember-source@5.12.0)
       ember-concurrency: 4.0.2(@babel/core@7.26.0)(@glimmer/tracking@1.1.2)(@glint/template@1.5.0)(ember-source@5.12.0)
       ember-lifeline: 7.0.0(@ember/test-helpers@4.0.4)
       ember-modifier: 4.2.0(@babel/core@7.26.0)(ember-source@5.12.0)
