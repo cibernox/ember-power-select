@@ -3,6 +3,21 @@
 
 
 
+
+## v8.4.0 (2024-11-12)
+
+#### :rocket: Enhancement
+* [#1859](https://github.com/cibernox/ember-power-select/pull/1859) Allow `@glimmer/component` v2 ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1858](https://github.com/cibernox/ember-power-select/pull/1858) Remove `ember-prism`, use `primsjs` in docs ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#1857](https://github.com/cibernox/ember-power-select/pull/1857) Replace scss to css compiler while rollup ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.3.1 (2024-09-09)
 
 #### :rocket: Enhancement
