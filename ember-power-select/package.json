@@ -91,7 +91,7 @@
     "@glint/environment-ember-loose": "^1.4.0",
     "@glint/environment-ember-template-imports": "^1.4.0",
     "@glint/template": "^1.4.0",
-    "@glimmer/component": "^1.1.2",
+    "@glimmer/component": "^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "@rollup/plugin-babel": "^6.0.4",
     "@tsconfig/ember": "^3.0.8",
@@ -142,7 +142,7 @@
   },
   "peerDependencies": {
     "@ember/test-helpers": "^2.9.4 || ^3.2.1 || ^4.0.2",
-    "@glimmer/component": "^1.1.2",
+    "@glimmer/component": "^1.1.2 || ^2.0.0",
     "@glimmer/tracking": "^1.1.2",
     "ember-basic-dropdown": "^8.2.0",
     "ember-concurrency": "^4.0.2",

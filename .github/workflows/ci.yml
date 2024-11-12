@@ -105,6 +105,7 @@ jobs:
           - ember-lts-4.12
           - ember-lts-5.4
           - ember-lts-5.8
+          - glimmer-component-v1
           - ember-release
           - ember-beta
           - ember-canary
