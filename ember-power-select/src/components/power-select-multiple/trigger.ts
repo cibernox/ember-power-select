@@ -10,7 +10,6 @@ import { deprecate } from '@ember/debug';
 interface PowerSelectMultipleTriggerSignature {
   Element: HTMLElement;
   Args: {
-    Element: HTMLElement;
     select: Select;
     searchEnabled: boolean;
     placeholder?: string;
