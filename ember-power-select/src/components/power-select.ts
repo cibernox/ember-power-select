@@ -72,6 +72,7 @@ export interface PowerSelectArgs {
   options?: readonly any[] | Promise<readonly any[]>;
   selected?: any | PromiseProxy<any>;
   destination?: string;
+  destinationElement?: HTMLElement;
   closeOnSelect?: boolean;
   renderInPlace?: boolean;
   preventScroll?: boolean;
