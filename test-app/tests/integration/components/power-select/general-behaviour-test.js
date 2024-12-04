@@ -22,6 +22,7 @@ import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
 import { TrackedArray } from 'tracked-built-ins';
+import { modifier } from 'ember-modifier';
 
 const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
 const PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
@@ -1382,6 +1383,30 @@ module(
       await clickTrigger();
       assert
         .dom('#alternative-destination .ember-power-select-dropdown')
+        .exists('Dropdown is rendered inside the destination element');
+    });
+
+    test('The destination where the content is rendered can be customized by passing a `destinationElement=element`', async function (assert) {
+      assert.expect(2);
+
+      this.numbers = numbers;
+      this.ref = modifier((element) => {
+        this.set('destinationElement', element);
+      });
+      await render(hbs`
+      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @destinationElement={{this.destinationElement}} as |option|>
+        {{option}}
+      </PowerSelect>
+      <div class="alternative-destination" {{this.ref}}></div>
+    `);
+
+      assert
+        .dom('.ember-power-select-dropdown')
+        .doesNotExist('Dropdown is not rendered');
+
+      await clickTrigger();
+      assert
+        .dom('.alternative-destination .ember-power-select-dropdown')
         .exists('Dropdown is rendered inside the destination element');
     });
 
