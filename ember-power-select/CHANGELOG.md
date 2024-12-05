@@ -4,6 +4,19 @@
 
 
 
+
+## v8.5.0 (2024-12-05)
+
+#### :rocket: Enhancement
+* [#1863](https://github.com/cibernox/ember-power-select/pull/1863) Pass destinationElement to basic-dropdown ([@andreyfel](https://github.com/andreyfel))
+
+#### :bug: Bug Fix
+* [#1862](https://github.com/cibernox/ember-power-select/pull/1862) Remove incorrect `Element` from args in `PowerSelectMultipleTrigger` ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 2
+- Andrey Fel ([@andreyfel](https://github.com/andreyfel))
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.4.0 (2024-11-12)
 
 #### :rocket: Enhancement
