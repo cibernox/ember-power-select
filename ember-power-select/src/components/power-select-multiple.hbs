@@ -11,7 +11,7 @@
   @labelComponent={{ensure-safe-component @labelComponent}}
   @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
   @allowClear={{@allowClear}}
-  @beforeOptionsComponent={{if @beforeOptionsComponent (ensure-safe-component @beforeOptionsComponent) null}}
+  @beforeOptionsComponent={{if @beforeOptionsComponent (ensure-safe-component @beforeOptionsComponent)}}
   @buildSelection={{or @buildSelection this.defaultBuildSelection}}
   @calculatePosition={{@calculatePosition}}
   @closeOnSelect={{@closeOnSelect}}
@@ -50,6 +50,7 @@
   @search={{@search}}
   @searchEnabled={{@searchEnabled}}
   @searchField={{@searchField}}
+  @searchFieldPosition={{(or @searchFieldPosition 'trigger')}}
   @searchMessage={{@searchMessage}}
   @searchMessageComponent={{@searchMessageComponent}}
   @searchPlaceholder={{@searchPlaceholder}}

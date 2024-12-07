@@ -15,6 +15,7 @@ interface PowerSelectBeforeOptionsSignature {
     ariaDescribedBy?: string;
     role?: string;
     searchPlaceholder?: string;
+    searchFieldPosition?: string;
     ariaActiveDescendant?: string;
     listboxId?: string;
     onKeydown: (e: KeyboardEvent) => false | void;
