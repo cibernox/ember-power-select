@@ -8,10 +8,24 @@ interface PowerSelectTriggerSignature {
   Args: {
     select: Select;
     allowClear: boolean;
-    extra: any;
+    searchEnabled: boolean;
     placeholder?: string;
+    searchField: string;
+    searchFieldPosition?: string;
+    listboxId?: string;
+    tabindex?: string;
+    ariaLabel?: string;
+    ariaLabelledBy?: string;
+    ariaDescribedBy?: string;
+    role?: string;
+    ariaActiveDescendant: string;
+    extra?: any;
     placeholderComponent?: string | ComponentLike<any>;
     selectedItemComponent?: string | ComponentLike<any>;
+    onInput?: (e: InputEvent) => boolean;
+    onKeydown?: (e: KeyboardEvent) => boolean;
+    onFocus?: (e: FocusEvent) => void;
+    onBlur?: (e: FocusEvent) => void;
   };
   Blocks: {
     default: [selected: any, select: Select];

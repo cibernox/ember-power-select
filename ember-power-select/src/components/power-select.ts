@@ -425,6 +425,15 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     ) {
       return false;
     }
+    if (
+      this.searchFieldPosition === 'trigger' &&
+      !this.storedAPI.isOpen &&
+      e.keyCode !== 9 && // TAB
+      e.keyCode !== 13 && // ENTER
+      e.keyCode !== 27 // ESC
+    ) {
+      this.storedAPI.actions.open(e);
+    }
     return this._routeKeydown(this.storedAPI, e);
   }
 
@@ -486,6 +495,15 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     if (!this.isDestroying) {
       scheduleTask(this, 'actions', this._updateIsActive, true);
     }
+    if (this.searchFieldPosition === 'trigger') {
+      if (event.target) {
+        const target = event.target as HTMLElement;
+        const input = target.querySelector(
+          'input[type="search"]',
+        ) as HTMLInputElement | null;
+        input?.focus();
+      }
+    }
     if (this.args.onFocus) {
       this.args.onFocus(this.storedAPI, event);
     }
@@ -495,6 +513,9 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
       scheduleTask(this, 'actions', this._updateIsActive, false);
+    }
+    if (this.searchFieldPosition === 'trigger') {
+      this.searchText = '';
     }
     if (this.args.onBlur) {
       this.args.onBlur(this.storedAPI, event);
@@ -585,6 +606,9 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
       this.storedAPI.actions.close(e);
+      if (this.searchFieldPosition === 'trigger') {
+        this.searchText = '';
+      }
       // return false;
     }
   }

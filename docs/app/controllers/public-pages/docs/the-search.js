@@ -6,6 +6,8 @@ import TheSearch4 from '../../../components/snippets/the-search-4';
 import TheSearch5 from '../../../components/snippets/the-search-5';
 import TheSearch6 from '../../../components/snippets/the-search-6';
 import TheSearch7 from '../../../components/snippets/the-search-7';
+import TheSearch8 from '../../../components/snippets/the-search-8';
+import TheSearch9 from '../../../components/snippets/the-search-9';
 
 export default class TheSearch extends Controller {
   theSearch1 = TheSearch1;
@@ -15,6 +17,8 @@ export default class TheSearch extends Controller {
   theSearch5 = TheSearch5;
   theSearch6 = TheSearch6;
   theSearch7 = TheSearch7;
+  theSearch8 = TheSearch8;
+  theSearch9 = TheSearch9;
   names = [
     'Stefan',
     'Miguel',
