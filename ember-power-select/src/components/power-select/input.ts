@@ -51,9 +51,7 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
       this.args.select.searchText = '';
     }
 
-    if (this.args.onBlur(event)) {
-      return false;
-    }
+    this.args.onBlur(event as FocusEvent);
   }
 
   setupInput = modifier(
