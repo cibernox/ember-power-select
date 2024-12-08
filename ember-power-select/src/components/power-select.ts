@@ -91,7 +91,7 @@ export interface PowerSelectArgs {
   animationEnabled?: boolean;
   tabindex?: number | string;
   searchPlaceholder?: string;
-  searchFieldPosition?: string;
+  searchFieldPosition?: TSearchFieldPosition;
   verticalPosition?: string;
   horizontalPosition?: string;
   triggerId?: string;
@@ -135,6 +135,7 @@ export interface PowerSelectArgs {
 }
 
 export type TLabelClickAction = 'focus' | 'open';
+export type TSearchFieldPosition = 'before-options' | 'trigger';
 
 export interface PowerSelectSignature {
   Element: HTMLElement;
