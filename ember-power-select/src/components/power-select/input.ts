@@ -48,7 +48,7 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
   @action
   handleBlur(event: Event) {
     if (this.args.searchFieldPosition === 'trigger') {
-      this.args.select.searchText = '';
+      this.args.select.actions?.search('');
     }
 
     this.args.onBlur(event as FocusEvent);
