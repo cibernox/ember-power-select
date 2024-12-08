@@ -515,9 +515,6 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     if (!this.isDestroying) {
       scheduleTask(this, 'actions', this._updateIsActive, false);
     }
-    if (this.searchFieldPosition === 'trigger') {
-      this.searchText = '';
-    }
     if (this.args.onBlur) {
       this.args.onBlur(this.storedAPI, event);
     }

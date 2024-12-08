@@ -20,7 +20,7 @@
     aria-describedby={{@ariaDescribedBy}}
     {{on "input" this.handleInput}}
     {{on "focus" @onFocus}}
-    {{on "blur" @onBlur}}
+    {{on "blur" this.handleBlur}}
     {{on "keydown" this.handleKeydown}}
     {{this.setupInput}}
   >

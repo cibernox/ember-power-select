@@ -45,6 +45,17 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
     }
   }
 
+  @action
+  handleBlur(event: Event) {
+    if (this.args.searchFieldPosition === 'trigger') {
+      this.args.select.searchText = '';
+    }
+
+    if (this.args.onBlur(event)) {
+      return false;
+    }
+  }
+
   setupInput = modifier(
     (el: HTMLElement) => {
       if (this.didSetup) {
