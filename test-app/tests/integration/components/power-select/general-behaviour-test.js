@@ -126,6 +126,27 @@ module(
         .exists('The search box is rendered');
     });
 
+    test('The search box position is inside the trigger by passing `@searchFieldPosition="trigger"`', async function (assert) {
+      assert.expect(3);
+
+      this.numbers = numbers;
+      await render(hbs`
+      <PowerSelect @options={{this.numbers}} @searchEnabled={{true}} @searchFieldPosition="trigger" @onChange={{fn (mut this.foo)}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+      assert
+        .dom('.ember-power-select-trigger input[type="search"]')
+        .exists('The search box is rendered in trigger');
+
+      await clickTrigger();
+      assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
+      assert
+        .dom('.ember-power-select-search')
+        .doesNotExist('The search box does not exists in dropdown');
+    });
+
     test("The search box shouldn't gain focus if autofocus is disabled", async function (assert) {
       assert.expect(1);
       this.numbers = numbers;

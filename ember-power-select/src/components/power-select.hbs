@@ -85,6 +85,7 @@
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
           @searchField={{@searchField}}
+          @searchFieldPosition={{this.searchFieldPosition}}
           @onFocus={{this.handleFocus}}
           @onBlur={{this.handleBlur}}
           @extra={{@extra}}
@@ -133,6 +134,7 @@
             @ariaActiveDescendant={{if this.highlightedIndex (concat publicAPI.uniqueId "-" this.highlightedIndex)}}
             @selectedItemComponent={{ensure-safe-component @selectedItemComponent}}
             @searchPlaceholder={{@searchPlaceholder}}
+            @searchFieldPosition={{this.searchFieldPosition}}
             @ariaLabel={{@ariaLabel}}
             @ariaLabelledBy={{this.ariaLabelledBy}}
             @ariaDescribedBy={{@ariaDescribedBy}}

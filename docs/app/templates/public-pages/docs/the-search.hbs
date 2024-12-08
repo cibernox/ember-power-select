@@ -25,6 +25,22 @@
   {{component (ensure-safe-component this.theSearch2)}}
 </CodeExample>
 
+<h2 class="t3">Search field position</h2>
+
+<p>
+  The default search field position for single select is inside the dropdown and only visible when the dropdown is open (<code>@searchFieldPosition="before-options"</code>).<br />
+  In multiple selection you will find the search field inside trigger box (<code>@searchFieldPosition="trigger"</code>).<br />
+  By passing <code>@searchFieldPosition</code> you can change this logic for single and multiple selection.
+</p>
+
+<CodeExample @hbs="the-search-8.hbs" @js="the-search-8.js">
+  {{component (ensure-safe-component this.theSearch8)}}
+</CodeExample>
+
+<CodeExample @hbs="the-search-9.hbs" @js="the-search-9.js">
+  {{component (ensure-safe-component this.theSearch9)}}
+</CodeExample>
+
 <h2 class="t3">Customize the search field</h2>
 
 <p>

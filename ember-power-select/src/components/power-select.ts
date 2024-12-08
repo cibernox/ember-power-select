@@ -91,6 +91,7 @@ export interface PowerSelectArgs {
   animationEnabled?: boolean;
   tabindex?: number | string;
   searchPlaceholder?: string;
+  searchFieldPosition?: TSearchFieldPosition;
   verticalPosition?: string;
   horizontalPosition?: string;
   triggerId?: string;
@@ -134,6 +135,7 @@ export interface PowerSelectArgs {
 }
 
 export type TLabelClickAction = 'focus' | 'open';
+export type TSearchFieldPosition = 'before-options' | 'trigger';
 
 export interface PowerSelectSignature {
   Element: HTMLElement;
@@ -368,6 +370,12 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return '';
   }
 
+  get searchFieldPosition(): string {
+    return this.args.searchFieldPosition === undefined
+      ? 'before-options'
+      : this.args.searchFieldPosition;
+  }
+
   // Actions
   @action
   handleOpen(_select: Select, e: Event): boolean | void {
@@ -417,6 +425,15 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
       this.args.onKeydown(this.storedAPI, e) === false
     ) {
       return false;
+    }
+    if (
+      this.searchFieldPosition === 'trigger' &&
+      !this.storedAPI.isOpen &&
+      e.keyCode !== 9 && // TAB
+      e.keyCode !== 13 && // ENTER
+      e.keyCode !== 27 // ESC
+    ) {
+      this.storedAPI.actions.open(e);
     }
     return this._routeKeydown(this.storedAPI, e);
   }
@@ -478,6 +495,15 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
       scheduleTask(this, 'actions', this._updateIsActive, true);
+    }
+    if (this.searchFieldPosition === 'trigger') {
+      if (event.target) {
+        const target = event.target as HTMLElement;
+        const input = target.querySelector(
+          'input[type="search"]',
+        ) as HTMLInputElement | null;
+        input?.focus();
+      }
     }
     if (this.args.onFocus) {
       this.args.onFocus(this.storedAPI, event);
@@ -578,6 +604,9 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
       this.storedAPI.actions.close(e);
+      if (this.searchFieldPosition === 'trigger') {
+        this.searchText = '';
+      }
       // return false;
     }
   }
