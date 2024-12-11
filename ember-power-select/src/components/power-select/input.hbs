@@ -1,0 +1,27 @@
+<div class="ember-power-select-input">
+  {{!-- template-lint-disable require-input-label --}}
+  <input type="search"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck={{false}}
+    class="ember-power-select-search-input-field"
+    value={{@select.searchText}}
+    role={{or @role "combobox"}}
+    aria-activedescendant={{@ariaActiveDescendant}}
+    aria-controls={{@listboxId}}
+    aria-owns={{@listboxId}}
+    aria-autocomplete="list"
+    aria-haspopup="listbox"
+    aria-expanded={{if @select.isOpen "true" "false"}}
+    placeholder={{@searchPlaceholder}}
+    aria-label={{@ariaLabel}}
+    aria-labelledby={{@ariaLabelledBy}}
+    aria-describedby={{@ariaDescribedBy}}
+    {{on "input" this.handleInput}}
+    {{on "focus" @onFocus}}
+    {{on "blur" this.handleBlur}}
+    {{on "keydown" this.handleKeydown}}
+    {{this.setupInput}}
+  >
+</div>

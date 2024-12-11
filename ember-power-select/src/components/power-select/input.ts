@@ -3,13 +3,11 @@ import { runTask } from 'ember-lifeline';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type { Select, TSearchFieldPosition } from '../power-select';
-import { deprecate } from '@ember/debug';
 
-interface PowerSelectBeforeOptionsSignature {
+interface PowerSelectInputSignature {
   Element: HTMLElement;
   Args: {
     select: Select;
-    searchEnabled: boolean;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
@@ -26,27 +24,8 @@ interface PowerSelectBeforeOptionsSignature {
   };
 }
 
-export default class PowerSelectBeforeOptionsComponent extends Component<PowerSelectBeforeOptionsSignature> {
+export default class PowerSelectInput extends Component<PowerSelectInputSignature> {
   didSetup: boolean = false;
-
-  @action
-  clearSearch(): void {
-    deprecate(
-      'You are using power-select before-option component with ember/render-modifier. Replace {{will-destroy this.clearSearch}} with {{this.setupInput}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this.args.select.actions?.search('');
-  }
 
   @action
   handleKeydown(e: KeyboardEvent): false | void {
@@ -67,22 +46,12 @@ export default class PowerSelectBeforeOptionsComponent extends Component<PowerSe
   }
 
   @action
-  focusInput(el: HTMLElement) {
-    deprecate(
-      'You are using power-select before-option component with ember/render-modifier. Replace {{did-insert this.focusInput}} with {{this.setupInput}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
+  handleBlur(event: Event) {
+    if (this.args.searchFieldPosition === 'trigger') {
+      this.args.select.actions?.search('');
+    }
 
-    this._focusInput(el);
+    this.args.onBlur(event as FocusEvent);
   }
 
   setupInput = modifier(

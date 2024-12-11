@@ -52,7 +52,7 @@
       </li>
     {{/if}}
   {{/each}}
-  {{#if @searchEnabled}}
+  {{#if (and @searchEnabled (eq @searchFieldPosition 'trigger'))}}
     <li class="ember-power-select-trigger-multiple-input-container">
       {{#let
         (component
