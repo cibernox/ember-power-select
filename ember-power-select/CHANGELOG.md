@@ -5,6 +5,15 @@
 
 
 
+
+## v8.6.0 (2024-12-11)
+
+#### :rocket: Enhancement
+* [#1864](https://github.com/cibernox/ember-power-select/pull/1864) Add `@searchFieldPosition` argument ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.5.0 (2024-12-05)
 
 #### :rocket: Enhancement
