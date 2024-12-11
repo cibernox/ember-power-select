@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
 import { scheduleTask } from 'ember-lifeline';
-import type { Select } from '../power-select';
+import type { Select, TSearchFieldPosition } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
@@ -14,7 +14,7 @@ interface PowerSelectMultipleTriggerSignature {
     searchEnabled: boolean;
     placeholder?: string;
     searchField: string;
-    searchFieldPosition?: string;
+    searchFieldPosition?: TSearchFieldPosition;
     listboxId?: string;
     tabindex?: string;
     ariaLabel?: string;

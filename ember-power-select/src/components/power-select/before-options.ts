@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { runTask } from 'ember-lifeline';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { Select } from '../power-select';
+import type { Select, TSearchFieldPosition } from '../power-select';
 import { deprecate } from '@ember/debug';
 
 interface PowerSelectBeforeOptionsSignature {
@@ -15,7 +15,7 @@ interface PowerSelectBeforeOptionsSignature {
     ariaDescribedBy?: string;
     role?: string;
     searchPlaceholder?: string;
-    searchFieldPosition?: string;
+    searchFieldPosition?: TSearchFieldPosition;
     ariaActiveDescendant?: string;
     listboxId?: string;
     onKeydown: (e: KeyboardEvent) => false | void;
