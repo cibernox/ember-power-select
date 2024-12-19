@@ -77,7 +77,7 @@ export default class PowerSelectMultipleInputComponent extends Component<PowerSe
               this.args.searchField,
             );
             this.args.select.actions.search(
-              get(lastSelection, this.args.searchField),
+              get(lastSelection, this.args.searchField) || '',
             );
           }
           this.args.select.actions.open(e);
