@@ -6,6 +6,15 @@
 
 
 
+
+## v8.6.1 (2024-12-19)
+
+#### :bug: Bug Fix
+* [#1865](https://github.com/cibernox/ember-power-select/pull/1865) Fix multiple select error `TypeError Cannot read properties of null (reading 'length')` ([@johanrd](https://github.com/johanrd))
+
+#### Committers: 1
+- [@johanrd](https://github.com/johanrd)
+
 ## v8.6.0 (2024-12-11)
 
 #### :rocket: Enhancement
