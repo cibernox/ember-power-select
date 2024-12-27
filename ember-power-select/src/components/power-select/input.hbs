@@ -8,9 +8,9 @@
     class="ember-power-select-search-input-field"
     value={{@select.searchText}}
     role={{or @role "combobox"}}
-    aria-activedescendant={{@ariaActiveDescendant}}
-    aria-controls={{@listboxId}}
-    aria-owns={{@listboxId}}
+    aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
+    aria-controls={{if @select.isOpen @listboxId}}
+    aria-owns={{if @select.isOpen @listboxId}}
     aria-autocomplete="list"
     aria-haspopup="listbox"
     aria-expanded={{if @select.isOpen "true" "false"}}

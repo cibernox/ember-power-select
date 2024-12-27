@@ -17,6 +17,8 @@ export interface CustomTriggerWithSearchSignature {
 export default class CustomGroupComponent extends Component<CustomTriggerWithSearchSignature> {
   @action
   onSearch(evt: Event) {
-    this.args.select.actions.search((evt.target as HTMLInputElement).value ?? '');
+    this.args.select.actions.search(
+      (evt.target as HTMLInputElement).value ?? '',
+    );
   }
 }
