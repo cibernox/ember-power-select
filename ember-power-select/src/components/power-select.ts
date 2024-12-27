@@ -375,12 +375,15 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
       ? 'before-options'
       : this.args.searchFieldPosition;
   }
-  
+
   get tabindex(): string | number {
-    if (this.args.tabindex === undefined && this.searchFieldPosition === 'trigger') {
+    if (
+      this.args.tabindex === undefined &&
+      this.searchFieldPosition === 'trigger'
+    ) {
       return '-1';
     }
-    
+
     return this.args.tabindex || '0';
   }
 
