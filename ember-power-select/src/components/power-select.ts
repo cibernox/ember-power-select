@@ -370,10 +370,18 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return '';
   }
 
-  get searchFieldPosition(): string {
+  get searchFieldPosition(): TSearchFieldPosition {
     return this.args.searchFieldPosition === undefined
       ? 'before-options'
       : this.args.searchFieldPosition;
+  }
+  
+  get tabindex(): string | number {
+    if (this.args.tabindex === undefined && this.searchFieldPosition === 'trigger') {
+      return '-1';
+    }
+    
+    return this.args.tabindex || '0';
   }
 
   // Actions
