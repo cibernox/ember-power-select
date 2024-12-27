@@ -378,6 +378,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   get tabindex(): string | number {
     if (
+      this.args.searchEnabled &&
       this.args.tabindex === undefined &&
       this.searchFieldPosition === 'trigger'
     ) {
