@@ -7,6 +7,15 @@
 
 
 
+
+## v8.6.2 (2024-12-27)
+
+#### :bug: Bug Fix
+* [#1866](https://github.com/cibernox/ember-power-select/pull/1866) Fix a11y error for single select with search field position trigger ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.6.1 (2024-12-19)
 
 #### :bug: Bug Fix
