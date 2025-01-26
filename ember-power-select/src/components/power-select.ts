@@ -25,7 +25,7 @@ import type {
   DropdownActions,
   TRootEventType,
 } from 'ember-basic-dropdown/components/basic-dropdown';
-import Owner from '@ember/application';
+import type Owner from '@ember/owner';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 import { isArray } from '@ember/array';
 import type { ComponentLike } from '@glint/template';

@@ -46,7 +46,7 @@ export default ts.config(
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
-    ignores: ['dist/', 'declarations/', 'node_modules/', 'coverage/', 'vendor/', '!**/.*'],
+    ignores: ['blueprints', 'dist/', 'declarations/', 'node_modules/', 'coverage/', 'vendor/', '!**/.*'],
   },
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
