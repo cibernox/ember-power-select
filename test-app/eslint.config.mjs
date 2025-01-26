@@ -93,6 +93,7 @@ export default ts.config(
     rules: {
       // Add any custom rules here
       '@typescript-eslint/no-explicit-any': 0,
+      '@typescript-eslint/no-unsafe-argument': 'off',
     },
   },
   {
