@@ -46,7 +46,15 @@ export default ts.config(
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
-    ignores: ['blueprints', 'dist/', 'declarations/', 'node_modules/', 'coverage/', 'vendor/', '!**/.*'],
+    ignores: [
+      'blueprints',
+      'dist/',
+      'declarations/',
+      'node_modules/',
+      'coverage/',
+      'vendor/',
+      '!**/.*',
+    ],
   },
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
@@ -80,7 +88,9 @@ export default ts.config(
     extends: [...ts.configs.recommendedTypeChecked, ember.configs.gts],
     rules: {
       '@typescript-eslint/no-explicit-any': 0,
-    }
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/unbound-method': 'off',
+    },
   },
   {
     files: ['src/**/*'],

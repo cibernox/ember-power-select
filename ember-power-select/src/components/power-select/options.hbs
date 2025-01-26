@@ -1,14 +1,19 @@
-{{!-- template-lint-disable require-context-role --}}
+{{! template-lint-disable require-context-role }}
 <ul {{this.setupHandlers}} ...attributes>
   {{#if @select.loading}}
     {{#if @loadingMessage}}
-      <li class="ember-power-select-option ember-power-select-option--loading-message" role="option" aria-selected={{false}}>{{@loadingMessage}}</li>
+      <li
+        class="ember-power-select-option ember-power-select-option--loading-message"
+        role="option"
+        aria-selected={{false}}
+      >{{@loadingMessage}}</li>
     {{/if}}
   {{/if}}
   {{#let
     (component (ensure-safe-component @groupComponent))
     (component (ensure-safe-component @optionsComponent))
-  as |Group Options|}}
+    as |Group Options|
+  }}
     {{#each @options as |opt index|}}
       {{#if (ember-power-select-is-group opt)}}
         <Group @group={{opt}} @select={{@select}} @extra={{@extra}}>
@@ -21,12 +26,15 @@
             @extra={{@extra}}
             role="presentation"
             data-optgroup="true"
-            class="ember-power-select-options" as |option|>
+            class="ember-power-select-options"
+            as |option|
+          >
             {{yield option @select}}
           </Options>
         </Group>
       {{else}}
-        <li class="ember-power-select-option"
+        <li
+          class="ember-power-select-option"
           id="{{@select.uniqueId}}-{{@groupIndex}}{{index}}"
           aria-selected="{{ember-power-select-is-equal opt @select.selected}}"
           aria-disabled={{if opt.disabled "true"}}

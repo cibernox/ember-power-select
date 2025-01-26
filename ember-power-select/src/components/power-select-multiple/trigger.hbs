@@ -1,7 +1,7 @@
-{{!-- template-lint-disable no-invalid-interactive --}}
-{{!-- template-lint-disable no-pointer-down-event-binding --}}
-{{!-- template-lint-disable no-unsupported-role-attributes --}}
-{{!-- template-lint-disable require-aria-activedescendant-tabindex --}}
+{{! template-lint-disable no-invalid-interactive }}
+{{! template-lint-disable no-pointer-down-event-binding }}
+{{! template-lint-disable no-unsupported-role-attributes }}
+{{! template-lint-disable require-aria-activedescendant-tabindex }}
 <ul
   id="ember-power-select-multiple-options-{{@select.uniqueId}}"
   aria-activedescendant={{if
@@ -30,7 +30,10 @@
         </span>
       {{/unless}}
       {{#if @selectedItemComponent}}
-        {{#let (component (ensure-safe-component @selectedItemComponent)) as |SelectedItemComponent|}}
+        {{#let
+          (component (ensure-safe-component @selectedItemComponent))
+          as |SelectedItemComponent|
+        }}
           <SelectedItemComponent
             @extra={{@extra}}
             @option={{opt}}
@@ -44,15 +47,16 @@
   {{else}}
     {{#if (and @placeholder (not @searchEnabled))}}
       <li>
-        {{#let (component (ensure-safe-component @placeholderComponent)) as |PlaceholderComponent|}}
-          <PlaceholderComponent
-            @placeholder={{@placeholder}}
-          />
+        {{#let
+          (component (ensure-safe-component @placeholderComponent))
+          as |PlaceholderComponent|
+        }}
+          <PlaceholderComponent @placeholder={{@placeholder}} />
         {{/let}}
       </li>
     {{/if}}
   {{/each}}
-  {{#if (and @searchEnabled (eq @searchFieldPosition 'trigger'))}}
+  {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
     <li class="ember-power-select-trigger-multiple-input-container">
       {{#let
         (component
@@ -76,13 +80,19 @@
         )
         as |InputComponent|
       }}
-        {{#let (component (ensure-safe-component @placeholderComponent)) as |PlaceholderComponent|}}
+        {{#let
+          (component (ensure-safe-component @placeholderComponent))
+          as |PlaceholderComponent|
+        }}
           <PlaceholderComponent
             @select={{@select}}
             @placeholder={{@placeholder}}
             @isMultipleWithSearch={{true}}
             @inputComponent={{InputComponent}}
-            @displayPlaceholder={{and (not @select.searchText) (not @select.selected)}}
+            @displayPlaceholder={{and
+              (not @select.searchText)
+              (not @select.selected)
+            }}
           />
         {{/let}}
       {{/let}}
