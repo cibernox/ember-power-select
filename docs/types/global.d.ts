@@ -2,12 +2,10 @@ import '@glint/environment-ember-loose';
 import EmberPowerSelectRegistry from 'ember-power-select/template-registry';
 
 export interface GetCodeSnippetHelperRegistry {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
 export interface CodeBlockRegistry {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 

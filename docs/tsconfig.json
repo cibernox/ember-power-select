@@ -27,7 +27,8 @@
       "./node_modules/@ember-data/model/unstable-preview-types",
       "./node_modules/@ember-data/serializer/unstable-preview-types",
       "./node_modules/@ember-data/tracking/unstable-preview-types",
-      "./node_modules/@warp-drive/core-types/unstable-preview-types"
+      "./node_modules/@warp-drive/core-types/unstable-preview-types",
+      "./node_modules/@types/prismjs"
     ]
   }
 }
