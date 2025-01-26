@@ -1,9 +1,6 @@
 {
   "extends": "@tsconfig/ember/tsconfig.json",
-  "include": [
-    "src/**/*",
-    "unpublished-development-types/**/*"
-  ],
+  "include": ["src/**/*", "unpublished-development-types/**/*"],
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]
   },
@@ -48,6 +45,8 @@
       We want our tooling to know how to resolve our custom files so the appropriate plugins
       can do the proper transformations on those files.
     */
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+
+    "types": ["ember-source/types"]
   }
 }
