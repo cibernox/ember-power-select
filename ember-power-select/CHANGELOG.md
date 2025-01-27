@@ -8,6 +8,19 @@
 
 
 
+
+## v8.7.0 (2025-01-27)
+
+#### :rocket: Enhancement
+* [#1867](https://github.com/cibernox/ember-power-select/pull/1867) Allow `@ember/test-helpers` v5.x and update ember-cli to 6.1 ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#1868](https://github.com/cibernox/ember-power-select/pull/1868) Update `ember-basic-dropdown` to `^8.5.0` ([@mkszepp](https://github.com/mkszepp))
+* [#1867](https://github.com/cibernox/ember-power-select/pull/1867) Allow `@ember/test-helpers` v5.x and update ember-cli to 6.1 ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.6.2 (2024-12-27)
 
 #### :bug: Bug Fix
