@@ -3,9 +3,7 @@ import { modifier } from 'ember-modifier';
 import { htmlSafe, type SafeString } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { assert } from '@ember/debug';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare const Prism: any;
+import Prism from 'prismjs';
 
 interface CodeInlineSignature {
   Element: HTMLElement;
@@ -25,8 +23,8 @@ export default class CodeInline extends Component<CodeInlineSignature> {
       "ember-prism's <CodeBlock/> and <CodeInline/> components require a `code` parameter to be passed in.",
       code !== undefined,
     );
-    if (Prism?.plugins?.NormalizeWhitespace) {
-      return Prism.plugins.NormalizeWhitespace.normalize(code);
+    if (Prism?.plugins['NormalizeWhitespace']) {
+      return Prism.plugins['NormalizeWhitespace'].normalize(code) as string;
     }
 
     return code;

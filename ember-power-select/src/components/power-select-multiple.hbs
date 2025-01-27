@@ -11,7 +11,10 @@
   @labelComponent={{ensure-safe-component @labelComponent}}
   @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
   @allowClear={{@allowClear}}
-  @beforeOptionsComponent={{if @beforeOptionsComponent (ensure-safe-component @beforeOptionsComponent)}}
+  @beforeOptionsComponent={{if
+    @beforeOptionsComponent
+    (ensure-safe-component @beforeOptionsComponent)
+  }}
   @buildSelection={{or @buildSelection this.defaultBuildSelection}}
   @calculatePosition={{@calculatePosition}}
   @closeOnSelect={{@closeOnSelect}}
@@ -30,7 +33,9 @@
   @matcher={{@matcher}}
   @matchTriggerWidth={{@matchTriggerWidth}}
   @noMatchesMessage={{@noMatchesMessage}}
-  @noMatchesMessageComponent={{ensure-safe-component @noMatchesMessageComponent}}
+  @noMatchesMessageComponent={{ensure-safe-component
+    @noMatchesMessageComponent
+  }}
   @onBlur={{@onBlur}}
   @onChange={{@onChange}}
   @onClose={{@onClose}}
@@ -50,7 +55,7 @@
   @search={{@search}}
   @searchEnabled={{@searchEnabled}}
   @searchField={{@searchField}}
-  @searchFieldPosition={{or @searchFieldPosition 'trigger'}}
+  @searchFieldPosition={{or @searchFieldPosition "trigger"}}
   @searchMessage={{@searchMessage}}
   @searchMessageComponent={{@searchMessageComponent}}
   @searchPlaceholder={{@searchPlaceholder}}
@@ -59,8 +64,7 @@
   @eventType={{@eventType}}
   @title={{@title}}
   @triggerClass="ember-power-select-multiple-trigger {{@triggerClass}}"
-  @triggerComponent={{
-    if
+  @triggerComponent={{if
     @triggerComponent
     (component (ensure-safe-component @triggerComponent) tabindex=@tabindex)
     (component "power-select-multiple/trigger" tabindex=@tabindex)
@@ -70,6 +74,8 @@
   @tabindex={{this.computedTabIndex}}
   @ebdTriggerComponent={{ensure-safe-component @ebdTriggerComponent}}
   @ebdContentComponent={{ensure-safe-component @ebdContentComponent}}
-  ...attributes as |option select|>
+  ...attributes
+  as |option select|
+>
   {{yield option select}}
 </PowerSelect>

@@ -450,7 +450,7 @@ module(
           runTask(
             this,
             function () {
-              data.push('one'); // eslint-disable-line ember/no-array-prototype-extensions
+              data.push('one');
             },
             100,
           );

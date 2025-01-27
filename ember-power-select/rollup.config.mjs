@@ -23,7 +23,7 @@ export default [
           includePaths: [path.resolve('node_modules')],
         },
         output: './vendor/ember-power-select.css',
-      })
+      }),
     ],
   },
   {
@@ -37,13 +37,14 @@ export default [
         options: {
           includePaths: [path.resolve('node_modules')],
         },
-        processor: css => postcss()
-          .process(css, {
-            from: undefined,
-          })
-          .then(result => result.css)
-      })
-    ]
+        processor: (css) =>
+          postcss()
+            .process(css, {
+              from: undefined,
+            })
+            .then((result) => result.css),
+      }),
+    ],
   },
   {
     input: './scss/bootstrap-complete.scss',
@@ -71,13 +72,14 @@ export default [
         options: {
           includePaths: [path.resolve('node_modules')],
         },
-        processor: css => postcss()
-          .process(css, {
-            from: undefined,
-          })
-          .then(result => result.css)
-      })
-    ]
+        processor: (css) =>
+          postcss()
+            .process(css, {
+              from: undefined,
+            })
+            .then((result) => result.css),
+      }),
+    ],
   },
   {
     input: './scss/material-complete.scss',
@@ -105,13 +107,14 @@ export default [
         options: {
           includePaths: [path.resolve('node_modules')],
         },
-        processor: css => postcss()
-          .process(css, {
-            from: undefined,
-          })
-          .then(result => result.css)
-      })
-    ]
+        processor: (css) =>
+          postcss()
+            .process(css, {
+              from: undefined,
+            })
+            .then((result) => result.css),
+      }),
+    ],
   },
   {
     // This provides defaults that work well alongside `publicEntrypoints` below.
@@ -163,6 +166,9 @@ export default [
 
       // Ensure that .gjs files are properly integrated as Javascript
       addon.gjs(),
+
+      // Emit .d.ts declaration files
+      addon.declarations('declarations'),
 
       // addons are allowed to contain imports of .css files, which we want rollup
       // to leave alone and keep in the published output.

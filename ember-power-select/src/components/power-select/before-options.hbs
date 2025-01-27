@@ -1,7 +1,8 @@
-{{#if (and @searchEnabled (eq @searchFieldPosition 'before-options'))}}
+{{#if (and @searchEnabled (eq @searchFieldPosition "before-options"))}}
   <div class="ember-power-select-search">
-    {{!-- template-lint-disable require-input-label --}}
-    <input type="search"
+    {{! template-lint-disable require-input-label }}
+    <input
+      type="search"
       autocomplete="off"
       autocorrect="off"
       autocapitalize="off"
@@ -24,6 +25,6 @@
       {{on "blur" @onBlur}}
       {{on "keydown" this.handleKeydown}}
       {{this.setupInput}}
-    >
+    />
   </div>
 {{/if}}

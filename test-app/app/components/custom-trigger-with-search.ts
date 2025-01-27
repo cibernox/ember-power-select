@@ -1,11 +1,12 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import type { Select } from 'ember-power-select/components/power-select';
 
 export interface CustomTriggerWithSearchSignature {
   Element: Element;
   Args: {
     selected: any;
-    select: any;
+    select: Select;
     listboxId: string;
     lastSearchedText: string;
   };

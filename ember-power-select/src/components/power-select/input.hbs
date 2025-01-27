@@ -1,6 +1,7 @@
 <div class="ember-power-select-input">
-  {{!-- template-lint-disable require-input-label --}}
-  <input type="search"
+  {{! template-lint-disable require-input-label }}
+  <input
+    type="search"
     autocomplete="off"
     autocorrect="off"
     autocapitalize="off"
@@ -23,5 +24,5 @@
     {{on "blur" this.handleBlur}}
     {{on "keydown" this.handleKeydown}}
     {{this.setupInput}}
-  >
+  />
 </div>
