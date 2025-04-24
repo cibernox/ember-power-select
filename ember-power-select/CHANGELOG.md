@@ -737,7 +737,7 @@ For upgrade from v7 to v8 see [here](https://ember-power-select.com/docs/migrate
 # 1.3.0
 - [ENHANCEMENT] Added LESS support, on pair with the SASS one.
 - [BUGFIX] If the addon is installed in the presence of an `app.scss` file, it will automatically
-  append `@import 'ember-power-select';` to it instead of replacing it.
+  append `@use 'ember-power-select';` to it instead of replacing it.
 
 # 1.2.1
 - [BUGFIX] Properly pass the `extra` option to the `optionsComponent`. It used to receive it but

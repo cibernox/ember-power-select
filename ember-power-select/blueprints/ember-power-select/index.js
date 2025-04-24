@@ -26,7 +26,7 @@ module.exports = {
     }
 
     let type;
-    let importStatement = '\n@import "ember-power-select";\n';
+    let importStatement = '\n@use "ember-power-select";\n';
 
     if ('ember-cli-sass' in dependencies) {
       type = 'scss';
