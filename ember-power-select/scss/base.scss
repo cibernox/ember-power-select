@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "./variables.scss" as *;
 
 .ember-power-select-dropdown * {
   box-sizing: border-box;
