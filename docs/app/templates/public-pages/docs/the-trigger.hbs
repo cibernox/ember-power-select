@@ -87,6 +87,16 @@ section for more info.
   part of the component and the subject of the next chapter.
 </p>
 
+<h2 class="t3">HTML attributes</h2>
+
+<p>
+  The trigger component is invoked with <code>...attributes</code> so any general HTML attributes passed to the component will be set on the trigger.
+</p>
+
+<CodeExample @hbs="the-trigger-6.hbs" @js="the-trigger-6.js">
+  {{component (ensure-safe-component this.theTrigger6)}}
+</CodeExample>
+
 <div class="doc-page-nav">
   <LinkTo @route="public-pages.docs.multiple-selection" class="doc-page-nav-link-prev">&lt; Multiple selection</LinkTo>
   <LinkTo @route="public-pages.docs.the-list" class="doc-page-nav-link-next">The list &gt;</LinkTo>
