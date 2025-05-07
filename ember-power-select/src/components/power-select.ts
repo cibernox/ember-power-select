@@ -123,7 +123,7 @@ export interface PowerSelectArgs {
   search?: (
     term: string,
     select: Select,
-  ) => readonly any[] | Promise<readonly any[]>;
+  ) => readonly any[] | Promise<readonly any[]> | Promise<void> ;
   onOpen?: (select: Select, e: Event) => boolean | undefined;
   onClose?: (select: Select, e: Event) => boolean | undefined;
   onInput?: (term: string, select: Select, e: Event) => string | false | void;
