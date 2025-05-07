@@ -4,11 +4,11 @@ import { isEqual } from '@ember/utils';
 import type { PowerSelectSignature, Select } from './power-select';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface PowerSelectMultipleSignature<T> extends PowerSelectSignature<T> {
+interface PowerSelectMultipleSignature<T = unknown> extends PowerSelectSignature<T> {
   // any extra property for multiple selects?
 }
 
-export default class PowerSelectMultipleComponent<T> extends Component<PowerSelectMultipleSignature<T>> {
+export default class PowerSelectMultipleComponent<T = unknown> extends Component<PowerSelectMultipleSignature<T>> {
   get computedTabIndex() {
     if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
       return '-1';
