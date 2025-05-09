@@ -1,23 +1,23 @@
-@import 'variables';
-@import 'base';
-@import 'utilities';
-@import 'layout';
+@use 'variables';
+@use 'base';
+@use 'utilities';
+@use 'layout';
 
 // Components
-@import 'components/main-header';
-@import 'components/link-to-other-version';
-@import 'components/main-footer';
-@import 'components/index';
-@import 'components/side-nav';
-@import 'components/docs';
-@import 'components/cookbook';
+@use 'components/main-header';
+@use 'components/link-to-other-version';
+@use 'components/main-footer';
+@use 'components/index';
+@use 'components/side-nav';
+@use 'components/docs';
+@use 'components/cookbook';
 
 // Docs
-@import 'docs/code-example';
+@use 'docs/code-example';
 @include ember-code-example($brand-color);
 
 // Legacy demo
-@import 'ember-power-select';
+@use 'ember-power-select';
 
 // Utility classes
 .evenly-splitted {

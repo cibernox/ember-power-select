@@ -1,5 +1,3 @@
-@import "./scss/variables.scss";
+@use "ember-basic-dropdown/_index.scss";
 
-@import "ember-basic-dropdown/_index.scss";
-
-@import "./scss/base.scss";
+@use "./scss/base.scss";
