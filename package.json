@@ -25,7 +25,7 @@
     "@glint/core": "^1.5.0",
     "@release-it-plugins/lerna-changelog": "^7.0.0",
     "@release-it-plugins/workspaces": "^4.2.0",
-    "concurrently": "^9.1.0",
+    "concurrently": "^9.1.2",
     "prettier": "^3.3.3",
     "prettier-plugin-ember-template-tag": "^2.0.4",
     "release-it": "^17.10.0",
