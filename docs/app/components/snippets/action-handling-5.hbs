@@ -1,12 +1,18 @@
-<input type="text" placeholder="Focus me and press TAB to focus the select" style="line-height: 2; width: 100%">
-<br>
-<br>
+<input
+  type="text"
+  placeholder="Focus me and press TAB to focus the select"
+  style="line-height: 2; width: 100%"
+/>
+<br />
+<br />
 <PowerSelectMultiple
   @selected={{this.selected}}
   @options={{this.cities}}
   @onChange={{fn (mut this.selected)}}
   @onFocus={{this.handleFocus}}
   @labelText="Country"
-  @onBlur={{this.handleBlur}} as |name|>
+  @onBlur={{this.handleBlur}}
+  as |name|
+>
   {{name}}
 </PowerSelectMultiple>

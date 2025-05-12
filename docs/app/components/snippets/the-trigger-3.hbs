@@ -5,6 +5,8 @@
   @selected={{this.selected}}
   @searchField="name"
   @labelText="Destination"
-  @onChange={{fn (mut this.selected)}} as |country|>
+  @onChange={{fn (mut this.selected)}}
+  as |country|
+>
   {{country.name}}
 </PowerSelect>

@@ -6,12 +6,17 @@
   @searchField="name"
   @labelText="Country"
   @onChange={{fn (mut this.country)}}
-  as |country|>
+  as |country|
+>
   <div class="country-detailed-info">
-    <img src={{country.flagUrl}} class="country-flag" alt="Flag of {{country.name}}">
+    <img
+      src={{country.flagUrl}}
+      class="country-flag"
+      alt="Flag of {{country.name}}"
+    />
     <div class="country-data-text">
       <strong>{{country.name}}</strong>
-      <br>
+      <br />
       <small>Population in 2014: <i>{{country.population}}</i></small>
     </div>
   </div>

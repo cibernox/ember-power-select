@@ -4,6 +4,9 @@
   @matcher={{this.myMatcher}}
   @selected={{this.selectedPerson}}
   @labelText="Person"
-  @onChange={{fn (mut this.selectedPerson)}} as |person|>
-  {{person.name}} {{person.surname}}
+  @onChange={{fn (mut this.selectedPerson)}}
+  as |person|
+>
+  {{person.name}}
+  {{person.surname}}
 </PowerSelect>

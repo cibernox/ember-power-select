@@ -7,7 +7,8 @@
   @search={{this.searchUsers}}
   @labelText="User"
   @searchEnabled={{true}}
-  as |user|>
+  as |user|
+>
   {{user.name}}
 </PowerSelect>
 
@@ -18,7 +19,9 @@
     @selected={{this.chosenCities}}
     @onChange={{fn (mut this.chosenCities)}}
     @labelText="Country"
-    @searchEnabled={{true}} as |city|>
+    @searchEnabled={{true}}
+    as |city|
+  >
     {{city}}
   </PowerSelectMultiple>
 </form>

@@ -1,51 +1,88 @@
 <h1 class="doc-page-title">Installation</h1>
 
 <p>
-  Ember Power Select is distributed as an <a href="http://www.ember-cli.com/" target="_blank" rel="noopener noreferrer">Ember CLI</a> addon,
-  so the majority of the installation will be done by running the following command in your Ember project directory:
+  Ember Power Select is distributed as an
+  <a
+    href="http://www.ember-cli.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >Ember CLI</a>
+  addon, so the majority of the installation will be done by running the
+  following command in your Ember project directory:
 </p>
 
 <div class="highlight">
-  <pre class="language-command"><code class="language-command">$ ember install ember-power-select</code></pre>
+  <pre class="language-command"><code class="language-command">$ ember install
+      ember-power-select</code></pre>
 </div>
 
 <p>
-  When installing via <code>ember install</code>, the addon will automatically add the necessary snippets to your app.
+  When installing via
+  <code>ember install</code>, the addon will automatically add the necessary
+  snippets to your app.
 </p>
 
 <p>
-  The addon uses ember-concurrency internally, which require some manual steps for installation. For these steps, see the <a href="http://ember-concurrency.com/docs/installation" target="_blank" rel="noopener noreferrer">ember-concurrency</a> installation page under <i>"Configure Babel Transform"</i>.
+  The addon uses ember-concurrency internally, which require some manual steps
+  for installation. For these steps, see the
+  <a
+    href="http://ember-concurrency.com/docs/installation"
+    target="_blank"
+    rel="noopener noreferrer"
+  >ember-concurrency</a>
+  installation page under
+  <i>"Configure Babel Transform"</i>.
 </p>
 
 <h2 class="t3">Manual Installation</h2>
 
 <p>
-  If you haven't used <code>ember install</code>, you need to add <code>ember-basic-dropdown</code> and <code>ember-concurrency</code> as <code>devDependencies</code> in your <code>package.json</code>.
+  If you haven't used
+  <code>ember install</code>, you need to add
+  <code>ember-basic-dropdown</code>
+  and
+  <code>ember-concurrency</code>
+  as
+  <code>devDependencies</code>
+  in your
+  <code>package.json</code>.
 </p>
 
 <p>
-  After installation, add the following line to the templates where you want to render the power select content, such as in your <code>application.hbs</code>.
-  This component will render the power select content.
+  After installation, add the following line to the templates where you want to
+  render the power select content, such as in your
+  <code>application.hbs</code>. This component will render the power select
+  content.
 </p>
 
 <CodeBlock @language="hbs" @code="<BasicDropdownWormhole />" />
 
 <p>
-  If you use vanilla CSS, add the following line to your <code>app.js</code> or any route/controller/component <code>.js/.ts</code> file:
+  If you use vanilla CSS, add the following line to your
+  <code>app.js</code>
+  or any route/controller/component
+  <code>.js/.ts</code>
+  file:
 </p>
 
 <CodeBlock @language="js" @code="import 'ember-power-select/styles';" />
 
 <p>
-  Instead of adding the styling in a <code>.js</code> file.
-  Depending on your build config you can also add the CSS in any template/component CSS file using the following line:
+  Instead of adding the styling in a
+  <code>.js</code>
+  file. Depending on your build config you can also add the CSS in any
+  template/component CSS file using the following line:
 </p>
 
-{{!-- template-lint-disable no-potential-path-strings --}}
-<CodeBlock @language="css" @code="@import 'ember-power-select/vendor/ember-power-select.css';" />
+{{! template-lint-disable no-potential-path-strings }}
+<CodeBlock
+  @language="css"
+  @code="@import 'ember-power-select/vendor/ember-power-select.css';"
+/>
 
 <p>
-  If you are using SASS or LESS, you need to add an import statement to your styles.
+  If you are using SASS or LESS, you need to add an import statement to your
+  styles.
 </p>
 
 {{#let (get-code-snippet "installation-1.scss") as |snippet|}}
@@ -53,7 +90,10 @@
 {{/let}}
 
 <p>
-  For LESS, you also need to register the <code>paths</code> in <code>lessOptions</code>.
+  For LESS, you also need to register the
+  <code>paths</code>
+  in
+  <code>lessOptions</code>.
 </p>
 
 {{#let (get-code-snippet "installation-2.js") as |snippet|}}
@@ -61,20 +101,32 @@
 {{/let}}
 
 <p>
-  This explicit import is needed because using CSS preprocessors like SASS and LESS allows you to
-  customize the appearance of ember-power-select using variables. This method is easier and generates less
-  code than overriding styles you don't like.
+  This explicit import is needed because using CSS preprocessors like SASS and
+  LESS allows you to customize the appearance of ember-power-select using
+  variables. This method is easier and generates less code than overriding
+  styles you don't like.
 </p>
 
 <p>
-  For more information about styling, see <LinkTo @route="public-pages.docs.styles">Basic Customization: Styles</LinkTo>.
+  For more information about styling, see
+  <LinkTo @route="public-pages.docs.styles">Basic Customization: Styles</LinkTo>.
 </p>
 
 <p>
-  For further details on ember-concurrency installation, visit the <a href="http://ember-concurrency.com/docs/installation" target="_blank" rel="noopener noreferrer">ember-concurrency</a> installation page.
+  For further details on ember-concurrency installation, visit the
+  <a
+    href="http://ember-concurrency.com/docs/installation"
+    target="_blank"
+    rel="noopener noreferrer"
+  >ember-concurrency</a>
+  installation page.
 </p>
 
 <div class="doc-page-nav">
-  <LinkTo @route="public-pages.docs.index" class="doc-page-nav-link-prev">&lt; Overview</LinkTo>
-  <LinkTo @route="public-pages.docs.how-to-use-it" class="doc-page-nav-link-next">How to use it &gt;</LinkTo>
+  <LinkTo @route="public-pages.docs.index" class="doc-page-nav-link-prev">&lt;
+    Overview</LinkTo>
+  <LinkTo
+    @route="public-pages.docs.how-to-use-it"
+    class="doc-page-nav-link-next"
+  >How to use it &gt;</LinkTo>
 </div>

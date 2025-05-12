@@ -12,7 +12,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  
+
 jobs:
   lint:
     name: Lint
@@ -43,13 +43,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: 20.x
           cache: pnpm
-      
+
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
@@ -68,28 +68,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-          
+
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: 20.x
           cache: pnpm
-          
+
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
       - run: pnpm build
       - run: pnpm i -f # re-sync injected deps
-        
+
       - name: Run Tests
         run: pnpm --filter docs build
-      
+
       - name: Copy 404 page
         run: cp ./docs/404.html ./docs/dist/404.html
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

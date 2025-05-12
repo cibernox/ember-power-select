@@ -1,18 +1,44 @@
 <section class="docs">
   <nav class="side-nav">
     <header class="side-nav-header">Basic recipes</header>
-    <LinkTo @route="public-pages.cookbook.index" class="side-nav-link">System-wide config</LinkTo>
-    <LinkTo @route="public-pages.cookbook.bootstrap-theme" class="side-nav-link">Bootstrap theme</LinkTo>
-    <LinkTo @route="public-pages.cookbook.material-theme" class="side-nav-link">Material theme</LinkTo>
-    <LinkTo @route="public-pages.cookbook.css-animations" class="side-nav-link">CSS Animations</LinkTo>
-    <LinkTo @route="public-pages.cookbook.debounce-searches" class="side-nav-link">Debounce searches</LinkTo>
-    <LinkTo @route="public-pages.cookbook.create-custom-options" class="side-nav-link">Create custom options</LinkTo>
-    {{!-- <header class="side-nav-header">Advanced recipes</header>
-    <LinkTo @route="public-pages.cookbook.navigable-select" class="side-nav-link">Navigable select</LinkTo> --}}
+    <LinkTo
+      @route="public-pages.cookbook.index"
+      class="side-nav-link"
+    >System-wide config</LinkTo>
+    <LinkTo
+      @route="public-pages.cookbook.bootstrap-theme"
+      class="side-nav-link"
+    >Bootstrap theme</LinkTo>
+    <LinkTo
+      @route="public-pages.cookbook.material-theme"
+      class="side-nav-link"
+    >Material theme</LinkTo>
+    <LinkTo
+      @route="public-pages.cookbook.css-animations"
+      class="side-nav-link"
+    >CSS Animations</LinkTo>
+    <LinkTo
+      @route="public-pages.cookbook.debounce-searches"
+      class="side-nav-link"
+    >Debounce searches</LinkTo>
+    <LinkTo
+      @route="public-pages.cookbook.create-custom-options"
+      class="side-nav-link"
+    >Create custom options</LinkTo>
+    {{! <header class="side-nav-header">Advanced recipes</header>
+    <LinkTo @route="public-pages.cookbook.navigable-select" class="side-nav-link">Navigable select</LinkTo> }}
   </nav>
   <section class="doc-page">
     <div class="doc-submenu">
-      <PowerSelect @selected={{this.currentSection}} @options={{this.groupedSections}} @onChange={{this.visit}} @labelText="Submenu" @searchField="text" @triggerClass="section-selector" as |option|>
+      <PowerSelect
+        @selected={{this.currentSection}}
+        @options={{this.groupedSections}}
+        @onChange={{this.visit}}
+        @labelText="Submenu"
+        @searchField="text"
+        @triggerClass="section-selector"
+        as |option|
+      >
         {{option.text}}
       </PowerSelect>
     </div>

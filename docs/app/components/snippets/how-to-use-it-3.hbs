@@ -1,4 +1,14 @@
-<PowerSelect @options={{this.countries}} @selected={{this.destination}} @labelText="Country" @onChange={{this.foo}} as |country|>
-  <img src={{country.flagUrl}} class="icon-flag" alt="Flag of {{country.name}}">
+<PowerSelect
+  @options={{this.countries}}
+  @selected={{this.destination}}
+  @labelText="Country"
+  @onChange={{this.foo}}
+  as |country|
+>
+  <img
+    src={{country.flagUrl}}
+    class="icon-flag"
+    alt="Flag of {{country.name}}"
+  />
   <strong>{{country.name}}</strong>
 </PowerSelect>

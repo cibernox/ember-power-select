@@ -1,43 +1,56 @@
 <h1 class="doc-page-title">Overview</h1>
 
 <p>
-  Selects. Almost all web applications out there have selects on one way or another. A piece of
-  UI that allows the user to choose one option among a list of them.
+  Selects. Almost all web applications out there have selects on one way or
+  another. A piece of UI that allows the user to choose one option among a list
+  of them.
 </p>
 
 <p>
-  Browsers always had a <code>select</code> tag but it is very limited. They can only
-  display plain text, they look totally different in each browser and you can't reliably
-  style them, so devs have built their own select components to bypass all these limitations.
+  Browsers always had a
+  <code>select</code>
+  tag but it is very limited. They can only display plain text, they look
+  totally different in each browser and you can't reliably style them, so devs
+  have built their own select components to bypass all these limitations.
 </p>
 
 <p>
-  Two good examples of jQuery plugins that did a great job are <a href="http://brianreavis.github.io/selectize.js">Selectize.js</a>
-  and <a href="https://select2.github.io/">Select2</a>, that solve the styling issues while
-  allowing features that the original tag can't have.
+  Two good examples of jQuery plugins that did a great job are
+  <a href="http://brianreavis.github.io/selectize.js">Selectize.js</a>
+  and
+  <a href="https://select2.github.io/">Select2</a>, that solve the styling
+  issues while allowing features that the original tag can't have.
 </p>
 
 <p>
-  But even being two solid pieces of engineering they are fundamentally flawed when it comes to
-  play with frontend frameworks like Ember.js. Those libraries have an imperative API designed to
-  append a component to an otherwise existing HTML document, with HTML in mind.
+  But even being two solid pieces of engineering they are fundamentally flawed
+  when it comes to play with frontend frameworks like Ember.js. Those libraries
+  have an imperative API designed to append a component to an otherwise existing
+  HTML document, with HTML in mind.
 </p>
 
 <p>
-  In Ember apps, however, we don't think in terms of nodes, events and tags, but in terms of data, actions and templates.
-  The translation between those two visions, even if possible (two good examples of prior art are
-  <a href="https://github.com/iStefo/ember-select-2">ember-select2</a> and
-  <a href="https://github.com/miguelcobain/ember-cli-selectize">ember-cli-selectize</a>), involves
-  a significant amount of glue code and prevents us from taking advantage of Ember's primitives.
+  In Ember apps, however, we don't think in terms of nodes, events and tags, but
+  in terms of data, actions and templates. The translation between those two
+  visions, even if possible (two good examples of prior art are
+  <a href="https://github.com/iStefo/ember-select-2">ember-select2</a>
+  and
+  <a
+    href="https://github.com/miguelcobain/ember-cli-selectize"
+  >ember-cli-selectize</a>), involves a significant amount of glue code and
+  prevents us from taking advantage of Ember's primitives.
 </p>
 
 <p>
-  This project aims to build a select component that has all the features of those existing libraries
-  but allows to you to leverage Ember's primitives.
+  This project aims to build a select component that has all the features of
+  those existing libraries but allows to you to leverage Ember's primitives.
 </p>
 
 <p>Let's see how.</p>
 
 <div class="doc-page-nav">
-  <LinkTo @route="public-pages.docs.installation" class="doc-page-nav-link-next">Installation &gt;</LinkTo>
+  <LinkTo
+    @route="public-pages.docs.installation"
+    class="doc-page-nav-link-next"
+  >Installation &gt;</LinkTo>
 </div>

@@ -4,6 +4,8 @@
   @onChange={{fn (mut this.selectedCities)}}
   @searchEnabled={{true}}
   @labelText="Country"
-  @onKeydown={{this.handleKeydown}} as |name|>
+  @onKeydown={{this.handleKeydown}}
+  as |name|
+>
   {{name}}
 </PowerSelectMultiple>
