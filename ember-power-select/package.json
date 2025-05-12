@@ -99,7 +99,7 @@
     "concurrently": "^9.1.2",
     "ember-basic-dropdown": "^8.5.0",
     "ember-concurrency": "^4.0.2",
-    "ember-source": "~6.1.0",
+    "ember-source": "~6.4.0",
     "ember-template-lint": "^6.1.0",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
