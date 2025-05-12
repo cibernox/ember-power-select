@@ -3,7 +3,10 @@
   @verticalPosition="above"
   @selected={{this.name}}
   @labelText="Name"
-  @onChange={{fn (mut this.name)}} as |name|>
+  @onChange={{fn (mut this.name)}}
+  as |name|
+>
   {{name}}
 </PowerSelect>
-(This list of options will always be on top regardless of how much available space there is around)
+(This list of options will always be on top regardless of how much available
+space there is around)

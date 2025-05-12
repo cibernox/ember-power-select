@@ -5,6 +5,11 @@
   @selected={{this.selected}}
   @onChange={{fn (mut this.selected)}}
   @labelText="Country"
-  @beforeOptionsComponent={{component "power-select/before-options" autofocus=false}} as |country|>
+  @beforeOptionsComponent={{component
+    "power-select/before-options"
+    autofocus=false
+  }}
+  as |country|
+>
   {{country.name}}
 </PowerSelect>

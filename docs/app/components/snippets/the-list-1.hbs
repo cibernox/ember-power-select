@@ -3,7 +3,9 @@
   @destination="customized-destination"
   @selected={{this.name123}}
   @labelText="Name"
-  @onChange={{fn (mut this.name123)}} as |name|>
+  @onChange={{fn (mut this.name123)}}
+  as |name|
+>
   {{name}}
 </PowerSelect>
 <div id="customized-destination"></div>

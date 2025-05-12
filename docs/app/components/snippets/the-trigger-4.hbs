@@ -3,6 +3,8 @@
   @selected={{this.aName}}
   @placeholderComponent={{component "weird-placeholder"}}
   @labelText="Name"
-  @onChange={{fn (mut this.aName)}} as |name|>
+  @onChange={{fn (mut this.aName)}}
+  as |name|
+>
   {{name}}
 </PowerSelect>

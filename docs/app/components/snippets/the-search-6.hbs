@@ -3,6 +3,8 @@
   @options={{this.names}}
   @selected={{this.selectedPersonName}}
   @labelText="Name"
-  @onChange={{fn (mut this.selectedPersonName)}} as |name select|>
+  @onChange={{fn (mut this.selectedPersonName)}}
+  as |name select|
+>
   {{highlight-substr name select.lastSearchedText}}
 </PowerSelect>

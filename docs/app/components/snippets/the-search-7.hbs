@@ -4,6 +4,8 @@
   @searchPlaceholder="Type to name..."
   @selected={{this.person}}
   @labelText="Name"
-  @onChange={{fn (mut this.person)}} as |name|>
+  @onChange={{fn (mut this.person)}}
+  as |name|
+>
   {{name}}
 </PowerSelect>

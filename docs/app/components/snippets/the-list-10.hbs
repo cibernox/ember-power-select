@@ -3,7 +3,13 @@
   @renderInPlace={{true}}
   @selected={{this.name345}}
   @labelText="Name"
-  @onChange={{fn (mut this.name345)}} as |name|>
+  @onChange={{fn (mut this.name345)}}
+  as |name|
+>
   {{name}}
-  <a href="#" {{on "mouseup" this.stopPropagation}} {{on "click" (fn this.removeName name)}}>&times;</a>
+  <a
+    href="#"
+    {{on "mouseup" this.stopPropagation}}
+    {{on "click" (fn this.removeName name)}}
+  >&times;</a>
 </PowerSelect>

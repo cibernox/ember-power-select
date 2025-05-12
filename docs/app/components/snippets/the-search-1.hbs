@@ -3,6 +3,8 @@
   @options={{this.diacritics}}
   @selected={{this.selectedDiacritic}}
   @labelText="Name"
-  @onChange={{fn (mut this.selectedDiacritic)}} as |name|>
+  @onChange={{fn (mut this.selectedDiacritic)}}
+  as |name|
+>
   {{name}}
 </PowerSelect>

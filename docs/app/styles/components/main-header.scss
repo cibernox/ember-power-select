@@ -35,7 +35,9 @@
 // Easter egg
 $almost-white: #fff2f2;
 .main-header-select {
-  a { color: $almost-white; }
+  a {
+    color: $almost-white;
+  }
   .ember-basic-dropdown-trigger.ember-power-select-trigger {
     padding: 0rem 2rem 0rem 0.5rem !important;
     background-color: transparent;
@@ -56,7 +58,7 @@ $almost-white: #fff2f2;
   font-size: 24px;
   border: 2px solid $almost-white;
   border-top: none;
-  background: $brand-color linear-gradient(#E61A1A, #EB3E3E);
+  background: $brand-color linear-gradient(#e61a1a, #eb3e3e);
   .ember-power-select-option {
     font-weight: 600;
   }
@@ -64,10 +66,10 @@ $almost-white: #fff2f2;
     border-bottom: 2px solid $almost-white;
   }
   border-bottom: 2px solid $almost-white;
-  .ember-power-select-option[aria-selected=true] {
+  .ember-power-select-option[aria-selected="true"] {
     background-color: transparent;
   }
-  .ember-power-select-option[aria-current=true] {
+  .ember-power-select-option[aria-current="true"] {
     background-color: $almost-white;
     color: $brand-color;
   }
@@ -99,4 +101,3 @@ $almost-white: #fff2f2;
     color: $brand-color;
   }
 }
-
