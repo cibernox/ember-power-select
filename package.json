@@ -20,7 +20,7 @@
     "start:test-app": "pnpm run --filter test-app start",
     "test:ember": "pnpm --filter '*' test:ember"
   },
-  "packageManager": "pnpm@10.0.0",
+  "packageManager": "pnpm@10.10.0",
   "devDependencies": {
     "@glint/core": "^1.5.0",
     "@release-it-plugins/lerna-changelog": "^7.0.0",
