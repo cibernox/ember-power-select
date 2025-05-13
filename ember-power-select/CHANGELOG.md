@@ -9,6 +9,24 @@
 
 
 
+
+## v8.7.1 (2025-05-13)
+
+#### :bug: Bug Fix
+* [#1879](https://github.com/cibernox/ember-power-select/pull/1879) Fix empty ariaLabelledBy ([@mkszepp](https://github.com/mkszepp))
+* [#1877](https://github.com/cibernox/ember-power-select/pull/1877) Remove ember-source and glimmer tracking as a peer dependency ([@runspired](https://github.com/runspired))
+
+#### :memo: Documentation
+* [#1872](https://github.com/cibernox/ember-power-select/pull/1872) DOCS: Add `@required` and `attributes` ([@andrew-paterson](https://github.com/andrew-paterson))
+
+#### :house: Internal
+* [#1873](https://github.com/cibernox/ember-power-select/pull/1873) Remove incorrect lock files ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 3
+- Andrew Paterson ([@andrew-paterson](https://github.com/andrew-paterson))
+- Chris Thoburn ([@runspired](https://github.com/runspired))
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.7.0 (2025-01-27)
 
 #### :rocket: Enhancement
