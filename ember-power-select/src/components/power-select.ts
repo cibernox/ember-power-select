@@ -358,7 +358,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return `${this._uid}-label`;
   }
 
-  get ariaLabelledBy(): string {
+  get ariaLabelledBy(): string | undefined {
     if (this.args.ariaLabelledBy) {
       return this.args.ariaLabelledBy;
     }
@@ -366,8 +366,6 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     if (this.args.labelText || this.args.labelComponent) {
       return this.labelId;
     }
-
-    return '';
   }
 
   get searchFieldPosition(): TSearchFieldPosition {
