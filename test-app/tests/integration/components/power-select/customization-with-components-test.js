@@ -597,6 +597,91 @@ module(
         );
     });
 
+    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field not in trigger', async function (assert) {
+      this.countries = countries;
+      this.country = [countries[1]]; // Spain
+
+      await render(hbs`
+      <div class="select-box">
+        <PowerSelectMultiple
+            @options={{this.countries}}
+            @selected={{this.country}}
+            @searchEnabled={{true}}
+            @beforeOptionsComponent={{component "custom-multiple-before-options"}}
+            @placeholder="inception"
+            @onChange={{fn (mut this.selected)}}
+            @extra={{hash coolFlagIcon=true}} as |country|>
+          {{country.code}}
+        </PowerSelectMultiple>
+      </div>
+    `);
+
+      await clickTrigger();
+
+      assert.dom('.ember-power-select-trigger input').doesNotExist();
+
+      assert
+        .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
+        .exists(
+          'The custom component is rendered instead of the usual search bar',
+        );
+      assert
+        .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
+        .hasText('inception', 'The placeholder attribute is passed through.');
+      assert
+        .dom('.ember-power-select-dropdown .ember-power-select-placeholder')
+        .exists('The placeholder component is passed through.');
+      assert
+        .dom('.ember-power-select-search-input')
+        .doesNotExist('The search input is not visible');
+      assert
+        .dom('.ember-power-select-dropdown .custom-before-options-search-field')
+        .doesNotExist('Custom search input is visible');
+    });
+
+    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in trigger', async function (assert) {
+      this.countries = countries;
+      this.country = [countries[1]]; // Spain
+
+      await render(hbs`
+      <div class="select-box">
+        <PowerSelectMultiple
+            @options={{this.countries}}
+            @selected={{this.country}}
+            @searchEnabled={{true}}
+            @searchFieldPosition="trigger"
+            @beforeOptionsComponent={{component "custom-multiple-before-options"}}
+            @placeholder="inception"
+            @onChange={{fn (mut this.selected)}}
+            @extra={{hash coolFlagIcon=true}} as |country|>
+          {{country.code}}
+        </PowerSelectMultiple>
+      </div>
+    `);
+
+      await clickTrigger();
+
+      assert.dom('.ember-power-select-trigger input').exists('The search field is in trigger');
+
+      assert
+        .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
+        .exists(
+          'The custom component is rendered instead of the usual search bar',
+        );
+      assert
+        .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
+        .hasText('inception', 'The placeholder attribute is passed through.');
+      assert
+        .dom('.ember-power-select-dropdown .ember-power-select-placeholder')
+        .exists('The placeholder component is passed through.');
+      assert
+        .dom('.ember-power-select-search-input')
+        .doesNotExist('The search input is not visible');
+      assert
+        .dom('.ember-power-select-dropdown .custom-before-options-search-field')
+        .doesNotExist('Custom search input is visible');
+    });
+
     test('The power-select-multiple `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
       assert.expect(3);
 
