@@ -10,6 +10,15 @@
 
 
 
+
+## v8.7.2 (2025-05-26)
+
+#### :bug: Bug Fix
+* [#1882](https://github.com/cibernox/ember-power-select/pull/1882) Fix before options component (add input when position is undefined) & Add tests for `@beforeOptionsComponent` with search field ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.7.1 (2025-05-13)
 
 #### :bug: Bug Fix
