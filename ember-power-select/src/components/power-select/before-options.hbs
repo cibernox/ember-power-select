@@ -1,4 +1,12 @@
-{{#if (and @searchEnabled (or (eq @searchFieldPosition "before-options") (eq @searchFieldPosition undefined)))}}
+{{#if
+  (and
+    @searchEnabled
+    (or
+      (eq @searchFieldPosition "before-options")
+      (eq @searchFieldPosition undefined)
+    )
+  )
+}}
   <div class="ember-power-select-search">
     {{! template-lint-disable require-input-label }}
     <input
