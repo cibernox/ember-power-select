@@ -597,7 +597,7 @@ module(
         );
     });
 
-    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field not in trigger', async function (assert) {
+    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in trigger', async function (assert) {
       this.countries = countries;
       this.country = [countries[1]]; // Spain
 
@@ -618,7 +618,7 @@ module(
 
       await clickTrigger();
 
-      assert.dom('.ember-power-select-trigger input').doesNotExist();
+      assert.dom('.ember-power-select-trigger input').exists('The search field is in trigger');
 
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
@@ -639,7 +639,7 @@ module(
         .doesNotExist('Custom search input is visible');
     });
 
-    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in trigger', async function (assert) {
+    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in before-options', async function (assert) {
       this.countries = countries;
       this.country = [countries[1]]; // Spain
 
@@ -649,7 +649,7 @@ module(
             @options={{this.countries}}
             @selected={{this.country}}
             @searchEnabled={{true}}
-            @searchFieldPosition="trigger"
+            @searchFieldPosition="before-options"
             @beforeOptionsComponent={{component "custom-multiple-before-options"}}
             @placeholder="inception"
             @onChange={{fn (mut this.selected)}}
@@ -661,7 +661,7 @@ module(
 
       await clickTrigger();
 
-      assert.dom('.ember-power-select-trigger input').exists('The search field is in trigger');
+      assert.dom('.ember-power-select-trigger input').doesNotExist('The search field is not in trigger');
 
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
