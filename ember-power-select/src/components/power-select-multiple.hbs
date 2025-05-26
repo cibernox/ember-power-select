@@ -55,7 +55,7 @@
   @search={{@search}}
   @searchEnabled={{@searchEnabled}}
   @searchField={{@searchField}}
-  @searchFieldPosition={{or @searchFieldPosition "trigger"}}
+  @searchFieldPosition={{or @searchFieldPosition (if @beforeOptionsComponent "before-options" "trigger")}}
   @searchMessage={{@searchMessage}}
   @searchMessageComponent={{@searchMessageComponent}}
   @searchPlaceholder={{@searchPlaceholder}}
