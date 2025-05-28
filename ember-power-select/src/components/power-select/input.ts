@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { runTask } from 'ember-lifeline';
+import { runTask, scheduleTask } from 'ember-lifeline';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type { Select, TSearchFieldPosition } from '../power-select';
@@ -27,6 +27,8 @@ interface PowerSelectInputSignature {
 export default class PowerSelectInput extends Component<PowerSelectInputSignature> {
   didSetup: boolean = false;
 
+  private _lastIsOpen: boolean = this.args.select.isOpen;
+
   @action
   handleKeydown(e: KeyboardEvent): false | void {
     if (this.args.onKeydown(e) === false) {
@@ -48,7 +50,7 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
   @action
   handleBlur(event: Event) {
     if (
-      !this.args.select.isOpen &&
+      !this._lastIsOpen &&
       this.args.searchFieldPosition === 'trigger'
     ) {
       this.args.select.actions?.search('');
@@ -75,6 +77,19 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
     // @ts-ignore
     { eager: false },
   );
+
+  openChange = modifier((element: HTMLElement, [isOpen]: [boolean]) => {
+    this._openChanged(element, [isOpen]);
+  });
+
+  private _openChanged(element: HTMLElement, [isOpen]: [boolean]) {
+    if (isOpen === false && this._lastIsOpen === true && document.activeElement !== element) {
+      scheduleTask(this, 'actions', () => {
+        this.args.select.actions?.search('');
+      });
+    }
+    this._lastIsOpen = isOpen;
+  }
 
   private _focusInput(el: HTMLElement) {
     runTask(
