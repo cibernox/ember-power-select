@@ -49,10 +49,7 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
 
   @action
   handleBlur(event: Event) {
-    if (
-      !this._lastIsOpen &&
-      this.args.searchFieldPosition === 'trigger'
-    ) {
+    if (!this._lastIsOpen && this.args.searchFieldPosition === 'trigger') {
       this.args.select.actions?.search('');
     }
 
@@ -83,7 +80,11 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
   });
 
   private _openChanged(element: HTMLElement, [isOpen]: [boolean]) {
-    if (isOpen === false && this._lastIsOpen === true && document.activeElement !== element) {
+    if (
+      isOpen === false &&
+      this._lastIsOpen === true &&
+      document.activeElement !== element
+    ) {
       scheduleTask(this, 'actions', () => {
         this.args.select.actions?.search('');
       });
