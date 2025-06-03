@@ -11,6 +11,15 @@
 
 
 
+
+## v8.7.3 (2025-06-03)
+
+#### :bug: Bug Fix
+* [#1884](https://github.com/cibernox/ember-power-select/pull/1884) Inputfield in trigger - Avoid clearing input field when dropdown is open ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.7.2 (2025-05-26)
 
 #### :bug: Bug Fix
