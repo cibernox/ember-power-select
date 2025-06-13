@@ -60,7 +60,7 @@ interface Sliceable<T> {
   slice(): T[];
 }
 // Some args are not listed here because they are only accessed from the template. Should I list them?
-export interface PowerSelectArgs {
+export interface PowerSelectArgs<T = unknown> {
   highlightOnHover?: boolean;
   placeholderComponent?: string | ComponentLike<any>;
   searchMessage?: string;
@@ -69,7 +69,7 @@ export interface PowerSelectArgs {
   noMatchesMessageComponent?: string | ComponentLike<any>;
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
-  options?: readonly any[] | Promise<readonly any[]>;
+  options?: readonly T[] | Promise<readonly T[]>;
   selected?: any | PromiseProxy<any>;
   destination?: string;
   destinationElement?: HTMLElement;
@@ -137,11 +137,11 @@ export interface PowerSelectArgs {
 export type TLabelClickAction = 'focus' | 'open';
 export type TSearchFieldPosition = 'before-options' | 'trigger';
 
-export interface PowerSelectSignature {
+export interface PowerSelectSignature<T = unknown> {
   Element: HTMLElement;
-  Args: PowerSelectArgs;
+  Args: PowerSelectArgs<T>;
   Blocks: {
-    default: [option: any, select: Select];
+    default: [option: T, select: Select];
   };
 }
 
@@ -163,7 +163,7 @@ const isCancellablePromise = <T>(
   return typeof thing.cancel === 'function';
 };
 
-export default class PowerSelectComponent extends Component<PowerSelectSignature> {
+export default class PowerSelectComponent<T = unknown> extends Component<PowerSelectSignature<T>> {
   // Untracked properties
   _publicAPIActions = {
     search: this._search,
