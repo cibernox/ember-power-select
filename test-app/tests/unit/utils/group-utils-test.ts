@@ -7,7 +7,6 @@ import {
   stripDiacritics,
   countOptions,
   defaultTypeAheadMatcher,
-  type MatcherFn,
 } from 'ember-power-select/utils/group-utils';
 import { module, test } from 'qunit';
 
@@ -42,6 +41,7 @@ const groupedOptionsWithDisabledThings = [
   },
   'one hundred',
   'one thousand',
+  { disabled: true, value: 'one million' },
 ];
 const basicOptions = ['zero', 'one', 'two', 'three', 'four', 'five'];
 
@@ -72,6 +72,7 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#pathForOption works for simple lists with no nesting', function (assert) {
+    // @ts-expect-error Argument of type 'null' is not assignable to parameter of type 'unknown[]'.
     assert.strictEqual(pathForOption(null, null), '');
     assert.strictEqual(pathForOption(basicOptions, null), '');
     assert.strictEqual(pathForOption(basicOptions, ''), '');
@@ -174,6 +175,10 @@ module('Unit | Utility | Group utils', function () {
       option: 'one thousand',
     });
     assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 16), {
+      disabled: true,
+      option: { disabled: true, value: 'one million' },
+    });
+    assert.deepEqual(optionAtIndex(groupedOptionsWithDisabledThings, 17), {
       disabled: false,
       option: undefined,
     });
@@ -184,7 +189,7 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function (assert) {
-    const matcher: MatcherFn = function (value, searchText) {
+    const matcher = function (value: string, searchText: string) {
       return new RegExp(searchText, 'i').test(value) ? 0 : -1;
     };
     assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [
@@ -211,7 +216,7 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function (assert) {
-    const matcher: MatcherFn = function (value, searchText) {
+    const matcher = function (value: string, searchText: string) {
       return new RegExp(searchText, 'i').test(value) ? 0 : -1;
     };
     assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [
@@ -244,7 +249,7 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions skips disabled options and groups if it receives a truty values as 4th arguments', function (assert) {
-    const matcher: MatcherFn = function (value, searchText) {
+    const matcher = function (value: string, searchText: string) {
       return new RegExp(searchText, 'i').test(value) ? 0 : -1;
     };
     assert.deepEqual(

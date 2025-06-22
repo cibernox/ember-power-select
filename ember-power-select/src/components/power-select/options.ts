@@ -4,26 +4,31 @@ import { modifier } from 'ember-modifier';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
-declare const FastBoot: any;
+import type { PowerSelectPowerSelectGroupSignature } from './power-select-group';
+declare const FastBoot: unknown;
 
-interface PowerSelectOptionsSignature {
+export interface PowerSelectOptionsSignature<T = unknown, TExtra = unknown> {
   Element: HTMLElement;
-  Args: PowerSelectOptionsArgs;
+  Args: PowerSelectOptionsArgs<T, TExtra>;
   Blocks: {
-    default: [opt: PowerSelectOptionsArgs, select: Select];
+    default: [opt: T, select: Select<T>];
   };
 }
 
-interface PowerSelectOptionsArgs {
-  select: Select;
+interface PowerSelectOptionsArgs<T = unknown, TExtra = unknown> {
+  select: Select<T>;
   highlightOnHover?: boolean;
   listboxId: string;
   groupIndex: string;
   loadingMessage: string;
-  options: any[];
-  extra: any;
-  groupComponent?: string | ComponentLike<any>;
-  optionsComponent?: string | ComponentLike<any>;
+  options: T[];
+  extra: TExtra;
+  groupComponent?:
+    | string
+    | ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
+  optionsComponent?:
+    | string
+    | ComponentLike<PowerSelectOptionsSignature<T, TExtra>>;
 }
 
 const isTouchDevice = !!window && 'ontouchstart' in window;
@@ -52,7 +57,12 @@ if (typeof FastBoot === 'undefined') {
   })(window.Element.prototype);
 }
 
-export default class PowerSelectOptionsComponent extends Component<PowerSelectOptionsSignature> {
+export default class PowerSelectOptionsComponent<
+  T = unknown,
+  TExtra = unknown,
+> extends Component<PowerSelectOptionsSignature<T, TExtra>> {
+  // extra._isTouchDevice is a workaround for test,!
+  // @ts-expect-error Property '_isTouchDevice' does not exist on type 'NonNullable<TExtra>'.
   private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice;
   private touchMoveEvent?: TouchEvent;
   private mouseOverHandler: EventListener = ((
@@ -133,11 +143,34 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
     this._addHandlers(element);
   });
 
+  isOptionDisabled(option: T): boolean {
+    if (option && typeof option === 'object' && 'disabled' in option) {
+      return option.disabled as boolean;
+    }
+
+    return false;
+  }
+
+  options(group: T): T[] | undefined {
+    if (group && typeof group === 'object' && 'options' in group) {
+      return group.options as T[];
+    }
+
+    return undefined;
+  }
+
   _optionFromIndex(index: string) {
     const parts = index.split('.');
     let option = this.args.options[parseInt(parts[0] ?? '', 10)];
     for (let i = 1; i < parts.length; i++) {
-      option = option.options[parseInt(parts[i] ?? '', 10)];
+      if (
+        option &&
+        typeof option === 'object' &&
+        'options' in option &&
+        option.options
+      ) {
+        option = (option.options as T[])[parseInt(parts[i] ?? '', 10)];
+      }
     }
     return option;
   }

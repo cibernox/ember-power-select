@@ -3,12 +3,12 @@ import { action } from '@ember/object';
 import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
-import type { Select } from '../power-select';
+import type { Select } from '../power-select-multiple';
 
-interface PowerSelectMultipleInputSignature {
+interface PowerSelectMultipleInputSignature<T = unknown> {
   Element: HTMLElement;
   Args: {
-    select: Select;
+    select: Select<T>;
     placeholder?: string;
     searchField: string;
     tabindex?: string;
@@ -24,14 +24,16 @@ interface PowerSelectMultipleInputSignature {
     onKeydown?: (e: KeyboardEvent) => boolean;
     onFocus: (e: FocusEvent) => void;
     onBlur: (e: FocusEvent) => void;
-    buildSelection: (lastSelection: any, select: Select) => any[];
+    buildSelection: (lastSelection: T, select: Select<T>) => T;
   };
 }
 
 const ua = window && window.navigator ? window.navigator.userAgent : '';
 const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
 
-export default class PowerSelectMultipleInputComponent extends Component<PowerSelectMultipleInputSignature> {
+export default class PowerSelectMultipleInputComponent<
+  T = unknown,
+> extends Component<PowerSelectMultipleInputSignature<T>> {
   get maybePlaceholder() {
     if (isIE || !this.args.isDefaultPlaceholder) {
       return undefined;
@@ -77,7 +79,7 @@ export default class PowerSelectMultipleInputComponent extends Component<PowerSe
               this.args.searchField,
             );
             this.args.select.actions.search(
-              get(lastSelection, this.args.searchField) || '',
+              (get(lastSelection, this.args.searchField) || '') as string,
             );
           }
           this.args.select.actions.open(e);

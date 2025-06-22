@@ -3,7 +3,7 @@ import { isArray as isEmberArray } from '@ember/array';
 import { isEqual } from '@ember/utils';
 
 export function emberPowerSelectIsEqual(
-  [option, selected]: [any, any] /* , hash*/,
+  [option, selected]: [unknown, unknown] /* , hash*/,
 ): boolean {
   if (selected === undefined || selected === null) {
     return false;

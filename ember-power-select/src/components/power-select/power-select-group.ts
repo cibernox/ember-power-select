@@ -1,16 +1,19 @@
 import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
+import type { Group } from '../../utils/group-utils';
 
-interface PowerSelectPowerSelectGroupSignature {
+export interface PowerSelectPowerSelectGroupSignature<T = unknown> {
   Element: HTMLElement;
   Args: {
-    group: any;
+    group: Group<T>;
   };
   Blocks: {
     default: [];
   };
 }
 
-export default class PowerSelectGroupComponent extends Component<PowerSelectPowerSelectGroupSignature> {
+export default class PowerSelectGroupComponent<T = unknown> extends Component<
+  PowerSelectPowerSelectGroupSignature<T>
+> {
   uniqueId = guidFor(this);
 }

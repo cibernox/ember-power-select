@@ -17,6 +17,7 @@ import {
   defaultTypeAheadMatcher,
   pathForOption,
   type MatcherFn,
+  type DefaultHighlightedParams,
 } from '../utils/group-utils.ts';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
@@ -29,54 +30,106 @@ import type Owner from '@ember/owner';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 import { isArray } from '@ember/array';
 import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './power-select/placeholder.ts';
+import type { PowerSelectSearchMessageSignature } from './power-select/search-message.ts';
+import type { PowerSelectNoMatchesMessageSignature } from './power-select/no-matches-message.ts';
+import type { BasicDropdownTriggerSignature } from 'ember-basic-dropdown/components/basic-dropdown-trigger';
+import type { BasicDropdownContentSignature } from 'ember-basic-dropdown/components/basic-dropdown-content';
+import type { PowerSelectLabelSignature } from './power-select/label.ts';
+import type { PowerSelectTriggerSignature } from './power-select/trigger.ts';
+import type { PowerSelectBeforeOptionsSignature } from './power-select/before-options.ts';
+import type { PowerSelectOptionsSignature } from './power-select/options.ts';
+import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group.ts';
 
-interface SelectActions extends DropdownActions {
+export interface PowerSelectSelectedItemSignature<
+  T = unknown,
+  TExtra = unknown,
+> {
+  Element: HTMLElement;
+  Args: {
+    extra: TExtra;
+    selected: Selected<T>;
+    select: Select<T>;
+  };
+  Blocks: {
+    default: [];
+  };
+}
+
+export interface PowerSelectAfterOptionsSignature<
+  T = unknown,
+  TExtra = unknown,
+> {
+  Element: HTMLElement;
+  Args: {
+    extra: TExtra;
+    publicApi: Select<T>;
+  };
+  Blocks: {
+    default: [];
+  };
+}
+
+interface SelectActions<T> extends DropdownActions {
   search: (term: string) => void;
-  highlight: (option: any) => void;
-  select: (selected: any, e?: Event) => void;
-  choose: (selected: any, e?: Event) => void;
-  scrollTo: (option: any) => void;
+  highlight: (option: T | undefined) => void;
+  select: (selected: Selected<T>, e?: Event) => void;
+  choose: (selected: Selected<T>, e?: Event) => void;
+  scrollTo: (option: T | undefined) => void;
   labelClick: (e: MouseEvent) => void;
 }
-export interface Select extends Dropdown {
-  selected: any;
-  highlighted: any;
-  options: readonly any[];
-  results: readonly any[];
+
+export interface Select<T> extends Dropdown {
+  selected: Selected<T>;
+  highlighted: T;
+  options: readonly T[];
+  results: readonly T[];
   resultsCount: number;
   loading: boolean;
   isActive: boolean;
   searchText: string;
   lastSearchedText: string;
-  actions: SelectActions;
+  actions: SelectActions<T>;
 }
-interface PromiseProxy<T> extends Promise<T> {
-  content: any;
+
+export interface PromiseProxy<T> extends Promise<T> {
+  content: unknown;
 }
+
 interface CancellablePromise<T> extends Promise<T> {
   cancel: () => void;
 }
+
 interface Sliceable<T> {
   slice(): T[];
 }
+
+export type Selected<T> = T | null | undefined;
+
 // Some args are not listed here because they are only accessed from the template. Should I list them?
-export interface PowerSelectArgs {
+export interface PowerSelectArgs<T = unknown, TExtra = unknown> {
   highlightOnHover?: boolean;
-  placeholderComponent?: string | ComponentLike<any>;
+  placeholderComponent?:
+    | string
+    | ComponentLike<PowerSelectPlaceholderSignature>;
   searchMessage?: string;
-  searchMessageComponent?: string | ComponentLike<any>;
+  searchMessageComponent?:
+    | string
+    | ComponentLike<PowerSelectSearchMessageSignature>;
   noMatchesMessage?: string;
-  noMatchesMessageComponent?: string | ComponentLike<any>;
+  noMatchesMessageComponent?:
+    | string
+    | ComponentLike<PowerSelectNoMatchesMessageSignature>;
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
-  options?: readonly any[] | Promise<readonly any[]>;
-  selected?: any | PromiseProxy<any>;
+  options?: readonly T[] | Promise<readonly T[]>;
+  selected?: T | PromiseProxy<T>;
   destination?: string;
   destinationElement?: HTMLElement;
   closeOnSelect?: boolean;
   renderInPlace?: boolean;
   preventScroll?: boolean;
-  defaultHighlighted?: any;
+  defaultHighlighted?: (params: DefaultHighlightedParams<T>) => T | undefined;
   searchField?: string;
   labelClass?: string;
   labelText?: string;
@@ -105,65 +158,89 @@ export interface PowerSelectArgs {
   rootEventType?: TRootEventType;
   ariaDescribedBy?: string;
   calculatePosition?: CalculatePosition;
-  ebdTriggerComponent?: string | ComponentLike<any>;
-  ebdContentComponent?: string | ComponentLike<any>;
-  labelComponent?: string | ComponentLike<any>;
-  triggerComponent?: string | ComponentLike<any>;
-  selectedItemComponent?: string | ComponentLike<any>;
-  beforeOptionsComponent?: string | ComponentLike<any>;
-  optionsComponent?: string | ComponentLike<any>;
-  groupComponent?: string | ComponentLike<any>;
-  afterOptionsComponent?: string | ComponentLike<any>;
-  extra?: any;
+  ebdTriggerComponent?: string | ComponentLike<BasicDropdownTriggerSignature>;
+  ebdContentComponent?: string | ComponentLike<BasicDropdownContentSignature>;
+  labelComponent?: string | ComponentLike<PowerSelectLabelSignature<T>>;
+  triggerComponent?:
+    | string
+    | ComponentLike<PowerSelectTriggerSignature<T, TExtra>>;
+  selectedItemComponent?:
+    | string
+    | ComponentLike<PowerSelectSelectedItemSignature<T>>;
+  beforeOptionsComponent?:
+    | string
+    | ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
+  optionsComponent?: string | ComponentLike<PowerSelectOptionsSignature<T>>;
+  groupComponent?:
+    | string
+    | ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
+  afterOptionsComponent?:
+    | string
+    | ComponentLike<PowerSelectAfterOptionsSignature<T>>;
+  extra?: TExtra;
   matcher?: MatcherFn;
   initiallyOpened?: boolean;
   typeAheadOptionMatcher?: MatcherFn;
-  buildSelection?: (selected: any, select: Select) => any;
-  onChange: (selection: any, select: Select, event?: Event) => void;
+  buildSelection?: (selected: Selected<T>, select: Select<T>) => T | null;
+  onChange: (selection: Selected<T>, select: Select<T>, event?: Event) => void;
   search?: (
     term: string,
-    select: Select,
-  ) => readonly any[] | Promise<readonly any[]>;
-  onOpen?: (select: Select, e: Event) => boolean | undefined;
-  onClose?: (select: Select, e: Event) => boolean | undefined;
-  onInput?: (term: string, select: Select, e: Event) => string | false | void;
-  onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined;
-  onFocus?: (select: Select, event: FocusEvent) => void;
-  onBlur?: (select: Select, event: FocusEvent) => void;
-  scrollTo?: (option: any, select: Select) => void;
-  registerAPI?: (select: Select) => void;
+    select: Select<T>,
+  ) => readonly T[] | Promise<readonly T[]>;
+  onOpen?: (select: Select<T>, e: Event) => boolean | undefined;
+  onClose?: (select: Select<T>, e: Event) => boolean | undefined;
+  onInput?: (
+    term: string,
+    select: Select<T>,
+    e: Event,
+  ) => string | false | void;
+  onKeydown?: (select: Select<T>, e: KeyboardEvent) => boolean | undefined;
+  onFocus?: (select: Select<T>, event: FocusEvent) => void;
+  onBlur?: (select: Select<T>, event: FocusEvent) => void;
+  scrollTo?: (option: T, select: Select<T>) => void;
+  registerAPI?: (select: Select<T>) => void;
 }
 
 export type TLabelClickAction = 'focus' | 'open';
 export type TSearchFieldPosition = 'before-options' | 'trigger';
 
-export interface PowerSelectSignature {
+export interface PowerSelectSignature<T = unknown> {
   Element: HTMLElement;
-  Args: PowerSelectArgs;
+  Args: PowerSelectArgs<T>;
   Blocks: {
-    default: [option: any, select: Select];
+    default: [option: T, select: Select<T>];
   };
 }
 
-const isSliceable = <T>(coll: any): coll is Sliceable<T> => {
+const isSliceable = <T>(coll: unknown): coll is Sliceable<T> => {
   return isArray(coll);
 };
 
-const isPromiseLike = <T>(thing: any): thing is Promise<T> => {
-  return typeof thing.then === 'function';
+const isPromiseLike = <T>(thing: unknown): thing is Promise<T> => {
+  return (
+    typeof thing === 'object' &&
+    thing !== null &&
+    typeof (thing as { then?: unknown }).then === 'function'
+  );
 };
 
-const isPromiseProxyLike = <T>(thing: any): thing is PromiseProxy<T> => {
+const isPromiseProxyLike = <T>(thing: unknown): thing is PromiseProxy<T> => {
   return isPromiseLike(thing) && Object.hasOwnProperty.call(thing, 'content');
 };
 
 const isCancellablePromise = <T>(
-  thing: any,
+  thing: unknown,
 ): thing is CancellablePromise<T> => {
-  return typeof thing.cancel === 'function';
+  return (
+    typeof thing === 'object' &&
+    thing !== null &&
+    typeof (thing as { cancel?: unknown }).cancel === 'function'
+  );
 };
 
-export default class PowerSelectComponent extends Component<PowerSelectSignature> {
+export default class PowerSelectComponent<T = unknown> extends Component<
+  PowerSelectSignature<T>
+> {
   // Untracked properties
   _publicAPIActions = {
     search: this._search,
@@ -175,32 +252,32 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   };
 
   // Tracked properties
-  @tracked private _resolvedOptions?: readonly any[];
-  @tracked private _resolvedSelected?: any;
+  @tracked private _resolvedOptions?: T | readonly T[];
+  @tracked private _resolvedSelected?: Selected<T>;
   @tracked private _repeatingChar = '';
   @tracked private _expirableSearchText = '';
-  @tracked private _searchResult?: readonly any[];
+  @tracked private _searchResult?: readonly T[];
   @tracked isActive = false;
   @tracked loading = false;
   @tracked searchText = '';
   @tracked lastSearchedText = '';
-  @tracked highlighted?: any;
-  storedAPI!: Select;
+  @tracked highlighted?: Selected<T>;
+  storedAPI!: Select<T>;
 
   private _uid = guidFor(this);
-  private _lastOptionsPromise?: Promise<readonly any[]>;
-  private _lastSelectedPromise?: PromiseProxy<any>;
+  private _lastOptionsPromise?: Promise<readonly T[]>;
+  private _lastSelectedPromise?: PromiseProxy<T>;
   private _lastSearchPromise?:
-    | Promise<readonly any[]>
-    | CancellablePromise<readonly any[]>;
+    | Promise<readonly T[]>
+    | CancellablePromise<readonly T[]>;
   private _filterResultsCache: {
-    results: any[];
-    options: any[];
+    results: T[];
+    options: T[];
     searchText: string;
   } = { results: [], options: [], searchText: this.searchText };
 
   // Lifecycle hooks
-  constructor(owner: Owner, args: PowerSelectArgs) {
+  constructor(owner: Owner, args: PowerSelectArgs<T>) {
     super(owner, args);
     assert(
       '<PowerSelect> requires an `@onChange` function',
@@ -294,10 +371,10 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     );
   }
 
-  get results(): any[] {
+  get results(): T[] {
     if (this.searchText.length > 0) {
       if (this.args.search) {
-        return toPlainArray(this._searchResult || this.options);
+        return toPlainArray(this._searchResult || this.options) as T[];
       } else {
         if (
           this._filterResultsCache.options === this.options &&
@@ -321,10 +398,12 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
   }
 
-  get options(): any[] {
-    if (this._resolvedOptions) return toPlainArray(this._resolvedOptions);
+  get options(): T[] {
+    if (this._resolvedOptions) {
+      return toPlainArray(this._resolvedOptions) as T[];
+    }
     if (this.args.options) {
-      return toPlainArray(this.args.options as any[]);
+      return toPlainArray(this.args.options as T[]) as T[];
     } else {
       return [];
     }
@@ -334,14 +413,14 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return countOptions(this.results);
   }
 
-  get selected(): any {
+  get selected(): T | undefined {
     if (this._resolvedSelected) {
-      return toPlainArray(this._resolvedSelected);
+      return toPlainArray(this._resolvedSelected) as T;
     } else if (
       !isNone(this.args.selected) &&
-      typeof this.args.selected.then !== 'function'
+      !isPromiseLike(this.args.selected)
     ) {
-      return toPlainArray(this.args.selected);
+      return toPlainArray(this.args.selected) as T;
     }
     return undefined;
   }
@@ -388,7 +467,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   // Actions
   @action
-  handleOpen(_select: Select, e: Event): boolean | void {
+  handleOpen(_select: Select<T>, e: Event): boolean | void {
     if (this.args.onOpen && this.args.onOpen(this.storedAPI, e) === false) {
       return false;
     }
@@ -405,7 +484,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   @action
-  handleClose(_select: Select, e: Event): boolean | void {
+  handleClose(_select: Select<T>, e: Event): boolean | void {
     if (this.args.onClose && this.args.onClose(this.storedAPI, e) === false) {
       return false;
     }
@@ -587,27 +666,33 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   _selectedObserverCallback(): void {
-    this._resolvedSelected = this._lastSelectedPromise;
+    this._resolvedSelected = this._lastSelectedPromise as Selected<T>;
     this._highlight(this._resolvedSelected);
   }
 
   @action
-  _highlight(opt: any): void {
-    if (!isNone(opt) && opt.disabled) {
+  _highlight(opt: T | undefined | null): void {
+    if (
+      !isNone(opt) &&
+      opt &&
+      typeof opt === 'object' &&
+      'disabled' in opt &&
+      opt.disabled
+    ) {
       return;
     }
     this.highlighted = opt;
   }
 
   @action
-  _select(selected: any, e?: Event): void {
+  _select(selected: Selected<T>, e?: Event): void {
     if (!isEqual(this.storedAPI.selected, selected)) {
       this.args.onChange(selected, this.storedAPI, e);
     }
   }
 
   @action
-  _choose(selected: any, e?: Event): void {
+  _choose(selected: Selected<T>, e?: Event): void {
     const selection = this.args.buildSelection
       ? this.args.buildSelection(selected, this.storedAPI)
       : selected;
@@ -622,7 +707,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   @action
-  _scrollTo(option: any): void {
+  _scrollTo(option: T): void {
     const select = this.storedAPI;
     if (!document || !option) {
       return;
@@ -656,7 +741,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   @action
-  _registerAPI(triggerElement: Element, [publicAPI]: [Select]): void {
+  _registerAPI(triggerElement: Element, [publicAPI]: [Select<T>]): void {
     deprecate(
       'You are using power-select with ember/render-modifier. Replace {{did-insert this._registerAPI publicAPI}} and {{did-update this._registerAPI publicAPI}} with {{this.updateRegisterAPI publicAPI}}.',
       false,
@@ -712,7 +797,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   );
 
   updateRegisterAPI = modifier(
-    (triggerElement: Element, [publicAPI]: [Select]) => {
+    (triggerElement: Element, [publicAPI]: [Select<T>]) => {
       this.__registerAPI(triggerElement, [publicAPI]);
     },
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -756,7 +841,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   private __updateSelected(): void {
     if (isNone(this.args.selected)) return;
-    if (typeof this.args.selected.then === 'function') {
+    if (isPromiseLike(this.args.selected)) {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
       if (
         this._lastSelectedPromise &&
@@ -770,7 +855,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
         );
       }
 
-      const currentSelectedPromise: PromiseProxy<any> = this.args.selected;
+      const currentSelectedPromise: PromiseProxy<T> = this.args.selected;
       currentSelectedPromise.then(() => {
         if (this.isDestroyed || this.isDestroying) return;
         if (isPromiseProxyLike(currentSelectedPromise)) {
@@ -800,7 +885,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
   }
 
-  private __registerAPI(_: Element, [publicAPI]: [Select]): void {
+  private __registerAPI(_: Element, [publicAPI]: [Select<T>]): void {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
       scheduleTask(this, 'actions', this.args.registerAPI, publicAPI);
@@ -852,11 +937,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
   }
 
-  _defaultBuildSelection(option: any): any {
-    return option;
-  }
-
-  _routeKeydown(select: Select, e: KeyboardEvent): boolean | void {
+  _routeKeydown(select: Select<T>, e: KeyboardEvent): boolean | void {
     if (e.keyCode === 38 || e.keyCode === 40) {
       // Up & Down
       return this._handleKeyUpDown(select, e);
@@ -872,15 +953,15 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
   }
 
-  _handleKeyTab(select: Select, e: KeyboardEvent): void {
+  _handleKeyTab(select: Select<T>, e: KeyboardEvent): void {
     select.actions.close(e);
   }
 
-  _handleKeyESC(select: Select, e: KeyboardEvent): void {
+  _handleKeyESC(select: Select<T>, e: KeyboardEvent): void {
     select.actions.close(e);
   }
 
-  _handleKeyEnter(select: Select, e: KeyboardEvent): boolean | void {
+  _handleKeyEnter(select: Select<T>, e: KeyboardEvent): boolean | void {
     if (select.isOpen && select.highlighted !== undefined) {
       select.actions.choose(select.highlighted, e);
       e.stopImmediatePropagation();
@@ -888,7 +969,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
   }
 
-  _handleKeySpace(select: Select, e: KeyboardEvent): void {
+  _handleKeySpace(select: Select<T>, e: KeyboardEvent): void {
     if (
       e.target !== null &&
       ['TEXTAREA', 'INPUT'].includes((e.target as Element).nodeName)
@@ -901,7 +982,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     }
   }
 
-  _handleKeyUpDown(select: Select, e: KeyboardEvent): void {
+  _handleKeyUpDown(select: Select<T>, e: KeyboardEvent): void {
     if (select.isOpen) {
       e.preventDefault();
       e.stopPropagation();
@@ -919,7 +1000,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   _resetHighlighted(): void {
-    let highlighted;
+    let highlighted: T | null | undefined;
     const defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
       highlighted = defHighlighted({
@@ -933,11 +1014,11 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     this._highlight(highlighted);
   }
 
-  _filter(options: any[], term: string, skipDisabled = false): any[] {
+  _filter(options: T[], term: string, skipDisabled = false): T[] {
     const matcher = this.args.matcher || defaultMatcher;
     const optionMatcher = getOptionMatcher(
-      matcher,
-      defaultMatcher,
+      matcher as MatcherFn,
+      defaultMatcher as MatcherFn,
       this.args.searchField,
     );
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
@@ -948,14 +1029,15 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   findWithOffset(
-    options: readonly any[],
+    options: readonly T[],
     term: string,
     offset: number,
     skipDisabled = false,
-  ): any {
+  ): T | undefined {
     const typeAheadOptionMatcher = getOptionMatcher(
-      this.args.typeAheadOptionMatcher || defaultTypeAheadMatcher,
-      defaultTypeAheadMatcher,
+      this.args.typeAheadOptionMatcher ||
+        (defaultTypeAheadMatcher as MatcherFn),
+      defaultTypeAheadMatcher as MatcherFn,
       this.args.searchField,
     );
     return findOptionWithOffset(
@@ -1037,10 +1119,10 @@ function getOptionMatcher(
   searchField: string | undefined,
 ): MatcherFn {
   if (searchField && matcher === defaultMatcher) {
-    return (option: any, text: string) =>
-      matcher(get(option, searchField), text);
+    return (option: unknown, text: string) =>
+      matcher(get(option, searchField) as string | undefined, text);
   } else {
-    return (option: any, text: string) => {
+    return (option: unknown, text: string) => {
       assert(
         '<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`',
         matcher !== defaultMatcher || typeof option === 'string',
@@ -1054,7 +1136,7 @@ function isNumpadKeyEvent(e: KeyboardEvent): boolean {
   return e.keyCode >= 96 && e.keyCode <= 105;
 }
 
-const toPlainArray = <T>(collection: T[] | Sliceable<T>): T[] => {
+const toPlainArray = <T>(collection: T | T[] | Sliceable<T>): T[] | T => {
   if (isSliceable<T>(collection)) {
     return collection.slice();
   } else {

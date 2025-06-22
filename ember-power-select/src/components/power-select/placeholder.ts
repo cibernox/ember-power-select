@@ -1,11 +1,13 @@
 ﻿import templateOnly from '@ember/component/template-only';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectInputSignature } from './input';
 
-interface PowerSelectPlaceholderSignature {
+export interface PowerSelectPlaceholderSignature {
   Element: HTMLElement;
   Args: {
     isMultipleWithSearch: boolean;
-    placeholder: any;
-    inputComponent?: any;
+    placeholder?: string;
+    inputComponent?: string | ComponentLike<PowerSelectInputSignature>;
   };
 }
 

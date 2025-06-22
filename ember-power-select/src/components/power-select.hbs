@@ -30,8 +30,14 @@
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
   @calculatePosition={{@calculatePosition}}
-  @triggerComponent={{ensure-safe-component @ebdTriggerComponent}}
-  @contentComponent={{ensure-safe-component @ebdContentComponent}}
+  @triggerComponent={{if
+    @ebdTriggerComponent
+    (ensure-safe-component @ebdTriggerComponent)
+  }}
+  @contentComponent={{if
+    @ebdContentComponent
+    (ensure-safe-component @ebdContentComponent)
+  }}
   @rootEventType={{or @rootEventType "mousedown"}}
   as |dropdown|
 >
@@ -102,8 +108,9 @@
           @allowClear={{@allowClear}}
           @buildSelection={{@buildSelection}}
           @loadingMessage={{or @loadingMessage "Loading options..."}}
-          @selectedItemComponent={{ensure-safe-component
+          @selectedItemComponent={{if
             @selectedItemComponent
+            (ensure-safe-component @selectedItemComponent)
           }}
           @select={{publicAPI}}
           @searchEnabled={{@searchEnabled}}
@@ -171,8 +178,9 @@
               this.highlightedIndex
               (concat publicAPI.uniqueId "-" this.highlightedIndex)
             }}
-            @selectedItemComponent={{ensure-safe-component
+            @selectedItemComponent={{if
               @selectedItemComponent
+              (ensure-safe-component @selectedItemComponent)
             }}
             @searchPlaceholder={{@searchPlaceholder}}
             @searchFieldPosition={{this.searchFieldPosition}}

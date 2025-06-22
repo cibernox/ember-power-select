@@ -78,7 +78,7 @@
           @inputComponent={{InputComponent}}
           @displayPlaceholder={{and
             (not @select.searchText)
-            (not @select.selected)
+            (is-empty @select.selected)
           }}
         />
       {{/let}}
