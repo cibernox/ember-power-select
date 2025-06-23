@@ -79,7 +79,7 @@ interface SelectActions<T> extends DropdownActions {
   labelClick: (e: MouseEvent) => void;
 }
 
-export interface Select<T> extends Dropdown {
+export interface Select<T = unknown> extends Dropdown {
   selected: Selected<T>;
   highlighted: T;
   options: readonly T[];
@@ -92,7 +92,7 @@ export interface Select<T> extends Dropdown {
   actions: SelectActions<T>;
 }
 
-export interface PromiseProxy<T> extends Promise<T> {
+export interface PromiseProxy<T = unknown> extends Promise<T> {
   content: unknown;
 }
 
@@ -104,7 +104,7 @@ interface Sliceable<T> {
   slice(): T[];
 }
 
-export type Selected<T> = T | null | undefined;
+export type Selected<T = unknown> = T | null | undefined;
 
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs<T = unknown, TExtra = unknown> {

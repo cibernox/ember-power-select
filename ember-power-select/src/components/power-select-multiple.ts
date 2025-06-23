@@ -27,7 +27,7 @@ import type { PowerSelectBeforeOptionsSignature } from './power-select/before-op
 import type { PowerSelectOptionsSignature } from './power-select/options';
 import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group';
 
-export type Selected<T> = T[] | null | undefined;
+export type Selected<T = unknown> = T[] | null | undefined;
 
 interface SelectActions<T> extends DropdownActions {
   search: (term: string) => void;
@@ -38,7 +38,7 @@ interface SelectActions<T> extends DropdownActions {
   labelClick: (e: MouseEvent) => void;
 }
 
-export interface Select<T>
+export interface Select<T = unknown>
   extends Omit<SingleSelect<T>, 'selected' | 'actions'> {
   selected: Selected<T>;
   actions: SelectActions<T>;
