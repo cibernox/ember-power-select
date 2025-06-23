@@ -1,22 +1,35 @@
 import { isEqual } from '@ember/utils';
+import type EmberArrayLike from '@ember/array';
 
-export type MatcherFn = (option: any, text: string) => number;
-export function isGroup(entry: any): boolean {
-  return !!entry && !!entry.groupName && !!entry.options;
+// type MatcherOption = string | number | Record<string, unknown> | undefined;
+
+export type MatcherFn<T = unknown> = (option: T, text: string) => number;
+export function isGroup<T>(entry: T): boolean {
+  return (
+    !!entry &&
+    typeof entry === 'object' &&
+    'groupName' in entry &&
+    'options' in entry &&
+    !!entry.groupName &&
+    !!entry.options
+  );
 }
 
-export function countOptions(collection: any): number {
+export function countOptions<T = unknown>(collection: readonly T[]): number {
   let counter = 0;
   (function walk(collection): void {
     if (!collection) {
       return;
     }
     for (let i = 0; i < collection.length; i++) {
-      const entry = collection.objectAt
-        ? collection.objectAt(i)
-        : collection[i];
+      const entry =
+        collection &&
+        'objectAt' in collection &&
+        typeof collection.objectAt === 'function'
+          ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
+          : collection[i];
       if (isGroup(entry)) {
-        walk(entry.options);
+        walk((entry as unknown as Group<T>).options);
       } else {
         counter++;
       }
@@ -25,18 +38,24 @@ export function countOptions(collection: any): number {
   return counter;
 }
 
-export function indexOfOption(collection: any, option: any): number {
+export function indexOfOption<T = unknown>(
+  collection: readonly T[],
+  option: T | undefined,
+): number {
   let index = 0;
   return (function walk(collection): number {
     if (!collection) {
       return -1;
     }
     for (let i = 0; i < collection.length; i++) {
-      const entry = collection.objectAt
-        ? collection.objectAt(i)
-        : collection[i];
+      const entry =
+        collection &&
+        'objectAt' in collection &&
+        typeof collection.objectAt === 'function'
+          ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
+          : collection[i];
       if (isGroup(entry)) {
-        const result = walk(entry.options);
+        const result = walk((entry as unknown as Group<T>).options);
         if (result > -1) {
           return result;
         }
@@ -50,17 +69,23 @@ export function indexOfOption(collection: any, option: any): number {
   })(collection);
 }
 
-export function pathForOption(collection: any, option: any): string {
+export function pathForOption<T = unknown>(
+  collection: T[],
+  option: unknown,
+): string {
   return (function walk(collection): string {
     if (!collection) {
       return '';
     }
     for (let i = 0; i < collection.length; i++) {
-      const entry = collection.objectAt
-        ? collection.objectAt(i)
-        : collection[i];
+      const entry =
+        collection &&
+        'objectAt' in collection &&
+        typeof collection.objectAt === 'function'
+          ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
+          : collection[i];
       if (isGroup(entry)) {
-        const result = walk(entry.options);
+        const result = walk((entry as unknown as Group<T>).options);
         if (result.length > 0) {
           return i + '.' + result;
         }
@@ -72,36 +97,42 @@ export function pathForOption(collection: any, option: any): string {
   })(collection);
 }
 
-export function optionAtIndex(
-  originalCollection: any,
+export function optionAtIndex<T = unknown>(
+  originalCollection: readonly T[],
   index: number,
-): { disabled: boolean; option: any } {
+): { disabled: boolean; option: T | undefined } {
   let counter = 0;
   return (
     (function walk(
       collection,
       ancestorIsDisabled,
-    ): { disabled: boolean; option: any } | void {
+    ): { disabled: boolean; option: T | undefined } | void {
       if (!collection || index < 0) {
         return { disabled: false, option: undefined };
       }
       let localCounter = 0;
       const length = collection.length;
       while (counter <= index && localCounter < length) {
-        const entry = collection.objectAt
-          ? collection.objectAt(localCounter)
-          : collection[localCounter];
+        const entry =
+          collection &&
+          'objectAt' in collection &&
+          typeof collection.objectAt === 'function'
+            ? (collection as unknown as EmberArrayLike<T>).objectAt(
+                localCounter,
+              )
+            : collection[localCounter];
         if (isGroup(entry)) {
           const found = walk(
-            entry.options,
-            ancestorIsDisabled || !!entry.disabled,
+            (entry as unknown as Group<T>).options,
+            ancestorIsDisabled || !!(entry as unknown as Group<T>).disabled,
           );
           if (found) {
             return found;
           }
         } else if (counter === index) {
           return {
-            disabled: ancestorIsDisabled || !!entry.disabled,
+            disabled:
+              ancestorIsDisabled || !!(entry as unknown as Group<T>).disabled,
             option: entry,
           };
         } else {
@@ -113,41 +144,53 @@ export function optionAtIndex(
   );
 }
 
-export interface Group {
+export interface Group<T = unknown> {
   groupName: string;
-  options: any[];
+  options: T[];
   disabled?: boolean;
   [key: string]: unknown;
 }
-function copyGroup(group: Group, suboptions: any[]): Group {
-  const groupCopy: Group = { ...group, options: suboptions };
+function copyGroup<T = unknown>(group: Group<T>, suboptions: T[]): Group<T> {
+  const groupCopy: Group<T> = { ...group, options: suboptions };
   if (Object.prototype.hasOwnProperty.call(group, 'disabled')) {
     groupCopy.disabled = group.disabled;
   }
   return groupCopy;
 }
 
-export function findOptionWithOffset(
-  options: any,
+export function findOptionWithOffset<T>(
+  options: readonly T[],
   text: string,
   matcher: MatcherFn,
   offset: number,
   skipDisabled = false,
-): any {
+): T | undefined {
   let counter = 0;
   let foundBeforeOffset;
-  let foundAfterOffset = false;
+  let foundAfterOffset: T | undefined | false = false;
   const canStop = () => !!foundAfterOffset;
 
-  (function walk(options: any, ancestorIsDisabled: boolean): any {
+  (function walk(options: readonly T[], ancestorIsDisabled: boolean): void {
     const length = options.length;
 
     for (let i = 0; i < length; i++) {
-      const entry = options.objectAt ? options.objectAt(i) : options[i];
-      const entryIsDisabled = !!entry.disabled;
+      const entry =
+        options &&
+        'objectAt' in options &&
+        typeof options.objectAt === 'function'
+          ? (options as unknown as EmberArrayLike<T>).objectAt(i)
+          : options[i];
+      const entryIsDisabled =
+        !!entry &&
+        typeof entry === 'object' &&
+        'disabled' in entry &&
+        !!entry.disabled;
       if (!skipDisabled || !entryIsDisabled) {
         if (isGroup(entry)) {
-          walk(entry.options, ancestorIsDisabled || entryIsDisabled);
+          walk(
+            (entry as unknown as Group<T>).options,
+            ancestorIsDisabled || entryIsDisabled,
+          );
           if (canStop()) {
             return;
           }
@@ -174,28 +217,39 @@ export function findOptionWithOffset(
   return foundAfterOffset ? foundAfterOffset : foundBeforeOffset;
 }
 
-export function filterOptions(
-  options: any,
+export function filterOptions<T = unknown, MT = unknown>(
+  options: T[],
   text: string,
-  matcher: MatcherFn,
+  matcher: MatcherFn<MT>,
   skipDisabled = false,
-): any[] {
-  const opts = [];
+): T[] {
+  const opts: T[] = [];
   const length = options.length;
   for (let i = 0; i < length; i++) {
-    const entry = options.objectAt ? options.objectAt(i) : options[i];
-    if (!skipDisabled || !entry.disabled) {
+    const entry =
+      options && 'objectAt' in options && typeof options.objectAt === 'function'
+        ? (options as unknown as EmberArrayLike<T>).objectAt(i)
+        : options[i];
+    if (
+      !skipDisabled ||
+      !(
+        entry &&
+        typeof entry === 'object' &&
+        'disabled' in entry &&
+        entry.disabled
+      )
+    ) {
       if (isGroup(entry)) {
         const suboptions = filterOptions(
-          entry.options,
+          (entry as unknown as Group<T>).options,
           text,
           matcher,
           skipDisabled,
         );
         if (suboptions.length > 0) {
-          opts.push(copyGroup(entry, suboptions));
+          opts.push(copyGroup(entry as Group<T>, suboptions) as T);
         }
-      } else if (matcher(entry, text) >= 0) {
+      } else if (entry && matcher(entry as MT, text) >= 0) {
         opts.push(entry);
       }
     }
@@ -203,15 +257,17 @@ export function filterOptions(
   return opts;
 }
 
-export function defaultHighlighted<T>({
+export interface DefaultHighlightedParams<T> {
+  results: T[];
+  highlighted: T | undefined | null;
+  selected: T | undefined | null;
+}
+
+export function defaultHighlighted<T = unknown>({
   results,
   highlighted,
   selected,
-}: {
-  results: T[];
-  highlighted: T | undefined;
-  selected: T | undefined;
-}): T {
+}: DefaultHighlightedParams<T>): T | null | undefined {
   const option = highlighted || selected;
   if (option === undefined || indexOfOption(results, option) === -1) {
     return advanceSelectableOption(results, option, 1);
@@ -219,11 +275,11 @@ export function defaultHighlighted<T>({
   return option;
 }
 
-export function advanceSelectableOption(
-  options: any,
-  currentOption: any,
+export function advanceSelectableOption<T = unknown>(
+  options: readonly T[],
+  currentOption: T | undefined,
   step: 1 | -1,
-) {
+): T | undefined {
   const resultsLength = countOptions(options);
   let startIndex = Math.min(
     Math.max(indexOfOption(options, currentOption) + step, 0),
@@ -1096,7 +1152,7 @@ export function defaultMatcher(value: string, text: string) {
     .indexOf(stripDiacritics(text).toUpperCase());
 }
 
-export function defaultTypeAheadMatcher(value: string, text: string) {
+export function defaultTypeAheadMatcher(value: string, text: string): number {
   return stripDiacritics(value)
     .toUpperCase()
     .startsWith(stripDiacritics(text).toUpperCase())

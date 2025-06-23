@@ -5,10 +5,10 @@ import { modifier } from 'ember-modifier';
 import type { Select, TSearchFieldPosition } from '../power-select';
 import { deprecate } from '@ember/debug';
 
-interface PowerSelectBeforeOptionsSignature {
+export interface PowerSelectBeforeOptionsSignature<T = unknown> {
   Element: HTMLElement;
   Args: {
-    select: Select;
+    select: Select<T>;
     searchEnabled: boolean;
     ariaLabel?: string;
     ariaLabelledBy?: string;
@@ -26,7 +26,9 @@ interface PowerSelectBeforeOptionsSignature {
   };
 }
 
-export default class PowerSelectBeforeOptionsComponent extends Component<PowerSelectBeforeOptionsSignature> {
+export default class PowerSelectBeforeOptionsComponent<
+  T = unknown,
+> extends Component<PowerSelectBeforeOptionsSignature<T>> {
   didSetup: boolean = false;
 
   @action

@@ -34,9 +34,6 @@ importers:
         version: 5.8.3
 
   docs:
-    dependenciesMeta:
-      ember-power-select:
-        injected: true
     devDependencies:
       '@babel/core':
         specifier: ^7.27.1
@@ -437,9 +434,6 @@ importers:
         version: 5.99.8
 
   test-app:
-    dependenciesMeta:
-      ember-power-select:
-        injected: true
     devDependencies:
       '@babel/core':
         specifier: ^7.27.1

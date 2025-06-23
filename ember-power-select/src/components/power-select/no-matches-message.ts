@@ -1,9 +1,9 @@
 import templateOnly from '@ember/component/template-only';
 
-interface PowerSelectNoMatchesMessageSignature {
+export interface PowerSelectNoMatchesMessageSignature {
   Element: HTMLElement;
   Args: {
-    noMatchesMessage: any;
+    noMatchesMessage?: string;
   };
 }
 

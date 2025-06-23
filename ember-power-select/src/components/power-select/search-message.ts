@@ -1,6 +1,6 @@
 import templateOnly from '@ember/component/template-only';
 
-interface PowerSelectSearchMessageSignature {
+export interface PowerSelectSearchMessageSignature {
   Element: HTMLElement;
   Args: {
     searchMessage: string;

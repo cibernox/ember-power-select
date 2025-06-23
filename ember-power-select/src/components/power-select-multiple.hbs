@@ -8,8 +8,11 @@
   @labelClass={{@labelClass}}
   @labelText={{@labelText}}
   @labelClickAction={{@labelClickAction}}
-  @labelComponent={{ensure-safe-component @labelComponent}}
-  @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
+  @labelComponent={{if @labelComponent (ensure-safe-component @labelComponent)}}
+  @afterOptionsComponent={{if
+    @afterOptionsComponent
+    (ensure-safe-component @afterOptionsComponent)
+  }}
   @allowClear={{@allowClear}}
   @beforeOptionsComponent={{if
     @beforeOptionsComponent
@@ -26,15 +29,16 @@
   @disabled={{@disabled}}
   @dropdownClass={{@dropdownClass}}
   @extra={{@extra}}
-  @groupComponent={{ensure-safe-component @groupComponent}}
+  @groupComponent={{if @groupComponent (ensure-safe-component @groupComponent)}}
   @horizontalPosition={{@horizontalPosition}}
   @initiallyOpened={{@initiallyOpened}}
   @loadingMessage={{@loadingMessage}}
   @matcher={{@matcher}}
   @matchTriggerWidth={{@matchTriggerWidth}}
   @noMatchesMessage={{@noMatchesMessage}}
-  @noMatchesMessageComponent={{ensure-safe-component
+  @noMatchesMessageComponent={{if
     @noMatchesMessageComponent
+    (ensure-safe-component @noMatchesMessageComponent)
   }}
   @onBlur={{@onBlur}}
   @onChange={{@onChange}}
@@ -44,9 +48,15 @@
   @onKeydown={{this.handleKeydown}}
   @onOpen={{this.handleOpen}}
   @options={{@options}}
-  @optionsComponent={{ensure-safe-component @optionsComponent}}
+  @optionsComponent={{if
+    @optionsComponent
+    (ensure-safe-component @optionsComponent)
+  }}
   @placeholder={{@placeholder}}
-  @placeholderComponent={{ensure-safe-component @placeholderComponent}}
+  @placeholderComponent={{if
+    @placeholderComponent
+    (ensure-safe-component @placeholderComponent)
+  }}
   @preventScroll={{@preventScroll}}
   @registerAPI={{@registerAPI}}
   @renderInPlace={{@renderInPlace}}
@@ -60,7 +70,10 @@
   @searchMessageComponent={{@searchMessageComponent}}
   @searchPlaceholder={{@searchPlaceholder}}
   @selected={{@selected}}
-  @selectedItemComponent={{ensure-safe-component @selectedItemComponent}}
+  @selectedItemComponent={{if
+    @selectedItemComponent
+    (ensure-safe-component @selectedItemComponent)
+  }}
   @eventType={{@eventType}}
   @title={{@title}}
   @triggerClass="ember-power-select-multiple-trigger {{@triggerClass}}"
@@ -72,8 +85,14 @@
   @triggerId={{@triggerId}}
   @verticalPosition={{@verticalPosition}}
   @tabindex={{this.computedTabIndex}}
-  @ebdTriggerComponent={{ensure-safe-component @ebdTriggerComponent}}
-  @ebdContentComponent={{ensure-safe-component @ebdContentComponent}}
+  @ebdTriggerComponent={{if
+    @ebdTriggerComponent
+    (ensure-safe-component @ebdTriggerComponent)
+  }}
+  @ebdContentComponent={{if
+    @ebdContentComponent
+    (ensure-safe-component @ebdContentComponent)
+  }}
   ...attributes
   as |option select|
 >

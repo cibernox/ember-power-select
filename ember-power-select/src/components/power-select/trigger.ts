@@ -1,12 +1,18 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import type { Select, TSearchFieldPosition } from '../power-select';
+import type {
+  PowerSelectSelectedItemSignature,
+  Select,
+  Selected,
+  TSearchFieldPosition,
+} from '../power-select';
 import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './placeholder';
 
-interface PowerSelectTriggerSignature {
+export interface PowerSelectTriggerSignature<T = unknown, TExtra = unknown> {
   Element: HTMLElement;
   Args: {
-    select: Select;
+    select: Select<T>;
     allowClear: boolean;
     searchEnabled: boolean;
     placeholder?: string;
@@ -19,20 +25,27 @@ interface PowerSelectTriggerSignature {
     ariaDescribedBy?: string;
     role?: string;
     ariaActiveDescendant: string;
-    extra?: any;
-    placeholderComponent?: string | ComponentLike<any>;
-    selectedItemComponent?: string | ComponentLike<any>;
+    extra?: TExtra;
+    placeholderComponent?:
+      | string
+      | ComponentLike<PowerSelectPlaceholderSignature>;
+    selectedItemComponent?:
+      | string
+      | ComponentLike<PowerSelectSelectedItemSignature>;
     onInput?: (e: InputEvent) => boolean;
     onKeydown?: (e: KeyboardEvent) => boolean;
     onFocus?: (e: FocusEvent) => void;
     onBlur?: (e: FocusEvent) => void;
   };
   Blocks: {
-    default: [selected: any, select: Select];
+    default: [selected: Selected<T>, select: Select<T>];
   };
 }
 
-export default class PowerSelectTriggerComponent extends Component<PowerSelectTriggerSignature> {
+export default class PowerSelectTriggerComponent<
+  T = unknown,
+  TExtra = unknown,
+> extends Component<PowerSelectTriggerSignature<T, TExtra>> {
   @action
   clear(e: Event): false | void {
     e.stopPropagation();
