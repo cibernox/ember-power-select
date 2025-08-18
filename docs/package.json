@@ -82,7 +82,7 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-code-snippet": "git+https://git@github.com/ef4/ember-code-snippet.git#d054b697098ad52481c94a952ccf8d89ba1f25fe",
-    "ember-concurrency": "^4.0.4",
+    "ember-concurrency": "^5.0.0",
     "ember-data": "5.5.0",
     "ember-fetch": "^8.1.2",
     "ember-inflector": "^6.0.0",
