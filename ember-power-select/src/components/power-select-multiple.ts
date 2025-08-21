@@ -44,26 +44,49 @@ export type Selected<T = unknown> = SingleSelected<T, true>;
 // }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Select<T = unknown> extends SingleSelect<T, true>{
-}
+export interface Select<T = unknown> extends SingleSelect<T, true> {}
 
-interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> extends Omit<PowerSelectArgs<T, true, TExtra>, 'placeholderComponent' | 'selected' | 'triggerComponent' | 'selectedItemComponent' | 'afterOptionsComponent' | 'buildSelection' | 'onChange' | 'search' | 'onOpen' | 'onClose' | 'onInput' | 'onKeydown' | 'onFocus' | 'onBlur' | 'scrollTo' | 'registerAPI'> {
-  placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, true>>;
+interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
+  extends Omit<
+    PowerSelectArgs<T, true, TExtra>,
+    | 'placeholderComponent'
+    | 'selected'
+    | 'triggerComponent'
+    | 'selectedItemComponent'
+    | 'afterOptionsComponent'
+    | 'buildSelection'
+    | 'onChange'
+    | 'search'
+    | 'onOpen'
+    | 'onClose'
+    | 'onInput'
+    | 'onKeydown'
+    | 'onFocus'
+    | 'onBlur'
+    | 'scrollTo'
+    | 'registerAPI'
+  > {
+  placeholderComponent?: ComponentLike<
+    PowerSelectPlaceholderSignature<T, true>
+  >;
   // searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T>>;
   // noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T>>;
   // options?: readonly T[] | Promise<readonly T[]>;
   selected?: T[] | PromiseProxy<T[]>;
   // labelComponent?: ComponentLike<PowerSelectLabelSignature<T>>;
-  triggerComponent?: ComponentLike<PowerSelectTriggerSignature<T, TExtra, true>>;
-  selectedItemComponent?: ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, true>>;
+  triggerComponent?: ComponentLike<
+    PowerSelectTriggerSignature<T, TExtra, true>
+  >;
+  selectedItemComponent?: ComponentLike<
+    PowerSelectSelectedItemSignature<T, TExtra, true>
+  >;
   // beforeOptionsComponent?: ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
   // optionsComponent?: ComponentLike<PowerSelectOptionsSignature<T>>;
   // groupComponent?: ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
-  afterOptionsComponent?: ComponentLike<PowerSelectAfterOptionsSignature<T, TExtra, true>>;
-  buildSelection?: (
-    selected: T,
-    select: Select<T>,
-  ) => Selected<T> | null;
+  afterOptionsComponent?: ComponentLike<
+    PowerSelectAfterOptionsSignature<T, TExtra, true>
+  >;
+  buildSelection?: (selected: T, select: Select<T>) => Selected<T> | null;
   onChange: (selection: Selected<T>, select: Select<T>, event?: Event) => void;
   search?: (
     term: string,
@@ -93,7 +116,7 @@ export interface PowerSelectMultipleSignature<T = unknown, TExtra = unknown> {
 
 export default class PowerSelectMultipleComponent<
   T = unknown,
-  TExtra = unknown
+  TExtra = unknown,
 > extends Component<PowerSelectMultipleSignature<T, TExtra>> {
   get computedTabIndex() {
     if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
@@ -103,12 +126,16 @@ export default class PowerSelectMultipleComponent<
     }
   }
 
-  get triggerComponent(): ComponentLike<PowerSelectTriggerSignature<T, TExtra, true>> {
+  get triggerComponent(): ComponentLike<
+    PowerSelectTriggerSignature<T, TExtra, true>
+  > {
     if (this.args.triggerComponent) {
       return ensureSafeComponent(this.args.triggerComponent, this);
     }
 
-    return TriggerComponent as unknown as ComponentLike<PowerSelectTriggerSignature<T, TExtra, true>>;
+    return TriggerComponent as unknown as ComponentLike<
+      PowerSelectTriggerSignature<T, TExtra, true>
+    >;
   }
 
   // Actions

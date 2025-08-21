@@ -1,10 +1,7 @@
 {{#if (ember-power-select-is-selected-present @select.selected)}}
   {{#if (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))}}
     {{#if @selectedItemComponent}}
-      {{#let
-        @selectedItemComponent
-        as |SelectedItemComponent|
-      }}
+      {{#let @selectedItemComponent as |SelectedItemComponent|}}
         <SelectedItemComponent
           @extra={{@extra}}
           @selected={{this.selected}}
@@ -81,10 +78,7 @@
       {{/let}}
     {{/let}}
   {{else}}
-    {{#let
-      @placeholderComponent
-      as |PlaceholderComponent|
-    }}
+    {{#let @placeholderComponent as |PlaceholderComponent|}}
       <PlaceholderComponent @placeholder={{@placeholder}} @select={{@select}} />
     {{/let}}
   {{/if}}

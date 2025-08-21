@@ -2,7 +2,11 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import type { Select } from '../power-select';
 
-export interface PowerSelectLabelArgs<T = unknown, TExtra = unknown, IsMultiple extends boolean = false> {
+export interface PowerSelectLabelArgs<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   select: Select<T, IsMultiple>;
   labelText?: string;
   labelId: string;
@@ -10,7 +14,11 @@ export interface PowerSelectLabelArgs<T = unknown, TExtra = unknown, IsMultiple 
   extra?: TExtra;
 }
 
-export interface PowerSelectLabelSignature<T = unknown, TExtra = unknown, IsMultiple extends boolean = false> {
+export interface PowerSelectLabelSignature<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
   Args: PowerSelectLabelArgs<T, TExtra, IsMultiple>;
 }

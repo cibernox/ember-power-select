@@ -10,7 +10,11 @@ import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder';
 import PowerSelectInput, { type PowerSelectInputSignature } from './input.ts';
 
-export interface PowerSelectTriggerSignature<T = unknown, TExtra = unknown, IsMultiple extends boolean = false> {
+export interface PowerSelectTriggerSignature<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
   Args: {
     select: Select<T, IsMultiple>;
@@ -32,8 +36,12 @@ export interface PowerSelectTriggerSignature<T = unknown, TExtra = unknown, IsMu
       selected: T,
       select: Select<T, IsMultiple>,
     ) => Selected<T, IsMultiple> | null;
-    placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>>;
-    selectedItemComponent?: ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>>;
+    placeholderComponent?: ComponentLike<
+      PowerSelectPlaceholderSignature<T, IsMultiple>
+    >;
+    selectedItemComponent?: ComponentLike<
+      PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>
+    >;
     onInput?: (e: InputEvent) => void | boolean;
     onKeydown?: (e: KeyboardEvent) => void | boolean;
     onFocus?: (e: FocusEvent) => void;
@@ -47,10 +55,14 @@ export interface PowerSelectTriggerSignature<T = unknown, TExtra = unknown, IsMu
 export default class PowerSelectTriggerComponent<
   T = unknown,
   TExtra = unknown,
-  IsMultiple extends boolean = false
+  IsMultiple extends boolean = false,
 > extends Component<PowerSelectTriggerSignature<T, TExtra, IsMultiple>> {
-  get inputComponent(): ComponentLike<PowerSelectInputSignature<T, IsMultiple>> {
-    return PowerSelectInput as ComponentLike<PowerSelectInputSignature<T, IsMultiple>>;
+  get inputComponent(): ComponentLike<
+    PowerSelectInputSignature<T, IsMultiple>
+  > {
+    return PowerSelectInput as ComponentLike<
+      PowerSelectInputSignature<T, IsMultiple>
+    >;
   }
 
   get selected() {

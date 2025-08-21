@@ -5,7 +5,9 @@ import type { Selected } from '../power-select-multiple';
 import type { ComponentLike } from '@glint/template';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
-import PowerSelectMultipleInputComponent, { type PowerSelectMultipleInputSignature } from './input.ts';
+import PowerSelectMultipleInputComponent, {
+  type PowerSelectMultipleInputSignature,
+} from './input.ts';
 import PowerSelectTriggerComponent from '../power-select/trigger.ts';
 
 export default class TriggerComponent<
@@ -15,7 +17,9 @@ export default class TriggerComponent<
   private _lastIsOpen: boolean = this.args.select.isOpen;
 
   get inputMultipleComponent() {
-    return PowerSelectMultipleInputComponent as unknown as ComponentLike<PowerSelectMultipleInputSignature<T>>;
+    return PowerSelectMultipleInputComponent as unknown as ComponentLike<
+      PowerSelectMultipleInputSignature<T>
+    >;
   }
 
   isOptionDisabled(option: T): boolean {

@@ -28,7 +28,11 @@ import type {
   TRootEventType,
 } from 'ember-basic-dropdown/components/basic-dropdown';
 import type Owner from '@ember/owner';
-import type { CalculatePosition, HorizontalPosition, VerticalPosition } from 'ember-basic-dropdown/utils/calculate-position';
+import type {
+  CalculatePosition,
+  HorizontalPosition,
+  VerticalPosition,
+} from 'ember-basic-dropdown/utils/calculate-position';
 import { isArray } from '@ember/array';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './power-select/placeholder.ts';
@@ -54,7 +58,7 @@ import PowerSelectGroupComponent from './power-select/power-select-group.ts';
 export interface PowerSelectSelectedItemSignature<
   T = unknown,
   TExtra = unknown,
-  IsMultiple extends boolean = false
+  IsMultiple extends boolean = false,
 > {
   Element: HTMLElement;
   Args: {
@@ -70,7 +74,7 @@ export interface PowerSelectSelectedItemSignature<
 export interface PowerSelectAfterOptionsSignature<
   T = unknown,
   TExtra = unknown,
-  IsMultiple extends boolean = false
+  IsMultiple extends boolean = false,
 > {
   Element: HTMLElement;
   Args: {
@@ -82,7 +86,8 @@ export interface PowerSelectAfterOptionsSignature<
   };
 }
 
-interface SelectActions<T, IsMultiple extends boolean = false> extends DropdownActions {
+interface SelectActions<T, IsMultiple extends boolean = false>
+  extends DropdownActions {
   search: (term: string) => void;
   highlight: (option: T | undefined) => void;
   select: (selected: Selected<T, IsMultiple>, e?: Event) => void;
@@ -91,7 +96,8 @@ interface SelectActions<T, IsMultiple extends boolean = false> extends DropdownA
   labelClick: (e: MouseEvent) => void;
 }
 
-export interface Select<T = unknown, IsMultiple extends boolean = false> extends Dropdown {
+export interface Select<T = unknown, IsMultiple extends boolean = false>
+  extends Dropdown {
   selected: Selected<T, IsMultiple>;
   highlighted: T;
   options: readonly T[];
@@ -116,16 +122,29 @@ interface Sliceable<T> {
   slice(): T[];
 }
 
-export type Selected<T = unknown, IsMultiple extends boolean = false> = IsMultiple extends true ? T[] | null | undefined : T | null | undefined;
+export type Selected<
+  T = unknown,
+  IsMultiple extends boolean = false,
+> = IsMultiple extends true ? T[] | null | undefined : T | null | undefined;
 
 // Some args are not listed here because they are only accessed from the template. Should I list them?
-export interface PowerSelectArgs<T, IsMultiple extends boolean, TExtra = unknown> {
+export interface PowerSelectArgs<
+  T,
+  IsMultiple extends boolean,
+  TExtra = unknown,
+> {
   highlightOnHover?: boolean;
-  placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>>;
+  placeholderComponent?: ComponentLike<
+    PowerSelectPlaceholderSignature<T, IsMultiple>
+  >;
   searchMessage?: string;
-  searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T, IsMultiple>>;
+  searchMessageComponent?: ComponentLike<
+    PowerSelectSearchMessageSignature<T, IsMultiple>
+  >;
   noMatchesMessage?: string;
-  noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T, IsMultiple>>;
+  noMatchesMessageComponent?: ComponentLike<
+    PowerSelectNoMatchesMessageSignature<T, IsMultiple>
+  >;
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
   options?: readonly T[] | Promise<readonly T[]>;
@@ -136,7 +155,9 @@ export interface PowerSelectArgs<T, IsMultiple extends boolean, TExtra = unknown
   closeOnSelect?: boolean;
   renderInPlace?: boolean;
   preventScroll?: boolean;
-  defaultHighlighted?: (params: DefaultHighlightedParams<T, IsMultiple>) => T | T[] | undefined;
+  defaultHighlighted?: (
+    params: DefaultHighlightedParams<T, IsMultiple>,
+  ) => T | T[] | undefined;
   searchField?: string;
   labelClass?: string;
   labelText?: string;
@@ -167,41 +188,78 @@ export interface PowerSelectArgs<T, IsMultiple extends boolean, TExtra = unknown
   calculatePosition?: CalculatePosition;
   ebdTriggerComponent?: ComponentLike<BasicDropdownTriggerSignature>;
   ebdContentComponent?: ComponentLike<BasicDropdownContentSignature>;
-  labelComponent?: ComponentLike<PowerSelectLabelSignature<T, TExtra, IsMultiple>>;
-  triggerComponent?: ComponentLike<PowerSelectTriggerSignature<T, TExtra, IsMultiple>>;
-  selectedItemComponent?: ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>>;
-  beforeOptionsComponent?: ComponentLike<PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>>;
-  optionsComponent?: ComponentLike<PowerSelectOptionsSignature<T, TExtra, IsMultiple>>;
-  groupComponent?: ComponentLike<PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>>;
-  afterOptionsComponent?: ComponentLike<PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>>;
+  labelComponent?: ComponentLike<
+    PowerSelectLabelSignature<T, TExtra, IsMultiple>
+  >;
+  triggerComponent?: ComponentLike<
+    PowerSelectTriggerSignature<T, TExtra, IsMultiple>
+  >;
+  selectedItemComponent?: ComponentLike<
+    PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>
+  >;
+  beforeOptionsComponent?: ComponentLike<
+    PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
+  >;
+  optionsComponent?: ComponentLike<
+    PowerSelectOptionsSignature<T, TExtra, IsMultiple>
+  >;
+  groupComponent?: ComponentLike<
+    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+  >;
+  afterOptionsComponent?: ComponentLike<
+    PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>
+  >;
   extra?: TExtra;
   matcher?: MatcherFn;
   initiallyOpened?: boolean;
   typeAheadOptionMatcher?: MatcherFn;
-  buildSelection?: (selected: T, select: Select<T, IsMultiple>) => Selected<T, IsMultiple> | null;
-  onChange: (selection: Selected<T, IsMultiple>, select: Select<T, IsMultiple>, event?: Event) => void;
+  buildSelection?: (
+    selected: T,
+    select: Select<T, IsMultiple>,
+  ) => Selected<T, IsMultiple> | null;
+  onChange: (
+    selection: Selected<T, IsMultiple>,
+    select: Select<T, IsMultiple>,
+    event?: Event,
+  ) => void;
   search?: (
     term: string,
     select: Select<T, IsMultiple>,
   ) => readonly T[] | Promise<readonly T[]>;
-  onOpen?: (select: Select<T, IsMultiple>, e: Event | undefined) => boolean | void | undefined;
-  onClose?: (select: Select<T, IsMultiple>, e: Event | undefined) => boolean | undefined;
+  onOpen?: (
+    select: Select<T, IsMultiple>,
+    e: Event | undefined,
+  ) => boolean | void | undefined;
+  onClose?: (
+    select: Select<T, IsMultiple>,
+    e: Event | undefined,
+  ) => boolean | undefined;
   onInput?: (
     term: string,
     select: Select<T, IsMultiple>,
     e: Event,
   ) => string | false | void;
-  onKeydown?: (select: Select<T, IsMultiple>, e: KeyboardEvent) => boolean | void | undefined;
+  onKeydown?: (
+    select: Select<T, IsMultiple>,
+    e: KeyboardEvent,
+  ) => boolean | void | undefined;
   onFocus?: (select: Select<T, IsMultiple>, event: FocusEvent) => void;
   onBlur?: (select: Select<T, IsMultiple>, event: FocusEvent) => void;
-  scrollTo?: (option: Selected<T, IsMultiple>, select: Select<T, IsMultiple>) => void;
+  scrollTo?: (
+    option: Selected<T, IsMultiple>,
+    select: Select<T, IsMultiple>,
+  ) => void;
   registerAPI?: (select: Select<T, IsMultiple>) => void;
 }
 
 export type TLabelClickAction = 'focus' | 'open';
 export type TSearchFieldPosition = 'before-options' | 'trigger';
 
-export interface PowerSelectSignature<T, IsMultiple extends boolean, TExtra = undefined> {
+export interface PowerSelectSignature<
+  T,
+  IsMultiple extends boolean,
+  TExtra = undefined,
+> {
   Element: Element;
   Args: PowerSelectArgs<T, IsMultiple, TExtra>;
   Blocks: {
@@ -235,9 +293,11 @@ const isCancellablePromise = <T>(
   );
 };
 
-export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra = undefined> extends Component<
-  PowerSelectSignature<T, IsMultiple, TExtra>
-> {
+export default class PowerSelectComponent<
+  T,
+  IsMultiple extends boolean,
+  TExtra = undefined,
+> extends Component<PowerSelectSignature<T, IsMultiple, TExtra>> {
   // Untracked properties
   _publicAPIActions = {
     search: this._search,
@@ -462,68 +522,100 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
     return this.args.tabindex || '0';
   }
 
-  get labelComponent(): ComponentLike<PowerSelectLabelSignature<T, TExtra, IsMultiple>> {
+  get labelComponent(): ComponentLike<
+    PowerSelectLabelSignature<T, TExtra, IsMultiple>
+  > {
     if (this.args.labelComponent) {
       return ensureSafeComponent(this.args.labelComponent, this);
     }
 
-    return PowerSelectLabelComponent as unknown as ComponentLike<PowerSelectLabelSignature<T, TExtra, IsMultiple>>;
+    return PowerSelectLabelComponent as unknown as ComponentLike<
+      PowerSelectLabelSignature<T, TExtra, IsMultiple>
+    >;
   }
 
-  get triggerComponent(): ComponentLike<PowerSelectTriggerSignature<T, TExtra, IsMultiple>> {
+  get triggerComponent(): ComponentLike<
+    PowerSelectTriggerSignature<T, TExtra, IsMultiple>
+  > {
     if (this.args.triggerComponent) {
       return ensureSafeComponent(this.args.triggerComponent, this);
     }
 
-    return PowerSelectTriggerComponent as unknown as ComponentLike<PowerSelectTriggerSignature<T, TExtra, IsMultiple>>;
+    return PowerSelectTriggerComponent as unknown as ComponentLike<
+      PowerSelectTriggerSignature<T, TExtra, IsMultiple>
+    >;
   }
 
-  get placeholderComponent(): ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>> {
+  get placeholderComponent(): ComponentLike<
+    PowerSelectPlaceholderSignature<T, IsMultiple>
+  > {
     if (this.args.placeholderComponent) {
       return ensureSafeComponent(this.args.placeholderComponent, this);
     }
 
-    return PowerSelectPlaceholderComponent as unknown as ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>>;
+    return PowerSelectPlaceholderComponent as unknown as ComponentLike<
+      PowerSelectPlaceholderSignature<T, IsMultiple>
+    >;
   }
 
-  get beforeOptionsComponent(): ComponentLike<PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>> {
+  get beforeOptionsComponent(): ComponentLike<
+    PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
+  > {
     if (this.args.beforeOptionsComponent) {
       return ensureSafeComponent(this.args.beforeOptionsComponent, this);
     }
 
-    return PowerSelectBeforeOptionsComponent as unknown as ComponentLike<PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>>;
+    return PowerSelectBeforeOptionsComponent as unknown as ComponentLike<
+      PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
+    >;
   }
 
-  get searchMessageComponent(): ComponentLike<PowerSelectSearchMessageSignature<T, IsMultiple>> {
+  get searchMessageComponent(): ComponentLike<
+    PowerSelectSearchMessageSignature<T, IsMultiple>
+  > {
     if (this.args.searchMessageComponent) {
       return ensureSafeComponent(this.args.searchMessageComponent, this);
     }
 
-    return SearchMessageComponent as unknown as ComponentLike<PowerSelectSearchMessageSignature<T, IsMultiple>>;
+    return SearchMessageComponent as unknown as ComponentLike<
+      PowerSelectSearchMessageSignature<T, IsMultiple>
+    >;
   }
 
-  get noMatchesMessageComponent(): ComponentLike<PowerSelectNoMatchesMessageSignature<T, IsMultiple>> {
+  get noMatchesMessageComponent(): ComponentLike<
+    PowerSelectNoMatchesMessageSignature<T, IsMultiple>
+  > {
     if (this.args.noMatchesMessageComponent) {
       return ensureSafeComponent(this.args.noMatchesMessageComponent, this);
     }
 
-    return NoMatchesMessageComponent as unknown as ComponentLike<PowerSelectNoMatchesMessageSignature<T, IsMultiple>>;
+    return NoMatchesMessageComponent as unknown as ComponentLike<
+      PowerSelectNoMatchesMessageSignature<T, IsMultiple>
+    >;
   }
 
-  get optionsComponent(): ComponentLike<PowerSelectOptionsSignature<T, TExtra, IsMultiple>> {
+  get optionsComponent(): ComponentLike<
+    PowerSelectOptionsSignature<T, TExtra, IsMultiple>
+  > {
     if (this.args.optionsComponent) {
       return ensureSafeComponent(this.args.optionsComponent, this);
     }
 
-    return PowerSelectOptionsComponent as unknown as ComponentLike<PowerSelectOptionsSignature<T, TExtra, IsMultiple>>;
+    return PowerSelectOptionsComponent as unknown as ComponentLike<
+      PowerSelectOptionsSignature<T, TExtra, IsMultiple>
+    >;
   }
 
-  get groupComponent(): ComponentLike<PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>> {
+  get groupComponent(): ComponentLike<
+    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+  > {
     if (this.args.groupComponent) {
       return ensureSafeComponent(this.args.groupComponent, this);
     }
 
-    return PowerSelectGroupComponent as unknown as ComponentLike<PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>>;
+    return PowerSelectGroupComponent as unknown as ComponentLike<
+      PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+    >;
   }
 
   // Actions
@@ -727,7 +819,10 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
   }
 
   _selectedObserverCallback(): void {
-    this._resolvedSelected = this._lastSelectedPromise as Selected<T, IsMultiple>;
+    this._resolvedSelected = this._lastSelectedPromise as Selected<
+      T,
+      IsMultiple
+    >;
     if (!Array.isArray(this._resolvedSelected)) {
       this._highlight(this._resolvedSelected as T);
     }
@@ -758,7 +853,7 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
   _choose(selected: T, e?: Event): void {
     const selection = this.args.buildSelection
       ? this.args.buildSelection(selected, this.storedAPI)
-      : selected as Selected<T, IsMultiple>; // Note: For multiple we pass always function, otherwise it would not work!
+      : (selected as Selected<T, IsMultiple>); // Note: For multiple we pass always function, otherwise it would not work!
     this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
       this.storedAPI.actions.close(e);
@@ -804,7 +899,10 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
   }
 
   @action
-  _registerAPI(triggerElement: Element, [publicAPI]: [Select<T, IsMultiple>]): void {
+  _registerAPI(
+    triggerElement: Element,
+    [publicAPI]: [Select<T, IsMultiple>],
+  ): void {
     deprecate(
       'You are using power-select with ember/render-modifier. Replace {{did-insert this._registerAPI publicAPI}} and {{did-update this._registerAPI publicAPI}} with {{this.updateRegisterAPI publicAPI}}.',
       false,
@@ -918,7 +1016,8 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
         );
       }
 
-      const currentSelectedPromise: PromiseProxy<Selected<T, IsMultiple>> = this.args.selected;
+      const currentSelectedPromise: PromiseProxy<Selected<T, IsMultiple>> =
+        this.args.selected;
       currentSelectedPromise.then(() => {
         if (this.isDestroyed || this.isDestroying) return;
         if (isPromiseProxyLike(currentSelectedPromise)) {
@@ -950,7 +1049,10 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
     }
   }
 
-  private __registerAPI(_: Element, [publicAPI]: [Select<T, IsMultiple>]): void {
+  private __registerAPI(
+    _: Element,
+    [publicAPI]: [Select<T, IsMultiple>],
+  ): void {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
       scheduleTask(this, 'actions', this.args.registerAPI, publicAPI);
@@ -1002,7 +1104,10 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
     }
   }
 
-  _routeKeydown(select: Select<T, IsMultiple>, e: KeyboardEvent): boolean | void {
+  _routeKeydown(
+    select: Select<T, IsMultiple>,
+    e: KeyboardEvent,
+  ): boolean | void {
     if (e.keyCode === 38 || e.keyCode === 40) {
       // Up & Down
       return this._handleKeyUpDown(select, e);
@@ -1026,7 +1131,10 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
     select.actions.close(e);
   }
 
-  _handleKeyEnter(select: Select<T, IsMultiple>, e: KeyboardEvent): boolean | void {
+  _handleKeyEnter(
+    select: Select<T, IsMultiple>,
+    e: KeyboardEvent,
+  ): boolean | void {
     if (select.isOpen && select.highlighted !== undefined) {
       select.actions.choose(select.highlighted, e);
       e.stopImmediatePropagation();
@@ -1127,7 +1235,7 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
       lastSearchedText: this.lastSearchedText,
       actions: Object.assign({}, dropdown.actions, this._publicAPIActions),
     }) as Select<T, IsMultiple>;
-  }
+  };
 
   // Tasks
   triggerTypingTask = restartableTask(async (e: KeyboardEvent) => {
@@ -1193,7 +1301,7 @@ export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra 
   });
 }
 
-function getOptionMatcher<T = unknown, IsMultiple extends boolean = false>(
+function getOptionMatcher(
   matcher: MatcherFn,
   defaultMatcher: MatcherFn,
   searchField: string | undefined,

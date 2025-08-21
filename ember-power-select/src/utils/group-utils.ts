@@ -53,10 +53,14 @@ export function indexOfOption<T = unknown, IsMultiple extends boolean = false>(
         collection &&
         'objectAt' in collection &&
         typeof collection.objectAt === 'function'
-          ? (collection as unknown as EmberArrayLike<Selected<T, IsMultiple>>).objectAt(i)
+          ? (
+              collection as unknown as EmberArrayLike<Selected<T, IsMultiple>>
+            ).objectAt(i)
           : collection[i];
       if (isGroup(entry)) {
-        const result = walk((entry as unknown as Group<Selected<T, IsMultiple>>).options);
+        const result = walk(
+          (entry as unknown as Group<Selected<T, IsMultiple>>).options,
+        );
         if (result > -1) {
           return result;
         }
@@ -151,8 +155,14 @@ export interface Group<T = unknown> {
   disabled?: boolean;
   [key: string]: unknown;
 }
-function copyGroup<T = unknown, IsMultiple extends boolean = false>(group: Group<Selected<T, IsMultiple>>, suboptions: Selected<T, IsMultiple>[]): Group<Selected<T, IsMultiple>> {
-  const groupCopy: Group<Selected<T, IsMultiple>> = { ...group, options: suboptions };
+function copyGroup<T = unknown, IsMultiple extends boolean = false>(
+  group: Group<Selected<T, IsMultiple>>,
+  suboptions: Selected<T, IsMultiple>[],
+): Group<Selected<T, IsMultiple>> {
+  const groupCopy: Group<Selected<T, IsMultiple>> = {
+    ...group,
+    options: suboptions,
+  };
   if (Object.prototype.hasOwnProperty.call(group, 'disabled')) {
     groupCopy.disabled = group.disabled;
   }
@@ -218,7 +228,11 @@ export function findOptionWithOffset<T>(
   return foundAfterOffset ? foundAfterOffset : foundBeforeOffset;
 }
 
-export function filterOptions<T = unknown, MT = unknown, IsMultiple extends boolean = false>(
+export function filterOptions<
+  T = unknown,
+  MT = unknown,
+  IsMultiple extends boolean = false,
+>(
   options: T[],
   text: string,
   matcher: MatcherFn<MT>,
@@ -248,7 +262,9 @@ export function filterOptions<T = unknown, MT = unknown, IsMultiple extends bool
           skipDisabled,
         );
         if (suboptions.length > 0) {
-          opts.push(copyGroup(entry as Group<Selected<T, IsMultiple>>, suboptions) as T);
+          opts.push(
+            copyGroup(entry as Group<Selected<T, IsMultiple>>, suboptions) as T,
+          );
         }
       } else if (entry && matcher(entry as MT, text) >= 0) {
         opts.push(entry);
@@ -258,13 +274,19 @@ export function filterOptions<T = unknown, MT = unknown, IsMultiple extends bool
   return opts;
 }
 
-export interface DefaultHighlightedParams<T, IsMultiple extends boolean = false> {
+export interface DefaultHighlightedParams<
+  T,
+  IsMultiple extends boolean = false,
+> {
   results: T[];
   highlighted: T | T[] | undefined | null;
   selected: Selected<T, IsMultiple>;
 }
 
-export function defaultHighlighted<T = unknown, IsMultiple extends boolean = false>({
+export function defaultHighlighted<
+  T = unknown,
+  IsMultiple extends boolean = false,
+>({
   results,
   highlighted,
   selected,

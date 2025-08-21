@@ -618,7 +618,9 @@ module(
 
       await clickTrigger();
 
-      assert.dom('.ember-power-select-trigger input').exists('The search field is in trigger');
+      assert
+        .dom('.ember-power-select-trigger input')
+        .exists('The search field is in trigger');
 
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
@@ -661,7 +663,9 @@ module(
 
       await clickTrigger();
 
-      assert.dom('.ember-power-select-trigger input').doesNotExist('The search field is not in trigger');
+      assert
+        .dom('.ember-power-select-trigger input')
+        .doesNotExist('The search field is not in trigger');
 
       assert
         .dom('.ember-power-select-dropdown #custom-before-options-p-tag')

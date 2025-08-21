@@ -21,7 +21,9 @@ export interface PowerSelectMultipleInputSignature<T = unknown> {
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
     role?: string;
-    placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, true>>;
+    placeholderComponent?: ComponentLike<
+      PowerSelectPlaceholderSignature<T, true>
+    >;
     isDefaultPlaceholder?: boolean;
     onInput?: (e: InputEvent) => void | boolean;
     onKeydown?: (e: KeyboardEvent) => boolean | void;

@@ -34,10 +34,7 @@
           </span>
         {{/unless}}
         {{#if @selectedItemComponent}}
-          {{#let
-            @selectedItemComponent
-            as |SelectedItemComponent|
-          }}
+          {{#let @selectedItemComponent as |SelectedItemComponent|}}
             <SelectedItemComponent
               @extra={{@extra}}
               @selected={{opt}}
@@ -52,11 +49,11 @@
   {{else}}
     {{#if (and @placeholder (not @searchEnabled))}}
       <li>
-        {{#let
-          @placeholderComponent
-          as |PlaceholderComponent|
-        }}
-          <PlaceholderComponent @placeholder={{@placeholder}} @select={{@select}} />
+        {{#let @placeholderComponent as |PlaceholderComponent|}}
+          <PlaceholderComponent
+            @placeholder={{@placeholder}}
+            @select={{@select}}
+          />
         {{/let}}
       </li>
     {{/if}}
@@ -64,7 +61,8 @@
   {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
     <li class="ember-power-select-trigger-multiple-input-container">
       {{#let
-        (component this.inputMultipleComponent
+        (component
+          this.inputMultipleComponent
           select=@select
           ariaActiveDescendant=@ariaActiveDescendant
           ariaLabelledBy=@ariaLabelledBy
@@ -84,10 +82,7 @@
         )
         as |InputComponent|
       }}
-        {{#let
-          @placeholderComponent
-          as |PlaceholderComponent|
-        }}
+        {{#let @placeholderComponent as |PlaceholderComponent|}}
           <PlaceholderComponent
             @select={{@select}}
             @placeholder={{@placeholder}}

@@ -4,7 +4,10 @@ import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type { Select, TSearchFieldPosition } from '../power-select';
 
-export interface PowerSelectInputSignature<T = unknown, IsMultiple extends boolean = false> {
+export interface PowerSelectInputSignature<
+  T = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
   Args: {
     select: Select<T, IsMultiple>;
@@ -25,9 +28,10 @@ export interface PowerSelectInputSignature<T = unknown, IsMultiple extends boole
   };
 }
 
-export default class PowerSelectInput<T = unknown, IsMultiple extends boolean = false> extends Component<
-  PowerSelectInputSignature<T, IsMultiple>
-> {
+export default class PowerSelectInput<
+  T = unknown,
+  IsMultiple extends boolean = false,
+> extends Component<PowerSelectInputSignature<T, IsMultiple>> {
   didSetup: boolean = false;
 
   private _lastIsOpen: boolean = this.args.select.isOpen;

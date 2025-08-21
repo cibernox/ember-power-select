@@ -1,6 +1,9 @@
-<p id='custom-before-options-p-tag'>
+<p id="custom-before-options-p-tag">
   {{@placeholder}}
 </p>
-{{#let (component (ensure-safe-component @placeholderComponent)) as |ComponentName|}}
+{{#let
+  (component (ensure-safe-component @placeholderComponent))
+  as |ComponentName|
+}}
   <ComponentName @placeholder={{@placeholder}} />
 {{/let}}

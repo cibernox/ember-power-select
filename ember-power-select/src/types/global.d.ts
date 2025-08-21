@@ -11,7 +11,10 @@ import type { EmbroiderUtilRegistry } from '@embroider/util';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
-    extends EmberTruthRegistry, BasicDropdown, EmberPowerSelect, EmbroiderUtilRegistry,  /* other registries here */ {
+    extends EmberTruthRegistry,
+      BasicDropdown,
+      EmberPowerSelect,
+      EmbroiderUtilRegistry /* other registries here */ {
     // ...
   }
 }
