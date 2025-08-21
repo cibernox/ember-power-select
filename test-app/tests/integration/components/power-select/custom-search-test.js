@@ -1,5 +1,5 @@
 import { runTask } from 'ember-lifeline';
-import { task, timeout } from 'ember-concurrency';
+import { timeout, restartableTask } from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, settled, click, waitFor } from '@ember/test-helpers';
@@ -798,12 +798,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(100);
+        searchTask = restartableTask(async (term) => {
+          await timeout(100);
           assert.strictEqual(term, 'nin', 'The second search gets executed');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();
@@ -831,12 +830,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(100);
+        searchTask = restartableTask(async (term) => {
+          await timeout(100);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();
@@ -864,12 +862,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(100).linked();
+        searchTask = restartableTask(async (term) => {
+          await timeout(100).linked();
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();
@@ -899,12 +896,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(100);
+        searchTask = restartableTask(async (term) => {
+          await timeout(100);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();
@@ -932,12 +928,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(100);
+        searchTask = restartableTask(async (term) => {
+          await timeout(100);
           assert.strictEqual(term, 'nin', 'The second search gets executed');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();
@@ -965,12 +960,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(100);
+        searchTask = restartableTask(async (term) => {
+          await timeout(100);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();
@@ -998,12 +992,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(100).linked();
+        searchTask = restartableTask(async (term) => {
+          await timeout(100).linked();
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();
@@ -1033,12 +1026,11 @@ module(
       let done = assert.async();
 
       class testObj {
-        @(task(function* (term) {
-          yield timeout(150);
+        searchTask = restartableTask(async (term) => {
+          await timeout(150);
           assert.ok(false, 'This task should not have been executed this far');
           return numbers.filter((str) => str.indexOf(term) > -1);
-        }).restartable())
-        searchTask;
+        });
       }
 
       this.obj = new testObj();

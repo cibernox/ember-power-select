@@ -12,6 +12,15 @@
 
 
 
+
+## v8.8.0 (2025-08-18)
+
+#### :rocket: Enhancement
+* [#1933](https://github.com/cibernox/ember-power-select/pull/1933) Allow `ember-concurrency` v5 ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.7.3 (2025-06-03)
 
 #### :bug: Bug Fix
