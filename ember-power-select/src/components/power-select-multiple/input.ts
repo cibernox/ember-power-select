@@ -5,15 +5,15 @@ import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import type { Select } from '../power-select-multiple';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectMultiplePlaceholderSignature } from './placeholder';
 import type { Selected } from '../power-select-multiple';
+import type { PowerSelectPlaceholderSignature } from '../power-select/placeholder';
 
 export interface PowerSelectMultipleInputSignature<T = unknown> {
   Element: HTMLElement;
   Args: {
     select: Select<T>;
     placeholder?: string;
-    searchField: string;
+    searchField?: string;
     tabindex?: number | string;
     listboxId?: string;
     ariaLabel?: string;
@@ -21,7 +21,7 @@ export interface PowerSelectMultipleInputSignature<T = unknown> {
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
     role?: string;
-    placeholderComponent?: ComponentLike<PowerSelectMultiplePlaceholderSignature<T>>;
+    placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, true>>;
     isDefaultPlaceholder?: boolean;
     onInput?: (e: InputEvent) => void | boolean;
     onKeydown?: (e: KeyboardEvent) => boolean | void;

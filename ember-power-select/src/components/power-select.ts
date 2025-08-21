@@ -59,7 +59,7 @@ export interface PowerSelectSelectedItemSignature<
   Element: HTMLElement;
   Args: {
     extra?: TExtra;
-    selected: Selected<T, IsMultiple>;
+    selected: T;
     select: Select<T, IsMultiple>;
   };
   Blocks: {
@@ -119,7 +119,7 @@ interface Sliceable<T> {
 export type Selected<T = unknown, IsMultiple extends boolean = false> = IsMultiple extends true ? T[] | null | undefined : T | null | undefined;
 
 // Some args are not listed here because they are only accessed from the template. Should I list them?
-export interface PowerSelectArgs<T = unknown, TExtra = unknown, IsMultiple extends boolean = false> {
+export interface PowerSelectArgs<T, IsMultiple extends boolean, TExtra = unknown> {
   highlightOnHover?: boolean;
   placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>>;
   searchMessage?: string;
@@ -130,6 +130,7 @@ export interface PowerSelectArgs<T = unknown, TExtra = unknown, IsMultiple exten
   resultCountMessage?: (resultCount: number) => string;
   options?: readonly T[] | Promise<readonly T[]>;
   selected?: Selected<T, IsMultiple> | PromiseProxy<Selected<T, IsMultiple>>;
+  multiple?: IsMultiple;
   destination?: string;
   destinationElement?: HTMLElement;
   closeOnSelect?: boolean;
@@ -177,7 +178,7 @@ export interface PowerSelectArgs<T = unknown, TExtra = unknown, IsMultiple exten
   matcher?: MatcherFn;
   initiallyOpened?: boolean;
   typeAheadOptionMatcher?: MatcherFn;
-  buildSelection?: (selected: Selected<T, IsMultiple>, select: Select<T, IsMultiple>) => Selected<T, IsMultiple> | null;
+  buildSelection?: (selected: T, select: Select<T, IsMultiple>) => Selected<T, IsMultiple> | null;
   onChange: (selection: Selected<T, IsMultiple>, select: Select<T, IsMultiple>, event?: Event) => void;
   search?: (
     term: string,
@@ -200,9 +201,9 @@ export interface PowerSelectArgs<T = unknown, TExtra = unknown, IsMultiple exten
 export type TLabelClickAction = 'focus' | 'open';
 export type TSearchFieldPosition = 'before-options' | 'trigger';
 
-export interface PowerSelectSignature<T = unknown, TExtra = undefined, IsMultiple extends boolean = false> {
+export interface PowerSelectSignature<T, IsMultiple extends boolean, TExtra = undefined> {
   Element: Element;
-  Args: PowerSelectArgs<T, TExtra, IsMultiple>;
+  Args: PowerSelectArgs<T, IsMultiple, TExtra>;
   Blocks: {
     default: [option: T, select: Select<T, IsMultiple>];
   };
@@ -234,8 +235,8 @@ const isCancellablePromise = <T>(
   );
 };
 
-export default class PowerSelectComponent<T = unknown, TExtra = undefined, IsMultiple extends boolean = false> extends Component<
-  PowerSelectSignature<T, TExtra, IsMultiple>
+export default class PowerSelectComponent<T, IsMultiple extends boolean, TExtra = undefined> extends Component<
+  PowerSelectSignature<T, IsMultiple, TExtra>
 > {
   // Untracked properties
   _publicAPIActions = {
@@ -273,7 +274,7 @@ export default class PowerSelectComponent<T = unknown, TExtra = undefined, IsMul
   } = { results: [], options: [], searchText: this.searchText };
 
   // Lifecycle hooks
-  constructor(owner: Owner, args: PowerSelectArgs<T, TExtra, IsMultiple>) {
+  constructor(owner: Owner, args: PowerSelectArgs<T, IsMultiple, TExtra>) {
     super(owner, args);
     assert(
       '<PowerSelect> requires an `@onChange` function',
@@ -754,10 +755,10 @@ export default class PowerSelectComponent<T = unknown, TExtra = undefined, IsMul
   }
 
   @action
-  _choose(selected: Selected<T, IsMultiple>, e?: Event): void {
+  _choose(selected: T, e?: Event): void {
     const selection = this.args.buildSelection
       ? this.args.buildSelection(selected, this.storedAPI)
-      : selected;
+      : selected as Selected<T, IsMultiple>; // Note: For multiple we pass always function, otherwise it would not work!
     this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
       this.storedAPI.actions.close(e);

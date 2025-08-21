@@ -29,7 +29,7 @@ export interface PowerSelectTriggerSignature<T = unknown, TExtra = unknown, IsMu
     ariaActiveDescendant: string;
     extra?: TExtra;
     buildSelection?: (
-      selected: Selected<T, IsMultiple>,
+      selected: T,
       select: Select<T, IsMultiple>,
     ) => Selected<T, IsMultiple> | null;
     placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>>;

@@ -2,7 +2,9 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import type {
+  PowerSelectAfterOptionsSignature,
   PowerSelectArgs,
+  PowerSelectSelectedItemSignature,
   PromiseProxy,
   Select as SingleSelect,
 } from './power-select';
@@ -12,48 +14,19 @@ import type { ComponentLike } from '@glint/template';
 // } from 'ember-basic-dropdown/components/basic-dropdown';
 import TriggerComponent from './power-select-multiple/trigger.ts';
 import { ensureSafeComponent } from '@embroider/util';
-import type { PowerSelectMultiplePlaceholderSignature } from './power-select-multiple/placeholder';
 // import type { PowerSelectSearchMessageSignature } from './power-select/search-message';
 // import type { PowerSelectNoMatchesMessageSignature } from './power-select/no-matches-message';
 // import type { BasicDropdownTriggerSignature } from 'ember-basic-dropdown/components/basic-dropdown-trigger';
 // import type { BasicDropdownContentSignature } from 'ember-basic-dropdown/components/basic-dropdown-content';
 // import type { PowerSelectLabelSignature } from './power-select/label';
-import type { PowerSelectMultipleTriggerSignature } from './power-select-multiple/trigger';
 // import type { PowerSelectBeforeOptionsSignature } from './power-select/before-options';
 // import type { PowerSelectOptionsSignature } from './power-select/options';
 // import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group';
 import type { Selected as SingleSelected } from './power-select';
+import type { PowerSelectTriggerSignature } from './power-select/trigger.ts';
+import type { PowerSelectPlaceholderSignature } from './power-select/placeholder.ts';
 
 export type Selected<T = unknown> = SingleSelected<T, true>;
-
-export interface PowerSelectMultipleSelectedItemSignature<
-  T = unknown,
-  TExtra = unknown,
-> {
-  Element: HTMLElement;
-  Args: {
-    extra?: TExtra;
-    selected: T;
-    select: Select<T>;
-  };
-  Blocks: {
-    default: [];
-  };
-}
-
-export interface PowerSelectMultipleAfterOptionsSignature<
-  T = unknown,
-  TExtra = unknown,
-> {
-  Element: HTMLElement;
-  Args: {
-    extra: TExtra;
-    select: Select<T>;
-  };
-  Blocks: {
-    default: [];
-  };
-}
 
 // interface SelectActions<T> extends DropdownActions {
 //   search: (term: string) => void;
@@ -74,21 +47,21 @@ export interface PowerSelectMultipleAfterOptionsSignature<
 export interface Select<T = unknown> extends SingleSelect<T, true>{
 }
 
-interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> extends Omit<PowerSelectArgs<T, TExtra>, 'placeholderComponent' | 'selected' | 'triggerComponent' | 'selectedItemComponent' | 'afterOptionsComponent' | 'buildSelection' | 'onChange' | 'search' | 'onOpen' | 'onClose' | 'onInput' | 'onKeydown' | 'onFocus' | 'onBlur' | 'scrollTo' | 'registerAPI'> {
-  placeholderComponent?: ComponentLike<PowerSelectMultiplePlaceholderSignature<T>>;
+interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> extends Omit<PowerSelectArgs<T, true, TExtra>, 'placeholderComponent' | 'selected' | 'triggerComponent' | 'selectedItemComponent' | 'afterOptionsComponent' | 'buildSelection' | 'onChange' | 'search' | 'onOpen' | 'onClose' | 'onInput' | 'onKeydown' | 'onFocus' | 'onBlur' | 'scrollTo' | 'registerAPI'> {
+  placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, true>>;
   // searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T>>;
   // noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T>>;
   // options?: readonly T[] | Promise<readonly T[]>;
   selected?: T[] | PromiseProxy<T[]>;
   // labelComponent?: ComponentLike<PowerSelectLabelSignature<T>>;
-  triggerComponent?: ComponentLike<PowerSelectMultipleTriggerSignature<T, TExtra>>;
-  selectedItemComponent?: ComponentLike<PowerSelectMultipleSelectedItemSignature<T>>;
+  triggerComponent?: ComponentLike<PowerSelectTriggerSignature<T, TExtra, true>>;
+  selectedItemComponent?: ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, true>>;
   // beforeOptionsComponent?: ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
   // optionsComponent?: ComponentLike<PowerSelectOptionsSignature<T>>;
   // groupComponent?: ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
-  afterOptionsComponent?: ComponentLike<PowerSelectMultipleAfterOptionsSignature<T>>;
+  afterOptionsComponent?: ComponentLike<PowerSelectAfterOptionsSignature<T, TExtra, true>>;
   buildSelection?: (
-    selected: Selected<T>,
+    selected: T,
     select: Select<T>,
   ) => Selected<T> | null;
   onChange: (selection: Selected<T>, select: Select<T>, event?: Event) => void;
@@ -106,7 +79,7 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> extends Omit<Po
   onKeydown?: (select: Select<T>, e: KeyboardEvent) => boolean | undefined;
   onFocus?: (select: Select<T>, event: FocusEvent) => void;
   onBlur?: (select: Select<T>, event: FocusEvent) => void;
-  scrollTo?: (option: T, select: Select<T>) => void;
+  scrollTo?: (option: Selected<T>, select: Select<T>) => void;
   registerAPI?: (select: Select<T>) => void;
 }
 
@@ -130,12 +103,12 @@ export default class PowerSelectMultipleComponent<
     }
   }
 
-  get triggerComponent(): ComponentLike<PowerSelectMultipleTriggerSignature<T, TExtra>> {
+  get triggerComponent(): ComponentLike<PowerSelectTriggerSignature<T, TExtra, true>> {
     if (this.args.triggerComponent) {
       return ensureSafeComponent(this.args.triggerComponent, this);
     }
 
-    return TriggerComponent as unknown as ComponentLike<PowerSelectMultipleTriggerSignature<T, TExtra>>;
+    return TriggerComponent as unknown as ComponentLike<PowerSelectTriggerSignature<T, TExtra, true>>;
   }
 
   // Actions
@@ -181,13 +154,14 @@ export default class PowerSelectMultipleComponent<
     }
   }
 
-  defaultBuildSelection(option: T, select: Select<T>) {
+  defaultBuildSelection(selected: T, select: Select<T>) {
+    console.log('option', selected);
     const newSelection = Array.isArray(select.selected)
       ? select.selected.slice(0)
       : [];
     let idx = -1;
     for (let i = 0; i < newSelection.length; i++) {
-      if (isEqual(newSelection[i], option)) {
+      if (isEqual(newSelection[i], selected)) {
         idx = i;
         break;
       }
@@ -195,8 +169,9 @@ export default class PowerSelectMultipleComponent<
     if (idx > -1) {
       newSelection.splice(idx, 1);
     } else {
-      newSelection.push(option);
+      newSelection.push(selected);
     }
+    console.log(newSelection);
     return newSelection;
   }
 
