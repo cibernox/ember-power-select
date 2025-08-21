@@ -23,8 +23,8 @@
   disabled={{@select.disabled}}
   tabindex={{@tabindex}}
   form="power-select-fake-form"
-  {{on "focus" @onFocus}}
-  {{on "blur" @onBlur}}
+  {{on "focus" this.handleFocus}}
+  {{on "blur" this.handleBlur}}
   {{on "input" this.handleInput}}
   {{on "keydown" this.handleKeydown}}
   ...attributes

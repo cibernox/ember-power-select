@@ -4,10 +4,10 @@ import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type { Select, TSearchFieldPosition } from '../power-select';
 
-export interface PowerSelectInputSignature<T = unknown> {
+export interface PowerSelectInputSignature<T = unknown, IsMultiple extends boolean = false> {
   Element: HTMLElement;
   Args: {
-    select: Select<T>;
+    select: Select<T, IsMultiple>;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
@@ -15,17 +15,18 @@ export interface PowerSelectInputSignature<T = unknown> {
     searchPlaceholder?: string;
     searchFieldPosition?: TSearchFieldPosition;
     ariaActiveDescendant?: string;
+    isDefaultPlaceholder?: boolean;
     listboxId?: string;
-    onKeydown: (e: KeyboardEvent) => false | void;
-    onBlur: (e: FocusEvent) => void;
-    onFocus: (e: FocusEvent) => void;
-    onInput: (e: InputEvent) => boolean;
     autofocus?: boolean;
+    onKeydown?: (e: KeyboardEvent) => boolean | void;
+    onBlur?: (e: FocusEvent) => void;
+    onFocus?: (e: FocusEvent) => void;
+    onInput?: (e: InputEvent) => void | boolean;
   };
 }
 
-export default class PowerSelectInput<T = unknown> extends Component<
-  PowerSelectInputSignature<T>
+export default class PowerSelectInput<T = unknown, IsMultiple extends boolean = false> extends Component<
+  PowerSelectInputSignature<T, IsMultiple>
 > {
   didSetup: boolean = false;
 
@@ -33,7 +34,7 @@ export default class PowerSelectInput<T = unknown> extends Component<
 
   @action
   handleKeydown(e: KeyboardEvent): false | void {
-    if (this.args.onKeydown(e) === false) {
+    if (this.args.onKeydown && this.args.onKeydown(e) === false) {
       return false;
     }
     if (e.keyCode === 13) {
@@ -44,7 +45,7 @@ export default class PowerSelectInput<T = unknown> extends Component<
   @action
   handleInput(event: Event): false | void {
     const e = event as InputEvent;
-    if (this.args.onInput(e) === false) {
+    if (this.args.onInput && this.args.onInput(e) === false) {
       return false;
     }
   }
@@ -55,7 +56,16 @@ export default class PowerSelectInput<T = unknown> extends Component<
       this.args.select.actions?.search('');
     }
 
-    this.args.onBlur(event as FocusEvent);
+    if (this.args.onBlur) {
+      this.args.onBlur(event as FocusEvent);
+    }
+  }
+
+  @action
+  handleFocus(event: Event) {
+    if (this.args.onFocus) {
+      this.args.onFocus(event as FocusEvent);
+    }
   }
 
   setupInput = modifier(

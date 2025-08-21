@@ -1,9 +1,6 @@
 {{#if @isMultipleWithSearch}}
-  {{#let
-    (component (ensure-safe-component @inputComponent))
-    as |InputComponent|
-  }}
-    <InputComponent @isDefaultPlaceholder={{true}} />
+  {{#let @inputComponent as |InputComponent|}}
+    <InputComponent @isDefaultPlaceholder={{true}} @select={{@select}} />
   {{/let}}
 {{else if @placeholder}}
   <span

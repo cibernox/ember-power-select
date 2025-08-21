@@ -4,27 +4,30 @@ import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import type { Select } from '../power-select-multiple';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectMultiplePlaceholderSignature } from './placeholder';
+import type { Selected } from '../power-select-multiple';
 
-interface PowerSelectMultipleInputSignature<T = unknown> {
+export interface PowerSelectMultipleInputSignature<T = unknown> {
   Element: HTMLElement;
   Args: {
     select: Select<T>;
     placeholder?: string;
     searchField: string;
-    tabindex?: string;
+    tabindex?: number | string;
     listboxId?: string;
     ariaLabel?: string;
     ariaActiveDescendant?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
     role?: string;
-    placeholderComponent?: string;
+    placeholderComponent?: ComponentLike<PowerSelectMultiplePlaceholderSignature<T>>;
     isDefaultPlaceholder?: boolean;
-    onInput?: (e: InputEvent) => boolean;
-    onKeydown?: (e: KeyboardEvent) => boolean;
-    onFocus: (e: FocusEvent) => void;
-    onBlur: (e: FocusEvent) => void;
-    buildSelection: (lastSelection: T, select: Select<T>) => T;
+    onInput?: (e: InputEvent) => void | boolean;
+    onKeydown?: (e: KeyboardEvent) => boolean | void;
+    onFocus?: (e: FocusEvent) => void;
+    onBlur?: (e: FocusEvent) => void;
+    buildSelection: (lastSelection: T, select: Select<T>) => Selected<T>;
   };
 }
 
@@ -50,6 +53,20 @@ export default class PowerSelectMultipleInputComponent<
       return;
     }
     this.args.select.actions.open(e);
+  }
+
+  @action
+  handleBlur(event: Event) {
+    if (this.args.onBlur) {
+      this.args.onBlur(event as FocusEvent);
+    }
+  }
+
+  @action
+  handleFocus(event: Event) {
+    if (this.args.onFocus) {
+      this.args.onFocus(event as FocusEvent);
+    }
   }
 
   @action

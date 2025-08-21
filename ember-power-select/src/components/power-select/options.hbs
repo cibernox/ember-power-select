@@ -9,29 +9,27 @@
       >{{@loadingMessage}}</li>
     {{/if}}
   {{/if}}
-  {{#let
-    (component (ensure-safe-component @groupComponent))
-    (component (ensure-safe-component @optionsComponent))
-    as |Group Options|
-  }}
+  {{#let @groupComponent @optionsComponent as |Group Options|}}
     {{#each @options as |opt index|}}
       {{#if (ember-power-select-is-group opt)}}
-        <Group @group={{opt}} @select={{@select}} @extra={{@extra}}>
-          <Options
-            @options={{this.options opt}}
-            @select={{@select}}
-            @groupIndex="{{@groupIndex}}{{index}}."
-            @optionsComponent={{@optionsComponent}}
-            @groupComponent={{@groupComponent}}
-            @extra={{@extra}}
-            role="presentation"
-            data-optgroup="true"
-            class="ember-power-select-options"
-            as |option|
-          >
-            {{yield option @select}}
-          </Options>
-        </Group>
+        {{#let (this.groupTyping opt) as |groupOpt|}}
+          <Group @group={{groupOpt}} @select={{@select}} @extra={{@extra}}>
+            <Options
+              @options={{this.options groupOpt}}
+              @select={{@select}}
+              @groupIndex="{{@groupIndex}}{{index}}."
+              @optionsComponent={{@optionsComponent}}
+              @groupComponent={{@groupComponent}}
+              @extra={{@extra}}
+              role="presentation"
+              data-optgroup="true"
+              class="ember-power-select-options"
+              as |option|
+            >
+              {{yield option @select}}
+            </Options>
+          </Group>
+        {{/let}}
       {{else}}
         <li
           class="ember-power-select-option"

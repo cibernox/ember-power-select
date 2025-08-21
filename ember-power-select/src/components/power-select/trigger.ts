@@ -8,44 +8,55 @@ import type {
 } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder';
+import PowerSelectInput, { type PowerSelectInputSignature } from './input.ts';
 
-export interface PowerSelectTriggerSignature<T = unknown, TExtra = unknown> {
+export interface PowerSelectTriggerSignature<T = unknown, TExtra = unknown, IsMultiple extends boolean = false> {
   Element: HTMLElement;
   Args: {
-    select: Select<T>;
-    allowClear: boolean;
-    searchEnabled: boolean;
+    select: Select<T, IsMultiple>;
+    allowClear?: boolean;
+    searchEnabled?: boolean;
     placeholder?: string;
-    searchField: string;
+    searchField?: string;
     searchFieldPosition?: TSearchFieldPosition;
     listboxId?: string;
-    tabindex?: string;
+    tabindex?: number | string;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
+    loadingMessage?: string;
     role?: string;
     ariaActiveDescendant: string;
     extra?: TExtra;
-    placeholderComponent?:
-      | string
-      | ComponentLike<PowerSelectPlaceholderSignature>;
-    selectedItemComponent?:
-      | string
-      | ComponentLike<PowerSelectSelectedItemSignature>;
-    onInput?: (e: InputEvent) => boolean;
-    onKeydown?: (e: KeyboardEvent) => boolean;
+    buildSelection?: (
+      selected: Selected<T, IsMultiple>,
+      select: Select<T, IsMultiple>,
+    ) => Selected<T, IsMultiple> | null;
+    placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>>;
+    selectedItemComponent?: ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>>;
+    onInput?: (e: InputEvent) => void | boolean;
+    onKeydown?: (e: KeyboardEvent) => void | boolean;
     onFocus?: (e: FocusEvent) => void;
     onBlur?: (e: FocusEvent) => void;
   };
   Blocks: {
-    default: [selected: Selected<T>, select: Select<T>];
+    default: [selected: T, select: Select<T, IsMultiple>];
   };
 }
 
 export default class PowerSelectTriggerComponent<
   T = unknown,
   TExtra = unknown,
-> extends Component<PowerSelectTriggerSignature<T, TExtra>> {
+  IsMultiple extends boolean = false
+> extends Component<PowerSelectTriggerSignature<T, TExtra, IsMultiple>> {
+  get inputComponent(): ComponentLike<PowerSelectInputSignature<T, IsMultiple>> {
+    return PowerSelectInput as ComponentLike<PowerSelectInputSignature<T, IsMultiple>>;
+  }
+
+  get selected() {
+    return this.args.select.selected as T;
+  }
+
   @action
   clear(e: Event): false | void {
     e.stopPropagation();

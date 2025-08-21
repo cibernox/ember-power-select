@@ -2,122 +2,91 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import type {
-  PowerSelectAfterOptionsSignature,
-  PowerSelectSelectedItemSignature,
+  PowerSelectArgs,
   PromiseProxy,
   Select as SingleSelect,
-  TLabelClickAction,
-  TSearchFieldPosition,
 } from './power-select';
 import type { ComponentLike } from '@glint/template';
-import type { DefaultHighlightedParams, MatcherFn } from '../utils/group-utils';
-import type {
-  DropdownActions,
-  TRootEventType,
-} from 'ember-basic-dropdown/components/basic-dropdown';
-import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
-import type { PowerSelectPlaceholderSignature } from './power-select/placeholder';
-import type { PowerSelectSearchMessageSignature } from './power-select/search-message';
-import type { PowerSelectNoMatchesMessageSignature } from './power-select/no-matches-message';
-import type { BasicDropdownTriggerSignature } from 'ember-basic-dropdown/components/basic-dropdown-trigger';
-import type { BasicDropdownContentSignature } from 'ember-basic-dropdown/components/basic-dropdown-content';
-import type { PowerSelectLabelSignature } from './power-select/label';
+// import type {
+//   DropdownActions,
+// } from 'ember-basic-dropdown/components/basic-dropdown';
+import TriggerComponent from './power-select-multiple/trigger.ts';
+import { ensureSafeComponent } from '@embroider/util';
+import type { PowerSelectMultiplePlaceholderSignature } from './power-select-multiple/placeholder';
+// import type { PowerSelectSearchMessageSignature } from './power-select/search-message';
+// import type { PowerSelectNoMatchesMessageSignature } from './power-select/no-matches-message';
+// import type { BasicDropdownTriggerSignature } from 'ember-basic-dropdown/components/basic-dropdown-trigger';
+// import type { BasicDropdownContentSignature } from 'ember-basic-dropdown/components/basic-dropdown-content';
+// import type { PowerSelectLabelSignature } from './power-select/label';
 import type { PowerSelectMultipleTriggerSignature } from './power-select-multiple/trigger';
-import type { PowerSelectBeforeOptionsSignature } from './power-select/before-options';
-import type { PowerSelectOptionsSignature } from './power-select/options';
-import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group';
+// import type { PowerSelectBeforeOptionsSignature } from './power-select/before-options';
+// import type { PowerSelectOptionsSignature } from './power-select/options';
+// import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group';
+import type { Selected as SingleSelected } from './power-select';
 
-export type Selected<T = unknown> = T[] | null | undefined;
+export type Selected<T = unknown> = SingleSelected<T, true>;
 
-interface SelectActions<T> extends DropdownActions {
-  search: (term: string) => void;
-  highlight: (option: T | undefined) => void;
-  select: (selected: T, e?: Event) => void;
-  choose: (selected: T, e?: Event) => void;
-  scrollTo: (option: T | undefined) => void;
-  labelClick: (e: MouseEvent) => void;
+export interface PowerSelectMultipleSelectedItemSignature<
+  T = unknown,
+  TExtra = unknown,
+> {
+  Element: HTMLElement;
+  Args: {
+    extra?: TExtra;
+    selected: T;
+    select: Select<T>;
+  };
+  Blocks: {
+    default: [];
+  };
 }
 
-export interface Select<T = unknown>
-  extends Omit<SingleSelect<T>, 'selected' | 'actions'> {
-  selected: Selected<T>;
-  actions: SelectActions<T>;
+export interface PowerSelectMultipleAfterOptionsSignature<
+  T = unknown,
+  TExtra = unknown,
+> {
+  Element: HTMLElement;
+  Args: {
+    extra: TExtra;
+    select: Select<T>;
+  };
+  Blocks: {
+    default: [];
+  };
 }
 
-interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> {
-  highlightOnHover?: boolean;
-  placeholderComponent?:
-    | string
-    | ComponentLike<PowerSelectPlaceholderSignature>;
-  searchMessage?: string;
-  searchMessageComponent?:
-    | string
-    | ComponentLike<PowerSelectSearchMessageSignature>;
-  noMatchesMessage?: string;
-  noMatchesMessageComponent?:
-    | string
-    | ComponentLike<PowerSelectNoMatchesMessageSignature>;
-  matchTriggerWidth?: boolean;
-  resultCountMessage?: (resultCount: number) => string;
-  options?: readonly T[] | Promise<readonly T[]>;
+// interface SelectActions<T> extends DropdownActions {
+//   search: (term: string) => void;
+//   highlight: (option: T | undefined) => void;
+//   select: (selected: Selected<T>, e?: Event) => void;
+//   choose: (selected: T, e?: Event) => void;
+//   scrollTo: (option: T | undefined) => void;
+//   labelClick: (e: MouseEvent) => void;
+// }
+
+// export interface Select<T = unknown>
+//   extends Omit<SingleSelect<T>, 'selected' | 'actions'> {
+//   selected: Selected<T>;
+//   actions: SelectActions<T>;
+// }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface Select<T = unknown> extends SingleSelect<T, true>{
+}
+
+interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> extends Omit<PowerSelectArgs<T, TExtra>, 'placeholderComponent' | 'selected' | 'triggerComponent' | 'selectedItemComponent' | 'afterOptionsComponent' | 'buildSelection' | 'onChange' | 'search' | 'onOpen' | 'onClose' | 'onInput' | 'onKeydown' | 'onFocus' | 'onBlur' | 'scrollTo' | 'registerAPI'> {
+  placeholderComponent?: ComponentLike<PowerSelectMultiplePlaceholderSignature<T>>;
+  // searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T>>;
+  // noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T>>;
+  // options?: readonly T[] | Promise<readonly T[]>;
   selected?: T[] | PromiseProxy<T[]>;
-  destination?: string;
-  destinationElement?: HTMLElement;
-  closeOnSelect?: boolean;
-  renderInPlace?: boolean;
-  preventScroll?: boolean;
-  defaultHighlighted?: (params: DefaultHighlightedParams<T>) => T | undefined;
-  searchField?: string;
-  labelClass?: string;
-  labelText?: string;
-  labelClickAction?: TLabelClickAction;
-  ariaLabel?: string;
-  ariaLabelledBy?: string;
-  loadingMessage?: string;
-  placeholder?: string;
-  dropdownClass?: string;
-  allowClear?: boolean;
-  searchEnabled?: boolean;
-  animationEnabled?: boolean;
-  tabindex?: number | string;
-  searchPlaceholder?: string;
-  searchFieldPosition?: TSearchFieldPosition;
-  verticalPosition?: string;
-  horizontalPosition?: string;
-  triggerId?: string;
-  disabled?: boolean;
-  title?: string;
-  triggerRole?: string;
-  required?: string;
-  triggerClass?: string;
-  ariaInvalid?: string;
-  eventType?: string;
-  rootEventType?: TRootEventType;
-  ariaDescribedBy?: string;
-  calculatePosition?: CalculatePosition;
-  ebdTriggerComponent?: string | ComponentLike<BasicDropdownTriggerSignature>;
-  ebdContentComponent?: string | ComponentLike<BasicDropdownContentSignature>;
-  labelComponent?: string | ComponentLike<PowerSelectLabelSignature<T>>;
-  triggerComponent?:
-    | string
-    | ComponentLike<PowerSelectMultipleTriggerSignature<T, TExtra>>;
-  selectedItemComponent?:
-    | string
-    | ComponentLike<PowerSelectSelectedItemSignature<T>>;
-  beforeOptionsComponent?:
-    | string
-    | ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
-  optionsComponent?: string | ComponentLike<PowerSelectOptionsSignature<T>>;
-  groupComponent?:
-    | string
-    | ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
-  afterOptionsComponent?:
-    | string
-    | ComponentLike<PowerSelectAfterOptionsSignature<T>>;
-  extra?: TExtra;
-  matcher?: MatcherFn;
-  initiallyOpened?: boolean;
-  typeAheadOptionMatcher?: MatcherFn;
+  // labelComponent?: ComponentLike<PowerSelectLabelSignature<T>>;
+  triggerComponent?: ComponentLike<PowerSelectMultipleTriggerSignature<T, TExtra>>;
+  selectedItemComponent?: ComponentLike<PowerSelectMultipleSelectedItemSignature<T>>;
+  // beforeOptionsComponent?: ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
+  // optionsComponent?: ComponentLike<PowerSelectOptionsSignature<T>>;
+  // groupComponent?: ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
+  afterOptionsComponent?: ComponentLike<PowerSelectMultipleAfterOptionsSignature<T>>;
   buildSelection?: (
     selected: Selected<T>,
     select: Select<T>,
@@ -127,8 +96,8 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> {
     term: string,
     select: Select<T>,
   ) => readonly T[] | Promise<readonly T[]>;
-  onOpen?: (select: Select<T>, e: Event) => boolean | undefined;
-  onClose?: (select: Select<T>, e: Event) => boolean | undefined;
+  onOpen?: (select: Select<T>, e: Event | undefined) => boolean | undefined;
+  onClose?: (select: Select<T>, e: Event | undefined) => boolean | undefined;
   onInput?: (
     term: string,
     select: Select<T>,
@@ -141,9 +110,9 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> {
   registerAPI?: (select: Select<T>) => void;
 }
 
-export interface PowerSelectMultipleSignature<T = unknown> {
-  Element: HTMLElement;
-  Args: PowerSelectMultipleArgs<T>;
+export interface PowerSelectMultipleSignature<T = unknown, TExtra = unknown> {
+  Element: Element;
+  Args: PowerSelectMultipleArgs<T, TExtra>;
   Blocks: {
     default: [option: T, select: Select<T>];
   };
@@ -151,7 +120,8 @@ export interface PowerSelectMultipleSignature<T = unknown> {
 
 export default class PowerSelectMultipleComponent<
   T = unknown,
-> extends Component<PowerSelectMultipleSignature<T>> {
+  TExtra = unknown
+> extends Component<PowerSelectMultipleSignature<T, TExtra>> {
   get computedTabIndex() {
     if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
       return '-1';
@@ -160,9 +130,17 @@ export default class PowerSelectMultipleComponent<
     }
   }
 
+  get triggerComponent(): ComponentLike<PowerSelectMultipleTriggerSignature<T, TExtra>> {
+    if (this.args.triggerComponent) {
+      return ensureSafeComponent(this.args.triggerComponent, this);
+    }
+
+    return TriggerComponent as unknown as ComponentLike<PowerSelectMultipleTriggerSignature<T, TExtra>>;
+  }
+
   // Actions
   @action
-  handleOpen(select: Select<T>, e: Event): false | void {
+  handleOpen(select: Select<T>, e: Event | undefined): boolean | void {
     if (this.args.onOpen && this.args.onOpen(select, e) === false) {
       return false;
     }
@@ -178,7 +156,7 @@ export default class PowerSelectMultipleComponent<
   }
 
   @action
-  handleKeydown(select: Select<T>, e: KeyboardEvent): false | void {
+  handleKeydown(select: Select<T>, e: KeyboardEvent): boolean | void {
     if (this.args.onKeydown && this.args.onKeydown(select, e) === false) {
       e.stopPropagation();
       return false;

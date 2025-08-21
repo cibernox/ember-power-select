@@ -35,12 +35,12 @@
         {{/unless}}
         {{#if @selectedItemComponent}}
           {{#let
-            (component (ensure-safe-component @selectedItemComponent))
+            @selectedItemComponent
             as |SelectedItemComponent|
           }}
             <SelectedItemComponent
               @extra={{@extra}}
-              @option={{opt}}
+              @selected={{opt}}
               @select={{@select}}
             />
           {{/let}}
@@ -53,10 +53,10 @@
     {{#if (and @placeholder (not @searchEnabled))}}
       <li>
         {{#let
-          (component (ensure-safe-component @placeholderComponent))
+          @placeholderComponent
           as |PlaceholderComponent|
         }}
-          <PlaceholderComponent @placeholder={{@placeholder}} />
+          <PlaceholderComponent @placeholder={{@placeholder}} @select={{@select}} />
         {{/let}}
       </li>
     {{/if}}
@@ -64,8 +64,7 @@
   {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
     <li class="ember-power-select-trigger-multiple-input-container">
       {{#let
-        (component
-          "power-select-multiple/input"
+        (component this.inputComponent
           select=@select
           ariaActiveDescendant=@ariaActiveDescendant
           ariaLabelledBy=@ariaLabelledBy
@@ -86,7 +85,7 @@
         as |InputComponent|
       }}
         {{#let
-          (component (ensure-safe-component @placeholderComponent))
+          @placeholderComponent
           as |PlaceholderComponent|
         }}
           <PlaceholderComponent

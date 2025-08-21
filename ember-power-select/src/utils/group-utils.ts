@@ -1,10 +1,11 @@
 import { isEqual } from '@ember/utils';
 import type EmberArrayLike from '@ember/array';
+import type { Selected } from '../components/power-select';
 
 // type MatcherOption = string | number | Record<string, unknown> | undefined;
 
 export type MatcherFn<T = unknown> = (option: T, text: string) => number;
-export function isGroup<T>(entry: T): boolean {
+export function isGroup<T>(entry: unknown): entry is Group<T> {
   return (
     !!entry &&
     typeof entry === 'object' &&
@@ -38,9 +39,9 @@ export function countOptions<T = unknown>(collection: readonly T[]): number {
   return counter;
 }
 
-export function indexOfOption<T = unknown>(
-  collection: readonly T[],
-  option: T | undefined,
+export function indexOfOption<T = unknown, IsMultiple extends boolean = false>(
+  collection: readonly Selected<T, IsMultiple>[],
+  option: T | T[] | undefined | null,
 ): number {
   let index = 0;
   return (function walk(collection): number {
@@ -52,10 +53,10 @@ export function indexOfOption<T = unknown>(
         collection &&
         'objectAt' in collection &&
         typeof collection.objectAt === 'function'
-          ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
+          ? (collection as unknown as EmberArrayLike<Selected<T, IsMultiple>>).objectAt(i)
           : collection[i];
       if (isGroup(entry)) {
-        const result = walk((entry as unknown as Group<T>).options);
+        const result = walk((entry as unknown as Group<Selected<T, IsMultiple>>).options);
         if (result > -1) {
           return result;
         }
@@ -150,8 +151,8 @@ export interface Group<T = unknown> {
   disabled?: boolean;
   [key: string]: unknown;
 }
-function copyGroup<T = unknown>(group: Group<T>, suboptions: T[]): Group<T> {
-  const groupCopy: Group<T> = { ...group, options: suboptions };
+function copyGroup<T = unknown, IsMultiple extends boolean = false>(group: Group<Selected<T, IsMultiple>>, suboptions: Selected<T, IsMultiple>[]): Group<Selected<T, IsMultiple>> {
+  const groupCopy: Group<Selected<T, IsMultiple>> = { ...group, options: suboptions };
   if (Object.prototype.hasOwnProperty.call(group, 'disabled')) {
     groupCopy.disabled = group.disabled;
   }
@@ -217,7 +218,7 @@ export function findOptionWithOffset<T>(
   return foundAfterOffset ? foundAfterOffset : foundBeforeOffset;
 }
 
-export function filterOptions<T = unknown, MT = unknown>(
+export function filterOptions<T = unknown, MT = unknown, IsMultiple extends boolean = false>(
   options: T[],
   text: string,
   matcher: MatcherFn<MT>,
@@ -241,13 +242,13 @@ export function filterOptions<T = unknown, MT = unknown>(
     ) {
       if (isGroup(entry)) {
         const suboptions = filterOptions(
-          (entry as unknown as Group<T>).options,
+          (entry as unknown as Group<Selected<T, IsMultiple>>).options,
           text,
           matcher,
           skipDisabled,
         );
         if (suboptions.length > 0) {
-          opts.push(copyGroup(entry as Group<T>, suboptions) as T);
+          opts.push(copyGroup(entry as Group<Selected<T, IsMultiple>>, suboptions) as T);
         }
       } else if (entry && matcher(entry as MT, text) >= 0) {
         opts.push(entry);
@@ -257,17 +258,17 @@ export function filterOptions<T = unknown, MT = unknown>(
   return opts;
 }
 
-export interface DefaultHighlightedParams<T> {
+export interface DefaultHighlightedParams<T, IsMultiple extends boolean = false> {
   results: T[];
-  highlighted: T | undefined | null;
-  selected: T | undefined | null;
+  highlighted: T | T[] | undefined | null;
+  selected: Selected<T, IsMultiple>;
 }
 
-export function defaultHighlighted<T = unknown>({
+export function defaultHighlighted<T = unknown, IsMultiple extends boolean = false>({
   results,
   highlighted,
   selected,
-}: DefaultHighlightedParams<T>): T | null | undefined {
+}: DefaultHighlightedParams<T, IsMultiple>): T | T[] | null | undefined {
   const option = highlighted || selected;
   if (option === undefined || indexOfOption(results, option) === -1) {
     return advanceSelectableOption(results, option, 1);
@@ -277,7 +278,7 @@ export function defaultHighlighted<T = unknown>({
 
 export function advanceSelectableOption<T = unknown>(
   options: readonly T[],
-  currentOption: T | undefined,
+  currentOption: T | T[] | null | undefined,
   step: 1 | -1,
 ): T | undefined {
   const resultsLength = countOptions(options);

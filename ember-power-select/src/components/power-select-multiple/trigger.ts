@@ -3,14 +3,14 @@ import { action } from '@ember/object';
 import { get } from '@ember/object';
 import { scheduleTask } from 'ember-lifeline';
 import type {
-  PowerSelectSelectedItemSignature,
   TSearchFieldPosition,
 } from '../power-select';
-import type { Select, Selected } from '../power-select-multiple';
+import type { PowerSelectMultipleSelectedItemSignature, Select, Selected } from '../power-select-multiple';
 import type { ComponentLike } from '@glint/template';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
-import type { PowerSelectPlaceholderSignature } from '../power-select/placeholder';
+import PowerSelectMultipleInputComponent, { type PowerSelectMultipleInputSignature } from './input.ts';
+import type { PowerSelectMultiplePlaceholderSignature } from './placeholder.ts';
 
 export interface PowerSelectMultipleTriggerSignature<
   T = unknown,
@@ -24,25 +24,22 @@ export interface PowerSelectMultipleTriggerSignature<
     searchField: string;
     searchFieldPosition?: TSearchFieldPosition;
     listboxId?: string;
-    tabindex?: string;
+    tabindex?: number | string;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
+    loadingMessage?: string;
     role?: string;
     ariaActiveDescendant: string;
     extra?: TExtra;
-    placeholderComponent?:
-      | string
-      | ComponentLike<PowerSelectPlaceholderSignature>;
-    selectedItemComponent?:
-      | string
-      | ComponentLike<PowerSelectSelectedItemSignature<T, TExtra>>;
-    onInput?: (e: InputEvent) => boolean;
-    onKeydown?: (e: KeyboardEvent) => boolean;
+    placeholderComponent?: ComponentLike<PowerSelectMultiplePlaceholderSignature<T>>;
+    selectedItemComponent?: ComponentLike<PowerSelectMultipleSelectedItemSignature<T, TExtra>>;
+    onInput?: (e: InputEvent) => void | boolean;
+    onKeydown?: (e: KeyboardEvent) => void | boolean;
     onFocus?: (e: FocusEvent) => void;
     onBlur?: (e: FocusEvent) => void;
     buildSelection: (
-      selected: Selected<T>,
+      selected: T,
       select: Select<T>,
     ) => Selected<T> | null;
   };
@@ -56,6 +53,10 @@ export default class TriggerComponent<
   TExtra = undefined,
 > extends Component<PowerSelectMultipleTriggerSignature<T, TExtra>> {
   private _lastIsOpen: boolean = this.args.select.isOpen;
+
+  get inputComponent() {
+    return PowerSelectMultipleInputComponent as unknown as ComponentLike<PowerSelectMultipleInputSignature<T>>;
+  }
 
   isOptionDisabled(option: T): boolean {
     if (option && typeof option === 'object' && 'disabled' in option) {

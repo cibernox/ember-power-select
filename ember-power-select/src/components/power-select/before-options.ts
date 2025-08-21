@@ -2,14 +2,16 @@ import Component from '@glimmer/component';
 import { runTask } from 'ember-lifeline';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { Select, TSearchFieldPosition } from '../power-select';
+import type { PowerSelectSelectedItemSignature, Select, TSearchFieldPosition } from '../power-select';
 import { deprecate } from '@ember/debug';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './placeholder';
 
-export interface PowerSelectBeforeOptionsSignature<T = unknown> {
+export interface PowerSelectBeforeOptionsSignature<T = unknown, TExtra = unknown, IsMultiple extends boolean = false> {
   Element: HTMLElement;
   Args: {
-    select: Select<T>;
-    searchEnabled: boolean;
+    select: Select<T, IsMultiple>;
+    searchEnabled?: boolean;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
@@ -18,17 +20,23 @@ export interface PowerSelectBeforeOptionsSignature<T = unknown> {
     searchFieldPosition?: TSearchFieldPosition;
     ariaActiveDescendant?: string;
     listboxId?: string;
-    onKeydown: (e: KeyboardEvent) => false | void;
+    placeholder?: string;
+    autofocus?: boolean;
+    extra?: TExtra;
+    triggerRole?: string;
+    onKeydown: (e: KeyboardEvent) => boolean | void;
     onBlur: (e: FocusEvent) => void;
     onFocus: (e: FocusEvent) => void;
-    onInput: (e: InputEvent) => boolean;
-    autofocus?: boolean;
+    onInput: (e: InputEvent) => boolean | void;
+    placeholderComponent?: ComponentLike<PowerSelectPlaceholderSignature<T, IsMultiple>>;
+    selectedItemComponent?: ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>>;
   };
 }
 
 export default class PowerSelectBeforeOptionsComponent<
   T = unknown,
-> extends Component<PowerSelectBeforeOptionsSignature<T>> {
+  TExtra = unknown
+> extends Component<PowerSelectBeforeOptionsSignature<T, TExtra>> {
   didSetup: boolean = false;
 
   @action

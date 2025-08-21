@@ -1,10 +1,16 @@
-import templateOnly from '@ember/component/template-only';
+import Component from '@glimmer/component';
+import type { Select } from '../power-select';
 
-export interface PowerSelectSearchMessageSignature {
+export interface PowerSelectSearchMessageSignature<T = unknown, IsMultiple extends boolean = false> {
   Element: HTMLElement;
   Args: {
     searchMessage: string;
+    select?: Select<T, IsMultiple>,
   };
 }
 
-export default templateOnly<PowerSelectSearchMessageSignature>();
+export default class PowerSelectSearchMessage<
+  T = unknown,
+  IsMultiple extends boolean = false
+> extends Component<PowerSelectSearchMessageSignature<T, IsMultiple>> {
+}
