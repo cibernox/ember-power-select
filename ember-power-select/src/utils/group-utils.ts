@@ -289,7 +289,7 @@ export function defaultHighlighted<T>({
     if (Array.isArray(selected)) {
       option = undefined; // Maybe correct is selected[0], but tests do fail right now
     } else {
-      option = selected
+      option = selected;
     }
   }
 
