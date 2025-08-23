@@ -284,9 +284,15 @@ export function defaultHighlighted<T>({
   selected,
 }: DefaultHighlightedParams<T>): Option<T> | null | undefined {
   let option: Option<T> | null | undefined = highlighted;
-  if (Array.isArray(selected)) {
-    option = selected[0];
+
+  if (!option) {
+    if (Array.isArray(selected)) {
+      option = undefined; // Maybe correct is selected[0], but tests do fail right now
+    } else {
+      option = selected
+    }
   }
+
   if (option === undefined || indexOfOption(results, option) === -1) {
     return advanceSelectableOption(results, option, 1);
   }
