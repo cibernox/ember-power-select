@@ -4,7 +4,7 @@ import type { Option, Selected } from '../components/power-select';
 
 // type MatcherOption = string | number | Record<string, unknown> | undefined;
 
-export type MatcherFn<T = unknown> = (option: T, text: string) => number;
+export type MatcherFn<T> = (option: T | undefined, text: string) => number;
 export function isGroup<T>(entry: unknown): entry is Group<T> {
   return (
     !!entry &&
@@ -170,7 +170,7 @@ function copyGroup<T = unknown, IsMultiple extends boolean = false>(
 export function findOptionWithOffset<T>(
   options: readonly T[],
   text: string,
-  matcher: MatcherFn,
+  matcher: MatcherFn<T>,
   offset: number,
   skipDisabled = false,
 ): Option<T> | undefined {

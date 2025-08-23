@@ -218,9 +218,9 @@ export interface PowerSelectArgs<
     PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>
   >;
   extra?: TExtra;
-  matcher?: MatcherFn;
+  matcher?: MatcherFn<T>;
   initiallyOpened?: boolean;
-  typeAheadOptionMatcher?: MatcherFn;
+  typeAheadOptionMatcher?: MatcherFn<T>;
   buildSelection?: (
     selected: Option<T>,
     select: Select<T, IsMultiple>,
@@ -1198,8 +1198,8 @@ export default class PowerSelectComponent<
   _filter(options: T[], term: string, skipDisabled = false): T[] {
     const matcher = this.args.matcher || defaultMatcher;
     const optionMatcher = getOptionMatcher(
-      matcher as MatcherFn,
-      defaultMatcher as MatcherFn,
+      matcher as MatcherFn<T>,
+      defaultMatcher as MatcherFn<T>,
       this.args.searchField,
     );
     return filterOptions(options || [], term, optionMatcher, skipDisabled);
@@ -1217,8 +1217,8 @@ export default class PowerSelectComponent<
   ): Option<T> | undefined {
     const typeAheadOptionMatcher = getOptionMatcher(
       this.args.typeAheadOptionMatcher ||
-        (defaultTypeAheadMatcher as MatcherFn),
-      defaultTypeAheadMatcher as MatcherFn,
+        (defaultTypeAheadMatcher as MatcherFn<T>),
+      defaultTypeAheadMatcher as MatcherFn<T>,
       this.args.searchField,
     );
     return findOptionWithOffset(
@@ -1309,16 +1309,16 @@ export default class PowerSelectComponent<
   });
 }
 
-function getOptionMatcher(
-  matcher: MatcherFn,
-  defaultMatcher: MatcherFn,
+function getOptionMatcher<T>(
+  matcher: MatcherFn<T>,
+  defaultMatcher: MatcherFn<T>,
   searchField: string | undefined,
-): MatcherFn {
+): MatcherFn<T> {
   if (searchField && matcher === defaultMatcher) {
-    return (option: unknown, text: string) =>
-      matcher(get(option, searchField) as string | undefined, text);
+    return (option: T | undefined, text: string) =>
+      matcher(get(option, searchField) as T, text);
   } else {
-    return (option: unknown, text: string) => {
+    return (option: T | undefined, text: string) => {
       assert(
         '<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`',
         matcher !== defaultMatcher || typeof option === 'string',
