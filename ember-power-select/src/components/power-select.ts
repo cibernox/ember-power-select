@@ -63,7 +63,7 @@ export interface PowerSelectSelectedItemSignature<
   Element: HTMLElement;
   Args: {
     extra?: TExtra;
-    selected: T;
+    selected: Option<T>;
     select: Select<T, IsMultiple>;
   };
   Blocks: {
@@ -89,17 +89,17 @@ export interface PowerSelectAfterOptionsSignature<
 interface SelectActions<T, IsMultiple extends boolean = false>
   extends DropdownActions {
   search: (term: string) => void;
-  highlight: (option: T | undefined) => void;
+  highlight: (option: Option<T> | undefined) => void;
   select: (selected: Selected<T, IsMultiple>, e?: Event) => void;
-  choose: (selected: T | undefined, e?: Event) => void;
-  scrollTo: (option: T | undefined) => void;
+  choose: (selected: Option<T> | undefined, e?: Event) => void;
+  scrollTo: (option: Option<T> | undefined) => void;
   labelClick: (e: MouseEvent) => void;
 }
 
 export interface Select<T = unknown, IsMultiple extends boolean = false>
   extends Dropdown {
   selected: Selected<T, IsMultiple>;
-  highlighted: T;
+  highlighted: Option<T>;
   options: readonly T[];
   results: readonly T[];
   resultsCount: number;
@@ -122,15 +122,22 @@ interface Sliceable<T> {
   slice(): T[];
 }
 
+export type Option<T> =
+  T extends readonly (infer U)[]
+    ? Option<U> // unwrap array
+    : T extends { groupName: string; options: infer O }
+      ? Option<O> // unwrap groups recursively
+      : T; // base case: string, number, or object with value/name
+
 export type Selected<
-  T = unknown,
+  T,
   IsMultiple extends boolean = false,
-> = IsMultiple extends true ? T[] | null | undefined : T | null | undefined;
+> = IsMultiple extends true ? Option<T>[] | null | undefined : Option<T> | null | undefined;
 
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs<
   T,
-  IsMultiple extends boolean,
+  IsMultiple extends boolean = false,
   TExtra = unknown,
 > {
   highlightOnHover?: boolean;
@@ -156,8 +163,8 @@ export interface PowerSelectArgs<
   renderInPlace?: boolean;
   preventScroll?: boolean;
   defaultHighlighted?: (
-    params: DefaultHighlightedParams<T, IsMultiple>,
-  ) => T | T[] | undefined;
+    params: DefaultHighlightedParams<T>,
+  ) => Option<T> | undefined;
   searchField?: string;
   labelClass?: string;
   labelText?: string;
@@ -214,7 +221,7 @@ export interface PowerSelectArgs<
   initiallyOpened?: boolean;
   typeAheadOptionMatcher?: MatcherFn;
   buildSelection?: (
-    selected: T,
+    selected: Option<T>,
     select: Select<T, IsMultiple>,
   ) => Selected<T, IsMultiple> | null;
   onChange: (
@@ -257,13 +264,13 @@ export type TSearchFieldPosition = 'before-options' | 'trigger';
 
 export interface PowerSelectSignature<
   T,
-  IsMultiple extends boolean,
+  IsMultiple extends boolean = false,
   TExtra = undefined,
 > {
   Element: Element;
   Args: PowerSelectArgs<T, IsMultiple, TExtra>;
   Blocks: {
-    default: [option: T, select: Select<T, IsMultiple>];
+    default: [option: Option<T>, select: Select<T, IsMultiple>];
   };
 }
 
@@ -295,7 +302,7 @@ const isCancellablePromise = <T>(
 
 export default class PowerSelectComponent<
   T,
-  IsMultiple extends boolean,
+  IsMultiple extends boolean = false,
   TExtra = undefined,
 > extends Component<PowerSelectSignature<T, IsMultiple, TExtra>> {
   // Untracked properties
@@ -318,7 +325,7 @@ export default class PowerSelectComponent<
   @tracked loading = false;
   @tracked searchText = '';
   @tracked lastSearchedText = '';
-  @tracked highlighted?: T | T[] | undefined | null;
+  @tracked highlighted?: Option<T> | undefined | null;
   storedAPI!: Select<T, IsMultiple>;
 
   private _uid = guidFor(this);
@@ -824,12 +831,12 @@ export default class PowerSelectComponent<
       IsMultiple
     >;
     if (!Array.isArray(this._resolvedSelected)) {
-      this._highlight(this._resolvedSelected as T);
+      this._highlight(this._resolvedSelected as Option<T>);
     }
   }
 
   @action
-  _highlight(opt: T | T[] | undefined | null): void {
+  _highlight(opt: Option<T> | undefined | null): void {
     if (
       !isNone(opt) &&
       opt &&
@@ -850,7 +857,7 @@ export default class PowerSelectComponent<
   }
 
   @action
-  _choose(selected: T, e?: Event): void {
+  _choose(selected: Option<T>, e?: Event): void {
     const selection = this.args.buildSelection
       ? this.args.buildSelection(selected, this.storedAPI)
       : (selected as Selected<T, IsMultiple>); // Note: For multiple we pass always function, otherwise it would not work!
@@ -1036,7 +1043,7 @@ export default class PowerSelectComponent<
         if (this._lastSelectedPromise === currentSelectedPromise) {
           this._resolvedSelected = resolvedSelected;
           if (!Array.isArray(resolvedSelected)) {
-            this._highlight(resolvedSelected as T);
+            this._highlight(resolvedSelected as Option<T>);
           }
         }
       });
@@ -1044,7 +1051,7 @@ export default class PowerSelectComponent<
       this._resolvedSelected = undefined;
       // Don't highlight args.selected array on multi-select
       if (!Array.isArray(this.args.selected)) {
-        this._highlight(this.args.selected as T);
+        this._highlight(this.args.selected as Option<T>);
       }
     }
   }
@@ -1173,10 +1180,10 @@ export default class PowerSelectComponent<
   }
 
   _resetHighlighted(): void {
-    let highlighted: T | T[] | null | undefined;
+    let highlighted: Option<T> | null | undefined;
     const defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
-      highlighted = defHighlighted<T, IsMultiple>({
+      highlighted = defHighlighted({
         results: this.results,
         highlighted: this.highlighted,
         selected: this.selected,
@@ -1206,7 +1213,7 @@ export default class PowerSelectComponent<
     term: string,
     offset: number,
     skipDisabled = false,
-  ): T | undefined {
+  ): Option<T> | undefined {
     const typeAheadOptionMatcher = getOptionMatcher(
       this.args.typeAheadOptionMatcher ||
         (defaultTypeAheadMatcher as MatcherFn),

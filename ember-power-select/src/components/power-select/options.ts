@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { Select } from '../power-select';
+import type { Option, Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
 import type { PowerSelectPowerSelectGroupSignature } from './power-select-group';
@@ -16,7 +16,7 @@ export interface PowerSelectOptionsSignature<
   Element: HTMLElement;
   Args: PowerSelectOptionsArgs<T, TExtra, IsMultiple>;
   Blocks: {
-    default: [opt: T, select: Select<T, IsMultiple>];
+    default: [opt: Option<T>, select: Select<T, IsMultiple>];
   };
 }
 
@@ -173,7 +173,11 @@ export default class PowerSelectOptionsComponent<
     return opt as Group<T>;
   }
 
-  _optionFromIndex(index: string) {
+  optionTyping(opt: T) {
+    return opt as Option<T>;
+  }
+
+  _optionFromIndex(index: string): Option<T> {
     const parts = index.split('.');
     let option = this.args.options[parseInt(parts[0] ?? '', 10)];
     for (let i = 1; i < parts.length; i++) {
@@ -186,7 +190,7 @@ export default class PowerSelectOptionsComponent<
         option = (option.options as T[])[parseInt(parts[i] ?? '', 10)];
       }
     }
-    return option;
+    return option as Option<T>;
   }
 
   _hasMoved(endEvent: TouchEvent): boolean {

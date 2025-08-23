@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import type {
+  Option,
+  PowerSelectArgs,
   PowerSelectSelectedItemSignature,
   Select,
   Selected,
@@ -32,10 +34,7 @@ export interface PowerSelectTriggerSignature<
     role?: string;
     ariaActiveDescendant: string;
     extra?: TExtra;
-    buildSelection?: (
-      selected: T,
-      select: Select<T, IsMultiple>,
-    ) => Selected<T, IsMultiple> | null;
+    buildSelection?: PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'];
     placeholderComponent?: ComponentLike<
       PowerSelectPlaceholderSignature<T, IsMultiple>
     >;
@@ -48,7 +47,7 @@ export interface PowerSelectTriggerSignature<
     onBlur?: (e: FocusEvent) => void;
   };
   Blocks: {
-    default: [selected: T, select: Select<T, IsMultiple>];
+    default: [selected: Option<T>, select: Select<T, IsMultiple>];
   };
 }
 
@@ -66,7 +65,7 @@ export default class PowerSelectTriggerComponent<
   }
 
   get selected() {
-    return this.args.select.selected as T;
+    return this.args.select.selected as Option<T>;
   }
 
   @action

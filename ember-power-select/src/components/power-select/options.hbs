@@ -40,7 +40,7 @@
           data-option-index="{{@groupIndex}}{{index}}"
           role="option"
         >
-          {{yield opt @select}}
+          {{yield (this.optionTyping opt) @select}}
         </li>
       {{/if}}
     {{/each}}

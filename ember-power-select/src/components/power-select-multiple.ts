@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import type {
+  Option,
   PowerSelectAfterOptionsSignature,
   PowerSelectArgs,
   PowerSelectSelectedItemSignature,
@@ -50,11 +51,10 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
   extends Omit<
     PowerSelectArgs<T, true, TExtra>,
     | 'placeholderComponent'
-    | 'selected'
     | 'triggerComponent'
     | 'selectedItemComponent'
     | 'afterOptionsComponent'
-    | 'buildSelection'
+    // | 'buildSelection'
     | 'onChange'
     | 'search'
     | 'onOpen'
@@ -72,7 +72,7 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
   // searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T>>;
   // noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T>>;
   // options?: readonly T[] | Promise<readonly T[]>;
-  selected?: T[] | PromiseProxy<T[]>;
+  // selected?: T[] | PromiseProxy<T[]>;
   // labelComponent?: ComponentLike<PowerSelectLabelSignature<T>>;
   triggerComponent?: ComponentLike<
     PowerSelectTriggerSignature<T, TExtra, true>
@@ -86,7 +86,7 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
   afterOptionsComponent?: ComponentLike<
     PowerSelectAfterOptionsSignature<T, TExtra, true>
   >;
-  buildSelection?: (selected: T, select: Select<T>) => Selected<T> | null;
+  // buildSelection?: (selected: Selected<T>, select: Select<T>) => Selected<T> | null;
   onChange: (selection: Selected<T>, select: Select<T>, event?: Event) => void;
   search?: (
     term: string,
@@ -106,16 +106,16 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
   registerAPI?: (select: Select<T>) => void;
 }
 
-export interface PowerSelectMultipleSignature<T = unknown, TExtra = unknown> {
+export interface PowerSelectMultipleSignature<T, TExtra = unknown> {
   Element: Element;
   Args: PowerSelectMultipleArgs<T, TExtra>;
   Blocks: {
-    default: [option: T, select: Select<T>];
+    default: [option: Option<T>, select: Select<T>];
   };
 }
 
 export default class PowerSelectMultipleComponent<
-  T = unknown,
+  T,
   TExtra = unknown,
 > extends Component<PowerSelectMultipleSignature<T, TExtra>> {
   get computedTabIndex() {
@@ -181,8 +181,7 @@ export default class PowerSelectMultipleComponent<
     }
   }
 
-  defaultBuildSelection(selected: T, select: Select<T>) {
-    console.log('option', selected);
+  defaultBuildSelection(selected: Option<T>, select: Select<T>): Selected<T> {
     const newSelection = Array.isArray(select.selected)
       ? select.selected.slice(0)
       : [];
@@ -198,7 +197,6 @@ export default class PowerSelectMultipleComponent<
     } else {
       newSelection.push(selected);
     }
-    console.log(newSelection);
     return newSelection;
   }
 

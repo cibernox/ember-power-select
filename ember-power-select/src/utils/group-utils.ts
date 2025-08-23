@@ -1,6 +1,7 @@
 import { isEqual } from '@ember/utils';
 import type EmberArrayLike from '@ember/array';
-import type { Selected } from '../components/power-select';
+import type { Option, Selected } from '../components/power-select';
+import { isArray } from '@ember/array';
 
 // type MatcherOption = string | number | Record<string, unknown> | undefined;
 
@@ -39,9 +40,9 @@ export function countOptions<T = unknown>(collection: readonly T[]): number {
   return counter;
 }
 
-export function indexOfOption<T = unknown, IsMultiple extends boolean = false>(
-  collection: readonly Selected<T, IsMultiple>[],
-  option: T | T[] | undefined | null,
+export function indexOfOption<T, Option, IsMultiple extends boolean = false>(
+  collection: readonly T[],
+  option: Option,
 ): number {
   let index = 0;
   return (function walk(collection): number {
@@ -59,7 +60,7 @@ export function indexOfOption<T = unknown, IsMultiple extends boolean = false>(
           : collection[i];
       if (isGroup(entry)) {
         const result = walk(
-          (entry as unknown as Group<Selected<T, IsMultiple>>).options,
+          (entry as unknown as Group<T>).options,
         );
         if (result > -1) {
           return result;
@@ -102,16 +103,16 @@ export function pathForOption<T = unknown>(
   })(collection);
 }
 
-export function optionAtIndex<T = unknown>(
+export function optionAtIndex<T>(
   originalCollection: readonly T[],
   index: number,
-): { disabled: boolean; option: T | undefined } {
+): { disabled: boolean; option: Option<T> | undefined } {
   let counter = 0;
   return (
     (function walk(
       collection,
       ancestorIsDisabled,
-    ): { disabled: boolean; option: T | undefined } | void {
+    ): { disabled: boolean; option: Option<T> | undefined } | void {
       if (!collection || index < 0) {
         return { disabled: false, option: undefined };
       }
@@ -138,7 +139,7 @@ export function optionAtIndex<T = unknown>(
           return {
             disabled:
               ancestorIsDisabled || !!(entry as unknown as Group<T>).disabled,
-            option: entry,
+            option: entry as Option<T>,
           };
         } else {
           counter++;
@@ -175,10 +176,10 @@ export function findOptionWithOffset<T>(
   matcher: MatcherFn,
   offset: number,
   skipDisabled = false,
-): T | undefined {
+): Option<T> | undefined {
   let counter = 0;
-  let foundBeforeOffset;
-  let foundAfterOffset: T | undefined | false = false;
+  let foundBeforeOffset: Option<T> | undefined;
+  let foundAfterOffset: Option<T> | undefined | false = false;
   const canStop = () => !!foundAfterOffset;
 
   (function walk(options: readonly T[], ancestorIsDisabled: boolean): void {
@@ -208,10 +209,10 @@ export function findOptionWithOffset<T>(
         } else if (matcher(entry, text) >= 0) {
           if (counter < offset) {
             if (!foundBeforeOffset) {
-              foundBeforeOffset = entry;
+              foundBeforeOffset = entry as Option<T>;
             }
           } else {
-            foundAfterOffset = entry;
+            foundAfterOffset = entry as Option<T>;
           }
           counter++;
         } else {
@@ -275,34 +276,35 @@ export function filterOptions<
 }
 
 export interface DefaultHighlightedParams<
-  T,
-  IsMultiple extends boolean = false,
+  T
 > {
   results: T[];
-  highlighted: T | T[] | undefined | null;
-  selected: Selected<T, IsMultiple>;
+  highlighted: Option<T> | null | undefined;
+  selected: Selected<T> | Selected<T, true>;
 }
 
 export function defaultHighlighted<
-  T = unknown,
-  IsMultiple extends boolean = false,
+  T
 >({
   results,
   highlighted,
   selected,
-}: DefaultHighlightedParams<T, IsMultiple>): T | T[] | null | undefined {
-  const option = highlighted || selected;
+}: DefaultHighlightedParams<T>): Option<T> | null | undefined {
+  let option: Option<T> | null | undefined = highlighted;
+  if (Array.isArray(selected)) {
+    option = selected[0];
+  }
   if (option === undefined || indexOfOption(results, option) === -1) {
     return advanceSelectableOption(results, option, 1);
   }
   return option;
 }
 
-export function advanceSelectableOption<T = unknown>(
+export function advanceSelectableOption<T, IsMultiple extends boolean = false>(
   options: readonly T[],
-  currentOption: T | T[] | null | undefined,
+  currentOption: Selected<T, IsMultiple> | null | undefined,
   step: 1 | -1,
-): T | undefined {
+): Option<T> | undefined {
   const resultsLength = countOptions(options);
   let startIndex = Math.min(
     Math.max(indexOfOption(options, currentOption) + step, 0),

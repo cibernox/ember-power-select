@@ -45,7 +45,9 @@ export const names = [
   'Lisa',
 ];
 
-export const countries = [
+export type Country = { name: string, code: string, population: number, disabled?: boolean };
+
+export const countries: Country[] = [
   { name: 'United States', code: 'US', population: 321853000 },
   { name: 'Spain', code: 'ES', population: 46439864 },
   { name: 'Portugal', code: 'PT', population: 10374822 },
@@ -55,7 +57,7 @@ export const countries = [
   { name: 'United Kingdom', code: 'GB', population: 64596752 },
 ];
 
-export const countriesWithDisabled = [
+export const countriesWithDisabled: Country[] = [
   { name: 'United States', code: 'US', population: 321853000 },
   { name: 'Spain', code: 'ES', population: 46439864 },
   { name: 'Portugal', code: 'PT', population: 10374822, disabled: true },

@@ -7,6 +7,7 @@ import type { Select } from '../power-select-multiple';
 import type { ComponentLike } from '@glint/template';
 import type { Selected } from '../power-select-multiple';
 import type { PowerSelectPlaceholderSignature } from '../power-select/placeholder';
+import type { Option } from '../power-select';
 
 export interface PowerSelectMultipleInputSignature<T = unknown> {
   Element: HTMLElement;
@@ -29,7 +30,7 @@ export interface PowerSelectMultipleInputSignature<T = unknown> {
     onKeydown?: (e: KeyboardEvent) => boolean | void;
     onFocus?: (e: FocusEvent) => void;
     onBlur?: (e: FocusEvent) => void;
-    buildSelection: (lastSelection: T, select: Select<T>) => Selected<T>;
+    buildSelection: (lastSelection: Option<T>, select: Select<T>) => Selected<T>;
   };
 }
 

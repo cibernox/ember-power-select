@@ -1,24 +1,67 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, triggerEvent, triggerKeyEvent } from '@ember/test-helpers';
+import { render, triggerEvent, triggerKeyEvent, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { numbers, groupedNumbers, countriesWithDisabled } from '../constants';
+import { numbers, groupedNumbers, countries, countriesWithDisabled, type Country } from '../constants';
 import {
   clickTrigger,
   findContains,
 } from 'ember-power-select/test-support/helpers';
+import type { Selected } from 'ember-power-select/components/power-select';
+import type { Selected as MultipleSelected } from 'ember-power-select/components/power-select-multiple';
+
+interface GroupedNumbersContext extends TestContext {
+  foo: (selected: string | null | undefined) => void;
+  groupedNumbers: typeof groupedNumbers
+}
+
+interface GroupedNumbersMultipleContext extends TestContext {
+  foo: (selected: string[] | null | undefined) => void;
+  groupedNumbers: typeof groupedNumbers
+}
+
+interface NumbersContext extends TestContext {
+  numbers: typeof numbers
+  selected: Selected<string>;
+  role?: string;
+  onChange: (selection: Selected<string>) => void;
+}
+
+interface NumbersMultipleContext extends TestContext {
+  numbers: typeof numbers;
+  selected: MultipleSelected<string>;
+  onChange: (selection: MultipleSelected<string>) => void;
+}
+
+interface CountriesContext extends TestContext {
+  countries: typeof countries;
+  role: string;
+  country: Selected<Country>;
+  foo: (selected: Selected<Country>) => void;
+}
+
+interface CountriesWithDisabledContext extends TestContext {
+  countriesWithDisabled: typeof countriesWithDisabled
+  foo: (selected: Selected<Country>) => void;
+}
+
+interface CountriesWithDisabledMultipleContext extends TestContext {
+  countriesWithDisabled: typeof countriesWithDisabled
+  foo: (selected: MultipleSelected<Country>) => void;
+}
 
 module(
   'Integration | Component | Ember Power Select (Accessibility)',
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test('Single-select: The top-level options list have `role=listbox` and nested lists have `role=presentation`', async function (assert) {
+    test<GroupedNumbersContext>('Single-select: The top-level options list have `role=listbox` and nested lists have `role=presentation`', async function (assert) {
       assert.expect(6);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<GroupedNumbersContext>(hbs`
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -31,7 +74,7 @@ module(
           'listbox',
           'The top-level list has `role=listbox`',
         );
-      let nestedOptionList = document.querySelectorAll(
+      const nestedOptionList = document.querySelectorAll(
         '.ember-power-select-options .ember-power-select-options',
       );
       [].slice
@@ -39,12 +82,13 @@ module(
         .forEach((e) => assert.dom(e).hasAttribute('role', 'presentation'));
     });
 
-    test('Multiple-select: The top-level options list have `role=listbox` and nested lists have `role=presentation`', async function (assert) {
+    test<GroupedNumbersMultipleContext>('Multiple-select: The top-level options list have `role=listbox` and nested lists have `role=presentation`', async function (assert) {
       assert.expect(6);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<GroupedNumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.groupedNumbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -57,7 +101,7 @@ module(
           'listbox',
           'The top-level list has `role=listbox`',
         );
-      let nestedOptionList = document.querySelectorAll(
+      const nestedOptionList = document.querySelectorAll(
         '.ember-power-select-options .ember-power-select-options',
       );
       [].slice
@@ -65,12 +109,13 @@ module(
         .forEach((e) => assert.dom(e).hasAttribute('role', 'presentation'));
     });
 
-    test('Single-select: All options have `role=option`', async function (assert) {
+    test<GroupedNumbersContext>('Single-select: All options have `role=option`', async function (assert) {
       assert.expect(15);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<GroupedNumbersContext>(hbs`
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -82,12 +127,13 @@ module(
         .forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
     });
 
-    test('Multiple-select: All options have `role=option`', async function (assert) {
+    test<GroupedNumbersContext>('Multiple-select: All options have `role=option`', async function (assert) {
       assert.expect(15);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<GroupedNumbersContext>(hbs`
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -99,13 +145,14 @@ module(
         .forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
     });
 
-    test('Single-select: The selected option has `aria-selected=true` and the rest `aria-selected=false`', async function (assert) {
+    test<NumbersContext>('Single-select: The selected option has `aria-selected=true` and the rest `aria-selected=false`', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
       this.selected = 'two';
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
+      this.onChange = (selection: Selected<string>) => this.selected = selection;
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -126,13 +173,14 @@ module(
         );
     });
 
-    test('Multiple-select: The selected options have `aria-selected=true` and the rest `aria-selected=false`', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The selected options have `aria-selected=true` and the rest `aria-selected=false`', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
       this.selected = ['two', 'four'];
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
+      this.onChange = (selection: MultipleSelected<string>) => this.selected = selection;
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -160,11 +208,11 @@ module(
         );
     });
 
-    test('Single-select: The highlighted option has `aria-current=true` and the rest not have `aria-current`', async function (assert) {
+    test<NumbersContext>('Single-select: The highlighted option has `aria-current=true` and the rest not have `aria-current`', async function (assert) {
       assert.expect(4);
 
       this.numbers = numbers;
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
@@ -201,11 +249,11 @@ module(
         );
     });
 
-    test('Multiple-select: The highlighted option has `aria-current=true` and the rest `aria-current=false`', async function (assert) {
+    test<NumbersContext>('Multiple-select: The highlighted option has `aria-current=true` and the rest `aria-current=false`', async function (assert) {
       assert.expect(4);
 
       this.numbers = numbers;
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
@@ -242,12 +290,13 @@ module(
         );
     });
 
-    test('Single-select: Options with a disabled field have `aria-disabled=true`', async function (assert) {
+    test<CountriesWithDisabledContext>('Single-select: Options with a disabled field have `aria-disabled=true`', async function (assert) {
       assert.expect(1);
 
       this.countriesWithDisabled = countriesWithDisabled;
-      await render(hbs`
-      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<CountriesWithDisabledContext>(hbs`
+      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{this.foo}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -258,12 +307,13 @@ module(
         .exists({ count: 3 }, 'Three of them are disabled');
     });
 
-    test('Multiple-select: Options with a disabled field have `aria-disabled=true`', async function (assert) {
+    test<CountriesWithDisabledMultipleContext>('Multiple-select: Options with a disabled field have `aria-disabled=true`', async function (assert) {
       assert.expect(1);
 
       this.countriesWithDisabled = countriesWithDisabled;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.countriesWithDisabled}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<CountriesWithDisabledMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.countriesWithDisabled}} @onChange={{this.foo}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelectMultiple>
     `);
@@ -274,12 +324,12 @@ module(
         .exists({ count: 3 }, 'Three of them are disabled');
     });
 
-    test('Single-select: The trigger has `role=combobox`', async function (assert) {
+    test<NumbersContext>('Single-select: The trigger has `role=combobox`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -290,12 +340,12 @@ module(
         .hasAttribute('role', 'combobox', 'The trigger has role combobox');
     });
 
-    test('Multiple-select: The trigger has `role=combobox`', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The trigger has `role=combobox`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -306,12 +356,12 @@ module(
         .hasAttribute('role', 'combobox', 'The trigger has role combobox');
     });
 
-    test('Single-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', async function (assert) {
+    test<NumbersContext>('Single-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -325,12 +375,12 @@ module(
         .hasAttribute('aria-expanded', 'true', 'Expanded');
     });
 
-    test('Multiple-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The trigger attribute `aria-expanded` is true when the dropdown is opened', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -344,11 +394,11 @@ module(
         .hasAttribute('aria-expanded', 'true', 'Expanded');
     });
 
-    test('Single-select: The listbox has a unique id`', async function (assert) {
+    test<NumbersContext>('Single-select: The listbox has a unique id`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
@@ -364,12 +414,12 @@ module(
         );
     });
 
-    test('Multiple-select: The listbox has a unique id`', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The listbox has a unique id`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -384,12 +434,12 @@ module(
         );
     });
 
-    test('Single-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', async function (assert) {
+    test<NumbersContext>('Single-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -407,12 +457,12 @@ module(
         );
     });
 
-    test('Multiple-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The searchbox has type `search` and `aria-controls=<id-of-listbox>`', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -430,27 +480,27 @@ module(
         );
     });
 
-    test('Multiple-select: The selected elements are <li>s inside an <ul>, and have an item with `role=button` with `aria-label="remove element"`', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The selected elements are <li>s inside an <ul>, and have an item with `role=button` with `aria-label="remove element"`', async function (assert) {
       assert.expect(12);
 
       this.numbers = numbers;
       this.selected = ['two', 'four', 'six'];
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
 
       [].slice
         .call(document.querySelectorAll('.ember-power-select-multiple-option'))
-        .forEach((e) => {
+        .forEach((e: HTMLElement) => {
           assert.strictEqual(e.tagName, 'LI', 'The element is a list item');
           assert.strictEqual(
-            e.parentElement.tagName,
+            e.parentElement?.tagName,
             'UL',
             'The parent element is a list',
           );
-          let closeButton = e.querySelector(
+          const closeButton = e.querySelector(
             '.ember-power-select-multiple-remove-btn',
           );
           assert
@@ -470,15 +520,15 @@ module(
         });
     });
 
-    test('Single-select: The trigger element correctly passes through WAI-ARIA widget attributes', async function (assert) {
+    test<NumbersContext>('Single-select: The trigger element correctly passes through WAI-ARIA widget attributes', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect
         @ariaInvalid="true"
         @ariaLabel="ariaLabelString"
-        @onChange={{fn (mut this.foo)}}
+        @onChange={{fn (mut this.selected)}}
         @options={{this.numbers}}
         @required="true"
         @selected={{this.selected}}
@@ -501,15 +551,15 @@ module(
         .hasAttribute('aria-required', 'true', 'aria-required set correctly');
     });
 
-    test('Multiple-select: The trigger element correctly passes through WAI-ARIA widget attributes', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The trigger element correctly passes through WAI-ARIA widget attributes', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      await render(hbs`
+      await render<NumbersMultipleContext>(hbs`
       <PowerSelectMultiple
         @ariaLabel="ariaLabelString"
         @ariaInvalid="true"
-        @onChange={{fn (mut this.foo)}}
+        @onChange={{fn (mut this.selected)}}
         @options={{this.numbers}}
         @required="true"
         @selected={{this.selected}}
@@ -532,15 +582,15 @@ module(
         .hasAttribute('aria-required', 'true', 'aria-required set correctly');
     });
 
-    test('Single-select: The trigger element correctly passes through WAI-ARIA relationship attributes', async function (assert) {
+    test<NumbersContext>('Single-select: The trigger element correctly passes through WAI-ARIA relationship attributes', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect
         @ariaDescribedBy="ariaDescribedByString"
         @ariaLabelledBy="ariaLabelledByString"
-        @onChange={{fn (mut this.foo)}}
+        @onChange={{fn (mut this.selected)}}
         @options={{this.numbers}}
         @selected={{this.selected}}
         as |option|>
@@ -563,15 +613,15 @@ module(
         );
     });
 
-    test('Multiple-select: The trigger element correctly passes through WAI-ARIA relationship attributes', async function (assert) {
+    test<NumbersMultipleContext>('Multiple-select: The trigger element correctly passes through WAI-ARIA relationship attributes', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
+      await render<NumbersMultipleContext>(hbs`
       <PowerSelectMultiple
         @ariaDescribedBy="ariaDescribedByString"
         @ariaLabelledBy="ariaLabelledByString"
-        @onChange={{fn (mut this.foo)}}
+        @onChange={{fn (mut this.selected)}}
         @options={{this.numbers}}
         @selected={{this.selected}}
         as |option|>
@@ -594,15 +644,16 @@ module(
         );
     });
 
-    test('Trigger can have a custom aria-role passing @triggerRole', async function (assert) {
+    test<CountriesContext>('Trigger can have a custom aria-role passing @triggerRole', async function (assert) {
       assert.expect(2);
-      let role = 'my-role';
+      const role = 'my-role';
       this.role = role;
 
-      this.numbers = numbers;
+      this.countries = countries;
+      this.foo = () => {};
 
-      await render(hbs`
-      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{fn (mut this.foo)}} @triggerRole={{this.role}} as |country|>
+      await render<CountriesContext>(hbs`
+      <PowerSelect @options={{this.countries}} @selected={{this.country}} @onChange={{this.foo}} @triggerRole={{this.role}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -620,11 +671,11 @@ module(
         );
     });
 
-    test('Dropdown with search disabled has proper aria attributes to associate trigger with the options', async function (assert) {
+    test<NumbersContext>('Dropdown with search disabled has proper aria attributes to associate trigger with the options', async function (assert) {
       assert.expect(3);
       this.numbers = numbers;
 
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect
         @options={{this.numbers}}
         @selected={{this.selected}}
@@ -647,7 +698,7 @@ module(
           'aria-owns',
           document.querySelector(
             '.ember-power-select-dropdown .ember-power-select-options',
-          ).id,
+          )?.id ?? '',
         );
       assert
         .dom('.ember-power-select-trigger')
@@ -655,15 +706,15 @@ module(
           'aria-controls',
           document.querySelector(
             '.ember-power-select-dropdown .ember-power-select-options',
-          ).id,
+          )?.id ?? '',
         );
     });
 
-    test('Dropdown with search enabled has proper aria attributes to associate search box with the options', async function (assert) {
+    test<NumbersContext>('Dropdown with search enabled has proper aria attributes to associate search box with the options', async function (assert) {
       assert.expect(4);
       this.numbers = numbers;
 
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect
         @options={{this.numbers}}
         @selected={{this.selected}}
@@ -682,7 +733,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-dropdown').id,
+          document.querySelector('.ember-power-select-dropdown')?.id ?? '',
         );
 
       assert
@@ -692,15 +743,15 @@ module(
         .dom('.ember-power-select-search-input')
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-options').id,
+          document.querySelector('.ember-power-select-options')?.id ?? '',
         );
     });
 
-    test('Trigger has aria-activedescendant attribute for the highlighted option', async function (assert) {
+    test<NumbersContext>('Trigger has aria-activedescendant attribute for the highlighted option', async function (assert) {
       assert.expect(5);
       this.numbers = numbers;
 
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |number|>
         {{number}}
       </PowerSelect>
@@ -727,7 +778,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)').id,
+          document.querySelector('.ember-power-select-option:nth-child(1)')?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
@@ -743,16 +794,16 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)').id,
+          document.querySelector('.ember-power-select-option:nth-child(4)')?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });
 
-    test('PowerSelectMultiple with search disabled has proper aria attributes', async function (assert) {
+    test<NumbersMultipleContext>('PowerSelectMultiple with search disabled has proper aria attributes', async function (assert) {
       assert.expect(7);
       this.numbers = numbers;
 
-      await render(hbs`
+      await render<NumbersMultipleContext>(hbs`
       <PowerSelectMultiple
         @options={{this.numbers}}
         @selected={{this.selected}}
@@ -800,7 +851,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)').id,
+          document.querySelector('.ember-power-select-option:nth-child(1)')?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
@@ -816,16 +867,16 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)').id,
+          document.querySelector('.ember-power-select-option:nth-child(4)')?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });
 
-    test('PowerSelectMultiple with search enabled has proper aria attributes', async function (assert) {
+    test<NumbersMultipleContext>('PowerSelectMultiple with search enabled has proper aria attributes', async function (assert) {
       assert.expect(10);
       this.numbers = numbers;
 
-      await render(hbs`
+      await render<NumbersMultipleContext>(hbs`
       <PowerSelectMultiple
         @options={{this.numbers}}
         @selected={{this.selected}}
@@ -893,7 +944,7 @@ module(
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)').id,
+          document.querySelector('.ember-power-select-option:nth-child(1)')?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
@@ -909,7 +960,7 @@ module(
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)').id,
+          document.querySelector('.ember-power-select-option:nth-child(4)')?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });

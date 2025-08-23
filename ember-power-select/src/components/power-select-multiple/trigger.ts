@@ -9,6 +9,7 @@ import PowerSelectMultipleInputComponent, {
   type PowerSelectMultipleInputSignature,
 } from './input.ts';
 import PowerSelectTriggerComponent from '../power-select/trigger.ts';
+import type { Option } from '../power-select.ts';
 
 export default class TriggerComponent<
   T = unknown,
@@ -22,7 +23,7 @@ export default class TriggerComponent<
     >;
   }
 
-  isOptionDisabled(option: T): boolean {
+  isOptionDisabled(option: Option<T>): boolean {
     if (option && typeof option === 'object' && 'disabled' in option) {
       return option.disabled as boolean;
     }
@@ -81,11 +82,11 @@ export default class TriggerComponent<
     this._lastIsOpen = isOpen;
   }
 
-  selectedObject<T>(list: Selected<T>, index: number): T {
+  selectedObject<T>(list: Selected<T>, index: number): Option<T> {
     if (list && 'objectAt' in list && typeof list.objectAt === 'function') {
-      return list.objectAt(index) as T;
+      return list.objectAt(index) as Option<T>;
     } else {
-      return get(list as T[], index) as T;
+      return get(list as T[], index) as Option<T>;
     }
   }
 }
