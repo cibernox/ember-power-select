@@ -1,7 +1,6 @@
 import { isEqual } from '@ember/utils';
 import type EmberArrayLike from '@ember/array';
 import type { Option, Selected } from '../components/power-select';
-import { isArray } from '@ember/array';
 
 // type MatcherOption = string | number | Record<string, unknown> | undefined;
 

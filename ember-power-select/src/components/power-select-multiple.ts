@@ -6,7 +6,6 @@ import type {
   PowerSelectAfterOptionsSignature,
   PowerSelectArgs,
   PowerSelectSelectedItemSignature,
-  PromiseProxy,
   Select as SingleSelect,
 } from './power-select';
 import type { ComponentLike } from '@glint/template';

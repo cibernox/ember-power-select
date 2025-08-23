@@ -5,7 +5,6 @@ import type {
   PowerSelectArgs,
   PowerSelectSelectedItemSignature,
   Select,
-  Selected,
   TSearchFieldPosition,
 } from '../power-select';
 import type { ComponentLike } from '@glint/template';
