@@ -2,7 +2,7 @@ import { runTask } from 'ember-lifeline';
 import { timeout, restartableTask, type TaskForAsyncTaskFunction } from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, settled, click, waitFor, type TestContext, pauseTest } from '@ember/test-helpers';
+import { render, settled, click, waitFor, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import {
   typeInSearch,

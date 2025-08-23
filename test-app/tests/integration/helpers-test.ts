@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { numbers } from './components/constants';
 import {
@@ -9,14 +9,21 @@ import {
   findContains,
 } from 'ember-power-select/test-support/helpers';
 
+interface Context extends TestContext {
+  numbers: string[];
+  fooMultiple: () => void;
+  foo: () => void;
+}
+
 module('Integration | Helpers', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('typeInSearch inputs the provided search string', async function (assert) {
+  test<Context>('typeInSearch inputs the provided search string', async function (assert) {
     this.numbers = numbers;
+    this.foo = () => {};
 
-    await render(hbs`
-      <PowerSelect @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
+    await render<Context>(hbs`
+      <PowerSelect @options={{this.numbers}} @onChange={{this.foo}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelect>
     `);
@@ -27,15 +34,17 @@ module('Integration | Helpers', function (hooks) {
     assert.ok(findContains('.ember-power-select-option', 'one'));
   });
 
-  test('typeInSearch scopes the input to the provided one if the passed arguments are two', async function (assert) {
+  test<Context>('typeInSearch scopes the input to the provided one if the passed arguments are two', async function (assert) {
     this.numbers = numbers;
+    this.fooMultiple = () => {};
+    this.foo = () => {};
 
-    await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.fooMultiple)}} @searchEnabled={{true}} as |number|>
+    await render<Context>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.fooMultiple}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
       <div id="single-select">
-        <PowerSelect @options={{this.numbers}} @renderInPlace={{true}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
+        <PowerSelect @options={{this.numbers}} @renderInPlace={{true}} @onChange={{this.foo}} @searchEnabled={{true}} as |number|>
           {{number}}
         </PowerSelect>
       </div>
