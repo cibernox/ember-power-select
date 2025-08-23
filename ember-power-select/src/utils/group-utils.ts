@@ -58,9 +58,7 @@ export function indexOfOption<T, Option, IsMultiple extends boolean = false>(
             ).objectAt(i)
           : collection[i];
       if (isGroup(entry)) {
-        const result = walk(
-          (entry as unknown as Group<T>).options,
-        );
+        const result = walk((entry as unknown as Group<T>).options);
         if (result > -1) {
           return result;
         }
@@ -274,17 +272,13 @@ export function filterOptions<
   return opts;
 }
 
-export interface DefaultHighlightedParams<
-  T
-> {
+export interface DefaultHighlightedParams<T> {
   results: T[];
   highlighted: Option<T> | null | undefined;
   selected: Selected<T> | Selected<T, true>;
 }
 
-export function defaultHighlighted<
-  T
->({
+export function defaultHighlighted<T>({
   results,
   highlighted,
   selected,

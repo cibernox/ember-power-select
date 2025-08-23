@@ -122,17 +122,18 @@ interface Sliceable<T> {
   slice(): T[];
 }
 
-export type Option<T> =
-  T extends readonly (infer U)[]
-    ? Option<U> // unwrap array
-    : T extends { groupName: string; options: infer O }
-      ? Option<O> // unwrap groups recursively
-      : T; // base case: string, number, or object with value/name
+export type Option<T> = T extends readonly (infer U)[]
+  ? Option<U> // unwrap array
+  : T extends { groupName: string; options: infer O }
+    ? Option<O> // unwrap groups recursively
+    : T; // base case: string, number, or object with value/name
 
 export type Selected<
   T,
   IsMultiple extends boolean = false,
-> = IsMultiple extends true ? Option<T>[] | null | undefined : Option<T> | null | undefined;
+> = IsMultiple extends true
+  ? Option<T>[] | null | undefined
+  : Option<T> | null | undefined;
 
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs<

@@ -1,8 +1,19 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, triggerEvent, triggerKeyEvent, type TestContext } from '@ember/test-helpers';
+import {
+  render,
+  triggerEvent,
+  triggerKeyEvent,
+  type TestContext,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { numbers, groupedNumbers, countries, countriesWithDisabled, type Country } from '../constants';
+import {
+  numbers,
+  groupedNumbers,
+  countries,
+  countriesWithDisabled,
+  type Country,
+} from '../constants';
 import {
   clickTrigger,
   findContains,
@@ -12,16 +23,16 @@ import type { Selected as MultipleSelected } from 'ember-power-select/components
 
 interface GroupedNumbersContext extends TestContext {
   foo: (selected: string | null | undefined) => void;
-  groupedNumbers: typeof groupedNumbers
+  groupedNumbers: typeof groupedNumbers;
 }
 
 interface GroupedNumbersMultipleContext extends TestContext {
   foo: (selected: string[] | null | undefined) => void;
-  groupedNumbers: typeof groupedNumbers
+  groupedNumbers: typeof groupedNumbers;
 }
 
 interface NumbersContext extends TestContext {
-  numbers: typeof numbers
+  numbers: typeof numbers;
   selected: Selected<string>;
   role?: string;
   onChange: (selection: Selected<string>) => void;
@@ -41,12 +52,12 @@ interface CountriesContext extends TestContext {
 }
 
 interface CountriesWithDisabledContext extends TestContext {
-  countriesWithDisabled: typeof countriesWithDisabled
+  countriesWithDisabled: typeof countriesWithDisabled;
   foo: (selected: Selected<Country>) => void;
 }
 
 interface CountriesWithDisabledMultipleContext extends TestContext {
-  countriesWithDisabled: typeof countriesWithDisabled
+  countriesWithDisabled: typeof countriesWithDisabled;
   foo: (selected: MultipleSelected<Country>) => void;
 }
 
@@ -150,7 +161,8 @@ module(
 
       this.numbers = numbers;
       this.selected = 'two';
-      this.onChange = (selection: Selected<string>) => this.selected = selection;
+      this.onChange = (selection: Selected<string>) =>
+        (this.selected = selection);
       await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} as |option|>
         {{option}}
@@ -178,7 +190,8 @@ module(
 
       this.numbers = numbers;
       this.selected = ['two', 'four'];
-      this.onChange = (selection: MultipleSelected<string>) => this.selected = selection;
+      this.onChange = (selection: MultipleSelected<string>) =>
+        (this.selected = selection);
       await render<NumbersMultipleContext>(hbs`
       <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} as |option|>
         {{option}}
@@ -778,7 +791,8 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)')?.id ?? '',
+          document.querySelector('.ember-power-select-option:nth-child(1)')
+            ?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
@@ -794,7 +808,8 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)')?.id ?? '',
+          document.querySelector('.ember-power-select-option:nth-child(4)')
+            ?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });
@@ -851,7 +866,8 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)')?.id ?? '',
+          document.querySelector('.ember-power-select-option:nth-child(1)')
+            ?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
@@ -867,7 +883,8 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)')?.id ?? '',
+          document.querySelector('.ember-power-select-option:nth-child(4)')
+            ?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });
@@ -944,7 +961,8 @@ module(
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)')?.id ?? '',
+          document.querySelector('.ember-power-select-option:nth-child(1)')
+            ?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
@@ -960,7 +978,8 @@ module(
         .dom('.ember-power-select-trigger-multiple-input')
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)')?.id ?? '',
+          document.querySelector('.ember-power-select-option:nth-child(4)')
+            ?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });

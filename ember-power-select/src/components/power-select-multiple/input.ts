@@ -30,7 +30,10 @@ export interface PowerSelectMultipleInputSignature<T = unknown> {
     onKeydown?: (e: KeyboardEvent) => boolean | void;
     onFocus?: (e: FocusEvent) => void;
     onBlur?: (e: FocusEvent) => void;
-    buildSelection: (lastSelection: Option<T>, select: Select<T>) => Selected<T>;
+    buildSelection: (
+      lastSelection: Option<T>,
+      select: Select<T>,
+    ) => Selected<T>;
   };
 }
 

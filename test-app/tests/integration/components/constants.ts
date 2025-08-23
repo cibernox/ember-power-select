@@ -45,7 +45,12 @@ export const names = [
   'Lisa',
 ];
 
-export type Country = { name: string, code: string, population: number, disabled?: boolean };
+export type Country = {
+  name: string;
+  code: string;
+  population: number;
+  disabled?: boolean;
+};
 
 export const countries: Country[] = [
   { name: 'United States', code: 'US', population: 321853000 },
