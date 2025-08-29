@@ -13,19 +13,60 @@ import {
   clickTrigger,
   typeInSearch,
 } from 'ember-power-select/test-support/helpers';
-import { numbers, countriesWithDisabled } from '../constants';
+import { numbers, countriesWithDisabled, type Country } from 'test-app/utils/constants';
+import type { Selected } from 'ember-power-select/components/power-select';
+import type { Selected as MultipleSelected } from 'ember-power-select/components/power-select-multiple';
+import type { TestContext } from '@ember/test-helpers';
+
+interface NumbersContext extends TestContext {
+  numbers: typeof numbers;
+  selected: Selected<string>;
+  isDisabled: boolean;
+  foo: (selection: Selected<string>) => void;
+}
+
+interface NumbersMultipleContext extends TestContext {
+  numbers: typeof numbers;
+  selected: MultipleSelected<string>;
+  shouldBeDisabled: boolean;
+  onChange: (selection: MultipleSelected<string>) => void;
+}
+
+interface CountriesWithDisabledContext extends TestContext {
+  countriesWithDisabled: typeof countriesWithDisabled;
+  selected: Selected<Country>;
+  foo: (selected: Selected<Country>) => void;
+}
+
+interface LocaleGroupedNumberContext extends TestContext {
+  options: LocaleGroupedNumber[];
+  selected: Selected<string>;
+  foo: (selected: Selected<string>) => void;
+}
+
+type LocaleGroupedNumber = {
+  groupName: string;
+  options: (string | {
+    groupName: string;
+    options: string[];
+    disabled?: boolean;
+  })[];
+  disabled?: boolean;
+} | string
 
 module(
   'Integration | Component | Ember Power Select (Disabled)',
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test("A disabled dropdown doesn't responds to mouse/keyboard events", async function (assert) {
+    test<NumbersContext>("A disabled dropdown doesn't responds to mouse/keyboard events", async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @disabled={{true}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @disabled={{true}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -43,12 +84,14 @@ module(
         .doesNotExist('The select is still closed');
     });
 
-    test('A disabled dropdown is not focusable, and ignores the passed tabindex', async function (assert) {
+    test<NumbersContext>('A disabled dropdown is not focusable, and ignores the passed tabindex', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @disabled={{true}} @onChange={{fn (mut this.foo)}} @tabindex="123" as |option|>
+      this.foo = () => {};
+
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @disabled={{true}} @onChange={{this.foo}} @tabindex="123" as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -60,12 +103,14 @@ module(
         );
     });
 
-    test('Disabled options are not highlighted when hovered with the mouse', async function (assert) {
+    test<CountriesWithDisabledContext>('Disabled options are not highlighted when hovered with the mouse', async function (assert) {
       assert.expect(1);
 
       this.countriesWithDisabled = countriesWithDisabled;
-      await render(hbs`
-      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+
+      await render<CountriesWithDisabledContext>(hbs`
+      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{this.foo}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -84,12 +129,14 @@ module(
         );
     });
 
-    test('Disabled options are skipped when highlighting items with the keyboard', async function (assert) {
+    test<CountriesWithDisabledContext>('Disabled options are skipped when highlighting items with the keyboard', async function (assert) {
       assert.expect(1);
 
       this.countriesWithDisabled = countriesWithDisabled;
-      await render(hbs`
-      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      this.foo = () => {};
+
+      await render<CountriesWithDisabledContext>(hbs`
+      <PowerSelect @options={{this.countriesWithDisabled}} @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option.code}}: {{option.name}}
       </PowerSelect>
     `);
@@ -105,12 +152,12 @@ module(
         );
     });
 
-    test('When passed `@disabled={{true}}`, the input inside the trigger is also disabled', async function (assert) {
+    test<NumbersMultipleContext>('When passed `@disabled={{true}}`, the input inside the trigger is also disabled', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @disabled={{true}} @searchEnabled={{true}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @disabled={{true}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -120,14 +167,16 @@ module(
         .hasAttribute('disabled');
     });
 
-    test('When passed `disabled=true`, the options cannot be removed', async function (assert) {
+    test<NumbersMultipleContext>('When passed `disabled=true`, the options cannot be removed', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      this.selectedNumbers = [numbers[2], numbers[4]];
+      if (numbers[2] && numbers[4]) {
+        this.selected = [numbers[2], numbers[4]];
+      }
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{fn (mut this.foo)}} @disabled={{true}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @disabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -137,15 +186,17 @@ module(
         .doesNotExist('There is no button to remove selected elements');
     });
 
-    test('Multiple select: When passed `@disabled={{prop}}`, enabling and disabling that property changes the component', async function (assert) {
+    test<NumbersMultipleContext>('Multiple select: When passed `@disabled={{prop}}`, enabling and disabling that property changes the component', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      this.selectedNumbers = [numbers[2], numbers[4]];
+      if (numbers[2] && numbers[4]){
+        this.selected = [numbers[2], numbers[4]];
+      }
       this.set('shouldBeDisabled', true);
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{fn (mut this.foo)}} @disabled={{this.shouldBeDisabled}} @searchEnabled={{true}} as |option|>
+      await render<NumbersMultipleContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @disabled={{this.shouldBeDisabled}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -166,12 +217,12 @@ module(
         .doesNotHaveAttribute('disabled');
     });
 
-    test("BUGFIX: When after a search the only result is a disabled element, it isn't highlighted and cannot be selected", async function (assert) {
+    test<CountriesWithDisabledContext>("BUGFIX: When after a search the only result is a disabled element, it isn't highlighted and cannot be selected", async function (assert) {
       assert.expect(3);
       this.countriesWithDisabled = countriesWithDisabled;
 
-      await render(hbs`
-     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |country|>
+      await render<CountriesWithDisabledContext>(hbs`
+     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);
@@ -190,12 +241,12 @@ module(
         .hasText('', 'Nothing was selected');
     });
 
-    test('BUGFIX: When after a search there is two results and the first one is a disabled element, the second one is highlighted', async function (assert) {
+    test<CountriesWithDisabledContext>('BUGFIX: When after a search there is two results and the first one is a disabled element, the second one is highlighted', async function (assert) {
       assert.expect(4);
       this.countriesWithDisabled = countriesWithDisabled;
 
-      await render(hbs`
-     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |country|>
+      await render<CountriesWithDisabledContext>(hbs`
+     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);
@@ -219,15 +270,17 @@ module(
         );
     });
 
-    test('BUGFIX: When searching by pressing keys on a focused & closed select, disabled options are ignored', async function (assert) {
+    test<CountriesWithDisabledContext>('BUGFIX: When searching by pressing keys on a focused & closed select, disabled options are ignored', async function (assert) {
       assert.expect(3);
       this.countriesWithDisabled = countriesWithDisabled.map((country) =>
         Object.assign({}, country),
       );
-      this.countriesWithDisabled[0].disabled = true;
+      if (this.countriesWithDisabled[0]) {
+        this.countriesWithDisabled[0].disabled = true;
+      }
 
-      await render(hbs`
-     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |country|>
+      await render<CountriesWithDisabledContext>(hbs`
+     <PowerSelect @options={{this.countriesWithDisabled}} @searchField="name" @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);
@@ -245,10 +298,10 @@ module(
         .hasText('United Kingdom', '"United Kingdom" has been selected');
     });
 
-    test('The title of a group can be marked as disabled, and it is still disabled after filtering', async function (assert) {
+    test<LocaleGroupedNumberContext>('The title of a group can be marked as disabled, and it is still disabled after filtering', async function (assert) {
       assert.expect(2);
 
-      let options = [
+      let options: LocaleGroupedNumber[] = [
         { groupName: 'Smalls', options: ['one', 'two', 'three'] },
         {
           groupName: 'Mediums',
@@ -268,8 +321,9 @@ module(
       ];
 
       this.options = options;
-      await render(hbs`
-      <PowerSelect @options={{this.options}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      this.foo = () => {};
+      await render<LocaleGroupedNumberContext>(hbs`
+      <PowerSelect @options={{this.options}} @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -284,10 +338,10 @@ module(
         .exists({ count: 1 }, 'one group is still disabled');
     });
 
-    test('If a group is disabled, any options inside cannot be interacted with mouse', async function (assert) {
+    test<LocaleGroupedNumberContext>('If a group is disabled, any options inside cannot be interacted with mouse', async function (assert) {
       assert.expect(4);
 
-      let options = [
+      let options: LocaleGroupedNumber[] = [
         { groupName: 'Smalls', options: ['one', 'two', 'three'] },
         { groupName: 'Mediums', options: ['four', 'five', 'six'] },
         {
@@ -304,8 +358,8 @@ module(
       ];
 
       this.options = options;
-      await render(hbs`
-      <PowerSelect @options={{this.options}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<LocaleGroupedNumberContext>(hbs`
+      <PowerSelect @options={{this.options}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -318,26 +372,26 @@ module(
         .dom('.ember-power-select-option[aria-selected="true"]')
         .doesNotExist('No option is selected');
       await triggerEvent(
-        document.querySelectorAll('.ember-power-select-option')[8],
+        document.querySelectorAll('.ember-power-select-option')[8] ?? '',
         'mouseover',
       );
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('one');
-      await click(document.querySelectorAll('.ember-power-select-option')[9]);
+      await click(document.querySelectorAll('.ember-power-select-option')[9] ?? '');
       assert
         .dom('.ember-power-select-option[aria-selected="true"]')
         .doesNotExist('Noting was selected');
     });
 
-    test('If the value of `disabled` changes, the `disabled` property in the publicAPI matches it', async function (assert) {
+    test<NumbersContext>('If the value of `disabled` changes, the `disabled` property in the publicAPI matches it', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
       this.isDisabled = false;
-      this.foo = numbers[0];
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @disabled={{this.isDisabled}} @onChange={{fn (mut this.foo)}} as |option select|>
+      this.selected = numbers[0];
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @disabled={{this.isDisabled}} @onChange={{fn (mut this.selected)}} as |option select|>
         {{if select.disabled 'disabled!' 'enabled!'}}
       </PowerSelect>
     `);
@@ -357,13 +411,13 @@ module(
         );
     });
 
-    test("If a select gets disabled while it's open, it closes automatically", async function (assert) {
+    test<NumbersContext>("If a select gets disabled while it's open, it closes automatically", async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
       this.isDisabled = false;
-      await render(hbs`
-      <PowerSelect @options={{this.numbers}} @disabled={{this.isDisabled}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @disabled={{this.isDisabled}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -376,18 +430,18 @@ module(
         .doesNotExist('The select is now closed');
     });
 
-    test('BUGFIX: A component can be disabled on selection', async function (assert) {
+    test<NumbersContext>('BUGFIX: A component can be disabled on selection', async function (assert) {
       assert.expect(2);
       this.numbers = numbers;
 
-      await render(hbs`
-     <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @disabled={{this.foo}}  as |opt|>
+      await render<NumbersContext>(hbs`
+     <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @disabled={{if this.selected true}} as |opt|>
        {{opt}}
      </PowerSelect>
     `);
 
       await clickTrigger();
-      await click(document.querySelectorAll('.ember-power-select-option')[1]);
+      await click(document.querySelectorAll('.ember-power-select-option')[1]!);
       assert
         .dom('.ember-power-select-trigger')
         .hasText('two', 'The option is selected');
@@ -396,26 +450,26 @@ module(
         .hasAttribute('aria-disabled', 'true');
     });
 
-    test('Disabled options cannot be selected', async function (assert) {
+    test<CountriesWithDisabledContext>('Disabled options cannot be selected', async function (assert) {
       assert.expect(4);
       this.countriesWithDisabled = countriesWithDisabled;
 
-      await render(hbs`
-     <PowerSelect @options={{this.countriesWithDisabled}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |country|>
+      await render<CountriesWithDisabledContext>(hbs`
+     <PowerSelect @options={{this.countriesWithDisabled}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |country|>
        {{country.name}}
      </PowerSelect>
     `);
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is open');
-      await click(document.querySelectorAll('.ember-power-select-option')[2]);
+      await click(document.querySelectorAll('.ember-power-select-option')[2]!);
       assert
         .dom('.ember-power-select-trigger')
         .hasText('', 'Nothing is selected');
       assert
         .dom('.ember-power-select-dropdown')
         .exists('The select is still open');
-      await tap(document.querySelectorAll('.ember-power-select-option')[2]);
+      await tap(document.querySelectorAll('.ember-power-select-option')[2]!);
       assert
         .dom('.ember-power-select-trigger')
         .hasText('', 'Nothing is selected');

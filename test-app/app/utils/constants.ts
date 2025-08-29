@@ -132,13 +132,6 @@ export const countriesWithDisabled: Country[] = [
   },
 ];
 
-export interface GroupedNumberGroup {
-  groupName: string;
-  options: string[] | GroupedNumber[];
-}
-
-export type GroupedNumber = GroupedNumberGroup | string;
-
 export const groupedNumbers = [
   { groupName: 'Smalls', options: ['one', 'two', 'three'] },
   { groupName: 'Mediums', options: ['four', 'five', 'six'] },
