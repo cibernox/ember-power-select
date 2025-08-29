@@ -46,64 +46,64 @@ export type Selected<T = unknown> = SingleSelected<T, true>;
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Select<T = unknown> extends SingleSelect<T, true> {}
 
-interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
-  extends Omit<
-    PowerSelectArgs<T, true, TExtra>,
-    // | 'placeholderComponent'
-    // | 'triggerComponent'
-    // | 'selectedItemComponent'
-    // | 'afterOptionsComponent'
-    // | 'buildSelection'
-    | 'onChange'
-    | 'search'
-    | 'onOpen'
-    | 'onClose'
-    | 'onInput'
-    | 'onKeydown'
-    | 'onFocus'
-    | 'onBlur'
-    | 'scrollTo'
-    | 'registerAPI'
-  > {
-  // placeholderComponent?: ComponentLike<
-  //   PowerSelectPlaceholderSignature<T, true>
-  // >;
-  // searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T>>;
-  // noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T>>;
-  // options?: readonly T[] | Promise<readonly T[]>;
-  // selected?: T[] | PromiseProxy<T[]>;
-  // labelComponent?: ComponentLike<PowerSelectLabelSignature<T>>;
-  // triggerComponent?: ComponentLike<
-  //   PowerSelectTriggerSignature<T, TExtra, true>
-  // >;
-  // selectedItemComponent?: ComponentLike<
-  //   PowerSelectSelectedItemSignature<T, TExtra, true>
-  // >;
-  // beforeOptionsComponent?: ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
-  // optionsComponent?: ComponentLike<PowerSelectOptionsSignature<T>>;
-  // groupComponent?: ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
-  // afterOptionsComponent?: ComponentLike<
-  //   PowerSelectAfterOptionsSignature<T, TExtra, true>
-  // >;
-  // buildSelection?: (selected: Selected<T>, select: Select<T>) => Selected<T> | null;
-  onChange: (selection: Selected<T>, select: Select<T>, event?: Event) => void;
-  search?: (
-    term: string,
-    select: Select<T>,
-  ) => readonly T[] | Promise<readonly T[]>;
-  onOpen?: (select: Select<T>, e: Event | undefined) => boolean | undefined;
-  onClose?: (select: Select<T>, e: Event | undefined) => boolean | undefined;
-  onInput?: (
-    term: string,
-    select: Select<T>,
-    e: Event,
-  ) => string | false | void;
-  onKeydown?: (select: Select<T>, e: KeyboardEvent) => boolean | undefined;
-  onFocus?: (select: Select<T>, event: FocusEvent) => void;
-  onBlur?: (select: Select<T>, event: FocusEvent) => void;
-  scrollTo?: (option: Selected<T>, select: Select<T>) => void;
-  registerAPI?: (select: Select<T>) => void;
-}
+interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> extends PowerSelectArgs<T, true, TExtra> {}
+//   extends Omit<
+//     PowerSelectArgs<T, true, TExtra>,
+//     // | 'placeholderComponent'
+//     // | 'triggerComponent'
+//     // | 'selectedItemComponent'
+//     // | 'afterOptionsComponent'
+//     // | 'buildSelection'
+//     | 'onChange'
+//     | 'search'
+//     | 'onOpen'
+//     | 'onClose'
+//     | 'onInput'
+//     | 'onKeydown'
+//     | 'onFocus'
+//     | 'onBlur'
+//     | 'scrollTo'
+//     | 'registerAPI'
+//   > {
+//   // placeholderComponent?: ComponentLike<
+//   //   PowerSelectPlaceholderSignature<T, true>
+//   // >;
+//   // searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T>>;
+//   // noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T>>;
+//   // options?: readonly T[] | Promise<readonly T[]>;
+//   // selected?: T[] | PromiseProxy<T[]>;
+//   // labelComponent?: ComponentLike<PowerSelectLabelSignature<T>>;
+//   // triggerComponent?: ComponentLike<
+//   //   PowerSelectTriggerSignature<T, TExtra, true>
+//   // >;
+//   // selectedItemComponent?: ComponentLike<
+//   //   PowerSelectSelectedItemSignature<T, TExtra, true>
+//   // >;
+//   // beforeOptionsComponent?: ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
+//   // optionsComponent?: ComponentLike<PowerSelectOptionsSignature<T>>;
+//   // groupComponent?: ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
+//   // afterOptionsComponent?: ComponentLike<
+//   //   PowerSelectAfterOptionsSignature<T, TExtra, true>
+//   // >;
+//   // buildSelection?: (selected: Selected<T>, select: Select<T>) => Selected<T> | null;
+//   onChange: (selection: Selected<T>, select: Select<T>, event?: Event) => void;
+//   search?: (
+//     term: string,
+//     select: Select<T>,
+//   ) => readonly T[] | Promise<readonly T[]>;
+//   onOpen?: (select: Select<T>, e: Event | undefined) => boolean | undefined;
+//   onClose?: (select: Select<T>, e: Event | undefined) => boolean | undefined;
+//   onInput?: (
+//     term: string,
+//     select: Select<T>,
+//     e: Event,
+//   ) => string | false | void;
+//   onKeydown?: (select: Select<T>, e: KeyboardEvent) => boolean | undefined;
+//   onFocus?: (select: Select<T>, event: FocusEvent) => void;
+//   onBlur?: (select: Select<T>, event: FocusEvent) => void;
+//   scrollTo?: (option: Selected<T>, select: Select<T>) => void;
+//   registerAPI?: (select: Select<T>) => void;
+// }
 
 export interface PowerSelectMultipleSignature<T, TExtra = unknown> {
   Element: Element;
