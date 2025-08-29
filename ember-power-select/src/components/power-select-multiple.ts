@@ -3,9 +3,7 @@ import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
 import type {
   Option,
-  PowerSelectAfterOptionsSignature,
   PowerSelectArgs,
-  PowerSelectSelectedItemSignature,
   Select as SingleSelect,
 } from './power-select';
 import type { ComponentLike } from '@glint/template';
@@ -24,7 +22,6 @@ import { ensureSafeComponent } from '@embroider/util';
 // import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group';
 import type { Selected as SingleSelected } from './power-select';
 import type { PowerSelectTriggerSignature } from './power-select/trigger.ts';
-import type { PowerSelectPlaceholderSignature } from './power-select/placeholder.ts';
 
 export type Selected<T = unknown> = SingleSelected<T, true>;
 
@@ -43,10 +40,11 @@ export type Selected<T = unknown> = SingleSelected<T, true>;
 //   actions: SelectActions<T>;
 // }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface Select<T = unknown> extends SingleSelect<T, true> {}
+export type Select<T = unknown> = SingleSelect<T, true>;
 
-interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown> extends PowerSelectArgs<T, true, TExtra> {}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
+  extends PowerSelectArgs<T, true, TExtra> {}
 //   extends Omit<
 //     PowerSelectArgs<T, true, TExtra>,
 //     // | 'placeholderComponent'

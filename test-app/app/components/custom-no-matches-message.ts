@@ -1,3 +1,6 @@
 import PowerSelectNoMatchesMessage from 'ember-power-select/components/power-select/no-matches-message';
 
-export default class CustomNoMatchesMessage<T, IsMultiple extends boolean = false> extends PowerSelectNoMatchesMessage<T, IsMultiple> {};
+export default class CustomNoMatchesMessage<
+  T,
+  IsMultiple extends boolean = false,
+> extends PowerSelectNoMatchesMessage<T, IsMultiple> {}

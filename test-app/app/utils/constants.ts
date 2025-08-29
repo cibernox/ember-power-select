@@ -46,8 +46,8 @@ export const names = [
 ];
 
 export interface SelectedCountryExtra {
-  coolFlagIcon?: boolean
-  field?: 'code'
+  coolFlagIcon?: boolean;
+  field?: 'code';
   passedAction?: () => void;
 }
 
@@ -60,29 +60,82 @@ export type Country = {
 };
 
 export const countries: Country[] = [
-  { name: 'United States', code: 'US', flagUrl: '/flags/us.svg', population: 321853000 },
+  {
+    name: 'United States',
+    code: 'US',
+    flagUrl: '/flags/us.svg',
+    population: 321853000,
+  },
   { name: 'Spain', code: 'ES', flagUrl: '/flags/es.svg', population: 46439864 },
-  { name: 'Portugal', code: 'PT', flagUrl: '/flags/pt.svg', population: 10374822 },
-  { name: 'Russia', code: 'RU', flagUrl: '/flags/ru.svg', population: 146588880 },
+  {
+    name: 'Portugal',
+    code: 'PT',
+    flagUrl: '/flags/pt.svg',
+    population: 10374822,
+  },
+  {
+    name: 'Russia',
+    code: 'RU',
+    flagUrl: '/flags/ru.svg',
+    population: 146588880,
+  },
   { name: 'Latvia', code: 'LV', flagUrl: '/flags/lv.svg', population: 1978300 },
-  { name: 'Brazil', code: 'BR', flagUrl: '/flags/br.svg', population: 204921000 },
-  { name: 'United Kingdom', code: 'GB', flagUrl: '/flags/gb.svg', population: 64596752 },
+  {
+    name: 'Brazil',
+    code: 'BR',
+    flagUrl: '/flags/br.svg',
+    population: 204921000,
+  },
+  {
+    name: 'United Kingdom',
+    code: 'GB',
+    flagUrl: '/flags/gb.svg',
+    population: 64596752,
+  },
 ];
 
 export const countriesWithDisabled: Country[] = [
-  { name: 'United States', code: 'US', flagUrl: '/flags/us.svg', population: 321853000 },
+  {
+    name: 'United States',
+    code: 'US',
+    flagUrl: '/flags/us.svg',
+    population: 321853000,
+  },
   { name: 'Spain', code: 'ES', flagUrl: '/flags/es.svg', population: 46439864 },
-  { name: 'Portugal', code: 'PT', flagUrl: '/flags/pt.svg', population: 10374822, disabled: true },
-  { name: 'Russia', code: 'RU', flagUrl: '/flags/ru.svg', population: 146588880, disabled: true },
+  {
+    name: 'Portugal',
+    code: 'PT',
+    flagUrl: '/flags/pt.svg',
+    population: 10374822,
+    disabled: true,
+  },
+  {
+    name: 'Russia',
+    code: 'RU',
+    flagUrl: '/flags/ru.svg',
+    population: 146588880,
+    disabled: true,
+  },
   { name: 'Latvia', code: 'LV', flagUrl: '/flags/lv.svg', population: 1978300 },
-  { name: 'Brazil', code: 'BR', flagUrl: '/flags/br.svg', population: 204921000, disabled: true },
-  { name: 'United Kingdom', code: 'GB', flagUrl: '/flags/gb.svg', population: 64596752 },
+  {
+    name: 'Brazil',
+    code: 'BR',
+    flagUrl: '/flags/br.svg',
+    population: 204921000,
+    disabled: true,
+  },
+  {
+    name: 'United Kingdom',
+    code: 'GB',
+    flagUrl: '/flags/gb.svg',
+    population: 64596752,
+  },
 ];
 
 export interface GroupedNumberGroup {
   groupName: string;
-  options: string[] | GroupedNumber[]
-};
+  options: string[] | GroupedNumber[];
+}
 
 export type GroupedNumber = GroupedNumberGroup | string;
 

@@ -6,14 +6,20 @@ export interface CustomGroupSignature<
   T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Omit<PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>, | 'Args'> {
+> extends Omit<
+    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>,
+    'Args'
+  > {
   Args: PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>['Args'] & {
-    onInit?: () => void
+    onInit?: () => void;
   };
 }
 
-
-export default class CustomGroupComponent<T, TExtra = unknown, IsMultiple extends boolean = false> extends Component<CustomGroupSignature<T, TExtra, IsMultiple>> {
+export default class CustomGroupComponent<
+  T,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> extends Component<CustomGroupSignature<T, TExtra, IsMultiple>> {
   didSetup = false;
 
   setup = modifier(() => {

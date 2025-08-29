@@ -2,10 +2,20 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, focus, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { countries, groupedNumbers, type Country, type SelectedCountryExtra } from 'test-app/utils/constants';
+import {
+  countries,
+  groupedNumbers,
+  type Country,
+  type SelectedCountryExtra,
+} from 'test-app/utils/constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { isPresent } from '@ember/utils';
-import type { Option, PowerSelectAfterOptionsSignature, PowerSelectSelectedItemSignature, Select, Selected } from 'ember-power-select/components/power-select';
+import type {
+  PowerSelectAfterOptionsSignature,
+  PowerSelectSelectedItemSignature,
+  Select,
+  Selected,
+} from 'ember-power-select/components/power-select';
 import SelectedCountry from 'test-app/components/selected-country';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';
@@ -15,7 +25,9 @@ import ListOfCountries from 'test-app/components/list-of-countries';
 import type { PowerSelectOptionsSignature } from 'ember-power-select/components/power-select/options';
 import CustomBeforeOptions from 'test-app/components/custom-before-options';
 import type { PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
-import PowerSelectPlaceholder, { type PowerSelectPlaceholderSignature } from 'ember-power-select/components/power-select/placeholder';
+import PowerSelectPlaceholder, {
+  type PowerSelectPlaceholderSignature,
+} from 'ember-power-select/components/power-select/placeholder';
 import CustomAfterOptions from 'test-app/components/custom-after-options';
 import CustomAfterOptionsTwo from 'test-app/components/custom-after-options-two';
 import CustomBeforeOptionsTwo from 'test-app/components/custom-before-options-two';
@@ -33,7 +45,8 @@ import CustomMultipleSearchPlaceholder from 'test-app/components/custom-multiple
 import CustomMultipleBeforeOptions from 'test-app/components/custom-multiple-before-options';
 import type { Group } from 'ember-power-select/utils/group-utils';
 
-interface CountryContext<IsMultiple extends boolean = false> extends TestContext {
+interface CountryContext<IsMultiple extends boolean = false>
+  extends TestContext {
   foo: () => void;
   countries: typeof countries;
   country: Selected<Country, IsMultiple>;
@@ -71,16 +84,21 @@ interface CountryContext<IsMultiple extends boolean = false> extends TestContext
 }
 
 interface GroupedNumbersExtra {
-  foo: string
+  foo: string;
 }
 
-interface GroupedNumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface GroupedNumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   foo: (selected: string | null | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
   extra?: GroupedNumbersExtra;
   onInit?: () => void;
   groupComponent: ComponentLike<
-    PowerSelectPowerSelectGroupSignature<Group<string>, GroupedNumbersExtra, IsMultiple>
+    PowerSelectPowerSelectGroupSignature<
+      Group<string>,
+      GroupedNumbersExtra,
+      IsMultiple
+    >
   >;
 }
 
@@ -331,7 +349,10 @@ module(
       this.countries = countries;
       this.country = countries[1]; // Spain
       this.triggerComponent = CustomTriggerThatHandlesFocus;
-      this.didFocusInside = function (select: Select<Country>, event: FocusEvent) {
+      this.didFocusInside = function (
+        select: Select<Country>,
+        event: FocusEvent,
+      ) {
         assert.strictEqual(
           typeof select.isOpen,
           'boolean',
@@ -474,7 +495,7 @@ module(
       this.groupedNumbers = groupedNumbers;
       this.foo = () => {};
 
-      let numberOfGroups = 5; // number of groups in groupedNumber;
+      const numberOfGroups = 5; // number of groups in groupedNumber;
       this.groupComponent = CustomGroupComponent;
 
       await render<GroupedNumbersContext>(hbs`
@@ -494,14 +515,16 @@ module(
 
     test<GroupedNumbersContext>('`@groupComponent` has extension points', async function (assert) {
       this.groupedNumbers = groupedNumbers;
-      let numberOfGroups = 5; // number of groups in groupedNumbers
+      const numberOfGroups = 5; // number of groups in groupedNumbers
 
-      let extra = { foo: 'bar' };
+      const extra = { foo: 'bar' };
       this.extra = extra;
       this.foo = () => {};
       this.groupComponent = CustomGroupComponent;
 
-      this.onInit = function (this: CustomGroupComponent<typeof groupedNumbers>) {
+      this.onInit = function (
+        this: CustomGroupComponent<typeof groupedNumbers>,
+      ) {
         assert.ok(isPresent(this.args.select));
         assert.ok(isPresent(this.args.group.groupName));
         assert.ok(isPresent(this.args.group.options));
@@ -556,12 +579,16 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
-          document.querySelector('.ember-power-select-custom-label-component')?.getAttribute('for') ?? '',
+          document
+            .querySelector('.ember-power-select-custom-label-component')
+            ?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
     });
 
-    test<CountryContext<true>>('the power-select-multiple placeholder can be customized using `@placeholderComponent`', async function (assert) {
+    test<
+      CountryContext<true>
+    >('the power-select-multiple placeholder can be customized using `@placeholderComponent`', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
@@ -589,7 +616,9 @@ module(
         );
     });
 
-    test<CountryContext<true>>('the power-select-multiple placeholder can be customized using `@placeholderComponent` and work with `@searchEnabled` on `true`', async function (assert) {
+    test<
+      CountryContext<true>
+    >('the power-select-multiple placeholder can be customized using `@placeholderComponent` and work with `@searchEnabled` on `true`', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
@@ -619,7 +648,9 @@ module(
         );
     });
 
-    test<CountryContext<true>>('the power-select-multiple `optionsComponent` receives the `extra` hash', async function (assert) {
+    test<
+      CountryContext<true>
+    >('the power-select-multiple `optionsComponent` receives the `extra` hash', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
@@ -652,7 +683,9 @@ module(
         );
     });
 
-    test<CountryContext<true>>('the power-select-multiple `@triggerComponent` receives the `@extra` hash', async function (assert) {
+    test<
+      CountryContext<true>
+    >('the power-select-multiple `@triggerComponent` receives the `@extra` hash', async function (assert) {
       assert.expect(1);
 
       this.countries = countries;
@@ -683,7 +716,9 @@ module(
         );
     });
 
-    test<CountryContext<true>>('the power-select-multiple `@selectedItemComponent` receives the `extra` hash', async function (assert) {
+    test<
+      CountryContext<true>
+    >('the power-select-multiple `@selectedItemComponent` receives the `extra` hash', async function (assert) {
       assert.expect(1);
 
       this.countries = countries;
@@ -714,7 +749,9 @@ module(
         );
     });
 
-    test<CountryContext<true>>('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in trigger', async function (assert) {
+    test<
+      CountryContext<true>
+    >('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in trigger', async function (assert) {
       this.countries = countries;
       if (countries[1]) {
         this.country = [countries[1]]; // Spain
@@ -761,7 +798,9 @@ module(
         .doesNotExist('Custom search input is visible');
     });
 
-    test<CountryContext<true>>('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in before-options', async function (assert) {
+    test<
+      CountryContext<true>
+    >('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in before-options', async function (assert) {
       this.countries = countries;
       if (countries[1]) {
         this.country = [countries[1]]; // Spain
@@ -810,11 +849,13 @@ module(
         .doesNotExist('Custom search input is visible');
     });
 
-    test<CountryContext<true>>('The power-select-multiple `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+    test<
+      CountryContext<true>
+    >('The power-select-multiple `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
       assert.expect(3);
 
       this.countries = countries;
-      this.foo = () => {}
+      this.foo = () => {};
       this.labelComponent = CustomLabelComponent;
 
       await render<CountryContext<true>>(hbs`
@@ -839,7 +880,9 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
-          document.querySelector('.ember-power-select-custom-label-component')?.getAttribute('for') ?? '',
+          document
+            .querySelector('.ember-power-select-custom-label-component')
+            ?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
     });

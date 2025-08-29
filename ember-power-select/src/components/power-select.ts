@@ -619,9 +619,12 @@ export default class PowerSelectComponent<
     PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.groupComponent) {
-      return ensureSafeComponent(this.args.groupComponent as unknown as ComponentLike<
-        PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
-      >, this);
+      return ensureSafeComponent(
+        this.args.groupComponent as unknown as ComponentLike<
+          PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+        >,
+        this,
+      );
     }
 
     return PowerSelectGroupComponent as unknown as ComponentLike<

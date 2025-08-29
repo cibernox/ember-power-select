@@ -1,8 +1,18 @@
 import { runTask } from 'ember-lifeline';
-import { timeout, restartableTask, type TaskForAsyncTaskFunction } from 'ember-concurrency';
+import {
+  timeout,
+  restartableTask,
+  type TaskForAsyncTaskFunction,
+} from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, settled, click, waitFor, type TestContext } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  waitFor,
+  type TestContext,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import {
   typeInSearch,
@@ -35,12 +45,18 @@ interface CountryContext extends TestContext {
 
 interface ObjContext extends TestContext {
   obj: {
-    searchTask: TaskForAsyncTaskFunction<{
-      restartable: boolean;
-    }, (this: {
-      restartable: boolean;
-    }, term: string) => Promise<string[]>>
-  }
+    searchTask: TaskForAsyncTaskFunction<
+      {
+        restartable: boolean;
+      },
+      (
+        this: {
+          restartable: boolean;
+        },
+        term: string,
+      ) => Promise<string[]>
+    >;
+  };
   foo: () => void;
   hideSelect: boolean;
 }
@@ -586,7 +602,7 @@ module(
       assert
         .dom('.ember-power-select-option')
         .exists({ count: 20 }, 'All the options are shown');
-      typeInSearch('teen');
+      void typeInSearch('teen');
 
       await settled();
       assert.dom('.ember-power-select-option').exists({ count: 7 });
