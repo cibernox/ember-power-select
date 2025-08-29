@@ -49,10 +49,10 @@ export interface Select<T = unknown> extends SingleSelect<T, true> {}
 interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
   extends Omit<
     PowerSelectArgs<T, true, TExtra>,
-    | 'placeholderComponent'
-    | 'triggerComponent'
-    | 'selectedItemComponent'
-    | 'afterOptionsComponent'
+    // | 'placeholderComponent'
+    // | 'triggerComponent'
+    // | 'selectedItemComponent'
+    // | 'afterOptionsComponent'
     // | 'buildSelection'
     | 'onChange'
     | 'search'
@@ -65,26 +65,26 @@ interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
     | 'scrollTo'
     | 'registerAPI'
   > {
-  placeholderComponent?: ComponentLike<
-    PowerSelectPlaceholderSignature<T, true>
-  >;
+  // placeholderComponent?: ComponentLike<
+  //   PowerSelectPlaceholderSignature<T, true>
+  // >;
   // searchMessageComponent?: ComponentLike<PowerSelectSearchMessageSignature<T>>;
   // noMatchesMessageComponent?: ComponentLike<PowerSelectNoMatchesMessageSignature<T>>;
   // options?: readonly T[] | Promise<readonly T[]>;
   // selected?: T[] | PromiseProxy<T[]>;
   // labelComponent?: ComponentLike<PowerSelectLabelSignature<T>>;
-  triggerComponent?: ComponentLike<
-    PowerSelectTriggerSignature<T, TExtra, true>
-  >;
-  selectedItemComponent?: ComponentLike<
-    PowerSelectSelectedItemSignature<T, TExtra, true>
-  >;
+  // triggerComponent?: ComponentLike<
+  //   PowerSelectTriggerSignature<T, TExtra, true>
+  // >;
+  // selectedItemComponent?: ComponentLike<
+  //   PowerSelectSelectedItemSignature<T, TExtra, true>
+  // >;
   // beforeOptionsComponent?: ComponentLike<PowerSelectBeforeOptionsSignature<T>>;
   // optionsComponent?: ComponentLike<PowerSelectOptionsSignature<T>>;
   // groupComponent?: ComponentLike<PowerSelectPowerSelectGroupSignature<T>>;
-  afterOptionsComponent?: ComponentLike<
-    PowerSelectAfterOptionsSignature<T, TExtra, true>
-  >;
+  // afterOptionsComponent?: ComponentLike<
+  //   PowerSelectAfterOptionsSignature<T, TExtra, true>
+  // >;
   // buildSelection?: (selected: Selected<T>, select: Select<T>) => Selected<T> | null;
   onChange: (selection: Selected<T>, select: Select<T>, event?: Event) => void;
   search?: (

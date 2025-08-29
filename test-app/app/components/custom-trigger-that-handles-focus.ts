@@ -1,10 +1,4 @@
-import templateOnly from '@ember/component/template-only';
+import PowerSelectTriggerComponent from 'ember-power-select/components/power-select/trigger';
+import type { Country, SelectedCountryExtra } from 'test-app/utils/constants';
 
-export interface CustomTriggerThatHandlesFocusSignature {
-  Element: Element;
-  Args: {
-    onFocus: any;
-  };
-}
-
-export default templateOnly<CustomTriggerThatHandlesFocusSignature>();
+export default class CustomTriggerThatHandlesFocus extends PowerSelectTriggerComponent<Country, SelectedCountryExtra> {};

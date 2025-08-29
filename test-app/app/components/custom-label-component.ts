@@ -1,4 +1,3 @@
-import templateOnly from '@ember/component/template-only';
-import type { PowerSelectLabelSignature } from 'ember-power-select/components/power-select/label';
+import PowerSelectLabelComponent from 'ember-power-select/components/power-select/label';
 
-export default templateOnly<PowerSelectLabelSignature>();
+export default class CustomLabelComponent<T, TExtra = unknown, IsMultiple extends boolean = false> extends PowerSelectLabelComponent<T, TExtra, IsMultiple> {};

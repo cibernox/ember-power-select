@@ -9,7 +9,7 @@ import type { Group } from '../../utils/group-utils';
 declare const FastBoot: unknown;
 
 export interface PowerSelectOptionsSignature<
-  T = unknown,
+  T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
@@ -21,7 +21,7 @@ export interface PowerSelectOptionsSignature<
 }
 
 interface PowerSelectOptionsArgs<
-  T = unknown,
+  T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
@@ -67,7 +67,7 @@ if (typeof FastBoot === 'undefined') {
 }
 
 export default class PowerSelectOptionsComponent<
-  T = unknown,
+  T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > extends Component<PowerSelectOptionsSignature<T, TExtra, IsMultiple>> {
@@ -163,7 +163,7 @@ export default class PowerSelectOptionsComponent<
 
   options(group: Group<T>): readonly T[] {
     if (group && typeof group === 'object' && 'options' in group) {
-      return group.options as T[];
+      return group.options;
     }
 
     return [];

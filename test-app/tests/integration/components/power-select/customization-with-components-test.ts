@@ -1,29 +1,107 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, click, focus } from '@ember/test-helpers';
+import { render, click, focus, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { countries } from '../constants';
-import { groupedNumbers } from '../constants';
+import { countries, groupedNumbers, type Country, type SelectedCountryExtra } from 'test-app/utils/constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { isPresent } from '@ember/utils';
+import type { Option, PowerSelectAfterOptionsSignature, PowerSelectSelectedItemSignature, Select, Selected } from 'ember-power-select/components/power-select';
+import SelectedCountry from 'test-app/components/selected-country';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';
+import CustomTrigger from 'test-app/components/custom-trigger-component';
+import SelectedItemCountry from 'test-app/components/selected-item-country';
+import ListOfCountries from 'test-app/components/list-of-countries';
+import type { PowerSelectOptionsSignature } from 'ember-power-select/components/power-select/options';
+import CustomBeforeOptions from 'test-app/components/custom-before-options';
+import type { PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
+import PowerSelectPlaceholder, { type PowerSelectPlaceholderSignature } from 'ember-power-select/components/power-select/placeholder';
+import CustomAfterOptions from 'test-app/components/custom-after-options';
+import CustomAfterOptionsTwo from 'test-app/components/custom-after-options-two';
+import CustomBeforeOptionsTwo from 'test-app/components/custom-before-options-two';
+import CustomTriggerThatHandlesFocus from 'test-app/components/custom-trigger-that-handles-focus';
+import CustomSearchMessage from 'test-app/components/custom-search-message';
+import type { PowerSelectSearchMessageSignature } from 'ember-power-select/components/power-select/search-message';
+import CustomNoMatchesMessage from 'test-app/components/custom-no-matches-message';
+import type { PowerSelectNoMatchesMessageSignature } from 'ember-power-select/components/power-select/no-matches-message';
+import CustomPlaceholder from 'test-app/components/custom-placeholder';
+import CustomGroupComponent from 'test-app/components/custom-group-component';
+import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
+import CustomLabelComponent from 'test-app/components/custom-label-component';
+import type { PowerSelectLabelSignature } from 'ember-power-select/components/power-select/label';
+import CustomMultipleSearchPlaceholder from 'test-app/components/custom-multiple-search-placeholder';
+import CustomMultipleBeforeOptions from 'test-app/components/custom-multiple-before-options';
+import type { Group } from 'ember-power-select/utils/group-utils';
+
+interface CountryContext<IsMultiple extends boolean = false> extends TestContext {
+  foo: () => void;
+  countries: typeof countries;
+  country: Selected<Country, IsMultiple>;
+  searchFn: () => typeof countries;
+  someAction: () => void;
+  didFocusInside: (select: Select<Country>, event: FocusEvent) => void;
+  triggerComponent: ComponentLike<
+    PowerSelectTriggerSignature<Country, SelectedCountryExtra, IsMultiple>
+  >;
+  selectedItemComponent: ComponentLike<
+    PowerSelectSelectedItemSignature<Country, SelectedCountryExtra, IsMultiple>
+  >;
+  optionsComponent: ComponentLike<
+    PowerSelectOptionsSignature<Country, SelectedCountryExtra, IsMultiple>
+  >;
+  beforeOptionsComponent: ComponentLike<
+    PowerSelectBeforeOptionsSignature<Country, SelectedCountryExtra, IsMultiple>
+  >;
+  placeholderComponent: ComponentLike<
+    PowerSelectPlaceholderSignature<Country, IsMultiple>
+  >;
+  afterOptionsComponent: ComponentLike<
+    PowerSelectAfterOptionsSignature<Country, SelectedCountryExtra, IsMultiple>
+  >;
+  searchMessageComponent: ComponentLike<
+    PowerSelectSearchMessageSignature<Country, IsMultiple>
+  >;
+  noMatchesMessageComponent: ComponentLike<
+    PowerSelectNoMatchesMessageSignature<Country, IsMultiple>
+  >;
+  labelComponent: ComponentLike<
+    PowerSelectLabelSignature<Country, SelectedCountryExtra, IsMultiple>
+  >;
+  extra?: SelectedCountryExtra;
+}
+
+interface GroupedNumbersExtra {
+  foo: string
+}
+
+interface GroupedNumbersContext<IsMultiple extends boolean = false> extends TestContext {
+  foo: (selected: string | null | undefined) => void;
+  groupedNumbers: typeof groupedNumbers;
+  extra?: GroupedNumbersExtra;
+  onInit?: () => void;
+  groupComponent: ComponentLike<
+    PowerSelectPowerSelectGroupSignature<Group<string>, GroupedNumbersExtra, IsMultiple>
+  >;
+}
 
 module(
   'Integration | Component | Ember Power Select (Customization using components)',
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test('selected option can be customized using triggerComponent', async function (assert) {
+    test<CountryContext>('selected option can be customized using triggerComponent', async function (assert) {
       assert.expect(3);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
+      this.triggerComponent = SelectedCountry;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @triggerComponent={{component "selected-country"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @triggerComponent={{this.triggerComponent}}
+        @onChange={{fn (mut this.country)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -39,18 +117,20 @@ module(
         .hasText('Spain', 'With the country name as the text.');
     });
 
-    test('triggerComponent receives loading message', async function (assert) {
+    test<CountryContext>('triggerComponent receives loading message', async function (assert) {
       assert.expect(1);
       this.countries = countries;
+      this.triggerComponent = CustomTrigger;
+      this.foo = () => {};
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @loadingMessage="hmmmm paella"
         @selected={{this.country}}
-        @triggerComponent={{component "custom-trigger-component"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
-        {{country}}
+        @triggerComponent={{this.triggerComponent}}
+        @onChange={{this.foo}} as |country|>
+        {{country.name}}
       </PowerSelect>
     `);
       assert
@@ -61,18 +141,19 @@ module(
         );
     });
 
-    test('selected item option can be customized using `@selectedItemComponent`', async function (assert) {
+    test<CountryContext>('selected item option can be customized using `@selectedItemComponent`', async function (assert) {
       assert.expect(3);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
+      this.selectedItemComponent = SelectedItemCountry;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @selectedItemComponent={{component "selected-country"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @selectedItemComponent={{this.selectedItemComponent}}
+        @onChange={{fn (mut this.country)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -88,18 +169,19 @@ module(
         .hasText('Spain', 'With the country name as the text.');
     });
 
-    test('the list of options can be customized using `@optionsComponent`', async function (assert) {
+    test<CountryContext>('the list of options can be customized using `@optionsComponent`', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
+      this.optionsComponent = ListOfCountries;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @optionsComponent={{component "list-of-countries"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @optionsComponent={{this.optionsComponent}}
+        @onChange={{fn (mut this.country)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -113,18 +195,19 @@ module(
         .includesText('3. Russia', 'The component has access to the options');
     });
 
-    test('the `@optionsComponent` receives the `@extra` hash', async function (assert) {
+    test<CountryContext>('the `@optionsComponent` receives the `@extra` hash', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
+      this.optionsComponent = ListOfCountries;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @optionsComponent={{component "list-of-countries"}}
-        @onChange={{fn (mut this.foo)}}
+        @optionsComponent={{this.optionsComponent}}
+        @onChange={{fn (mut this.country)}}
         @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelect>
@@ -142,20 +225,22 @@ module(
         );
     });
 
-    test('the content before the list can be customized passing `@beforeOptionsComponent`', async function (assert) {
+    test<CountryContext>('the content before the list can be customized passing `@beforeOptionsComponent`', async function (assert) {
       assert.expect(4);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
+      this.beforeOptionsComponent = CustomBeforeOptions;
+      this.placeholderComponent = PowerSelectPlaceholder;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @selected={{this.country}}
-        @beforeOptionsComponent={{component "custom-before-options"}}
+        @beforeOptionsComponent={{this.beforeOptionsComponent}}
         @options={{this.countries}}
         @placeholder="inception"
-        @placeholderComponent={{component "power-select/placeholder"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @placeholderComponent={{this.placeholderComponent}}
+        @onChange={{fn (mut this.country)}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -177,18 +262,19 @@ module(
         .doesNotExist('The search input is not visible');
     });
 
-    test('the content after the list can be customized passing `@afterOptionsComponent`', async function (assert) {
+    test<CountryContext>('the content after the list can be customized passing `@afterOptionsComponent`', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
+      this.afterOptionsComponent = CustomAfterOptions;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @afterOptionsComponent={{component "custom-after-options"}}
-        @onChange={{fn (mut this.foo)}}
+        @afterOptionsComponent={{this.afterOptionsComponent}}
+        @onChange={{fn (mut this.country)}}
         @searchEnabled={{true}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -205,7 +291,7 @@ module(
         .exists('The search input is still visible');
     });
 
-    test('the `@beforeOptionsComponent` and `@afterOptionsComponent` receive the `@extra` hash', async function (assert) {
+    test<CountryContext>('the `@beforeOptionsComponent` and `@afterOptionsComponent` receive the `@extra` hash', async function (assert) {
       assert.expect(1);
 
       let counter = 0;
@@ -214,14 +300,16 @@ module(
       this.someAction = function () {
         counter++;
       };
+      this.afterOptionsComponent = CustomAfterOptionsTwo;
+      this.beforeOptionsComponent = CustomBeforeOptionsTwo;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @onChange={{fn (mut this.selected)}}
-        @afterOptionsComponent={{component "custom-after-options-two"}}
-        @beforeOptionsComponent={{component "custom-before-options-two"}}
+        @onChange={{fn (mut this.country)}}
+        @afterOptionsComponent={{this.afterOptionsComponent}}
+        @beforeOptionsComponent={{this.beforeOptionsComponent}}
         @extra={{hash passedAction=this.someAction}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -237,12 +325,13 @@ module(
       );
     });
 
-    test('the `@triggerComponent` receives the `@onFocus` action that triggers it', async function (assert) {
+    test<CountryContext>('the `@triggerComponent` receives the `@onFocus` action that triggers it', async function (assert) {
       assert.expect(9);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
-      this.didFocusInside = function (select, event) {
+      this.triggerComponent = CustomTriggerThatHandlesFocus;
+      this.didFocusInside = function (select: Select<Country>, event: FocusEvent) {
         assert.strictEqual(
           typeof select.isOpen,
           'boolean',
@@ -288,12 +377,13 @@ module(
           'The second argument is an event',
         );
       };
-      await render(hbs`
+
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @selected={{this.country}}
-        @onChange={{fn (mut this.selected)}}
-        @triggerComponent={{component "custom-trigger-that-handles-focus"}}
+        @onChange={{fn (mut this.country)}}
+        @triggerComponent={{this.triggerComponent}}
         @onFocus={{this.didFocusInside}} as |country|>
         {{country.name}}
       </PowerSelect>
@@ -302,15 +392,17 @@ module(
       await focus('#focusable-input');
     });
 
-    test('the search message can be customized passing `@searchMessageComponent`', async function (assert) {
+    test<CountryContext>('the search message can be customized passing `@searchMessageComponent`', async function (assert) {
       assert.expect(1);
 
-      this.searchFn = function () {};
-      await render(hbs`
+      this.searchFn = () => [];
+      this.foo = () => {};
+      this.searchMessageComponent = CustomSearchMessage;
+      await render<CountryContext>(hbs`
       <PowerSelect
         @search={{this.searchFn}}
-        @searchMessageComponent={{component "custom-search-message"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @searchMessageComponent={{this.searchMessageComponent}}
+        @onChange={{this.foo}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -323,18 +415,20 @@ module(
         );
     });
 
-    test('the no matches element can be customized passing `@noMatchesMessageComponent`', async function (assert) {
+    test<CountryContext>('the no matches element can be customized passing `@noMatchesMessageComponent`', async function (assert) {
       assert.expect(2);
 
-      this.options = [];
+      this.countries = [];
+      this.foo = () => {};
+      this.noMatchesMessageComponent = CustomNoMatchesMessage;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
-        @options={{this.options}}
-        @noMatchesMessageComponent={{component "custom-no-matches-message"}}
+        @options={{this.countries}}
+        @noMatchesMessageComponent={{this.noMatchesMessageComponent}}
         @noMatchesMessage="Nope"
-        @onChange={{fn (mut this.foo)}} as |option|>
-        {{option}}
+        @onChange={{this.foo}} as |option|>
+        {{option.name}}
       </PowerSelect>
     `);
 
@@ -348,17 +442,19 @@ module(
       assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
     });
 
-    test('placeholder can be customized using `@placeholderComponent`', async function (assert) {
+    test<CountryContext>('placeholder can be customized using `@placeholderComponent`', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
+      this.foo = () => {};
+      this.placeholderComponent = CustomPlaceholder;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
         @placeholder="test"
-        @placeholderComponent={{component "custom-placeholder"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @placeholderComponent={{this.placeholderComponent}}
+        @onChange={{this.foo}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -374,16 +470,19 @@ module(
         );
     });
 
-    test('`@groupComponent` can be overridden', async function (assert) {
+    test<GroupedNumbersContext>('`@groupComponent` can be overridden', async function (assert) {
       this.groupedNumbers = groupedNumbers;
-      let numberOfGroups = 5; // number of groups in groupedNumber;
+      this.foo = () => {};
 
-      await render(hbs`
+      let numberOfGroups = 5; // number of groups in groupedNumber;
+      this.groupComponent = CustomGroupComponent;
+
+      await render<GroupedNumbersContext>(hbs`
       <PowerSelect
         @options={{this.groupedNumbers}}
-        @groupComponent={{component "custom-group-component"}}
-        @onChange={{fn (mut this.foo)}} as |country|>
-        {{country.name}}
+        @groupComponent={{component this.groupComponent}}
+        @onChange={{this.foo}} as |number|>
+        {{number}}
       </PowerSelect>
     `);
 
@@ -393,28 +492,32 @@ module(
         .exists({ count: numberOfGroups });
     });
 
-    test('`@groupComponent` has extension points', async function (assert) {
+    test<GroupedNumbersContext>('`@groupComponent` has extension points', async function (assert) {
       this.groupedNumbers = groupedNumbers;
       let numberOfGroups = 5; // number of groups in groupedNumbers
 
       let extra = { foo: 'bar' };
       this.extra = extra;
+      this.foo = () => {};
+      this.groupComponent = CustomGroupComponent;
 
-      this.onInit = function () {
-        assert.ok(isPresent(this.select));
-        assert.ok(isPresent(this.group.groupName));
-        assert.ok(isPresent(this.group.options));
-        assert.strictEqual(this.extra, extra);
+      this.onInit = function (this: CustomGroupComponent<typeof groupedNumbers>) {
+        assert.ok(isPresent(this.args.select));
+        assert.ok(isPresent(this.args.group.groupName));
+        assert.ok(isPresent(this.args.group.options));
+        assert.strictEqual(this.args.extra, extra);
       };
 
-      await render(hbs`
-      <PowerSelect
-        @options={{this.groupedNumbers}}
-        @groupComponent={{component "custom-group-component" onInit=this.onInit}}
-        @extra={{this.extra}}
-        @onChange={{fn (mut this.foo)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
+      await render<GroupedNumbersContext>(hbs`
+      {{#let (component this.groupComponent onInit=this.onInit) as |groupComponent|}}
+        <PowerSelect
+          @options={{this.groupedNumbers}}
+          @groupComponent={{groupComponent}}
+          @extra={{this.extra}}
+          @onChange={{this.foo}} as |number|>
+          {{number}}
+        </PowerSelect>
+      {{/let}}
     `);
 
       await clickTrigger();
@@ -424,17 +527,19 @@ module(
         .exists({ count: numberOfGroups });
     });
 
-    test('The `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+    test<CountryContext>('The `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
       assert.expect(3);
 
       this.countries = countries;
+      this.foo = () => {};
+      this.labelComponent = CustomLabelComponent;
 
-      await render(hbs`
+      await render<CountryContext>(hbs`
       <PowerSelect
         @options={{this.countries}}
-        @labelComponent={{component "custom-label-component"}}
+        @labelComponent={{this.labelComponent}}
         @labelText="Label for select"
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @onChange={{this.foo}} as |country|>
         {{country.name}}
       </PowerSelect>
     `);
@@ -451,24 +556,24 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
-          document
-            .querySelector('.ember-power-select-custom-label-component')
-            .getAttribute('for'),
+          document.querySelector('.ember-power-select-custom-label-component')?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
     });
 
-    test('the power-select-multiple placeholder can be customized using `@placeholderComponent`', async function (assert) {
+    test<CountryContext<true>>('the power-select-multiple placeholder can be customized using `@placeholderComponent`', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
+      this.foo = () => {};
+      this.placeholderComponent = CustomPlaceholder;
 
-      await render(hbs`
+      await render<CountryContext<true>>(hbs`
         <PowerSelectMultiple
           @options={{this.countries}}
           @placeholder="test"
-          @placeholderComponent={{component "custom-placeholder"}}
-          @onChange={{fn (mut this.foo)}} as |country|>
+          @placeholderComponent={{this.placeholderComponent}}
+          @onChange={{this.foo}} as |country|>
           {{country.name}}
         </PowerSelectMultiple>
       `);
@@ -484,19 +589,20 @@ module(
         );
     });
 
-    test('the power-select-multiple placeholder can be customized using `@placeholderComponent` and work with `@searchEnabled` on `true`', async function (assert) {
+    test<CountryContext<true>>('the power-select-multiple placeholder can be customized using `@placeholderComponent` and work with `@searchEnabled` on `true`', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
+      this.placeholderComponent = CustomMultipleSearchPlaceholder;
 
-      await render(hbs`
+      await render<CountryContext<true>>(hbs`
         <PowerSelectMultiple
           @searchEnabled={{true}}
           @searchField="name"
           @options={{this.countries}}
           @selected={{this.country}}
           @placeholder="test"
-          @placeholderComponent={{component "custom-multiple-search-placeholder"}}
+          @placeholderComponent={{this.placeholderComponent}}
           @onChange={{fn (mut this.country)}} as |country|>
           {{country.name}}
         </PowerSelectMultiple>
@@ -513,18 +619,21 @@ module(
         );
     });
 
-    test('the power-select-multiple `optionsComponent` receives the `extra` hash', async function (assert) {
+    test<CountryContext<true>>('the power-select-multiple `optionsComponent` receives the `extra` hash', async function (assert) {
       assert.expect(2);
 
       this.countries = countries;
-      this.country = countries[1]; // Spain
+      if (countries[1]) {
+        this.country = [countries[1]]; // Spain
+      }
+      this.optionsComponent = ListOfCountries;
 
-      await render(hbs`
+      await render<CountryContext<true>>(hbs`
       <PowerSelectMultiple
         @options={{this.countries}}
         @selected={{this.country}}
-        @optionsComponent={{component "list-of-countries"}}
-        @onChange={{fn (mut this.foo)}}
+        @optionsComponent={{this.optionsComponent}}
+        @onChange={{fn (mut this.country)}}
         @extra={{hash field="code"}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
@@ -543,18 +652,22 @@ module(
         );
     });
 
-    test('the power-select-multiple `@triggerComponent` receives the `@extra` hash', async function (assert) {
+    test<CountryContext<true>>('the power-select-multiple `@triggerComponent` receives the `@extra` hash', async function (assert) {
       assert.expect(1);
 
       this.countries = countries;
-      this.country = countries[1]; // Spain
+      if (countries[1]) {
+        this.country = [countries[1]]; // Spain
+      }
 
-      await render(hbs`
+      this.triggerComponent = SelectedCountry;
+
+      await render<CountryContext<true>>(hbs`
       <PowerSelectMultiple
         @options={{this.countries}}
         @selected={{this.country}}
-        @triggerComponent={{component "selected-country"}}
-        @onChange={{fn (mut this.foo)}}
+        @triggerComponent={{this.triggerComponent}}
+        @onChange={{fn (mut this.country)}}
         @extra={{hash coolFlagIcon=true}} as |country|>
         {{country.code}}
       </PowerSelectMultiple>
@@ -570,19 +683,23 @@ module(
         );
     });
 
-    test('the power-select-multiple `@selectedItemComponent` receives the `extra` hash', async function (assert) {
+    test<CountryContext<true>>('the power-select-multiple `@selectedItemComponent` receives the `extra` hash', async function (assert) {
       assert.expect(1);
 
       this.countries = countries;
-      this.country = [countries[1]]; // Spain
+      if (countries[1]) {
+        this.country = [countries[1]]; // Spain
+      }
 
-      await render(hbs`
+      this.selectedItemComponent = SelectedItemCountry;
+
+      await render<CountryContext<true>>(hbs`
       <div class="select-box">
         <PowerSelectMultiple
             @options={{this.countries}}
             @selected={{this.country}}
-            @selectedItemComponent={{component "selected-country"}}
-            @onChange={{fn (mut this.selected)}}
+            @selectedItemComponent={{this.selectedItemComponent}}
+            @onChange={{fn (mut this.country)}}
             @extra={{hash coolFlagIcon=true}} as |country|>
           {{country.code}}
         </PowerSelectMultiple>
@@ -597,19 +714,22 @@ module(
         );
     });
 
-    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in trigger', async function (assert) {
+    test<CountryContext<true>>('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in trigger', async function (assert) {
       this.countries = countries;
-      this.country = [countries[1]]; // Spain
+      if (countries[1]) {
+        this.country = [countries[1]]; // Spain
+      }
+      this.beforeOptionsComponent = CustomMultipleBeforeOptions;
 
-      await render(hbs`
+      await render<CountryContext<true>>(hbs`
       <div class="select-box">
         <PowerSelectMultiple
             @options={{this.countries}}
             @selected={{this.country}}
             @searchEnabled={{true}}
-            @beforeOptionsComponent={{component "custom-multiple-before-options"}}
+            @beforeOptionsComponent={{this.beforeOptionsComponent}}
             @placeholder="inception"
-            @onChange={{fn (mut this.selected)}}
+            @onChange={{fn (mut this.country)}}
             @extra={{hash coolFlagIcon=true}} as |country|>
           {{country.code}}
         </PowerSelectMultiple>
@@ -641,20 +761,24 @@ module(
         .doesNotExist('Custom search input is visible');
     });
 
-    test('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in before-options', async function (assert) {
+    test<CountryContext<true>>('the power-select-multiple content before the list can be customized passing `@beforeOptionsComponent`, search field in before-options', async function (assert) {
       this.countries = countries;
-      this.country = [countries[1]]; // Spain
+      if (countries[1]) {
+        this.country = [countries[1]]; // Spain
+      }
 
-      await render(hbs`
+      this.beforeOptionsComponent = CustomMultipleBeforeOptions;
+
+      await render<CountryContext<true>>(hbs`
       <div class="select-box">
         <PowerSelectMultiple
             @options={{this.countries}}
             @selected={{this.country}}
             @searchEnabled={{true}}
             @searchFieldPosition="before-options"
-            @beforeOptionsComponent={{component "custom-multiple-before-options"}}
+            @beforeOptionsComponent={{this.beforeOptionsComponent}}
             @placeholder="inception"
-            @onChange={{fn (mut this.selected)}}
+            @onChange={{fn (mut this.country)}}
             @extra={{hash coolFlagIcon=true}} as |country|>
           {{country.code}}
         </PowerSelectMultiple>
@@ -686,17 +810,19 @@ module(
         .doesNotExist('Custom search input is visible');
     });
 
-    test('The power-select-multiple `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+    test<CountryContext<true>>('The power-select-multiple `@labelComponent` was rendered with text `@labelText="Label for select` and is matching with trigger id', async function (assert) {
       assert.expect(3);
 
       this.countries = countries;
+      this.foo = () => {}
+      this.labelComponent = CustomLabelComponent;
 
-      await render(hbs`
+      await render<CountryContext<true>>(hbs`
       <PowerSelectMultiple
         @options={{this.countries}}
-        @labelComponent={{component "custom-label-component"}}
+        @labelComponent={{this.labelComponent}}
         @labelText="Label for select"
-        @onChange={{fn (mut this.foo)}} as |country|>
+        @onChange={{this.foo}} as |country|>
         {{country.name}}
       </PowerSelectMultiple>
     `);
@@ -713,9 +839,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
-          document
-            .querySelector('.ember-power-select-custom-label-component')
-            .getAttribute('for'),
+          document.querySelector('.ember-power-select-custom-label-component')?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
     });

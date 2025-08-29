@@ -1,10 +1,3 @@
-import templateOnly from '@ember/component/template-only';
+import PowerSelectNoMatchesMessage from 'ember-power-select/components/power-select/no-matches-message';
 
-export interface CustomNoMatchesMessageSignature {
-  Element: Element;
-  Args: {
-    noMatchesMessage: string;
-  };
-}
-
-export default templateOnly<CustomNoMatchesMessageSignature>();
+export default class CustomNoMatchesMessage<T, IsMultiple extends boolean = false> extends PowerSelectNoMatchesMessage<T, IsMultiple> {};

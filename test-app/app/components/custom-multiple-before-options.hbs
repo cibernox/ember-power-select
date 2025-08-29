@@ -8,9 +8,11 @@
   </div>
 {{/if}}
 
-{{#let
-  (component (ensure-safe-component @placeholderComponent))
-  as |ComponentName|
-}}
-  <ComponentName @placeholder={{@placeholder}} />
-{{/let}}
+{{#if @placeholderComponent}}
+  {{#let
+    (component (ensure-safe-component @placeholderComponent))
+    as |ComponentName|
+  }}
+    <ComponentName @placeholder={{@placeholder}} @select={{@select}} />
+  {{/let}}
+{{/if}}

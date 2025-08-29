@@ -4,7 +4,7 @@ import type { Group } from '../../utils/group-utils';
 import type { Select } from '../power-select';
 
 export interface PowerSelectPowerSelectGroupSignature<
-  T = unknown,
+  T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
@@ -19,8 +19,8 @@ export interface PowerSelectPowerSelectGroupSignature<
   };
 }
 
-export default class PowerSelectGroupComponent<
-  T = unknown,
+export default class PowerSelectPowerSelectGroupComponent<
+  T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > extends Component<

@@ -18,6 +18,7 @@ import {
   pathForOption,
   type MatcherFn,
   type DefaultHighlightedParams,
+  type Group,
 } from '../utils/group-utils.ts';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
@@ -212,7 +213,7 @@ export interface PowerSelectArgs<
     PowerSelectOptionsSignature<T, TExtra, IsMultiple>
   >;
   groupComponent?: ComponentLike<
-    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+    PowerSelectPowerSelectGroupSignature<Group<Option<T>>, TExtra, IsMultiple> // Note: Group<Option<T>> should be T, but this makes an issues outside the component, check this later
   >;
   afterOptionsComponent?: ComponentLike<
     PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>
@@ -618,7 +619,9 @@ export default class PowerSelectComponent<
     PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.groupComponent) {
-      return ensureSafeComponent(this.args.groupComponent, this);
+      return ensureSafeComponent(this.args.groupComponent as unknown as ComponentLike<
+        PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+      >, this);
     }
 
     return PowerSelectGroupComponent as unknown as ComponentLike<
