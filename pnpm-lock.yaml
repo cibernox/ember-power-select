@@ -447,6 +447,9 @@ importers:
       '@ember-data/legacy-compat':
         specifier: 5.5.0
         version: 5.5.0(200713f34af890c5f2b717c574b31a5d)
+      '@ember-data/model':
+        specifier: 5.5.0
+        version: 5.5.0(832016f1d6834ab8ce54f5edfdec9ae9)
       '@ember-data/request':
         specifier: 5.5.0
         version: 5.5.0(@ember/test-waiters@4.1.1(@glint/template@1.5.2))(@glint/template@1.5.2)(@warp-drive/core-types@5.5.0(@glint/template@1.5.2))

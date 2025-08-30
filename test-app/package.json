@@ -34,6 +34,7 @@
     "@babel/plugin-proposal-decorators": "^7.27.1",
     "@ember-data/legacy-compat": "5.5.0",
     "@ember-data/request": "5.5.0",
+    "@ember-data/model": "5.5.0",
     "@ember-data/request-utils": "5.5.0",
     "@ember-data/store": "5.5.0",
     "@ember/optional-features": "^2.2.0",
