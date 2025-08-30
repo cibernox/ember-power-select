@@ -112,7 +112,7 @@ export interface Select<T = unknown, IsMultiple extends boolean = false>
 }
 
 export interface PromiseProxy<T = unknown> extends Promise<T> {
-  content: unknown;
+  content: T;
 }
 
 interface CancellablePromise<T> extends Promise<T> {
@@ -157,16 +157,16 @@ export interface PowerSelectArgs<
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
   options?: readonly T[] | Promise<readonly T[]>;
-  selected?: Selected<T, IsMultiple> | PromiseProxy<Selected<T, IsMultiple>>;
+  selected?: Selected<T, IsMultiple> | PromiseProxy<Selected<T, IsMultiple>> | Promise<Selected<T, IsMultiple>>;
   multiple?: IsMultiple;
   destination?: string;
   destinationElement?: HTMLElement;
   closeOnSelect?: boolean;
   renderInPlace?: boolean;
   preventScroll?: boolean;
-  defaultHighlighted?: (
+  defaultHighlighted?: ((
     params: DefaultHighlightedParams<T>,
-  ) => Option<T> | undefined;
+  ) => Option<T> | undefined) | Option<T> | null | undefined;
   searchField?: string;
   labelClass?: string;
   labelText?: string;
@@ -332,7 +332,7 @@ export default class PowerSelectComponent<
 
   private _uid = guidFor(this);
   private _lastOptionsPromise?: Promise<readonly T[]>;
-  private _lastSelectedPromise?: PromiseProxy<Selected<T, IsMultiple>>;
+  private _lastSelectedPromise?: PromiseProxy<Selected<T, IsMultiple>> | Promise<Selected<T, IsMultiple>>;
   private _lastSearchPromise?:
     | Promise<readonly T[]>
     | CancellablePromise<readonly T[]>;
@@ -1030,7 +1030,7 @@ export default class PowerSelectComponent<
         );
       }
 
-      const currentSelectedPromise: PromiseProxy<Selected<T, IsMultiple>> =
+      const currentSelectedPromise: PromiseProxy<Selected<T, IsMultiple>> | Promise<Selected<T, IsMultiple>> =
         this.args.selected;
       currentSelectedPromise.then(() => {
         if (this.isDestroyed || this.isDestroying) return;
@@ -1190,7 +1190,7 @@ export default class PowerSelectComponent<
     let highlighted: Option<T> | null | undefined;
     const defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
-      highlighted = defHighlighted({
+      highlighted = (defHighlighted as typeof defaultHighlighted)({
         results: this.results,
         highlighted: this.highlighted,
         selected: this.selected,
