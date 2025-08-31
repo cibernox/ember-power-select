@@ -45,7 +45,7 @@ module(
       </PowerSelect>
     `);
 
-      this.set('users', void this.store.findAll('user'));
+      this.set('users', this.store.findAll('user'));
       const promise = clickTrigger();
       await waitFor('.ember-power-select-option');
       assert
@@ -80,7 +80,7 @@ module(
       </PowerSelect>
     `);
 
-      this.set('users', void this.store.query('user', { foo: 'bar' }));
+      this.set('users', this.store.query('user', { foo: 'bar' }));
       const promise = clickTrigger();
       await waitFor('.ember-power-select-option');
       assert
@@ -113,7 +113,7 @@ module(
       </PowerSelectMultiple>
     `);
 
-      this.set('users', void this.store.findAll('user'));
+      this.set('users', this.store.findAll('user'));
       await this.users;
       this.set('selected', this.users);
       await settled();
