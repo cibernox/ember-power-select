@@ -157,16 +157,21 @@ export interface PowerSelectArgs<
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
   options?: readonly T[] | Promise<readonly T[]>;
-  selected?: Selected<T, IsMultiple> | PromiseProxy<Selected<T, IsMultiple>> | Promise<Selected<T, IsMultiple>>;
+  selected?:
+    | Selected<T, IsMultiple>
+    | PromiseProxy<Selected<T, IsMultiple>>
+    | Promise<Selected<T, IsMultiple>>;
   multiple?: IsMultiple;
   destination?: string;
   destinationElement?: HTMLElement;
   closeOnSelect?: boolean;
   renderInPlace?: boolean;
   preventScroll?: boolean;
-  defaultHighlighted?: ((
-    params: DefaultHighlightedParams<T>,
-  ) => Option<T> | undefined) | Option<T> | null | undefined;
+  defaultHighlighted?:
+    | ((params: DefaultHighlightedParams<T>) => Option<T> | undefined)
+    | Option<T>
+    | null
+    | undefined;
   searchField?: string;
   labelClass?: string;
   labelText?: string;
@@ -332,7 +337,9 @@ export default class PowerSelectComponent<
 
   private _uid = guidFor(this);
   private _lastOptionsPromise?: Promise<readonly T[]>;
-  private _lastSelectedPromise?: PromiseProxy<Selected<T, IsMultiple>> | Promise<Selected<T, IsMultiple>>;
+  private _lastSelectedPromise?:
+    | PromiseProxy<Selected<T, IsMultiple>>
+    | Promise<Selected<T, IsMultiple>>;
   private _lastSearchPromise?:
     | Promise<readonly T[]>
     | CancellablePromise<readonly T[]>;
@@ -1030,8 +1037,9 @@ export default class PowerSelectComponent<
         );
       }
 
-      const currentSelectedPromise: PromiseProxy<Selected<T, IsMultiple>> | Promise<Selected<T, IsMultiple>> =
-        this.args.selected;
+      const currentSelectedPromise:
+        | PromiseProxy<Selected<T, IsMultiple>>
+        | Promise<Selected<T, IsMultiple>> = this.args.selected;
       currentSelectedPromise.then(() => {
         if (this.isDestroyed || this.isDestroying) return;
         if (isPromiseProxyLike(currentSelectedPromise)) {

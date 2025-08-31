@@ -249,7 +249,7 @@ module(
 
     test<GroupedNumbersContext>('overwriting `power-select/power-select-group` works', async function (assert) {
       this.groupedNumbers = groupedNumbers;
-      let numberOfGroups = 5; // number of groups in groupedNumber;
+      const numberOfGroups = 5; // number of groups in groupedNumber;
 
       this.groupComponent = CustomGroupComponent;
 

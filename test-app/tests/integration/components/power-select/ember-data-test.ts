@@ -1,4 +1,4 @@
-import { extend, module, test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, settled, click, waitFor, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -13,7 +13,10 @@ import type { Selected } from 'ember-power-select/components/power-select';
 
 interface UsersContext<IsMultiple extends boolean = false> extends TestContext {
   store: Store;
-  server: any;
+  server: {
+    createList: (model: string, timing: number) => void;
+    timing: number;
+  };
   users: UserModel[] | Promise<UserModel[]>;
   search: () => Promise<UserModel[]>;
   selected: Selected<UserModel, IsMultiple>;
@@ -27,7 +30,7 @@ module(
     setupMirage(hooks);
 
     hooks.beforeEach(function (this: UsersContext) {
-      let owner = this.owner;
+      const owner = this.owner;
       this.store = owner.lookup('service:store') as Store;
     });
 
@@ -42,8 +45,8 @@ module(
       </PowerSelect>
     `);
 
-      this.set('users', this.store.findAll('user'));
-      let promise = clickTrigger();
+      this.set('users', void this.store.findAll('user'));
+      const promise = clickTrigger();
       await waitFor('.ember-power-select-option');
       assert
         .dom('.ember-power-select-option')
@@ -77,8 +80,8 @@ module(
       </PowerSelect>
     `);
 
-      this.set('users', this.store.query('user', { foo: 'bar' }));
-      let promise = clickTrigger();
+      this.set('users', void this.store.query('user', { foo: 'bar' }));
+      const promise = clickTrigger();
       await waitFor('.ember-power-select-option');
       assert
         .dom('.ember-power-select-option')
@@ -110,7 +113,7 @@ module(
       </PowerSelectMultiple>
     `);
 
-      this.set('users', this.store.findAll('user'));
+      this.set('users', void this.store.findAll('user'));
       await this.users;
       this.set('selected', this.users);
       await settled();

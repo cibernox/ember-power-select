@@ -301,7 +301,7 @@ module(
     test<LocaleGroupedNumberContext>('The title of a group can be marked as disabled, and it is still disabled after filtering', async function (assert) {
       assert.expect(2);
 
-      let options: LocaleGroupedNumber[] = [
+      const options: LocaleGroupedNumber[] = [
         { groupName: 'Smalls', options: ['one', 'two', 'three'] },
         {
           groupName: 'Mediums',
@@ -341,7 +341,7 @@ module(
     test<LocaleGroupedNumberContext>('If a group is disabled, any options inside cannot be interacted with mouse', async function (assert) {
       assert.expect(4);
 
-      let options: LocaleGroupedNumber[] = [
+      const options: LocaleGroupedNumber[] = [
         { groupName: 'Smalls', options: ['one', 'two', 'three'] },
         { groupName: 'Mediums', options: ['four', 'five', 'six'] },
         {

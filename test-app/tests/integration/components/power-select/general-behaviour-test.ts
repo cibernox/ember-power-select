@@ -41,8 +41,6 @@ interface NumbersContext<IsMultiple extends boolean = false> extends TestContext
   defaultHighlighted?: string | ((params: DefaultHighlightedParams<string>) => string);
   destinationElement?: HTMLElement | undefined;
   ref: any;
-  // visible?: boolean;
-  // searchFn: (term: string) => typeof numbers | Promise<typeof numbers>;
   foo: () => void;
   renderInPlace?: boolean;
   calculatePosition: CalculatePosition;
@@ -72,7 +70,6 @@ interface Person {
 interface PeopleContext extends TestContext {
   people: Person[];
   nameOrSurnameNoDiacriticsCaseSensitive: MatcherFn<Person>;
-  // country: Selected<People>;
   foo: () => void;
 }
 
@@ -100,7 +97,7 @@ interface Pet {
 interface MainUserContext extends TestContext {
   mainUser: {
     pets: Pet[];
-    selected: Selected<Pet>;
+    selected: Selected<Pet> | Promise<Selected<Pet>>;
   }
   foo: (selected: Selected<Pet>) => void;
 }
@@ -318,7 +315,7 @@ module(
         }),
       );
 
-      clickTrigger();
+      void clickTrigger();
       await waitFor('.ember-power-select-options');
       assert
         .dom('.ember-power-select-option')
@@ -546,10 +543,10 @@ module(
     });
 
     test<NumbersContext>('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', async function (assert) {
-      let done = assert.async();
+      const done = assert.async();
       assert.expect(2);
 
-      let data: string[] = new TrackedArray();
+      const data: string[] = new TrackedArray();
       this.proxy = data;
       this.search = () => {
         return new RSVP.Promise((resolve) => {
@@ -576,7 +573,7 @@ module(
       </PowerSelect>`);
 
       await clickTrigger();
-      typeInSearch('o');
+      void typeInSearch('o');
 
       setTimeout(function () {
         assert
@@ -591,10 +588,10 @@ module(
     });
 
     test<NumbersContext>('If the content of the options is updated (starting with populated array proxy) the available options should also refresh', async function (assert) {
-      let done = assert.async();
+      const done = assert.async();
       assert.expect(5);
 
-      let data = new TrackedArray(['one']);
+      const data = new TrackedArray(['one']);
       this.proxy = data;
       this.search = () => {
         return new RSVP.Promise((resolve) => {
@@ -624,7 +621,7 @@ module(
         );
       assert.dom('.ember-power-select-option').hasText('one');
 
-      typeInSearch('o');
+      void typeInSearch('o');
 
       setTimeout(function () {
         assert
@@ -1022,7 +1019,7 @@ module(
     `);
 
       await clickTrigger();
-      let selectedOption = findContains(
+      const selectedOption = findContains(
         '.ember-power-select-option',
         'ES: Spain',
       );
@@ -1251,7 +1248,7 @@ module(
           );
         }),
       );
-      clickTrigger();
+      void clickTrigger();
       await waitFor('.ember-power-select-options');
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
@@ -1312,7 +1309,7 @@ module(
         }),
       );
 
-      clickTrigger();
+      void clickTrigger();
       await waitFor('.ember-power-select-options');
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
@@ -1348,7 +1345,7 @@ module(
       </PowerSelect>
     `);
 
-      let promise1 = new RSVP.Promise((resolve) => {
+      const promise1 = new RSVP.Promise((resolve) => {
         runTask(
           this,
           function () {
@@ -1358,7 +1355,7 @@ module(
         );
       });
 
-      let promise2 = new RSVP.Promise((resolve) => {
+      const promise2 = new RSVP.Promise((resolve) => {
         runTask(
           this,
           function () {
@@ -1369,18 +1366,18 @@ module(
       });
 
       this.set('selected', promise1);
-      await new RSVP.Promise((resolve) =>
+      await new RSVP.Promise((resolve) => {
         runTask(
           this,
-          function () {
+          () => {
             resolve();
           },
           20,
-        ),
-      );
+        )
+      });
       this.set('selected', promise2);
 
-      clickTrigger();
+      void clickTrigger();
       await waitFor('.ember-power-select-options');
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
@@ -1620,7 +1617,7 @@ module(
       this.selected = numbers[1];
 
       this.defaultHighlighted = (params: DefaultHighlightedParams<string>): string => {
-        let { selected, results } = params;
+        const { selected, results } = params;
         assert.ok(results instanceof Array, 'select.results is an array');
         assert.strictEqual(selected, numbers[1]);
         return 'five';
@@ -1758,7 +1755,7 @@ module(
 
     test<MainUserContext>('The `selected` option can be a thenable', async function (assert) {
       assert.expect(6);
-      let pets = [
+      const pets = [
         { name: 'Toby' },
         { name: 'Rex' },
         { name: 'Lucius' },
@@ -1807,7 +1804,7 @@ module(
     test<OptionContext>('If the options change and the new value is PromiseArrayProxy, the content of that proxy is set immediately while the promise resolves', async function (assert) {
       this.options = ['initial', 'options'];
       this.refreshCollection = () => {
-        let promise = new RSVP.Promise((resolve) => {
+        const promise = new RSVP.Promise((resolve) => {
           setTimeout(() => resolve(['one', 'two', 'three']), 500);
         });
         // @ts-expect-error Object literal may only specify known properties, and 'promise' does not exist in type
@@ -1847,12 +1844,12 @@ module(
     });
 
     test<CountriesContext>('Constant PromiseProxy references are tracked when .content changes', async function (assert) {
-      let initial: Country | null = null;
+      const initial: Country | null = null;
       // @ts-expect-error Expected 0 arguments, but got 1.
-      this.proxy = PromiseObject.create<Country | null | undefined>({ promise: Promise.resolve(initial) });
+      this.proxy = PromiseObject.create<Country | null | undefined>({ promise: Promise.resolve(initial) }) as PromiseProxy<Country | null | undefined>;
       this.countries = countries;
       this.updateProxy = () => {
-        // @ts-expect-error Property 'set' does not exist on type 'PromiseProxy<Country | null | undefined>'
+        // @ts-expect-error Property 'set' does not exist on type 'PromiseProxy<Country | null | undefined>'.
         this.proxy.set<keyof ObjectProxy<Country | null | undefined>>('content', countries[0]);
       };
 
