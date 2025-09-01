@@ -153,6 +153,7 @@ export interface Group<T = unknown> {
   disabled?: boolean;
   [key: string]: unknown;
 }
+
 function copyGroup<T = unknown, IsMultiple extends boolean = false>(
   group: Group<Selected<T, IsMultiple>>,
   suboptions: Selected<T, IsMultiple>[],

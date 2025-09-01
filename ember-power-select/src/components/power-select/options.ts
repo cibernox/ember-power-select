@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { Option, Select } from '../power-select';
+import type { GroupObject, Option, Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
 import type { PowerSelectPowerSelectGroupSignature } from './power-select-group';
-import type { Group } from '../../utils/group-utils';
 declare const FastBoot: unknown;
 
 export interface PowerSelectOptionsSignature<
@@ -161,16 +160,16 @@ export default class PowerSelectOptionsComponent<
     return false;
   }
 
-  options(group: Group<T>): readonly T[] {
+  options(group: GroupObject<T>): readonly T[] {
     if (group && typeof group === 'object' && 'options' in group) {
-      return group.options;
+      return group.options as T[];
     }
 
     return [];
   }
 
   groupTyping(opt: T) {
-    return opt as Group<T>;
+    return opt as GroupObject<T>;
   }
 
   optionTyping(opt: T) {

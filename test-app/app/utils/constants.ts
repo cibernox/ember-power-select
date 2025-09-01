@@ -132,7 +132,12 @@ export const countriesWithDisabled: Country[] = [
   },
 ];
 
-export const groupedNumbers = [
+export type GroupedNumber = {
+  groupName: string;
+  options: (string | { groupName: string, options: string[] })[]
+} | string;
+
+export const groupedNumbers: GroupedNumber[] = [
   { groupName: 'Smalls', options: ['one', 'two', 'three'] },
   { groupName: 'Mediums', options: ['four', 'five', 'six'] },
   {
@@ -162,7 +167,13 @@ export const groupedNumbersWithDisabled = [
   'one thousand',
 ];
 
-export const groupedNumbersWithCustomProperty = [
+export type GroupedNumbersWithCustomProperty = {
+  groupName: string;
+  variant: string;
+  options: (string | { groupName: string, variant: string, options: string[] })[]
+} | string;
+
+export const groupedNumbersWithCustomProperty: GroupedNumbersWithCustomProperty[] = [
   { groupName: 'Smalls', variant: 'Primary', options: ['one', 'two', 'three'] },
   {
     groupName: 'Mediums',

@@ -6,19 +6,58 @@ import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
-import { groupedNumbers, groupedNumbersWithCustomProperty } from '../constants';
+import { groupedNumbers, groupedNumbersWithCustomProperty, type GroupedNumbersWithCustomProperty } from 'test-app/utils/constants';
+import type { TestContext } from '@ember/test-helpers';
+import type { Selected } from 'ember-power-select/components/power-select';
+import CustomGroupComponentWithVariant from 'test-app/components/custom-group-component-with-variant';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
+
+interface GroupedNumbersContext
+  extends TestContext {
+  foo: (selected: string | null | undefined) => void;
+  groupedNumbers: typeof groupedNumbers;
+  selected: Selected<string>;
+}
+
+interface GroupedNumbersWithCustomPropertyContext<IsMultiple extends boolean = false>
+  extends TestContext {
+  foo: (selected: Selected<string, IsMultiple>) => void;
+  groupedNumbersWithCustomProperty: GroupedNumbersWithCustomProperty[];
+  // extra?: GroupedNumbersExtra;
+  // onInit?: () => void;
+  groupComponent: ComponentLike<
+    PowerSelectPowerSelectGroupSignature<
+      GroupedNumbersWithCustomProperty,
+      unknown,
+      IsMultiple
+    >
+  >;
+}
+
+interface NotQuiteGroups {
+  groupName: string;
+  initial: string;
+}
+
+interface NotQuiteGroupsContext
+  extends TestContext {
+  foo: (selected: Selected<NotQuiteGroups>) => void;
+  notQuiteGroups: NotQuiteGroups[];
+}
 
 module(
   'Integration | Component | Ember Power Select (Groups)',
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test('Options that have a `groupName` and `options` are considered groups and are rendered as such', async function (assert) {
+    test<GroupedNumbersContext>('Options that have a `groupName` and `options` are considered groups and are rendered as such', async function (assert) {
       assert.expect(10);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<GroupedNumbersContext>(hbs`
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -29,12 +68,12 @@ module(
 
       await clickTrigger();
 
-      let rootLevelGroups = document.querySelectorAll(
+      const rootLevelGroups = document.querySelectorAll(
         '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
-      );
-      let rootLevelOptions = document.querySelectorAll(
+      ) as unknown as HTMLElement[];
+      const rootLevelOptions = document.querySelectorAll(
         '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option',
-      );
+      ) as unknown as HTMLElement[];
       assert
         .dom(
           '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
@@ -56,15 +95,15 @@ module(
         .hasText('Bigs');
       assert.dom(rootLevelOptions[0]).hasText('one hundred');
       assert.dom(rootLevelOptions[1]).hasText('one thousand');
-      let bigs = [].slice
-        .apply(rootLevelGroups[2].children)
-        .filter((e) => e.classList.contains('ember-power-select-options'))[0];
-      let bigGroups = [].slice
+      const bigs: HTMLElement = [].slice
+        .apply(rootLevelGroups[2]?.children)
+        .filter((e: HTMLElement) => e.classList.contains('ember-power-select-options'))[0]!;
+      const bigGroups = [].slice
         .apply(bigs.children)
-        .filter((e) => e.classList.contains('ember-power-select-group'));
-      let bigOptions = [].slice
+        .filter((e: HTMLElement) => e.classList.contains('ember-power-select-group'));
+      const bigOptions = [].slice
         .apply(bigs.children)
-        .filter((e) => e.classList.contains('ember-power-select-option'));
+        .filter((e: HTMLElement) => e.classList.contains('ember-power-select-option'));
       assert.strictEqual(
         bigGroups.length,
         2,
@@ -77,7 +116,7 @@ module(
       );
     });
 
-    test('Options that have a `groupName` but NOT `options` are NOT considered groups and are rendered normally', async function (assert) {
+    test<NotQuiteGroupsContext>('Options that have a `groupName` but NOT `options` are NOT considered groups and are rendered normally', async function (assert) {
       assert.expect(3);
 
       this.notQuiteGroups = [
@@ -86,8 +125,10 @@ module(
         { groupName: 'Dogs', initial: 'D' },
         { groupName: 'Eagles', initial: 'E' },
       ];
-      await render(hbs`
-      <PowerSelect @options={{this.notQuiteGroups}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+
+      await render<NotQuiteGroupsContext>(hbs`
+      <PowerSelect @options={{this.notQuiteGroups}} @onChange={{this.foo}} as |option|>
         {{option.groupName}}
       </PowerSelect>
     `);
@@ -100,12 +141,14 @@ module(
       assert.dom('.ember-power-select-option:nth-child(2)').hasText('Tigers');
     });
 
-    test("When filtering, a group title is visible as long as one of it's elements is", async function (assert) {
+    test<GroupedNumbersContext>("When filtering, a group title is visible as long as one of it's elements is", async function (assert) {
       assert.expect(3);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      this.foo = () => {};
+
+      await render<GroupedNumbersContext>(hbs`
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -113,10 +156,10 @@ module(
       await typeInSearch('ve');
       let groupNames = Array.from(
         document.querySelectorAll('.ember-power-select-group-name'),
-      ).map((e) => e.textContent.trim());
-      let optionValues = Array.from(
+      ).map((e) => e.textContent?.trim());
+      const optionValues = Array.from(
         document.querySelectorAll('.ember-power-select-option'),
-      ).map((e) => e.textContent.trim());
+      ).map((e) => e.textContent?.trim());
       assert.deepEqual(
         groupNames,
         ['Mediums', 'Bigs', 'Fairly big', 'Really big'],
@@ -130,7 +173,7 @@ module(
       await typeInSearch('lve');
       groupNames = Array.from(
         document.querySelectorAll('.ember-power-select-group-name'),
-      ).map((e) => e.textContent.trim());
+      ).map((e) => e.textContent?.trim());
       assert.deepEqual(
         groupNames,
         ['Bigs', 'Really big'],
@@ -138,11 +181,14 @@ module(
       );
     });
 
-    test('When filtering, all properties of the options remain available for a single select', async function (assert) {
+    test<GroupedNumbersWithCustomPropertyContext>('When filtering, all properties of the options remain available for a single select', async function (assert) {
       this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
+      this.foo = () => {};
 
-      await render(hbs`
-        <PowerSelect @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{component "custom-group-component-with-variant"}} as |option|>
+      this.groupComponent = CustomGroupComponentWithVariant;
+
+      await render<GroupedNumbersWithCustomPropertyContext>(hbs`
+        <PowerSelect @options={{this.groupedNumbersWithCustomProperty}} @onChange={{this.foo}} @searchEnabled={{true}} @groupComponent={{this.groupComponent}} as |option|>
           {{option}}
         </PowerSelect>
       `);
@@ -151,7 +197,7 @@ module(
 
       const variants = Array.from(
         document.querySelectorAll('[data-test-id="group-component-variant"]'),
-      ).map((e) => e.textContent.trim());
+      ).map((e) => e.textContent?.trim());
 
       assert.deepEqual(variants, [
         'Primary',
@@ -170,11 +216,15 @@ module(
       assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
     });
 
-    test('When filtering, all properties of the options remain available for a multi select', async function (assert) {
+    test<GroupedNumbersWithCustomPropertyContext<true>>('When filtering, all properties of the options remain available for a multi select', async function (assert) {
       this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
 
-      await render(hbs`
-       <PowerSelectMultiple @options={{this.groupedNumbersWithCustomProperty}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @groupComponent={{component "custom-group-component-with-variant"}} as |option|>
+      this.foo = () => {};
+
+      this.groupComponent = CustomGroupComponentWithVariant;
+
+      await render<GroupedNumbersWithCustomPropertyContext<true>>(hbs`
+       <PowerSelectMultiple @options={{this.groupedNumbersWithCustomProperty}} @onChange={{this.foo}} @searchEnabled={{true}} @groupComponent={{this.groupComponent}} as |option|>
           {{option}}
         </PowerSelectMultiple>
       `);
@@ -183,7 +233,7 @@ module(
 
       const variants = Array.from(
         document.querySelectorAll('[data-test-id="group-component-variant"]'),
-      ).map((e) => e.textContent.trim());
+      ).map((e) => e.textContent?.trim());
 
       assert.deepEqual(variants, [
         'Primary',
@@ -202,20 +252,22 @@ module(
       assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
     });
 
-    test('Click on an option of a group select selects the option and closes the dropdown', async function (assert) {
+    test<GroupedNumbersContext>('Click on an option of a group select selects the option and closes the dropdown', async function (assert) {
       assert.expect(2);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<GroupedNumbersContext>(hbs`
+      <PowerSelect @options={{this.groupedNumbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
       await clickTrigger();
-      let option = Array.from(
+      const option = Array.from(
         document.querySelectorAll('.ember-power-select-option'),
-      ).find((e) => e.textContent.indexOf('four') > -1);
-      await click(option);
+      ).find((e) => (e.textContent?.indexOf('four') ?? -1) > -1);
+      if (option) {
+        await click(option);
+      }
       assert
         .dom('.ember-power-select-trigger')
         .hasText('four', 'The clicked option was selected');
@@ -224,20 +276,23 @@ module(
         .doesNotExist('The dropdown has dissapeared');
     });
 
-    test("Clicking on the title of a group doesn't performs any action nor closes the dropdown", async function (assert) {
+    test<GroupedNumbersContext>("Clicking on the title of a group doesn't performs any action nor closes the dropdown", async function (assert) {
       assert.expect(1);
 
       this.groupedNumbers = groupedNumbers;
-      await render(hbs`
-      <PowerSelect @options={{this.groupedNumbers}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<GroupedNumbersContext>(hbs`
+      <PowerSelect @options={{this.groupedNumbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
 
       await clickTrigger();
-      await click(
-        document.querySelectorAll('.ember-power-select-group-name')[1],
-      );
+      const selectedGroup = document.querySelectorAll('.ember-power-select-group-name')[1];
+      if (selectedGroup) {
+        await click(selectedGroup);
+      }
+
       assert
         .dom('.ember-power-select-dropdown')
         .exists('The select is still opened');

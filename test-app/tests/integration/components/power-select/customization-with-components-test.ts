@@ -6,6 +6,7 @@ import {
   countries,
   groupedNumbers,
   type Country,
+  type GroupedNumber,
   type SelectedCountryExtra,
 } from 'test-app/utils/constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
@@ -43,7 +44,6 @@ import CustomLabelComponent from 'test-app/components/custom-label-component';
 import type { PowerSelectLabelSignature } from 'ember-power-select/components/power-select/label';
 import CustomMultipleSearchPlaceholder from 'test-app/components/custom-multiple-search-placeholder';
 import CustomMultipleBeforeOptions from 'test-app/components/custom-multiple-before-options';
-import type { Group } from 'ember-power-select/utils/group-utils';
 
 interface CountryContext<IsMultiple extends boolean = false>
   extends TestContext {
@@ -90,12 +90,12 @@ interface GroupedNumbersExtra {
 interface GroupedNumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
   foo: (selected: string | null | undefined) => void;
-  groupedNumbers: typeof groupedNumbers;
+  groupedNumbers: GroupedNumber[];
   extra?: GroupedNumbersExtra;
   onInit?: () => void;
   groupComponent: ComponentLike<
     PowerSelectPowerSelectGroupSignature<
-      Group<string>,
+      GroupedNumber,
       GroupedNumbersExtra,
       IsMultiple
     >

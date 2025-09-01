@@ -18,7 +18,6 @@ import {
   pathForOption,
   type MatcherFn,
   type DefaultHighlightedParams,
-  type Group,
 } from '../utils/group-utils.ts';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
@@ -129,6 +128,28 @@ export type Option<T> = T extends readonly (infer U)[]
     ? Option<O> // unwrap groups recursively
     : T; // base case: string, number, or object with value/name
 
+// Depth helper to limit recursion
+type GroupWithOptionsPrev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+// Recursive extractor with max depth
+type GroupWithOptions<T, Depth extends number = 5> = Depth extends 0
+  ? never
+  : T extends { groupName: string; options: infer O }
+    ?
+        | T
+        | GroupWithOptions<
+            O extends readonly any[] ? O[number] : never,
+            GroupWithOptionsPrev[Depth]
+          >
+    : T extends readonly (infer U)[]
+      ? GroupWithOptions<U, GroupWithOptionsPrev[Depth]>
+      : never;
+
+export type GroupObject<T> = Extract<
+  GroupWithOptions<T, 5>,
+  { groupName: string; options: any; disabled?: boolean }
+>;
+
 export type Selected<
   T,
   IsMultiple extends boolean = false,
@@ -218,7 +239,7 @@ export interface PowerSelectArgs<
     PowerSelectOptionsSignature<T, TExtra, IsMultiple>
   >;
   groupComponent?: ComponentLike<
-    PowerSelectPowerSelectGroupSignature<Group<Option<T>>, TExtra, IsMultiple> // Note: Group<Option<T>> should be T, but this makes an issues outside the component, check this later
+    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
   >;
   afterOptionsComponent?: ComponentLike<
     PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>
