@@ -152,7 +152,13 @@ export const groupedNumbers: GroupedNumber[] = [
   'one thousand',
 ];
 
-export const groupedNumbersWithDisabled = [
+export type GroupedNumberWithDisabled = {
+  groupName: string;
+  disabled?: boolean;
+  options: (string | { groupName: string, disabled?: boolean, options: string[] })[]
+} | string;
+
+export const groupedNumbersWithDisabled: GroupedNumberWithDisabled[] = [
   { groupName: 'Smalls', disabled: true, options: ['one', 'two', 'three'] },
   { groupName: 'Mediums', options: ['four', 'five', 'six'] },
   {
