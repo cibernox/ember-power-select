@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { numbers } from './components/constants';
+import { numbers } from 'test-app/utils/constants';
 import {
   clickTrigger,
   typeInSearch,
