@@ -754,8 +754,8 @@ module(
         .dom('.ember-power-select-dropdown')
         .doesNotExist('The dropdown is closed');
 
-      triggerKeyEvent('.ember-power-select-trigger', 'keydown', 78); // n
-      triggerKeyEvent('.ember-power-select-trigger', 'keydown', 73); // i
+      void triggerKeyEvent('.ember-power-select-trigger', 'keydown', 78); // n
+      void triggerKeyEvent('.ember-power-select-trigger', 'keydown', 73); // i
       await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 78); // n
       assert
         .dom('.ember-power-select-trigger')
@@ -816,8 +816,8 @@ module(
         0,
         'The list is not scrolled',
       );
-      triggerKeydown('.ember-power-select-trigger', 78); // n
-      triggerKeydown('.ember-power-select-trigger', 73); // i
+      void triggerKeydown('.ember-power-select-trigger', 78); // n
+      void triggerKeydown('.ember-power-select-trigger', 73); // i
       await triggerKeydown('.ember-power-select-trigger', 78); // n
       assert
         .dom('.ember-power-select-trigger')
@@ -885,8 +885,8 @@ module(
         0,
         'The list is not scrolled',
       );
-      triggerKeydown('.ember-power-select-trigger', 78); // n
-      triggerKeydown('.ember-power-select-trigger', 73); // i
+      void triggerKeydown('.ember-power-select-trigger', 78); // n
+      void triggerKeydown('.ember-power-select-trigger', 73); // i
       await triggerKeydown('.ember-power-select-trigger', 78); // n
       assert
         .dom('.ember-power-select-trigger')
@@ -952,9 +952,9 @@ module(
       assert
         .dom('.ember-power-select-trigger')
         .hasText('', 'nothing is selected');
-      triggerKeydown('.ember-power-select-trigger', 78); // n
-      triggerKeydown('.ember-power-select-trigger', 73); // i
-      triggerKeydown('.ember-power-select-trigger', 78); // n
+      void triggerKeydown('.ember-power-select-trigger', 78); // n
+      void triggerKeydown('.ember-power-select-trigger', 73); // i
+      void triggerKeydown('.ember-power-select-trigger', 78); // n
       await triggerKeydown('.ember-power-select-trigger', 69); // e
       assert
         .dom('.ember-power-select-trigger')
@@ -980,7 +980,7 @@ module(
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
-      triggerKeydown('.ember-power-select-trigger', 80); // p
+      void triggerKeydown('.ember-power-select-trigger', 80); // p
       await triggerKeydown('.ember-power-select-trigger', 79); // o
       assert
         .dom('.ember-power-select-trigger')
@@ -1008,7 +1008,7 @@ module(
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
-      triggerKeydown('.ember-power-select-trigger', 69); // e
+      void triggerKeydown('.ember-power-select-trigger', 69); // e
       await triggerKeydown('.ember-power-select-trigger', 76); // l
       assert
         .dom('.ember-power-select-trigger')
@@ -1068,7 +1068,7 @@ module(
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
-      triggerKeydown('.ember-power-select-trigger', 84); // t
+      void triggerKeydown('.ember-power-select-trigger', 84); // t
       await triggerKeydown('.ember-power-select-trigger', 87); // w
       assert
         .dom('.ember-power-select-trigger')
@@ -1086,10 +1086,10 @@ module(
 
     test<NumbersContext>('BUGFIX: If pressing up/down arrow on a single select open the dropdown, the event is defaultPrevented', async function (assert) {
       assert.expect(2);
-      let done = assert.async();
+      const done = assert.async();
 
       this.numbers = numbers;
-      let events: Event[] = [];
+      const events: Event[] = [];
       this.onOpen = function (_, e) {
         if (e?.type === 'keydown') {
           events.push(e);
@@ -1122,10 +1122,10 @@ module(
 
     test<NumbersContext>('BUGFIX: If pressing up/down arrow on a single select DOES NOT the dropdown, the event is defaultPrevented', async function (assert) {
       assert.expect(2);
-      let done = assert.async();
+      const done = assert.async();
 
       this.numbers = numbers;
-      let events: Event[] = [];
+      const events: Event[] = [];
       this.onOpen = function (_, e) {
         if (e?.type === 'keydown') {
           events.push(e);
@@ -1159,10 +1159,10 @@ module(
 
     test<NumbersContext<true>>('BUGFIX: If pressing up/down arrow on a multiple select opens the select, the event is defaultPrevented', async function (assert) {
       assert.expect(2);
-      let done = assert.async();
+      const done = assert.async();
 
       this.numbers = numbers;
-      let events: Event[] = [];
+      const events: Event[] = [];
       this.onOpen = function (_, e) {
         if (e?.type === 'keydown') {
           events.push(e);
@@ -1195,10 +1195,10 @@ module(
 
     test<NumbersContext<true>>('BUGFIX: If pressing up/down arrow on a multiple select DOES NOT open the select, the event is defaultPrevented', async function (assert) {
       assert.expect(2);
-      let done = assert.async();
+      const done = assert.async();
 
       this.numbers = numbers;
-      let events: Event[] = [];
+      const events: Event[] = [];
       this.onOpen = function (_, e) {
         if (e?.type === 'keydown') {
           events.push(e);

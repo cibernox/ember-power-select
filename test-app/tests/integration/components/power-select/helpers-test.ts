@@ -75,7 +75,7 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
       </PowerSelect>
     `);
 
-    let options = await getDropdownItems('.ember-power-select-trigger');
+    const options = await getDropdownItems('.ember-power-select-trigger');
     assert.deepEqual(
       options,
       numbers,
