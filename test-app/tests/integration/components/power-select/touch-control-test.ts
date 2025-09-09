@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, tap, triggerEvent, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { numbers } from '../constants';
+import { numbers } from 'test-app/utils/constants';
 import type { Select, Selected } from 'ember-power-select/components/power-select';
 
 interface NumbersContext<IsMultiple extends boolean = false> extends TestContext {

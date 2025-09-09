@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { optionAtIndex } from 'ember-power-select/utils/group-utils';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import { namesStartingWithA } from '../constants';
+import { namesStartingWithA } from 'test-app/utils/constants';
 import { render, focus, triggerKeyEvent } from '@ember/test-helpers';
 
 const WITH_EPS_CLOSED = {

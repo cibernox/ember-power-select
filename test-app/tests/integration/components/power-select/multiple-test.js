@@ -5,7 +5,7 @@ import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
-import { numbers, names, countries, countriesWithDisabled } from '../constants';
+import { numbers, names, countries, countriesWithDisabled } from 'test-app/utils/constants';
 import {
   click,
   tap,

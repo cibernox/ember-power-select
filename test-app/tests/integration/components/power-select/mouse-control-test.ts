@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
-import { numbers } from '../constants';
+import { numbers } from 'test-app/utils/constants';
 import { click, triggerEvent } from '@ember/test-helpers';
 import type { Select, Selected } from 'ember-power-select/components/power-select';
 

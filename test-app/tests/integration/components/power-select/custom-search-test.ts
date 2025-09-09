@@ -18,7 +18,7 @@ import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
-import { numbers, countries, type Country } from '../constants';
+import { numbers, countries, type Country } from 'test-app/utils/constants';
 import RSVP from 'rsvp';
 import type { MatcherFn } from 'ember-power-select/utils/group-utils';
 

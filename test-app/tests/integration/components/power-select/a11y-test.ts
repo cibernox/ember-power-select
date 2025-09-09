@@ -13,7 +13,7 @@ import {
   countries,
   countriesWithDisabled,
   type Country,
-} from '../constants';
+} from 'test-app/utils/constants';
 import {
   clickTrigger,
   findContains,

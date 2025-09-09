@@ -6,7 +6,7 @@ import {
   clickTrigger,
   typeInSearch,
 } from 'ember-power-select/test-support/helpers';
-import { names, numbers } from '../constants';
+import { names, numbers } from 'test-app/utils/constants';
 import { tracked } from '@glimmer/tracking';
 
 function assertPublicAPIShape(assert, select) {

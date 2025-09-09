@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { countries, type Country } from '../constants';
+import { countries, type Country } from 'test-app/utils/constants';
 import type { Selected } from 'ember-power-select/components/power-select';
 import type { Selected as MultipleSelected } from 'ember-power-select/components/power-select-multiple';
 
