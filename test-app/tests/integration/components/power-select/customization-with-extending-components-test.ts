@@ -21,7 +21,6 @@ import type { PowerSelectNoMatchesMessageSignature } from 'ember-power-select/co
 import CustomNoMatchesMessage from 'test-app/components/custom-no-matches-message';
 import CustomPlaceholder from 'test-app/components/custom-placeholder';
 import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
-import type { Group } from 'ember-power-select/utils/group-utils';
 import CustomGroupComponent from 'test-app/components/custom-group-component';
 
 interface CountryContext<IsMultiple extends boolean = false>
