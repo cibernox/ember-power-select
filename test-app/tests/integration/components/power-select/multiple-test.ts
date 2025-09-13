@@ -5,31 +5,103 @@ import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
-import { numbers, names, countries, countriesWithDisabled } from 'test-app/utils/constants';
+import { numbers, names, countries, countriesWithDisabled, type Country } from 'test-app/utils/constants';
 import {
   click,
   tap,
   triggerKeyEvent,
   focus,
   render,
+  type TestContext,
 } from '@ember/test-helpers';
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import { runTask } from 'ember-lifeline';
 import { TrackedArray } from 'tracked-built-ins';
+import type { Selected, Select } from 'ember-power-select/components/power-select-multiple';
+import type { DefaultHighlightedParams, MatcherFn } from 'ember-power-select/utils/group-utils';
+
+interface NumbersContext extends TestContext {
+  element: HTMLElement;
+  numbers: string[] | Promise<string[]>;
+  selected: Selected<string>;
+  // search: () => Promise<string[]> | string[];
+  searchFn: (term: string) => string[] | Promise<string[]>;
+  // proxy: string[] | Promise<string[]>;
+  endsWithMatcher: MatcherFn<string>;
+  defaultHighlighted?: string | ((params: DefaultHighlightedParams<string>) => string);
+  // destinationElement?: HTMLElement | undefined;
+  // ref: any;
+  foo: () => void;
+  onChange: (selection: Selected<string>, select: Select<string>) => void;
+  // renderInPlace?: boolean;
+  // calculatePosition: CalculatePosition;
+  // beforeOptionsComponent: ComponentLike<
+  //   PowerSelectBeforeOptionsSignature<string, unknown, IsMultiple>
+  // >;
+}
+
+interface Person {
+  name: string;
+  surname: string;
+}
+
+interface PeopleContext extends TestContext {
+  people: Person[] | Promise<Person[]>;
+  selected: Selected<Person>;
+  // search: () => Promise<string[]> | string[];
+  // proxy: string[] | Promise<string[]>;
+  // endsWithMatcher: MatcherFn<string>;
+  // defaultHighlighted?: string | ((params: DefaultHighlightedParams<string>) => string);
+  // destinationElement?: HTMLElement | undefined;
+  // ref: any;
+  foo: () => void;
+  onChange: (selected: Selected<Person>) => void;
+  // renderInPlace?: boolean;
+  // calculatePosition: CalculatePosition;
+  // beforeOptionsComponent: ComponentLike<
+  //   PowerSelectBeforeOptionsSignature<string, unknown, IsMultiple>
+  // >;
+}
+
+interface UserContext extends TestContext {
+  selected: Selected<User>;
+  search: (term: string) => User[];
+  onChange: (user: Selected<User>) => void;
+}
+
+interface CountryContext extends TestContext {
+  // matcherFn: MatcherFn<Country>;
+  countries: Country[];
+  selected: Selected<typeof countries>;
+  foo: () => void;
+  onChange: (selection: Selected<Country>, select: Select<Country>) => void;
+}
+
+class User {
+  @tracked name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  isEqual(other: User | undefined) {
+    return this.name === other?.name;
+  }
+}
 
 module(
   'Integration | Component | Ember Power Select (Multiple)',
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test("Multiple selects don't have a search box by default", async function (assert) {
+    test<NumbersContext>("Multiple selects don't have a search box by default", async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -40,12 +112,12 @@ module(
         .doesNotExist('There is no search box');
     });
 
-    test('Multiple selects have a search box in the trigger when the search is enabled', async function (assert) {
+    test<NumbersContext>('Multiple selects have a search box in the trigger when the search is enabled', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -55,11 +127,11 @@ module(
       assert.dom('.ember-power-select-dropdown input').doesNotExist();
     });
 
-    test('Multiple selects have a search box in the dropdown when the search is enabled and search position is `after-options`', async function (assert) {
+    test<NumbersContext>('Multiple selects have a search box in the dropdown when the search is enabled and search position is `after-options`', async function (assert) {
       assert.expect(2);
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @searchFieldPosition="before-options" as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} @searchFieldPosition="before-options" as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -68,12 +140,12 @@ module(
       assert.dom('.ember-power-select-dropdown input').exists();
     });
 
-    test('The searchbox of multiple selects has type="search" and a form attribute to prevent submitting the wrapper form when pressing enter', async function (assert) {
+    test<NumbersContext>('The searchbox of multiple selects has type="search" and a form attribute to prevent submitting the wrapper form when pressing enter', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -85,12 +157,12 @@ module(
       assert.dom('.ember-power-select-trigger input').hasAttribute('form');
     });
 
-    test('When the select opens, the search input (if any) in the trigger gets the focus', async function (assert) {
+    test<NumbersContext>('When the select opens, the search input (if any) in the trigger gets the focus', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -99,11 +171,11 @@ module(
       assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
     });
 
-    test('When the select opens and search position is `after-options`, the search input (if any) in the dropdown gets the focus', async function (assert) {
+    test<NumbersContext>('When the select opens and search position is `after-options`, the search input (if any) in the dropdown gets the focus', async function (assert) {
       assert.expect(1);
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} @searchFieldPosition="before-options" as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} @searchFieldPosition="before-options" as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -111,12 +183,12 @@ module(
       assert.dom('.ember-power-select-search-input').isFocused();
     });
 
-    test("Click on an element selects it and closes the dropdown and focuses the trigger's input", async function (assert) {
+    test<NumbersContext>("Click on an element selects it and closes the dropdown and focuses the trigger's input", async function (assert) {
       assert.expect(4);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -136,11 +208,11 @@ module(
         .includesText('two', 'The clicked element has been selected');
     });
 
-    test('Selecting an element triggers the onchange action with the list of selected options', async function (assert) {
+    test<NumbersContext>('Selecting an element triggers the onchange action with the list of selected options', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      this.change = (values) => {
+      this.onChange = (values) => {
         assert.deepEqual(
           values,
           ['two'],
@@ -148,8 +220,8 @@ module(
         );
       };
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.change}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.onChange}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -158,22 +230,22 @@ module(
       await click('.ember-power-select-option:nth-child(2)');
     });
 
-    test('Click an option when there is already another selects both, and triggers the onchange action with them', async function (assert) {
+    test<NumbersContext>('Click an option when there is already another selects both, and triggers the onchange action with them', async function (assert) {
       assert.expect(5);
 
       this.numbers = numbers;
-      this.selectedNumbers = ['four'];
-      this.change = (values) => {
+      this.selected = ['four'];
+      this.onChange = (values) => {
         assert.deepEqual(
           values,
           ['four', 'two'],
           'The onchange action is fired with the list of values',
         );
-        this.set('selectedNumbers', values);
+        this.set('selected', values);
       };
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{this.change}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -194,14 +266,14 @@ module(
         .includesText('two', 'The second option is the one just selected');
     });
 
-    test('If there is many selections, all those options are styled as `selected`', async function (assert) {
+    test<NumbersContext>('If there is many selections, all those options are styled as `selected`', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      this.selectedNumbers = ['four', 'two'];
+      this.selected = ['four', 'two'];
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{fn (mut this.selectedNumbers)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -223,14 +295,14 @@ module(
         );
     });
 
-    test('When the popup opens, the first items is highlighed, even if there is only one selection', async function (assert) {
+    test<NumbersContext>('When the popup opens, the first items is highlighed, even if there is only one selection', async function (assert) {
       assert.expect(4);
 
       this.numbers = numbers;
-      this.selectedNumbers = ['four'];
+      this.selected = ['four'];
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{fn (mut this.selectedNumbers)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -252,18 +324,18 @@ module(
         .hasText('one', 'The highlighted element is the first one');
     });
 
-    test('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', async function (assert) {
+    test<NumbersContext>('Clicking on an option that is already selected unselects it, closes the select and triggers the `onchange` action', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      this.selectedNumbers = ['four'];
-      this.change = (selected) => {
+      this.selected = ['four'];
+      this.onChange = (selected) => {
         assert.ok(isEmpty(selected), 'No elements are selected');
-        this.set('selectedNumbers', selected);
+        this.set('selected', selected);
       };
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selectedNumbers}} @onChange={{this.change}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -278,12 +350,13 @@ module(
         .exists({ count: 0 }, 'There is no options selected');
     });
 
-    test('The default filtering works in multiple mode', async function (assert) {
+    test<NumbersContext>('The default filtering works in multiple mode', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -295,7 +368,7 @@ module(
         .exists({ count: 2 }, 'Only two items matched the criteria');
     });
 
-    test('The filtering specifying a searchkey works in multiple model', async function (assert) {
+    test<PeopleContext>('The filtering specifying a searchkey works in multiple model', async function (assert) {
       assert.expect(8);
 
       this.people = [
@@ -306,9 +379,10 @@ module(
         { name: 'Marta', surname: 'Stinson' },
         { name: 'Lisa', surname: 'Simpson' },
       ];
+      this.foo = () => {};
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.people}} @searchField="name" @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |person|>
+      await render<PeopleContext>(hbs`
+      <PowerSelectMultiple @options={{this.people}} @searchField="name" @onChange={{this.foo}} @searchEnabled={{true}} as |person|>
         {{person.name}} {{person.surname}}
       </PowerSelectMultiple>
     `);
@@ -339,16 +413,17 @@ module(
       assert.dom('.ember-power-select-option:nth-child(2)').hasText('João Jin');
     });
 
-    test('The filtering specifying a custom matcher works in multiple model', async function (assert) {
+    test<NumbersContext>('The filtering specifying a custom matcher works in multiple model', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
       this.endsWithMatcher = function (value, text) {
-        return value.slice(text.length * -1) === text ? 0 : -1;
+        return value?.slice(text.length * -1) === text ? 0 : -1;
       };
+      this.foo = () => {};
 
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @matcher={{this.endsWithMatcher}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @matcher={{this.endsWithMatcher}} @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -364,11 +439,11 @@ module(
         .exists({ count: 7 }, 'There is 7 number that end in "teen"');
     });
 
-    test('The search using a custom action works int multiple mode', async function (assert) {
-      let done = assert.async();
+    test<NumbersContext>('The search using a custom action works int multiple mode', async function (assert) {
+      const done = assert.async();
       assert.expect(1);
 
-      this.searchFn = function (term) {
+      this.searchFn = function (term: string) {
         return new RSVP.Promise((resolve) => {
           runTask(
             this,
@@ -379,9 +454,10 @@ module(
           );
         });
       };
+      this.foo = () => {};
 
-      await render(hbs`
-      <PowerSelectMultiple @search={{this.searchFn}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |number|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @search={{this.searchFn}} @onChange={{this.foo}} @searchEnabled={{true}} as |number|>
         {{number}}
       </PowerSelectMultiple>
     `);
@@ -395,12 +471,12 @@ module(
       }, 150);
     });
 
-    test('Pressing ENTER when the select is closed opens and nothing is written on the box opens it', async function (assert) {
+    test<NumbersContext>('Pressing ENTER when the select is closed opens and nothing is written on the box opens it', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -423,12 +499,12 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
     });
 
-    test('Pressing ENTER on a multiple select with `searchEnabled=false` when it is closed opens it', async function (assert) {
+    test<NumbersContext>('Pressing ENTER on a multiple select with `searchEnabled=false` when it is closed opens it', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -441,16 +517,16 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
     });
 
-    test('Pressing ENTER over a highlighted element selects it', async function (assert) {
+    test<NumbersContext>('Pressing ENTER over a highlighted element selects it', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      this.change = (selected) => {
+      this.onChange = (selected) => {
         assert.deepEqual(selected, ['two']);
-        this.set('foo', selected);
+        this.set('selected', selected);
       };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{this.change}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -471,12 +547,12 @@ module(
         .includesText('two', 'The element was selected');
     });
 
-    test('Pressing ENTER over a highlighted element on a multiple select without a searchbox selects it', async function (assert) {
+    test<NumbersContext>('Pressing ENTER over a highlighted element on a multiple select without a searchbox selects it', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -490,16 +566,16 @@ module(
         .includesText('two', 'The element was selected');
     });
 
-    test('Pressing ENTER over a highlighted element on a select without a searchbox selects it', async function (assert) {
+    test<NumbersContext>('Pressing ENTER over a highlighted element on a select without a searchbox selects it', async function (assert) {
       assert.expect(4);
 
       this.numbers = numbers;
-      this.change = (selected) => {
+      this.onChange = (selected) => {
         assert.deepEqual(selected, ['two']);
-        this.set('foo', selected);
+        this.set('selected', selected);
       };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{this.change}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -518,17 +594,17 @@ module(
         .includesText('two', 'The element was selected');
     });
 
-    test('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', async function (assert) {
+    test<NumbersContext>('Pressing ENTER over a highlighted element what is already selected closes the select without doing anything and focuses the trigger', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
       this.selected = ['two'];
-      this.didChange = (val) => {
+      this.onChange = (val) => {
         assert.ok(false, 'This should never be invoked');
         this.set('selected', val);
       };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.didChange}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -553,17 +629,17 @@ module(
       assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
     });
 
-    test('Pressing BACKSPACE on the search input when there is text on it does nothing special', async function (assert) {
+    test<NumbersContext>('Pressing BACKSPACE on the search input when there is text on it does nothing special', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
       this.selected = ['two'];
-      this.didChange = (val) => {
+      this.onChange = (val) => {
         assert.ok(false, 'This should not be called');
         this.set('selected', val);
       };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.didChange}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -580,12 +656,12 @@ module(
         .exists('The dropown is still opened');
     });
 
-    test("Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediately, opening the select if closed", async function (assert) {
+    test<NumbersContext>("Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediately, opening the select if closed", async function (assert) {
       assert.expect(9);
 
       this.numbers = numbers;
       this.selected = ['two'];
-      this.didChange = (val, dropdown) => {
+      this.onChange = (val, dropdown) => {
         assert.deepEqual(val, [], 'The selected item was unselected');
         this.set('selected', val);
         assert.ok(
@@ -593,8 +669,8 @@ module(
           'The dropdown API is received as second argument',
         );
       };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.didChange}} @selected={{this.selected}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.onChange}} @selected={{this.selected}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -619,32 +695,34 @@ module(
       assert
         .dom('.ember-power-select-option')
         .exists({ count: 1 }, 'The list has been filtered');
-      let input = this.element.querySelector(
+      const input = this.element?.querySelector(
         '.ember-power-select-trigger-multiple-input',
-      );
-      assert.strictEqual(input.selectionStart, 3);
-      assert.strictEqual(input.selectionEnd, 3);
+      ) as HTMLInputElement | undefined;
+      assert.strictEqual(input?.selectionStart ?? 0, 3);
+      assert.strictEqual(input?.selectionEnd ?? 0, 3);
     });
 
-    test("Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediatly (when options are not strings)", async function (assert) {
+    test<CountryContext>("Pressing BACKSPACE on the search input when it's empty removes the last selection and performs a search for that text immediatly (when options are not strings)", async function (assert) {
       assert.expect(7);
 
       this.countries = countries;
-      this.country = [countries[2], countries[4]];
-      this.didChange = (val, dropdown) => {
+      if (countries[2] && countries[4]) {
+        this.selected = [countries[2], countries[4]];
+      }
+      this.onChange = (val, dropdown) => {
         assert.deepEqual(
           val,
           [countries[2]],
           'The selected item was unselected',
         );
-        this.set('country', val);
+        this.set('selected', val);
         assert.ok(
           dropdown.actions.close,
           'The dropdown API is received as second argument',
         );
       };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.countries}} @selected={{this.country}} @onChange={{this.didChange}} @searchField="name" @searchEnabled={{true}} as |c|>
+      await render<CountryContext>(hbs`
+      <PowerSelectMultiple @options={{this.countries}} @selected={{this.selected}} @onChange={{this.onChange}} @searchField="name" @searchEnabled={{true}} as |c|>
         {{c.name}}
       </PowerSelectMultiple>
     `);
@@ -671,12 +749,12 @@ module(
         .exists({ count: 1 }, 'The list has been filtered');
     });
 
-    test("Pressing BACKSPACE on the search input when it's empty removes the last selection ALSO when that option didn't come from the outside", async function (assert) {
+    test<NumbersContext>("Pressing BACKSPACE on the search input when it's empty removes the last selection ALSO when that option didn't come from the outside", async function (assert) {
       assert.expect(5);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -706,12 +784,12 @@ module(
         .exists({ count: 1 }, 'The list has been filtered');
     });
 
-    test("Pressing BACKSPACE on the search input when it's empty doesnt trigger error", async function (assert) {
+    test<NumbersContext>("Pressing BACKSPACE on the search input when it's empty doesnt trigger error", async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-        <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+        <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
           {{option}}
         </PowerSelectMultiple>
       `);
@@ -731,12 +809,13 @@ module(
         .exists('The dropdown is still opened');
     });
 
-    test('If the multiple component is focused, pressing KEYDOWN opens it', async function (assert) {
+    test<NumbersContext>('If the multiple component is focused, pressing KEYDOWN opens it', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -758,12 +837,13 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
     });
 
-    test('If the multiple component is focused, pressing KEYUP opens it', async function (assert) {
+    test<NumbersContext>('If the multiple component is focused, pressing KEYUP opens it', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -785,12 +865,12 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
     });
 
-    test('The placeholder is only visible when no options are selected', async function (assert) {
+    test<NumbersContext>('The placeholder is only visible when no options are selected', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @placeholder="Select stuff here" @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @placeholder="Select stuff here" @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -809,12 +889,12 @@ module(
         .hasAttribute('placeholder', '', 'The placeholder is gone');
     });
 
-    test('The placeholder is visible when no options are selected and search is disabled', async function (assert) {
+    test<NumbersContext>('The placeholder is visible when no options are selected and search is disabled', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @placeholder="Select stuff here" as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @placeholder="Select stuff here" as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -829,12 +909,12 @@ module(
         .doesNotExist('The placeholder is gone');
     });
 
-    test('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', async function (assert) {
+    test<NumbersContext>('If the placeholder is null the placeholders shouldn\'t be "null" (issue #94)', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -861,11 +941,11 @@ module(
         );
     });
 
-    test('Selecting and removing should result in desired behavior', async function (assert) {
+    test<NumbersContext>('Selecting and removing should result in desired behavior', async function (assert) {
       assert.expect(3);
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -887,11 +967,11 @@ module(
         .exists({ count: 0 }, 'Should remove selected option');
     });
 
-    test('Selecting and removing can also be done with touch events', async function (assert) {
+    test<NumbersContext>('Selecting and removing can also be done with touch events', async function (assert) {
       assert.expect(3);
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -913,12 +993,12 @@ module(
         .exists({ count: 0 }, 'Should remove selected option');
     });
 
-    test('Typing in the input opens the component and filters the options', async function (assert) {
+    test<NumbersContext>('Typing in the input opens the component and filters the options', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -929,10 +1009,10 @@ module(
         .exists({ count: 2 }, 'The dropdown is opened and results filtered');
     });
 
-    test('Typing in the input opens the component and filters the options also with async searches', async function (assert) {
+    test<NumbersContext>('Typing in the input opens the component and filters the options also with async searches', async function (assert) {
       assert.expect(1);
 
-      this.search = (term) => {
+      this.searchFn = (term) => {
         return new RSVP.Promise((resolve) => {
           runTask(
             this,
@@ -944,14 +1024,14 @@ module(
         });
       };
 
-      await render(hbs`
-      <PowerSelectMultiple @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @search={{this.search}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @search={{this.searchFn}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
 
       await typeInSearch('fo');
-      let done = assert.async();
+      const done = assert.async();
 
       setTimeout(function () {
         assert
@@ -961,11 +1041,11 @@ module(
       }, 150);
     });
 
-    test('The publicAPI is yielded as second argument in multiple selects', async function (assert) {
+    test<NumbersContext>('The publicAPI is yielded as second argument in multiple selects', async function (assert) {
       assert.expect(2);
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option select|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option select|>
         {{select.lastSearchedText}}:{{option}}
       </PowerSelectMultiple>
     `);
@@ -981,11 +1061,11 @@ module(
         .includesText('thr:two', 'The trigger also receives the public API');
     });
 
-    test('The search input is cleared when the component is closed', async function (assert) {
+    test<NumbersContext>('The search input is cleared when the component is closed', async function (assert) {
       assert.expect(3);
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
       <div id="other-thing">Other div</div>
@@ -1001,14 +1081,14 @@ module(
       assert.dom('.ember-power-select-trigger-multiple-input').hasValue('');
     });
 
-    test('When hitting ENTER after a search with no results, the component is closed but the onchange function is not invoked', async function (assert) {
+    test<NumbersContext>('When hitting ENTER after a search with no results, the component is closed but the onchange function is not invoked', async function (assert) {
       assert.expect(3);
       this.numbers = numbers;
-      this.handleChange = () => {
+      this.onChange = () => {
         assert.ok(false, 'The handle change should not be called');
       };
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{this.handleChange}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{this.onChange}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1027,11 +1107,11 @@ module(
       assert.dom('.ember-power-select-trigger-multiple-input').isFocused();
     });
 
-    test('The trigger of multiple selects have a special class to distinguish them from regular ones, even if you pass them another one', async function (assert) {
+    test<NumbersContext>('The trigger of multiple selects have a special class to distinguish them from regular ones, even if you pass them another one', async function (assert) {
       assert.expect(2);
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @triggerClass="foobar-trigger" @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @triggerClass="foobar-trigger" @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1047,30 +1127,33 @@ module(
         .hasClass('foobar-trigger', 'The trigger has the given class');
     });
 
-    test('The component works when the array of selected elements is mutated in place instead of replaced', async function (assert) {
+    test<NumbersContext>('The component works when the array of selected elements is mutated in place instead of replaced', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
       this.selected = new TrackedArray();
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
       await clickTrigger();
-      this.selected.push(numbers[3]);
+      if (numbers[3]) {
+        this.selected.push(numbers[3]);
+      }
       await click('.ember-power-select-option');
       assert
         .dom('.ember-power-select-multiple-option')
         .exists({ count: 2 }, 'Two elements are selected');
     });
 
-    test('When the input inside the multiple select gets focused, the trigger and the dropdown gain special `--active` classes', async function (assert) {
+    test<NumbersContext>('When the input inside the multiple select gets focused, the trigger and the dropdown gain special `--active` classes', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1096,12 +1179,12 @@ module(
         );
     });
 
-    test('When the power select multiple uses the default component and the search is enabled, the trigger has `tabindex=-1`', async function (assert) {
+    test<NumbersContext>('When the power select multiple uses the default component and the search is enabled, the trigger has `tabindex=-1`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1111,12 +1194,12 @@ module(
         .hasAttribute('tabindex', '-1', 'The trigger has tabindex=-1');
     });
 
-    test('When the power select multiple uses the default component and the search is disabled, the trigger has `tabindex=0`', async function (assert) {
+    test<NumbersContext>('When the power select multiple uses the default component and the search is disabled, the trigger has `tabindex=0`', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1126,12 +1209,12 @@ module(
         .hasAttribute('tabindex', '0', 'The trigger has tabindex=0');
     });
 
-    test('When the power select multiple uses the default component and the search is enabled, and the component receives an specific tabindex, the trigger has tabindex=-1, and the tabindex is applied to the searchbox inside', async function (assert) {
+    test<NumbersContext>('When the power select multiple uses the default component and the search is enabled, and the component receives an specific tabindex, the trigger has tabindex=-1, and the tabindex is applied to the searchbox inside', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @tabindex="3" @searchEnabled={{true}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @tabindex="3" @searchEnabled={{true}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1144,13 +1227,13 @@ module(
         .hasAttribute('tabindex', '3', 'The searchbox has tabindex=3');
     });
 
-    test('Multiple selects honor the `defaultHighlighted` option', async function (assert) {
+    test<NumbersContext>('Multiple selects honor the `defaultHighlighted` option', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
       this.defaultHighlighted = numbers[3];
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} @defaultHighlighted={{this.defaultHighlighted}} as |option|>
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} @defaultHighlighted={{this.defaultHighlighted}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1164,26 +1247,14 @@ module(
         );
     });
 
-    test('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', async function (assert) {
-      class User {
-        @tracked name;
-
-        constructor(name) {
-          this.name = name;
-        }
-
-        isEqual(other) {
-          return this.name === other?.name;
-        }
-      }
-
-      this.search = (term) => {
+    test<UserContext>('If the options of a multiple select implement `isEqual`, that option is used to determine whether or not two items are the same', async function (assert) {
+      this.search = (term: string) => {
         return names
           .filter((n) => n.indexOf(term) > -1)
           .map((name) => new User(name));
       };
 
-      await render(hbs`
+      await render<UserContext>(hbs`
       <PowerSelectMultiple
         @selected={{this.selected}}
         @onChange={{fn (mut this.selected)}}
@@ -1207,14 +1278,14 @@ module(
       assert.dom('.ember-power-select-multiple-option').exists({ count: 0 });
     });
 
-    test('When there is an option which is disabled the css class "ember-power-select-multiple-option--disabled" should be added', async function (assert) {
+    test<CountryContext>('When there is an option which is disabled the css class "ember-power-select-multiple-option--disabled" should be added', async function (assert) {
       assert.expect(2);
 
-      this.countriesWithDisabled = countriesWithDisabled;
-      let countriesWithDisabledLength = this.countriesWithDisabled.length;
+      this.countries = countriesWithDisabled;
+      const countriesWithDisabledLength = this.countries.length;
       let disabledNumCountries = 0;
       for (let i = 0; i < countriesWithDisabledLength; i++) {
-        if (this.countriesWithDisabled[i].disabled) {
+        if (this.countries[i]?.disabled) {
           disabledNumCountries++;
         }
       }
@@ -1224,10 +1295,10 @@ module(
         0,
         'There is at least one disabled option',
       );
-      this.foo = countriesWithDisabled;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.countriesWithDisabled}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
-        {{option}}
+      this.selected = countriesWithDisabled;
+      await render<CountryContext>(hbs`
+      <PowerSelectMultiple @options={{this.countries}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
+        {{option.name}}
       </PowerSelectMultiple>
     `);
       assert
@@ -1240,12 +1311,13 @@ module(
         );
     });
 
-    test('The title is rendered in the trigger of multiple selects', async function (assert) {
+    test<NumbersContext>('The title is rendered in the trigger of multiple selects', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @onChange={{fn (mut this.foo)}} @title="The title" as |option|>
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @onChange={{this.foo}} @title="The title" as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1255,11 +1327,11 @@ module(
         .hasAttribute('title', 'The title');
     });
 
-    test('triggerComponent argument could be passed with undefined', async function (assert) {
+    test<NumbersContext>('triggerComponent argument could be passed with undefined', async function (assert) {
       this.numbers = numbers;
       this.selected = numbers.slice(0, 1);
 
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelectMultiple
         @triggerComponent={{undefined}}
         @options={{this.numbers}}
@@ -1276,10 +1348,10 @@ module(
         .exists({ count: 1 }, 'Shows selected option');
     });
 
-    test('buildSelection argument could be passed with undefined', async function (assert) {
+    test<NumbersContext>('buildSelection argument could be passed with undefined', async function (assert) {
       this.numbers = numbers;
 
-      await render(hbs`
+      await render<NumbersContext>(hbs`
       <PowerSelectMultiple
         @buildSelection={{undefined}}
         @options={{this.numbers}}
@@ -1298,12 +1370,13 @@ module(
         .exists({ count: 1 }, 'Shows selected option');
     });
 
-    test('Multiple selects: The label was rendered when it was passed with `@labelText="Label for select` and is matching with trigger id', async function (assert) {
+    test<NumbersContext>('Multiple selects: The label was rendered when it was passed with `@labelText="Label for select` and is matching with trigger id', async function (assert) {
       assert.expect(3);
 
       this.numbers = numbers;
-      await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @onChange={{fn (mut this.foo)}} as |option|>
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -1316,9 +1389,7 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
-          document
-            .querySelector('.ember-power-select-label')
-            .getAttribute('for'),
+          document.querySelector('.ember-power-select-label')?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
     });
