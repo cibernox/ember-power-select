@@ -268,7 +268,7 @@ export interface PowerSelectArgs<
   onClose?: (
     select: Select<T, IsMultiple>,
     e: Event | undefined,
-  ) => boolean | undefined;
+  ) => boolean | void | undefined;
   onInput?: (
     term: string,
     select: Select<T, IsMultiple>,
@@ -281,7 +281,7 @@ export interface PowerSelectArgs<
   onFocus?: (select: Select<T, IsMultiple>, event: FocusEvent) => void;
   onBlur?: (select: Select<T, IsMultiple>, event: FocusEvent) => void;
   scrollTo?: (
-    option: Selected<T, IsMultiple>,
+    option: Selected<T>,
     select: Select<T, IsMultiple>,
   ) => void;
   registerAPI?: (select: Select<T, IsMultiple>) => void;
@@ -907,7 +907,7 @@ export default class PowerSelectComponent<
   }
 
   @action
-  _scrollTo(option: Selected<T, IsMultiple>): void {
+  _scrollTo(option: Selected<T>): void {
     const select = this.storedAPI;
     if (!document || !option) {
       return;
