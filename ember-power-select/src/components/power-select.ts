@@ -280,10 +280,7 @@ export interface PowerSelectArgs<
   ) => boolean | void | undefined;
   onFocus?: (select: Select<T, IsMultiple>, event: FocusEvent) => void;
   onBlur?: (select: Select<T, IsMultiple>, event: FocusEvent) => void;
-  scrollTo?: (
-    option: Selected<T>,
-    select: Select<T, IsMultiple>,
-  ) => void;
+  scrollTo?: (option: Selected<T>, select: Select<T, IsMultiple>) => void;
   registerAPI?: (select: Select<T, IsMultiple>) => void;
 }
 

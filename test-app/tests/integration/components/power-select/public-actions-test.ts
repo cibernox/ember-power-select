@@ -307,7 +307,7 @@ module(
     `);
 
       await clickTrigger();
-      triggerKeyEvent(
+      void triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
         'keydown',
         13,
