@@ -132,10 +132,12 @@ export const countriesWithDisabled: Country[] = [
   },
 ];
 
-export type GroupedNumber = {
-  groupName: string;
-  options: (string | { groupName: string, options: string[] })[]
-} | string;
+export type GroupedNumber =
+  | {
+      groupName: string;
+      options: (string | { groupName: string; options: string[] })[];
+    }
+  | string;
 
 export const groupedNumbers: GroupedNumber[] = [
   { groupName: 'Smalls', options: ['one', 'two', 'three'] },
@@ -152,11 +154,16 @@ export const groupedNumbers: GroupedNumber[] = [
   'one thousand',
 ];
 
-export type GroupedNumberWithDisabled = {
-  groupName: string;
-  disabled?: boolean;
-  options: (string | { groupName: string, disabled?: boolean, options: string[] })[]
-} | string;
+export type GroupedNumberWithDisabled =
+  | {
+      groupName: string;
+      disabled?: boolean;
+      options: (
+        | string
+        | { groupName: string; disabled?: boolean; options: string[] }
+      )[];
+    }
+  | string;
 
 export const groupedNumbersWithDisabled: GroupedNumberWithDisabled[] = [
   { groupName: 'Smalls', disabled: true, options: ['one', 'two', 'three'] },
@@ -173,39 +180,49 @@ export const groupedNumbersWithDisabled: GroupedNumberWithDisabled[] = [
   'one thousand',
 ];
 
-export type GroupedNumbersWithCustomProperty = {
-  groupName: string;
-  variant: string;
-  options: (string | { groupName: string, variant: string, options: string[] })[]
-} | string;
+export type GroupedNumbersWithCustomProperty =
+  | {
+      groupName: string;
+      variant: string;
+      options: (
+        | string
+        | { groupName: string; variant: string; options: string[] }
+      )[];
+    }
+  | string;
 
-export const groupedNumbersWithCustomProperty: GroupedNumbersWithCustomProperty[] = [
-  { groupName: 'Smalls', variant: 'Primary', options: ['one', 'two', 'three'] },
-  {
-    groupName: 'Mediums',
-    variant: 'Secondary',
-    options: ['four', 'five', 'six'],
-  },
-  {
-    groupName: 'Bigs',
-    variant: 'Primary',
-    options: [
-      {
-        groupName: 'Fairly big',
-        variant: 'Secondary',
-        options: ['seven', 'eight', 'nine'],
-      },
-      {
-        groupName: 'Really big',
-        variant: 'Primary',
-        options: ['ten', 'eleven', 'twelve'],
-      },
-      'thirteen',
-    ],
-  },
-  'one hundred',
-  'one thousand',
-];
+export const groupedNumbersWithCustomProperty: GroupedNumbersWithCustomProperty[] =
+  [
+    {
+      groupName: 'Smalls',
+      variant: 'Primary',
+      options: ['one', 'two', 'three'],
+    },
+    {
+      groupName: 'Mediums',
+      variant: 'Secondary',
+      options: ['four', 'five', 'six'],
+    },
+    {
+      groupName: 'Bigs',
+      variant: 'Primary',
+      options: [
+        {
+          groupName: 'Fairly big',
+          variant: 'Secondary',
+          options: ['seven', 'eight', 'nine'],
+        },
+        {
+          groupName: 'Really big',
+          variant: 'Primary',
+          options: ['ten', 'eleven', 'twelve'],
+        },
+        'thirteen',
+      ],
+    },
+    'one hundred',
+    'one thousand',
+  ];
 
 export const namesStartingWithA = [
   'Abigail',

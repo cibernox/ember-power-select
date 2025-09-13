@@ -2,7 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { countries, groupedNumbers, type Country, type GroupedNumber, type SelectedCountryExtra } from 'test-app/utils/constants';
+import {
+  countries,
+  groupedNumbers,
+  type Country,
+  type GroupedNumber,
+  type SelectedCountryExtra,
+} from 'test-app/utils/constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import type { TestContext } from '@ember/test-helpers';
 import type { Selected } from 'ember-power-select/components/power-select';
@@ -47,20 +53,16 @@ interface CountryContext<IsMultiple extends boolean = false>
   noMatchesMessageComponent: ComponentLike<
     PowerSelectNoMatchesMessageSignature<Country, IsMultiple>
   >;
-};
+}
 
 interface GroupedNumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
   foo: (selected: string | null | undefined) => void;
   groupedNumbers: GroupedNumber[];
   groupComponent: ComponentLike<
-    PowerSelectPowerSelectGroupSignature<
-      GroupedNumber,
-      unknown,
-      IsMultiple
-    >
+    PowerSelectPowerSelectGroupSignature<GroupedNumber, unknown, IsMultiple>
   >;
-};
+}
 
 module(
   'Integration | Component | Ember Power Select (Customization with overwriting components)',
@@ -269,7 +271,9 @@ module(
         .exists({ count: numberOfGroups });
     });
 
-    test<CountryContext<true>>('overwriting `power-select-multiple/trigger` works', async function (assert) {
+    test<
+      CountryContext<true>
+    >('overwriting `power-select-multiple/trigger` works', async function (assert) {
       assert.expect(1);
 
       this.countries = countries;

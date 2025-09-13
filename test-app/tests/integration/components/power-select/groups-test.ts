@@ -6,22 +6,26 @@ import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
-import { groupedNumbers, groupedNumbersWithCustomProperty, type GroupedNumbersWithCustomProperty } from 'test-app/utils/constants';
+import {
+  groupedNumbers,
+  groupedNumbersWithCustomProperty,
+  type GroupedNumbersWithCustomProperty,
+} from 'test-app/utils/constants';
 import type { TestContext } from '@ember/test-helpers';
 import type { Selected } from 'ember-power-select/components/power-select';
 import CustomGroupComponentWithVariant from 'test-app/components/custom-group-component-with-variant';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
 
-interface GroupedNumbersContext
-  extends TestContext {
+interface GroupedNumbersContext extends TestContext {
   foo: (selected: string | null | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
   selected: Selected<string>;
 }
 
-interface GroupedNumbersWithCustomPropertyContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface GroupedNumbersWithCustomPropertyContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   foo: (selected: Selected<string, IsMultiple>) => void;
   groupedNumbersWithCustomProperty: GroupedNumbersWithCustomProperty[];
   // extra?: GroupedNumbersExtra;
@@ -40,8 +44,7 @@ interface NotQuiteGroups {
   initial: string;
 }
 
-interface NotQuiteGroupsContext
-  extends TestContext {
+interface NotQuiteGroupsContext extends TestContext {
   foo: (selected: Selected<NotQuiteGroups>) => void;
   notQuiteGroups: NotQuiteGroups[];
 }
@@ -97,13 +100,19 @@ module(
       assert.dom(rootLevelOptions[1]).hasText('one thousand');
       const bigs: HTMLElement = [].slice
         .apply(rootLevelGroups[2]?.children)
-        .filter((e: HTMLElement) => e.classList.contains('ember-power-select-options'))[0]!;
+        .filter((e: HTMLElement) =>
+          e.classList.contains('ember-power-select-options'),
+        )[0]!;
       const bigGroups = [].slice
         .apply(bigs.children)
-        .filter((e: HTMLElement) => e.classList.contains('ember-power-select-group'));
+        .filter((e: HTMLElement) =>
+          e.classList.contains('ember-power-select-group'),
+        );
       const bigOptions = [].slice
         .apply(bigs.children)
-        .filter((e: HTMLElement) => e.classList.contains('ember-power-select-option'));
+        .filter((e: HTMLElement) =>
+          e.classList.contains('ember-power-select-option'),
+        );
       assert.strictEqual(
         bigGroups.length,
         2,
@@ -216,7 +225,9 @@ module(
       assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
     });
 
-    test<GroupedNumbersWithCustomPropertyContext<true>>('When filtering, all properties of the options remain available for a multi select', async function (assert) {
+    test<
+      GroupedNumbersWithCustomPropertyContext<true>
+    >('When filtering, all properties of the options remain available for a multi select', async function (assert) {
       this.groupedNumbersWithCustomProperty = groupedNumbersWithCustomProperty;
 
       this.foo = () => {};
@@ -288,7 +299,9 @@ module(
     `);
 
       await clickTrigger();
-      const selectedGroup = document.querySelectorAll('.ember-power-select-group-name')[1];
+      const selectedGroup = document.querySelectorAll(
+        '.ember-power-select-group-name',
+      )[1];
       if (selectedGroup) {
         await click(selectedGroup);
       }

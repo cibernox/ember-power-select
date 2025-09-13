@@ -189,8 +189,8 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function (assert) {
-    const matcher = function (value: string, searchText: string) {
-      return new RegExp(searchText, 'i').test(value) ? 0 : -1;
+    const matcher = function (value: string | undefined, searchText: string) {
+      return new RegExp(searchText, 'i').test(value ?? '') ? 0 : -1;
     };
     assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [
       { groupName: 'Smalls', options: ['zero'] },
@@ -216,8 +216,8 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions generates new options respecting groups when the matches returns a number, taking negative numbers as "not found" and positive as matches', function (assert) {
-    const matcher = function (value: string, searchText: string) {
-      return new RegExp(searchText, 'i').test(value) ? 0 : -1;
+    const matcher = function (value: string | undefined, searchText: string) {
+      return new RegExp(searchText, 'i').test(value ?? '') ? 0 : -1;
     };
     assert.deepEqual(filterOptions(groupedOptions, 'zero', matcher), [
       { groupName: 'Smalls', options: ['zero'] },
@@ -249,8 +249,8 @@ module('Unit | Utility | Group utils', function () {
   });
 
   test('#filterOptions skips disabled options and groups if it receives a truty values as 4th arguments', function (assert) {
-    const matcher = function (value: string, searchText: string) {
-      return new RegExp(searchText, 'i').test(value) ? 0 : -1;
+    const matcher = function (value: string | undefined, searchText: string) {
+      return new RegExp(searchText, 'i').test(value ?? '') ? 0 : -1;
     };
     assert.deepEqual(
       filterOptions(groupedOptionsWithDisabledThings, 'zero', matcher, true),

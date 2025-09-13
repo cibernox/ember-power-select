@@ -13,7 +13,11 @@ import {
   clickTrigger,
   typeInSearch,
 } from 'ember-power-select/test-support/helpers';
-import { numbers, countriesWithDisabled, type Country } from 'test-app/utils/constants';
+import {
+  numbers,
+  countriesWithDisabled,
+  type Country,
+} from 'test-app/utils/constants';
 import type { Selected } from 'ember-power-select/components/power-select';
 import type { Selected as MultipleSelected } from 'ember-power-select/components/power-select-multiple';
 import type { TestContext } from '@ember/test-helpers';
@@ -44,15 +48,20 @@ interface LocaleGroupedNumberContext extends TestContext {
   foo: (selected: Selected<string>) => void;
 }
 
-type LocaleGroupedNumber = {
-  groupName: string;
-  options: (string | {
-    groupName: string;
-    options: string[];
-    disabled?: boolean;
-  })[];
-  disabled?: boolean;
-} | string
+type LocaleGroupedNumber =
+  | {
+      groupName: string;
+      options: (
+        | string
+        | {
+            groupName: string;
+            options: string[];
+            disabled?: boolean;
+          }
+      )[];
+      disabled?: boolean;
+    }
+  | string;
 
 module(
   'Integration | Component | Ember Power Select (Disabled)',
@@ -190,7 +199,7 @@ module(
       assert.expect(3);
 
       this.numbers = numbers;
-      if (numbers[2] && numbers[4]){
+      if (numbers[2] && numbers[4]) {
         this.selected = [numbers[2], numbers[4]];
       }
       this.set('shouldBeDisabled', true);
@@ -378,7 +387,9 @@ module(
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('one');
-      await click(document.querySelectorAll('.ember-power-select-option')[9] ?? '');
+      await click(
+        document.querySelectorAll('.ember-power-select-option')[9] ?? '',
+      );
       assert
         .dom('.ember-power-select-option[aria-selected="true"]')
         .doesNotExist('Noting was selected');

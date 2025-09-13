@@ -5,14 +5,26 @@ import { hbs } from 'ember-cli-htmlbars';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers } from 'test-app/utils/constants';
 import { click, triggerEvent } from '@ember/test-helpers';
-import type { Select, Selected } from 'ember-power-select/components/power-select';
+import type {
+  Select,
+  Selected,
+} from 'ember-power-select/components/power-select';
 
-interface NumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface NumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
-  foo: (selection: Selected<string, IsMultiple>, select: Select<string, IsMultiple>, event?: Event) => void;
-  onChange: (selection: Selected<string, IsMultiple>, select: Select<string, IsMultiple>, event?: Event) => void;
-};
+  foo: (
+    selection: Selected<string, IsMultiple>,
+    select: Select<string, IsMultiple>,
+    event?: Event,
+  ) => void;
+  onChange: (
+    selection: Selected<string, IsMultiple>,
+    select: Select<string, IsMultiple>,
+    event?: Event,
+  ) => void;
+}
 
 module(
   'Integration | Component | Ember Power Select (Mouse control)',
@@ -276,10 +288,7 @@ module(
 
       const element = document.querySelectorAll('.special-class')[3];
       if (element) {
-        await triggerEvent(
-          element,
-          'mouseover',
-        );
+        await triggerEvent(element, 'mouseover');
       }
       assert
         .dom('.ember-power-select-option[aria-current="true"]')

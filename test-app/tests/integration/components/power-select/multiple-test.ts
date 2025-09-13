@@ -5,7 +5,13 @@ import {
   typeInSearch,
   clickTrigger,
 } from 'ember-power-select/test-support/helpers';
-import { numbers, names, countries, countriesWithDisabled, type Country } from 'test-app/utils/constants';
+import {
+  numbers,
+  names,
+  countries,
+  countriesWithDisabled,
+  type Country,
+} from 'test-app/utils/constants';
 import {
   click,
   tap,
@@ -19,8 +25,14 @@ import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import { runTask } from 'ember-lifeline';
 import { TrackedArray } from 'tracked-built-ins';
-import type { Selected, Select } from 'ember-power-select/components/power-select-multiple';
-import type { DefaultHighlightedParams, MatcherFn } from 'ember-power-select/utils/group-utils';
+import type {
+  Selected,
+  Select,
+} from 'ember-power-select/components/power-select-multiple';
+import type {
+  DefaultHighlightedParams,
+  MatcherFn,
+} from 'ember-power-select/utils/group-utils';
 
 interface NumbersContext extends TestContext {
   element: HTMLElement;
@@ -30,7 +42,9 @@ interface NumbersContext extends TestContext {
   searchFn: (term: string) => string[] | Promise<string[]>;
   // proxy: string[] | Promise<string[]>;
   endsWithMatcher: MatcherFn<string>;
-  defaultHighlighted?: string | ((params: DefaultHighlightedParams<string>) => string);
+  defaultHighlighted?:
+    | string
+    | ((params: DefaultHighlightedParams<string>) => string);
   // destinationElement?: HTMLElement | undefined;
   // ref: any;
   foo: () => void;
@@ -1389,7 +1403,9 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
-          document.querySelector('.ember-power-select-label')?.getAttribute('for') ?? '',
+          document
+            .querySelector('.ember-power-select-label')
+            ?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
     });

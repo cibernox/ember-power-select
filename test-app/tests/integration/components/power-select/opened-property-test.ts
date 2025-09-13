@@ -3,12 +3,20 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, type TestContext } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { numbers } from 'test-app/utils/constants';
-import type { Select, Selected } from 'ember-power-select/components/power-select';
+import type {
+  Select,
+  Selected,
+} from 'ember-power-select/components/power-select';
 
-interface NumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface NumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   numbers: typeof numbers;
-  foo: (selection: Selected<string, IsMultiple>, select: Select<string, IsMultiple>, event?: Event) => void;
-};
+  foo: (
+    selection: Selected<string, IsMultiple>,
+    select: Select<string, IsMultiple>,
+    event?: Event,
+  ) => void;
+}
 
 module(
   'Integration | Component | Ember Power Select (The opened property)',

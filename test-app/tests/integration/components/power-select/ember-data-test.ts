@@ -1,6 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, settled, click, waitFor, type TestContext } from '@ember/test-helpers';
+import {
+  render,
+  settled,
+  click,
+  waitFor,
+  type TestContext,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import {
   typeInSearch,
@@ -73,7 +79,7 @@ module(
       this.server.createList('user', 10);
       this.server.timing = 200;
       this.users = [];
-      this.foo = () => {}
+      this.foo = () => {};
       await render<UsersContext>(hbs`
       <PowerSelect @options={{this.users}} @searchField="name" @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
         {{option.name}}
@@ -104,7 +110,9 @@ module(
         .exists({ count: 1 }, 'Filtering works');
     });
 
-    test<UsersContext<true>>('Delete an item in a multiple selection', async function (assert) {
+    test<
+      UsersContext<true>
+    >('Delete an item in a multiple selection', async function (assert) {
       this.server.createList('user', 10);
       this.users = [];
       await render<UsersContext<true>>(hbs`
@@ -151,7 +159,9 @@ module(
         .hasText('User 3', 'The 4th option was selected');
     });
 
-    test<UsersContext<true>>('passing an Ember-data collection to `@selected` of a multiple select works', async function (assert) {
+    test<
+      UsersContext<true>
+    >('passing an Ember-data collection to `@selected` of a multiple select works', async function (assert) {
       this.server.createList('user', 10);
       this.server.timing = 0;
       this.users = this.store.findAll('user') as Promise<UserModel[]>;

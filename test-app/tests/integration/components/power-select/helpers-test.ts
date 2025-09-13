@@ -10,10 +10,11 @@ import { numbers } from 'test-app/utils/constants';
 import type { Selected } from 'ember-power-select/components/power-select';
 import type { TestContext } from '@ember/test-helpers';
 
-interface NumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface NumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
-};
+}
 
 module('Integration | Helpers | selectChoose', function (hooks) {
   setupRenderingTest(hooks);
@@ -38,7 +39,9 @@ module('Integration | Helpers | selectChoose', function (hooks) {
       .hasText('three', 'The values has been selected');
   });
 
-  test<NumbersContext<true>>('selectChoose selects the given value on multiple selects', async function (assert) {
+  test<
+    NumbersContext<true>
+  >('selectChoose selects the given value on multiple selects', async function (assert) {
     assert.expect(3);
 
     this.numbers = numbers;

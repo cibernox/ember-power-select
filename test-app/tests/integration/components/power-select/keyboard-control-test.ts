@@ -18,25 +18,45 @@ import {
 } from 'test-app/utils/constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';
-import type { Selected, Select } from 'ember-power-select/components/power-select';
+import type {
+  Selected,
+  Select,
+} from 'ember-power-select/components/power-select';
 
-interface NumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface NumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
-  foo: (selection: Selected<string, IsMultiple>, select: Select<string, IsMultiple>, event?: Event) => void;
-  onChange: (selection: Selected<string, IsMultiple>, select: Select<string, IsMultiple>, event?: Event) => void;
-  onKeydown?: (select: Select<string, IsMultiple>, e: KeyboardEvent) => boolean | void | undefined;
-  onOpen?: (select: Select<string, IsMultiple>, e: Event | undefined) => boolean | void | undefined;
-};
+  foo: (
+    selection: Selected<string, IsMultiple>,
+    select: Select<string, IsMultiple>,
+    event?: Event,
+  ) => void;
+  onChange: (
+    selection: Selected<string, IsMultiple>,
+    select: Select<string, IsMultiple>,
+    event?: Event,
+  ) => void;
+  onKeydown?: (
+    select: Select<string, IsMultiple>,
+    e: KeyboardEvent,
+  ) => boolean | void | undefined;
+  onOpen?: (
+    select: Select<string, IsMultiple>,
+    e: Event | undefined,
+  ) => boolean | void | undefined;
+}
 
-interface CountryContext<IsMultiple extends boolean = false> extends TestContext {
+interface CountryContext<IsMultiple extends boolean = false>
+  extends TestContext {
   // matcherFn: MatcherFn<Country>;
   countries: typeof countries;
   selected: Selected<typeof countries, IsMultiple>;
   foo: () => void;
 }
 
-interface GroupedNumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface GroupedNumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   foo: (selected: string | null | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
   selected: Selected<typeof groupedNumbers, IsMultiple>;
@@ -165,7 +185,8 @@ module(
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('eight', 'The next option is highlighted now');
       assert.ok(
-        (document.querySelector('.ember-power-select-options')?.scrollTop ?? 0) > 0,
+        (document.querySelector('.ember-power-select-options')?.scrollTop ??
+          0) > 0,
         'The list has scrolled',
       );
     });
@@ -573,7 +594,9 @@ module(
         .hasText('', 'Nothing was selected');
     });
 
-    test<NumbersContext<true>>('In multiple-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('In multiple-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', async function (assert) {
       assert.expect(10);
 
       this.numbers = numbers;
@@ -656,7 +679,9 @@ module(
         .exists('The select is still opened');
     });
 
-    test<NumbersContext<true>>('In multiple-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('In multiple-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function (assert) {
       assert.expect(9);
 
       this.numbers = numbers;
@@ -712,7 +737,9 @@ module(
         .doesNotExist('The select is closed');
     });
 
-    test<NumbersContext<true>>('in multiple-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('in multiple-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
@@ -826,7 +853,8 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText('nine', 'The option containing "nine" has been highlighted');
       assert.ok(
-        (document.querySelector('.ember-power-select-options')?.scrollTop ?? 0) > 0,
+        (document.querySelector('.ember-power-select-options')?.scrollTop ??
+          0) > 0,
         'The list has scrolled',
       );
       assert
@@ -860,7 +888,8 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText('853', 'The option containing "853" has been highlighted');
       assert.ok(
-        (document.querySelector('.ember-power-select-options')?.scrollTop ?? 0) > 0,
+        (document.querySelector('.ember-power-select-options')?.scrollTop ??
+          0) > 0,
         'The list has scrolled',
       );
       assert
@@ -868,7 +897,9 @@ module(
         .exists('The dropdown is still closed');
     });
 
-    test<NumbersContext<true>>('Typing on an opened multiple select highlights the value that matches the string typed so far, scrolling if needed', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('Typing on an opened multiple select highlights the value that matches the string typed so far, scrolling if needed', async function (assert) {
       assert.expect(6);
 
       this.numbers = numbers;
@@ -895,7 +926,8 @@ module(
         .dom('.ember-power-select-option[aria-current=true]')
         .hasText('nine', 'The option containing "nine" has been highlighted');
       assert.ok(
-        (document.querySelector('.ember-power-select-options')?.scrollTop ?? 0) > 0,
+        (document.querySelector('.ember-power-select-options')?.scrollTop ??
+          0) > 0,
         'The list has scrolled',
       );
       assert
@@ -1157,7 +1189,9 @@ module(
       }, 50);
     });
 
-    test<NumbersContext<true>>('BUGFIX: If pressing up/down arrow on a multiple select opens the select, the event is defaultPrevented', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('BUGFIX: If pressing up/down arrow on a multiple select opens the select, the event is defaultPrevented', async function (assert) {
       assert.expect(2);
       const done = assert.async();
 
@@ -1193,7 +1227,9 @@ module(
       }, 50);
     });
 
-    test<NumbersContext<true>>('BUGFIX: If pressing up/down arrow on a multiple select DOES NOT open the select, the event is defaultPrevented', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('BUGFIX: If pressing up/down arrow on a multiple select DOES NOT open the select, the event is defaultPrevented', async function (assert) {
       assert.expect(2);
       const done = assert.async();
 
@@ -1230,7 +1266,9 @@ module(
       }, 50);
     });
 
-    test<NumbersContext<true>>('BUGFIX: when using ENTER to select an option in multiple select, the next ARROWDOWN should select the option after it', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('BUGFIX: when using ENTER to select an option in multiple select, the next ARROWDOWN should select the option after it', async function (assert) {
       this.numbers = numbers;
       this.selected = [];
 
@@ -1273,7 +1311,9 @@ module(
       assert.dom('[data-option-index="2"][aria-current="true"]').exists();
     });
 
-    test<NumbersContext<true>>('BUGFIX: when pressing enter multiple times on the same selected element in a multiple select', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('BUGFIX: when pressing enter multiple times on the same selected element in a multiple select', async function (assert) {
       this.numbers = numbers;
       this.selected = [];
       this.onChange = (selected) => {

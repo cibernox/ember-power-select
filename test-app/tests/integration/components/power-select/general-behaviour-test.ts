@@ -18,27 +18,42 @@ import {
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { runTask } from 'ember-lifeline';
-import { numbers, names, countries, digits, type Country } from 'test-app/utils/constants';
+import {
+  numbers,
+  names,
+  countries,
+  digits,
+  type Country,
+} from 'test-app/utils/constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
 import { TrackedArray } from 'tracked-built-ins';
 import { modifier } from 'ember-modifier';
-import PowerSelectBeforeOptionsComponent, { type PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
+import PowerSelectBeforeOptionsComponent, {
+  type PowerSelectBeforeOptionsSignature,
+} from 'ember-power-select/components/power-select/before-options';
 import type { ComponentLike } from '@glint/template';
-import type { DefaultHighlightedParams, MatcherFn } from 'ember-power-select/utils/group-utils';
-import type { PromiseProxy, Selected } from 'ember-power-select/components/power-select';
 import type {
-  CalculatePosition
-} from 'ember-basic-dropdown/utils/calculate-position';
+  DefaultHighlightedParams,
+  MatcherFn,
+} from 'ember-power-select/utils/group-utils';
+import type {
+  PromiseProxy,
+  Selected,
+} from 'ember-power-select/components/power-select';
+import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 
-interface NumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface NumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   numbers: string[] | Promise<string[]>;
   selected: string | null | undefined | Promise<string | null | undefined>;
   search: () => Promise<string[]> | string[];
   proxy: string[] | Promise<string[]>;
   endsWithMatcher: MatcherFn<string>;
-  defaultHighlighted?: string | ((params: DefaultHighlightedParams<string>) => string);
+  defaultHighlighted?:
+    | string
+    | ((params: DefaultHighlightedParams<string>) => string);
   destinationElement?: HTMLElement | undefined;
   ref: any;
   foo: () => void;
@@ -98,7 +113,7 @@ interface MainUserContext extends TestContext {
   mainUser: {
     pets: Pet[];
     selected: Selected<Pet> | Promise<Selected<Pet>>;
-  }
+  };
   foo: (selected: Selected<Pet>) => void;
 }
 
@@ -125,7 +140,7 @@ module(
     test<NumbersContext>('Click in the trigger of a closed select opens the dropdown', async function (assert) {
       assert.expect(2);
       this.numbers = numbers;
-      this.foo = () => {}
+      this.foo = () => {};
       await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @onChange={{this.foo}} as |option|>
         {{option}}
@@ -144,7 +159,7 @@ module(
       assert.expect(2);
 
       this.numbers = numbers;
-      this.foo = () => {}
+      this.foo = () => {};
       await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @onChange={{this.foo}} as |option|>
         {{option}}
@@ -196,7 +211,9 @@ module(
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
-          document.querySelector('.ember-power-select-label')?.getAttribute('for') ?? '',
+          document
+            .querySelector('.ember-power-select-label')
+            ?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
     });
@@ -924,7 +941,10 @@ module(
       assert.expect(2);
 
       this.numbers = numbers;
-      this.endsWithMatcher = function (option: string | undefined, text: string) {
+      this.endsWithMatcher = function (
+        option: string | undefined,
+        text: string,
+      ) {
         return option?.slice(text.length * -1) === text ? 0 : -1;
       };
       this.foo = () => {};
@@ -1092,7 +1112,10 @@ module(
         { name: 'Lisa', surname: 'Simpson' },
       ];
 
-      this.nameOrSurnameNoDiacriticsCaseSensitive = function (person: Person | undefined, term: string) {
+      this.nameOrSurnameNoDiacriticsCaseSensitive = function (
+        person: Person | undefined,
+        term: string,
+      ) {
         return `${person?.name} ${person?.surname}`.indexOf(term);
       };
 
@@ -1373,7 +1396,7 @@ module(
             resolve();
           },
           20,
-        )
+        );
       });
       this.set('selected', promise2);
 
@@ -1513,7 +1536,8 @@ module(
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('nine');
       assert.ok(
-        (document.querySelector('.ember-power-select-options')?.scrollTop ?? 0) > 0,
+        (document.querySelector('.ember-power-select-options')?.scrollTop ??
+          0) > 0,
         'The list has scrolled',
       );
     });
@@ -1616,7 +1640,9 @@ module(
       this.numbers = numbers;
       this.selected = numbers[1];
 
-      this.defaultHighlighted = (params: DefaultHighlightedParams<string>): string => {
+      this.defaultHighlighted = (
+        params: DefaultHighlightedParams<string>,
+      ): string => {
         const { selected, results } = params;
         assert.ok(results instanceof Array, 'select.results is an array');
         assert.strictEqual(selected, numbers[1]);
@@ -1846,11 +1872,16 @@ module(
     test<CountriesContext>('Constant PromiseProxy references are tracked when .content changes', async function (assert) {
       const initial: Country | null = null;
       // @ts-expect-error Expected 0 arguments, but got 1.
-      this.proxy = PromiseObject.create<Country | null | undefined>({ promise: Promise.resolve(initial) }) as PromiseProxy<Country | null | undefined>;
+      this.proxy = PromiseObject.create<Country | null | undefined>({
+        promise: Promise.resolve(initial),
+      }) as PromiseProxy<Country | null | undefined>;
       this.countries = countries;
       this.updateProxy = () => {
         // @ts-expect-error Property 'set' does not exist on type 'PromiseProxy<Country | null | undefined>'.
-        this.proxy.set<keyof ObjectProxy<Country | null | undefined>>('content', countries[0]);
+        this.proxy.set<keyof ObjectProxy<Country | null | undefined>>(
+          'content',
+          countries[0],
+        );
       };
 
       this.foo = () => {};
@@ -1868,12 +1899,18 @@ module(
         .doesNotExist('no element is selected');
       assert
         .dom('.ember-power-select-trigger')
-        .hasText(initial ? (initial as Country).name : '', 'Nothing is selected yet');
+        .hasText(
+          initial ? (initial as Country).name : '',
+          'Nothing is selected yet',
+        );
 
       await click('#update-proxy-btn');
       assert
         .dom('.ember-power-select-trigger')
-        .hasText(countries[0]?.name ?? '', 'The trigger has the proper content');
+        .hasText(
+          countries[0]?.name ?? '',
+          'The trigger has the proper content',
+        );
 
       //TODO: also try starting from non-null value and maybe also going back to null?
     });

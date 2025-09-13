@@ -16,5 +16,10 @@ export interface CustomGroupComponentWithVariantSignature<
 export default class CustomGroupComponentWithVariant<
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Component<CustomGroupComponentWithVariantSignature<GroupedNumbersWithCustomProperty, TExtra, IsMultiple>> {
-}
+> extends Component<
+  CustomGroupComponentWithVariantSignature<
+    GroupedNumbersWithCustomProperty,
+    TExtra,
+    IsMultiple
+  >
+> {}

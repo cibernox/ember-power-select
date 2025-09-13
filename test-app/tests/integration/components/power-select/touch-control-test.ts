@@ -1,15 +1,28 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, tap, triggerEvent, type TestContext } from '@ember/test-helpers';
+import {
+  render,
+  tap,
+  triggerEvent,
+  type TestContext,
+} from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { numbers } from 'test-app/utils/constants';
-import type { Select, Selected } from 'ember-power-select/components/power-select';
+import type {
+  Select,
+  Selected,
+} from 'ember-power-select/components/power-select';
 
-interface NumbersContext<IsMultiple extends boolean = false> extends TestContext {
+interface NumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
-  foo: (selection: Selected<string, IsMultiple>, select: Select<string, IsMultiple>, event?: Event) => void;
-};
+  foo: (
+    selection: Selected<string, IsMultiple>,
+    select: Select<string, IsMultiple>,
+    event?: Event,
+  ) => void;
+}
 
 module(
   'Integration | Component | Ember Power Select (Touch control)',
@@ -42,7 +55,9 @@ module(
     `);
 
       await tap('.ember-power-select-trigger');
-      const element = document.querySelectorAll('.ember-power-select-option')[3];
+      const element = document.querySelectorAll(
+        '.ember-power-select-option',
+      )[3];
       if (element) {
         await tap(element);
       }
