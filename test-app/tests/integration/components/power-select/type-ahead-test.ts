@@ -10,9 +10,17 @@ import type { TestContext } from '@ember/test-helpers';
 
 interface Helpers {
   beforeInteraction: (trigger: Element, assert: Assert) => Promise<void>;
-  checkSelectedValue: (value: string | undefined, trigger: Element, assert: Assert) => void;
-  valueAt: (coll: string[], _idx: number, isGrouped?: boolean) => string | undefined;
-};
+  checkSelectedValue: (
+    value: string | undefined,
+    trigger: Element,
+    assert: Assert,
+  ) => void;
+  valueAt: (
+    coll: string[],
+    _idx: number,
+    isGrouped?: boolean,
+  ) => string | undefined;
+}
 
 const WITH_EPS_CLOSED: Helpers = {
   async beforeInteraction(trigger: Element, assert: Assert) {
@@ -23,7 +31,11 @@ const WITH_EPS_CLOSED: Helpers = {
       .doesNotExist('The dropdown is closed');
   },
 
-  checkSelectedValue(value: string | undefined, trigger: Element, assert: Assert) {
+  checkSelectedValue(
+    value: string | undefined,
+    trigger: Element,
+    assert: Assert,
+  ) {
     // -1 adjust the position for the implicit placeholder
     assert.dom(trigger).hasText(value ?? '');
     assert
@@ -31,7 +43,11 @@ const WITH_EPS_CLOSED: Helpers = {
       .doesNotExist('The dropdown is still closed');
   },
 
-  valueAt(coll: string[], _idx: number, isGrouped: boolean = false): string | undefined {
+  valueAt(
+    coll: string[],
+    _idx: number,
+    isGrouped: boolean = false,
+  ): string | undefined {
     const idx = isGrouped ? _idx - 1 : (_idx - 1) % coll.length;
     return optionAtIndex(coll, idx).option;
   },
@@ -43,15 +59,25 @@ const WITH_EPS_OPEN: Helpers = {
     assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
   },
 
-  checkSelectedValue(value: string | undefined, trigger: Element, assert: Assert) {
+  checkSelectedValue(
+    value: string | undefined,
+    trigger: Element,
+    assert: Assert,
+  ) {
     assert.dom(trigger).hasText('', 'nothing is selected');
-    assert.dom('.ember-power-select-option[aria-current=true]').hasText(value ?? '');
+    assert
+      .dom('.ember-power-select-option[aria-current=true]')
+      .hasText(value ?? '');
     assert
       .dom('.ember-power-select-dropdown')
       .exists('The dropdown is still open');
   },
 
-  valueAt(coll: string[], _idx: number, isGrouped: boolean = false): string | undefined {
+  valueAt(
+    coll: string[],
+    _idx: number,
+    isGrouped: boolean = false,
+  ): string | undefined {
     const idx = isGrouped ? _idx : _idx % coll.length;
     return optionAtIndex(coll, idx).option;
   },
@@ -107,7 +133,9 @@ module(
         </PowerSelect>
       `);
 
-        const trigger = this.element.querySelector('.ember-power-select-trigger');
+        const trigger = this.element.querySelector(
+          '.ember-power-select-trigger',
+        );
         if (trigger) {
           await helpers.beforeInteraction(trigger, assert);
           await typeString(trigger, 'AAA');
@@ -129,7 +157,9 @@ module(
         </PowerSelect>
       `);
 
-        const trigger = this.element.querySelector('.ember-power-select-trigger');
+        const trigger = this.element.querySelector(
+          '.ember-power-select-trigger',
+        );
         if (trigger) {
           await helpers.beforeInteraction(trigger, assert);
           const { length } = namesStartingWithA;
@@ -155,7 +185,9 @@ module(
         </PowerSelect>
       `);
 
-        const trigger = this.element.querySelector('.ember-power-select-trigger');
+        const trigger = this.element.querySelector(
+          '.ember-power-select-trigger',
+        );
         if (trigger) {
           await helpers.beforeInteraction(trigger, assert);
           void triggerKeyEvent(trigger, 'keydown', 'A');
@@ -180,7 +212,9 @@ module(
         </PowerSelect>
       `);
 
-        const trigger = this.element.querySelector('.ember-power-select-trigger');
+        const trigger = this.element.querySelector(
+          '.ember-power-select-trigger',
+        );
         if (trigger) {
           await helpers.beforeInteraction(trigger, assert);
           void triggerKeyEvent(trigger, 'keydown', 'A');
@@ -206,7 +240,9 @@ module(
           {{option}}
         </PowerSelect>
       `);
-        const trigger = this.element.querySelector('.ember-power-select-trigger');
+        const trigger = this.element.querySelector(
+          '.ember-power-select-trigger',
+        );
         if (trigger) {
           await helpers.beforeInteraction(trigger, assert);
           await typeString(trigger, 'F', state === 'Open' ? 1 : 2); // Normalize open closed behaviour

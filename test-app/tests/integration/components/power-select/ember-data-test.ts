@@ -43,7 +43,8 @@ module(
     test<UsersContext>('Passing as options of a `store.findAll` works', async function (assert) {
       this.server.createList('user', 10);
       this.server.timing = 200;
-      this.users = [];
+      this.users = Promise.resolve([]);
+      await this.users;
       this.foo = () => {};
       await render<UsersContext>(hbs`
       <PowerSelect @options={{this.users}} @searchField="name" @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
@@ -51,7 +52,7 @@ module(
       </PowerSelect>
     `);
 
-      this.set('users', this.store.findAll('user'));
+      void this.set('users', this.store.findAll('user'));
       const promise = clickTrigger();
       await waitFor('.ember-power-select-option');
       assert
@@ -78,7 +79,8 @@ module(
     test<UsersContext>('Passing as options the result of `store.query` works', async function (assert) {
       this.server.createList('user', 10);
       this.server.timing = 200;
-      this.users = [];
+      this.users = Promise.resolve([]);
+      await this.users;
       this.foo = () => {};
       await render<UsersContext>(hbs`
       <PowerSelect @options={{this.users}} @searchField="name" @onChange={{this.foo}} @searchEnabled={{true}} as |option|>
@@ -86,7 +88,7 @@ module(
       </PowerSelect>
     `);
 
-      this.set('users', this.store.query('user', { foo: 'bar' }));
+      void this.set('users', this.store.query('user', { foo: 'bar' }));
       const promise = clickTrigger();
       await waitFor('.ember-power-select-option');
       assert
@@ -114,16 +116,17 @@ module(
       UsersContext<true>
     >('Delete an item in a multiple selection', async function (assert) {
       this.server.createList('user', 10);
-      this.users = [];
+      this.users = Promise.resolve([]);
+      await this.users;
       await render<UsersContext<true>>(hbs`
       <PowerSelectMultiple @options={{this.users}} @searchField="name" @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option.name}}
       </PowerSelectMultiple>
     `);
 
-      this.set('users', this.store.findAll('user'));
+      void this.set('users', this.store.findAll('user'));
       await this.users;
-      this.set('selected', this.users);
+      void this.set('selected', this.users);
       await settled();
       await click('.ember-power-select-multiple-remove-btn');
       assert

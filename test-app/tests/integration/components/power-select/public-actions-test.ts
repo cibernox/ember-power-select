@@ -9,7 +9,10 @@ import {
 import { names, numbers } from 'test-app/utils/constants';
 import { tracked } from '@glimmer/tracking';
 import type { TestContext } from '@ember/test-helpers';
-import type { Select, Selected } from 'ember-power-select/components/power-select';
+import type {
+  Select,
+  Selected,
+} from 'ember-power-select/components/power-select';
 
 interface NumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
@@ -17,7 +20,10 @@ interface NumbersContext<IsMultiple extends boolean = false>
   options: string[];
   selected: Selected<string, IsMultiple>;
   selectAPI: Select<string, IsMultiple>;
-  handleSearch: (term: string, select: Select<string, IsMultiple>) => string[] | Promise<string[]>;
+  handleSearch: (
+    term: string,
+    select: Select<string, IsMultiple>,
+  ) => string[] | Promise<string[]>;
   handleChange: (
     selection: Selected<string, IsMultiple>,
     select: Select<string, IsMultiple>,
@@ -29,11 +35,24 @@ interface NumbersContext<IsMultiple extends boolean = false>
   ) => boolean | void | undefined;
   onFocus?: (select: Select<string, IsMultiple>, event: FocusEvent) => void;
   onBlur?: (select: Select<string, IsMultiple>, event: FocusEvent) => void;
-  onOpen?: (select: Select<string, IsMultiple>, event: Event | undefined) => boolean | void | undefined;
-  onClose?: (select: Select<string, IsMultiple>, event: Event | undefined) => boolean | void | undefined;
-  onInput?: (term: string, select: Select<string, IsMultiple>, e: Event) => string | false | void;
+  onOpen?: (
+    select: Select<string, IsMultiple>,
+    event: Event | undefined,
+  ) => boolean | void | undefined;
+  onClose?: (
+    select: Select<string, IsMultiple>,
+    event: Event | undefined,
+  ) => boolean | void | undefined;
+  onInput?: (
+    term: string,
+    select: Select<string, IsMultiple>,
+    e: Event,
+  ) => string | false | void;
   registerAPI?: (select: Select<string, IsMultiple>) => void;
-  scrollTo?: (option: Selected<string>, select: Select<string, IsMultiple>) => void;
+  scrollTo?: (
+    option: Selected<string>,
+    select: Select<string, IsMultiple>,
+  ) => void;
 }
 
 class User {
@@ -48,14 +67,19 @@ class User {
   }
 }
 
-interface UserContext
-  extends TestContext {
+interface UserContext extends TestContext {
   users: User[];
   selected: Selected<User>;
-  onOpen?: (select: Select<User>, event: Event | undefined) => boolean | void | undefined;
+  onOpen?: (
+    select: Select<User>,
+    event: Event | undefined,
+  ) => boolean | void | undefined;
 }
 
-function assertPublicAPIShape<IsMultiple extends boolean = false>(assert: Assert, select: Select<string, IsMultiple>) {
+function assertPublicAPIShape<IsMultiple extends boolean = false>(
+  assert: Assert,
+  select: Select<string, IsMultiple>,
+) {
   assert.strictEqual(
     typeof select.uniqueId,
     'string',
@@ -177,7 +201,9 @@ module(
       await typeInSearch('el');
     });
 
-    test<NumbersContext<true>>('The search action of multiple selects action receives the search term and the public API', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The search action of multiple selects action receives the search term and the public API', async function (assert) {
       assert.expect(22);
 
       this.numbers = numbers;
@@ -223,12 +249,18 @@ module(
       await click('.ember-power-select-option');
     });
 
-    test<NumbersContext<true>>('The onchange of multiple selects action receives the selection and the public API', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The onchange of multiple selects action receives the selection and the public API', async function (assert) {
       assert.expect(22);
 
       this.numbers = numbers;
       this.handleChange = (selected, select) => {
-        assert.strictEqual(selected ? selected[0] : '', 'one', 'The first option is the selected');
+        assert.strictEqual(
+          selected ? selected[0] : '',
+          'one',
+          'The first option is the selected',
+        );
         assertPublicAPIShape(assert, select);
       };
 
@@ -291,7 +323,9 @@ module(
         .doesNotExist('Dropdown is opened');
     });
 
-    test<NumbersContext<true>>('The onKeydown of multiple selects action receives the public API and the keydown event', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The onKeydown of multiple selects action receives the public API and the keydown event', async function (assert) {
       assert.expect(44);
 
       this.numbers = numbers;
@@ -346,7 +380,9 @@ module(
         .doesNotIncludeText('two', 'nothing was selected');
     });
 
-    test<NumbersContext<true>>('returning false from the `@onKeydown` action prevents the default behaviour in multiple selects', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('returning false from the `@onKeydown` action prevents the default behaviour in multiple selects', async function (assert) {
       assert.expect(24);
 
       this.numbers = numbers;
@@ -392,7 +428,9 @@ module(
     });
 
     // Weird failure in Ember 4
-    skip<NumbersContext<true>>('The onFocus of multiple selects action receives the public API and the focus event', async function (assert) {
+    skip<
+      NumbersContext<true>
+    >('The onFocus of multiple selects action receives the public API and the focus event', async function (assert) {
       assert.expect(22);
 
       this.numbers = numbers;
@@ -411,7 +449,9 @@ module(
     });
 
     // Weird failure in Ember 4
-    skip<NumbersContext<true>>('The onFocus of multiple selects also gets called when the thing getting the focus is the searbox', async function (assert) {
+    skip<
+      NumbersContext<true>
+    >('The onFocus of multiple selects also gets called when the thing getting the focus is the searbox', async function (assert) {
       assert.expect(22);
 
       this.numbers = numbers;
@@ -450,7 +490,9 @@ module(
       await focus('#other-element');
     });
 
-    test<NumbersContext<true>>('The onBlur of multiple selects action receives the public API and the focus event', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The onBlur of multiple selects action receives the public API and the focus event', async function (assert) {
       assert.expect(22);
 
       this.numbers = numbers;
@@ -531,7 +573,9 @@ module(
         .doesNotExist("Dropdown didn't open");
     });
 
-    test<NumbersContext<true>>('returning false from the `@onOpen` action prevents the multiple select from opening', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('returning false from the `@onOpen` action prevents the multiple select from opening', async function (assert) {
       assert.expect(24);
 
       this.numbers = numbers;
@@ -602,7 +646,9 @@ module(
         .exists("Dropdown didn't close");
     });
 
-    test<NumbersContext<true>>('returning false from the `@onClose` action prevents the multiple select from closing', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('returning false from the `@onClose` action prevents the multiple select from closing', async function (assert) {
       assert.expect(25);
 
       this.numbers = numbers;
@@ -662,7 +708,9 @@ module(
       assert.dom('.ember-power-select-option:nth-child(3)').hasText('twenty');
     });
 
-    test<NumbersContext<true>>('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', async function (assert) {
       assert.expect(28);
 
       this.numbers = numbers;
@@ -718,7 +766,9 @@ module(
         .exists({ count: 20 }, 'There is the same options than before');
     });
 
-    test<NumbersContext<true>>('if `oninput` action of multiple selects returns false the search is cancelled', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('if `oninput` action of multiple selects returns false the search is cancelled', async function (assert) {
       assert.expect(1);
 
       this.numbers = numbers;
@@ -780,7 +830,9 @@ module(
         .hasValue('hello', 'The search text contains the searched string');
     });
 
-    test<NumbersContext<true>>('The programmer can use the received public API to perform searches in mutiple selects', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The programmer can use the received public API to perform searches in mutiple selects', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
@@ -801,7 +853,9 @@ module(
         .hasValue('hello', 'The search text contains the searched string');
     });
 
-    test<NumbersContext<true>>('The search action of multiple selects has the searchText set to the up-to-date value', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The search action of multiple selects has the searchText set to the up-to-date value', async function (assert) {
       assert.expect(2);
 
       this.numbers = numbers;
@@ -844,7 +898,9 @@ module(
     `);
     });
 
-    test<NumbersContext<true>>('The multiple component invokes the `registerAPI` action with the public API object', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The multiple component invokes the `registerAPI` action with the public API object', async function (assert) {
       this.numbers = numbers;
       this.registerAPI = function (select) {
         if (select) {
@@ -881,7 +937,9 @@ module(
       this.selectAPI.actions.scrollTo('three');
     });
 
-    test<NumbersContext<true>>('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function (assert) {
       assert.expect(22);
       this.numbers = numbers;
       this.registerAPI = (select) => {
@@ -905,7 +963,9 @@ module(
       this.selectAPI.actions.scrollTo('three');
     });
 
-    test<NumbersContext<true>>('The programmer can use the received public API to highlight an option', async function (assert) {
+    test<
+      NumbersContext<true>
+    >('The programmer can use the received public API to highlight an option', async function (assert) {
       this.numbers = numbers;
       const highlightedOption = numbers[1];
       this.onOpen = (select) => {

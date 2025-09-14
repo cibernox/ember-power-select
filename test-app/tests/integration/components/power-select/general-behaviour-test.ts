@@ -1878,6 +1878,7 @@ module(
       this.countries = countries;
       this.updateProxy = () => {
         // @ts-expect-error Property 'set' does not exist on type 'PromiseProxy<Country | null | undefined>'.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         this.proxy.set<keyof ObjectProxy<Country | null | undefined>>(
           'content',
           countries[0],
