@@ -38,22 +38,13 @@ interface NumbersContext extends TestContext {
   element: HTMLElement;
   numbers: string[] | Promise<string[]>;
   selected: Selected<string>;
-  // search: () => Promise<string[]> | string[];
   searchFn: (term: string) => string[] | Promise<string[]>;
-  // proxy: string[] | Promise<string[]>;
   endsWithMatcher: MatcherFn<string>;
   defaultHighlighted?:
     | string
     | ((params: DefaultHighlightedParams<string>) => string);
-  // destinationElement?: HTMLElement | undefined;
-  // ref: any;
   foo: () => void;
   onChange: (selection: Selected<string>, select: Select<string>) => void;
-  // renderInPlace?: boolean;
-  // calculatePosition: CalculatePosition;
-  // beforeOptionsComponent: ComponentLike<
-  //   PowerSelectBeforeOptionsSignature<string, unknown, IsMultiple>
-  // >;
 }
 
 interface Person {
