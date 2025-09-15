@@ -318,8 +318,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.28.3)
       ember-truth-helpers:
-        specifier: ^4.0.3
-        version: 4.0.3(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^4.0.3 || ^5.0.0
+        version: 5.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.27.1
@@ -601,8 +601,8 @@ importers:
         specifier: ^7.6.0
         version: 7.9.3
       ember-truth-helpers:
-        specifier: ^4.0.3
-        version: 4.0.3(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        specifier: ^5.0.0
+        version: 5.0.0
       ember-try:
         specifier: ^4.0.0
         version: 4.0.0(encoding@0.1.13)
@@ -4021,6 +4021,9 @@ packages:
     resolution: {integrity: sha512-T6Ogd3pk9FxYiZfSxdjgn3Hb3Ksqgw7CD23V9qfig9jktNdkNEHo4+3PA3cSD/+3a2kdH3KmNvKyarVuzdtEkA==}
     peerDependencies:
       ember-source: '>=3.28.0'
+
+  ember-truth-helpers@5.0.0:
+    resolution: {integrity: sha512-PnQd6D6hvlNC3k6gBu0SC2cvfXX6wH6W0nToomIIoxqyrD5cllk0zBh/j/1H0KsczVCWeuF9PWj5xJgL4jQAGg==}
 
   ember-try-config@4.0.0:
     resolution: {integrity: sha512-jAv7fqYJK7QYYekPc/8Nr7KOqDpv/asqM6F8xcRnbmf9UrD35BkSffY63qUuiD9e0aR5qiMNBIQzH8f65rGDqw==}
@@ -12472,6 +12475,12 @@ snapshots:
       '@embroider/addon-shim': 1.10.0
       ember-functions-as-helper-polyfill: 2.1.3(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-source: 6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5)
+    transitivePeerDependencies:
+      - supports-color
+
+  ember-truth-helpers@5.0.0:
+    dependencies:
+      '@embroider/addon-shim': 1.10.0
     transitivePeerDependencies:
       - supports-color
 
