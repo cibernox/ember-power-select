@@ -13,6 +13,18 @@
 
 
 
+
+## v8.9.0 (2025-09-16)
+
+#### :rocket: Enhancement
+* [#1937](https://github.com/cibernox/ember-power-select/pull/1937) Allow `ember-truth-helpers` v5 as dependency ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1935](https://github.com/cibernox/ember-power-select/pull/1935) Fix ember-concurrency usages in docs (replace `@task`) ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.8.0 (2025-08-18)
 
 #### :rocket: Enhancement
