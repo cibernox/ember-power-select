@@ -1,0 +1,368 @@
+.ember-basic-dropdown {
+  position: relative;
+}
+
+.ember-basic-dropdown,
+.ember-basic-dropdown-content,
+.ember-basic-dropdown-content * {
+  box-sizing: border-box;
+}
+
+.ember-basic-dropdown-content {
+  position: absolute;
+  width: auto;
+  z-index: 1000;
+  background-color: #ffffff;
+}
+
+.ember-basic-dropdown-content--left {
+  left: 0;
+}
+
+.ember-basic-dropdown-content--right {
+  right: 0;
+}
+
+.ember-basic-dropdown-overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.ember-basic-dropdown-content-wormhole-origin {
+  display: inline;
+}
+
+.ember-power-select-dropdown * {
+  box-sizing: border-box;
+}
+
+.ember-power-select-trigger {
+  position: relative;
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  border-radius: 4px;
+  background-color: #ffffff;
+  line-height: 1.75;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  min-height: 1.75em;
+  user-select: none;
+  -webkit-user-select: none;
+  color: inherit;
+  /* Minimum clearfix for modern browsers */
+}
+.ember-power-select-trigger:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.ember-power-select-trigger .ember-power-select-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ember-power-select-trigger:focus,
+.ember-power-select-trigger--active {
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  box-shadow: none;
+}
+
+.ember-basic-dropdown-trigger--below.ember-power-select-trigger[aria-expanded=true],
+.ember-basic-dropdown-trigger--in-place.ember-power-select-trigger[aria-expanded=true] {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ember-basic-dropdown-trigger--above.ember-power-select-trigger[aria-expanded=true] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.ember-power-select-placeholder {
+  color: #999999;
+  display: block;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ember-power-select-status-icon {
+  position: absolute;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-style: solid;
+  border-width: 7px 4px 0 4px;
+  border-color: #aaaaaa transparent transparent transparent;
+}
+.ember-basic-dropdown-trigger[aria-expanded=true] .ember-power-select-status-icon {
+  transform: rotate(180deg);
+}
+
+.ember-power-select-clear-btn {
+  position: absolute;
+  cursor: pointer;
+}
+
+.ember-power-select-multiple-options {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+}
+.ember-power-select-multiple-options li.ember-power-select-trigger-multiple-input-container {
+  flex-grow: 1;
+  display: flex;
+}
+.ember-power-select-multiple-options li.ember-power-select-trigger-multiple-input-container input {
+  flex-grow: 1;
+}
+
+.ember-power-select-trigger-multiple-input {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  line-height: inherit;
+  -webkit-appearance: none;
+  outline: none;
+  padding: 0;
+  background-color: transparent;
+  text-indent: 2px;
+  /* There's a browser bug where this selectos cannot be chained with commas */
+}
+.ember-power-select-trigger-multiple-input:disabled {
+  background-color: #eeeeee;
+}
+.ember-power-select-trigger-multiple-input::placeholder {
+  opacity: 1;
+  color: #999999;
+}
+.ember-power-select-trigger-multiple-input::-webkit-input-placeholder {
+  opacity: 1;
+  color: #999999;
+}
+.ember-power-select-trigger-multiple-input::-moz-placeholder {
+  opacity: 1;
+  color: #999999;
+}
+.ember-power-select-trigger-multiple-input::-ms-input-placeholder {
+  opacity: 1;
+  color: #999999;
+}
+
+.ember-power-select-multiple-option {
+  border: 1px solid gray;
+  border-radius: 4px;
+  color: #333333;
+  background-color: #e4e4e4;
+  padding: 0 4px;
+  line-height: 1.45;
+  margin: 2px 0 2px 3px;
+}
+
+.ember-power-select-multiple-remove-btn {
+  cursor: pointer;
+}
+.ember-power-select-multiple-remove-btn:not(:hover) {
+  opacity: 0.5;
+}
+
+.ember-power-select-search {
+  padding: 4px;
+}
+
+.ember-power-select-search-input {
+  border: 1px solid #aaaaaa;
+  border-radius: 0;
+  width: 100%;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0 5px;
+}
+.ember-power-select-search-input:focus {
+  border: 1px solid #aaaaaa;
+  box-shadow: none;
+}
+
+.ember-power-select-search-input-field {
+  width: 100%;
+  height: 100%;
+  padding: 0 8px;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  display: block;
+  line-height: inherit;
+  -webkit-appearance: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.ember-power-select-dropdown {
+  border-left: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
+  line-height: 1.75;
+  border-radius: 4px;
+  box-shadow: none;
+  overflow: hidden;
+  color: inherit;
+}
+
+.ember-power-select-dropdown.ember-basic-dropdown-content--above {
+  border-top: 1px solid #aaaaaa;
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ember-power-select-dropdown.ember-basic-dropdown-content--below,
+.ember-power-select-dropdown.ember-basic-dropdown-content--in-place {
+  border-top: none;
+  border-bottom: 1px solid #aaaaaa;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.ember-power-select-dropdown.ember-basic-dropdown-content--in-place {
+  width: 100%;
+}
+
+.ember-power-select-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ember-power-select-options[role=listbox] {
+  overflow-y: auto; /* in firefox in windows this can cause a word-break issue. Try `overflow-y: scroll` if that happens */
+  -webkit-overflow-scrolling: touch;
+  max-height: 12.25em;
+}
+
+.ember-power-select-option {
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+.ember-power-select-group[aria-disabled=true] {
+  color: #999999;
+  cursor: not-allowed;
+}
+
+.ember-power-select-group[aria-disabled=true] .ember-power-select-option,
+.ember-power-select-option[aria-disabled=true] {
+  color: #999999;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.ember-power-select-option[aria-selected=true] {
+  background-color: #dddddd;
+}
+
+.ember-power-select-option[aria-current=true] {
+  background-color: #5897fb;
+  color: #ffffff;
+}
+
+.ember-power-select-group-name {
+  cursor: default;
+  font-weight: bold;
+}
+
+.ember-power-select-trigger[aria-disabled=true] {
+  background-color: #eeeeee;
+}
+
+.ember-power-select-trigger {
+  padding: 0 16px 0 0;
+}
+
+.ember-power-select-selected-item,
+.ember-power-select-placeholder {
+  margin-left: 8px;
+}
+
+.ember-power-select-status-icon {
+  right: 5px;
+}
+
+.ember-power-select-clear-btn {
+  right: 25px;
+}
+
+.ember-power-select-group .ember-power-select-group .ember-power-select-group-name {
+  padding-left: 24px;
+}
+.ember-power-select-group .ember-power-select-group .ember-power-select-option {
+  padding-left: 40px;
+}
+.ember-power-select-group .ember-power-select-option {
+  padding-left: 24px;
+}
+.ember-power-select-group .ember-power-select-group-name {
+  padding-left: 8px;
+}
+
+.ember-power-select-trigger[dir=rtl] {
+  padding: 0 0 0 16px;
+}
+.ember-power-select-trigger[dir=rtl] .ember-power-select-selected-item,
+.ember-power-select-trigger[dir=rtl] .ember-power-select-placeholder {
+  margin-right: 8px;
+}
+.ember-power-select-trigger[dir=rtl] .ember-power-select-multiple-option {
+  float: right;
+}
+.ember-power-select-trigger[dir=rtl] .ember-power-select-trigger-multiple-input {
+  float: right;
+}
+.ember-power-select-trigger[dir=rtl] .ember-power-select-status-icon {
+  left: 5px;
+  right: initial;
+}
+.ember-power-select-trigger[dir=rtl] .ember-power-select-clear-btn {
+  left: 25px;
+  right: initial;
+}
+
+.ember-power-select-visually-hidden {
+  height: 1px;
+  left: -9999px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+.ember-power-select-dropdown[dir=rtl] .ember-power-select-group .ember-power-select-group .ember-power-select-group-name {
+  padding-right: 24px;
+}
+.ember-power-select-dropdown[dir=rtl] .ember-power-select-group .ember-power-select-group .ember-power-select-option {
+  padding-right: 40px;
+}
+.ember-power-select-dropdown[dir=rtl] .ember-power-select-group .ember-power-select-option {
+  padding-right: 24px;
+}
+.ember-power-select-dropdown[dir=rtl] .ember-power-select-group .ember-power-select-group-name {
+  padding-right: 8px;
+}
