@@ -33,6 +33,7 @@ export interface PowerSelectTriggerSignature<
     role?: string;
     ariaActiveDescendant: string;
     extra?: TExtra;
+    multiple?: IsMultiple;
     buildSelection?: PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'];
     placeholderComponent?: ComponentLike<
       PowerSelectPlaceholderSignature<T, IsMultiple>

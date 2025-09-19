@@ -136,7 +136,6 @@
     "main": "addon-main.cjs",
     "app-js": {
       "./components/power-select-multiple.js": "./dist/_app_/components/power-select-multiple.js",
-      "./components/power-select-multiple/input.js": "./dist/_app_/components/power-select-multiple/input.js",
       "./components/power-select-multiple/trigger.js": "./dist/_app_/components/power-select-multiple/trigger.js",
       "./components/power-select.js": "./dist/_app_/components/power-select.js",
       "./components/power-select/before-options.js": "./dist/_app_/components/power-select/before-options.js",

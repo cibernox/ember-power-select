@@ -2,14 +2,13 @@ import { action } from '@ember/object';
 import { get } from '@ember/object';
 import { scheduleTask } from 'ember-lifeline';
 import type { Selected } from '../power-select-multiple';
-import type { ComponentLike } from '@glint/template';
+// import type { ComponentLike } from '@glint/template';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
-import PowerSelectMultipleInputComponent, {
-  type PowerSelectMultipleInputSignature,
-} from './input.ts';
 import PowerSelectTriggerComponent from '../power-select/trigger.ts';
+// import PowerSelectInput from '../power-select/input.ts';
 import type { Option } from '../power-select.ts';
+// import type { PowerSelectInputSignature } from '../power-select/input.ts';
 
 export default class TriggerComponent<
   T = unknown,
@@ -17,11 +16,11 @@ export default class TriggerComponent<
 > extends PowerSelectTriggerComponent<T, TExtra, true> {
   private _lastIsOpen: boolean = this.args.select.isOpen;
 
-  get inputMultipleComponent() {
-    return PowerSelectMultipleInputComponent as unknown as ComponentLike<
-      PowerSelectMultipleInputSignature<T>
-    >;
-  }
+  // get inputComponent() {
+  //   return PowerSelectInput as unknown as ComponentLike<
+  //     PowerSelectInputSignature<T>
+  //   >;
+  // }
 
   isOptionDisabled(option: Option<T>): boolean {
     if (option && typeof option === 'object' && 'disabled' in option) {

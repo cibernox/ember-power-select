@@ -62,7 +62,7 @@
     <li class="ember-power-select-trigger-multiple-input-container">
       {{#let
         (component
-          this.inputMultipleComponent
+          this.inputComponent
           select=@select
           ariaActiveDescendant=@ariaActiveDescendant
           ariaLabelledBy=@ariaLabelledBy
@@ -72,13 +72,14 @@
           listboxId=@listboxId
           tabindex=@tabindex
           buildSelection=@buildSelection
-          placeholder=@placeholder
+          searchPlaceholder=@placeholder
           placeholderComponent=@placeholderComponent
           searchField=@searchField
           onFocus=@onFocus
           onBlur=@onBlur
           onKeydown=@onKeydown
           onInput=@onInput
+          multiple=true
         )
         as |InputComponent|
       }}

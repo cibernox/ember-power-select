@@ -24,13 +24,18 @@
       @role={{@role}}
       @ariaLabel={{@ariaLabel}}
       @listboxId={{@listboxId}}
+      @tabindex={{@tabindex}}
+      @buildSelection={{@buildSelection}}
       @searchPlaceholder={{@placeholder}}
+      @placeholderComponent={{@placeholderComponent}}
+      @searchField={{@searchField}}
       @onFocus={{@onFocus}}
       @onBlur={{@onBlur}}
       @onKeydown={{@onKeydown}}
       @onInput={{@onInput}}
       @searchFieldPosition={{@searchFieldPosition}}
       @autofocus={{false}}
+      @multiple={{@multiple}}
     />
   {{/if}}
   {{#if (and @allowClear (not @select.disabled))}}
