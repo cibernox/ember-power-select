@@ -5,7 +5,12 @@ import { modifier } from 'ember-modifier';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import { get } from '@ember/object';
-import type { Option, Select, Selected, TSearchFieldPosition } from '../power-select';
+import type {
+  Option,
+  Select,
+  Selected,
+  TSearchFieldPosition,
+} from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder';
 
@@ -57,7 +62,9 @@ export default class PowerSelectInput<
     }
 
     if (this.args.multiple) {
-      return !this.args.select.selected || (Array.isArray(this.args.select.selected) && this.args.select.selected.length === 0)
+      return !this.args.select.selected ||
+        (Array.isArray(this.args.select.selected) &&
+          this.args.select.selected.length === 0)
         ? this.args.searchPlaceholder || ''
         : '';
     }
@@ -75,7 +82,10 @@ export default class PowerSelectInput<
     if (this.args.multiple) {
       if (e.keyCode === 8) {
         e.stopPropagation();
-        if (isBlank((e.target as HTMLInputElement).value) && this.args.buildSelection) {
+        if (
+          isBlank((e.target as HTMLInputElement).value) &&
+          this.args.buildSelection
+        ) {
           const lastSelection =
             Array.isArray(this.args.select.selected) &&
             this.args.select.selected[this.args.select.selected.length - 1];

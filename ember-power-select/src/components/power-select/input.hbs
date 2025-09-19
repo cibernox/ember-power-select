@@ -8,7 +8,11 @@
     autocorrect="off"
     autocapitalize="off"
     spellcheck={{false}}
-    class={{if @multiple "ember-power-select-trigger-multiple-input" "ember-power-select-search-input-field"}}
+    class={{if
+      @multiple
+      "ember-power-select-trigger-multiple-input"
+      "ember-power-select-search-input-field"
+    }}
     value={{@select.searchText}}
     role={{or @role "combobox"}}
     aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
