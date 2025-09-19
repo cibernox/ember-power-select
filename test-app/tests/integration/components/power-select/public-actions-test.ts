@@ -946,7 +946,6 @@ module(
         this.selectAPI = select;
       };
       this.scrollTo = (opt, select) => {
-        console.log(opt);
         assert.strictEqual(
           opt,
           'three',
