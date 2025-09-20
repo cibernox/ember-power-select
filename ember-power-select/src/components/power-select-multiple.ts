@@ -200,7 +200,7 @@ export default class PowerSelectMultipleComponent<
   focusInput(select: Select<T>) {
     if (select) {
       const input = document.querySelector(
-        `#ember-power-select-trigger-multiple-input-${select.uniqueId}`,
+        `#ember-power-select-trigger-input-${select.uniqueId}`,
       ) as HTMLElement;
       if (input) {
         input.focus();
