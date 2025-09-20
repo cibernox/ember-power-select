@@ -1,19 +1,16 @@
 {{#if (ember-power-select-is-selected-present @select.selected)}}
   {{#if (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))}}
     {{#if @selectedItemComponent}}
-      {{#let
-        (component (ensure-safe-component @selectedItemComponent))
-        as |SelectedItemComponent|
-      }}
+      {{#let @selectedItemComponent as |SelectedItemComponent|}}
         <SelectedItemComponent
-          @extra={{readonly @extra}}
-          @option={{readonly @select.selected}}
-          @select={{readonly @select}}
+          @extra={{@extra}}
+          @selected={{this.selected}}
+          @select={{@select}}
         />
       {{/let}}
     {{else}}
       <span class="ember-power-select-selected-item">{{yield
-          @select.selected
+          this.selected
           @select
         }}</span>
     {{/if}}
@@ -27,13 +24,18 @@
       @role={{@role}}
       @ariaLabel={{@ariaLabel}}
       @listboxId={{@listboxId}}
+      @tabindex={{@tabindex}}
+      @buildSelection={{@buildSelection}}
       @searchPlaceholder={{@placeholder}}
+      @placeholderComponent={{@placeholderComponent}}
+      @searchField={{@searchField}}
       @onFocus={{@onFocus}}
       @onBlur={{@onBlur}}
       @onKeydown={{@onKeydown}}
       @onInput={{@onInput}}
       @searchFieldPosition={{@searchFieldPosition}}
       @autofocus={{false}}
+      @multiple={{@multiple}}
     />
   {{/if}}
   {{#if (and @allowClear (not @select.disabled))}}
@@ -49,7 +51,7 @@
   {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
     {{#let
       (component
-        "power-select/input"
+        this.inputComponent
         select=@select
         ariaActiveDescendant=@ariaActiveDescendant
         ariaLabelledBy=@ariaLabelledBy
@@ -67,10 +69,7 @@
       )
       as |InputComponent|
     }}
-      {{#let
-        (component (ensure-safe-component @placeholderComponent))
-        as |PlaceholderComponent|
-      }}
+      {{#let @placeholderComponent as |PlaceholderComponent|}}
         <PlaceholderComponent
           @select={{@select}}
           @placeholder={{@placeholder}}
@@ -78,17 +77,14 @@
           @inputComponent={{InputComponent}}
           @displayPlaceholder={{and
             (not @select.searchText)
-            (not @select.selected)
+            (is-empty this.selected)
           }}
         />
       {{/let}}
     {{/let}}
   {{else}}
-    {{#let
-      (component (ensure-safe-component @placeholderComponent))
-      as |PlaceholderComponent|
-    }}
-      <PlaceholderComponent @placeholder={{@placeholder}} />
+    {{#let @placeholderComponent as |PlaceholderComponent|}}
+      <PlaceholderComponent @placeholder={{@placeholder}} @select={{@select}} />
     {{/let}}
   {{/if}}
 {{/if}}

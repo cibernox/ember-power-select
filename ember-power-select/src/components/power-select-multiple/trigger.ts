@@ -1,50 +1,34 @@
-import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
 import { scheduleTask } from 'ember-lifeline';
-import type { Select, TSearchFieldPosition } from '../power-select';
-import type { ComponentLike } from '@glint/template';
+import type { Selected } from '../power-select-multiple';
+// import type { ComponentLike } from '@glint/template';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
+import PowerSelectTriggerComponent from '../power-select/trigger.ts';
+// import PowerSelectInput from '../power-select/input.ts';
+import type { Option } from '../power-select.ts';
+// import type { PowerSelectInputSignature } from '../power-select/input.ts';
 
-interface PowerSelectMultipleTriggerSignature {
-  Element: HTMLElement;
-  Args: {
-    select: Select;
-    searchEnabled: boolean;
-    placeholder?: string;
-    searchField: string;
-    searchFieldPosition?: TSearchFieldPosition;
-    listboxId?: string;
-    tabindex?: string;
-    ariaLabel?: string;
-    ariaLabelledBy?: string;
-    ariaDescribedBy?: string;
-    role?: string;
-    ariaActiveDescendant: string;
-    extra?: any;
-    placeholderComponent?: string | ComponentLike<any>;
-    selectedItemComponent?: string | ComponentLike<any>;
-    onInput?: (e: InputEvent) => boolean;
-    onKeydown?: (e: KeyboardEvent) => boolean;
-    onFocus?: (e: FocusEvent) => void;
-    onBlur?: (e: FocusEvent) => void;
-    buildSelection: (lastSelection: any, select: Select) => any[];
-  };
-  Blocks: {
-    default: [opt: any, select: Select];
-  };
-}
-
-interface IndexAccesible<T> {
-  objectAt(index: number): T;
-}
-const isIndexAccesible = <T>(target: any): target is IndexAccesible<T> => {
-  return typeof target.objectAt === 'function';
-};
-
-export default class TriggerComponent extends Component<PowerSelectMultipleTriggerSignature> {
+export default class TriggerComponent<
+  T = unknown,
+  TExtra = undefined,
+> extends PowerSelectTriggerComponent<T, TExtra, true> {
   private _lastIsOpen: boolean = this.args.select.isOpen;
+
+  // get inputComponent() {
+  //   return PowerSelectInput as unknown as ComponentLike<
+  //     PowerSelectInputSignature<T>
+  //   >;
+  // }
+
+  isOptionDisabled(option: Option<T>): boolean {
+    if (option && typeof option === 'object' && 'disabled' in option) {
+      return option.disabled as boolean;
+    }
+
+    return false;
+  }
 
   // Actions
   @action
@@ -97,11 +81,11 @@ export default class TriggerComponent extends Component<PowerSelectMultipleTrigg
     this._lastIsOpen = isOpen;
   }
 
-  selectedObject<T>(list: IndexAccesible<T> | T[], index: number): T {
-    if (isIndexAccesible(list)) {
-      return list.objectAt(index);
+  selectedObject<T>(list: Selected<T>, index: number): Option<T> {
+    if (list && 'objectAt' in list && typeof list.objectAt === 'function') {
+      return list.objectAt(index) as Option<T>;
     } else {
-      return get(list, index) as T;
+      return get(list as T[], index) as Option<T>;
     }
   }
 }

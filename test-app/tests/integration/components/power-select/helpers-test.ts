@@ -6,17 +6,26 @@ import {
   selectChoose,
   getDropdownItems,
 } from 'ember-power-select/test-support';
-import { numbers } from '../constants';
+import { numbers } from 'test-app/utils/constants';
+import type { Selected } from 'ember-power-select/components/power-select';
+import type { TestContext } from '@ember/test-helpers';
+
+interface NumbersContext<IsMultiple extends boolean = false>
+  extends TestContext {
+  numbers: typeof numbers;
+  selected: Selected<string, IsMultiple>;
+}
 
 module('Integration | Helpers | selectChoose', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('selectChoose selects the given value on single selects', async function (assert) {
+  test<NumbersContext>('selectChoose selects the given value on single selects', async function (assert) {
     assert.expect(2);
 
     this.numbers = numbers;
-    await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+
+    await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -30,12 +39,14 @@ module('Integration | Helpers | selectChoose', function (hooks) {
       .hasText('three', 'The values has been selected');
   });
 
-  test('selectChoose selects the given value on multiple selects', async function (assert) {
+  test<
+    NumbersContext<true>
+  >('selectChoose selects the given value on multiple selects', async function (assert) {
     assert.expect(3);
 
     this.numbers = numbers;
-    await render(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+    await render<NumbersContext<true>>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
@@ -57,17 +68,17 @@ module('Integration | Helpers | selectChoose', function (hooks) {
 module('Integration | Helpers | getDropdownItems', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('getDropdownItems should give the list of items in the select dropdown', async function (assert) {
+  test<NumbersContext>('getDropdownItems should give the list of items in the select dropdown', async function (assert) {
     assert.expect(1);
 
     this.numbers = numbers;
-    await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+    await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
 
-    let options = await getDropdownItems('.ember-power-select-trigger');
+    const options = await getDropdownItems('.ember-power-select-trigger');
     assert.deepEqual(
       options,
       numbers,
@@ -75,12 +86,12 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
     );
   });
 
-  test('getDropdownItems should throws an error when selector is not matched', async function (assert) {
+  test<NumbersContext>('getDropdownItems should throws an error when selector is not matched', async function (assert) {
     assert.expect(1);
 
     this.numbers = numbers;
-    await render(hbs`
-      <PowerSelect @options={{this.numbers}} @selected={{this.foo}} @onChange={{fn (mut this.foo)}} as |option|>
+    await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -89,7 +100,7 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
       await getDropdownItems('.fake-ember-power-select-trigger');
     } catch (error) {
       assert.strictEqual(
-        error.message,
+        (error as Error).message,
         'You called "getDropdownItems(\'.fake-ember-power-select-trigger\'" but no select was found using selector ".fake-ember-power-select-trigger"',
         'elements from the dropdown should be same as passed elements',
       );

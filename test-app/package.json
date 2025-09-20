@@ -28,17 +28,13 @@
     "test:ember": "ember test",
     "test:ember-try": "ember try:one"
   },
-  "dependenciesMeta": {
-    "ember-power-select": {
-      "injected": true
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.27.1",
     "@babel/eslint-parser": "^7.27.1",
     "@babel/plugin-proposal-decorators": "^7.27.1",
     "@ember-data/legacy-compat": "5.5.0",
     "@ember-data/request": "5.5.0",
+    "@ember-data/model": "5.5.0",
     "@ember-data/request-utils": "5.5.0",
     "@ember-data/store": "5.5.0",
     "@ember/optional-features": "^2.2.0",
