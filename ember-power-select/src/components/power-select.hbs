@@ -93,7 +93,9 @@
         @onInput={{this.handleInput}}
         @onKeydown={{this.handleKeydown}}
         @placeholder={{@placeholder}}
-        @placeholderComponent={{ensure-safe-component this.placeholderComponent}}
+        @placeholderComponent={{ensure-safe-component
+          this.placeholderComponent
+        }}
         @ariaActiveDescendant={{concat
           publicAPI.uniqueId
           "-"
@@ -126,7 +128,9 @@
           @onFocus={{this.handleFocus}}
           @onBlur={{this.handleBlur}}
           @placeholder={{@placeholder}}
-          @placeholderComponent={{ensure-safe-component this.placeholderComponent}}
+          @placeholderComponent={{ensure-safe-component
+            this.placeholderComponent
+          }}
           @extra={{@extra}}
           @listboxId={{listboxId}}
           @ariaActiveDescendant={{if
