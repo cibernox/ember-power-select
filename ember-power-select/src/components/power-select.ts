@@ -593,7 +593,7 @@ export default class PowerSelectComponent<
       return ensureSafeComponent(this.args.labelComponent, this);
     }
 
-    return PowerSelectLabelComponent as unknown as ComponentLike<
+    return PowerSelectLabelComponent as ComponentLike<
       PowerSelectLabelSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -605,7 +605,7 @@ export default class PowerSelectComponent<
       return ensureSafeComponent(this.args.triggerComponent, this);
     }
 
-    return PowerSelectTriggerComponent as unknown as ComponentLike<
+    return PowerSelectTriggerComponent as ComponentLike<
       PowerSelectTriggerSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -617,7 +617,7 @@ export default class PowerSelectComponent<
       return ensureSafeComponent(this.args.placeholderComponent, this);
     }
 
-    return PowerSelectPlaceholderComponent as unknown as ComponentLike<
+    return PowerSelectPlaceholderComponent as ComponentLike<
       PowerSelectPlaceholderSignature<T, IsMultiple>
     >;
   }
@@ -629,7 +629,7 @@ export default class PowerSelectComponent<
       return ensureSafeComponent(this.args.beforeOptionsComponent, this);
     }
 
-    return PowerSelectBeforeOptionsComponent as unknown as ComponentLike<
+    return PowerSelectBeforeOptionsComponent as ComponentLike<
       PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -641,7 +641,7 @@ export default class PowerSelectComponent<
       return ensureSafeComponent(this.args.searchMessageComponent, this);
     }
 
-    return SearchMessageComponent as unknown as ComponentLike<
+    return SearchMessageComponent as ComponentLike<
       PowerSelectSearchMessageSignature<T, IsMultiple>
     >;
   }
@@ -653,7 +653,7 @@ export default class PowerSelectComponent<
       return ensureSafeComponent(this.args.noMatchesMessageComponent, this);
     }
 
-    return NoMatchesMessageComponent as unknown as ComponentLike<
+    return NoMatchesMessageComponent as ComponentLike<
       PowerSelectNoMatchesMessageSignature<T, IsMultiple>
     >;
   }
@@ -665,7 +665,7 @@ export default class PowerSelectComponent<
       return ensureSafeComponent(this.args.optionsComponent, this);
     }
 
-    return PowerSelectOptionsComponent as unknown as ComponentLike<
+    return PowerSelectOptionsComponent as ComponentLike<
       PowerSelectOptionsSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -675,14 +675,14 @@ export default class PowerSelectComponent<
   > {
     if (this.args.groupComponent) {
       return ensureSafeComponent(
-        this.args.groupComponent as unknown as ComponentLike<
+        this.args.groupComponent as ComponentLike<
           PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
         >,
         this,
       );
     }
 
-    return PowerSelectGroupComponent as unknown as ComponentLike<
+    return PowerSelectGroupComponent as ComponentLike<
       PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
     >;
   }
