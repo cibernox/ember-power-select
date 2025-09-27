@@ -1,12 +1,18 @@
 <div class="ember-power-select-input">
   {{! template-lint-disable require-input-label }}
+  {{! template-lint-disable no-positive-tabindex }}
+  {{! template-lint-disable require-aria-activedescendant-tabindex }}
   <input
     type="search"
     autocomplete="off"
     autocorrect="off"
     autocapitalize="off"
     spellcheck={{false}}
-    class="ember-power-select-search-input-field"
+    class={{if
+      @select.multiple
+      "ember-power-select-trigger-multiple-input"
+      "ember-power-select-search-input-field"
+    }}
     value={{@select.searchText}}
     role={{or @role "combobox"}}
     aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
@@ -15,15 +21,20 @@
     aria-autocomplete="list"
     aria-haspopup="listbox"
     aria-expanded={{if @select.isOpen "true" "false"}}
-    placeholder={{@searchPlaceholder}}
+    placeholder={{this.placeholder}}
     aria-label={{@ariaLabel}}
     aria-labelledby={{@ariaLabelledBy}}
     aria-describedby={{@ariaDescribedBy}}
+    disabled={{@select.disabled}}
+    tabindex={{@tabindex}}
+    form="power-select-fake-form"
+    id="ember-power-select-trigger-input-{{@select.uniqueId}}"
     {{on "input" this.handleInput}}
-    {{on "focus" @onFocus}}
+    {{on "focus" this.handleFocus}}
     {{on "blur" this.handleBlur}}
     {{on "keydown" this.handleKeydown}}
     {{this.setupInput}}
     {{this.openChange @select.isOpen}}
+    ...attributes
   />
 </div>
