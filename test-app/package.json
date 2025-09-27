@@ -28,6 +28,11 @@
     "test:ember": "ember test",
     "test:ember-try": "ember try:one"
   },
+  "dependenciesMeta": {
+    "ember-power-select": {
+      "injected": true
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.27.1",
     "@babel/eslint-parser": "^7.27.1",
