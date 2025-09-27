@@ -266,7 +266,7 @@ module(
       this.beforeOptionsComponent = PowerSelectBeforeOptionsComponent;
 
       await render<NumbersContext>(hbs`
-      {{#let (component this.beforeOptionsComponent autofocus=false) as |BeforeOptionsComponent|}}
+      {{#let (component (ensure-safe-component this.beforeOptionsComponent) autofocus=false) as |BeforeOptionsComponent|}}
         <PowerSelect
           @options={{this.numbers}}
           @onChange={{this.foo}}

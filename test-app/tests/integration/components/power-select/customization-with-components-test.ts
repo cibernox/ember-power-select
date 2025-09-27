@@ -501,7 +501,7 @@ module(
       await render<GroupedNumbersContext>(hbs`
       <PowerSelect
         @options={{this.groupedNumbers}}
-        @groupComponent={{component this.groupComponent}}
+        @groupComponent={{component (ensure-safe-component this.groupComponent)}}
         @onChange={{this.foo}} as |number|>
         {{number}}
       </PowerSelect>
@@ -532,7 +532,7 @@ module(
       };
 
       await render<GroupedNumbersContext>(hbs`
-      {{#let (component this.groupComponent onInit=this.onInit) as |groupComponent|}}
+      {{#let (component (ensure-safe-component this.groupComponent) onInit=this.onInit) as |groupComponent|}}
         <PowerSelect
           @options={{this.groupedNumbers}}
           @groupComponent={{groupComponent}}
