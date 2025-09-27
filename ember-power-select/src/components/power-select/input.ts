@@ -33,7 +33,6 @@ export interface PowerSelectInputSignature<
     listboxId?: string;
     autofocus?: boolean;
     tabindex?: number | string;
-    multiple?: IsMultiple;
     placeholderComponent?: ComponentLike<
       PowerSelectPlaceholderSignature<T, IsMultiple>
     >;
@@ -61,7 +60,7 @@ export default class PowerSelectInput<
       return undefined;
     }
 
-    if (this.args.multiple) {
+    if (this.args.select.multiple) {
       return !this.args.select.selected ||
         (Array.isArray(this.args.select.selected) &&
           this.args.select.selected.length === 0)
@@ -79,7 +78,7 @@ export default class PowerSelectInput<
       e.stopPropagation();
       return false;
     }
-    if (this.args.multiple) {
+    if (this.args.select.multiple) {
       if (e.keyCode === 8) {
         e.stopPropagation();
         if (

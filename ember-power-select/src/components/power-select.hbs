@@ -50,6 +50,7 @@
       {{on "focus" this.handleFocus}}
       {{on "blur" this.handleBlur}}
       class="ember-power-select-trigger
+        {{if @multiple ' ember-power-select-multiple-trigger'}}
         {{@triggerClass}}{{if
           publicAPI.isActive
           ' ember-power-select-trigger--active'
@@ -78,7 +79,7 @@
       {{#let this.triggerComponent as |Trigger|}}
         <Trigger
           @allowClear={{@allowClear}}
-          @buildSelection={{@buildSelection}}
+          @buildSelection={{this.buildSelection}}
           @loadingMessage={{or @loadingMessage "Loading options..."}}
           @selectedItemComponent={{if
             @selectedItemComponent
@@ -105,7 +106,7 @@
           @ariaDescribedBy={{@ariaDescribedBy}}
           @ariaLabel={{@ariaLabel}}
           @role={{@triggerRole}}
-          @multiple={{@multiple}}
+          @tabindex={{@tabindex}}
           as |opt select|
         >
           {{yield opt select}}

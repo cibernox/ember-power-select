@@ -1,7 +1,7 @@
 import { isNone } from '@ember/utils';
 
-export default function emberPowerSelectIsSelectedPresent(
-  value: unknown,
-): boolean {
+export default function emberPowerSelectIsSelectedPresent<T>(
+  value: T | null | undefined,
+): value is T {
   return !isNone(value);
 }

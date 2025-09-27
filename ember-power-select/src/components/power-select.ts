@@ -99,6 +99,7 @@ interface SelectActions<T, IsMultiple extends boolean = false>
 export interface Select<T = unknown, IsMultiple extends boolean = false>
   extends Dropdown {
   selected: Selected<T, IsMultiple>;
+  multiple: IsMultiple;
   highlighted: Option<T>;
   options: readonly T[];
   results: readonly T[];
@@ -539,12 +540,26 @@ export default class PowerSelectComponent<
   }
 
   get searchFieldPosition(): TSearchFieldPosition {
-    return this.args.searchFieldPosition === undefined
-      ? 'before-options'
-      : this.args.searchFieldPosition;
+    if (this.args.searchFieldPosition !== undefined) {
+      return this.args.searchFieldPosition;
+    }
+
+    if (this.args.multiple) {
+      return 'trigger';
+    }
+
+    return 'before-options';
   }
 
   get tabindex(): string | number {
+    if (this.args.multiple) {
+      if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
+        return '-1';
+      } else {
+        return this.args.tabindex || '0';
+      }
+    }
+
     if (
       this.args.searchEnabled &&
       this.args.tabindex === undefined &&
@@ -554,6 +569,21 @@ export default class PowerSelectComponent<
     }
 
     return this.args.tabindex || '0';
+  }
+
+  get buildSelection():
+    | ((
+        selected: Option<T>,
+        select: Select<T, IsMultiple>,
+      ) => Selected<T, IsMultiple> | null)
+    | undefined {
+    if (this.args.buildSelection) {
+      return this.args.buildSelection;
+    }
+
+    if (this.args.multiple) {
+      return this._defaultMultipleBuildSelection;
+    }
   }
 
   get labelComponent(): ComponentLike<
@@ -663,6 +693,9 @@ export default class PowerSelectComponent<
     if (this.args.onOpen && this.args.onOpen(this.storedAPI, e) === false) {
       return false;
     }
+
+    this.focusInput(this.storedAPI);
+
     if (e) {
       if (
         e instanceof KeyboardEvent &&
@@ -707,6 +740,26 @@ export default class PowerSelectComponent<
     ) {
       return false;
     }
+
+    if (this.args.multiple && e.keyCode === 13 && this.storedAPI.isOpen) {
+      e.stopPropagation();
+      if (this.storedAPI.highlighted !== undefined) {
+        if (
+          !Array.isArray(this.storedAPI.selected) ||
+          this.storedAPI.selected.indexOf(this.storedAPI.highlighted) === -1
+        ) {
+          this.storedAPI.actions.choose(this.storedAPI.highlighted, e);
+          return false;
+        } else {
+          this.storedAPI.actions.close(e);
+          return false;
+        }
+      } else {
+        this.storedAPI.actions.close(e);
+        return false;
+      }
+    }
+
     if (
       this.searchFieldPosition === 'trigger' &&
       !this.storedAPI.isOpen &&
@@ -890,10 +943,11 @@ export default class PowerSelectComponent<
 
   @action
   _choose(selected: Option<T>, e?: Event): void {
-    const selection = this.args.buildSelection
-      ? this.args.buildSelection(selected, this.storedAPI)
-      : (selected as Selected<T, IsMultiple>); // Note: For multiple we pass always function, otherwise it would not work!
-    this.storedAPI.actions.select(selection, e);
+    const buildSelection = this.buildSelection;
+    const selection = buildSelection
+      ? buildSelection(selected, this.storedAPI)
+      : selected;
+    this.storedAPI.actions.select(selection as Selected<T, IsMultiple>, e);
     if (this.args.closeOnSelect !== false) {
       this.storedAPI.actions.close(e);
       if (this.searchFieldPosition === 'trigger') {
@@ -1144,6 +1198,45 @@ export default class PowerSelectComponent<
     }
   }
 
+  @action
+  private _defaultMultipleBuildSelection(
+    selected: Option<T>,
+    select: Select<T, IsMultiple>,
+  ): Selected<T, IsMultiple> {
+    if (!this.args.multiple) {
+      throw new Error('The defaultBuildSelection is only allowed for multiple');
+    }
+
+    const newSelection: Option<T>[] = Array.isArray(select.selected)
+      ? select.selected.slice(0)
+      : [];
+    let idx = -1;
+    for (let i = 0; i < newSelection.length; i++) {
+      if (isEqual(newSelection[i], selected)) {
+        idx = i;
+        break;
+      }
+    }
+    if (idx > -1) {
+      newSelection.splice(idx, 1);
+    } else {
+      newSelection.push(selected);
+    }
+
+    return newSelection as Selected<T, IsMultiple>;
+  }
+
+  focusInput(select: Select<T, IsMultiple>) {
+    if (select) {
+      const input = document.querySelector(
+        `#ember-power-select-trigger-input-${select.uniqueId}`,
+      ) as HTMLElement;
+      if (input) {
+        input.focus();
+      }
+    }
+  }
+
   _routeKeydown(
     select: Select<T, IsMultiple>,
     e: KeyboardEvent,
@@ -1265,6 +1358,7 @@ export default class PowerSelectComponent<
   publicAPI = (dropdown: BasicDropdownDefaultBlock): Select<T, IsMultiple> => {
     return Object.assign({}, dropdown, {
       selected: this.selected,
+      multiple: this.args.multiple ?? false,
       highlighted: this.highlighted,
       options: this.options,
       results: this.results,
