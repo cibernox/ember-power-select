@@ -63,7 +63,7 @@
       <li class="ember-power-select-trigger-multiple-input-container">
         {{#let
           (component
-            this.inputComponent
+            (ensure-safe-component this.inputComponent)
             select=@select
             ariaActiveDescendant=@ariaActiveDescendant
             ariaLabelledBy=@ariaLabelledBy
@@ -153,7 +153,7 @@
     {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
       {{#let
         (component
-          this.inputComponent
+          (ensure-safe-component this.inputComponent)
           select=@select
           ariaActiveDescendant=@ariaActiveDescendant
           ariaLabelledBy=@ariaLabelledBy
