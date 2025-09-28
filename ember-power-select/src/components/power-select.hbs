@@ -40,6 +40,7 @@
       dropdown
       (hash
         selected=this.selected
+        multiple=(or @multiple false)
         highlighted=this.highlighted
         options=this.options
         results=this.results
@@ -65,6 +66,7 @@
       {{on "focus" this.handleFocus}}
       {{on "blur" this.handleBlur}}
       class="ember-power-select-trigger
+        {{if @multiple ' ember-power-select-multiple-trigger'}}
         {{@triggerClass}}{{if
           publicAPI.isActive
           ' ember-power-select-trigger--active'
@@ -98,42 +100,82 @@
         )
         as |Trigger|
       }}
-        <Trigger
-          @allowClear={{@allowClear}}
-          @buildSelection={{@buildSelection}}
-          @loadingMessage={{or @loadingMessage "Loading options..."}}
-          @selectedItemComponent={{ensure-safe-component
-            @selectedItemComponent
-          }}
-          @select={{publicAPI}}
-          @searchEnabled={{@searchEnabled}}
-          @searchField={{@searchField}}
-          @searchFieldPosition={{this.searchFieldPosition}}
-          @onFocus={{this.handleFocus}}
-          @onBlur={{this.handleBlur}}
-          @extra={{@extra}}
-          @listboxId={{listboxId}}
-          @onInput={{this.handleInput}}
-          @onKeydown={{this.handleKeydown}}
-          @placeholder={{@placeholder}}
-          @placeholderComponent={{if
-            @placeholderComponent
-            (ensure-safe-component @placeholderComponent)
-            (component "power-select/placeholder")
-          }}
-          @ariaActiveDescendant={{concat
-            publicAPI.uniqueId
-            "-"
-            this.highlightedIndex
-          }}
-          @ariaLabelledBy={{this.ariaLabelledBy}}
-          @ariaDescribedBy={{@ariaDescribedBy}}
-          @ariaLabel={{@ariaLabel}}
-          @role={{@triggerRole}}
-          as |opt select|
-        >
-          {{yield opt select}}
-        </Trigger>
+        {{#if @legacyMultiple}}
+          <Trigger
+            @allowClear={{@allowClear}}
+            @buildSelection={{this.buildSelection}}
+            @loadingMessage={{or @loadingMessage "Loading options..."}}
+            @selectedItemComponent={{ensure-safe-component
+              @selectedItemComponent
+            }}
+            @select={{publicAPI}}
+            @searchEnabled={{@searchEnabled}}
+            @searchField={{@searchField}}
+            @searchFieldPosition={{this.searchFieldPosition}}
+            @onFocus={{this.handleFocus}}
+            @onBlur={{this.handleBlur}}
+            @extra={{@extra}}
+            @listboxId={{listboxId}}
+            @onInput={{this.handleInput}}
+            @onKeydown={{this.handleKeydown}}
+            @placeholder={{@placeholder}}
+            @placeholderComponent={{if
+              @placeholderComponent
+              (ensure-safe-component @placeholderComponent)
+              (component "power-select/placeholder")
+            }}
+            @ariaActiveDescendant={{concat
+              publicAPI.uniqueId
+              "-"
+              this.highlightedIndex
+            }}
+            @ariaLabelledBy={{this.ariaLabelledBy}}
+            @ariaDescribedBy={{@ariaDescribedBy}}
+            @ariaLabel={{@ariaLabel}}
+            @role={{@triggerRole}}
+            as |opt select|
+          >
+            {{yield opt select}}
+          </Trigger>
+        {{else}}
+          <Trigger
+            @allowClear={{@allowClear}}
+            @buildSelection={{this.buildSelection}}
+            @loadingMessage={{or @loadingMessage "Loading options..."}}
+            @selectedItemComponent={{ensure-safe-component
+              @selectedItemComponent
+            }}
+            @select={{publicAPI}}
+            @searchEnabled={{@searchEnabled}}
+            @searchField={{@searchField}}
+            @searchFieldPosition={{this.searchFieldPosition}}
+            @onFocus={{this.handleFocus}}
+            @onBlur={{this.handleBlur}}
+            @extra={{@extra}}
+            @listboxId={{listboxId}}
+            @onInput={{this.handleInput}}
+            @onKeydown={{this.handleKeydown}}
+            @placeholder={{@placeholder}}
+            @placeholderComponent={{if
+              @placeholderComponent
+              (ensure-safe-component @placeholderComponent)
+              (component "power-select/placeholder")
+            }}
+            @ariaActiveDescendant={{concat
+              publicAPI.uniqueId
+              "-"
+              this.highlightedIndex
+            }}
+            @ariaLabelledBy={{this.ariaLabelledBy}}
+            @ariaDescribedBy={{@ariaDescribedBy}}
+            @ariaLabel={{@ariaLabel}}
+            @role={{@triggerRole}}
+            @tabindex={{@tabindex}}
+            as |opt select|
+          >
+            {{yield opt select}}
+          </Trigger>
+        {{/if}}
       {{/let}}
     </dropdown.Trigger>
     <dropdown.Content
