@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import { runTask, scheduleTask } from 'ember-lifeline';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
+import { task, timeout } from 'ember-concurrency';
 import type { Select, TSearchFieldPosition } from '../power-select';
 
 interface PowerSelectInputSignature {
@@ -85,7 +85,7 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
       this._lastIsOpen === true &&
       document.activeElement !== element
     ) {
-      scheduleTask(this, 'actions', () => {
+      Promise.resolve().then(() => {
         this.args.select.actions?.search('');
       });
     }
@@ -93,14 +93,13 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
   }
 
   private _focusInput(el: HTMLElement) {
-    runTask(
-      this,
-      () => {
-        if (this.args.autofocus !== false) {
-          el.focus();
-        }
-      },
-      0,
-    );
+    this.focusLaterTask.perform(el);
   }
+
+  private focusLaterTask = task(async (el: HTMLElement) => {
+    await timeout(0);
+    if (this.args.autofocus !== false) {
+      el.focus();
+    }
+  });
 }
