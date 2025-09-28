@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { runTask } from 'ember-lifeline';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type {
@@ -8,6 +7,7 @@ import type {
   TSearchFieldPosition,
 } from '../power-select';
 import { deprecate } from '@ember/debug';
+import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder';
 
@@ -127,14 +127,13 @@ export default class PowerSelectBeforeOptionsComponent<
   );
 
   private _focusInput(el: HTMLElement) {
-    runTask(
-      this,
-      () => {
-        if (this.args.autofocus !== false) {
-          el.focus();
-        }
-      },
-      0,
-    );
+    this.focusLaterTask.perform(el);
   }
+
+  private focusLaterTask = task(async (el: HTMLElement) => {
+    await timeout(0);
+    if (this.args.autofocus !== false) {
+      el.focus();
+    }
+  });
 }

@@ -1607,6 +1607,7 @@ module(
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('two');
       this.set('numbers', ['one', 'three', 'five', 'seven', 'nine']);
+      await settled();
       assert
         .dom('.ember-power-select-option[aria-current="true"]')
         .hasText('one');

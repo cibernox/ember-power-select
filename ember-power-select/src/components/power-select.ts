@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { addObserver, removeObserver } from '@ember/object/observers';
-import { scheduleTask } from 'ember-lifeline';
 import { isEqual, isNone } from '@ember/utils';
 import { assert, deprecate } from '@ember/debug';
 import {
@@ -828,7 +827,9 @@ export default class PowerSelectComponent<
   @action
   handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
-      scheduleTask(this, 'actions', this._updateIsActive, true);
+      Promise.resolve().then(() => {
+        this._updateIsActive(true);
+      });
     }
     if (this.searchFieldPosition === 'trigger') {
       if (event.target) {
@@ -847,7 +848,9 @@ export default class PowerSelectComponent<
   @action
   handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
-      scheduleTask(this, 'actions', this._updateIsActive, false);
+      Promise.resolve().then(() => {
+        this._updateIsActive(false);
+      });
     }
     if (this.args.onBlur) {
       this.args.onBlur(this.storedAPI, event);
@@ -1089,7 +1092,9 @@ export default class PowerSelectComponent<
           }
         });
     } else {
-      scheduleTask(this, 'actions', this._resetHighlighted);
+      Promise.resolve().then(() => {
+        this._resetHighlighted();
+      });
     }
   }
 
@@ -1149,7 +1154,11 @@ export default class PowerSelectComponent<
   ): void {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
-      scheduleTask(this, 'actions', this.args.registerAPI, publicAPI);
+      Promise.resolve().then(() => {
+        if (this.args.registerAPI) {
+          this.args.registerAPI(publicAPI);
+        }
+      });
     }
   }
 
@@ -1182,7 +1191,9 @@ export default class PowerSelectComponent<
             this._searchResult = results;
             this.loading = false;
             this.lastSearchedText = term;
-            scheduleTask(this, 'actions', this._resetHighlighted);
+            Promise.resolve().then(() => {
+              this._resetHighlighted();
+            });
           }
         })
         .catch(() => {
@@ -1194,7 +1205,9 @@ export default class PowerSelectComponent<
     } else {
       this.lastSearchedText = term;
       this._searchResult = searchResult;
-      scheduleTask(this, 'actions', this._resetHighlighted);
+      Promise.resolve().then(() => {
+        this._resetHighlighted();
+      });
     }
   }
 

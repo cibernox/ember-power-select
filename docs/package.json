@@ -86,7 +86,6 @@
     "ember-data": "5.5.0",
     "ember-fetch": "^8.1.2",
     "ember-inflector": "^6.0.0",
-    "ember-lifeline": "^7.0.0",
     "ember-load-initializers": "^3.0.1",
     "ember-modifier": "^4.2.0",
     "ember-page-title": "^9.0.1",

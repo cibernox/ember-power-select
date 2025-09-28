@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { runTask } from 'ember-lifeline';
+import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 const numbers = [
@@ -26,12 +26,18 @@ export default class extends Component {
 
   @action
   startSelfDestroyCountdown() {
-    let tick = () => {
-      this.counter--;
-      if (!this.destroyed) {
-        runTask(this, tick, 1000);
-      }
-    };
-    this.countdown = runTask(this, tick, 1000);
+    this.countdownLaterTask.perform();
   }
+
+  tick = () => {
+    this.counter--;
+    if (!this.destroyed) {
+      this.countdownLaterTask.perform();
+    }
+  };
+
+  countdownLaterTask = task(async () => {
+    await timeout(1000);
+    this.tick();
+  });
 }
