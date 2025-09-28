@@ -9,7 +9,6 @@ import type {
   TSearchFieldPosition,
 } from '../power-select';
 import { get } from '@ember/object';
-import { scheduleTask } from 'ember-lifeline';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
 import type { ComponentLike } from '@glint/template';
@@ -140,7 +139,7 @@ export default class PowerSelectTriggerComponent<
 
   private _openChanged(_el: Element, [isOpen]: [boolean]) {
     if (isOpen === false && this._lastIsOpen === true) {
-      scheduleTask(this, 'actions', () => {
+      Promise.resolve().then(() => {
         this.args.select.actions?.search('');
       });
     }
