@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { getOwner } from '@ember/owner';
+import { getOwner } from '@ember/application';
 
 const isFastBoot = typeof FastBoot !== 'undefined';
 
