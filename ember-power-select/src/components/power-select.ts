@@ -486,9 +486,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
       this.storedAPI.actions.open();
       return;
     } else if (this.labelClickAction === 'focus') {
-      const trigger = document.querySelector(
-        `[data-ebd-id="${this.storedAPI.uniqueId}-trigger"]`,
-      ) as HTMLElement;
+      const trigger = this.storedAPI.actions.getTriggerElement();
 
       if (!trigger) {
         return;
@@ -633,8 +631,21 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     if (this.args.scrollTo) {
       return this.args.scrollTo(option, select);
     }
-    const optionsList = document.getElementById(
-      `ember-power-select-options-${select.uniqueId}`,
+
+    let root: Document | HTMLElement;
+
+    const triggerElement = select.actions.getTriggerElement();
+    if (
+      triggerElement &&
+      triggerElement.getRootNode() instanceof ShadowRoot
+    ) {
+      root = (triggerElement.getRootNode() as HTMLElement);
+    } else {
+      root = document;
+    }
+
+    const optionsList = root.querySelector(
+      `#ember-power-select-options-${select.uniqueId}`,
     ) as HTMLElement;
     if (!optionsList) {
       return;

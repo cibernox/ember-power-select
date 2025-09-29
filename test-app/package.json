@@ -26,6 +26,7 @@
     "start": "ember serve",
     "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\" --prefixColors auto",
     "test:ember": "ember test",
+    "test:ember-shadow-dom": "ember test shadowDom",
     "test:ember-try": "ember try:one"
   },
   "dependenciesMeta": {

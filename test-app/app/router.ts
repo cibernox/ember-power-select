@@ -9,4 +9,5 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('helpers-testing');
   this.route('helpers-testing-single-power-select');
+  this.route('shadow-root');
 });

@@ -1,0 +1,15 @@
+<PowerSelect
+  @searchEnabled={{true}}
+  @options={{this.diacritics}}
+  @selected={{this.selectedDiacritic}}
+  @labelText="Name"
+  @onChange={{fn (mut this.selectedDiacritic)}}
+  as |name|
+>
+  {{name}}
+</PowerSelect>
+
+{{!-- <BasicDropdown as |dropdown|>
+  <dropdown.Trigger>Open me, i'm in shadow</dropdown.Trigger>
+  <dropdown.Content><h3>Content of the dropdown in shadow</h3></dropdown.Content>
+</BasicDropdown> --}}
