@@ -5,6 +5,7 @@ import type { Select, TSearchFieldPosition } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
+import type Owner from '@ember/owner';
 
 interface PowerSelectMultipleTriggerSignature {
   Element: HTMLElement;
@@ -44,6 +45,23 @@ const isIndexAccesible = <T>(target: any): target is IndexAccesible<T> => {
 
 export default class TriggerComponent extends Component<PowerSelectMultipleTriggerSignature> {
   private _lastIsOpen: boolean = this.args.select.isOpen;
+
+  constructor(owner: Owner, args: PowerSelectMultipleTriggerSignature['Args']) {
+    super(owner, args);
+    deprecate(
+      'You are using the `<PowerSelectMultiple::Trigger>` component. Replace all usages with the `<PowerSelect::Trigger>` component.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.deprecate-power-select-multiple-trigger',
+        since: {
+          enabled: '8.10',
+          available: '8.10',
+        },
+        until: '9.0.0',
+      },
+    );
+  }
 
   // Actions
   @action

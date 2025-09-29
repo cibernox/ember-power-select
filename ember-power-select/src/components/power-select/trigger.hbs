@@ -71,7 +71,7 @@
             listboxId=@listboxId
             tabindex=@tabindex
             buildSelection=@buildSelection
-            placeholder=@placeholder
+            searchPlaceholder=(or @placeholder @searchPlaceholder)
             placeholderComponent=@placeholderComponent
             searchField=@searchField
             onFocus=@onFocus
@@ -134,7 +134,7 @@
         @listboxId={{@listboxId}}
         @tabindex={{@tabindex}}
         @buildSelection={{@buildSelection}}
-        @searchPlaceholder={{@placeholder}}
+        @searchPlaceholder={{or @placeholder @searchPlaceholder}}
         @placeholderComponent={{@placeholderComponent}}
         @searchField={{@searchField}}
         @onFocus={{@onFocus}}
@@ -168,7 +168,7 @@
           listboxId=@listboxId
           tabindex=@tabindex
           buildSelection=@buildSelection
-          searchPlaceholder=@placeholder
+          searchPlaceholder=(or @placeholder @searchPlaceholder)
           placeholderComponent=@placeholderComponent
           searchField=@searchField
           onFocus=@onFocus

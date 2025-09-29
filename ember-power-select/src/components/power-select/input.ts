@@ -42,7 +42,7 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
   get placeholder() {
     if (this.args.placeholder !== undefined) {
       deprecate(
-        'You are using power-select::input-field with parameter @placeholder. Replace @placeholder with @searchPlaceholder',
+        'You are using `power-select/input-field` with parameter @placeholder. Replace @placeholder with @searchPlaceholder',
         false,
         {
           for: 'ember-power-select',
