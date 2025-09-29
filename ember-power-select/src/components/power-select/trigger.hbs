@@ -73,7 +73,7 @@
             listboxId=@listboxId
             tabindex=@tabindex
             buildSelection=@buildSelection
-            searchPlaceholder=@placeholder
+            searchPlaceholder=(or @placeholder @searchPlaceholder)
             placeholderComponent=@placeholderComponent
             searchField=@searchField
             onFocus=@onFocus
@@ -129,7 +129,7 @@
         @listboxId={{@listboxId}}
         @tabindex={{@tabindex}}
         @buildSelection={{@buildSelection}}
-        @searchPlaceholder={{@placeholder}}
+        @searchPlaceholder={{or @placeholder @searchPlaceholder}}
         @placeholderComponent={{@placeholderComponent}}
         @searchField={{@searchField}}
         @onFocus={{@onFocus}}
@@ -161,7 +161,7 @@
           role=@role
           ariaLabel=@ariaLabel
           listboxId=@listboxId
-          searchPlaceholder=@placeholder
+          searchPlaceholder=(or @placeholder @searchPlaceholder)
           onFocus=@onFocus
           onBlur=@onBlur
           onKeydown=@onKeydown

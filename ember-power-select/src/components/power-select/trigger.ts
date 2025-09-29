@@ -26,6 +26,7 @@ export interface PowerSelectTriggerSignature<
     allowClear?: boolean;
     searchEnabled?: boolean;
     placeholder?: string;
+    searchPlaceholder?: string;
     searchField?: string;
     searchFieldPosition?: TSearchFieldPosition;
     listboxId?: string;
