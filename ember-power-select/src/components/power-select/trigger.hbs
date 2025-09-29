@@ -104,7 +104,9 @@
 
 {{else}}
   {{#if (ember-power-select-is-selected-present @select.selected)}}
-    {{#if (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))}}
+    {{#if
+      (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))
+    }}
       {{#if @selectedItemComponent}}
         {{#let
           (component (ensure-safe-component @selectedItemComponent))

@@ -402,12 +402,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return this.args.tabindex || '0';
   }
 
-  get buildSelection():
-    | ((
-        selected: any,
-        select: Select,
-      ) => any)
-    | undefined {
+  get buildSelection(): ((selected: any, select: Select) => any) | undefined {
     if (this.args.buildSelection) {
       return this.args.buildSelection;
     }
@@ -928,7 +923,9 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   @action
   private _defaultMultipleBuildSelection(option: any, select: Select): any[] {
     if (!this.args.multiple) {
-      throw new Error('The _defaultMultipleBuildSelection is only allowed for multiple');
+      throw new Error(
+        'The _defaultMultipleBuildSelection is only allowed for multiple',
+      );
     }
 
     const newSelection = Array.isArray(select.selected)

@@ -1,7 +1,11 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
-import type { PowerSelectArgs, PowerSelectSignature, Select } from './power-select';
+import type {
+  PowerSelectArgs,
+  PowerSelectSignature,
+  Select,
+} from './power-select';
 import { deprecate } from '@ember/debug';
 import type Owner from '@ember/owner';
 
