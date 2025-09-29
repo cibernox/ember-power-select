@@ -635,11 +635,8 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     let root: Document | HTMLElement;
 
     const triggerElement = select.actions.getTriggerElement();
-    if (
-      triggerElement &&
-      triggerElement.getRootNode() instanceof ShadowRoot
-    ) {
-      root = (triggerElement.getRootNode() as HTMLElement);
+    if (triggerElement && triggerElement.getRootNode() instanceof ShadowRoot) {
+      root = triggerElement.getRootNode() as HTMLElement;
     } else {
       root = document;
     }

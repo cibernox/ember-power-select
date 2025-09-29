@@ -88,7 +88,7 @@ export default class PowerSelectMultipleComponent extends Component<PowerSelectM
         triggerElement &&
         triggerElement.getRootNode() instanceof ShadowRoot
       ) {
-        root = (triggerElement.getRootNode() as HTMLElement);
+        root = triggerElement.getRootNode() as HTMLElement;
       } else {
         root = document;
       }
