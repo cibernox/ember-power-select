@@ -956,9 +956,22 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   focusInput(select: Select) {
     if (select) {
-      const input = document.querySelector(
+      const triggerElement = select.actions.getTriggerElement();
+      let root: Document | HTMLElement;
+
+      if (
+        triggerElement &&
+        triggerElement.getRootNode() instanceof ShadowRoot
+      ) {
+        root = triggerElement.getRootNode() as HTMLElement;
+      } else {
+        root = document;
+      }
+
+      const input = root.querySelector(
         `#ember-power-select-trigger-input-${select.uniqueId}`,
       ) as HTMLElement;
+
       if (input) {
         input.focus();
       }
