@@ -14,6 +14,16 @@
 
 
 
+
+## v8.10.0 (2025-09-30)
+
+#### :rocket: Enhancement
+* [#1940](https://github.com/cibernox/ember-power-select/pull/1940) Add support for shadow dom ([@mkszepp](https://github.com/mkszepp))
+* [#1938](https://github.com/cibernox/ember-power-select/pull/1938) Remove use of `ember-lifeline` (addon & docs) ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.9.0 (2025-09-16)
 
 #### :rocket: Enhancement
