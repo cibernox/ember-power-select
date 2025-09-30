@@ -48,7 +48,8 @@
     </PowerSelect>
   </div>
   <div>
-    <PowerSelectMultiple
+    <PowerSelect
+      @multiple={{true}}
       @options={{this.options}}
       @selected={{this.selectedMultiple}}
       @onChange={{fn (mut this.selectedMultiple)}}
@@ -64,7 +65,7 @@
         alt="Country of {{country.name}}"
       />
       <strong>{{country.name}}</strong>
-    </PowerSelectMultiple>
+    </PowerSelect>
   </div>
 </div>
 
