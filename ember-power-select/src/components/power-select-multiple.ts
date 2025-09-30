@@ -1,7 +1,13 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isEqual } from '@ember/utils';
-import type { PowerSelectSignature, Select } from './power-select';
+import type {
+  PowerSelectArgs,
+  PowerSelectSignature,
+  Select,
+} from './power-select';
+import { deprecate } from '@ember/debug';
+import type Owner from '@ember/owner';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface PowerSelectMultipleSignature extends PowerSelectSignature {
@@ -9,6 +15,23 @@ interface PowerSelectMultipleSignature extends PowerSelectSignature {
 }
 
 export default class PowerSelectMultipleComponent extends Component<PowerSelectMultipleSignature> {
+  constructor(owner: Owner, args: PowerSelectArgs) {
+    super(owner, args);
+    deprecate(
+      'You are using the `<PowerSelectMultiple>` component. Replace all usages with `<PowerSelect>` and pass `@multiple={{true}}` as a parameter to achieve the same behavior. If you have used the ID `#ember-power-select-trigger-multiple-input-{uniqueId}` to access the search field, update your `querySelector` to use `#ember-power-select-trigger-input-{uniqueId}` instead. If you have a custom multiple trigger or input component, you also need to move them to `<PowerSelect::Trigger>` / `<PowerSelect::Input>`.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.deprecate-power-select-multiple',
+        since: {
+          enabled: '8.10',
+          available: '8.10',
+        },
+        until: '9.0.0',
+      },
+    );
+  }
+
   get computedTabIndex() {
     if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
       return '-1';

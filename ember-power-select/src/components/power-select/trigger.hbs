@@ -1,95 +1,211 @@
-{{#if (ember-power-select-is-selected-present @select.selected)}}
-  {{#if (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))}}
-    {{#if @selectedItemComponent}}
+{{#if @select.multiple}}
+  {{! template-lint-disable no-invalid-interactive }}
+  {{! template-lint-disable no-pointer-down-event-binding }}
+  {{! template-lint-disable no-unsupported-role-attributes }}
+  {{! template-lint-disable require-aria-activedescendant-tabindex }}
+  <ul
+    id="ember-power-select-multiple-options-{{@select.uniqueId}}"
+    aria-activedescendant={{if
+      (and @select.isOpen (not @searchEnabled))
+      @ariaActiveDescendant
+    }}
+    class="ember-power-select-multiple-options"
+    {{this.openChange @select.isOpen}}
+    {{on "touchstart" this.chooseOption}}
+    {{on "mousedown" this.chooseOption}}
+    ...attributes
+  >
+    {{#each @select.selected as |opt idx|}}
+      <li
+        class="ember-power-select-multiple-option
+          {{if opt.disabled 'ember-power-select-multiple-option--disabled'}}"
+      >
+        {{#unless @select.disabled}}
+          <span
+            role="button"
+            aria-label="remove element"
+            class="ember-power-select-multiple-remove-btn"
+            data-selected-index={{idx}}
+          >
+            &times;
+          </span>
+        {{/unless}}
+        {{#if @selectedItemComponent}}
+          {{#let
+            (component (ensure-safe-component @selectedItemComponent))
+            as |SelectedItemComponent|
+          }}
+            <SelectedItemComponent
+              @extra={{@extra}}
+              @option={{opt}}
+              @select={{@select}}
+            />
+          {{/let}}
+        {{else}}
+          {{yield opt @select}}
+        {{/if}}
+      </li>
+    {{else}}
+      {{#if (and @placeholder (not @searchEnabled))}}
+        <li>
+          {{#let
+            (component (ensure-safe-component @placeholderComponent))
+            as |PlaceholderComponent|
+          }}
+            <PlaceholderComponent @placeholder={{@placeholder}} />
+          {{/let}}
+        </li>
+      {{/if}}
+    {{/each}}
+    {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
+      <li class="ember-power-select-trigger-multiple-input-container">
+        {{#let
+          (component
+            "power-select/input"
+            select=@select
+            ariaActiveDescendant=@ariaActiveDescendant
+            ariaLabelledBy=@ariaLabelledBy
+            ariaDescribedBy=@ariaDescribedBy
+            role=@role
+            ariaLabel=@ariaLabel
+            listboxId=@listboxId
+            tabindex=@tabindex
+            buildSelection=@buildSelection
+            searchPlaceholder=(or @placeholder @searchPlaceholder)
+            placeholderComponent=@placeholderComponent
+            searchField=@searchField
+            onFocus=@onFocus
+            onBlur=@onBlur
+            onKeydown=@onKeydown
+            onInput=@onInput
+            searchFieldPosition=@searchFieldPosition
+          )
+          as |InputComponent|
+        }}
+          {{#let
+            (component (ensure-safe-component @placeholderComponent))
+            as |PlaceholderComponent|
+          }}
+            <PlaceholderComponent
+              @select={{@select}}
+              @placeholder={{@placeholder}}
+              @isMultipleWithSearch={{true}}
+              @inputComponent={{InputComponent}}
+              @displayPlaceholder={{and
+                (not @select.searchText)
+                (not @select.selected)
+              }}
+            />
+          {{/let}}
+        {{/let}}
+      </li>
+    {{/if}}
+  </ul>
+
+{{else}}
+  {{#if (ember-power-select-is-selected-present @select.selected)}}
+    {{#if
+      (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))
+    }}
+      {{#if @selectedItemComponent}}
+        {{#let
+          (component (ensure-safe-component @selectedItemComponent))
+          as |SelectedItemComponent|
+        }}
+          <SelectedItemComponent
+            @extra={{readonly @extra}}
+            @option={{readonly @select.selected}}
+            @select={{readonly @select}}
+          />
+        {{/let}}
+      {{else}}
+        <span class="ember-power-select-selected-item">{{yield
+            @select.selected
+            @select
+          }}</span>
+      {{/if}}
+    {{/if}}
+    {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
+      <PowerSelect::Input
+        @select={{@select}}
+        @ariaActiveDescendant={{@ariaActiveDescendant}}
+        @ariaLabelledBy={{@ariaLabelledBy}}
+        @ariaDescribedBy={{@ariaDescribedBy}}
+        @role={{@role}}
+        @ariaLabel={{@ariaLabel}}
+        @listboxId={{@listboxId}}
+        @tabindex={{@tabindex}}
+        @buildSelection={{@buildSelection}}
+        @searchPlaceholder={{or @placeholder @searchPlaceholder}}
+        @placeholderComponent={{@placeholderComponent}}
+        @searchField={{@searchField}}
+        @onFocus={{@onFocus}}
+        @onBlur={{@onBlur}}
+        @onKeydown={{@onKeydown}}
+        @onInput={{@onInput}}
+        @searchFieldPosition={{@searchFieldPosition}}
+        @autofocus={{false}}
+      />
+    {{/if}}
+    {{#if (and @allowClear (not @select.disabled))}}
+      {{! template-lint-disable no-pointer-down-event-binding }}
+      <span
+        class="ember-power-select-clear-btn"
+        role="button"
+        {{on "mousedown" this.clear}}
+        {{on "touchstart" this.clear}}
+      >&times;</span>
+    {{/if}}
+  {{else}}
+    {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
       {{#let
-        (component (ensure-safe-component @selectedItemComponent))
-        as |SelectedItemComponent|
+        (component
+          "power-select/input"
+          select=@select
+          ariaActiveDescendant=@ariaActiveDescendant
+          ariaLabelledBy=@ariaLabelledBy
+          ariaDescribedBy=@ariaDescribedBy
+          role=@role
+          ariaLabel=@ariaLabel
+          listboxId=@listboxId
+          tabindex=@tabindex
+          buildSelection=@buildSelection
+          searchPlaceholder=(or @placeholder @searchPlaceholder)
+          placeholderComponent=@placeholderComponent
+          searchField=@searchField
+          onFocus=@onFocus
+          onBlur=@onBlur
+          onKeydown=@onKeydown
+          onInput=@onInput
+          searchFieldPosition=@searchFieldPosition
+          autofocus=false
+        )
+        as |InputComponent|
       }}
-        <SelectedItemComponent
-          @extra={{readonly @extra}}
-          @option={{readonly @select.selected}}
-          @select={{readonly @select}}
-        />
+        {{#let
+          (component (ensure-safe-component @placeholderComponent))
+          as |PlaceholderComponent|
+        }}
+          <PlaceholderComponent
+            @select={{@select}}
+            @placeholder={{@placeholder}}
+            @isMultipleWithSearch={{true}}
+            @inputComponent={{InputComponent}}
+            @displayPlaceholder={{and
+              (not @select.searchText)
+              (not @select.selected)
+            }}
+          />
+        {{/let}}
       {{/let}}
     {{else}}
-      <span class="ember-power-select-selected-item">{{yield
-          @select.selected
-          @select
-        }}</span>
-    {{/if}}
-  {{/if}}
-  {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
-    <PowerSelect::Input
-      @select={{@select}}
-      @ariaActiveDescendant={{@ariaActiveDescendant}}
-      @ariaLabelledBy={{@ariaLabelledBy}}
-      @ariaDescribedBy={{@ariaDescribedBy}}
-      @role={{@role}}
-      @ariaLabel={{@ariaLabel}}
-      @listboxId={{@listboxId}}
-      @searchPlaceholder={{@placeholder}}
-      @onFocus={{@onFocus}}
-      @onBlur={{@onBlur}}
-      @onKeydown={{@onKeydown}}
-      @onInput={{@onInput}}
-      @searchFieldPosition={{@searchFieldPosition}}
-      @autofocus={{false}}
-    />
-  {{/if}}
-  {{#if (and @allowClear (not @select.disabled))}}
-    {{! template-lint-disable no-pointer-down-event-binding }}
-    <span
-      class="ember-power-select-clear-btn"
-      role="button"
-      {{on "mousedown" this.clear}}
-      {{on "touchstart" this.clear}}
-    >&times;</span>
-  {{/if}}
-{{else}}
-  {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
-    {{#let
-      (component
-        "power-select/input"
-        select=@select
-        ariaActiveDescendant=@ariaActiveDescendant
-        ariaLabelledBy=@ariaLabelledBy
-        ariaDescribedBy=@ariaDescribedBy
-        role=@role
-        ariaLabel=@ariaLabel
-        listboxId=@listboxId
-        searchPlaceholder=@placeholder
-        onFocus=@onFocus
-        onBlur=@onBlur
-        onKeydown=@onKeydown
-        onInput=@onInput
-        searchFieldPosition=@searchFieldPosition
-        autofocus=false
-      )
-      as |InputComponent|
-    }}
       {{#let
         (component (ensure-safe-component @placeholderComponent))
         as |PlaceholderComponent|
       }}
-        <PlaceholderComponent
-          @select={{@select}}
-          @placeholder={{@placeholder}}
-          @isMultipleWithSearch={{true}}
-          @inputComponent={{InputComponent}}
-          @displayPlaceholder={{and
-            (not @select.searchText)
-            (not @select.selected)
-          }}
-        />
+        <PlaceholderComponent @placeholder={{@placeholder}} />
       {{/let}}
-    {{/let}}
-  {{else}}
-    {{#let
-      (component (ensure-safe-component @placeholderComponent))
-      as |PlaceholderComponent|
-    }}
-      <PlaceholderComponent @placeholder={{@placeholder}} />
-    {{/let}}
+    {{/if}}
   {{/if}}
 {{/if}}
 <span class="ember-power-select-status-icon"></span>

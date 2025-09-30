@@ -39,6 +39,7 @@ interface SelectActions extends DropdownActions {
 }
 export interface Select extends Dropdown {
   selected: any;
+  multiple: boolean;
   highlighted: any;
   options: readonly any[];
   results: readonly any[];
@@ -70,6 +71,8 @@ export interface PowerSelectArgs {
   resultCountMessage?: (resultCount: number) => string;
   options?: readonly any[] | Promise<readonly any[]>;
   selected?: any | PromiseProxy<any>;
+  multiple?: boolean;
+  legacyMultiple?: boolean; // Don't use this inside app, internal usage!
   destination?: string;
   destinationElement?: HTMLElement;
   closeOnSelect?: boolean;
@@ -368,12 +371,26 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
   }
 
   get searchFieldPosition(): TSearchFieldPosition {
-    return this.args.searchFieldPosition === undefined
-      ? 'before-options'
-      : this.args.searchFieldPosition;
+    if (this.args.searchFieldPosition !== undefined) {
+      return this.args.searchFieldPosition;
+    }
+
+    if (this.args.multiple) {
+      return 'trigger';
+    }
+
+    return 'before-options';
   }
 
   get tabindex(): string | number {
+    if (this.args.multiple) {
+      if (this.args.triggerComponent === undefined && this.args.searchEnabled) {
+        return '-1';
+      } else {
+        return this.args.tabindex || '0';
+      }
+    }
+
     if (
       this.args.searchEnabled &&
       this.args.tabindex === undefined &&
@@ -385,12 +402,25 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     return this.args.tabindex || '0';
   }
 
+  get buildSelection(): ((selected: any, select: Select) => any) | undefined {
+    if (this.args.buildSelection) {
+      return this.args.buildSelection;
+    }
+
+    if (this.args.multiple) {
+      return this._defaultMultipleBuildSelection;
+    }
+  }
+
   // Actions
   @action
   handleOpen(_select: Select, e: Event): boolean | void {
     if (this.args.onOpen && this.args.onOpen(this.storedAPI, e) === false) {
       return false;
     }
+
+    this.focusInput(this.storedAPI);
+
     if (e) {
       if (
         e instanceof KeyboardEvent &&
@@ -435,6 +465,26 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     ) {
       return false;
     }
+
+    if (this.args.multiple && e.keyCode === 13 && this.storedAPI.isOpen) {
+      e.stopPropagation();
+      if (this.storedAPI.highlighted !== undefined) {
+        if (
+          !this.storedAPI.selected ||
+          this.storedAPI.selected.indexOf(this.storedAPI.highlighted) === -1
+        ) {
+          this.storedAPI.actions.choose(this.storedAPI.highlighted, e);
+          return false;
+        } else {
+          this.storedAPI.actions.close(e);
+          return false;
+        }
+      } else {
+        this.storedAPI.actions.close(e);
+        return false;
+      }
+    }
+
     if (
       this.searchFieldPosition === 'trigger' &&
       !this.storedAPI.isOpen &&
@@ -609,8 +659,9 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   @action
   _choose(selected: any, e?: Event): void {
-    const selection = this.args.buildSelection
-      ? this.args.buildSelection(selected, this.storedAPI)
+    const buildSelection = this.buildSelection;
+    const selection = buildSelection
+      ? buildSelection(selected, this.storedAPI)
       : selected;
     this.storedAPI.actions.select(selection, e);
     if (this.args.closeOnSelect !== false) {
@@ -875,6 +926,56 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
 
   _defaultBuildSelection(option: any): any {
     return option;
+  }
+
+  @action
+  private _defaultMultipleBuildSelection(option: any, select: Select): any[] {
+    if (!this.args.multiple) {
+      throw new Error(
+        'The _defaultMultipleBuildSelection is only allowed for multiple',
+      );
+    }
+
+    const newSelection = Array.isArray(select.selected)
+      ? select.selected.slice(0)
+      : [];
+    let idx = -1;
+    for (let i = 0; i < newSelection.length; i++) {
+      if (isEqual(newSelection[i], option)) {
+        idx = i;
+        break;
+      }
+    }
+    if (idx > -1) {
+      newSelection.splice(idx, 1);
+    } else {
+      newSelection.push(option);
+    }
+    return newSelection;
+  }
+
+  focusInput(select: Select) {
+    if (select) {
+      const triggerElement = select.actions.getTriggerElement();
+      let root: Document | HTMLElement;
+
+      if (
+        triggerElement &&
+        triggerElement.getRootNode() instanceof ShadowRoot
+      ) {
+        root = triggerElement.getRootNode() as HTMLElement;
+      } else {
+        root = document;
+      }
+
+      const input = root.querySelector(
+        `#ember-power-select-trigger-input-${select.uniqueId}`,
+      ) as HTMLElement;
+
+      if (input) {
+        input.focus();
+      }
+    }
   }
 
   _routeKeydown(select: Select, e: KeyboardEvent): boolean | void {

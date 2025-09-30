@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { get } from '@ember/object';
-import { assert } from '@ember/debug';
+import { assert, deprecate } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import type { Select } from '../power-select';
+import type Owner from '@ember/owner';
 
 interface PowerSelectMultipleInputSignature {
   Element: HTMLElement;
@@ -28,12 +29,26 @@ interface PowerSelectMultipleInputSignature {
   };
 }
 
-const ua = window && window.navigator ? window.navigator.userAgent : '';
-const isIE = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
-
 export default class PowerSelectMultipleInputComponent extends Component<PowerSelectMultipleInputSignature> {
+  constructor(owner: Owner, args: PowerSelectMultipleInputSignature['Args']) {
+    super(owner, args);
+    deprecate(
+      'You are using the `<PowerSelectMultiple::Input>` component. Replace all usages with the `<PowerSelect::Input>` component.',
+      false,
+      {
+        for: 'ember-power-select',
+        id: 'ember-power-select.deprecate-power-select-multiple-input',
+        since: {
+          enabled: '8.10',
+          available: '8.10',
+        },
+        until: '9.0.0',
+      },
+    );
+  }
+
   get maybePlaceholder() {
-    if (isIE || !this.args.isDefaultPlaceholder) {
+    if (!this.args.isDefaultPlaceholder) {
       return undefined;
     }
     return !this.args.select.selected || this.args.select.selected.length === 0
