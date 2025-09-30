@@ -12,13 +12,15 @@ export default class ShadowRootComponent extends Component<{
       return false;
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const config = getOwner(this).resolveRegistration('config:environment') as {
-      APP: {
-        shadowDom: boolean;
-      };
-    };
+    const config = (
+      getOwner(this) as unknown as {
+        resolveRegistration: (key: string) => {
+          APP: {
+            shadowDom: boolean;
+          };
+        };
+      }
+    ).resolveRegistration('config:environment');
 
     return config.APP.shadowDom ?? false;
   }
