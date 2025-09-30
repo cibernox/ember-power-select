@@ -20,6 +20,11 @@ module.exports = function (environment) {
     },
   };
 
+  if (process.argv.includes('shadowDom')) {
+    ENV.APP.rootElement = '#shadow-root';
+    ENV.APP.shadowDom = true;
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
