@@ -152,7 +152,12 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
 
       this.didSetup = true;
 
-      this._focusInput(el);
+      if (
+        this.args.searchFieldPosition === undefined ||
+        this.args.searchFieldPosition === 'before-options'
+      ) {
+        this._focusInput(el);
+      }
 
       return () => {
         this.args.select.actions?.search('');
