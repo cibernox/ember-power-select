@@ -8,27 +8,27 @@ export type TSearchFieldPosition = 'before-options' | 'trigger';
 
 export interface Select<T = unknown, IsMultiple extends boolean = false>
   extends Dropdown {
-  selected: Selected<T, IsMultiple>;
-  multiple: IsMultiple;
-  highlighted: Option<T>;
-  options: readonly T[];
-  results: readonly T[];
-  resultsCount: number;
-  loading: boolean;
-  isActive: boolean;
-  searchText: string;
-  lastSearchedText: string;
-  actions: SelectActions<T, IsMultiple>;
+  readonly selected: Selected<T, IsMultiple>;
+  readonly multiple: IsMultiple;
+  readonly highlighted: Option<T>;
+  readonly options: readonly T[];
+  readonly results: readonly T[];
+  readonly resultsCount: number;
+  readonly loading: boolean;
+  readonly isActive: boolean;
+  readonly searchText: string;
+  readonly lastSearchedText: string;
+  readonly actions: SelectActions<T, IsMultiple>;
 }
 
 interface SelectActions<T, IsMultiple extends boolean = false>
   extends DropdownActions {
-  search: (term: string) => void;
-  highlight: (option: Option<T> | undefined) => void;
-  select: (selected: Selected<T, IsMultiple>, e?: Event) => void;
-  choose: (selected: Option<T> | undefined, e?: Event) => void;
-  scrollTo: (option: Option<T> | undefined) => void;
-  labelClick: (e: MouseEvent) => void;
+  readonly search: (term: string) => void;
+  readonly highlight: (option: Option<T> | undefined) => void;
+  readonly select: (selected: Selected<T, IsMultiple>, e?: Event) => void;
+  readonly choose: (selected: Option<T> | undefined, e?: Event) => void;
+  readonly scrollTo: (option: Option<T> | undefined) => void;
+  readonly labelClick: (e: MouseEvent) => void;
 }
 
 export type Selected<
