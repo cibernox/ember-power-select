@@ -55,8 +55,8 @@ export default class TriggerComponent extends Component<PowerSelectMultipleTrigg
         for: 'ember-power-select',
         id: 'ember-power-select.deprecate-power-select-multiple-trigger',
         since: {
-          enabled: '8.10',
-          available: '8.10',
+          enabled: '8.11',
+          available: '8.11',
         },
         until: '9.0.0',
       },
