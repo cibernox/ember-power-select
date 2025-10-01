@@ -65,6 +65,7 @@
           (component
             (ensure-safe-component this.inputComponent)
             select=@select
+            extra=@extra
             ariaActiveDescendant=@ariaActiveDescendant
             ariaLabelledBy=@ariaLabelledBy
             ariaDescribedBy=@ariaDescribedBy
@@ -86,6 +87,7 @@
           {{#let @placeholderComponent as |PlaceholderComponent|}}
             <PlaceholderComponent
               @select={{@select}}
+              @extra={{@extra}}
               @placeholder={{@placeholder}}
               @isMultipleWithSearch={{true}}
               @inputComponent={{InputComponent}}
@@ -121,6 +123,7 @@
     {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
       <PowerSelect::Input
         @select={{@select}}
+        @extra={{@extra}}
         @ariaActiveDescendant={{@ariaActiveDescendant}}
         @ariaLabelledBy={{@ariaLabelledBy}}
         @ariaDescribedBy={{@ariaDescribedBy}}
@@ -155,6 +158,7 @@
         (component
           (ensure-safe-component this.inputComponent)
           select=@select
+          extra=@extra
           ariaActiveDescendant=@ariaActiveDescendant
           ariaLabelledBy=@ariaLabelledBy
           ariaDescribedBy=@ariaDescribedBy
@@ -177,6 +181,7 @@
             @placeholder={{@placeholder}}
             @isMultipleWithSearch={{true}}
             @inputComponent={{InputComponent}}
+            @extra={{@extra}}
             @displayPlaceholder={{and
               (not @select.searchText)
               (is-empty this.selected)
@@ -189,6 +194,7 @@
         <PlaceholderComponent
           @placeholder={{@placeholder}}
           @select={{@select}}
+          @extra={{@extra}}
         />
       {{/let}}
     {{/if}}

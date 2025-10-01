@@ -82,15 +82,15 @@ export interface PowerSelectArgs<
 > {
   highlightOnHover?: boolean;
   placeholderComponent?: ComponentLike<
-    PowerSelectPlaceholderSignature<T, IsMultiple>
+    PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
   >;
   searchMessage?: string;
   searchMessageComponent?: ComponentLike<
-    PowerSelectSearchMessageSignature<T, IsMultiple>
+    PowerSelectSearchMessageSignature<T, TExtra, IsMultiple>
   >;
   noMatchesMessage?: string;
   noMatchesMessageComponent?: ComponentLike<
-    PowerSelectNoMatchesMessageSignature<T, IsMultiple>
+    PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
   >;
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
@@ -524,14 +524,14 @@ export default class PowerSelectComponent<
   }
 
   get placeholderComponent(): ComponentLike<
-    PowerSelectPlaceholderSignature<T, IsMultiple>
+    PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.placeholderComponent) {
       return ensureSafeComponent(this.args.placeholderComponent, this);
     }
 
     return PowerSelectPlaceholderComponent as ComponentLike<
-      PowerSelectPlaceholderSignature<T, IsMultiple>
+      PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
     >;
   }
 
@@ -548,26 +548,26 @@ export default class PowerSelectComponent<
   }
 
   get searchMessageComponent(): ComponentLike<
-    PowerSelectSearchMessageSignature<T, IsMultiple>
+    PowerSelectSearchMessageSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.searchMessageComponent) {
       return ensureSafeComponent(this.args.searchMessageComponent, this);
     }
 
     return SearchMessageComponent as ComponentLike<
-      PowerSelectSearchMessageSignature<T, IsMultiple>
+      PowerSelectSearchMessageSignature<T, TExtra, IsMultiple>
     >;
   }
 
   get noMatchesMessageComponent(): ComponentLike<
-    PowerSelectNoMatchesMessageSignature<T, IsMultiple>
+    PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.noMatchesMessageComponent) {
       return ensureSafeComponent(this.args.noMatchesMessageComponent, this);
     }
 
     return NoMatchesMessageComponent as ComponentLike<
-      PowerSelectNoMatchesMessageSignature<T, IsMultiple>
+      PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
     >;
   }
 

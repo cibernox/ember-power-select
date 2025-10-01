@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { getOwner } from '@ember/application';
 
+// @ts-expect-error Public property 'isFastBoot' of exported class
 const isFastBoot = typeof FastBoot !== 'undefined';
 
 export default class ShadowRootComponent extends Component<{

@@ -66,16 +66,20 @@ interface CountryContext<IsMultiple extends boolean = false>
     PowerSelectBeforeOptionsSignature<Country, SelectedCountryExtra, IsMultiple>
   >;
   placeholderComponent: ComponentLike<
-    PowerSelectPlaceholderSignature<Country, IsMultiple>
+    PowerSelectPlaceholderSignature<Country, SelectedCountryExtra, IsMultiple>
   >;
   afterOptionsComponent: ComponentLike<
     PowerSelectAfterOptionsSignature<Country, SelectedCountryExtra, IsMultiple>
   >;
   searchMessageComponent: ComponentLike<
-    PowerSelectSearchMessageSignature<Country, IsMultiple>
+    PowerSelectSearchMessageSignature<Country, SelectedCountryExtra, IsMultiple>
   >;
   noMatchesMessageComponent: ComponentLike<
-    PowerSelectNoMatchesMessageSignature<Country, IsMultiple>
+    PowerSelectNoMatchesMessageSignature<
+      Country,
+      SelectedCountryExtra,
+      IsMultiple
+    >
   >;
   labelComponent: ComponentLike<
     PowerSelectLabelSignature<Country, SelectedCountryExtra, IsMultiple>

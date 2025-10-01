@@ -16,6 +16,7 @@ import type {
 
 export interface PowerSelectInputSignature<
   T = unknown,
+  TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
   Element: HTMLElement;
@@ -33,8 +34,9 @@ export interface PowerSelectInputSignature<
     listboxId?: string;
     autofocus?: boolean;
     tabindex?: number | string;
+    extra?: TExtra;
     placeholderComponent?: ComponentLike<
-      PowerSelectPlaceholderSignature<T, IsMultiple>
+      PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
     >;
     onKeydown?: (e: KeyboardEvent) => boolean | void;
     onBlur?: (e: FocusEvent) => void;
@@ -49,8 +51,9 @@ export interface PowerSelectInputSignature<
 
 export default class PowerSelectInput<
   T = unknown,
+  TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Component<PowerSelectInputSignature<T, IsMultiple>> {
+> extends Component<PowerSelectInputSignature<T, TExtra, IsMultiple>> {
   didSetup: boolean = false;
 
   private _lastIsOpen: boolean = this.args.select.isOpen;

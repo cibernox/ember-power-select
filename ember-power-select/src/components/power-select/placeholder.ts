@@ -5,24 +5,28 @@ import type { Select } from '../../types';
 
 export interface PowerSelectPlaceholderSignatureArgs<
   T = unknown,
+  TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
   select: Select<T, IsMultiple>;
   isMultipleWithSearch?: boolean;
   placeholder?: string;
   displayPlaceholder?: boolean;
-  inputComponent?: ComponentLike<PowerSelectInputSignature<T, IsMultiple>>;
+  extra?: TExtra;
+  inputComponent?: ComponentLike<PowerSelectInputSignature<T, TExtra, IsMultiple>>;
 }
 
 export interface PowerSelectPlaceholderSignature<
   T = unknown,
+  TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
   Element: HTMLElement;
-  Args: PowerSelectPlaceholderSignatureArgs<T, IsMultiple>;
+  Args: PowerSelectPlaceholderSignatureArgs<T, TExtra, IsMultiple>;
 }
 
 export default class PowerSelectPlaceholder<
   T = unknown,
+  TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Component<PowerSelectPlaceholderSignature<T, IsMultiple>> {}
+> extends Component<PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>> {}

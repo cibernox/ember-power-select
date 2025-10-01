@@ -2,5 +2,6 @@ import PowerSelectPlaceholder from 'ember-power-select/components/power-select/p
 
 export default class CustomPlaceholder<
   T,
+  TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends PowerSelectPlaceholder<T, IsMultiple> {}
+> extends PowerSelectPlaceholder<T, TExtra, IsMultiple> {}

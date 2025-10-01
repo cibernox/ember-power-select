@@ -40,7 +40,7 @@ export interface PowerSelectTriggerSignature<
     extra?: TExtra;
     buildSelection?: PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'];
     placeholderComponent?: ComponentLike<
-      PowerSelectPlaceholderSignature<T, IsMultiple>
+      PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
     >;
     selectedItemComponent?: ComponentLike<
       PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>
@@ -63,10 +63,10 @@ export default class PowerSelectTriggerComponent<
   private _lastIsOpen: boolean = this.args.select.isOpen;
 
   get inputComponent(): ComponentLike<
-    PowerSelectInputSignature<T, IsMultiple>
+    PowerSelectInputSignature<T, TExtra, IsMultiple>
   > {
     return PowerSelectInput as ComponentLike<
-      PowerSelectInputSignature<T, IsMultiple>
+      PowerSelectInputSignature<T, TExtra, IsMultiple>
     >;
   }
 

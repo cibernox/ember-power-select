@@ -17,7 +17,10 @@ export default class ShadowComponent extends Component<{
   }
 
   attachShadow = modifier(
-    (element: Element, [set]: [(shadowRoot: Element) => void]) => {
+    (
+      element: HTMLDivElement,
+      [set]: [(shadowRoot: HTMLDivElement) => void],
+    ) => {
       const shadowRoot = element.attachShadow({ mode: 'open' });
       const div = document.createElement('div');
       shadowRoot.appendChild(div);

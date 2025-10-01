@@ -37,7 +37,7 @@ export interface PowerSelectBeforeOptionsSignature<
     onFocus: (e: FocusEvent) => void;
     onInput: (e: InputEvent) => boolean | void;
     placeholderComponent?: ComponentLike<
-      PowerSelectPlaceholderSignature<T, IsMultiple>
+      PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
     >;
     selectedItemComponent?: ComponentLike<
       PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>
