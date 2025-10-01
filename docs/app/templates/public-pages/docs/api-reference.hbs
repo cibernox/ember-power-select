@@ -11,8 +11,13 @@
   </thead>
   <tbody>
     <tr>
+      <td>multiple</td>
+      <td><code>boolean</code></td>
+      <td>When truthy, the select field is a multiple select field</td>
+    </tr>
+    <tr>
       <td>afterOptionsComponent</td>
-      <td><code>string/contextual-component</code></td>
+      <td><code>contextual-component</code></td>
       <td>The component rendered after the list of options. It is empty by
         default in both single and multiple selects</td>
     </tr>
@@ -48,7 +53,7 @@
     </tr>
     <tr>
       <td>labelComponent</td>
-      <td><code>string/contextual-component</code></td>
+      <td><code>contextual-component</code></td>
       <td>Overrides the default label component</td>
     </tr>
     <tr>
@@ -79,7 +84,7 @@
     </tr>
     <tr>
       <td>beforeOptionsComponent</td>
-      <td><code>string/contextual-component</code></td>
+      <td><code>contextual-component</code></td>
       <td>The component rendered before the list of options. In single selects
         defaults to the searchbox. In multiple select defaults to nothing</td>
     </tr>
@@ -154,7 +159,7 @@
     </tr>
     <tr>
       <td>groupComponent</td>
-      <td><code>string</code></td>
+      <td><code>contextual-component</code></td>
       <td>The component to render instead of the default one around the list of
         options that have groups</td>
     </tr>
@@ -236,7 +241,7 @@
     </tr>
     <tr>
       <td>noMatchesMessageComponent</td>
-      <td><code>string</code></td>
+      <td><code>contextual-component</code></td>
       <td>The component to render instead of the default one around the no
         matches message.</td>
     </tr>
@@ -307,7 +312,7 @@
     </tr>
     <tr>
       <td>optionsComponent</td>
-      <td><code>string</code></td>
+      <td><code>contextual-component</code></td>
       <td>The component to render instead of the default one inside the list of
         options</td>
     </tr>
@@ -319,7 +324,7 @@
     </tr>
     <tr>
       <td>placeholderComponent</td>
-      <td><code>string or component</code></td>
+      <td><code>contextual-component</code></td>
       <td>Component to be rendered as placeholder. It can be used along with
         <code>placeholder</code>
         and has access to it</td>
@@ -405,7 +410,7 @@
     </tr>
     <tr>
       <td>selectedItemComponent</td>
-      <td><code>string</code></td>
+      <td><code>contextual-component</code></td>
       <td>The component to render to customize just the selected item of the
         trigger</td>
     </tr>
@@ -421,7 +426,7 @@
     </tr>
     <tr>
       <td>triggerComponent</td>
-      <td><code>string</code></td>
+      <td><code>contextual-component</code></td>
       <td>The component to render instead of the default one inside the trigger</td>
     </tr>
     <tr>
@@ -488,6 +493,7 @@
   resultsCount: &lt;number&gt;,         // Contains the number of results incuding those nested/disabled
   searchText: &lt;string&gt;,           // Contains the text of the current search
   selected: &lt;T&gt; or &lt;array[T]&gt;,    // Contains the resolved selected option (or options in multiple selects)
+  multiple: &lt;boolean&gt;,            // Truthy if `@multiple=true` was passed
   uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form `ember1234`.
   actions: {
     choose(option) { ... },       // Chooses the given options if it's not disabled (slight different than `select`)
