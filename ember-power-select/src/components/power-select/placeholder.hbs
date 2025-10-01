@@ -1,5 +1,7 @@
 {{#if @isMultipleWithSearch}}
-  <@inputComponent @isDefaultPlaceholder={{true}} />
+  {{#let @inputComponent as |InputComponent|}}
+    <InputComponent @isDefaultPlaceholder={{true}} @select={{@select}} />
+  {{/let}}
 {{else if @placeholder}}
   <span
     class="ember-power-select-placeholder"

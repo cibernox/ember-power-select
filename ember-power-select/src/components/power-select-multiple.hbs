@@ -1,5 +1,4 @@
 <PowerSelect
-  @legacyMultiple={{true}}
   @animationEnabled={{@animationEnabled}}
   @triggerRole={{@triggerRole}}
   @ariaDescribedBy={{@ariaDescribedBy}}
@@ -9,14 +8,11 @@
   @labelClass={{@labelClass}}
   @labelText={{@labelText}}
   @labelClickAction={{@labelClickAction}}
-  @labelComponent={{ensure-safe-component @labelComponent}}
-  @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
+  @labelComponent={{@labelComponent}}
+  @afterOptionsComponent={{@afterOptionsComponent}}
   @allowClear={{@allowClear}}
-  @beforeOptionsComponent={{if
-    @beforeOptionsComponent
-    (ensure-safe-component @beforeOptionsComponent)
-  }}
-  @buildSelection={{or @buildSelection this.defaultBuildSelection}}
+  @beforeOptionsComponent={{@beforeOptionsComponent}}
+  @buildSelection={{@buildSelection}}
   @calculatePosition={{@calculatePosition}}
   @closeOnSelect={{@closeOnSelect}}
   @defaultHighlighted={{@defaultHighlighted}}
@@ -27,27 +23,26 @@
   @disabled={{@disabled}}
   @dropdownClass={{@dropdownClass}}
   @extra={{@extra}}
-  @groupComponent={{ensure-safe-component @groupComponent}}
+  @groupComponent={{@groupComponent}}
   @horizontalPosition={{@horizontalPosition}}
   @initiallyOpened={{@initiallyOpened}}
   @loadingMessage={{@loadingMessage}}
   @matcher={{@matcher}}
   @matchTriggerWidth={{@matchTriggerWidth}}
   @noMatchesMessage={{@noMatchesMessage}}
-  @noMatchesMessageComponent={{ensure-safe-component
-    @noMatchesMessageComponent
-  }}
+  @noMatchesMessageComponent={{@noMatchesMessageComponent}}
+  @multiple={{true}}
   @onBlur={{@onBlur}}
   @onChange={{@onChange}}
   @onClose={{@onClose}}
-  @onFocus={{this.handleFocus}}
+  @onFocus={{@onFocus}}
   @onInput={{@onInput}}
-  @onKeydown={{this.handleKeydown}}
-  @onOpen={{this.handleOpen}}
+  @onKeydown={{@onKeydown}}
+  @onOpen={{@onOpen}}
   @options={{@options}}
-  @optionsComponent={{ensure-safe-component @optionsComponent}}
+  @optionsComponent={{@optionsComponent}}
   @placeholder={{@placeholder}}
-  @placeholderComponent={{ensure-safe-component @placeholderComponent}}
+  @placeholderComponent={{@placeholderComponent}}
   @preventScroll={{@preventScroll}}
   @registerAPI={{@registerAPI}}
   @renderInPlace={{@renderInPlace}}
@@ -56,25 +51,21 @@
   @search={{@search}}
   @searchEnabled={{@searchEnabled}}
   @searchField={{@searchField}}
-  @searchFieldPosition={{or @searchFieldPosition "trigger"}}
+  @searchFieldPosition={{@searchFieldPosition}}
   @searchMessage={{@searchMessage}}
   @searchMessageComponent={{@searchMessageComponent}}
   @searchPlaceholder={{@searchPlaceholder}}
   @selected={{@selected}}
-  @selectedItemComponent={{ensure-safe-component @selectedItemComponent}}
+  @selectedItemComponent={{@selectedItemComponent}}
   @eventType={{@eventType}}
   @title={{@title}}
-  @triggerClass="ember-power-select-multiple-trigger {{@triggerClass}}"
-  @triggerComponent={{if
-    @triggerComponent
-    (component (ensure-safe-component @triggerComponent) tabindex=@tabindex)
-    (component "power-select-multiple/trigger" tabindex=@tabindex)
-  }}
+  @triggerClass={{@triggerClass}}
+  @triggerComponent={{@triggerComponent}}
   @triggerId={{@triggerId}}
   @verticalPosition={{@verticalPosition}}
-  @tabindex={{this.computedTabIndex}}
-  @ebdTriggerComponent={{ensure-safe-component @ebdTriggerComponent}}
-  @ebdContentComponent={{ensure-safe-component @ebdContentComponent}}
+  @tabindex={{@tabindex}}
+  @ebdTriggerComponent={{@ebdTriggerComponent}}
+  @ebdContentComponent={{@ebdContentComponent}}
   ...attributes
   as |option select|
 >

@@ -447,6 +447,9 @@ importers:
       '@ember-data/legacy-compat':
         specifier: 5.7.0
         version: 5.7.0(@glint/template@1.5.2)
+      '@ember-data/model':
+        specifier: 5.7.0
+        version: 5.7.0(@glint/template@1.5.2)
       '@ember-data/request':
         specifier: 5.7.0
         version: 5.7.0(@glint/template@1.5.2)
