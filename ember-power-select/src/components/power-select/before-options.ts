@@ -1,15 +1,15 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type {
-  PowerSelectSelectedItemSignature,
-  Select,
-  TSearchFieldPosition,
-} from '../power-select';
 import { deprecate } from '@ember/debug';
 import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder';
+import type {
+  PowerSelectSelectedItemSignature,
+  Select,
+  TSearchFieldPosition,
+} from '../../types';
 
 export interface PowerSelectBeforeOptionsSignature<
   T = unknown,

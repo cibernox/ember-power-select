@@ -1,19 +1,19 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import type { PowerSelectArgs } from '../power-select';
+import { get } from '@ember/object';
+import { modifier } from 'ember-modifier';
+import { deprecate } from '@ember/debug';
+import PowerSelectInput, { type PowerSelectInputSignature } from './input.ts';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './placeholder';
 import type {
   Option,
-  PowerSelectArgs,
   PowerSelectSelectedItemSignature,
   Select,
   Selected,
   TSearchFieldPosition,
-} from '../power-select';
-import { get } from '@ember/object';
-import { modifier } from 'ember-modifier';
-import { deprecate } from '@ember/debug';
-import type { ComponentLike } from '@glint/template';
-import type { PowerSelectPlaceholderSignature } from './placeholder';
-import PowerSelectInput, { type PowerSelectInputSignature } from './input.ts';
+} from '../../types.ts';
 
 export interface PowerSelectTriggerSignature<
   T = unknown,

@@ -4,15 +4,15 @@ import { modifier } from 'ember-modifier';
 import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import { get } from '@ember/object';
+import { task, timeout } from 'ember-concurrency';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './placeholder';
 import type {
   Option,
   Select,
   Selected,
   TSearchFieldPosition,
-} from '../power-select';
-import { task, timeout } from 'ember-concurrency';
-import type { ComponentLike } from '@glint/template';
-import type { PowerSelectPlaceholderSignature } from './placeholder';
+} from '../../types';
 
 export interface PowerSelectInputSignature<
   T = unknown,

@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { GroupObject, Option, Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
 import type { PowerSelectPowerSelectGroupSignature } from './power-select-group';
+import type { GroupObject, Option, Select } from '../../types';
 declare const FastBoot: unknown;
 
 export interface PowerSelectOptionsSignature<

@@ -26,25 +26,26 @@ import { isEmpty } from '@ember/utils';
 import { runTask } from 'ember-lifeline';
 import { TrackedArray } from 'tracked-built-ins';
 import type {
-  Selected,
-  Select,
-} from 'ember-power-select/components/power-select-multiple';
-import type {
   DefaultHighlightedParams,
   MatcherFn,
-} from 'ember-power-select/utils/group-utils';
+  MultipleSelect,
+  MultipleSelected,
+} from 'ember-power-select/types';
 
 interface NumbersContext extends TestContext {
   element: HTMLElement;
   numbers: string[] | Promise<string[]>;
-  selected: Selected<string>;
+  selected: MultipleSelected<string>;
   searchFn: (term: string) => string[] | Promise<string[]>;
   endsWithMatcher: MatcherFn<string>;
   defaultHighlighted?:
     | string
     | ((params: DefaultHighlightedParams<string>) => string);
   foo: () => void;
-  onChange: (selection: Selected<string>, select: Select<string>) => void;
+  onChange: (
+    selection: MultipleSelected<string>,
+    select: MultipleSelect<string>,
+  ) => void;
 }
 
 interface Person {
@@ -54,34 +55,25 @@ interface Person {
 
 interface PeopleContext extends TestContext {
   people: Person[] | Promise<Person[]>;
-  selected: Selected<Person>;
-  // search: () => Promise<string[]> | string[];
-  // proxy: string[] | Promise<string[]>;
-  // endsWithMatcher: MatcherFn<string>;
-  // defaultHighlighted?: string | ((params: DefaultHighlightedParams<string>) => string);
-  // destinationElement?: HTMLElement | undefined;
-  // ref: any;
+  selected: MultipleSelected<Person>;
   foo: () => void;
-  onChange: (selected: Selected<Person>) => void;
-  // renderInPlace?: boolean;
-  // calculatePosition: CalculatePosition;
-  // beforeOptionsComponent: ComponentLike<
-  //   PowerSelectBeforeOptionsSignature<string, unknown, IsMultiple>
-  // >;
+  onChange: (selected: MultipleSelected<Person>) => void;
 }
 
 interface UserContext extends TestContext {
-  selected: Selected<User>;
+  selected: MultipleSelected<User>;
   search: (term: string) => User[];
-  onChange: (user: Selected<User>) => void;
+  onChange: (user: MultipleSelected<User>) => void;
 }
 
 interface CountryContext extends TestContext {
-  // matcherFn: MatcherFn<Country>;
   countries: Country[];
-  selected: Selected<typeof countries>;
+  selected: MultipleSelected<typeof countries>;
   foo: () => void;
-  onChange: (selection: Selected<Country>, select: Select<Country>) => void;
+  onChange: (
+    selection: MultipleSelected<Country>,
+    select: MultipleSelect<Country>,
+  ) => void;
 }
 
 class User {

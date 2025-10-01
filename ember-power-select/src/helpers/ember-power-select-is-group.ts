@@ -1,7 +1,8 @@
-import { isGroup, type Group } from '../utils/group-utils.ts';
+import { isGroup } from '../utils/group-utils.ts';
+import type { GroupBase } from '../types.ts';
 
 export default function emberPowerSelectIsGroup<T>(
   maybeGroup: unknown,
-): maybeGroup is Group<T> {
+): maybeGroup is GroupBase<T> {
   return isGroup(maybeGroup);
 }

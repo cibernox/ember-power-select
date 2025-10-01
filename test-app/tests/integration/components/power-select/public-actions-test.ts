@@ -9,10 +9,7 @@ import {
 import { names, numbers } from 'test-app/utils/constants';
 import { tracked } from '@glimmer/tracking';
 import type { TestContext } from '@ember/test-helpers';
-import type {
-  Select,
-  Selected,
-} from 'ember-power-select/components/power-select';
+import type { Select, Selected } from 'ember-power-select/types';
 
 interface NumbersContext<IsMultiple extends boolean = false>
   extends TestContext {

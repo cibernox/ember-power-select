@@ -16,7 +16,7 @@ import type {
   PowerSelectSelectedItemSignature,
   Select,
   Selected,
-} from 'ember-power-select/components/power-select';
+} from 'ember-power-select/types';
 import SelectedCountry from 'test-app/components/selected-country';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';

@@ -20,7 +20,7 @@ import {
 } from 'ember-power-select/test-support/helpers';
 import { numbers, countries, type Country } from 'test-app/utils/constants';
 import RSVP from 'rsvp';
-import type { MatcherFn } from 'ember-power-select/utils/group-utils';
+import type { MatcherFn } from 'ember-power-select/types';
 
 interface SearchContext extends TestContext {
   searchFn: (term: string) => typeof numbers | Promise<typeof numbers>;

@@ -11,7 +11,7 @@ import {
 } from 'test-app/utils/constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import type { TestContext } from '@ember/test-helpers';
-import type { Selected } from 'ember-power-select/components/power-select';
+import type { Selected } from 'ember-power-select/types';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';
 import SelectedCountry from 'test-app/components/selected-country';

@@ -1,14 +1,6 @@
 import Component from '@glimmer/component';
-import type {
-  Option,
-  PowerSelectArgs,
-  Select as SingleSelect,
-} from './power-select';
-import type { Selected as SingleSelected } from './power-select';
-
-export type Selected<T = unknown> = SingleSelected<T, true>;
-
-export type Select<T = unknown> = SingleSelect<T, true>;
+import type { PowerSelectArgs } from './power-select';
+import type { Option, Select } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
@@ -18,7 +10,7 @@ export interface PowerSelectMultipleSignature<T, TExtra = unknown> {
   Element: Element;
   Args: PowerSelectMultipleArgs<T, TExtra>;
   Blocks: {
-    default: [option: Option<T>, select: Select<T>];
+    default: [option: Option<T>, select: Select<T, true>];
   };
 }
 

@@ -18,10 +18,7 @@ import {
 } from 'test-app/utils/constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';
-import type {
-  Selected,
-  Select,
-} from 'ember-power-select/components/power-select';
+import type { Select, Selected } from 'ember-power-select/types';
 
 interface NumbersContext<IsMultiple extends boolean = false>
   extends TestContext {

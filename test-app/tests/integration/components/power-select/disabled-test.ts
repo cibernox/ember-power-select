@@ -18,8 +18,7 @@ import {
   countriesWithDisabled,
   type Country,
 } from 'test-app/utils/constants';
-import type { Selected } from 'ember-power-select/components/power-select';
-import type { Selected as MultipleSelected } from 'ember-power-select/components/power-select-multiple';
+import type { Selected, MultipleSelected } from 'ember-power-select/types';
 import type { TestContext } from '@ember/test-helpers';
 
 interface NumbersContext extends TestContext {

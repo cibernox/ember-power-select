@@ -18,8 +18,7 @@ import {
   clickTrigger,
   findContains,
 } from 'ember-power-select/test-support/helpers';
-import type { Selected } from 'ember-power-select/components/power-select';
-import type { Selected as MultipleSelected } from 'ember-power-select/components/power-select-multiple';
+import type { Selected, MultipleSelected } from 'ember-power-select/types';
 
 interface GroupedNumbersContext extends TestContext {
   foo: (selected: string | null | undefined) => void;

@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
-import type { GroupObject, Select } from '../power-select';
-import type { Group } from '../../utils/group-utils';
+import type { GroupBase, GroupObject, Select } from '../../types';
 
 export interface PowerSelectPowerSelectGroupSignature<
   T,
@@ -20,7 +19,7 @@ export interface PowerSelectPowerSelectGroupSignature<
 }
 
 export default class PowerSelectPowerSelectGroupComponent<
-  T extends Group,
+  T extends GroupBase,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > extends Component<

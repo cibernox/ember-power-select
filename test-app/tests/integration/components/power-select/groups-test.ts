@@ -12,7 +12,7 @@ import {
   type GroupedNumbersWithCustomProperty,
 } from 'test-app/utils/constants';
 import type { TestContext } from '@ember/test-helpers';
-import type { Selected } from 'ember-power-select/components/power-select';
+import type { Selected } from 'ember-power-select/types';
 import CustomGroupComponentWithVariant from 'test-app/components/custom-group-component-with-variant';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';

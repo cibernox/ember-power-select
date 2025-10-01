@@ -5,10 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers } from 'test-app/utils/constants';
 import { click, triggerEvent } from '@ember/test-helpers';
-import type {
-  Select,
-  Selected,
-} from 'ember-power-select/components/power-select';
+import type { Select, Selected } from 'ember-power-select/types';
 
 interface NumbersContext<IsMultiple extends boolean = false>
   extends TestContext {

@@ -1,11 +1,14 @@
 import { isEqual } from '@ember/utils';
 import type EmberArrayLike from '@ember/array';
-import type { Option, Selected } from '../components/power-select';
+import type {
+  DefaultHighlightedParams,
+  GroupBase,
+  MatcherFn,
+  Option,
+  Selected,
+} from '../types';
 
-// type MatcherOption = string | number | Record<string, unknown> | undefined;
-
-export type MatcherFn<T> = (option: T | undefined, text: string) => number;
-export function isGroup<T>(entry: unknown): entry is Group<T> {
+export function isGroup<T>(entry: unknown): entry is GroupBase<T> {
   return (
     !!entry &&
     typeof entry === 'object' &&
@@ -30,7 +33,7 @@ export function countOptions<T = unknown>(collection: readonly T[]): number {
           ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
           : collection[i];
       if (isGroup(entry)) {
-        walk((entry as unknown as Group<T>).options);
+        walk((entry as unknown as GroupBase<T>).options);
       } else {
         counter++;
       }
@@ -58,7 +61,7 @@ export function indexOfOption<T, Option, IsMultiple extends boolean = false>(
             ).objectAt(i)
           : collection[i];
       if (isGroup(entry)) {
-        const result = walk((entry as unknown as Group<T>).options);
+        const result = walk((entry as unknown as GroupBase<T>).options);
         if (result > -1) {
           return result;
         }
@@ -73,7 +76,7 @@ export function indexOfOption<T, Option, IsMultiple extends boolean = false>(
 }
 
 export function pathForOption<T = unknown>(
-  collection: T[],
+  collection: readonly T[],
   option: unknown,
 ): string {
   return (function walk(collection): string {
@@ -88,7 +91,7 @@ export function pathForOption<T = unknown>(
           ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
           : collection[i];
       if (isGroup(entry)) {
-        const result = walk((entry as unknown as Group<T>).options);
+        const result = walk((entry as unknown as GroupBase<T>).options);
         if (result.length > 0) {
           return i + '.' + result;
         }
@@ -126,8 +129,8 @@ export function optionAtIndex<T>(
             : collection[localCounter];
         if (isGroup(entry)) {
           const found = walk(
-            (entry as unknown as Group<T>).options,
-            ancestorIsDisabled || !!(entry as unknown as Group<T>).disabled,
+            (entry as unknown as GroupBase<T>).options,
+            ancestorIsDisabled || !!(entry as unknown as GroupBase<T>).disabled,
           );
           if (found) {
             return found;
@@ -135,7 +138,8 @@ export function optionAtIndex<T>(
         } else if (counter === index) {
           return {
             disabled:
-              ancestorIsDisabled || !!(entry as unknown as Group<T>).disabled,
+              ancestorIsDisabled ||
+              !!(entry as unknown as GroupBase<T>).disabled,
             option: entry as Option<T>,
           };
         } else {
@@ -147,20 +151,13 @@ export function optionAtIndex<T>(
   );
 }
 
-export interface Group<T = unknown> {
-  groupName: string;
-  options: T[];
-  disabled?: boolean;
-  [key: string]: unknown;
-}
-
 function copyGroup<T = unknown, IsMultiple extends boolean = false>(
-  group: Group<Selected<T, IsMultiple>>,
-  suboptions: Selected<T, IsMultiple>[],
-): Group<Selected<T, IsMultiple>> {
-  const groupCopy: Group<Selected<T, IsMultiple>> = {
+  group: GroupBase<Selected<T, IsMultiple>>,
+  subOptions: Selected<T, IsMultiple>[],
+): GroupBase<Selected<T, IsMultiple>> {
+  const groupCopy: GroupBase<Selected<T, IsMultiple>> = {
     ...group,
-    options: suboptions,
+    options: subOptions,
   };
   if (Object.prototype.hasOwnProperty.call(group, 'disabled')) {
     groupCopy.disabled = group.disabled;
@@ -198,7 +195,7 @@ export function findOptionWithOffset<T>(
       if (!skipDisabled || !entryIsDisabled) {
         if (isGroup(entry)) {
           walk(
-            (entry as unknown as Group<T>).options,
+            (entry as unknown as GroupBase<T>).options,
             ancestorIsDisabled || entryIsDisabled,
           );
           if (canStop()) {
@@ -232,7 +229,7 @@ export function filterOptions<
   MT = unknown,
   IsMultiple extends boolean = false,
 >(
-  options: T[],
+  options: readonly T[],
   text: string,
   matcher: MatcherFn<MT>,
   skipDisabled = false,
@@ -255,14 +252,17 @@ export function filterOptions<
     ) {
       if (isGroup(entry)) {
         const suboptions = filterOptions(
-          (entry as unknown as Group<Selected<T, IsMultiple>>).options,
+          (entry as unknown as GroupBase<Selected<T, IsMultiple>>).options,
           text,
           matcher,
           skipDisabled,
         );
         if (suboptions.length > 0) {
           opts.push(
-            copyGroup(entry as Group<Selected<T, IsMultiple>>, suboptions) as T,
+            copyGroup(
+              entry as GroupBase<Selected<T, IsMultiple>>,
+              suboptions,
+            ) as T,
           );
         }
       } else if (entry && matcher(entry as MT, text) >= 0) {
@@ -271,12 +271,6 @@ export function filterOptions<
     }
   }
   return opts;
-}
-
-export interface DefaultHighlightedParams<T> {
-  results: T[];
-  highlighted: Option<T> | null | undefined;
-  selected: Selected<T> | Selected<T, true>;
 }
 
 export function defaultHighlighted<T>({

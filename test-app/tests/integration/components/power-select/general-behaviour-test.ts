@@ -37,11 +37,8 @@ import type { ComponentLike } from '@glint/template';
 import type {
   DefaultHighlightedParams,
   MatcherFn,
-} from 'ember-power-select/utils/group-utils';
-import type {
-  PromiseProxy,
   Selected,
-} from 'ember-power-select/components/power-select';
+} from 'ember-power-select/types';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 
 interface NumbersContext<IsMultiple extends boolean = false>
@@ -67,6 +64,10 @@ interface NumbersContext<IsMultiple extends boolean = false>
 interface NamesContext extends TestContext {
   names: string[];
   foo: () => void;
+}
+
+interface PromiseProxy<T = unknown> extends Promise<T> {
+  content: T;
 }
 
 interface CountriesContext extends TestContext {

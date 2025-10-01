@@ -15,7 +15,7 @@ import {
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import type Store from '@ember-data/store';
 import type UserModel from 'test-app/models/user';
-import type { Selected } from 'ember-power-select/components/power-select';
+import type { Selected } from 'ember-power-select/types';
 
 interface UsersContext<IsMultiple extends boolean = false> extends TestContext {
   store: Store;

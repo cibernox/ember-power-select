@@ -7,7 +7,7 @@ import {
   getDropdownItems,
 } from 'ember-power-select/test-support';
 import { numbers } from 'test-app/utils/constants';
-import type { Selected } from 'ember-power-select/components/power-select';
+import type { Selected } from 'ember-power-select/types';
 import type { TestContext } from '@ember/test-helpers';
 
 interface NumbersContext<IsMultiple extends boolean = false>

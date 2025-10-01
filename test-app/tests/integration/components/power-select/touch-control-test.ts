@@ -8,10 +8,7 @@ import {
 } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { numbers } from 'test-app/utils/constants';
-import type {
-  Select,
-  Selected,
-} from 'ember-power-select/components/power-select';
+import type { Select, Selected } from 'ember-power-select/types';
 
 interface NumbersContext<IsMultiple extends boolean = false>
   extends TestContext {

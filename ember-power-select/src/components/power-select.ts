@@ -15,15 +15,22 @@ import {
   defaultMatcher,
   defaultTypeAheadMatcher,
   pathForOption,
-  type MatcherFn,
-  type DefaultHighlightedParams,
 } from '../utils/group-utils.ts';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
+import { isArray } from '@ember/array';
+import { ensureSafeComponent } from '@embroider/util';
+import PowerSelectLabelComponent from './power-select/label.ts';
+import PowerSelectTriggerComponent from './power-select/trigger.ts';
+import PowerSelectPlaceholderComponent from './power-select/placeholder.ts';
+import PowerSelectBeforeOptionsComponent from './power-select/before-options.ts';
+import SearchMessageComponent from './power-select/search-message.ts';
+import NoMatchesMessageComponent from './power-select/no-matches-message.ts';
+import PowerSelectOptionsComponent from './power-select/options.ts';
+import PowerSelectGroupComponent from './power-select/power-select-group.ts';
 import type {
   BasicDropdownDefaultBlock,
   Dropdown,
-  DropdownActions,
   TRootEventType,
 } from 'ember-basic-dropdown/components/basic-dropdown';
 import type Owner from '@ember/owner';
@@ -32,7 +39,6 @@ import type {
   HorizontalPosition,
   VerticalPosition,
 } from 'ember-basic-dropdown/utils/calculate-position';
-import { isArray } from '@ember/array';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './power-select/placeholder.ts';
 import type { PowerSelectSearchMessageSignature } from './power-select/search-message.ts';
@@ -44,73 +50,19 @@ import type { PowerSelectTriggerSignature } from './power-select/trigger.ts';
 import type { PowerSelectBeforeOptionsSignature } from './power-select/before-options.ts';
 import type { PowerSelectOptionsSignature } from './power-select/options.ts';
 import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group.ts';
-import { ensureSafeComponent } from '@embroider/util';
-import PowerSelectLabelComponent from './power-select/label.ts';
-import PowerSelectTriggerComponent from './power-select/trigger.ts';
-import PowerSelectPlaceholderComponent from './power-select/placeholder.ts';
-import PowerSelectBeforeOptionsComponent from './power-select/before-options.ts';
-import SearchMessageComponent from './power-select/search-message.ts';
-import NoMatchesMessageComponent from './power-select/no-matches-message.ts';
-import PowerSelectOptionsComponent from './power-select/options.ts';
-import PowerSelectGroupComponent from './power-select/power-select-group.ts';
+import type {
+  DefaultHighlightedParams,
+  MatcherFn,
+  Option,
+  PowerSelectAfterOptionsSignature,
+  PowerSelectSelectedItemSignature,
+  Select,
+  Selected,
+  TLabelClickAction,
+  TSearchFieldPosition,
+} from '../types.ts';
 
-export interface PowerSelectSelectedItemSignature<
-  T = unknown,
-  TExtra = unknown,
-  IsMultiple extends boolean = false,
-> {
-  Element: HTMLElement;
-  Args: {
-    extra?: TExtra;
-    selected: Option<T>;
-    select: Select<T, IsMultiple>;
-  };
-  Blocks: {
-    default: [];
-  };
-}
-
-export interface PowerSelectAfterOptionsSignature<
-  T = unknown,
-  TExtra = unknown,
-  IsMultiple extends boolean = false,
-> {
-  Element: HTMLElement;
-  Args: {
-    extra?: TExtra;
-    select: Select<T, IsMultiple>;
-  };
-  Blocks: {
-    default: [];
-  };
-}
-
-interface SelectActions<T, IsMultiple extends boolean = false>
-  extends DropdownActions {
-  search: (term: string) => void;
-  highlight: (option: Option<T> | undefined) => void;
-  select: (selected: Selected<T, IsMultiple>, e?: Event) => void;
-  choose: (selected: Option<T> | undefined, e?: Event) => void;
-  scrollTo: (option: Option<T> | undefined) => void;
-  labelClick: (e: MouseEvent) => void;
-}
-
-export interface Select<T = unknown, IsMultiple extends boolean = false>
-  extends Dropdown {
-  selected: Selected<T, IsMultiple>;
-  multiple: IsMultiple;
-  highlighted: Option<T>;
-  options: readonly T[];
-  results: readonly T[];
-  resultsCount: number;
-  loading: boolean;
-  isActive: boolean;
-  searchText: string;
-  lastSearchedText: string;
-  actions: SelectActions<T, IsMultiple>;
-}
-
-export interface PromiseProxy<T = unknown> extends Promise<T> {
+interface PromiseProxy<T = unknown> extends Promise<T> {
   content: T;
 }
 
@@ -121,41 +73,6 @@ interface CancellablePromise<T> extends Promise<T> {
 interface Sliceable<T> {
   slice(): T[];
 }
-
-export type Option<T> = T extends readonly (infer U)[]
-  ? Option<U> // unwrap array
-  : T extends { groupName: string; options: infer O }
-    ? Option<O> // unwrap groups recursively
-    : T; // base case: string, number, or object with value/name
-
-// Depth helper to limit recursion
-type GroupWithOptionsPrev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-// Recursive extractor with max depth
-type GroupWithOptions<T, Depth extends number = 5> = Depth extends 0
-  ? never
-  : T extends { groupName: string; options: infer O }
-    ?
-        | T
-        | GroupWithOptions<
-            O extends readonly any[] ? O[number] : never,
-            GroupWithOptionsPrev[Depth]
-          >
-    : T extends readonly (infer U)[]
-      ? GroupWithOptions<U, GroupWithOptionsPrev[Depth]>
-      : never;
-
-export type GroupObject<T> = Extract<
-  GroupWithOptions<T, 5>,
-  { groupName: string; options: any; disabled?: boolean }
->;
-
-export type Selected<
-  T,
-  IsMultiple extends boolean = false,
-> = IsMultiple extends true
-  ? Option<T>[] | null | undefined
-  : Option<T> | null | undefined;
 
 // Some args are not listed here because they are only accessed from the template. Should I list them?
 export interface PowerSelectArgs<
@@ -283,9 +200,6 @@ export interface PowerSelectArgs<
   scrollTo?: (option: Selected<T>, select: Select<T, IsMultiple>) => void;
   registerAPI?: (select: Select<T, IsMultiple>) => void;
 }
-
-export type TLabelClickAction = 'focus' | 'open';
-export type TSearchFieldPosition = 'before-options' | 'trigger';
 
 export interface PowerSelectSignature<
   T,

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import type { Select } from '../power-select';
+import type { Select } from '../../types';
 
 export interface PowerSelectNoMatchesMessageSignature<
   T = unknown,

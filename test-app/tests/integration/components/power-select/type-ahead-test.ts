@@ -5,7 +5,7 @@ import { optionAtIndex } from 'ember-power-select/utils/group-utils';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { namesStartingWithA } from 'test-app/utils/constants';
 import { render, focus, triggerKeyEvent } from '@ember/test-helpers';
-import type { Selected } from 'ember-power-select/components/power-select';
+import type { Selected } from 'ember-power-select/types';
 import type { TestContext } from '@ember/test-helpers';
 
 interface Helpers {
