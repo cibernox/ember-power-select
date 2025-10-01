@@ -1,4 +1,5 @@
-<PowerSelectMultiple
+<PowerSelect
+  @multiple={{true}}
   @options={{this.options}}
   @selected={{this.selected}}
   @onChange={{fn (mut this.selected)}}
@@ -8,4 +9,4 @@
   as |number|
 >
   {{number}}
-</PowerSelectMultiple>
+</PowerSelect>

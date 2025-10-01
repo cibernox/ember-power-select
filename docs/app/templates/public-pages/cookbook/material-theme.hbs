@@ -58,7 +58,8 @@
 </PowerSelect>
 
 <h2 class="t3">Multiple selects with search</h2>
-<PowerSelectMultiple
+<PowerSelect
+  @multiple={{true}}
   @triggerClass="material-theme-trigger"
   @dropdownClass="material-theme-dropdown"
   @options={{this.countries}}
@@ -70,7 +71,7 @@
   as |country|
 >
   {{country.name}}
-</PowerSelectMultiple>
+</PowerSelect>
 <h2 class="t3">Groups</h2>
 <PowerSelect
   @triggerClass="material-theme-trigger"
