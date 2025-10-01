@@ -15,6 +15,21 @@
 
 
 
+
+## v8.11.0 (2025-10-01)
+
+#### :rocket: Enhancement
+* [#1939](https://github.com/cibernox/ember-power-select/pull/1939) Add `@multiple` parameter to `<PowerSelect>` and deprecate `<PowerSelectMultiple>` ([@mkszepp](https://github.com/mkszepp))
+
+#### :bug: Bug Fix
+* [#1943](https://github.com/cibernox/ember-power-select/pull/1943) Add check to avoid auto focus for input field in trigger ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1942](https://github.com/cibernox/ember-power-select/pull/1942) Update docs to new multiple select field way ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.10.0 (2025-09-30)
 
 #### :rocket: Enhancement
