@@ -39,8 +39,8 @@ export default class PowerSelectMultipleInputComponent extends Component<PowerSe
         for: 'ember-power-select',
         id: 'ember-power-select.deprecate-power-select-multiple-input',
         since: {
-          enabled: '8.10',
-          available: '8.10',
+          enabled: '8.11',
+          available: '8.11',
         },
         until: '9.0.0',
       },

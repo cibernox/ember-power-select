@@ -48,8 +48,8 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
           for: 'ember-power-select',
           id: 'ember-power-select.deprecate-input-field-placeholder-argument',
           since: {
-            enabled: '8.10',
-            available: '8.10',
+            enabled: '8.11',
+            available: '8.11',
           },
           until: '9.0.0',
         },
