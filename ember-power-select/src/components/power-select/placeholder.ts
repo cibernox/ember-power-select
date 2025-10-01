@@ -13,7 +13,9 @@ export interface PowerSelectPlaceholderSignatureArgs<
   placeholder?: string;
   displayPlaceholder?: boolean;
   extra?: TExtra;
-  inputComponent?: ComponentLike<PowerSelectInputSignature<T, TExtra, IsMultiple>>;
+  inputComponent?: ComponentLike<
+    PowerSelectInputSignature<T, TExtra, IsMultiple>
+  >;
 }
 
 export interface PowerSelectPlaceholderSignature<

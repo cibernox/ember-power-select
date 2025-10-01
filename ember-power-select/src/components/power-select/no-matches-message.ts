@@ -18,4 +18,6 @@ export default class PowerSelectNoMatchesMessage<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Component<PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>> {}
+> extends Component<
+  PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
+> {}
