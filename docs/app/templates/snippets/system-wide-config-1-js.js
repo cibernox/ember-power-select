@@ -1,5 +1,5 @@
 import EmberPowerSelect from 'ember-power-select/components/power-select';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class extends EmberPowerSelect {
   @service intl;
