@@ -10,10 +10,12 @@
       and
       <code>ember-concurrency</code>
       are now peerDependencies. You need to add into your devDependencies</p>
-    <div class="highlight">
-      <pre class="language-command"><code class="language-command">$ ember
-          install ember-basic-dropdown ember-concurrency</code></pre>
-    </div>
+    <p>
+      <div class="code-block">
+        <pre>$ ember install ember-basic-dropdown ember-concurrency</pre>
+      </div>
+    </p>
+
     <p>As
       <code>ember-concurrency</code>
       is now also a V2 addon. There are some manual steps necessary see
@@ -29,7 +31,12 @@
       (necessary because
       <code>ember-basic-dropdown</code>
       is a V2 addon)</p>
-    <CodeBlock @language="hbs" @code="<BasicDropdownWormhole />" />
+
+    <CodeExample
+      @glimmerTs="installation-0.gts"
+      @showResult={{false}}
+      @activeTab="glimmer-ts"
+    />
   </li>
   <li>
     <p>OptionsComponent: Group options were detected over js since now with
@@ -74,7 +81,11 @@
         href="https://ember-power-select.com/cookbook/material-theme"
       >material</a>
     </p>
-    <CodeBlock @language="js" @code="import 'ember-power-select/styles';" />
+    <CodeExample
+      @js="installation-1.js.txt"
+      @showResult={{false}}
+      @activeTab="js"
+    />
   </li>
   <li>
     <p>LESS: If you are using with less you need to add
@@ -82,9 +93,12 @@
       into your
       <code>ember-cli-build.js</code>
       file</p>
-    {{#let (get-code-snippet "installation-2.js") as |snippet|}}
-      <CodeBlock @language="js" @code={{snippet.source}} />
-    {{/let}}
+
+    <CodeExample
+      @js="installation-2.js"
+      @showResult={{false}}
+      @activeTab="js"
+    />
   </li>
   <li>
     <p>Typo fix: If you have a custom

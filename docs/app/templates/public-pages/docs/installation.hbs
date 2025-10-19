@@ -11,10 +11,11 @@
   following command in your Ember project directory:
 </p>
 
-<div class="highlight">
-  <pre class="language-command"><code class="language-command">$ ember install
-      ember-power-select</code></pre>
-</div>
+<p>
+  <div class="code-block">
+    <pre>$ ember install ember-power-select</pre>
+  </div>
+</p>
 
 <p>
   When installing via
@@ -55,7 +56,11 @@
   content.
 </p>
 
-<CodeBlock @language="hbs" @code="<BasicDropdownWormhole />" />
+<CodeExample
+  @glimmerTs="installation-0.gts"
+  @showResult={{false}}
+  @activeTab="glimmer-ts"
+/>
 
 <p>
   If you use vanilla CSS, add the following line to your
@@ -65,7 +70,11 @@
   file:
 </p>
 
-<CodeBlock @language="js" @code="import 'ember-power-select/styles';" />
+<CodeExample
+  @js="installation-1.js.txt"
+  @showResult={{false}}
+  @activeTab="js"
+/>
 
 <p>
   Instead of adding the styling in a
@@ -74,10 +83,10 @@
   template/component CSS file using the following line:
 </p>
 
-{{! template-lint-disable no-potential-path-strings }}
-<CodeBlock
-  @language="css"
-  @code="@import 'ember-power-select/vendor/ember-power-select.css';"
+<CodeExample
+  @css="installation-2.css.txt"
+  @showResult={{false}}
+  @activeTab="css"
 />
 
 <p>
@@ -85,9 +94,11 @@
   styles.
 </p>
 
-{{#let (get-code-snippet "installation-1.scss") as |snippet|}}
-  <CodeBlock @language="scss" @code={{snippet.source}} />
-{{/let}}
+<CodeExample
+  @scss="installation-1.scss"
+  @showResult={{false}}
+  @activeTab="scss"
+/>
 
 <p>
   For LESS, you also need to register the
@@ -96,9 +107,11 @@
   <code>lessOptions</code>.
 </p>
 
-{{#let (get-code-snippet "installation-2.js") as |snippet|}}
-  <CodeBlock @language="js" @code={{snippet.source}} />
-{{/let}}
+<CodeExample
+  @js="installation-2.js"
+  @showResult={{false}}
+  @activeTab="js"
+/>
 
 <p>
   This explicit import is needed because using CSS preprocessors like SASS and

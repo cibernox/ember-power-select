@@ -50,7 +50,7 @@
   property.
 </p>
 
-<CodeExample @hbs="the-list-1.hbs" @js="the-list-1.js">
+<CodeExample @glimmerTs="the-list-1.gts">
   {{component (ensure-safe-component this.theList1)}}
 </CodeExample>
 
@@ -61,7 +61,7 @@
   and the dropdown will be placed next to the trigger element in the DOM.
 </p>
 
-<CodeExample @hbs="the-list-2.hbs" @js="the-list-2.js">
+<CodeExample @glimmerTs="the-list-2.gts">
   {{component (ensure-safe-component this.theList2)}}
 </CodeExample>
 
@@ -85,7 +85,7 @@
   this option.
 </p>
 
-<CodeExample @hbs="the-list-3.hbs" @js="the-list-3.js">
+<CodeExample @glimmerTs="the-list-3.gts">
   {{component (ensure-safe-component this.theList3)}}
 </CodeExample>
 
@@ -97,7 +97,7 @@
   that will appear after performing a search when there are no matching results.
 </p>
 
-<CodeExample @hbs="the-list-4.hbs" @js="the-list-4.js">
+<CodeExample @glimmerTs="the-list-4.gts">
   {{component (ensure-safe-component this.theList4)}}
 </CodeExample>
 
@@ -106,18 +106,9 @@
   <code>noMatchesMessage="My message"</code>
 </p>
 
-<CodeExample @hbs="the-list-5.hbs" @js="the-list-5.js">
+<CodeExample @glimmerTs="the-list-5.gts">
   {{component (ensure-safe-component this.theList5)}}
 </CodeExample>
-
-{{!-- <p>
-  Or you can just use the <code>\{{else}}</code> block to just customize a totally
-  different HTML content just like the <code>\{{each}}</code> helper.
-</p>
-
-<CodeExample @hbs="the-list-6.hbs" @js="the-list-6.js">
-  {{component (ensure-safe-component this.theList6)}}
-</CodeExample> --}}
 
 <h2 class="t3">The loading state</h2>
 
@@ -140,7 +131,7 @@
   <code>loadingMessage="Some text"</code>
 </p>
 
-<CodeExample @hbs="the-list-7.hbs" @js="the-list-7.js">
+<CodeExample @glimmerTs="the-list-7.gts">
   {{component (ensure-safe-component this.theList7)}}
 </CodeExample>
 
@@ -150,7 +141,6 @@
   In
   <LinkTo
     @route="public-pages.docs.the-trigger"
-    class="doc-page-nav-link-prev"
   >The trigger</LinkTo>
   we saw how to disable the entire component, but you can also disable specific
   options. Options that have a
@@ -164,7 +154,7 @@
   to mouse events nor can be highlighted using arrow navigation.
 </p>
 
-<CodeExample @hbs="the-list-8.hbs" @js="the-list-8.js">
+<CodeExample @glimmerTs="the-list-8.gts">
   {{component (ensure-safe-component this.theList8)}}
 </CodeExample>
 
@@ -175,7 +165,7 @@
   disabled.
 </p>
 
-<CodeExample @hbs="the-list-9.hbs" @js="the-list-9.js">
+<CodeExample @glimmerTs="the-list-9.gts">
   {{component (ensure-safe-component this.theList9)}}
 </CodeExample>
 
@@ -202,7 +192,7 @@
   clicks on the link.
 </p>
 
-<CodeExample @hbs="the-list-10.hbs" @js="the-list-10.js">
+<CodeExample @glimmerTs="the-list-10.gts">
   {{component (ensure-safe-component this.theList10)}}
 </CodeExample>
 
