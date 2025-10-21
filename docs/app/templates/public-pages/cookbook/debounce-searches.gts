@@ -1,0 +1,64 @@
+import CodeExample from 'docs/components/code-example';
+import { LinkTo } from '@ember/routing';
+import DebounceSearches1 from '../../../components/snippets/debounce-searches-1';
+import DebounceSearches2 from '../../../components/snippets/debounce-searches-2';
+
+<template>
+  <h1 class="doc-page-title">Debounce searches</h1>
+
+  <p>
+    By default this component will fire the search event with each change on the
+    search term but very often you want to debounce searches to not overload the
+    server, hit API rate limits or make the UI smoother.
+  </p>
+
+  <p>
+    You can do that yourself with a few lines of code:
+  </p>
+
+  <CodeExample @glimmerTs="debounce-searches-1.gts">
+    {{DebounceSearches1}}
+  </CodeExample>
+
+  <p>
+    That way you are in control and you can vary the debounce intervals depending
+    on any custom logic like the device (people type slower in small screens),
+    make it bigger if the API tells that you're approaching the API rate limit.
+  </p>
+
+  <p>
+    It makes you code a little more but in exchange you always have the ultimate
+    decision.
+  </p>
+
+  <h2 class="t3">Debouncing searches with ember-concurrency</h2>
+
+  <p>
+    Ember Power Select uses
+    <a
+      href="https://ember-concurrency.com/docs/introduction/"
+    >ember-concurrency</a>
+    internally to manage asyncrony in a nice way, and so can you. The above
+    example can be expresed much more succint way using ember-concurrency's task
+    because it abstract you from all the manual bookeeping of promises and
+    debounce times.
+  </p>
+
+  <CodeExample @glimmerTs="debounce-searches-2.gts">
+    {{DebounceSearches2}}
+  </CodeExample>
+
+  <p>That's it. Three lines of code for debounced searches with automatic
+    cancellation.</p>
+
+  <div class="doc-page-nav">
+    <LinkTo
+      @route="public-pages.cookbook.bootstrap-theme"
+      class="doc-page-nav-link-prev"
+    >&lt; Bootstrap theme</LinkTo>
+    <LinkTo
+      @route="public-pages.cookbook.create-custom-options"
+      class="doc-page-nav-link-next"
+    >Create custom options &gt;</LinkTo>
+  </div>
+</template>

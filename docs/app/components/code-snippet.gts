@@ -10,7 +10,7 @@ export interface CodeSnippetSignature {
   };
 }
 
-<template>
+export default <template>
   {{#let (getCodeSnippet @name) as |snippet|}}
     <CodeBlock @language={{snippet.language}} @code={{snippet.source}} />
   {{/let}}

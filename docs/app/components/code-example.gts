@@ -19,6 +19,7 @@ interface CodeExampleSignature {
     scss?: string;
     activeTab?: string;
     showResult?: boolean;
+    codeBlockClass?: string;
   };
   Blocks: {
     default: [];
@@ -101,32 +102,32 @@ export default class CodeExample extends Component<CodeExampleSignature> {
       </nav>
       {{#if (and @glimmerTs (eq this.activeTab "glimmer-ts"))}}
         {{#let (getCodeSnippet @glimmerTs) as |snippet|}}
-          <CodeBlock @language="gts" @code={{snippet.source}} />
+          <CodeBlock @language="gts" @code={{snippet.source}} @class={{@codeBlockClass}} />
         {{/let}}
       {{/if}}
       {{#if (and @hbs (eq this.activeTab "hbs"))}}
         {{#let (getCodeSnippet @hbs) as |snippet|}}
-          <CodeBlock @language="handlebars" @code={{snippet.source}} />
+          <CodeBlock @language="handlebars" @code={{snippet.source}} @class={{@codeBlockClass}} />
         {{/let}}
       {{/if}}
       {{#if @hbs2}}
         {{#let (getCodeSnippet @hbs2) as |snippet|}}
-          <CodeBlock @language="handlebars" @code={{snippet.source}} />
+          <CodeBlock @language="handlebars" @code={{snippet.source}} @class={{@codeBlockClass}} />
         {{/let}}
       {{/if}}
       {{#if (and @js (eq this.activeTab "js"))}}
         {{#let (getCodeSnippet @js) as |snippet|}}
-          <CodeBlock @language="js" @code={{snippet.source}} />
+          <CodeBlock @language="js" @code={{snippet.source}} @class={{@codeBlockClass}} />
         {{/let}}
       {{/if}}
       {{#if (and @scss (eq this.activeTab "scss"))}}
         {{#let (getCodeSnippet @scss) as |snippet|}}
-          <CodeBlock @language="scss" @code={{snippet.source}} />
+          <CodeBlock @language="scss" @code={{snippet.source}} @class={{@codeBlockClass}} />
         {{/let}}
       {{/if}}
       {{#if (and @css (eq this.activeTab "css"))}}
         {{#let (getCodeSnippet @css) as |snippet|}}
-          <CodeBlock @language="css" @code={{snippet.source}} />
+          <CodeBlock @language="css" @code={{snippet.source}} @class={{@codeBlockClass}} />
         {{/let}}
       {{/if}}
       {{#if (and this.showResult (has-block))}}

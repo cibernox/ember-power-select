@@ -8,7 +8,7 @@ export interface MainHeaderSelectTriggerSignature {
   };
 }
 
-<template>
+export default <template>
   {{#if @disabled}}
     <LinkTo @route="public-pages.index">
       <strong>Power</strong>
