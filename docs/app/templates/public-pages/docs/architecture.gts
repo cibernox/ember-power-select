@@ -1,0 +1,144 @@
+import { LinkTo } from '@ember/routing';
+
+<template>
+  <h1 class="doc-page-title">Architecture</h1>
+
+  <p>
+    This component is built using
+    <em>The Ember 2 Way ™</em>
+    but also with a focus in composition and composability. It is also a
+    showcase of how I think Ember components should be architectured to maximize
+    their reusablity.
+  </p>
+
+  <h2 class="t3">The Ember 2 Way ™</h2>
+
+  <p>
+    In plain English, it means that this component follows the "data down -
+    actions up" design guidelines also known as DDAU.
+    <ul>
+      <li>No two way binding. None of the given properties get silently mutated.</li>
+      <li>Changes are propagated through actions. The user must handle that
+        action and decide what to do.</li>
+    </ul>
+  </p>
+
+  <h2 class="t3">Built with composition</h2>
+
+  <p>
+    Ember Power Select is built by combining existing addons/components. Each
+    one of them focused on one simple task to create a complex piece of UI, but
+    at the same time hides that fact and exposes itself as a single item.
+    <br />
+    Even the select is built on top of basic-dropdown.
+  </p>
+
+  <article class="branded-graph">
+    <p class="text-center">\{{power-select}}</p>
+    <svg
+      class="horizontally-centered"
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      width="50"
+      height="50"
+      preserveAspectRatio="xMidYMid"
+      viewBox="0 0 70 70"
+    >
+      <polygon
+        points="35,70 70,35 49,35 49,0 21,0 21,35 0,35 35,70"
+        class="shape-element"
+        fill="rgb(255, 68, 1)"
+      ></polygon>
+    </svg>
+
+    <p class="text-center">\{{basic-dropdown}}</p>
+    <svg
+      class="horizontally-centered"
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      width="50"
+      height="50"
+      preserveAspectRatio="xMidYMid"
+      viewBox="0 0 70 70"
+    >
+      <polygon
+        points="35,70 70,35 49,35 49,0 21,0 21,35 0,35 35,70"
+        class="shape-element"
+        fill="rgb(255, 68, 1)"
+      ></polygon>
+    </svg>
+    <p class="text-center">\{{#in-element}}</p>
+  </article>
+
+  <h2 class="t3">Built for composability</h2>
+
+  <p>
+    Ember Power Select is built as a simple skeleton that exposes some "holes"
+    to be filled with more components to get the complete behavior. By default,
+    those "holes" are filled with components that provide sensible defaults, but
+    if any of the components rendered in those holes do not behave exactly as
+    you want, you can replace them with your own.
+  </p>
+
+  <p>
+    At the moment there is a total of 7 "holes" you can fill.
+    <ul>
+      <li><code>triggerComponent</code>: Replaces the entire trigger markup and
+        logic.</li>
+      <li><code>selectedItemComponent</code>: Replaces only the selected
+        option(s) inside the trigger. By default it just yields the block given
+        to the component.</li>
+      <li><code>beforeOptionsComponent</code>: Contains any markup and logic
+        displayed before the list of options (by default, a search box)</li>
+      <li><code>optionsComponent</code>: Contains the list of options. The
+        content of each option is the block given to the component.</li>
+      <li><code>afterOptionsComponent</code>: Contains any markup and logic
+        displayed after the list of options. Unused by default.</li>
+      <li><code>searchMessageComponent</code>: Displays the "Type to search"
+        message. By default it just displays the
+        <code>searchMessage</code>.</li>
+    </ul>
+  </p>
+
+  <img src="/EPS_disected.png" alt="dissection of Ember Power Select" />
+
+  <h2 class="t3">Leave the last word to the end user</h2>
+
+  <p>
+    Actions exposed by the component take as little for granted as possible, and
+    is up to you to decide what to do with each.<br />
+    For that, this component's public API exposes actions like
+    <code>onFocus</code>,
+    <code>onChange</code>,
+    <code>onKeydown</code>,
+    <code>onOpen</code>
+    and
+    <code>onClose</code>
+    that allow you to decide what to do.
+    <br />
+    All those options receive the DOM event that triggered the action (if any)
+    and the component's public API as penultimate argument, which allows you to
+    control the component from the ouside using actions.
+    <br />
+    The component has some behavior defined for some actions, but even that
+    behavior can be avoided by returning
+    <code>false</code>
+    from those actions, so you can decide to do something different.
+  </p>
+
+  <p>
+    You can see an extensive list of all options of the component in the next
+    section.
+  </p>
+
+  <div class="doc-page-nav">
+    <LinkTo
+      @route="public-pages.docs.troubleshooting"
+      class="doc-page-nav-link-prev"
+    >&lt; Troubleshooting</LinkTo>
+    <LinkTo
+      @route="public-pages.docs.api-reference"
+      class="doc-page-nav-link-next"
+    >API reference &gt;</LinkTo>
+  </div>
+</template>

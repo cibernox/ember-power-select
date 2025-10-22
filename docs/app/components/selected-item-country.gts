@@ -1,0 +1,23 @@
+import type { TOC } from '@ember/component/template-only';
+
+export interface SelectedItemCountrySignature {
+  Element: Element;
+  Args: {
+    option: any;
+  };
+}
+
+export default <template>
+  <div class="country-detailed-info">
+    <img
+      src={{@option.flagUrl}}
+      class="country-flag"
+      alt="Flag of {{@option.name}}"
+    />
+    <div class="country-data-text">
+      <strong>{{@option.name}}</strong>
+      <br />
+      <small>Population in 2014: <i>{{@option.population}}</i></small>
+    </div>
+  </div>
+</template> satisfies TOC<SelectedItemCountrySignature>;

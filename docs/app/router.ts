@@ -43,11 +43,5 @@ Router.map(function () {
       this.route('debounce-searches');
       this.route('create-custom-options');
     });
-
-    this.route('addons', function () {});
-    this.route('support-the-project');
   });
-
-  // Routes for playground
-  this.route('playground');
 });
