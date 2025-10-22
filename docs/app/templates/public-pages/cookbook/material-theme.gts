@@ -57,9 +57,9 @@ export default class MaterialTheme extends Component {
     <h1 class="doc-page-title">Material theme</h1>
 
     <p>
-      Like with bootstrap, it's not a lot of code to create a material-design theme
-      using the available SASS variables and a couple animations before importing
-      the styles of the addon.
+      Like with bootstrap, it's not a lot of code to create a material-design
+      theme using the available SASS variables and a couple animations before
+      importing the styles of the addon.
     </p>
 
     <CodeExample
@@ -162,12 +162,12 @@ export default class MaterialTheme extends Component {
     <br />
     <br />
     <p>
-      This theme doesn't attempt to provide totally accurate replica of the angular
-      directive, but it's a good start.
+      This theme doesn't attempt to provide totally accurate replica of the
+      angular directive, but it's a good start.
     </p>
 
-    <p>To use it in your app, SASS users should import the theme before importing
-      the main stylesheet:</p>
+    <p>To use it in your app, SASS users should import the theme before
+      importing the main stylesheet:</p>
 
     <CodeExample
       @scss="material-theme-2.scss"
@@ -176,8 +176,8 @@ export default class MaterialTheme extends Component {
     />
 
     <p>
-      As with the bootstrap one, this skin comes pre-compiled in the app, apps that
-      don't use SASS/LESS can include it by replacing the styles import in
+      As with the bootstrap one, this skin comes pre-compiled in the app, apps
+      that don't use SASS/LESS can include it by replacing the styles import in
       <code>app.js</code>
       to:
     </p>

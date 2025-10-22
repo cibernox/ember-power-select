@@ -21,7 +21,9 @@ export default class extends Component {
   ];
 
   highlightSubstr(text: string, termToHighlight: string) {
-    return htmlSafe(text.replace(new RegExp(termToHighlight, 'i'), '<b>$&</b>')); // Warning. This is not XSS safe!
+    return htmlSafe(
+      text.replace(new RegExp(termToHighlight, 'i'), '<b>$&</b>'),
+    ); // Warning. This is not XSS safe!
   }
 
   <template>

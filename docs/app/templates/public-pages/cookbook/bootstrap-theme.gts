@@ -26,13 +26,14 @@ export default class BootstrapTheme extends Component {
       In the
       <LinkTo @route="public-pages.docs.styles">chapter about styles</LinkTo>
       of the docs you've seen how, if you are a Sass user, you can customize the
-      styles of the dropdown by defining some variables before importing the styles
-      of the addon.
+      styles of the dropdown by defining some variables before importing the
+      styles of the addon.
     </p>
 
     <p>
-      This approach can allow a great amount of customization with only a few lines
-      of code. By example this is all that takes to create a Bootstrap 3 theme:
+      This approach can allow a great amount of customization with only a few
+      lines of code. By example this is all that takes to create a Bootstrap 3
+      theme:
     </p>
 
     <CodeExample
@@ -42,9 +43,9 @@ export default class BootstrapTheme extends Component {
     />
 
     <p>
-      Since bootstrap is so popular this theme comes already bundled in Ember Power
-      Select, so the only thing you have to do is to import the theme file before
-      the main one:
+      Since bootstrap is so popular this theme comes already bundled in Ember
+      Power Select, so the only thing you have to do is to import the theme file
+      before the main one:
     </p>
 
     <CodeExample
@@ -101,7 +102,8 @@ export default class BootstrapTheme extends Component {
 
     <p>
       If your project is not using sass/less, you can still use the precompiled
-      bootstrap theme instead of the default one by replacing the styles import in
+      bootstrap theme instead of the default one by replacing the styles import
+      in
       <code>app.js</code>
       to:
     </p>

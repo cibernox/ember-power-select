@@ -9,7 +9,7 @@ import RSVP from 'rsvp';
 interface ApiResult {
   total_count: number;
   incomplete_results: boolean;
-  items: ApiResultItem[]
+  items: ApiResultItem[];
 }
 
 interface ApiResultItem {
@@ -26,14 +26,20 @@ export default class extends Component {
     });
   }
 
-  _performSearch = restartableTask(async (term: string, resolve, reject) => {
-    await timeout(600);
-    const url = `https://api.github.com/search/repositories?q=${term}`;
+  _performSearch = restartableTask(
+    async (
+      term: string,
+      resolve: (items: ApiResultItem[]) => void,
+      reject: (reason?: unknown) => void,
+    ) => {
+      await timeout(600);
+      const url = `https://api.github.com/search/repositories?q=${term}`;
 
-    await fetch(url)
-      .then((resp) => resp.json())
-      .then((json: ApiResult) => resolve(json.items), reject);
-  });
+      await fetch(url)
+        .then((resp) => resp.json())
+        .then((json: ApiResult) => resolve(json.items), reject);
+    },
+  );
 
   <template>
     <PowerSelect

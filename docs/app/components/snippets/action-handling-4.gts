@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { fn } from '@ember/helper';
-import PowerSelect, { type Select } from 'ember-power-select/components/power-select';
+import PowerSelect, {
+  type Select,
+} from 'ember-power-select/components/power-select';
 
 export default class extends Component {
   cities: string[] = ['Barcelona', 'London', 'New York', 'Porto'];

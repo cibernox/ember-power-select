@@ -1,4 +1,4 @@
-import { LinkTo } from "@ember/routing";
+import { LinkTo } from '@ember/routing';
 
 <template>
   <h1 class="doc-page-title">API reference</h1>
@@ -96,10 +96,17 @@ import { LinkTo } from "@ember/routing";
         <td>buildSelection</td>
         <td><code>function</code></td>
         <td>The function to be invoked when the user selects an option. Should
-          return either the <code>option</code> or <code>null</code>. This is used internally by
-          <code>PowerSelectMultiple</code> to construct a new array of options, but can be
-          used for unselecting a single option by returning <code>null</code> to the
-          <code>onChange</code> event.</td>
+          return either the
+          <code>option</code>
+          or
+          <code>null</code>. This is used internally by
+          <code>PowerSelectMultiple</code>
+          to construct a new array of options, but can be used for unselecting a
+          single option by returning
+          <code>null</code>
+          to the
+          <code>onChange</code>
+          event.</td>
       </tr>
       <tr>
         <td>calculatePosition</td>
@@ -114,8 +121,10 @@ import { LinkTo } from "@ember/routing";
         <td>class</td>
         <td><code>string</code></td>
         <td>
-          The CSS class of the component. The component by default is tagless, so
-          this won't take any effect unless the user specifies <code>tagName=div</code> too.
+          The CSS class of the component. The component by default is tagless,
+          so this won't take any effect unless the user specifies
+          <code>tagName=div</code>
+          too.
         </td>
       </tr>
       <tr>
@@ -125,8 +134,9 @@ import { LinkTo } from "@ember/routing";
           Defaults to true. When false, the component won't be closed after the
           user
           <em>chooses</em>
-          an option, either with the mouse/keyboard or using the <code>choose</code> action
-          in the publicAPI.
+          an option, either with the mouse/keyboard or using the
+          <code>choose</code>
+          action in the publicAPI.
         </td>
       </tr>
       <tr>
@@ -134,8 +144,8 @@ import { LinkTo } from "@ember/routing";
         <td><code>any or function</code></td>
         <td>By default when the select opens, the highlighted element is the
           selected one, or the first if none. If you want to change this
-          behaviour, pass an option or a function that receives the publicAPI and
-          resolves to the highlighted option.</td>
+          behaviour, pass an option or a function that receives the publicAPI
+          and resolves to the highlighted option.</td>
       </tr>
       <tr>
         <td>destination</td>
@@ -158,20 +168,20 @@ import { LinkTo } from "@ember/routing";
       <tr>
         <td>extra</td>
         <td><code>object</code></td>
-        <td>Object to store any arbitrary configuration meant to be used by custom
-          components</td>
+        <td>Object to store any arbitrary configuration meant to be used by
+          custom components</td>
       </tr>
       <tr>
         <td>groupComponent</td>
         <td><code>contextual-component</code></td>
-        <td>The component to render instead of the default one around the list of
-          options that have groups</td>
+        <td>The component to render instead of the default one around the list
+          of options that have groups</td>
       </tr>
       <tr>
         <td>highlightOnHover</td>
         <td><code>boolean</code></td>
-        <td>Defaults to true. When false, when the user hovers over an option with
-          the mouse, it will not be highlighted.</td>
+        <td>Defaults to true. When false, when the user hovers over an option
+          with the mouse, it will not be highlighted.</td>
       </tr>
       <tr>
         <td>horizontalPosition</td>
@@ -190,9 +200,9 @@ import { LinkTo } from "@ember/routing";
         <td>initiallyOpened</td>
         <td><code>boolean</code></td>
         <td>
-          Boolean property that controls if the component is rendered initially in
-          the open state. It won't mutate if the component is opened/closed. It
-          won't close/open the component when mutated either.
+          Boolean property that controls if the component is rendered initially
+          in the open state. It won't mutate if the component is opened/closed.
+          It won't close/open the component when mutated either.
         </td>
       </tr>
       <tr>
@@ -219,8 +229,8 @@ import { LinkTo } from "@ember/routing";
         <td><code>string</code></td>
         <td>
           Defaults to
-          <code>"mousedown"</code>. Indicates the type of event the component will
-          be listening to in order to close.
+          <code>"mousedown"</code>. Indicates the type of event the component
+          will be listening to in order to close.
         </td>
       </tr>
       <tr>
@@ -228,7 +238,8 @@ import { LinkTo } from "@ember/routing";
         <td><code>function</code></td>
         <td>The
           <code>function(option, searchTerm)</code>
-          used to filter results. The default one will compare ignoring diacritics</td>
+          used to filter results. The default one will compare ignoring
+          diacritics</td>
       </tr>
       <tr>
         <td>matchTriggerWidth</td>
@@ -252,15 +263,16 @@ import { LinkTo } from "@ember/routing";
       <tr>
         <td>resultCountMessage</td>
         <td><code>function</code></td>
-        <td>This text is only for readers. For example '10 results'. The function
-          is passing the count as number. Consumer should return a string</td>
+        <td>This text is only for readers. For example '10 results'. The
+          function is passing the count as number. Consumer should return a
+          string</td>
       </tr>
       <tr>
         <td>onBlur</td>
         <td><code>function</code></td>
         <td>The function to be invoked when component or any of its subitems
-          looses the focus. The last argument is the FocusEvent, that can be used
-          to disambiguate what gained the focus</td>
+          looses the focus. The last argument is the FocusEvent, that can be
+          used to disambiguate what gained the focus</td>
       </tr>
       <tr>
         <td>onChange</td>
@@ -276,16 +288,16 @@ import { LinkTo } from "@ember/routing";
       <tr>
         <td>onFocus</td>
         <td><code>function</code></td>
-        <td>The function to be invoked when component or any of its subitems gains
-          the focus. The last argument is the FocusEvent, that can be used to
-          disambiguate what gained the focus</td>
+        <td>The function to be invoked when component or any of its subitems
+          gains the focus. The last argument is the FocusEvent, that can be used
+          to disambiguate what gained the focus</td>
       </tr>
       <tr>
         <td>onInput</td>
         <td><code>function</code></td>
         <td>
-          The function to be invoked when the user changes the text in any search
-          input of the component. If the user returns
+          The function to be invoked when the user changes the text in any
+          search input of the component. If the user returns
           <code>false</code>
           the default behaviour (filter/search) is prevented.
         </td>
@@ -317,8 +329,8 @@ import { LinkTo } from "@ember/routing";
       <tr>
         <td>optionsComponent</td>
         <td><code>contextual-component</code></td>
-        <td>The component to render instead of the default one inside the list of
-          options</td>
+        <td>The component to render instead of the default one inside the list
+          of options</td>
       </tr>
       <tr>
         <td>placeholder</td>
@@ -336,11 +348,11 @@ import { LinkTo } from "@ember/routing";
       <tr>
         <td>preventScroll</td>
         <td><code>boolean (defaults to false)</code></td>
-        <td>Flag that prevents any elements on the page outside the dropdown from
-          scrolling. This matches platform-provided
+        <td>Flag that prevents any elements on the page outside the dropdown
+          from scrolling. This matches platform-provided
           <code>select</code>
-          element behavior. Note that this has no effect when scroll is performed
-          on touch device.</td>
+          element behavior. Note that this has no effect when scroll is
+          performed on touch device.</td>
       </tr>
       <tr>
         <td>renderInPlace</td>
@@ -348,8 +360,8 @@ import { LinkTo } from "@ember/routing";
         <td>
           When truthy, the list of options will be rendered in place instead of
           being attached to the root of the body and positioned with javascript.
-          Enabling this option also adds a wrapper div around the trigger and the
-          content with class
+          Enabling this option also adds a wrapper div around the trigger and
+          the content with class
           <code>.ember-power-select</code>.
         </td>
       </tr>
@@ -367,8 +379,8 @@ import { LinkTo } from "@ember/routing";
         <td><code>function</code></td>
         <td>The
           <code>function(option, select, event)</code>
-          that users can pass to customize the list of options must scroll to put
-          an element into the viewport.</td>
+          that users can pass to customize the list of options must scroll to
+          put an element into the viewport.</td>
       </tr>
       <tr>
         <td>search</td>
@@ -431,7 +443,8 @@ import { LinkTo } from "@ember/routing";
       <tr>
         <td>triggerComponent</td>
         <td><code>contextual-component</code></td>
-        <td>The component to render instead of the default one inside the trigger</td>
+        <td>The component to render instead of the default one inside the
+          trigger</td>
       </tr>
       <tr>
         <td>triggerId</td>
@@ -452,8 +465,9 @@ import { LinkTo } from "@ember/routing";
         <td>
           The
           <code>function(option, searchTerm)</code>
-          used to match the searchTerm with an option when the selector is closed
-          or search is disabled. The default one will compare ignoring diacritics.
+          used to match the searchTerm with an option when the selector is
+          closed or search is disabled. The default one will compare ignoring
+          diacritics.
         </td>
       </tr>
       <tr>
@@ -474,9 +488,9 @@ import { LinkTo } from "@ember/routing";
   <h3 class="doc-page-title">Public API's methods and actions</h3>
 
   <p>
-    All actions, subcomponents and blocks of Ember Power Select receive an object
-    containing the public API of the component. That object contains (some of) the
-    state of the component and some actions to interact with it.
+    All actions, subcomponents and blocks of Ember Power Select receive an
+    object containing the public API of the component. That object contains
+    (some of) the state of the component and some actions to interact with it.
   </p>
   <p>
     <strong>Properties of this object are read-only</strong>. The only way of
@@ -486,21 +500,26 @@ import { LinkTo } from "@ember/routing";
   <pre
   >
   {
-    disabled: &lt;boolean&gt;,            // Truthy if the component received <code>disabled=true</code>
+    disabled: &lt;boolean&gt;,            // Truthy if the component received <code
+    >disabled=true</code>
     highlighted: &lt;T&gt;,               // Contains the currently highlighted option (if any)
     isActive: &lt;boolean&gt;,            // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
     isOpen: &lt;boolean&gt;,              // Truthy if the dropdown is open.
-    lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match <code>searchText</code>. In async searches, it will match it if the current search is fulfilled
+    lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match <code
+    >searchText</code>. In async searches, it will match it if the current search is fulfilled
     loading: &lt;boolean&gt;,             // Truthy if there is a pending promise that will update the results
     options: &lt;array[T]&gt;,            // Contains the regular array with the resolved collection of options.
     results: &lt;array[T]&gt;,            // Contains the regular array with the active set of results.
     resultsCount: &lt;number&gt;,         // Contains the number of results incuding those nested/disabled
     searchText: &lt;string&gt;,           // Contains the text of the current search
     selected: &lt;T&gt; or &lt;array[T]&gt;,    // Contains the resolved selected option (or options in multiple selects)
-    multiple: &lt;boolean&gt;,            // Truthy if <code>@multiple=true</code> was passed
-    uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form <code>ember1234</code>.
+    multiple: &lt;boolean&gt;,            // Truthy if <code
+    >@multiple=true</code> was passed
+    uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form <code
+    >ember1234</code>.
     actions: {
-      choose(option) { ... },       // Chooses the given options if it's not disabled (slight different than <code>select</code>)
+      choose(option) { ... },       // Chooses the given options if it's not disabled (slight different than <code
+    >select</code>)
       close() { ... },              // Closes the select
       highlight(option) { ... },    // Highlights the given option (if it's not disabled)
       open() { ... },               // Opens the select

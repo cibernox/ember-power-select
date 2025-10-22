@@ -6,9 +6,9 @@ import Groups1 from '../../../components/snippets/groups-1';
   <h1 class="doc-page-title">Groups</h1>
 
   <p>
-    Any component that aims to replace the native select has to handle groups and
-    so does this. When the component iterates over the collection of options it
-    checks if the option has an attribute named
+    Any component that aims to replace the native select has to handle groups
+    and so does this. When the component iterates over the collection of options
+    it checks if the option has an attribute named
     <code>groupName</code>
     and another named
     <code>options</code>
@@ -21,8 +21,8 @@ import Groups1 from '../../../components/snippets/groups-1';
 
   <p>
     You can nest groups inside groups with absolutely no depth limit, everything
-    else like arrow navigation and filtering will just work. However, the options
-    of a group cannot be a promise, it has to be a regular collection.
+    else like arrow navigation and filtering will just work. However, the
+    options of a group cannot be a promise, it has to be a regular collection.
   </p>
 
   <p>

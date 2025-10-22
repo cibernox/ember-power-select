@@ -6,8 +6,8 @@ import CssAnimation1 from '../../../components/snippets/css-animation-1';
   <h1 class="doc-page-title">CSS animations</h1>
 
   <p>
-    Want to add some fancy effects to your selects when they open and close? Ember
-    Power Select has you covered!
+    Want to add some fancy effects to your selects when they open and close?
+    Ember Power Select has you covered!
   </p>
 
   <p>
@@ -36,11 +36,12 @@ import CssAnimation1 from '../../../components/snippets/css-animation-1';
       to it.
     </li>
     <li>
-      Once all closing animations or transitions have finished, the "ghost" clone
-      is finally removed.
+      Once all closing animations or transitions have finished, the "ghost"
+      clone is finally removed.
     </li>
     <li>
-      If you don't have animations nor transitions, most of this work is skipped.
+      If you don't have animations nor transitions, most of this work is
+      skipped.
     </li>
   </ul>
 
@@ -54,17 +55,17 @@ import CssAnimation1 from '../../../components/snippets/css-animation-1';
     <strong>this approach doesn't work with CSS transitions.</strong>
   </p>
 
-  <p>Lets add some slide and fade in animation to a select that uses the bootstrap
-    theme.</p>
+  <p>Lets add some slide and fade in animation to a select that uses the
+    bootstrap theme.</p>
 
   <CodeExample @glimmerTs="css-animation-1.gts" @css="css-animation-1.scss">
     {{CssAnimation1}}
   </CodeExample>
 
   <p>
-    Now that you can add animations, the first rule of animations is use them with
-    caution, and if you decide that it worth adding them, keep them short. Almost
-    any animation over a third of a second is probably too long.
+    Now that you can add animations, the first rule of animations is use them
+    with caution, and if you decide that it worth adding them, keep them short.
+    Almost any animation over a third of a second is probably too long.
   </p>
 
   <p>

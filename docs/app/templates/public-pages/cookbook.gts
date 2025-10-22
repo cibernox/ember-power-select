@@ -55,10 +55,7 @@ export default class extends Component {
     return undefined;
   }
 
-  visit(section: {
-    route: string;
-    text: string;
-}) {
+  visit(section: { route: string; text: string }) {
     this.router.transitionTo(section.route);
   }
 

@@ -17,12 +17,12 @@ import MultipleSelection1 from '../../../components/snippets/multiple-selection-
   </CodeExample>
 
   <p>
-    The ergonomics of this component are slightly different. You will notice that
-    there is no search box in the dropdown box. Instead you can type directly in
-    the trigger to search. This is because you can use backspace to remove options
-    and also there is optional support for adding more options with free text
-    (think about a component to add tags) but we will dive into that in another
-    chapter.
+    The ergonomics of this component are slightly different. You will notice
+    that there is no search box in the dropdown box. Instead you can type
+    directly in the trigger to search. This is because you can use backspace to
+    remove options and also there is optional support for adding more options
+    with free text (think about a component to add tags) but we will dive into
+    that in another chapter.
   </p>
 
   <p>
@@ -31,8 +31,10 @@ import MultipleSelection1 from '../../../components/snippets/multiple-selection-
   </p>
 
   <div class="doc-page-nav">
-    <LinkTo @route="public-pages.docs.groups" class="doc-page-nav-link-prev">&lt;
-      Groups</LinkTo>
+    <LinkTo
+      @route="public-pages.docs.groups"
+      class="doc-page-nav-link-prev"
+    >&lt; Groups</LinkTo>
     <LinkTo
       @route="public-pages.docs.the-trigger"
       class="doc-page-nav-link-next"

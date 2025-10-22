@@ -18,8 +18,8 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
   <p>
     The default select has no searchbox, but you can pass
     <code>@searchEnabled={{true}}</code>
-    to enable a search that is surprisingly smart. As you type it will filter the
-    results that contain the given string ignoring diacritic differences and
+    to enable a search that is surprisingly smart. As you type it will filter
+    the results that contain the given string ignoring diacritic differences and
     capitalization. That means that the string
     <code>maria</code>
     will match against
@@ -40,8 +40,8 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
     closed. It just works out of the box.
   </p>
 
-  <p>Try focusing the next component and typing, while it's opened and also while
-    it's closed.</p>
+  <p>Try focusing the next component and typing, while it's opened and also
+    while it's closed.</p>
 
   <CodeExample @glimmerTs="the-search-2.gts">
     {{TheSearch2}}
@@ -50,8 +50,8 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
   <h2 class="t3">Search field position</h2>
 
   <p>
-    The default search field position for single select is inside the dropdown and
-    only visible when the dropdown is open (<code
+    The default search field position for single select is inside the dropdown
+    and only visible when the dropdown is open (<code
     >@searchFieldPosition="before-options"</code>).<br />
     In multiple selection you will find the search field inside trigger box (<code
     >@searchFieldPosition="trigger"</code>).<br />
@@ -92,15 +92,16 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
   <p>
     The
     <code>searchField</code>
-    property is also used when the user types over a select without searchbox that
-    has the focus.
+    property is also used when the user types over a select without searchbox
+    that has the focus.
   </p>
 
   <h2 class="t3">Prevent autofocus</h2>
 
   <p>
-    Sometimes you want to disable the default behavior of the search box, where it
-    will be focused when the dropdown opens. To achieve that you have to add the
+    Sometimes you want to disable the default behavior of the search box, where
+    it will be focused when the dropdown opens. To achieve that you have to add
+    the
     <code>autofocus</code>
     parameter to the default
     <code>beforeOptions</code>
@@ -114,10 +115,10 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
 
   <p>
     Sometimes the default matcher is not enough for you, for example if you need
-    to match against several fields or you need to perform fuzzy matching. If that
-    is the case just pass your own matcher function. It will receive the option
-    and the search term and you can do whatever you feel like inside as long as it
-    returns
+    to match against several fields or you need to perform fuzzy matching. If
+    that is the case just pass your own matcher function. It will receive the
+    option and the search term and you can do whatever you feel like inside as
+    long as it returns
     <code>-1</code>
     if it doesn't match and a positive number if it does.
   </p>
@@ -135,8 +136,8 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
 
   <p>
     Is very common to need the search term from withing the block used to render
-    each one of the options, typically for apply a highlight some substring of the
-    option's text. For that, the block, as most actions in this component,
+    each one of the options, typically for apply a highlight some substring of
+    the option's text. For that, the block, as most actions in this component,
     receives an instance of the publicAPI as second argument. The public API
     contains
     <code>searchText</code>
@@ -154,9 +155,9 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
 
   <ul>
     <li>
-      Even if the default search is smart enough to transform diacritics, the term
-      will unmodified, and therefore you need to handle terms as "João" or "María"
-      yourself.
+      Even if the default search is smart enough to transform diacritics, the
+      term will unmodified, and therefore you need to handle terms as "João" or
+      "María" yourself.
     </li>
     <li>
       <em>Likely</em>
@@ -165,8 +166,8 @@ import TheSearch9 from '../../../components/snippets/the-search-9';
       instead of
       <code>searchText</code>. That is because
       <code>searchText</code>
-      contains the text typed in the searchbox, and us updated as the user types,
-      while
+      contains the text typed in the searchbox, and us updated as the user
+      types, while
       <code>lastSearchedText</code>
       contains the search term that yielded the current collection of results.
       While in synchronous searches they are the same, in asynchronous searches

@@ -9,14 +9,14 @@ import CreateCustomOptions1 from '../../../components/snippets/create-custom-opt
     Ember Power Select exposes an
     <code>onKeydown</code>
     action that allows you to react to keyboard events before the default
-    behaviour takes place. This gives you the ability to enrich the component with
-    very few lines of code.
+    behaviour takes place. This gives you the ability to enrich the component
+    with very few lines of code.
   </p>
 
   <p>
     Let's create one component on top of the multiple select that, besides of
-    allowing you to select among the selected options, lets you create new options
-    on the fly.
+    allowing you to select among the selected options, lets you create new
+    options on the fly.
   </p>
 
   <p>You guessed right, the typical tag creator.</p>
@@ -37,9 +37,7 @@ import CreateCustomOptions1 from '../../../components/snippets/create-custom-opt
     results.
   </p>
 
-  <CodeExample
-    @glimmerTs="create-custom-options-1.gts"
-  >
+  <CodeExample @glimmerTs="create-custom-options-1.gts">
     {{CreateCustomOptions1}}
   </CodeExample>
 
@@ -49,9 +47,9 @@ import CreateCustomOptions1 from '../../../components/snippets/create-custom-opt
   </p>
 
   <p>
-    For the sake of completeness, this example takes a naive approach that doesn't
-    cover all edge cases. By example, it isn't possible to create a tag named
-    "York" above because it would match "New York". Check the
+    For the sake of completeness, this example takes a naive approach that
+    doesn't cover all edge cases. By example, it isn't possible to create a tag
+    named "York" above because it would match "New York". Check the
     <a
       href="https://github.com/cibernox/ember-power-select-with-create"
     >ember-power-select-with-create</a>

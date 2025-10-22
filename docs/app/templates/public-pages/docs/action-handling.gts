@@ -25,7 +25,8 @@ import ActionHandling7 from '../../../components/snippets/action-handling-7';
   </p>
 
   <p>
-    This section describes the available actions with the notable exception of the
+    This section describes the available actions with the notable exception of
+    the
     <code>search</code>, because there is an entire section dedicated to it, and
     gives you some examples of what you can do with each of them.
   </p>
@@ -69,18 +70,19 @@ import ActionHandling7 from '../../../components/snippets/action-handling-7';
   <h2 class="t3"><code>onKeydown</code> Action</h2>
 
   <p>
-    The second option you can provide to the component to customize it's behavior
-    is
-    <code>onKeydown</code>. This option will be fired whenever the user presses a
-    key while the component or the search input inside have the focus.
+    The second option you can provide to the component to customize it's
+    behavior is
+    <code>onKeydown</code>. This option will be fired whenever the user presses
+    a key while the component or the search input inside have the focus.
   </p>
 
   <p>
     This action receives two arguments,
     <code>dropdown</code>
     and
-    <code>event</code>. The first one is an object that you can use to control the
-    component through its actions (open, close, toggle...). The event is the raw
+    <code>event</code>. The first one is an object that you can use to control
+    the component through its actions (open, close, toggle...). The event is the
+    raw
     <code>keydown</code>
     event you can use to decide what to do next. If you desire to hijack the
     browser's default bahaviour you can call
@@ -112,16 +114,16 @@ import ActionHandling7 from '../../../components/snippets/action-handling-7';
   </p>
 
   <p>
-    This action gives you the opportunity to react to any change in the inputs of
-    the select, even when the inputs are emptied, because the
+    This action gives you the opportunity to react to any change in the inputs
+    of the select, even when the inputs are emptied, because the
     <code>search</code>
     action doesn't fire in that case. If you return false from this action, you
     will prevent the default behavior, which is searching.
   </p>
 
   <p>
-    Let's create a select that searches only if the length of the search is bigger
-    than 3 chars.
+    Let's create a select that searches only if the length of the search is
+    bigger than 3 chars.
   </p>
 
   <CodeExample @glimmerTs="action-handling-4.gts">
@@ -138,9 +140,9 @@ import ActionHandling7 from '../../../components/snippets/action-handling-7';
   </p>
 
   <p>
-    You can use this action for many things (fire a request to prefetch data, show
-    a tooltip, trigger some animation ...) but perhaps the most straightforward
-    use case is to automatically open the component on focus.
+    You can use this action for many things (fire a request to prefetch data,
+    show a tooltip, trigger some animation ...) but perhaps the most
+    straightforward use case is to automatically open the component on focus.
   </p>
 
   <CodeExample @glimmerTs="action-handling-5.gts">
@@ -149,8 +151,8 @@ import ActionHandling7 from '../../../components/snippets/action-handling-7';
 
   <p>
     Note that this action will be fired when the component or another element
-    inside, like the searchboxes, gain the focus, and sometimes you need which one
-    triggered the focus/blur event. Since the
+    inside, like the searchboxes, gain the focus, and sometimes you need which
+    one triggered the focus/blur event. Since the
     <code>FocusEvent</code>
     is received as last argument, you can check
     <code>event.target</code>
@@ -162,16 +164,16 @@ import ActionHandling7 from '../../../components/snippets/action-handling-7';
   <h2 class="t3"><code>onOpen/onClose</code> Actions</h2>
 
   <p>
-    As their names suggest, these actions are fired when the component is about to
-    be opened or closed respectively, and they both have the same signature
+    As their names suggest, these actions are fired when the component is about
+    to be opened or closed respectively, and they both have the same signature
     <code>(select, event)</code>
-    (the event will be undefined if the component is not opened as result of user
-    interaction).
+    (the event will be undefined if the component is not opened as result of
+    user interaction).
   </p>
 
   <p>
-    You can use this action for many useful purposes, but since the troll-force is
-    strong in me, I want to show a useless example: The select components for
+    You can use this action for many useful purposes, but since the troll-force
+    is strong in me, I want to show a useless example: The select components for
     spies!
   </p>
 
@@ -183,9 +185,9 @@ import ActionHandling7 from '../../../components/snippets/action-handling-7';
     Another neat trick is that you can prevent the component from open/close if
     you return
     <code>false</code>
-    from these actions, so you have the last word. This is all it takes to create
-    a mandatory select component that once opened cannot be closed until you
-    select some value, and changes the styles of the component.
+    from these actions, so you have the last word. This is all it takes to
+    create a mandatory select component that once opened cannot be closed until
+    you select some value, and changes the styles of the component.
   </p>
 
   <CodeExample @glimmerTs="action-handling-7.gts">

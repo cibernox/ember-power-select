@@ -22,19 +22,19 @@ import TheList10 from '../../../components/snippets/the-list-10';
   <h2 class="t3">Position and destination</h2>
 
   <p>
-    The dropdown in Ember Power Select is pretty smart. By default this component
-    inserts the dropdown not next the the trigger but in the a placeholder element
-    in the root of your app (typically the
+    The dropdown in Ember Power Select is pretty smart. By default this
+    component inserts the dropdown not next the the trigger but in the a
+    placeholder element in the root of your app (typically the
     <code>&lt;body&gt;</code>) using the awesome
     <a href="https://github.com/yapplabs/ember-wormhole">ember-wormhole</a>
     addon and then absolutely positions it.
   </p>
 
   <p>
-    This is a safe default because by default it won't be affected by the overflow
-    constraints of the element where the component lives in. However, there are a
-    few situations where this is not practical, so you can tune this in two
-    different ways.
+    This is a safe default because by default it won't be affected by the
+    overflow constraints of the element where the component lives in. However,
+    there are a few situations where this is not practical, so you can tune this
+    in two different ways.
   </p>
 
   <p>
@@ -79,8 +79,8 @@ import TheList10 from '../../../components/snippets/the-list-10';
   </CodeExample>
 
   <p>
-    When the component is not rendered in place the dropdown can be configured to
-    be added below or above the trigger using the
+    When the component is not rendered in place the dropdown can be configured
+    to be added below or above the trigger using the
     <code>verticalPosition</code>
     option. The possible values are
     <code>below</code>,
@@ -106,8 +106,9 @@ import TheList10 from '../../../components/snippets/the-list-10';
 
   <p>
     What happens when the collection you pass to the component is empty? By
-    default the component will render a helpful message. This message is the same
-    that will appear after performing a search when there are no matching results.
+    default the component will render a helpful message. This message is the
+    same that will appear after performing a search when there are no matching
+    results.
   </p>
 
   <CodeExample @glimmerTs="the-list-4.gts">
@@ -152,11 +153,9 @@ import TheList10 from '../../../components/snippets/the-list-10';
 
   <p>
     In
-    <LinkTo
-      @route="public-pages.docs.the-trigger"
-    >The trigger</LinkTo>
-    we saw how to disable the entire component, but you can also disable specific
-    options. Options that have a
+    <LinkTo @route="public-pages.docs.the-trigger">The trigger</LinkTo>
+    we saw how to disable the entire component, but you can also disable
+    specific options. Options that have a
     <code>disabled</code>
     property set to true will automatically be considered disabled and styled as
     such.
@@ -191,8 +190,8 @@ import TheList10 from '../../../components/snippets/the-list-10';
   <h2 class="t3">Prevent click propagation inside the list</h2>
 
   <p>
-    The options inside the list are selected with mousedown, a good way to prevent
-    the selection is intercepting
+    The options inside the list are selected with mousedown, a good way to
+    prevent the selection is intercepting
     <code>mouseup</code>
     and calling
     <code>stopPropagation</code>
@@ -201,8 +200,8 @@ import TheList10 from '../../../components/snippets/the-list-10';
 
   <p>
     This is particularly useful if you want to add some kind of link or button
-    inside the list of options and prevent the selection of the item when the user
-    clicks on the link.
+    inside the list of options and prevent the selection of the item when the
+    user clicks on the link.
   </p>
 
   <CodeExample @glimmerTs="the-list-10.gts">

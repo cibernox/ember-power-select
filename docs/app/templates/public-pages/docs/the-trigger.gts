@@ -11,16 +11,16 @@ import TheTrigger6 from '../../../components/snippets/the-trigger-6';
   <h1 class="doc-page-title">The trigger</h1>
 
   <p>
-    The trigger is the only part of the select that is always visible and the area
-    that will get more interaction from the user so it's not a surprise that it
-    can be customized in many ways.
+    The trigger is the only part of the select that is always visible and the
+    area that will get more interaction from the user so it's not a surprise
+    that it can be customized in many ways.
   </p>
 
   <h2 class="t3">Disable the component</h2>
 
   <p>
-    You can completely disable the trigger (and therefore the entire component) by
-    passing
+    You can completely disable the trigger (and therefore the entire component)
+    by passing
     <code>disabled=true</code>.
   </p>
 
@@ -33,14 +33,14 @@ import TheTrigger6 from '../../../components/snippets/the-trigger-6';
   <p>
     As we saw in the
     <LinkTo @route="public-pages.docs.how-to-use-it">How to use it</LinkTo>
-    section, Ember Power Select will reuse the same block used for each element of
-    the list for the content of the trigger, both in normal and multiple mode, but
-    this is something you can also customize if you need to.
+    section, Ember Power Select will reuse the same block used for each element
+    of the list for the content of the trigger, both in normal and multiple
+    mode, but this is something you can also customize if you need to.
   </p>
 
   <p>
-    Since we have run out of block to pass the the component we need to use other
-    components if we want to go any further. Pass
+    Since we have run out of block to pass the the component we need to use
+    other components if we want to go any further. Pass
     <code>selectedItemComponent=\{\{component "component-name"\}\}</code>
     to the component.
   </p>
@@ -70,8 +70,8 @@ import TheTrigger6 from '../../../components/snippets/the-trigger-6';
     {{TheTrigger3}}
   </CodeExample>
 
-  Take into account that in the multiple selects with search enabled, the trigger
-  contains a searchbox and you should use the
+  Take into account that in the multiple selects with search enabled, the
+  trigger contains a searchbox and you should use the
   <code>searchPlaceholder</code>
   option instead. Check
   <LinkTo @route="public-pages.docs.the-search">The search</LinkTo>
@@ -80,8 +80,8 @@ import TheTrigger6 from '../../../components/snippets/the-trigger-6';
   <h2 class="t3">Set a complex placeholder</h2>
 
   <p>
-    Sometimes a simple string as placeholder is not enough and you want bold text,
-    icons and such. In that case you can pass a
+    Sometimes a simple string as placeholder is not enough and you want bold
+    text, icons and such. In that case you can pass a
     <code>placeholderComponent</code>, on which you can do pretty much anything.
   </p>
 
@@ -134,7 +134,9 @@ import TheTrigger6 from '../../../components/snippets/the-trigger-6';
       @route="public-pages.docs.multiple-selection"
       class="doc-page-nav-link-prev"
     >&lt; Multiple selection</LinkTo>
-    <LinkTo @route="public-pages.docs.the-list" class="doc-page-nav-link-next">The
-      list &gt;</LinkTo>
+    <LinkTo
+      @route="public-pages.docs.the-list"
+      class="doc-page-nav-link-next"
+    >The list &gt;</LinkTo>
   </div>
 </template>

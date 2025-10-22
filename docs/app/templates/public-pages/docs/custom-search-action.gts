@@ -26,14 +26,14 @@ import CustomSearchAction2 from '../../../components/snippets/custom-search-acti
     <code>options</code>
     (it's the only situation where the
     <code>options</code>
-    are not mandatory) that will be invoked with the search term whenever the user
-    types on the search box.
+    are not mandatory) that will be invoked with the search term whenever the
+    user types on the search box.
   </p>
 
   <p>
-    Using that option you have complete freedom about how you search. Synchronous,
-    asynchronous, with debouncing, using generators, you name it. It's entirely up
-    to you.
+    Using that option you have complete freedom about how you search.
+    Synchronous, asynchronous, with debouncing, using generators, you name it.
+    It's entirely up to you.
     <br />
     There is only three things to know about this action:
     <ul>
@@ -106,8 +106,10 @@ import CustomSearchAction2 from '../../../components/snippets/custom-search-acti
   </p>
 
   <div class="doc-page-nav">
-    <LinkTo @route="public-pages.docs.styles" class="doc-page-nav-link-prev">&lt;
-      Styles</LinkTo>
+    <LinkTo
+      @route="public-pages.docs.styles"
+      class="doc-page-nav-link-prev"
+    >&lt; Styles</LinkTo>
     <LinkTo
       @route="public-pages.docs.migrate-7-0-to-8-0"
       class="doc-page-nav-link-next"

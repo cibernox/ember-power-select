@@ -5,8 +5,8 @@ import { LinkTo } from '@ember/routing';
 
   <p>
     Selects. Almost all web applications out there have selects on one way or
-    another. A piece of UI that allows the user to choose one option among a list
-    of them.
+    another. A piece of UI that allows the user to choose one option among a
+    list of them.
   </p>
 
   <p>
@@ -27,15 +27,15 @@ import { LinkTo } from '@ember/routing';
 
   <p>
     But even being two solid pieces of engineering they are fundamentally flawed
-    when it comes to play with frontend frameworks like Ember.js. Those libraries
-    have an imperative API designed to append a component to an otherwise existing
-    HTML document, with HTML in mind.
+    when it comes to play with frontend frameworks like Ember.js. Those
+    libraries have an imperative API designed to append a component to an
+    otherwise existing HTML document, with HTML in mind.
   </p>
 
   <p>
-    In Ember apps, however, we don't think in terms of nodes, events and tags, but
-    in terms of data, actions and templates. The translation between those two
-    visions, even if possible (two good examples of prior art are
+    In Ember apps, however, we don't think in terms of nodes, events and tags,
+    but in terms of data, actions and templates. The translation between those
+    two visions, even if possible (two good examples of prior art are
     <a href="https://github.com/iStefo/ember-select-2">ember-select2</a>
     and
     <a

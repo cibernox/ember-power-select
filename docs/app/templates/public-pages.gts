@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
 import PowerSelect from 'ember-power-select/components/power-select';
 import MainHeaderSelectTrigger from 'docs/components/main-header-select-trigger';
-import MemoryScroll from "memory-scroll/components/memory-scroll";
+import MemoryScroll from 'memory-scroll/components/memory-scroll';
 import { or } from 'ember-truth-helpers';
 import type RouterService from '@ember/routing/router-service';
 

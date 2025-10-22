@@ -82,10 +82,7 @@ export default class Docs extends Component {
   }
 
   @action
-  visit(section: {
-    route: string;
-    text: string;
-}) {
+  visit(section: { route: string; text: string }) {
     this.router.transitionTo(section.route);
   }
 
@@ -101,8 +98,10 @@ export default class Docs extends Component {
           @route="public-pages.docs.installation"
           class="side-nav-link"
         >Installation</LinkTo>
-        <LinkTo @route="public-pages.docs.how-to-use-it" class="side-nav-link">How
-          to use it</LinkTo>
+        <LinkTo
+          @route="public-pages.docs.how-to-use-it"
+          class="side-nav-link"
+        >How to use it</LinkTo>
         <LinkTo
           @route="public-pages.docs.action-handling"
           class="side-nav-link"
@@ -119,7 +118,8 @@ export default class Docs extends Component {
         <header class="side-nav-header">Basic customization</header>
         <LinkTo @route="public-pages.docs.the-trigger" class="side-nav-link">The
           trigger</LinkTo>
-        <LinkTo @route="public-pages.docs.the-list" class="side-nav-link">The list</LinkTo>
+        <LinkTo @route="public-pages.docs.the-list" class="side-nav-link">The
+          list</LinkTo>
         <LinkTo @route="public-pages.docs.the-search" class="side-nav-link">The
           search</LinkTo>
         <LinkTo
@@ -140,8 +140,10 @@ export default class Docs extends Component {
         >Migrate from 7.0 to 8.0</LinkTo>
 
         <header class="side-nav-header">Other</header>
-        <LinkTo @route="public-pages.docs.test-helpers" class="side-nav-link">Test
-          helpers</LinkTo>
+        <LinkTo
+          @route="public-pages.docs.test-helpers"
+          class="side-nav-link"
+        >Test helpers</LinkTo>
         <LinkTo
           @route="public-pages.docs.troubleshooting"
           class="side-nav-link"
@@ -150,8 +152,10 @@ export default class Docs extends Component {
           @route="public-pages.docs.architecture"
           class="side-nav-link"
         >Architecture</LinkTo>
-        <LinkTo @route="public-pages.docs.api-reference" class="side-nav-link">API
-          reference</LinkTo>
+        <LinkTo
+          @route="public-pages.docs.api-reference"
+          class="side-nav-link"
+        >API reference</LinkTo>
       </nav>
       <section class="doc-page">
         <div class="doc-submenu">

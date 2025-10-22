@@ -10,7 +10,7 @@ const placeholderComponent = <template>
   and
   <span class="text-pink">praise</span>
   <img src="/grumpy-cat.png" alt="grumpy-cat" width="24" height="24" />
-</template>
+</template>;
 
 export default class extends Component {
   @tracked name: string | undefined;

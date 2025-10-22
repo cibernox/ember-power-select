@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import PowerSelect, { type Select } from 'ember-power-select/components/power-select';
+import PowerSelect, {
+  type Select,
+} from 'ember-power-select/components/power-select';
 import { fn } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 

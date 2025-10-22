@@ -67,8 +67,8 @@ import { LinkTo } from '@ember/routing';
       <p>Helper: The helper
         <code>ember-power-select-is-selected</code>
         was renamed to
-        <code>ember-power-select-is-equal</code>. If you have used in your custom
-        components, you need to replace it</p>
+        <code>ember-power-select-is-equal</code>. If you have used in your
+        custom components, you need to replace it</p>
     </li>
     <li>
       <p>

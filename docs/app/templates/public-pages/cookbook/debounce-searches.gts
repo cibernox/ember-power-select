@@ -21,9 +21,10 @@ import DebounceSearches2 from '../../../components/snippets/debounce-searches-2'
   </CodeExample>
 
   <p>
-    That way you are in control and you can vary the debounce intervals depending
-    on any custom logic like the device (people type slower in small screens),
-    make it bigger if the API tells that you're approaching the API rate limit.
+    That way you are in control and you can vary the debounce intervals
+    depending on any custom logic like the device (people type slower in small
+    screens), make it bigger if the API tells that you're approaching the API
+    rate limit.
   </p>
 
   <p>

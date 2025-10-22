@@ -44,8 +44,8 @@ import HowToUseIt3 from '../../../components/snippets/how-to-use-it-3';
   <p>
     The block of the component becomes the content of each option of the select
     and also the content of the trigger by default. Blocks are a powerful Ember
-    primitive and you can use them to build selects with complex HTML inside very
-    naturally.
+    primitive and you can use them to build selects with complex HTML inside
+    very naturally.
   </p>
 
   <CodeExample @glimmerTs="how-to-use-it-2.gts">
@@ -53,18 +53,20 @@ import HowToUseIt3 from '../../../components/snippets/how-to-use-it-3';
   </CodeExample>
 
   <p>
-    <strong>Filtering in the above select also seems broken, but is also intended.</strong>
+    <strong>Filtering in the above select also seems broken, but is also
+      intended.</strong>
     See
     <LinkTo @route="public-pages.docs.the-search">the search</LinkTo>
-    section (Customize the search field) for instructions on how to make it work.
+    section (Customize the search field) for instructions on how to make it
+    work.
   </p>
 
   <p>
     The component expects
     <code>selected</code>
     to contain the actual selected object and not just an Id. One way to do this
-    is to have a computed property that returns the correct object based upon the
-    Id.
+    is to have a computed property that returns the correct object based upon
+    the Id.
   </p>
 
   <CodeExample @glimmerTs="how-to-use-it-3.gts">
@@ -94,8 +96,8 @@ import HowToUseIt3 from '../../../components/snippets/how-to-use-it-3';
   <ul>
     <li>
       The component compares options using
-      <code>Ember.isEqual</code>. With primitive values like strings or numbers it
-      works exactly as
+      <code>Ember.isEqual</code>. With primitive values like strings or numbers
+      it works exactly as
       <code>===</code>. With dates, although in JS
       <code>new Date(2017, 5, 5) !== new Date(2017, 5, 5)</code>, in Ember Power
       Select they will be considered the same because
@@ -116,9 +118,9 @@ import HowToUseIt3 from '../../../components/snippets/how-to-use-it-3';
     </li>
     <li>
       <code>selected</code>
-      (and all other options actually) is read only. This means that selecting an
-      element in the component won't do anything. That is a design decision and
-      the reason why the
+      (and all other options actually) is read only. This means that selecting
+      an element in the component won't do anything. That is a design decision
+      and the reason why the
       <code>onchange</code>
       action is mandatory. This is aligned with Ember's Data Down Actions Up
       (DDAU) philosophy.
@@ -126,8 +128,8 @@ import HowToUseIt3 from '../../../components/snippets/how-to-use-it-3';
   </ul>
 
   <p>
-    This is the very basic usage of this component, but so far is pretty useless.
-    Since there are no two way bindings and the
+    This is the very basic usage of this component, but so far is pretty
+    useless. Since there are no two way bindings and the
     <code>onchange</code>
     action is empty
     <strong>nothing happens when you select something.</strong>

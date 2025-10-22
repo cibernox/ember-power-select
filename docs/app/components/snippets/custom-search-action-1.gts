@@ -6,7 +6,7 @@ import { fn } from '@ember/helper';
 interface ApiResult {
   total_count: number;
   incomplete_results: boolean;
-  items: ApiResultItem[]
+  items: ApiResultItem[];
 }
 
 interface ApiResultItem {

@@ -8,12 +8,13 @@ import { LinkTo } from '@ember/routing';
   <h2>Acceptance Tests</h2>
 
   <p>
-    Ember Power Select bundles some handy test helpers (<code>selectChoose</code>,
+    Ember Power Select bundles some handy test helpers (<code
+    >selectChoose</code>,
     <code>selectSearch</code>,
     <code>removeMultipleOption</code>
     and
-    <code>clearSelected</code>) that make it nicer to interact with the component
-    in acceptance tests.
+    <code>clearSelected</code>) that make it nicer to interact with the
+    component in acceptance tests.
   </p>
 
   <CodeExample
@@ -26,8 +27,8 @@ import { LinkTo } from '@ember/routing';
 
   <p>
     This async helper allows you to select an option of a select by it's text,
-    without worrying about if the select is single or multiple or if it is opened
-    or closed.
+    without worrying about if the select is single or multiple or if it is
+    opened or closed.
   </p>
 
   <CodeExample
@@ -36,8 +37,8 @@ import { LinkTo } from '@ember/routing';
     @activeTab="js"
   />
 
-  It also allows to pass a complex CSS selector where using the text of the option
-  is not convenient:
+  It also allows to pass a complex CSS selector where using the text of the
+  option is not convenient:
 
   <CodeExample
     @js="test-helpers-3-js.js"
@@ -48,8 +49,9 @@ import { LinkTo } from '@ember/routing';
   <h2 class="t3"><code>selectSearch(cssPath, searchText)</code></h2>
 
   <p>
-    Use this helper to perform a search on a single/multiple select. You probably
-    will use it in conjunction when the search perform some asynchronous operation
+    Use this helper to perform a search on a single/multiple select. You
+    probably will use it in conjunction when the search perform some
+    asynchronous operation
   </p>
 
   <CodeExample
@@ -107,8 +109,8 @@ import { LinkTo } from '@ember/routing';
   <p><code>import { typeInSearch, clickTrigger } from
       'ember-power-select/test-support/helpers'</code></p>
   <p>
-    Also note that you could extract the code for these test helpers into your own
-    helpers file was well.
+    Also note that you could extract the code for these test helpers into your
+    own helpers file was well.
   </p>
   <p><code>import { typeInSearch, clickTrigger } from
       'my-app/tests/helpers/test-helpers'</code></p>
@@ -116,9 +118,9 @@ import { LinkTo } from '@ember/routing';
   <h2 class="t3"><code>clickTrigger(scope, options = {})</code></h2>
 
   <p>
-    This helper opens the dropdown based on the class name (scope) defined on the
-    power select. Scope is optional if integration test renders only one power
-    select.
+    This helper opens the dropdown based on the class name (scope) defined on
+    the power select. Scope is optional if integration test renders only one
+    power select.
   </p>
 
   <CodeExample
@@ -143,9 +145,9 @@ import { LinkTo } from '@ember/routing';
   <h2 class="t3"><code>selectChoose(text)</code></h2>
 
   <p>
-    Much like the acceptance one, this integration tests takes care of the entire
-    process of opening a select and choosing one of its values witout you having
-    to worry about the details.
+    Much like the acceptance one, this integration tests takes care of the
+    entire process of opening a select and choosing one of its values witout you
+    having to worry about the details.
   </p>
 
   <CodeExample

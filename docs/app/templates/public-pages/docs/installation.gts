@@ -54,8 +54,8 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <p>
-    After installation, add the following line to the templates where you want to
-    render the power select content, such as in your
+    After installation, add the following line to the templates where you want
+    to render the power select content, such as in your
     <code>application.hbs</code>. This component will render the power select
     content.
   </p>
@@ -111,11 +111,7 @@ import { LinkTo } from '@ember/routing';
     <code>lessOptions</code>.
   </p>
 
-  <CodeExample
-    @js="installation-2.js"
-    @showResult={{false}}
-    @activeTab="js"
-  />
+  <CodeExample @js="installation-2.js" @showResult={{false}} @activeTab="js" />
 
   <p>
     This explicit import is needed because using CSS preprocessors like SASS and

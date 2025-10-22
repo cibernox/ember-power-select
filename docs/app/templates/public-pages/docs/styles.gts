@@ -11,13 +11,13 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <p>
-    You can do it using just plain old CSS. There is no rocket science on it, just
-    override the default styles with your owns.
+    You can do it using just plain old CSS. There is no rocket science on it,
+    just override the default styles with your owns.
   </p>
 
   <p>
-    However if you are using SASS or LESS there is a more advanced method you can
-    use to customize the styles without overriding them.
+    However if you are using SASS or LESS there is a more advanced method you
+    can use to customize the styles without overriding them.
   </p>
 
   <p>
@@ -25,11 +25,7 @@ import { LinkTo } from '@ember/routing';
     styles. By example (sass example):
   </p>
 
-  <CodeExample
-    @scss="styles-1.scss"
-    @showResult={{false}}
-    @activeTab="scss"
-  />
+  <CodeExample @scss="styles-1.scss" @showResult={{false}} @activeTab="scss" />
 
   <p>
     Will make your selects to have pale blue borders with no rounded corners.

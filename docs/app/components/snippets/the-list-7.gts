@@ -22,7 +22,8 @@ export default class extends Component {
   }
 
   <template>
-    <button type="button" {{on "click" this.refreshCollection}}>Refresh collection</button>
+    <button type="button" {{on "click" this.refreshCollection}}>Refresh
+      collection</button>
     <br />
     <PowerSelect
       @options={{this.promise}}

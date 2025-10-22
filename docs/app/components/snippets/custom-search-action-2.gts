@@ -7,7 +7,7 @@ import { task, timeout } from 'ember-concurrency';
 interface ApiResult {
   total_count: number;
   incomplete_results: boolean;
-  items: ApiResultItem[]
+  items: ApiResultItem[];
 }
 
 interface ApiResultItem {
