@@ -183,7 +183,7 @@ export default class MaterialTheme extends Component {
     </p>
 
     <CodeExample
-      @js="material-theme-3.js"
+      @js="material-theme-3.js.txt"
       @showResult={{false}}
       @activeTab="js"
     />

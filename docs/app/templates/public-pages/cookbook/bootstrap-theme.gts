@@ -109,7 +109,7 @@ export default class BootstrapTheme extends Component {
     </p>
 
     <CodeExample
-      @js="bootstrap-theme-3.js"
+      @js="bootstrap-theme-3.js.txt"
       @showResult={{false}}
       @activeTab="js"
     />
