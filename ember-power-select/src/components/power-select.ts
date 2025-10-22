@@ -126,10 +126,10 @@ export interface PowerSelectArgs {
     term: string,
     select: Select,
   ) => readonly any[] | Promise<readonly any[]>;
-  onOpen?: (select: Select, e: Event) => boolean | undefined;
-  onClose?: (select: Select, e: Event) => boolean | undefined;
-  onInput?: (term: string, select: Select, e: Event) => string | false | void;
-  onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined;
+  onOpen?: (select: Select, e: Event) => boolean | void | undefined;
+  onClose?: (select: Select, e: Event) => boolean | void | undefined;
+  onInput?: (term: string, select: Select, e: Event) => string | boolean | void;
+  onKeydown?: (select: Select, e: KeyboardEvent) => boolean | void | undefined;
   onFocus?: (select: Select, event: FocusEvent) => void;
   onBlur?: (select: Select, event: FocusEvent) => void;
   scrollTo?: (option: any, select: Select) => void;
