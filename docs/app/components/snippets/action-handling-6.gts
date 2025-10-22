@@ -30,8 +30,8 @@ export default class extends Component {
   }
 
   @action
-  async startSelfDestroyCountdown() {
-    await this.countdownLaterTask.perform();
+  startSelfDestroyCountdown() {
+    void this.countdownLaterTask.perform();
   }
 
   tick = async () => {
