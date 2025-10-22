@@ -39,6 +39,7 @@
     "@babel/eslint-parser": "^7.28.4",
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@ember-data/legacy-compat": "5.7.0",
+    "@ember-data/model": "5.7.0",
     "@ember-data/request": "5.7.0",
     "@ember-data/request-utils": "5.7.0",
     "@ember-data/store": "5.7.0",

@@ -1,16 +1,18 @@
-<p id='custom-before-options-p-tag'>
+<p id="custom-before-options-p-tag">
   {{@placeholder}}
 </p>
 
 {{#if (and @searchEnabled (eq @searchFieldPosition "before-options"))}}
-  <div id='custom-before-options-search-field'>
-    <input
-      type="search"
-      value=""
-    />
+  <div id="custom-before-options-search-field">
+    <input type="search" value="" />
   </div>
 {{/if}}
 
-{{#let (component (ensure-safe-component @placeholderComponent)) as |ComponentName|}}
-  <ComponentName @placeholder={{@placeholder}} />
-{{/let}}
+{{#if @placeholderComponent}}
+  {{#let
+    (component (ensure-safe-component @placeholderComponent))
+    as |ComponentName|
+  }}
+    <ComponentName @placeholder={{@placeholder}} @select={{@select}} />
+  {{/let}}
+{{/if}}

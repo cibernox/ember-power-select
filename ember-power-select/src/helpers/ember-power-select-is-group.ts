@@ -1,8 +1,8 @@
-import { helper } from '@ember/component/helper';
 import { isGroup } from '../utils/group-utils.ts';
+import type { GroupBase } from '../types.ts';
 
-export function emberPowerSelectIsGroup([maybeGroup]: [any]): boolean {
+export default function emberPowerSelectIsGroup<T>(
+  maybeGroup: unknown,
+): maybeGroup is GroupBase<T> {
   return isGroup(maybeGroup);
 }
-
-export default helper(emberPowerSelectIsGroup);
