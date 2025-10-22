@@ -20,8 +20,8 @@ export default class extends Component {
   @tracked selected: ApiResultItem | undefined;
 
   @action
-  searchRepo(term: string) {
-    return new RSVP.Promise((resolve, reject) => {
+  searchRepo(term: string): RSVP.Promise<ApiResultItem[]> {
+    return new RSVP.Promise<ApiResultItem[]>((resolve, reject) => {
       void this._performSearch.perform(term, resolve, reject);
     });
   }
