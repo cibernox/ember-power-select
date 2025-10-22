@@ -1,0 +1,205 @@
+import CodeExample from 'docs/components/code-example';
+import { LinkTo } from '@ember/routing';
+import TheSearch1 from '../../../components/snippets/the-search-1';
+import TheSearch2 from '../../../components/snippets/the-search-2';
+import TheSearch3 from '../../../components/snippets/the-search-3';
+import TheSearch4 from '../../../components/snippets/the-search-4';
+import TheSearch5 from '../../../components/snippets/the-search-5';
+import TheSearch6 from '../../../components/snippets/the-search-6';
+import TheSearch7 from '../../../components/snippets/the-search-7';
+import TheSearch8 from '../../../components/snippets/the-search-8';
+import TheSearch9 from '../../../components/snippets/the-search-9';
+
+<template>
+  <h1 class="doc-page-title">The search</h1>
+
+  <h2 class="t3">The default behavior</h2>
+
+  <p>
+    The default select has no searchbox, but you can pass
+    <code>@searchEnabled={{true}}</code>
+    to enable a search that is surprisingly smart. As you type it will filter
+    the results that contain the given string ignoring diacritic differences and
+    capitalization. That means that the string
+    <code>maria</code>
+    will match against
+    <code>María</code>,
+    <code>oren</code>
+    against
+    <code>Søren</code>
+    and so on.
+  </p>
+
+  <CodeExample @glimmerTs="the-search-1.gts">
+    {{TheSearch1}}
+  </CodeExample>
+
+  <p>
+    Also (only in single selects) this component supports searching and
+    highlighting even when there is no searchbox or the component is focused but
+    closed. It just works out of the box.
+  </p>
+
+  <p>Try focusing the next component and typing, while it's opened and also
+    while it's closed.</p>
+
+  <CodeExample @glimmerTs="the-search-2.gts">
+    {{TheSearch2}}
+  </CodeExample>
+
+  <h2 class="t3">Search field position</h2>
+
+  <p>
+    The default search field position for single select is inside the dropdown
+    and only visible when the dropdown is open (<code
+    >@searchFieldPosition="before-options"</code>).<br />
+    In multiple selection you will find the search field inside trigger box (<code
+    >@searchFieldPosition="trigger"</code>).<br />
+    By passing
+    <code>@searchFieldPosition</code>
+    you can change this logic for single and multiple selection.
+  </p>
+
+  <CodeExample @glimmerTs="the-search-8.gts">
+    {{TheSearch8}}
+  </CodeExample>
+
+  <CodeExample @glimmerTs="the-search-9.gts">
+    {{TheSearch9}}
+  </CodeExample>
+
+  <h2 class="t3">Customize the search field</h2>
+
+  <p>
+    The default search works great when your options are just strings but when
+    your options are objects you need to tell the component what field it should
+    match against using the
+    <code>searchField</code>
+    option.
+  </p>
+
+  <CodeExample @glimmerTs="the-search-3.gts">
+    {{TheSearch3}}
+  </CodeExample>
+
+  <p>
+    Please note that the search works only when your options are strings or the
+    values in the property specified by
+    <code>searchField</code>
+    are strings. If you want to search numbers for instance you'll have to
+    transform them to strings.
+  </p>
+  <p>
+    The
+    <code>searchField</code>
+    property is also used when the user types over a select without searchbox
+    that has the focus.
+  </p>
+
+  <h2 class="t3">Prevent autofocus</h2>
+
+  <p>
+    Sometimes you want to disable the default behavior of the search box, where
+    it will be focused when the dropdown opens. To achieve that you have to add
+    the
+    <code>autofocus</code>
+    parameter to the default
+    <code>beforeOptions</code>
+    component.
+  </p>
+
+  <CodeExample @glimmerTs="the-search-4.gts">
+    {{TheSearch4}}
+  </CodeExample>
+  <h2 class="t3">Pass a custom matcher</h2>
+
+  <p>
+    Sometimes the default matcher is not enough for you, for example if you need
+    to match against several fields or you need to perform fuzzy matching. If
+    that is the case just pass your own matcher function. It will receive the
+    option and the search term and you can do whatever you feel like inside as
+    long as it returns
+    <code>-1</code>
+    if it doesn't match and a positive number if it does.
+  </p>
+
+  <CodeExample @glimmerTs="the-search-5.gts">
+    {{TheSearch5}}
+  </CodeExample>
+
+  <p>
+    This field is also used when the user types over a select without searchbox
+    that has the focus.
+  </p>
+
+  <h2 class="t3">Using the search term inside the block</h2>
+
+  <p>
+    Is very common to need the search term from withing the block used to render
+    each one of the options, typically for apply a highlight some substring of
+    the option's text. For that, the block, as most actions in this component,
+    receives an instance of the publicAPI as second argument. The public API
+    contains
+    <code>searchText</code>
+    and
+    <code>lastSearchedText</code>.
+  </p>
+
+  <CodeExample @glimmerTs="the-search-6.gts">
+    {{TheSearch6}}
+  </CodeExample>
+
+  <p>
+    There is a few things to be aware of this search term:
+  </p>
+
+  <ul>
+    <li>
+      Even if the default search is smart enough to transform diacritics, the
+      term will unmodified, and therefore you need to handle terms as "João" or
+      "María" yourself.
+    </li>
+    <li>
+      <em>Likely</em>
+      the attribute of the public API that you want to use is
+      <code>lastSearchedText</code>
+      instead of
+      <code>searchText</code>. That is because
+      <code>searchText</code>
+      contains the text typed in the searchbox, and us updated as the user
+      types, while
+      <code>lastSearchedText</code>
+      contains the search term that yielded the current collection of results.
+      While in synchronous searches they are the same, in asynchronous searches
+      they can temporality diverge while the search is ongoing. In the previous
+      example, if the search was async and you used
+      <code>searchText</code>, the results wouldn't be updated and your
+      highlighting wouldn't find a match.
+    </li>
+  </ul>
+
+  <h2 class="t3">Search box placeholder</h2>
+
+  <p>Pass
+    <code>searchPlaceholder="Type your name..."</code>
+    to show a placeholder in the search box</p>
+
+  <CodeExample @glimmerTs="the-search-7.gts">
+    {{TheSearch7}}
+  </CodeExample>
+
+  In the default multiple select without searchbox you can use the
+  <code>placeholder</code>
+  property to have put text in the trigger.
+
+  <div class="doc-page-nav">
+    <LinkTo
+      @route="public-pages.docs.the-list"
+      class="doc-page-nav-link-prev"
+    >&lt; The list</LinkTo>
+    <LinkTo
+      @route="public-pages.docs.styles"
+      class="doc-page-nav-link-next"
+    >Styles &gt;</LinkTo>
+  </div>
+</template>

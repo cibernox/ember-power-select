@@ -190,7 +190,7 @@ export interface PowerSelectArgs<
     term: string,
     select: Select<T, IsMultiple>,
     e: Event,
-  ) => string | false | void;
+  ) => string | boolean | void;
   onKeydown?: (
     select: Select<T, IsMultiple>,
     e: KeyboardEvent,
