@@ -1,9 +1,9 @@
-{{#let (element (or @labelTag "label")) as |LabelTag|}}
+{{#let (or @labelTag "label") (element (or @labelTag "label")) as |tagName LabelTag|}}
   <LabelTag
     id={{@labelId}}
     class="ember-power-select-label"
     ...attributes
-    for={{@triggerId}}
+    for={{if (eq tagName "label") @triggerId}}
     {{on "click" this.onLabelClick}}
   >
     {{@labelText}}
