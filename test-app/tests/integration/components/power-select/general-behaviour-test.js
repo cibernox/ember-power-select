@@ -122,7 +122,7 @@ module(
       let labelElement = document.querySelector('.ember-power-select-label');
 
       assert.equal(
-        labelElement?.tagName,
+        labelElement.tagName,
         'LABEL',
         'The label is rendered as a label element by default',
       );
@@ -141,7 +141,7 @@ module(
       let labelElement = document.querySelector('.ember-power-select-label');
 
       assert.equal(
-        labelElement?.tagName,
+        labelElement.tagName,
         'SPAN',
         'The label is rendered as a span element',
       );
