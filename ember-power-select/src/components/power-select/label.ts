@@ -9,6 +9,7 @@ export interface PowerSelectLabelSignature {
     labelText?: string;
     labelId: string;
     triggerId: string;
+    labelTag?: string;
     extra: any;
   };
 }

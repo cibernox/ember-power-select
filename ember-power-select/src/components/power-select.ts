@@ -82,6 +82,7 @@ export interface PowerSelectArgs {
   searchField?: string;
   labelClass?: string;
   labelText?: string;
+  labelTag?: string;
   labelClickAction?: TLabelClickAction;
   ariaLabel?: string;
   ariaLabelledBy?: string;
