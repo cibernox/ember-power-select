@@ -74,6 +74,7 @@
     "@embroider/util": "^1.13.4",
     "decorator-transforms": "^2.3.0",
     "ember-assign-helper": "^0.5.1",
+    "ember-element-helper": "^0.8.8",
     "ember-modifier": "^4.2.2",
     "ember-truth-helpers": "^4.0.3 || ^5.0.0"
   },
