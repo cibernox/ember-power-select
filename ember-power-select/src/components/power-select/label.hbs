@@ -1,4 +1,7 @@
-{{#let (or @labelTag "label") (element (or @labelTag "label")) as |tagName LabelTag|}}
+{{#let
+  (or @labelTag "label") (element (or @labelTag "label"))
+  as |tagName LabelTag|
+}}
   <LabelTag
     id={{@labelId}}
     class="ember-power-select-label"
