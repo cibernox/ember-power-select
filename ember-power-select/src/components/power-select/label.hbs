@@ -1,14 +1,5 @@
-{{#if (eq @labelTag "span")}}
-  <span
-    id={{@labelId}}
-    class="ember-power-select-label"
-    ...attributes
-    {{on "click" this.onLabelClick}}
-  >
-    {{@labelText}}
-  </span>
-{{else}}
-  <label
+{{#let (element (or @labelTag "label")) as |LabelTag|}}
+  <LabelTag
     id={{@labelId}}
     class="ember-power-select-label"
     ...attributes
@@ -16,5 +7,5 @@
     {{on "click" this.onLabelClick}}
   >
     {{@labelText}}
-  </label>
-{{/if}}
+  </LabelTag>
+{{/let}}
