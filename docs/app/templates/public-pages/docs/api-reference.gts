@@ -210,10 +210,14 @@ import { LinkTo } from '@ember/routing';
         <td><code>string</code></td>
         <td>
           Controls the HTML tag used for the built-in label. Defaults to
-          <code>"label"</code>. When set to <code>"span"</code> the component
-          renders a <code>&lt;span&gt;</code> instead and associates it to the
-          trigger via <code>aria-labelledby</code>, which avoids orphaned
-          <code>&lt;label&gt;</code> warnings from some accessibility tools.
+          <code>"label"</code>. When set to
+          <code>"span"</code>
+          the component renders a
+          <code>&lt;span&gt;</code>
+          instead and associates it to the trigger via
+          <code>aria-labelledby</code>, which avoids orphaned
+          <code>&lt;label&gt;</code>
+          warnings from some accessibility tools.
         </td>
       </tr>
       <tr>
