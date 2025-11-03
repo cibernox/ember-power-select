@@ -46,7 +46,7 @@
         {{/if}}
       </li>
     {{else}}
-      {{#if (and @placeholder (not @searchEnabled))}}
+      {{#if (and @placeholder (or (not @searchEnabled) (eq @searchFieldPosition "before-options")))}}
         <li>
           {{#let
             (component (ensure-safe-component @placeholderComponent))
@@ -89,7 +89,6 @@
             <PlaceholderComponent
               @select={{@select}}
               @placeholder={{@placeholder}}
-              @isMultipleWithSearch={{true}}
               @inputComponent={{InputComponent}}
               @displayPlaceholder={{and
                 (not @select.searchText)
