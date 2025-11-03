@@ -46,7 +46,12 @@
         {{/if}}
       </li>
     {{else}}
-      {{#if (and @placeholder (not @searchEnabled))}}
+      {{#if
+        (and
+          @placeholder
+          (or (not @searchEnabled) (eq @searchFieldPosition "before-options"))
+        )
+      }}
         <li>
           {{#let
             (component (ensure-safe-component @placeholderComponent))
