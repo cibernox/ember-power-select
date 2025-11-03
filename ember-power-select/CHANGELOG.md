@@ -16,6 +16,23 @@
 
 
 
+
+## v8.12.0 (2025-11-03)
+
+#### :rocket: Enhancement
+* [#1949](https://github.com/cibernox/ember-power-select/pull/1949) Add `@labelTag` to allow overriding the default label tag ([@kexposito](https://github.com/kexposito))
+
+#### :bug: Bug Fix
+* [#1950](https://github.com/cibernox/ember-power-select/pull/1950) Fix `@placeholder` for multiple select field with `@searchEnabled={{true}}` and `@searchFieldPosition="before-options"` ([@mkszepp](https://github.com/mkszepp))
+* [#1948](https://github.com/cibernox/ember-power-select/pull/1948) Allow void in all `on` events ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1947](https://github.com/cibernox/ember-power-select/pull/1947) Convert docs to gts ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 2
+- Kevin Expósito ([@kexposito](https://github.com/kexposito))
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.11.0 (2025-10-01)
 
 #### :rocket: Enhancement
