@@ -157,8 +157,8 @@ module(
       this.onChange = (selected, dropdown) => {
         assert.strictEqual(
           selected,
-          null,
-          'The onchange action was called with the new selection (null)',
+          undefined,
+          'The onchange action was called with the new selection (undefined)',
         );
         assert.ok(
           dropdown.actions.close,

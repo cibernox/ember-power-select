@@ -13,6 +13,7 @@ import type {
   Selected,
   TSearchFieldPosition,
 } from '../../types';
+import type { PowerSelectArgs } from '../power-select';
 
 export interface PowerSelectInputSignature<
   T = unknown,
@@ -42,10 +43,7 @@ export interface PowerSelectInputSignature<
     onBlur?: (e: FocusEvent) => void;
     onFocus?: (e: FocusEvent) => void;
     onInput?: (e: InputEvent) => void | boolean;
-    buildSelection?: (
-      lastSelection: Option<T>,
-      select: Select<T, IsMultiple>,
-    ) => Selected<T, IsMultiple>;
+    buildSelection?: PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'];
   };
 }
 

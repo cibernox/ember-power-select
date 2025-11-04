@@ -169,7 +169,7 @@ export interface PowerSelectArgs<
   buildSelection?: (
     selected: Option<T>,
     select: Select<T, IsMultiple>,
-  ) => Selected<T, IsMultiple> | null;
+  ) => Selected<T, IsMultiple>;
   onChange: (
     selection: Selected<T, IsMultiple>,
     select: Select<T, IsMultiple>,
@@ -485,12 +485,7 @@ export default class PowerSelectComponent<
     return this.args.tabindex || '0';
   }
 
-  get buildSelection():
-    | ((
-        selected: Option<T>,
-        select: Select<T, IsMultiple>,
-      ) => Selected<T, IsMultiple> | null)
-    | undefined {
+  get buildSelection(): PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'] {
     if (this.args.buildSelection) {
       return this.args.buildSelection;
     }

@@ -35,8 +35,8 @@ export type Selected<
   T,
   IsMultiple extends boolean = false,
 > = IsMultiple extends true
-  ? Option<T>[] | null | undefined
-  : Option<T> | null | undefined;
+  ? Option<T>[] | undefined
+  : Option<T> | undefined;
 
 export type MultipleSelect<T> = Select<T, true>;
 export type MultipleSelected<T> = Selected<T, true>;

@@ -81,7 +81,7 @@ export default class PowerSelectTriggerComponent<
   @action
   clear(e: Event): false | void {
     e.stopPropagation();
-    this.args.select.actions.select(null);
+    this.args.select.actions.select(undefined);
     if (e.type === 'touchstart') {
       return false;
     }

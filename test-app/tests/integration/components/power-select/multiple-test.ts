@@ -1397,8 +1397,9 @@ module(
       assert.expect(3);
 
       this.numbers = numbers;
+      this.foo = () => {};
       await render<NumbersContext>(hbs`
-      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @placeholder="Placeholder" @searchEnabled={{true}} @searchPlaceholder="Search Placeholder" @searchFieldPosition="before-options" @onChange={{fn (mut this.foo)}} as |option|>
+      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @placeholder="Placeholder" @searchEnabled={{true}} @searchPlaceholder="Search Placeholder" @searchFieldPosition="before-options" @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelectMultiple>
     `);
