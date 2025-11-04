@@ -1404,7 +1404,9 @@ module(
       </PowerSelectMultiple>
     `);
 
-      assert.dom('.ember-power-select-placeholder').exists('Placeholder is present');
+      assert
+        .dom('.ember-power-select-placeholder')
+        .exists('Placeholder is present');
 
       assert.dom('.ember-power-select-placeholder').hasText('Placeholder');
 

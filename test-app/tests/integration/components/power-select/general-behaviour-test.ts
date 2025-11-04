@@ -230,7 +230,7 @@ module(
       </PowerSelect>
     `);
 
-      let labelElement = document.querySelector('.ember-power-select-label');
+      const labelElement = document.querySelector('.ember-power-select-label');
 
       assert.equal(
         labelElement?.tagName,
@@ -250,7 +250,7 @@ module(
       </PowerSelect>
     `);
 
-      let labelElement = document.querySelector('.ember-power-select-label');
+      const labelElement = document.querySelector('.ember-power-select-label');
 
       assert.equal(
         labelElement?.tagName,

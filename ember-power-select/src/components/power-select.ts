@@ -485,7 +485,11 @@ export default class PowerSelectComponent<
     return this.args.tabindex || '0';
   }
 
-  get buildSelection(): PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'] {
+  get buildSelection(): PowerSelectArgs<
+    T,
+    IsMultiple,
+    TExtra
+  >['buildSelection'] {
     if (this.args.buildSelection) {
       return this.args.buildSelection;
     }
