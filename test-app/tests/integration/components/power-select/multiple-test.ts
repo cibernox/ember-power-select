@@ -1392,5 +1392,30 @@ module(
           'The for from label is matching with id of trigger',
         );
     });
+
+    test<NumbersContext>('Multiple selects: Test `@placeholder` and `@searchPlaceholder` with `@searchEnabled={{true}}` and `@searchFieldPosition="before-options"`', async function (assert) {
+      assert.expect(3);
+
+      this.numbers = numbers;
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @placeholder="Placeholder" @searchEnabled={{true}} @searchPlaceholder="Search Placeholder" @searchFieldPosition="before-options" @onChange={{fn (mut this.foo)}} as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+      assert.dom('.ember-power-select-placeholder').exists('Placeholder is present');
+
+      assert.dom('.ember-power-select-placeholder').hasText('Placeholder');
+
+      await clickTrigger();
+
+      assert
+        .dom('.ember-power-select-search-input')
+        .hasAttribute(
+          'placeholder',
+          'Search Placeholder',
+          'The placeholder in input field is present and has value "Search Placeholder"',
+        );
+    });
   },
 );

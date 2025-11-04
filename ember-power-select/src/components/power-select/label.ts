@@ -11,6 +11,7 @@ export interface PowerSelectLabelArgs<
   labelText?: string;
   labelId: string;
   triggerId: string;
+  labelTag?: keyof HTMLElementTagNameMap;
   extra?: TExtra;
 }
 

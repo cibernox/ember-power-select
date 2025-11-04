@@ -305,6 +305,9 @@ importers:
       ember-assign-helper:
         specifier: ^0.5.1
         version: 0.5.1
+      ember-element-helper:
+        specifier: ^0.8.8
+        version: 0.8.8
       ember-modifier:
         specifier: ^4.2.2
         version: 4.2.2(@babel/core@7.28.4)

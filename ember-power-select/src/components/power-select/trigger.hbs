@@ -48,7 +48,12 @@
         </li>
       {{/each}}
     {{else}}
-      {{#if (and @placeholder (not @searchEnabled))}}
+      {{#if
+        (and
+          @placeholder
+          (or (not @searchEnabled) (eq @searchFieldPosition "before-options"))
+        )
+      }}
         <li>
           {{#let @placeholderComponent as |PlaceholderComponent|}}
             <PlaceholderComponent

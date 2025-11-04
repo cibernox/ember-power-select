@@ -219,6 +219,46 @@ module(
         );
     });
 
+    test<NumbersContext>('The default label is rendered as a label element when @labelTag is not provided', async function (assert) {
+      assert.expect(1);
+
+      this.numbers = numbers;
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @onChange={{fn (mut this.foo)}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+      let labelElement = document.querySelector('.ember-power-select-label');
+
+      assert.equal(
+        labelElement?.tagName,
+        'LABEL',
+        'The label is rendered as a label element by default',
+      );
+    });
+
+    test<NumbersContext>('The labelTag="span" renders a span element instead of a label element for better accessibility', async function (assert) {
+      assert.expect(1);
+
+      this.numbers = numbers;
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @labelTag="span" @onChange={{fn (mut this.foo)}} as |option|>
+        {{option}}
+      </PowerSelect>
+    `);
+
+      let labelElement = document.querySelector('.ember-power-select-label');
+
+      assert.equal(
+        labelElement?.tagName,
+        'SPAN',
+        'The label is rendered as a span element',
+      );
+    });
+
     test<NumbersContext>('The search functionality can be enabled by passing `@searchEnabled={{true}}`', async function (assert) {
       assert.expect(2);
 

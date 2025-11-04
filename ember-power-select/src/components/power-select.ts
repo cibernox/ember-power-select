@@ -113,6 +113,7 @@ export interface PowerSelectArgs<
   searchField?: string;
   labelClass?: string;
   labelText?: string;
+  labelTag?: keyof HTMLElementTagNameMap;
   labelClickAction?: TLabelClickAction;
   ariaLabel?: string;
   ariaLabelledBy?: string;
