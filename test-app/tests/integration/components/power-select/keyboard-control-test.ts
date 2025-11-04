@@ -488,7 +488,7 @@ module(
       assert.expect(9);
 
       this.numbers = numbers;
-      this.selected = null;
+      this.selected = undefined;
       this.onKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),
@@ -540,7 +540,7 @@ module(
       assert.expect(10);
 
       this.numbers = numbers;
-      this.selected = null;
+      this.selected = undefined;
       this.onKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),
@@ -597,7 +597,7 @@ module(
       assert.expect(10);
 
       this.numbers = numbers;
-      this.selected = null;
+      this.selected = undefined;
       this.onKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),
@@ -656,7 +656,7 @@ module(
       assert.expect(2);
 
       this.numbers = numbers;
-      this.selected = null;
+      this.selected = undefined;
       this.onKeydown = () => {
         return false;
       };

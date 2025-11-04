@@ -44,7 +44,9 @@ import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-pos
 interface NumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
   numbers: string[] | Promise<string[]>;
-  selected: string | null | undefined | Promise<string | null | undefined>;
+  selected: IsMultiple extends true
+    ? (string | undefined | Promise<string | null | undefined>)[]
+    : string | undefined | Promise<string | undefined>;
   search: () => Promise<string[]> | string[];
   proxy: string[] | Promise<string[]>;
   endsWithMatcher: MatcherFn<string>;
@@ -73,7 +75,7 @@ interface PromiseProxy<T = unknown> extends Promise<T> {
 interface CountriesContext extends TestContext {
   countries: Country[];
   country: Selected<Country>;
-  proxy: PromiseProxy<Country | null | undefined>;
+  proxy: PromiseProxy<Country | undefined>;
   foo: () => void;
   updateProxy: () => void;
 }
@@ -225,7 +227,7 @@ module(
       this.numbers = numbers;
       this.foo = () => {};
       await render<NumbersContext>(hbs`
-      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @onChange={{fn (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -245,7 +247,7 @@ module(
       this.numbers = numbers;
       this.foo = () => {};
       await render<NumbersContext>(hbs`
-      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @labelTag="span" @onChange={{fn (mut this.foo)}} as |option|>
+      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @labelTag="span" @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -487,7 +489,7 @@ module(
       assert.expect(3);
 
       this.numbers = numbers;
-      this.selected = null;
+      this.selected = undefined;
       this.foo = function () {
         assert.ok(false, 'The onchange action is never fired');
       };
@@ -515,7 +517,7 @@ module(
       assert.expect(3);
 
       this.numbers = numbers;
-      this.selected = null;
+      this.selected = undefined;
       await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @onChange={{fn (mut this.selected)}} as |option|>
         {{option}}
@@ -1634,7 +1636,7 @@ module(
       assert.expect(2);
 
       this.numbers = numbers;
-      this.selected = null;
+      this.selected = undefined;
       this.search = () => [];
       await render<NumbersContext>(hbs`
       <PowerSelect @options={{this.numbers}} @selected={{this.selected}} @searchEnabled={{true}} @onChange={{fn (mut this.selected)}} @search={{this.search}} as |option|>
@@ -1829,7 +1831,7 @@ module(
         { name: 'Lucius' },
         { name: 'Donatello' },
       ];
-      this.mainUser = { pets, selected: null };
+      this.mainUser = { pets, selected: undefined };
       this.foo = () => {};
 
       await render<MainUserContext>(hbs`

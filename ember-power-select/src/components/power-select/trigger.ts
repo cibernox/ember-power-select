@@ -81,7 +81,8 @@ export default class PowerSelectTriggerComponent<
   @action
   clear(e: Event): false | void {
     e.stopPropagation();
-    this.args.select.actions.select(undefined);
+    const value = this.args.select.multiple ? [] : undefined;
+    this.args.select.actions.select(value as Selected<T, IsMultiple>);
     if (e.type === 'touchstart') {
       return false;
     }
