@@ -4,9 +4,15 @@ import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 
 export default class extends Component {
-  @tracked selectedDiacritic: string | undefined;
+  @tracked selectedDiacritic: string[] = [];
 
-  diacritics = ['María', 'Søren Larsen', 'João', 'Saša Jurić', 'Íñigo'];
+  diacritics: string[] = [
+    'María',
+    'Søren Larsen',
+    'João',
+    'Saša Jurić',
+    'Íñigo',
+  ];
 
   <template>
     <PowerSelect

@@ -3,8 +3,14 @@ import CodeExample from 'docs/components/code-example';
 import { LinkTo } from '@ember/routing';
 import PowerSelect from 'ember-power-select/components/power-select';
 import { fn } from '@ember/helper';
+import { tracked } from '@glimmer/tracking';
 
-const countries = [
+interface Country {
+  name: string;
+  flagUrl: string;
+}
+
+const countries: Country[] = [
   { name: 'United States', flagUrl: '/flags/us.svg' },
   { name: 'Spain', flagUrl: '/flags/es.svg' },
   { name: 'Portugal', flagUrl: '/flags/pt.svg' },
@@ -43,15 +49,16 @@ const groupedNumbers = [
 ];
 
 export default class MaterialTheme extends Component {
+  @tracked city: string | undefined = undefined;
+  @tracked country: Country | undefined = undefined;
+  @tracked country2: Country | undefined = undefined;
+  @tracked country3: Country | undefined = undefined;
+  @tracked selectedCountries: Country[] = [];
+  @tracked number: string | undefined = undefined;
+
   cities = cities;
   countries = countries;
   groupedNumbers = groupedNumbers;
-  city = null;
-  country = null;
-  country2 = null;
-  country3 = null;
-  selectedCountries = null;
-  number = null;
 
   <template>
     <h1 class="doc-page-title">Material theme</h1>

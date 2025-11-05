@@ -22,20 +22,22 @@ export default class extends Component {
   ];
 
   <template>
-    <PowerSelect
-      @searchEnabled={{true}}
-      @options={{this.countries}}
-      @searchField="name"
-      @selected={{this.selected}}
-      @onChange={{fn (mut this.selected)}}
-      @labelText="Country"
-      @beforeOptionsComponent={{component
-        PowerSelectBeforeOptions
-        autofocus=false
-      }}
-      as |country|
-    >
-      {{country.name}}
-    </PowerSelect>
+    {{#let
+      (component PowerSelectBeforeOptions autofocus=false)
+      as |beforeOptions|
+    }}
+      <PowerSelect
+        @searchEnabled={{true}}
+        @options={{this.countries}}
+        @searchField="name"
+        @selected={{this.selected}}
+        @onChange={{fn (mut this.selected)}}
+        @labelText="Country"
+        @beforeOptionsComponent={{beforeOptions}}
+        as |country|
+      >
+        {{country.name}}
+      </PowerSelect>
+    {{/let}}
   </template>
 }

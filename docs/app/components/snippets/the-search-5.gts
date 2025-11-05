@@ -10,6 +10,7 @@ interface Person {
 
 export default class extends Component {
   @tracked selectedPerson: Person | undefined;
+
   people: Person[] = [
     { name: 'María', surname: 'Murray' },
     { name: 'Søren', surname: 'Williams' },
@@ -19,8 +20,8 @@ export default class extends Component {
     { name: 'Lisa', surname: 'Simpson' },
   ];
 
-  myMatcher(person: Person, term: string) {
-    return `${person.name} ${person.surname}`.indexOf(term);
+  myMatcher(person: Person | undefined, term: string) {
+    return `${person?.name} ${person?.surname}`.indexOf(term);
   }
 
   <template>

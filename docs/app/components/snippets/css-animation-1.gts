@@ -3,7 +3,12 @@ import PowerSelect from 'ember-power-select/components/power-select';
 import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 
-const countries = [
+interface Country {
+  name: string;
+  flagUrl: string;
+}
+
+const countries: Country[] = [
   { name: 'United States', flagUrl: '/flags/us.svg' },
   { name: 'Spain', flagUrl: '/flags/es.svg' },
   { name: 'Portugal', flagUrl: '/flags/pt.svg' },
@@ -14,7 +19,7 @@ const countries = [
 ];
 
 export default class extends Component {
-  @tracked country: string | undefined;
+  @tracked country: Country | undefined;
 
   options = countries;
 

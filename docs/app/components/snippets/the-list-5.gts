@@ -4,9 +4,9 @@ import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 
 export default class extends Component {
-  @tracked selected: unknown;
+  @tracked selected: string | undefined;
 
-  emptyList = [];
+  emptyList: string[] = [];
 
   <template>
     <PowerSelect

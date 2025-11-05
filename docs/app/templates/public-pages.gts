@@ -69,7 +69,10 @@ export default class extends Component {
               @options={{this.mainSelectOptions}}
               @selected={{this.mainSelected}}
               @disabled={{this.disabled}}
-              @triggerComponent={{MainHeaderSelectTrigger}}
+              @triggerComponent={{component
+                MainHeaderSelectTrigger
+                disabled=this.disabled
+              }}
               @onChange={{this.changeOptions}}
               @ariaLabelledBy="home-link"
               @dropdownClass="main-header-select-dropdown"

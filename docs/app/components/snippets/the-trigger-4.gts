@@ -2,6 +2,8 @@ import Component from '@glimmer/component';
 import PowerSelect from 'ember-power-select/components/power-select';
 import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
+import type { TOC } from '@ember/component/template-only';
+import type { PowerSelectPlaceholderSignature } from 'ember-power-select/components/power-select/placeholder';
 
 const placeholderComponent = <template>
   <strong>Fill</strong>
@@ -10,7 +12,7 @@ const placeholderComponent = <template>
   and
   <span class="text-pink">praise</span>
   <img src="/grumpy-cat.png" alt="grumpy-cat" width="24" height="24" />
-</template>;
+</template> satisfies TOC<PowerSelectPlaceholderSignature<string>>;
 
 export default class extends Component {
   @tracked name: string | undefined;
