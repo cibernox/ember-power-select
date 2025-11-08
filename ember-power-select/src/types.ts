@@ -78,7 +78,7 @@ export type MatcherFn<T> = (option: T | undefined, text: string) => number;
 
 export interface DefaultHighlightedParams<T> {
   results: readonly T[];
-  highlighted: Option<T> | null | undefined;
+  highlighted: Option<T> | undefined;
   selected: Selected<T> | Selected<T, true>;
 }
 

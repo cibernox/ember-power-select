@@ -18,7 +18,7 @@ import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
 
 interface GroupedNumbersContext extends TestContext {
-  foo: (selected: string | null | undefined) => void;
+  foo: (selected: string | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
   selected: Selected<string>;
 }

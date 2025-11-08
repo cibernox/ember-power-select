@@ -54,7 +54,7 @@ interface CountryContext<IsMultiple extends boolean = false>
 
 interface GroupedNumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
-  foo: (selected: string | null | undefined) => void;
+  foo: (selected: string | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
   selected: Selected<typeof groupedNumbers, IsMultiple>;
 }
@@ -597,7 +597,7 @@ module(
       assert.expect(10);
 
       this.numbers = numbers;
-      this.selected = undefined;
+      this.selected = [];
       this.onKeydown = (select, e) => {
         assert.ok(
           Object.prototype.hasOwnProperty.call(select, 'isOpen'),

@@ -277,8 +277,8 @@ export function defaultHighlighted<T>({
   results,
   highlighted,
   selected,
-}: DefaultHighlightedParams<T>): Option<T> | null | undefined {
-  let option: Option<T> | null | undefined = highlighted;
+}: DefaultHighlightedParams<T>): Option<T> | undefined {
+  let option: Option<T> | undefined = highlighted;
 
   if (!option) {
     if (Array.isArray(selected)) {
@@ -296,7 +296,7 @@ export function defaultHighlighted<T>({
 
 export function advanceSelectableOption<T, IsMultiple extends boolean = false>(
   options: readonly T[],
-  currentOption: Selected<T, IsMultiple> | null | undefined,
+  currentOption: Selected<T, IsMultiple>,
   step: 1 | -1,
 ): Option<T> | undefined {
   const resultsLength = countOptions(options);

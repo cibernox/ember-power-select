@@ -45,7 +45,7 @@ interface NumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
   numbers: string[] | Promise<string[]>;
   selected: IsMultiple extends true
-    ? (string | undefined | Promise<string | null | undefined>)[]
+    ? (string | Promise<string>)[]
     : string | undefined | Promise<string | undefined>;
   search: () => Promise<string[]> | string[];
   proxy: string[] | Promise<string[]>;
@@ -1916,14 +1916,14 @@ module(
     test<CountriesContext>('Constant PromiseProxy references are tracked when .content changes', async function (assert) {
       const initial: Country | null = null;
       // @ts-expect-error Expected 0 arguments, but got 1.
-      this.proxy = PromiseObject.create<Country | null | undefined>({
+      this.proxy = PromiseObject.create<Country | undefined>({
         promise: Promise.resolve(initial),
-      }) as PromiseProxy<Country | null | undefined>;
+      }) as PromiseProxy<Country | undefined>;
       this.countries = countries;
       this.updateProxy = () => {
-        // @ts-expect-error Property 'set' does not exist on type 'PromiseProxy<Country | null | undefined>'.
+        // @ts-expect-error Property 'set' does not exist on type 'PromiseProxy<Country | undefined>'.
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        this.proxy.set<keyof ObjectProxy<Country | null | undefined>>(
+        this.proxy.set<keyof ObjectProxy<Country | undefined>>(
           'content',
           countries[0],
         );

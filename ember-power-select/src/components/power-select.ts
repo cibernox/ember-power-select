@@ -265,7 +265,7 @@ export default class PowerSelectComponent<
   @tracked loading = false;
   @tracked searchText = '';
   @tracked lastSearchedText = '';
-  @tracked highlighted?: Option<T> | undefined | null;
+  @tracked highlighted?: Option<T> | undefined;
   storedAPI!: Select<T, IsMultiple>;
 
   private _uid = guidFor(this);
@@ -836,7 +836,7 @@ export default class PowerSelectComponent<
   }
 
   @action
-  _highlight(opt: Option<T> | undefined | null): void {
+  _highlight(opt: Option<T> | undefined): void {
     if (
       !isNone(opt) &&
       opt &&
@@ -1241,7 +1241,7 @@ export default class PowerSelectComponent<
   }
 
   _resetHighlighted(): void {
-    let highlighted: Option<T> | null | undefined;
+    let highlighted: Option<T> | undefined;
     const defHighlighted = this.args.defaultHighlighted || defaultHighlighted;
     if (typeof defHighlighted === 'function') {
       highlighted = (defHighlighted as typeof defaultHighlighted)({

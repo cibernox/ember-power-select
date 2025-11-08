@@ -21,12 +21,12 @@ import {
 import type { Selected, MultipleSelected } from 'ember-power-select/types';
 
 interface GroupedNumbersContext extends TestContext {
-  foo: (selected: string | null | undefined) => void;
+  foo: (selected: string | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
 }
 
 interface GroupedNumbersMultipleContext extends TestContext {
-  foo: (selected: string[] | null | undefined) => void;
+  foo: (selected: string[]) => void;
   groupedNumbers: typeof groupedNumbers;
 }
 

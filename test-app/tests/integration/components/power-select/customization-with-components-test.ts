@@ -93,7 +93,7 @@ interface GroupedNumbersExtra {
 
 interface GroupedNumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
-  foo: (selected: string | null | undefined) => void;
+  foo: (selected: string | undefined) => void;
   groupedNumbers: GroupedNumber[];
   extra?: GroupedNumbersExtra;
   onInit?: () => void;

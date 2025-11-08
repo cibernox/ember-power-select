@@ -61,7 +61,7 @@ interface CountryContext<IsMultiple extends boolean = false>
 
 interface GroupedNumbersContext<IsMultiple extends boolean = false>
   extends TestContext {
-  foo: (selected: string | null | undefined) => void;
+  foo: (selected: string | undefined) => void;
   groupedNumbers: GroupedNumber[];
   groupComponent: ComponentLike<
     PowerSelectPowerSelectGroupSignature<GroupedNumber, unknown, IsMultiple>
