@@ -42,6 +42,10 @@ const groupedSections = [
     groupName: 'Migration',
     options: [
       {
+        route: 'public-pages.docs.migrate-8-0-to-9-0',
+        text: 'Migrate from 8.0 to 9.0',
+      },
+      {
         route: 'public-pages.docs.migrate-7-0-to-8-0',
         text: 'Migrate from 7.0 to 8.0',
       },
@@ -134,6 +138,10 @@ export default class Docs extends Component {
         >Custom search action</LinkTo>
 
         <header class="side-nav-header">Upgrade</header>
+        <LinkTo
+          @route="public-pages.docs.migrate-8-0-to-9-0"
+          class="side-nav-link"
+        >Migrate from 8.0 to 9.0</LinkTo>
         <LinkTo
           @route="public-pages.docs.migrate-7-0-to-8-0"
           class="side-nav-link"

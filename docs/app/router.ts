@@ -27,6 +27,7 @@ Router.map(function () {
       this.route('custom-search-action');
 
       // Migrate
+      this.route('migrate-8-0-to-9-0');
       this.route('migrate-7-0-to-8-0');
 
       // OTHER

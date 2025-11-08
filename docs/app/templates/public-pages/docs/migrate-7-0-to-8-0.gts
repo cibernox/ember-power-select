@@ -120,9 +120,9 @@ import { LinkTo } from '@ember/routing';
 
   <div class="doc-page-nav">
     <LinkTo
-      @route="public-pages.docs.custom-search-action"
+      @route="public-pages.docs.migrate-8-0-to-9-0"
       class="doc-page-nav-link-prev"
-    >&lt; Custom search action</LinkTo>
+    >&lt; Migrate from 8.0 to 9.0</LinkTo>
     <LinkTo
       @route="public-pages.docs.test-helpers"
       class="doc-page-nav-link-next"
