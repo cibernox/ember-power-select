@@ -1,0 +1,7 @@
+interface PowerSelectOptionsSignature<
+  OptionType,
+  ExtraTyp,
+  true,
+> {
+  ...
+}

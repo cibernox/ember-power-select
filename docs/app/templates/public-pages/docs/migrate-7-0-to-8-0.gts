@@ -124,8 +124,8 @@ import { LinkTo } from '@ember/routing';
       class="doc-page-nav-link-prev"
     >&lt; Migrate from 8.0 to 9.0</LinkTo>
     <LinkTo
-      @route="public-pages.docs.test-helpers"
+      @route="public-pages.docs.typescript"
       class="doc-page-nav-link-next"
-    >Test helpers &gt;</LinkTo>
+    >TypeScript &gt;</LinkTo>
   </div>
 </template>

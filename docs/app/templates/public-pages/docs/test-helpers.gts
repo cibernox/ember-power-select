@@ -158,9 +158,9 @@ import { LinkTo } from '@ember/routing';
 
   <div class="doc-page-nav">
     <LinkTo
-      @route="public-pages.docs.migrate-7-0-to-8-0"
+      @route="public-pages.docs.typescript"
       class="doc-page-nav-link-prev"
-    >&lt; Migrate from 7.0 to 8.0</LinkTo>
+    >&lt; TypeScript</LinkTo>
     <LinkTo
       @route="public-pages.docs.troubleshooting"
       class="doc-page-nav-link-next"

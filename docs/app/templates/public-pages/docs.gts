@@ -54,6 +54,7 @@ const groupedSections = [
   {
     groupName: 'Other',
     options: [
+      { route: 'public-pages.docs.typescript', text: 'TypeScript' },
       { route: 'public-pages.docs.test-helpers', text: 'Test helpers' },
       { route: 'public-pages.docs.troubleshooting', text: 'Troubleshooting' },
       { route: 'public-pages.docs.architecture', text: 'Architecture' },
@@ -148,6 +149,10 @@ export default class Docs extends Component {
         >Migrate from 7.0 to 8.0</LinkTo>
 
         <header class="side-nav-header">Other</header>
+        <LinkTo
+          @route="public-pages.docs.typescript"
+          class="side-nav-link"
+        >TypeScript</LinkTo>
         <LinkTo
           @route="public-pages.docs.test-helpers"
           class="side-nav-link"

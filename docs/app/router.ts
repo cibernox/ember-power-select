@@ -31,6 +31,7 @@ Router.map(function () {
       this.route('migrate-7-0-to-8-0');
 
       // OTHER
+      this.route('typescript');
       this.route('test-helpers');
       this.route('troubleshooting');
       this.route('architecture');
