@@ -149,7 +149,7 @@ export default class PowerSelectTriggerComponent<
   }
 
   selectedObject<T>(
-    list: Option<T>[] | undefined,
+    list: readonly Option<T>[] | undefined,
     index: number,
   ): Option<T> | undefined {
     if (list && 'objectAt' in list && typeof list.objectAt === 'function') {

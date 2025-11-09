@@ -1377,7 +1377,7 @@ function getOptionMatcher<T>(
 ): MatcherFn<T> {
   if (searchField && matcher === defaultMatcher) {
     return (option: T | undefined, text: string) =>
-      matcher(get(option, searchField) as T, text);
+      matcher(get(option, searchField) as T | undefined, text);
   } else {
     return (option: T | undefined, text: string) => {
       assert(

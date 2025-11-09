@@ -1,5 +1,6 @@
 import CodeExample from 'docs/components/code-example';
 import { LinkTo } from '@ember/routing';
+import Typescript4 from '../../../components/snippets/typescript-4';
 
 <template>
   <h1 class="doc-page-title">TypeScript</h1>
@@ -106,6 +107,24 @@ import { LinkTo } from '@ember/routing';
       @showResult={{false}}
       @activeTab="glimmer-ts"
     />
+  </p>
+
+  <h2>Example</h2>
+
+  <p>
+    Here you can find an example with:<br />
+    - Overridden component
+    <code>@selectedItemComponent</code><br />
+    -
+    <code>@extra</code>'s<br />
+    -
+    <code>@registerAPI</code><br />
+    - Custom matcher
+    <code>@matcher</code>
+
+    <CodeExample @glimmerTs="typescript-4.gts">
+      {{Typescript4}}
+    </CodeExample>
   </p>
 
   <div class="doc-page-nav">
