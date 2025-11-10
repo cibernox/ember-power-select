@@ -108,7 +108,6 @@ export interface PowerSelectArgs<
   defaultHighlighted?:
     | ((params: DefaultHighlightedParams<T>) => Option<T> | undefined)
     | Option<T>
-    | null
     | undefined;
   searchField?: string;
   labelClass?: string;
