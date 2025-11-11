@@ -4,6 +4,8 @@ import { modifier } from 'ember-modifier';
 import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
+import { emberPowerSelectIsGroup } from '../../helpers/ember-power-select-is-group.ts';
+import { emberPowerSelectIsEqual } from '../../helpers/ember-power-select-is-equal.ts';
 declare const FastBoot: any;
 
 interface PowerSelectOptionsSignature {
@@ -53,6 +55,8 @@ if (typeof FastBoot === 'undefined') {
 }
 
 export default class PowerSelectOptionsComponent extends Component<PowerSelectOptionsSignature> {
+  isGroup = emberPowerSelectIsGroup;
+  isEqual = emberPowerSelectIsEqual;
   private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice;
   private touchMoveEvent?: TouchEvent;
   private mouseOverHandler: EventListener = ((

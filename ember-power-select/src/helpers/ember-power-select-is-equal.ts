@@ -1,10 +1,7 @@
-import { helper } from '@ember/component/helper';
 import { isArray as isEmberArray } from '@ember/array';
 import { isEqual } from '@ember/utils';
 
-export function emberPowerSelectIsEqual(
-  [option, selected]: [any, any] /* , hash*/,
-): boolean {
+export function emberPowerSelectIsEqual(option: any, selected: any): boolean {
   if (selected === undefined || selected === null) {
     return false;
   }
@@ -21,4 +18,4 @@ export function emberPowerSelectIsEqual(
   }
 }
 
-export default helper(emberPowerSelectIsEqual);
+export default emberPowerSelectIsEqual;

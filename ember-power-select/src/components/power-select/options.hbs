@@ -15,7 +15,7 @@
     as |Group Options|
   }}
     {{#each @options as |opt index|}}
-      {{#if (ember-power-select-is-group opt)}}
+      {{#if (this.isGroup opt)}}
         <Group @group={{opt}} @select={{@select}} @extra={{@extra}}>
           <Options
             @options={{opt.options}}
@@ -36,9 +36,9 @@
         <li
           class="ember-power-select-option"
           id="{{@select.uniqueId}}-{{@groupIndex}}{{index}}"
-          aria-selected="{{ember-power-select-is-equal opt @select.selected}}"
+          aria-selected="{{this.isEqual opt @select.selected}}"
           aria-disabled={{if opt.disabled "true"}}
-          aria-current="{{ember-power-select-is-equal opt @select.highlighted}}"
+          aria-current="{{this.isEqual opt @select.highlighted}}"
           data-option-index="{{@groupIndex}}{{index}}"
           role="option"
         >
