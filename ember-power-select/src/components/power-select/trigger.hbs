@@ -103,7 +103,7 @@
   </ul>
 
 {{else}}
-  {{#if (ember-power-select-is-selected-present @select.selected)}}
+  {{#if (this.isSelectedPresent @select.selected)}}
     {{#if
       (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))
     }}

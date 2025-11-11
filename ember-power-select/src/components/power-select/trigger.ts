@@ -5,6 +5,7 @@ import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
 import type { Select, TSearchFieldPosition } from '../power-select';
 import type { ComponentLike } from '@glint/template';
+import { emberPowerSelectIsSelectedPresent } from '../../helpers/ember-power-select-is-selected-present.ts';
 
 interface IndexAccesible<T> {
   objectAt(index: number): T;
@@ -46,6 +47,7 @@ interface PowerSelectTriggerSignature {
 }
 
 export default class PowerSelectTriggerComponent extends Component<PowerSelectTriggerSignature> {
+  isSelectedPresent = emberPowerSelectIsSelectedPresent;
   private _lastIsOpen: boolean = this.args.select.isOpen;
 
   @action
