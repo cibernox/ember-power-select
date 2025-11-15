@@ -1134,7 +1134,7 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
     // if "Aa" would cycle through the results.
     this._expirableSearchText = this._expirableSearchText + c;
     this._repeatingChar = repeatingChar;
-    const match = this.findWithOffset(
+    let match = this.findWithOffset(
       this.storedAPI.options,
       term,
       searchStartOffset,
@@ -1145,6 +1145,9 @@ export default class PowerSelectComponent extends Component<PowerSelectSignature
         this.storedAPI.actions.highlight(match);
         this.storedAPI.actions.scrollTo(match);
       } else {
+        if (this.args.multiple || this.args.legacyMultiple) {
+          match = [match];
+        }
         this.storedAPI.actions.select(match, e);
       }
     }
