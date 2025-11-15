@@ -1349,7 +1349,7 @@ export default class PowerSelectComponent<
     // if "Aa" would cycle through the results.
     this._expirableSearchText = this._expirableSearchText + c;
     this._repeatingChar = repeatingChar;
-    const match = this.findWithOffset(
+    let match = this.findWithOffset(
       this.storedAPI.options,
       term,
       searchStartOffset,
@@ -1360,7 +1360,12 @@ export default class PowerSelectComponent<
         this.storedAPI.actions.highlight(match);
         this.storedAPI.actions.scrollTo(match);
       } else {
-        this.storedAPI.actions.select(match as Selected<T, IsMultiple>, e);
+        let selected: Option<T> | Option<T>[] = match;
+        if (this.args.multiple) {
+          selected = [match];
+        }
+
+        this.storedAPI.actions.select(selected as Selected<T, IsMultiple>, e);
       }
     }
     await timeout(1000);
