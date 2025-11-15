@@ -1349,7 +1349,7 @@ export default class PowerSelectComponent<
     // if "Aa" would cycle through the results.
     this._expirableSearchText = this._expirableSearchText + c;
     this._repeatingChar = repeatingChar;
-    let match = this.findWithOffset(
+    const match = this.findWithOffset(
       this.storedAPI.options,
       term,
       searchStartOffset,
