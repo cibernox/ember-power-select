@@ -29,7 +29,6 @@ const parserOptions = {
     },
     ts: {
       projectService: true,
-      project: true,
       tsconfigRootDir: import.meta.dirname,
     },
   },
