@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
 
 export default class extends Component {
-  @tracked name = 'Pluto';
+  @tracked name: string | undefined = 'Pluto';
 
   names = ['Stefan', 'Miguel', 'Tomster', 'Pluto'];
   destination = this.names[2];

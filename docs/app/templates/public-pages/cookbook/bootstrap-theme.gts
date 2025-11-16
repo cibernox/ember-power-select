@@ -4,7 +4,12 @@ import { LinkTo } from '@ember/routing';
 import PowerSelect from 'ember-power-select/components/power-select';
 import { fn } from '@ember/helper';
 
-const countries = [
+interface Country {
+  name: string;
+  flagUrl: string;
+}
+
+const countries: Country[] = [
   { name: 'United States', flagUrl: '/flags/us.svg' },
   { name: 'Spain', flagUrl: '/flags/es.svg' },
   { name: 'Portugal', flagUrl: '/flags/pt.svg' },
@@ -16,8 +21,8 @@ const countries = [
 
 export default class BootstrapTheme extends Component {
   options = countries;
-  selectedSingle = null;
-  selectedMultiple = [];
+  selectedSingle: Country | undefined = undefined;
+  selectedMultiple: Country[] = [];
 
   <template>
     <h1 class="doc-page-title">Bootstrap theme</h1>

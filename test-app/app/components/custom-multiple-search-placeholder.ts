@@ -1,12 +1,7 @@
-import templateOnly from '@ember/component/template-only';
-import type { ComponentLike } from '@glint/template';
+import PowerSelectPlaceholder from 'ember-power-select/components/power-select/placeholder';
 
-export interface CustomMultipleSearchPlaceholderSignature {
-  Element: Element;
-  Args: {
-    displayPlaceholder: boolean;
-    inputComponent: ComponentLike<any>;
-  };
-}
-
-export default templateOnly<CustomMultipleSearchPlaceholderSignature>();
+export default class CustomMultipleSearchPlaceholder<
+  T,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> extends PowerSelectPlaceholder<T, TExtra, IsMultiple> {}

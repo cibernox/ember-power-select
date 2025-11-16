@@ -111,8 +111,8 @@ import CustomSearchAction2 from '../../../components/snippets/custom-search-acti
       class="doc-page-nav-link-prev"
     >&lt; Styles</LinkTo>
     <LinkTo
-      @route="public-pages.docs.migrate-7-0-to-8-0"
+      @route="public-pages.docs.migrate-8-0-to-9-0"
       class="doc-page-nav-link-next"
-    >Migrate from 7.0 to 8.0 &gt;</LinkTo>
+    >Migrate from 8.0 to 9.0 &gt;</LinkTo>
   </div>
 </template>

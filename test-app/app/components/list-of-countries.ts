@@ -1,11 +1,10 @@
-import templateOnly from '@ember/component/template-only';
+import PowerSelectOptionsComponent from 'ember-power-select/components/power-select/options';
+import type { Country, SelectedCountryExtra } from 'test-app/utils/constants';
 
-export interface ListOfCountriesSignature {
-  Element: Element;
-  Args: {
-    extra: any;
-    options: any;
-  };
-}
-
-export default templateOnly<ListOfCountriesSignature>();
+export default class ListOfCountries<
+  IsMultiple extends boolean = false,
+> extends PowerSelectOptionsComponent<
+  Country,
+  SelectedCountryExtra,
+  IsMultiple
+> {}

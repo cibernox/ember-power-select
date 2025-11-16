@@ -42,6 +42,10 @@ const groupedSections = [
     groupName: 'Migration',
     options: [
       {
+        route: 'public-pages.docs.migrate-8-0-to-9-0',
+        text: 'Migrate from 8.0 to 9.0',
+      },
+      {
         route: 'public-pages.docs.migrate-7-0-to-8-0',
         text: 'Migrate from 7.0 to 8.0',
       },
@@ -50,6 +54,7 @@ const groupedSections = [
   {
     groupName: 'Other',
     options: [
+      { route: 'public-pages.docs.typescript', text: 'TypeScript' },
       { route: 'public-pages.docs.test-helpers', text: 'Test helpers' },
       { route: 'public-pages.docs.troubleshooting', text: 'Troubleshooting' },
       { route: 'public-pages.docs.architecture', text: 'Architecture' },
@@ -82,8 +87,8 @@ export default class Docs extends Component {
   }
 
   @action
-  visit(section: { route: string; text: string }) {
-    this.router.transitionTo(section.route);
+  visit(section: { route: string; text: string } | undefined) {
+    this.router.transitionTo(section?.route);
   }
 
   <template>
@@ -135,11 +140,19 @@ export default class Docs extends Component {
 
         <header class="side-nav-header">Upgrade</header>
         <LinkTo
+          @route="public-pages.docs.migrate-8-0-to-9-0"
+          class="side-nav-link"
+        >Migrate from 8.0 to 9.0</LinkTo>
+        <LinkTo
           @route="public-pages.docs.migrate-7-0-to-8-0"
           class="side-nav-link"
         >Migrate from 7.0 to 8.0</LinkTo>
 
         <header class="side-nav-header">Other</header>
+        <LinkTo
+          @route="public-pages.docs.typescript"
+          class="side-nav-link"
+        >TypeScript</LinkTo>
         <LinkTo
           @route="public-pages.docs.test-helpers"
           class="side-nav-link"

@@ -1,22 +1,13 @@
 {{#if (or @labelText @labelComponent)}}
-  {{#let
-    (if
-      @labelComponent
-      (component (ensure-safe-component @labelComponent))
-      (component "power-select/label")
-    )
-    as |Label|
-  }}
-    <Label
-      @select={{this.storedAPI}}
-      @labelText={{@labelText}}
-      @labelId={{this.labelId}}
-      @triggerId={{this.triggerId}}
-      @labelTag={{@labelTag}}
-      @extra={{@extra}}
-      class={{@labelClass}}
-    />
-  {{/let}}
+  <this.labelComponent
+    @select={{this.storedAPI}}
+    @labelText={{@labelText}}
+    @labelId={{this.labelId}}
+    @triggerId={{this.triggerId}}
+    @labelTag={{@labelTag}}
+    @extra={{@extra}}
+    class={{@labelClass}}
+  />
 {{/if}}
 <BasicDropdown
   @horizontalPosition={{@horizontalPosition}}
@@ -31,28 +22,19 @@
   @verticalPosition={{@verticalPosition}}
   @disabled={{@disabled}}
   @calculatePosition={{@calculatePosition}}
-  @triggerComponent={{ensure-safe-component @ebdTriggerComponent}}
-  @contentComponent={{ensure-safe-component @ebdContentComponent}}
+  @triggerComponent={{if
+    @ebdTriggerComponent
+    (ensure-safe-component @ebdTriggerComponent)
+  }}
+  @contentComponent={{if
+    @ebdContentComponent
+    (ensure-safe-component @ebdContentComponent)
+  }}
   @rootEventType={{or @rootEventType "mousedown"}}
   as |dropdown|
 >
   {{#let
-    (assign
-      dropdown
-      (hash
-        selected=this.selected
-        multiple=(or @multiple false)
-        highlighted=this.highlighted
-        options=this.options
-        results=this.results
-        resultsCount=this.resultsCount
-        loading=this.loading
-        isActive=this.isActive
-        searchText=this.searchText
-        lastSearchedText=this.lastSearchedText
-        actions=(assign dropdown.actions this._publicAPIActions)
-      )
-    )
+    (this.publicAPI dropdown)
     (concat "ember-power-select-options-" dropdown.uniqueId)
     as |publicAPI listboxId|
   }}
@@ -93,92 +75,43 @@
       tabindex={{and (not @disabled) (or this.tabindex "0")}}
       ...attributes
     >
-      {{#let
-        (if
-          @triggerComponent
-          (component (ensure-safe-component @triggerComponent))
-          (component "power-select/trigger")
-        )
-        as |Trigger|
-      }}
-        {{#if @legacyMultiple}}
-          <Trigger
-            @allowClear={{@allowClear}}
-            @buildSelection={{this.buildSelection}}
-            @loadingMessage={{or @loadingMessage "Loading options..."}}
-            @selectedItemComponent={{ensure-safe-component
-              @selectedItemComponent
-            }}
-            @select={{publicAPI}}
-            @searchEnabled={{@searchEnabled}}
-            @searchField={{@searchField}}
-            @searchFieldPosition={{this.searchFieldPosition}}
-            @onFocus={{this.handleFocus}}
-            @onBlur={{this.handleBlur}}
-            @extra={{@extra}}
-            @listboxId={{listboxId}}
-            @onInput={{this.handleInput}}
-            @onKeydown={{this.handleKeydown}}
-            @placeholder={{@placeholder}}
-            @placeholderComponent={{if
-              @placeholderComponent
-              (ensure-safe-component @placeholderComponent)
-              (component "power-select/placeholder")
-            }}
-            @ariaActiveDescendant={{concat
-              publicAPI.uniqueId
-              "-"
-              this.highlightedIndex
-            }}
-            @ariaLabelledBy={{this.ariaLabelledBy}}
-            @ariaDescribedBy={{@ariaDescribedBy}}
-            @ariaLabel={{@ariaLabel}}
-            @role={{@triggerRole}}
-            as |opt select|
-          >
-            {{yield opt select}}
-          </Trigger>
-        {{else}}
-          <Trigger
-            @allowClear={{@allowClear}}
-            @buildSelection={{this.buildSelection}}
-            @loadingMessage={{or @loadingMessage "Loading options..."}}
-            @selectedItemComponent={{ensure-safe-component
-              @selectedItemComponent
-            }}
-            @select={{publicAPI}}
-            @searchEnabled={{@searchEnabled}}
-            @searchField={{@searchField}}
-            @searchFieldPosition={{this.searchFieldPosition}}
-            @onFocus={{this.handleFocus}}
-            @onBlur={{this.handleBlur}}
-            @extra={{@extra}}
-            @listboxId={{listboxId}}
-            @onInput={{this.handleInput}}
-            @onKeydown={{this.handleKeydown}}
-            @placeholder={{@placeholder}}
-            @searchPlaceholder={{@searchPlaceholder}}
-            @placeholderComponent={{if
-              @placeholderComponent
-              (ensure-safe-component @placeholderComponent)
-              (component "power-select/placeholder")
-            }}
-            @ariaActiveDescendant={{concat
-              publicAPI.uniqueId
-              "-"
-              this.highlightedIndex
-            }}
-            @ariaLabelledBy={{this.ariaLabelledBy}}
-            @ariaDescribedBy={{@ariaDescribedBy}}
-            @ariaLabel={{@ariaLabel}}
-            @role={{@triggerRole}}
-            @tabindex={{@tabindex}}
-            as |opt select|
-          >
-            {{yield opt select}}
-          </Trigger>
-        {{/if}}
-      {{/let}}
+      <this.triggerComponent
+        @allowClear={{@allowClear}}
+        @buildSelection={{this.buildSelection}}
+        @loadingMessage={{or @loadingMessage "Loading options..."}}
+        @selectedItemComponent={{if
+          @selectedItemComponent
+          (ensure-safe-component @selectedItemComponent)
+        }}
+        @select={{publicAPI}}
+        @searchEnabled={{@searchEnabled}}
+        @searchField={{@searchField}}
+        @searchFieldPosition={{this.searchFieldPosition}}
+        @onFocus={{this.handleFocus}}
+        @onBlur={{this.handleBlur}}
+        @extra={{@extra}}
+        @listboxId={{listboxId}}
+        @onInput={{this.handleInput}}
+        @onKeydown={{this.handleKeydown}}
+        @placeholder={{@placeholder}}
+        @searchPlaceholder={{@searchPlaceholder}}
+        @placeholderComponent={{ensure-safe-component
+          this.placeholderComponent
+        }}
+        @ariaActiveDescendant={{concat
+          publicAPI.uniqueId
+          "-"
+          this.highlightedIndex
+        }}
+        @ariaLabelledBy={{this.ariaLabelledBy}}
+        @ariaDescribedBy={{@ariaDescribedBy}}
+        @ariaLabel={{@ariaLabel}}
+        @role={{@triggerRole}}
+        @tabindex={{@tabindex}}
+        as |opt select|
+      >
+        {{yield opt select}}
+      </this.triggerComponent>
     </dropdown.Trigger>
     <dropdown.Content
       class="ember-power-select-dropdown{{if
@@ -189,110 +122,71 @@
       @animationEnabled={{@animationEnabled}}
     >
       {{#if (not-eq @beforeOptionsComponent null)}}
-        {{#let
-          (if
-            @beforeOptionsComponent
-            (component (ensure-safe-component @beforeOptionsComponent))
-            (component "power-select/before-options")
-          )
-          as |BeforeOptions|
-        }}
-          <BeforeOptions
-            @select={{publicAPI}}
-            @searchEnabled={{@searchEnabled}}
-            @onInput={{this.handleInput}}
-            @onKeydown={{this.handleKeydown}}
-            @onFocus={{this.handleFocus}}
-            @onBlur={{this.handleBlur}}
-            @placeholder={{@placeholder}}
-            @placeholderComponent={{or
-              @placeholderComponent
-              (component "power-select/placeholder")
-            }}
-            @extra={{@extra}}
-            @listboxId={{listboxId}}
-            @ariaActiveDescendant={{if
-              this.highlightedIndex
-              (concat publicAPI.uniqueId "-" this.highlightedIndex)
-            }}
-            @selectedItemComponent={{ensure-safe-component
-              @selectedItemComponent
-            }}
-            @searchPlaceholder={{@searchPlaceholder}}
-            @searchFieldPosition={{this.searchFieldPosition}}
-            @ariaLabel={{@ariaLabel}}
-            @ariaLabelledBy={{this.ariaLabelledBy}}
-            @ariaDescribedBy={{@ariaDescribedBy}}
-            @triggerRole={{@triggerRole}}
-          />
-        {{/let}}
+        <this.beforeOptionsComponent
+          @select={{publicAPI}}
+          @searchEnabled={{@searchEnabled}}
+          @onInput={{this.handleInput}}
+          @onKeydown={{this.handleKeydown}}
+          @onFocus={{this.handleFocus}}
+          @onBlur={{this.handleBlur}}
+          @placeholder={{@placeholder}}
+          @placeholderComponent={{ensure-safe-component
+            this.placeholderComponent
+          }}
+          @extra={{@extra}}
+          @listboxId={{listboxId}}
+          @ariaActiveDescendant={{if
+            this.highlightedIndex
+            (concat publicAPI.uniqueId "-" this.highlightedIndex)
+          }}
+          @selectedItemComponent={{if
+            @selectedItemComponent
+            (ensure-safe-component @selectedItemComponent)
+          }}
+          @searchPlaceholder={{@searchPlaceholder}}
+          @searchFieldPosition={{this.searchFieldPosition}}
+          @ariaLabel={{@ariaLabel}}
+          @ariaLabelledBy={{this.ariaLabelledBy}}
+          @ariaDescribedBy={{@ariaDescribedBy}}
+          @triggerRole={{@triggerRole}}
+        />
       {{/if}}
       {{#if this.mustShowSearchMessage}}
-        {{#let
-          (if
-            @searchMessageComponent
-            (component (ensure-safe-component @searchMessageComponent))
-            (component "power-select/search-message")
-          )
-          as |SearchMessage|
-        }}
-          <SearchMessage
-            @searchMessage={{this.searchMessage}}
-            @select={{publicAPI}}
-            id={{listboxId}}
-            aria-label={{@ariaLabel}}
-            aria-labelledby={{this.ariaLabelledBy}}
-          />
-        {{/let}}
+        <this.searchMessageComponent
+          @searchMessage={{this.searchMessage}}
+          @select={{publicAPI}}
+          @extra={{@extra}}
+          id={{listboxId}}
+          aria-label={{@ariaLabel}}
+          aria-labelledby={{this.ariaLabelledBy}}
+        />
       {{else if this.mustShowNoMessages}}
-        {{#let
-          (if
-            @noMatchesMessageComponent
-            (component (ensure-safe-component @noMatchesMessageComponent))
-            (component "power-select/no-matches-message")
-          )
-          as |NoMatchesMessage|
-        }}
-          <NoMatchesMessage
-            @noMatchesMessage={{this.noMatchesMessage}}
-            @select={{publicAPI}}
-            id={{listboxId}}
-            aria-label={{@ariaLabel}}
-            aria-labelledby={{this.ariaLabelledBy}}
-          />
-        {{/let}}
+        <this.noMatchesMessageComponent
+          @noMatchesMessage={{this.noMatchesMessage}}
+          @select={{publicAPI}}
+          @extra={{@extra}}
+          id={{listboxId}}
+          aria-label={{@ariaLabel}}
+          aria-labelledby={{this.ariaLabelledBy}}
+        />
       {{else}}
-        {{#let
-          (if
-            @optionsComponent
-            (component (ensure-safe-component @optionsComponent))
-            (component "power-select/options")
-          )
-          (if
-            @groupComponent
-            (component (ensure-safe-component @groupComponent))
-            (component "power-select/power-select-group")
-          )
-          as |Options Group|
-        }}
-          <Options
-            @loadingMessage={{or @loadingMessage "Loading options..."}}
-            @select={{publicAPI}}
-            @options={{publicAPI.results}}
-            @groupIndex=""
-            @optionsComponent={{Options}}
-            @extra={{@extra}}
-            @highlightOnHover={{this.highlightOnHover}}
-            @groupComponent={{Group}}
-            role="listbox"
-            aria-multiselectable={{if this.ariaMultiSelectable "true"}}
-            id={{listboxId}}
-            class="ember-power-select-options"
-            as |option select|
-          >
-            {{yield option select}}
-          </Options>
-        {{/let}}
+        <this.optionsComponent
+          @loadingMessage={{or @loadingMessage "Loading options..."}}
+          @select={{publicAPI}}
+          @options={{publicAPI.results}}
+          @groupIndex=""
+          @optionsComponent={{ensure-safe-component this.optionsComponent}}
+          @extra={{@extra}}
+          @highlightOnHover={{this.highlightOnHover}}
+          @groupComponent={{ensure-safe-component this.groupComponent}}
+          role="listbox"
+          aria-multiselectable={{if this.ariaMultiSelectable "true"}}
+          id={{listboxId}}
+          class="ember-power-select-options"
+          as |option select|
+        >
+          {{yield option select}}
+        </this.optionsComponent>
       {{/if}}
 
       {{#if @afterOptionsComponent}}

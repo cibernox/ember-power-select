@@ -1,8 +1,10 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import PowerSelect from 'ember-power-select/components/power-select';
-import SelectedItemCountry from '../selected-item-country';
+import emberPowerSelectIsArray from 'ember-power-select/helpers/ember-power-select-is-array';
 import { fn } from '@ember/helper';
+import type { TOC } from '@ember/component/template-only';
+import type { PowerSelectSelectedItemSignature } from 'ember-power-select/types';
 
 interface Country {
   name: string;
@@ -20,18 +22,37 @@ const countries: Country[] = [
   { name: 'United Kingdom', flagUrl: '/flags/gb.svg', population: 64596752 },
 ];
 
+const selectedItemCountry = <template>
+  {{#if (emberPowerSelectIsArray @select.selected)}}
+    {{#each @select.selected as |option|}}
+      <img
+        src={{option.flagUrl}}
+        class="icon-flag"
+        alt="Flag of {{option.name}}"
+      />
+      {{option.name}}
+    {{/each}}
+  {{else}}
+    <img
+      src={{@select.selected.flagUrl}}
+      class="icon-flag"
+      alt="Flag of {{@select.selected.name}}"
+    />
+    {{@select.selected.name}}
+  {{/if}}
+</template> satisfies TOC<PowerSelectSelectedItemSignature<Country>>;
+
 export default class extends Component {
-  @tracked country: Country | undefined;
+  @tracked country: Country | undefined = countries[2];
 
   countries = countries;
-  destination = countries[2];
 
   <template>
     <PowerSelect
       @searchEnabled={{true}}
       @options={{this.countries}}
       @selected={{this.country}}
-      @selectedItemComponent={{SelectedItemCountry}}
+      @selectedItemComponent={{selectedItemCountry}}
       @searchField="name"
       @labelText="Country"
       @onChange={{fn (mut this.country)}}
