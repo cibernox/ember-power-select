@@ -104,9 +104,6 @@ importers:
       '@embroider/macros':
         specifier: ^1.19.0
         version: 1.19.4(@glint/template@1.5.2)
-      '@embroider/test-setup':
-        specifier: ^4.0.0
-        version: 4.0.0(@embroider/compat@4.1.10(@embroider/core@4.2.7(@glint/template@1.5.2))(@glint/template@1.5.2))(@embroider/core@4.2.7(@glint/template@1.5.2))
       '@embroider/vite':
         specifier: ^1.1.1
         version: 1.4.1(@embroider/core@4.2.7(@glint/template@1.5.2))(@glint/template@1.5.2)(rollup@4.53.2)(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(sass@1.94.0)(terser@5.44.1)(yaml@2.8.1))
@@ -221,9 +218,6 @@ importers:
       ember-truth-helpers:
         specifier: ^5.0.0
         version: 5.0.0
-      ember-try:
-        specifier: ^4.0.0
-        version: 4.0.0(encoding@0.1.13)
       eslint:
         specifier: ^9.36.0
         version: 9.39.1(jiti@2.6.1)
@@ -9614,14 +9608,6 @@ snapshots:
       typescript-memoize: 1.1.1
     transitivePeerDependencies:
       - supports-color
-
-  '@embroider/test-setup@4.0.0(@embroider/compat@4.1.10(@embroider/core@4.2.7(@glint/template@1.5.2))(@glint/template@1.5.2))(@embroider/core@4.2.7(@glint/template@1.5.2))':
-    dependencies:
-      lodash: 4.17.21
-      resolve: 1.22.11
-    optionalDependencies:
-      '@embroider/compat': 4.1.10(@embroider/core@4.2.7(@glint/template@1.5.2))(@glint/template@1.5.2)
-      '@embroider/core': 4.2.7(@glint/template@1.5.2)
 
   '@embroider/test-setup@4.0.0(@embroider/core@3.5.7(@glint/template@1.5.2))':
     dependencies:

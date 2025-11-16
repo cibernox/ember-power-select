@@ -25,9 +25,7 @@
     "lint:types": "glint",
     "start": "vite",
     "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\" --prefixColors auto",
-    "test:ember": "vite build --mode development && ember test --path dist",
-    "test:ember-try": "ember try:one",
-    "test:ember-compatibility": "ember try:each"
+    "test:ember": "vite build --mode development && ember test --path dist"
   },
   "dependenciesMeta": {
     "ember-power-select": {
@@ -57,7 +55,6 @@
     "@embroider/config-meta-loader": "^1.0.0",
     "@embroider/core": "^4.0.3",
     "@embroider/macros": "^1.19.0",
-    "@embroider/test-setup": "^4.0.0",
     "@embroider/vite": "^1.1.1",
     "@eslint/js": "^9.36.0",
     "@glimmer/component": "^2.0.0",
@@ -96,7 +93,6 @@
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^7.9.3",
     "ember-truth-helpers": "^5.0.0",
-    "ember-try": "^4.0.0",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-ember": "^12.7.4",
