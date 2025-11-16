@@ -164,9 +164,6 @@ importers:
       ember-cli-inject-live-reload:
         specifier: ^2.1.0
         version: 2.1.0
-      ember-cli-mirage:
-        specifier: ^3.0.4
-        version: 3.0.4(@ember-data/model@5.7.0(@glint/template@1.5.2))(@ember/test-helpers@5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2))(@glint/template@1.5.2)(ember-data@5.7.0(@ember/test-helpers@5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2))(@ember/test-waiters@4.1.1(@glint/template@1.5.2))(@glint/template@1.5.2)(ember-inflector@6.0.0(@babel/core@7.28.4))(qunit@2.24.1))(ember-qunit@9.0.4(@ember/test-helpers@5.3.0(@babel/core@7.28.4)(@glint/template@1.5.2))(@glint/template@1.5.2)(qunit@2.24.1))(ember-source@6.7.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(miragejs@0.1.48)(webpack@5.102.0)
       ember-cli-sass:
         specifier: ^11.0.1
         version: 11.0.1
