@@ -111,7 +111,11 @@ import { LinkTo } from '@ember/routing';
     <code>lessOptions</code>.
   </p>
 
-  <CodeExample @js="installation-2.js" @showResult={{false}} @activeTab="js" />
+  <CodeExample
+    @js="installation-2.js.txt"
+    @showResult={{false}}
+    @activeTab="js"
+  />
 
   <p>
     This explicit import is needed because using CSS preprocessors like SASS and
