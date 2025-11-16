@@ -4,7 +4,6 @@ import { LinkTo } from '@ember/routing';
 <template>
   <h1 class="doc-page-title">Test helpers</h1>
 
-  <br />
   <h2>Acceptance Tests</h2>
 
   <p>
