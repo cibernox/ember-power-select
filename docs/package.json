@@ -79,7 +79,6 @@
     "ember-cli-deprecation-workflow": "^3.4.0",
     "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-sass": "^11.0.1",
-    "ember-code-snippet": "git+https://git@github.com/ef4/ember-code-snippet.git#d054b697098ad52481c94a952ccf8d89ba1f25fe",
     "ember-concurrency": "^5.1.0",
     "ember-data": "5.7.0",
     "ember-inflector": "^6.0.0",

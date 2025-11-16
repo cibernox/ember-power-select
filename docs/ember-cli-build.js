@@ -26,7 +26,6 @@ module.exports = async function (defaults) {
       },
     },
     'ember-cli-babel': { enableTypeScriptTransform: true },
-    snippetPaths: ['app/components/snippets', 'app/templates/snippets/'],
   });
 
   return compatBuild(app, buildOnce);
