@@ -99,7 +99,7 @@ import { LinkTo } from '@ember/routing';
         file</p>
 
       <CodeExample
-        @js="installation-2.js"
+        @js="installation-2.js.txt"
         @showResult={{false}}
         @activeTab="js"
       />

@@ -4,7 +4,6 @@ import { LinkTo } from '@ember/routing';
 <template>
   <h1 class="doc-page-title">Test helpers</h1>
 
-  <br />
   <h2>Acceptance Tests</h2>
 
   <p>
@@ -18,7 +17,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-10-js.js"
+    @js="test-helpers-10-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -32,7 +31,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-2-js.js"
+    @js="test-helpers-2-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -41,7 +40,7 @@ import { LinkTo } from '@ember/routing';
   option is not convenient:
 
   <CodeExample
-    @js="test-helpers-3-js.js"
+    @js="test-helpers-3-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -55,7 +54,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-4-js.js"
+    @js="test-helpers-4-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -67,7 +66,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-5-js.js"
+    @js="test-helpers-5-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -80,7 +79,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-6-js.js"
+    @js="test-helpers-6-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -124,7 +123,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-7-js.js"
+    @js="test-helpers-7-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -137,7 +136,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-8-js.js"
+    @js="test-helpers-8-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />
@@ -151,7 +150,7 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <CodeExample
-    @js="test-helpers-9-js.js"
+    @js="test-helpers-9-js.js.txt"
     @showResult={{false}}
     @activeTab="js"
   />

@@ -2,31 +2,31 @@ import Component from '@glimmer/component';
 import { modifier } from 'ember-modifier';
 import { htmlSafe, type SafeString } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
-import { assert } from '@ember/debug';
 import { codeToHtml } from 'shiki';
 import { task } from 'ember-concurrency';
+
+const files = import.meta.glob('./snippets/*', {
+  query: '?raw',
+  import: 'default',
+}) as Record<string, () => Promise<string>>;
+
+async function loadSnippet(name: string) {
+  const path = `./snippets/${name}` as const;
+  const loader = files[path];
+  if (!loader) throw new Error(`File not found: ${path}`);
+  return await loader();
+}
 
 interface CodeInlineSignature {
   Element: HTMLElement;
   Args: {
-    code: string;
+    fileName: string;
     language?: string;
   };
 }
 
 export default class CodeInline extends Component<CodeInlineSignature> {
   @tracked prismCode: string | SafeString = '';
-
-  get code() {
-    const code = this.args.code;
-
-    assert(
-      "ember-prism's <CodeBlock/> and <CodeInline/> components require a `code` parameter to be passed in.",
-      code !== undefined,
-    );
-
-    return code;
-  }
 
   get language() {
     return this.args.language ?? 'markup';
@@ -37,8 +37,9 @@ export default class CodeInline extends Component<CodeInlineSignature> {
   });
 
   generateCode = task(async () => {
-    const code = this.code;
     const language = this.language;
+
+    const code = await loadSnippet(this.args.fileName);
 
     const htmlCode = await codeToHtml(code, {
       lang: language,

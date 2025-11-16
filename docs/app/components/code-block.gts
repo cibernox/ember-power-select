@@ -4,7 +4,7 @@ import CodeInline from './code-inline';
 interface CodeBlockSignature {
   Element: HTMLElement;
   Args: {
-    code: string;
+    fileName: string;
     language?: string;
     class?: string;
   };
@@ -18,7 +18,11 @@ export default class CodeBlock extends Component<CodeBlockSignature> {
   <template>
     <div class="code-block {{@class}}">
       {{~! ~}}
-      <CodeInline ...attributes @code={{@code}} @language={{@language}} />
+      <CodeInline
+        ...attributes
+        @fileName={{@fileName}}
+        @language={{@language}}
+      />
       {{~! ~}}
     </div>
   </template>
