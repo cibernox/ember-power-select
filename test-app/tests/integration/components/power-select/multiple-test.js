@@ -1347,5 +1347,36 @@ module(
           'The placeholder in input field is present and has value "Search Placeholder"',
         );
     });
+
+    test('BUGFIX: Rendering issue, when input field is in trigger and complete power select component will be destroyed (issue #1954)', async function (assert) {
+      assert.expect(1);
+
+      class State {
+        @tracked selected = ['a'];
+      }
+
+      this.state = new State();
+
+      this.sort = (arr) => arr.sort();
+
+      await render(hbs`
+      {{#if this.state.selected}}
+        <PowerSelect
+          @multiple={{true}}
+          @options={{array "a" "b" "c"}}
+          @selected={{this.sort this.state.selected}}
+          @searchEnabled={{true}}
+          @onChange={{fn (mut this.state.selected)}}
+          as |option|
+        >
+          {{option}}
+        </PowerSelect>
+      {{/if}}
+    `);
+
+      this.state.selected = undefined;
+
+      assert.ok(true);
+    });
   },
 );
