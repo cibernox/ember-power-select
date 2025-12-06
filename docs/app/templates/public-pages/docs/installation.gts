@@ -5,71 +5,55 @@ import { LinkTo } from '@ember/routing';
   <h1 class="doc-page-title">Installation</h1>
 
   <p>
-    Ember Power Select is distributed as an
-    <a
-      href="http://www.ember-cli.com/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >Ember CLI</a>
-    addon, so the majority of the installation will be done by running the
-    following command in your Ember project directory:
+    To install
+    <code>ember-power-select</code>, run the following command in your Ember
+    project directory:
   </p>
 
   <p>
     <div class="code-block">
-      <pre>$ ember install ember-power-select</pre>
+      <pre>$ pnpm install ember-power-select</pre>
     </div>
   </p>
 
   <p>
-    When installing via
-    <code>ember install</code>, the addon will automatically add the necessary
-    snippets to your app.
-  </p>
-
-  <p>
-    The addon uses ember-concurrency internally, which require some manual steps
-    for installation. For these steps, see the
-    <a
-      href="http://ember-concurrency.com/docs/installation"
-      target="_blank"
-      rel="noopener noreferrer"
-    >ember-concurrency</a>
-    installation page under
-    <i>"Configure Babel Transform"</i>.
-  </p>
-
-  <h2 class="t3">Manual Installation</h2>
-
-  <p>
-    If you haven't used
-    <code>ember install</code>, you need to add
+    This addon is built on top of
     <code>ember-basic-dropdown</code>
     and
-    <code>ember-concurrency</code>
-    as
-    <code>devDependencies</code>
-    in your
-    <code>package.json</code>.
+    <code>ember-concurrency</code>. If you haven't installed them yet, please
+    follow their official installation guides:
+  </p>
+
+  <ul>
+    <li>
+      <a
+        href="https://ember-basic-dropdown.com/docs/installation"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ember-basic-dropdown Installation Guide
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://ember-concurrency.com/docs/installation"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ember-concurrency Installation Guide
+      </a>
+    </li>
+  </ul>
+
+  <p>
+    After installing the dependencies, complete the following additional setup
+    steps.
   </p>
 
   <p>
-    After installation, add the following line to the templates where you want
-    to render the power select content, such as in your
-    <code>application.hbs</code>. This component will render the power select
-    content.
-  </p>
-
-  <CodeExample
-    @glimmerTs="installation-0.gts"
-    @showResult={{false}}
-    @activeTab="glimmer-ts"
-  />
-
-  <p>
-    If you use vanilla CSS, add the following line to your
+    If you are using vanilla CSS, add the following line to your
     <code>app.js</code>
-    or any route/controller/component
+    or any route, controller, or component
     <code>.js/.ts</code>
     file:
   </p>
@@ -127,16 +111,6 @@ import { LinkTo } from '@ember/routing';
   <p>
     For more information about styling, see
     <LinkTo @route="public-pages.docs.styles">Basic Customization: Styles</LinkTo>.
-  </p>
-
-  <p>
-    For further details on ember-concurrency installation, visit the
-    <a
-      href="http://ember-concurrency.com/docs/installation"
-      target="_blank"
-      rel="noopener noreferrer"
-    >ember-concurrency</a>
-    installation page.
   </p>
 
   <div class="doc-page-nav">
