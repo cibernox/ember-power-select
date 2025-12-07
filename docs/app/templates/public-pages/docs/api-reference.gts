@@ -512,8 +512,7 @@ import { LinkTo } from '@ember/routing';
     interacting with the component through this public API object is using the
     actions.
   </p>
-  <pre
-  >
+  <pre>
   {
     disabled: &lt;boolean&gt;,            // Truthy if the component received <code
     >disabled=true</code>

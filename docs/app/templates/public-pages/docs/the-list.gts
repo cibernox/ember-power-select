@@ -45,8 +45,7 @@ import TheList10 from '../../../components/snippets/the-list-10';
     specify a different one globally:
   </p>
 
-  <pre
-  >
+  <pre>
     // config/environment.js
 
     ENV['ember-basic-dropdown'] = {
