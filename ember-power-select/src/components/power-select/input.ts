@@ -156,6 +156,11 @@ export default class PowerSelectInput<
       }
 
       return () => {
+        // We don't need to reset search value, when searchFieldPosition is trigger, because complete power select will be destroyed
+        if (this.args.searchFieldPosition === 'trigger') {
+          return;
+        }
+
         this.args.select.actions?.search('');
       };
     },
