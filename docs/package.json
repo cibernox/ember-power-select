@@ -73,7 +73,7 @@
     "concurrently": "^9.2.1",
     "decorator-transforms": "^2.3.0",
     "ember-auto-import": "^2.12.0",
-    "ember-basic-dropdown": "^8.8.0",
+    "ember-basic-dropdown": "^8.9.0",
     "ember-cli": "~6.7.0",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-deprecation-workflow": "^3.4.0",

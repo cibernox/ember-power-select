@@ -96,7 +96,7 @@
     "@rollup/plugin-babel": "^6.1.0",
     "babel-plugin-ember-template-compilation": "^2.3.0",
     "concurrently": "^9.2.1",
-    "ember-basic-dropdown": "^8.8.0",
+    "ember-basic-dropdown": "^8.9.0",
     "ember-concurrency": "^5.1.0",
     "ember-source": "~6.7.0",
     "ember-template-lint": "^7.9.3",
@@ -120,7 +120,7 @@
   "peerDependencies": {
     "@ember/test-helpers": "^2.9.4 || ^3.2.1 || ^4.0.2 || ^5.0.0",
     "@glimmer/component": "^1.1.2 || ^2.0.0",
-    "ember-basic-dropdown": "^8.7.0",
+    "ember-basic-dropdown": "^8.9.0",
     "ember-concurrency": "^4.0.4 || ^5.1.0"
   },
   "publishConfig": {
