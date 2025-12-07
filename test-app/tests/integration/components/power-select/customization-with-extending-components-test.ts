@@ -29,8 +29,9 @@ import CustomPlaceholder from 'test-app/components/custom-placeholder';
 import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
 import CustomGroupComponent from 'test-app/components/custom-group-component';
 
-interface CountryContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface CountryContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   foo: () => void;
   countries: typeof countries;
   country: Selected<Country, IsMultiple>;
@@ -59,8 +60,9 @@ interface CountryContext<IsMultiple extends boolean = false>
   >;
 }
 
-interface GroupedNumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface GroupedNumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   foo: (selected: string | undefined) => void;
   groupedNumbers: GroupedNumber[];
   groupComponent: ComponentLike<

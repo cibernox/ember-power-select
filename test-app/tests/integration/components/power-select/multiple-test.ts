@@ -66,6 +66,12 @@ interface UserContext extends TestContext {
   onChange: (user: MultipleSelected<User>) => void;
 }
 
+interface StateContext extends TestContext {
+  state: State;
+  sort: (arr: string[]) => string[];
+  selected: MultipleSelected<string>;
+}
+
 interface CountryContext extends TestContext {
   countries: Country[];
   selected: MultipleSelected<typeof countries>;
@@ -86,6 +92,10 @@ class User {
   isEqual(other: User | undefined) {
     return this.name === other?.name;
   }
+}
+
+class State {
+  @tracked selected: string[] | undefined = ['a'];
 }
 
 module(
@@ -1421,18 +1431,14 @@ module(
         );
     });
 
-    test('BUGFIX: Rendering issue, when input field is in trigger and complete power select component will be destroyed (issue #1954)', async function (assert) {
+    test<StateContext>('BUGFIX: Rendering issue, when input field is in trigger and complete power select component will be destroyed (issue #1954)', async function (assert) {
       assert.expect(1);
-
-      class State {
-        @tracked selected = ['a'];
-      }
 
       this.state = new State();
 
-      this.sort = (arr) => arr.sort();
+      this.sort = <T>(arr: T[]): T[] => arr.sort();
 
-      await render(hbs`
+      await render<StateContext>(hbs`
       {{#if this.state.selected}}
         <PowerSelect
           @multiple={{true}}

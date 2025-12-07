@@ -45,8 +45,9 @@ import type { PowerSelectLabelSignature } from 'ember-power-select/components/po
 import CustomMultipleSearchPlaceholder from 'test-app/components/custom-multiple-search-placeholder';
 import CustomMultipleBeforeOptions from 'test-app/components/custom-multiple-before-options';
 
-interface CountryContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface CountryContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   foo: () => void;
   countries: typeof countries;
   country: Selected<Country, IsMultiple>;
@@ -91,8 +92,9 @@ interface GroupedNumbersExtra {
   foo: string;
 }
 
-interface GroupedNumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface GroupedNumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   foo: (selected: string | undefined) => void;
   groupedNumbers: GroupedNumber[];
   extra?: GroupedNumbersExtra;

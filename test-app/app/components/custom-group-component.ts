@@ -7,9 +7,9 @@ export interface CustomGroupSignature<
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > extends Omit<
-    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>,
-    'Args'
-  > {
+  PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>,
+  'Args'
+> {
   Args: PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>['Args'] & {
     onInit?: () => void;
   };

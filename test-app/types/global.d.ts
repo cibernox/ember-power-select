@@ -6,7 +6,8 @@ import type EmberConcurrencyRegistry from 'ember-concurrency/template-registry';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
-    extends EmbroiderUtilRegistry,
+    extends
+      EmbroiderUtilRegistry,
       EmberPowerSelectRegistry,
       EmberTruthRegistry,
       EmberConcurrencyRegistry {}

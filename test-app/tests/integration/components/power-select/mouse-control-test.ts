@@ -7,8 +7,9 @@ import { numbers } from 'test-app/utils/constants';
 import { click, triggerEvent } from '@ember/test-helpers';
 import type { Select, Selected } from 'ember-power-select/types';
 
-interface NumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface NumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
   foo: (

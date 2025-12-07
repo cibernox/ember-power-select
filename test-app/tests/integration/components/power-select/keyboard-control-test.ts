@@ -20,8 +20,9 @@ import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';
 import type { Select, Selected } from 'ember-power-select/types';
 
-interface NumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface NumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
   foo: (
@@ -44,16 +45,18 @@ interface NumbersContext<IsMultiple extends boolean = false>
   ) => boolean | void | undefined;
 }
 
-interface CountryContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface CountryContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   // matcherFn: MatcherFn<Country>;
   countries: typeof countries;
   selected: Selected<typeof countries, IsMultiple>;
   foo: () => void;
 }
 
-interface GroupedNumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface GroupedNumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   foo: (selected: string | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
   selected: Selected<typeof groupedNumbers, IsMultiple>;

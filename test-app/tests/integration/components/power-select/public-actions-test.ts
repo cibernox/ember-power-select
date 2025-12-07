@@ -11,8 +11,9 @@ import { tracked } from '@glimmer/tracking';
 import type { TestContext } from '@ember/test-helpers';
 import type { Select, Selected } from 'ember-power-select/types';
 
-interface NumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface NumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   numbers: string[];
   options: string[];
   selected: Selected<string, IsMultiple>;

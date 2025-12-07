@@ -10,8 +10,9 @@ import { numbers } from 'test-app/utils/constants';
 import type { Selected } from 'ember-power-select/types';
 import type { TestContext } from '@ember/test-helpers';
 
-interface NumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface NumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
 }

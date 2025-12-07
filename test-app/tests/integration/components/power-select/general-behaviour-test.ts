@@ -41,8 +41,9 @@ import type {
 } from 'ember-power-select/types';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 
-interface NumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface NumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   numbers: string[] | Promise<string[]>;
   selected: IsMultiple extends true
     ? (string | Promise<string>)[]

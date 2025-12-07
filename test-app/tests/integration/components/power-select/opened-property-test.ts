@@ -5,8 +5,9 @@ import { hbs } from 'ember-cli-htmlbars';
 import { numbers } from 'test-app/utils/constants';
 import type { Select, Selected } from 'ember-power-select/types';
 
-interface NumbersContext<IsMultiple extends boolean = false>
-  extends TestContext {
+interface NumbersContext<
+  IsMultiple extends boolean = false,
+> extends TestContext {
   numbers: typeof numbers;
   foo: (
     selection: Selected<string, IsMultiple>,
