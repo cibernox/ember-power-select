@@ -47,76 +47,6 @@ export default [
     ],
   },
   {
-    input: './scss/bootstrap-complete.scss',
-    output: {
-      file: './src/vendor/ember-power-select-bootstrap.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        output: './src/vendor/ember-power-select-bootstrap.css',
-      }),
-    ],
-  },
-  {
-    input: './scss/bootstrap-complete.scss',
-    output: {
-      file: './src/vendor/ember-power-select-bootstrap.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        processor: (css) =>
-          postcss()
-            .process(css, {
-              from: undefined,
-            })
-            .then((result) => result.css),
-      }),
-    ],
-  },
-  {
-    input: './scss/material-complete.scss',
-    output: {
-      file: './src/vendor/ember-power-select-material.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        output: './src/vendor/ember-power-select-material.css',
-      }),
-    ],
-  },
-  {
-    input: './scss/material-complete.scss',
-    output: {
-      file: './src/vendor/ember-power-select-material.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        processor: (css) =>
-          postcss()
-            .process(css, {
-              from: undefined,
-            })
-            .then((result) => result.css),
-      }),
-    ],
-  },
-  {
     // This provides defaults that work well alongside `publicEntrypoints` below.
     // You can augment this if you need to.
     output: addon.output(),
@@ -177,6 +107,76 @@ export default [
 
       // Remove leftover build artifacts when starting a new build.
       addon.clean(),
+    ],
+  },
+  {
+    input: './scss/bootstrap-complete.scss',
+    output: {
+      file: './dist/vendor/ember-power-select-bootstrap.js',
+      assetFileNames: '[name][extname]',
+    },
+    plugins: [
+      sass({
+        options: {
+          includePaths: [path.resolve('node_modules')],
+        },
+        output: './dist/vendor/ember-power-select-bootstrap.css',
+      }),
+    ],
+  },
+  {
+    input: './scss/bootstrap-complete.scss',
+    output: {
+      file: './dist/vendor/ember-power-select-bootstrap.js',
+      assetFileNames: '[name][extname]',
+    },
+    plugins: [
+      sass({
+        options: {
+          includePaths: [path.resolve('node_modules')],
+        },
+        processor: (css) =>
+          postcss()
+            .process(css, {
+              from: undefined,
+            })
+            .then((result) => result.css),
+      }),
+    ],
+  },
+  {
+    input: './scss/material-complete.scss',
+    output: {
+      file: './dist/vendor/ember-power-select-material.js',
+      assetFileNames: '[name][extname]',
+    },
+    plugins: [
+      sass({
+        options: {
+          includePaths: [path.resolve('node_modules')],
+        },
+        output: './dist/vendor/ember-power-select-material.css',
+      }),
+    ],
+  },
+  {
+    input: './scss/material-complete.scss',
+    output: {
+      file: './dist/vendor/ember-power-select-material.js',
+      assetFileNames: '[name][extname]',
+    },
+    plugins: [
+      sass({
+        options: {
+          includePaths: [path.resolve('node_modules')],
+        },
+        processor: (css) =>
+          postcss()
+            .process(css, {
+              from: undefined,
+            })
+            .then((result) => result.css),
+      }),
     ],
   },
 ];
