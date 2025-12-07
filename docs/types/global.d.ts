@@ -7,6 +7,5 @@ export interface CodeBlockRegistry {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
-    extends EmberPowerSelectRegistry,
-      CodeBlockRegistry {}
+    extends EmberPowerSelectRegistry, CodeBlockRegistry {}
 }

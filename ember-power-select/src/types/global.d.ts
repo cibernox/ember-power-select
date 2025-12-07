@@ -8,8 +8,7 @@ export interface ReadonlyRegistry {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
-    extends EmberTruthRegistry,
-      ReadonlyRegistry /* other registries here */ {
+    extends EmberTruthRegistry, ReadonlyRegistry /* other registries here */ {
     // ...
   }
 }
