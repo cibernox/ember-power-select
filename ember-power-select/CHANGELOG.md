@@ -17,6 +17,23 @@
 
 
 
+
+## v8.12.1 (2025-12-07)
+
+#### :bug: Bug Fix
+* [#1955](https://github.com/cibernox/ember-power-select/pull/1955) Fix rendering bug when input field is in trigger ([@mkszepp](https://github.com/mkszepp))
+* [#1952](https://github.com/cibernox/ember-power-select/pull/1952) Typing on trigger should always return an array for multiple select ([@mkszepp](https://github.com/mkszepp))
+
+#### :memo: Documentation
+* [#1956](https://github.com/cibernox/ember-power-select/pull/1956) Update installation docs and fixes in readme ([@mkszepp](https://github.com/mkszepp))
+* [#1953](https://github.com/cibernox/ember-power-select/pull/1953) Move docs to vite ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#1957](https://github.com/cibernox/ember-power-select/pull/1957) Update to @embroider/addon-dev v8 ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v8.12.0 (2025-11-03)
 
 #### :rocket: Enhancement
