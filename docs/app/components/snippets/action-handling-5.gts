@@ -1,18 +1,17 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import PowerSelect, {
-  type Select,
-} from 'ember-power-select/components/power-select';
+import PowerSelect from 'ember-power-select/components/power-select';
 import { fn } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
+import type { Select } from 'ember-power-select/types';
 
 export default class extends Component {
-  @tracked selected: string | undefined;
+  @tracked selected: string[] = [];
 
   cities: string[] = ['Barcelona', 'London', 'New York', 'Porto'];
 
   @action
-  handleFocus(select: Select, e: FocusEvent) {
+  handleFocus(select: Select<string, true>, e: FocusEvent) {
     console.debug('EPS focused!');
     if (this.focusComesFromOutside(e)) {
       select.actions.open();

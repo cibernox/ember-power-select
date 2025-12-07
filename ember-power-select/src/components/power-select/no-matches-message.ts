@@ -1,10 +1,23 @@
-import templateOnly from '@ember/component/template-only';
+import Component from '@glimmer/component';
+import type { Select } from '../../types';
 
-interface PowerSelectNoMatchesMessageSignature {
+export interface PowerSelectNoMatchesMessageSignature<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
   Args: {
-    noMatchesMessage: any;
+    noMatchesMessage?: string;
+    select?: Select<T, IsMultiple>;
+    extra?: TExtra;
   };
 }
 
-export default templateOnly<PowerSelectNoMatchesMessageSignature>();
+export default class PowerSelectNoMatchesMessage<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> extends Component<
+  PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
+> {}

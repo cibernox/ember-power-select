@@ -1,60 +1,99 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import type { PowerSelectArgs } from '../power-select';
 import { get } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
-import type { Select, TSearchFieldPosition } from '../power-select';
+import PowerSelectInput, { type PowerSelectInputSignature } from './input.ts';
 import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './placeholder';
+import type {
+  Option,
+  PowerSelectSelectedItemSignature,
+  Select,
+  Selected,
+  TSearchFieldPosition,
+} from '../../types.ts';
 
-interface IndexAccesible<T> {
-  objectAt(index: number): T;
-}
-
-const isIndexAccesible = <T>(target: any): target is IndexAccesible<T> => {
-  return typeof target.objectAt === 'function';
-};
-
-interface PowerSelectTriggerSignature {
+export interface PowerSelectTriggerSignature<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
   Args: {
-    select: Select;
-    allowClear: boolean;
-    searchEnabled: boolean;
+    select: Select<T, IsMultiple>;
+    allowClear?: boolean;
+    searchEnabled?: boolean;
     placeholder?: string;
     searchPlaceholder?: string;
-    searchField: string;
+    searchField?: string;
     searchFieldPosition?: TSearchFieldPosition;
     listboxId?: string;
-    tabindex?: string;
+    tabindex?: number | string;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
+    loadingMessage?: string;
     role?: string;
     ariaActiveDescendant: string;
-    extra?: any;
-    placeholderComponent?: string | ComponentLike<any>;
-    selectedItemComponent?: string | ComponentLike<any>;
-    onInput?: (e: InputEvent) => boolean;
-    onKeydown?: (e: KeyboardEvent) => boolean;
+    extra?: TExtra;
+    buildSelection?: PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'];
+    placeholderComponent?: ComponentLike<
+      PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
+    >;
+    selectedItemComponent?: ComponentLike<
+      PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>
+    >;
+    onInput?: (e: InputEvent) => void | boolean;
+    onKeydown?: (e: KeyboardEvent) => void | boolean;
     onFocus?: (e: FocusEvent) => void;
     onBlur?: (e: FocusEvent) => void;
-    buildSelection: (lastSelection: any, select: Select) => any[];
   };
   Blocks: {
-    default: [selected: any, select: Select];
+    default: [selected: Option<T>, select: Select<T, IsMultiple>];
   };
 }
 
-export default class PowerSelectTriggerComponent extends Component<PowerSelectTriggerSignature> {
+export default class PowerSelectTriggerComponent<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> extends Component<PowerSelectTriggerSignature<T, TExtra, IsMultiple>> {
   private _lastIsOpen: boolean = this.args.select.isOpen;
+
+  get inputComponent(): ComponentLike<
+    PowerSelectInputSignature<T, TExtra, IsMultiple>
+  > {
+    return PowerSelectInput as ComponentLike<
+      PowerSelectInputSignature<T, TExtra, IsMultiple>
+    >;
+  }
+
+  get selected() {
+    return this.args.select.selected as Selected<T, false>;
+  }
+
+  get selectedMultiple() {
+    return this.args.select.selected as Selected<T, true>;
+  }
 
   @action
   clear(e: Event): false | void {
     e.stopPropagation();
-    this.args.select.actions.select(null);
+    const value = this.args.select.multiple ? [] : undefined;
+    this.args.select.actions.select(value as Selected<T, IsMultiple>);
     if (e.type === 'touchstart') {
       return false;
     }
+  }
+
+  isOptionDisabled(option: Option<T>): boolean {
+    if (option && typeof option === 'object' && 'disabled' in option) {
+      return option.disabled as boolean;
+    }
+
+    return false;
   }
 
   // Actions
@@ -79,6 +118,10 @@ export default class PowerSelectTriggerComponent extends Component<PowerSelectTr
 
   @action
   chooseOption(e: Event) {
+    if (!this.args.select.multiple) {
+      return;
+    }
+
     if (e.target === null) return;
     const selectedIndex = (e.target as Element).getAttribute(
       'data-selected-index',
@@ -87,10 +130,7 @@ export default class PowerSelectTriggerComponent extends Component<PowerSelectTr
       const numericIndex = parseInt(selectedIndex, 10);
       e.stopPropagation();
       e.preventDefault();
-      const object = this.selectedObject(
-        this.args.select.selected,
-        numericIndex,
-      );
+      const object = this.selectedObject(this.selectedMultiple, numericIndex);
       this.args.select.actions.choose(object);
     }
   }
@@ -108,11 +148,14 @@ export default class PowerSelectTriggerComponent extends Component<PowerSelectTr
     this._lastIsOpen = isOpen;
   }
 
-  selectedObject<T>(list: IndexAccesible<T> | T[], index: number): T {
-    if (isIndexAccesible(list)) {
+  selectedObject<T>(
+    list: readonly Option<T>[] | undefined,
+    index: number,
+  ): Option<T> | undefined {
+    if (list && 'objectAt' in list && typeof list.objectAt === 'function') {
       return list.objectAt(index);
-    } else {
-      return get(list, index) as T;
+    } else if (list) {
+      return get(list, index);
     }
   }
 }

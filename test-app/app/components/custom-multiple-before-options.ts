@@ -1,15 +1,8 @@
 import templateOnly from '@ember/component/template-only';
-import type { ComponentLike } from '@glint/template';
-import type { TSearchFieldPosition } from 'ember-power-select/components/power-select';
+import type { PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
+import type { Country, SelectedCountryExtra } from 'test-app/utils/constants';
 
-export interface CustomMultipleBeforeOptionsSignature {
-  Element: Element;
-  Args: {
-    placeholder: string;
-    searchEnabled: boolean;
-    searchFieldPosition: TSearchFieldPosition;
-    placeholderComponent: ComponentLike<any>;
-  };
-}
+export type CustomMultipleBeforeOptionsSignature =
+  PowerSelectBeforeOptionsSignature<Country, SelectedCountryExtra, true>;
 
 export default templateOnly<CustomMultipleBeforeOptionsSignature>();

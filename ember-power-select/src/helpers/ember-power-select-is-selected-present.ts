@@ -1,8 +1,7 @@
-import { helper } from '@ember/component/helper';
 import { isNone } from '@ember/utils';
 
-export function emberPowerSelectIsSelectedPresent([value]: [any]): boolean {
+export default function emberPowerSelectIsSelectedPresent<T>(
+  value: T | undefined,
+): value is T {
   return !isNone(value);
 }
-
-export default helper(emberPowerSelectIsSelectedPresent);

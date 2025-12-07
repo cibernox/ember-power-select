@@ -1,14 +1,13 @@
 import Component from '@glimmer/component';
 import { fn } from '@ember/helper';
-import PowerSelect, {
-  type Select,
-} from 'ember-power-select/components/power-select';
+import PowerSelect from 'ember-power-select/components/power-select';
+import type { Select } from 'ember-power-select/types';
 
 export default class extends Component {
   cities: string[] = ['Barcelona', 'London', 'New York', 'Porto'];
   selectedCities: string[] = [];
 
-  checkLength(text: string, select: Select /*, e: Event */) {
+  checkLength(text: string, select: Select<string, true> /*, e: Event */) {
     if (select.searchText.length >= 3 && text.length < 3) {
       return '';
     } else {

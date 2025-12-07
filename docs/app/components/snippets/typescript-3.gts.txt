@@ -1,0 +1,20 @@
+// Single
+const onChange = (selection: Selected<Option>, select: Select<Option>, event?: Event) => {
+  ...
+}
+
+// equivalent to
+const onChange = (selection: Option | undefined, select: Select<Option>, event?: Event) => {
+  ...
+}
+
+
+// Multiple
+const onChange = (selection: Selected<Option, true>, select: Select<Option, true>, event?: Event) => {
+  ...
+}
+
+// equivalent to
+const onChange = (selection: Option[], select: Select<Option, true>, event?: Event) => {
+  ...
+}

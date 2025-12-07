@@ -21,7 +21,7 @@ export default class extends Component {
   get destination() {
     const countries = this.countries;
     if (!countries) {
-      return null;
+      return undefined;
     }
     return countries.find((x) => x.id === this.destinationId);
   }

@@ -17,7 +17,7 @@ export default class extends Component {
     'Tokio',
   ];
 
-  @tracked destination: string = 'London';
+  @tracked destination: string | undefined = 'London';
 
   <template>
     <PowerSelect
