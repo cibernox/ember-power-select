@@ -14,7 +14,7 @@ export default [
   {
     input: './_index.scss',
     output: {
-      file: './vendor/ember-power-select.js',
+      file: './src/vendor/ember-power-select.js',
       assetFileNames: '[name][extname]',
     },
     plugins: [
@@ -22,14 +22,14 @@ export default [
         options: {
           includePaths: [path.resolve('node_modules')],
         },
-        output: './vendor/ember-power-select.css',
+        output: './src/vendor/ember-power-select.css',
       }),
     ],
   },
   {
     input: './_index.scss',
     output: {
-      file: './vendor/ember-power-select.js',
+      file: './src/vendor/ember-power-select.js',
       assetFileNames: '[name][extname]',
     },
     plugins: [
@@ -49,7 +49,7 @@ export default [
   {
     input: './scss/bootstrap-complete.scss',
     output: {
-      file: './vendor/ember-power-select-bootstrap.js',
+      file: './src/vendor/ember-power-select-bootstrap.js',
       assetFileNames: '[name][extname]',
     },
     plugins: [
@@ -57,14 +57,14 @@ export default [
         options: {
           includePaths: [path.resolve('node_modules')],
         },
-        output: './vendor/ember-power-select-bootstrap.css',
+        output: './src/vendor/ember-power-select-bootstrap.css',
       }),
     ],
   },
   {
     input: './scss/bootstrap-complete.scss',
     output: {
-      file: './vendor/ember-power-select-bootstrap.js',
+      file: './src/vendor/ember-power-select-bootstrap.js',
       assetFileNames: '[name][extname]',
     },
     plugins: [
@@ -84,7 +84,7 @@ export default [
   {
     input: './scss/material-complete.scss',
     output: {
-      file: './vendor/ember-power-select-material.js',
+      file: './src/vendor/ember-power-select-material.js',
       assetFileNames: '[name][extname]',
     },
     plugins: [
@@ -92,14 +92,14 @@ export default [
         options: {
           includePaths: [path.resolve('node_modules')],
         },
-        output: './vendor/ember-power-select-material.css',
+        output: './src/vendor/ember-power-select-material.css',
       }),
     ],
   },
   {
     input: './scss/material-complete.scss',
     output: {
-      file: './vendor/ember-power-select-material.js',
+      file: './src/vendor/ember-power-select-material.js',
       assetFileNames: '[name][extname]',
     },
     plugins: [
@@ -138,6 +138,7 @@ export default [
         'test-support/**/*.js',
         'themes/**/*.js',
         'utils/**/*.js',
+        'vendor/**/*.js',
       ]),
 
       // These are the modules that should get reexported into the traditional

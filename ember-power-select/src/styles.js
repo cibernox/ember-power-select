@@ -1,1 +1,1 @@
-import '../vendor/ember-power-select.css';
+import './vendor/ember-power-select.css';
