@@ -3,8 +3,10 @@ import type { PowerSelectArgs } from './power-select';
 import type { Option, Select } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface PowerSelectMultipleArgs<T = unknown, TExtra = unknown>
-  extends PowerSelectArgs<T, true, TExtra> {}
+interface PowerSelectMultipleArgs<
+  T = unknown,
+  TExtra = unknown,
+> extends PowerSelectArgs<T, true, TExtra> {}
 
 export interface PowerSelectMultipleSignature<T, TExtra = unknown> {
   Element: Element;

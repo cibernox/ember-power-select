@@ -6,8 +6,10 @@
 export type TLabelClickAction = 'focus' | 'open';
 export type TSearchFieldPosition = 'before-options' | 'trigger';
 
-export interface Select<T = unknown, IsMultiple extends boolean = false>
-  extends Dropdown {
+export interface Select<
+  T = unknown,
+  IsMultiple extends boolean = false,
+> extends Dropdown {
   readonly selected: Selected<T, IsMultiple>;
   readonly multiple: IsMultiple;
   readonly highlighted: Option<T>;
@@ -21,8 +23,10 @@ export interface Select<T = unknown, IsMultiple extends boolean = false>
   readonly actions: SelectActions<T, IsMultiple>;
 }
 
-interface SelectActions<T, IsMultiple extends boolean = false>
-  extends DropdownActions {
+interface SelectActions<
+  T,
+  IsMultiple extends boolean = false,
+> extends DropdownActions {
   readonly search: (term: string) => void;
   readonly highlight: (option: Option<T> | undefined) => void;
   readonly select: (selected: Selected<T, IsMultiple>, e?: Event) => void;
