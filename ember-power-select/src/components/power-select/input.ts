@@ -6,9 +6,9 @@ import { isBlank } from '@ember/utils';
 import { get } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectPlaceholderSignature } from './placeholder';
-import type { Select, TSearchFieldPosition } from '../../types';
-import type { PowerSelectArgs } from '../power-select';
+import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
+import type { Select, TSearchFieldPosition } from '../../types.ts';
+import type { PowerSelectArgs } from '../power-select.ts';
 
 export interface PowerSelectInputSignature<
   T = unknown,

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import type { Select } from '../../types';
+import type { Select } from '../../types.ts';
 
 export interface PowerSelectLabelArgs<
   T = unknown,

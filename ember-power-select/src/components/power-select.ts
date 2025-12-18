@@ -22,12 +22,12 @@ import { isArray } from '@ember/array';
 import { ensureSafeComponent } from '@embroider/util';
 import PowerSelectLabelComponent from './power-select/label.ts';
 import PowerSelectTriggerComponent from './power-select/trigger.ts';
-import PowerSelectPlaceholderComponent from './power-select/placeholder.ts';
-import PowerSelectBeforeOptionsComponent from './power-select/before-options.ts';
-import SearchMessageComponent from './power-select/search-message.ts';
-import NoMatchesMessageComponent from './power-select/no-matches-message.ts';
-import PowerSelectOptionsComponent from './power-select/options.ts';
-import PowerSelectGroupComponent from './power-select/power-select-group.ts';
+import PowerSelectPlaceholderComponent from './power-select/placeholder.gts';
+import PowerSelectBeforeOptionsComponent from './power-select/before-options.gts';
+import SearchMessageComponent from './power-select/search-message.gts';
+import NoMatchesMessageComponent from './power-select/no-matches-message.gts';
+import PowerSelectOptionsComponent from './power-select/options.gts';
+import PowerSelectGroupComponent from './power-select/power-select-group.gts';
 import type {
   BasicDropdownDefaultBlock,
   Dropdown,
@@ -40,16 +40,16 @@ import type {
   VerticalPosition,
 } from 'ember-basic-dropdown/utils/calculate-position';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectPlaceholderSignature } from './power-select/placeholder.ts';
-import type { PowerSelectSearchMessageSignature } from './power-select/search-message.ts';
-import type { PowerSelectNoMatchesMessageSignature } from './power-select/no-matches-message.ts';
+import type { PowerSelectPlaceholderSignature } from './power-select/placeholder.gts';
+import type { PowerSelectSearchMessageSignature } from './power-select/search-message.gts';
+import type { PowerSelectNoMatchesMessageSignature } from './power-select/no-matches-message.gts';
 import type { BasicDropdownTriggerSignature } from 'ember-basic-dropdown/components/basic-dropdown-trigger';
 import type { BasicDropdownContentSignature } from 'ember-basic-dropdown/components/basic-dropdown-content';
 import type { PowerSelectLabelSignature } from './power-select/label.ts';
 import type { PowerSelectTriggerSignature } from './power-select/trigger.ts';
-import type { PowerSelectBeforeOptionsSignature } from './power-select/before-options.ts';
-import type { PowerSelectOptionsSignature } from './power-select/options.ts';
-import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group.ts';
+import type { PowerSelectBeforeOptionsSignature } from './power-select/before-options.gts';
+import type { PowerSelectOptionsSignature } from './power-select/options.gts';
+import type { PowerSelectPowerSelectGroupSignature } from './power-select/power-select-group.gts';
 import type {
   DefaultHighlightedParams,
   MatcherFn,

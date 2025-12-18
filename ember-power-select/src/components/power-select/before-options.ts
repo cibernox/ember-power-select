@@ -4,12 +4,12 @@ import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
 import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectPlaceholderSignature } from './placeholder';
+import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
 import type {
   PowerSelectSelectedItemSignature,
   Select,
   TSearchFieldPosition,
-} from '../../types';
+} from '../../types.ts';
 
 export interface PowerSelectBeforeOptionsSignature<
   T = unknown,

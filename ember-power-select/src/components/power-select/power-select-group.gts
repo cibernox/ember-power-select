@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { guidFor } from '@ember/object/internals';
-import type { GroupBase, GroupObject, Select } from '../../types';
+import type { GroupBase, GroupObject, Select } from '../../types.ts';
 
 export interface PowerSelectPowerSelectGroupSignature<
   T,

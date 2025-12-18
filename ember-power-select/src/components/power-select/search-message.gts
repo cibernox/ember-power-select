@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import type { Select } from '../../types';
+import type { Select } from '../../types.ts';
 
 export interface PowerSelectSearchMessageSignature<
   T = unknown,
