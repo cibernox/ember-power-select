@@ -5,8 +5,8 @@ import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
 import type { PowerSelectPowerSelectGroupSignature } from './power-select-group';
 import type { GroupObject, Option, Select } from '../../types';
-import emberPowerSelectIsGroup from "../../helpers/ember-power-select-is-group.ts";
-import emberPowerSelectIsEqual from "../../helpers/ember-power-select-is-equal.ts";
+import emberPowerSelectIsGroup from '../../helpers/ember-power-select-is-group.ts';
+import emberPowerSelectIsEqual from '../../helpers/ember-power-select-is-equal.ts';
 declare const FastBoot: unknown;
 
 export interface PowerSelectOptionsSignature<
@@ -71,31 +71,57 @@ export default class PowerSelectOptionsComponent<
   T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Component<PowerSelectOptionsSignature<T, TExtra, IsMultiple>> {<template>{{!-- template-lint-disable require-context-role --}}
-<ul {{this.setupHandlers}} ...attributes>
-  {{#if @select.loading}}
-    {{#if @loadingMessage}}
-      <li class="ember-power-select-option ember-power-select-option--loading-message" role="option" aria-selected={{false}}>{{@loadingMessage}}</li>
-    {{/if}}
-  {{/if}}
-  {{#let @groupComponent @optionsComponent as |Group Options|}}
-    {{#each @options as |opt index|}}
-      {{#if (emberPowerSelectIsGroup opt)}}
-        {{#let (this.groupTyping opt) as |groupOpt|}}
-          <Group @group={{groupOpt}} @select={{@select}} @extra={{@extra}}>
-            <Options @options={{this.options groupOpt}} @select={{@select}} @groupIndex="{{@groupIndex}}{{index}}." @optionsComponent={{@optionsComponent}} @groupComponent={{@groupComponent}} @extra={{@extra}} role="presentation" data-optgroup="true" class="ember-power-select-options" as |option|>
-              {{yield option @select}}
-            </Options>
-          </Group>
-        {{/let}}
-      {{else}}
-        <li class="ember-power-select-option" id="{{@select.uniqueId}}-{{@groupIndex}}{{index}}" aria-selected="{{emberPowerSelectIsEqual opt @select.selected}}" aria-disabled={{if (this.isOptionDisabled opt) "true"}} aria-current="{{emberPowerSelectIsEqual opt @select.highlighted}}" data-option-index="{{@groupIndex}}{{index}}" role="option">
-          {{yield (this.optionTyping opt) @select}}
-        </li>
+> extends Component<PowerSelectOptionsSignature<T, TExtra, IsMultiple>> {
+  <template>
+    {{! template-lint-disable require-context-role }}
+    <ul {{this.setupHandlers}} ...attributes>
+      {{#if @select.loading}}
+        {{#if @loadingMessage}}
+          <li
+            class="ember-power-select-option ember-power-select-option--loading-message"
+            role="option"
+            aria-selected={{false}}
+          >{{@loadingMessage}}</li>
+        {{/if}}
       {{/if}}
-    {{/each}}
-  {{/let}}
-</ul></template>
+      {{#let @groupComponent @optionsComponent as |Group Options|}}
+        {{#each @options as |opt index|}}
+          {{#if (emberPowerSelectIsGroup opt)}}
+            {{#let (this.groupTyping opt) as |groupOpt|}}
+              <Group @group={{groupOpt}} @select={{@select}} @extra={{@extra}}>
+                <Options
+                  @options={{this.options groupOpt}}
+                  @select={{@select}}
+                  @groupIndex="{{@groupIndex}}{{index}}."
+                  @optionsComponent={{@optionsComponent}}
+                  @groupComponent={{@groupComponent}}
+                  @extra={{@extra}}
+                  role="presentation"
+                  data-optgroup="true"
+                  class="ember-power-select-options"
+                  as |option|
+                >
+                  {{yield option @select}}
+                </Options>
+              </Group>
+            {{/let}}
+          {{else}}
+            <li
+              class="ember-power-select-option"
+              id="{{@select.uniqueId}}-{{@groupIndex}}{{index}}"
+              aria-selected="{{emberPowerSelectIsEqual opt @select.selected}}"
+              aria-disabled={{if (this.isOptionDisabled opt) "true"}}
+              aria-current="{{emberPowerSelectIsEqual opt @select.highlighted}}"
+              data-option-index="{{@groupIndex}}{{index}}"
+              role="option"
+            >
+              {{yield (this.optionTyping opt) @select}}
+            </li>
+          {{/if}}
+        {{/each}}
+      {{/let}}
+    </ul>
+  </template>
   // extra._isTouchDevice is a workaround for test,!
   // @ts-expect-error Property '_isTouchDevice' does not exist on type 'NonNullable<TExtra>'.
   private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice;
