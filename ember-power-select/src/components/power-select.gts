@@ -61,6 +61,10 @@ import type {
   TLabelClickAction,
   TSearchFieldPosition,
 } from '../types.ts';
+import BasicDropdown from 'ember-basic-dropdown/components/basic-dropdown';
+import { on } from '@ember/modifier';
+import { or, and, not, notEq } from 'ember-truth-helpers';
+import { concat } from '@ember/helper';
 
 interface PromiseProxy<T = unknown> extends Promise<T> {
   content: T;
@@ -213,11 +217,11 @@ export interface PowerSelectSignature<
   };
 }
 
-const isSliceable = <T>(coll: unknown): coll is Sliceable<T> => {
+const isSliceable = <T,>(coll: unknown): coll is Sliceable<T> => {
   return isArray(coll);
 };
 
-const isPromiseLike = <T>(thing: unknown): thing is Promise<T> => {
+const isPromiseLike = <T,>(thing: unknown): thing is Promise<T> => {
   return (
     typeof thing === 'object' &&
     thing !== null &&
@@ -225,11 +229,11 @@ const isPromiseLike = <T>(thing: unknown): thing is Promise<T> => {
   );
 };
 
-const isPromiseProxyLike = <T>(thing: unknown): thing is PromiseProxy<T> => {
+const isPromiseProxyLike = <T,>(thing: unknown): thing is PromiseProxy<T> => {
   return isPromiseLike(thing) && Object.hasOwnProperty.call(thing, 'content');
 };
 
-const isCancellablePromise = <T>(
+const isCancellablePromise = <T,>(
   thing: unknown,
 ): thing is CancellablePromise<T> => {
   return (
@@ -239,6 +243,36 @@ const isCancellablePromise = <T>(
   );
 };
 
+function isNumpadKeyEvent(e: KeyboardEvent): boolean {
+  return e.keyCode >= 96 && e.keyCode <= 105;
+}
+
+const toPlainArray = <T,>(collection: T | T[] | Sliceable<T>): T[] | T => {
+  if (isSliceable<T>(collection)) {
+    return collection.slice();
+  } else {
+    return collection;
+  }
+};
+
+function getOptionMatcher<T>(
+  matcher: MatcherFn<T>,
+  defaultMatcher: MatcherFn<T>,
+  searchField: string | undefined,
+): MatcherFn<T> {
+  if (searchField && matcher === defaultMatcher) {
+    return (option: T | undefined, text: string) =>
+      matcher(get(option, searchField) as T | undefined, text);
+  } else {
+    return (option: T | undefined, text: string) => {
+      assert(
+        '<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`',
+        matcher !== defaultMatcher || typeof option === 'string',
+      );
+      return matcher(option, text);
+    };
+  }
+}
 export default class PowerSelectComponent<
   T,
   IsMultiple extends boolean = false,
@@ -1372,35 +1406,202 @@ export default class PowerSelectComponent<
     this._expirableSearchText = '';
     this._repeatingChar = '';
   });
-}
 
-function getOptionMatcher<T>(
-  matcher: MatcherFn<T>,
-  defaultMatcher: MatcherFn<T>,
-  searchField: string | undefined,
-): MatcherFn<T> {
-  if (searchField && matcher === defaultMatcher) {
-    return (option: T | undefined, text: string) =>
-      matcher(get(option, searchField) as T | undefined, text);
-  } else {
-    return (option: T | undefined, text: string) => {
-      assert(
-        '<PowerSelect> If you want the default filtering to work on options that are not plain strings, you need to provide `@searchField`',
-        matcher !== defaultMatcher || typeof option === 'string',
-      );
-      return matcher(option, text);
-    };
-  }
-}
+  <template>
+    {{#if (or @labelText @labelComponent)}}
+      <this.labelComponent
+        @select={{this.storedAPI}}
+        @labelText={{@labelText}}
+        @labelId={{this.labelId}}
+        @triggerId={{this.triggerId}}
+        @labelTag={{@labelTag}}
+        @extra={{@extra}}
+        class={{@labelClass}}
+      />
+    {{/if}}
+    <BasicDropdown
+      @horizontalPosition={{@horizontalPosition}}
+      @destinationElement={{@destinationElement}}
+      @destination={{@destination}}
+      @initiallyOpened={{@initiallyOpened}}
+      @matchTriggerWidth={{this.matchTriggerWidth}}
+      @preventScroll={{or @preventScroll false}}
+      @onClose={{this.handleClose}}
+      @onOpen={{this.handleOpen}}
+      @renderInPlace={{@renderInPlace}}
+      @verticalPosition={{@verticalPosition}}
+      @disabled={{@disabled}}
+      @calculatePosition={{@calculatePosition}}
+      @triggerComponent={{@ebdTriggerComponent}}
+      @contentComponent={{@ebdContentComponent}}
+      @rootEventType={{or @rootEventType "mousedown"}}
+      as |dropdown|
+    >
+      {{#let
+        (this.publicAPI dropdown)
+        (concat "ember-power-select-options-" dropdown.uniqueId)
+        as |publicAPI listboxId|
+      }}
+        {{! template-lint-disable no-positive-tabindex }}
+        <dropdown.Trigger
+          @eventType={{or @eventType "mousedown"}}
+          {{this.updateOptions @options}}
+          {{this.updateSelected @selected}}
+          {{this.updateRegisterAPI publicAPI}}
+          {{this.updatePerformSearch this.searchText}}
+          {{on "keydown" this.handleTriggerKeydown}}
+          {{on "focus" this.handleFocus}}
+          {{on "blur" this.handleBlur}}
+          class="ember-power-select-trigger
+            {{if @multiple ' ember-power-select-multiple-trigger'}}
+            {{@triggerClass}}{{if
+              publicAPI.isActive
+              ' ember-power-select-trigger--active'
+            }}"
+          aria-activedescendant={{if
+            dropdown.isOpen
+            (unless
+              @searchEnabled
+              (concat publicAPI.uniqueId "-" this.highlightedIndex)
+            )
+          }}
+          aria-controls={{if
+            (and dropdown.isOpen (not @searchEnabled))
+            listboxId
+          }}
+          aria-describedby={{@ariaDescribedBy}}
+          aria-haspopup={{unless @searchEnabled "listbox"}}
+          aria-invalid={{@ariaInvalid}}
+          aria-label={{@ariaLabel}}
+          aria-labelledby={{this.ariaLabelledBy}}
+          aria-owns={{if (and dropdown.isOpen (not @searchEnabled)) listboxId}}
+          aria-required={{@required}}
+          aria-autocomplete={{if @searchEnabled "list"}}
+          role={{or @triggerRole "combobox"}}
+          title={{@title}}
+          id={{this.triggerId}}
+          tabindex={{and (not @disabled) (or this.tabindex "0")}}
+          ...attributes
+        >
+          <this.triggerComponent
+            @allowClear={{@allowClear}}
+            @buildSelection={{this.buildSelection}}
+            @loadingMessage={{or @loadingMessage "Loading options..."}}
+            @selectedItemComponent={{@selectedItemComponent}}
+            @select={{publicAPI}}
+            @searchEnabled={{@searchEnabled}}
+            @searchField={{@searchField}}
+            @searchFieldPosition={{this.searchFieldPosition}}
+            @onFocus={{this.handleFocus}}
+            @onBlur={{this.handleBlur}}
+            @extra={{@extra}}
+            @listboxId={{listboxId}}
+            @onInput={{this.handleInput}}
+            @onKeydown={{this.handleKeydown}}
+            @placeholder={{@placeholder}}
+            @searchPlaceholder={{@searchPlaceholder}}
+            @placeholderComponent={{this.placeholderComponent}}
+            @ariaActiveDescendant={{concat
+              publicAPI.uniqueId
+              "-"
+              this.highlightedIndex
+            }}
+            @ariaLabelledBy={{this.ariaLabelledBy}}
+            @ariaDescribedBy={{@ariaDescribedBy}}
+            @ariaLabel={{@ariaLabel}}
+            @role={{@triggerRole}}
+            @tabindex={{@tabindex}}
+            as |opt select|
+          >
+            {{yield opt select}}
+          </this.triggerComponent>
+        </dropdown.Trigger>
+        <dropdown.Content
+          class="ember-power-select-dropdown{{if
+              publicAPI.isActive
+              ' ember-power-select-dropdown--active'
+            }}
+            {{@dropdownClass}}"
+          @animationEnabled={{@animationEnabled}}
+        >
+          {{#if (notEq @beforeOptionsComponent null)}}
+            <this.beforeOptionsComponent
+              @select={{publicAPI}}
+              @searchEnabled={{@searchEnabled}}
+              @onInput={{this.handleInput}}
+              @onKeydown={{this.handleKeydown}}
+              @onFocus={{this.handleFocus}}
+              @onBlur={{this.handleBlur}}
+              @placeholder={{@placeholder}}
+              @placeholderComponent={{this.placeholderComponent}}
+              @extra={{@extra}}
+              @listboxId={{listboxId}}
+              @ariaActiveDescendant={{if
+                this.highlightedIndex
+                (concat publicAPI.uniqueId "-" this.highlightedIndex)
+              }}
+              @selectedItemComponent={{@selectedItemComponent}}
+              @searchPlaceholder={{@searchPlaceholder}}
+              @searchFieldPosition={{this.searchFieldPosition}}
+              @ariaLabel={{@ariaLabel}}
+              @ariaLabelledBy={{this.ariaLabelledBy}}
+              @ariaDescribedBy={{@ariaDescribedBy}}
+              @triggerRole={{@triggerRole}}
+            />
+          {{/if}}
+          {{#if this.mustShowSearchMessage}}
+            <this.searchMessageComponent
+              @searchMessage={{this.searchMessage}}
+              @select={{publicAPI}}
+              @extra={{@extra}}
+              id={{listboxId}}
+              aria-label={{@ariaLabel}}
+              aria-labelledby={{this.ariaLabelledBy}}
+            />
+          {{else if this.mustShowNoMessages}}
+            <this.noMatchesMessageComponent
+              @noMatchesMessage={{this.noMatchesMessage}}
+              @select={{publicAPI}}
+              @extra={{@extra}}
+              id={{listboxId}}
+              aria-label={{@ariaLabel}}
+              aria-labelledby={{this.ariaLabelledBy}}
+            />
+          {{else}}
+            <this.optionsComponent
+              @loadingMessage={{or @loadingMessage "Loading options..."}}
+              @select={{publicAPI}}
+              @options={{publicAPI.results}}
+              @groupIndex=""
+              @optionsComponent={{this.optionsComponent}}
+              @extra={{@extra}}
+              @highlightOnHover={{this.highlightOnHover}}
+              @groupComponent={{this.groupComponent}}
+              role="listbox"
+              aria-multiselectable={{if this.ariaMultiSelectable "true"}}
+              id={{listboxId}}
+              class="ember-power-select-options"
+              as |option select|
+            >
+              {{yield option select}}
+            </this.optionsComponent>
+          {{/if}}
 
-function isNumpadKeyEvent(e: KeyboardEvent): boolean {
-  return e.keyCode >= 96 && e.keyCode <= 105;
+          {{#if @afterOptionsComponent}}
+            {{#let @afterOptionsComponent as |AfterOptions|}}
+              <AfterOptions @extra={{@extra}} @select={{publicAPI}} />
+            {{/let}}
+          {{/if}}
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            class="ember-power-select-visually-hidden"
+          >
+            {{this.resultCountMessage}}
+          </div>
+        </dropdown.Content>
+      {{/let}}
+    </BasicDropdown>
+  </template>
 }
-
-const toPlainArray = <T>(collection: T | T[] | Sliceable<T>): T[] | T => {
-  if (isSliceable<T>(collection)) {
-    return collection.slice();
-  } else {
-    return collection;
-  }
-};

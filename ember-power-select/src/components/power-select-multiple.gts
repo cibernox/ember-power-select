@@ -1,7 +1,7 @@
 import type { PowerSelectArgs } from './power-select';
 import type { Option, Select } from '../types';
 
-import PowerSelect from './power-select.ts';
+import PowerSelect from './power-select.gts';
 import Component from '@glimmer/component';
 
 type PowerSelectMultipleArgs<T, TExtra> = PowerSelectArgs<T, true, TExtra>;

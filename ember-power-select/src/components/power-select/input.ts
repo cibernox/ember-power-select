@@ -8,7 +8,7 @@ import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
 import type { Select, TSearchFieldPosition } from '../../types.ts';
-import type { PowerSelectArgs } from '../power-select.ts';
+import type { PowerSelectArgs } from '../power-select.gts';
 
 export interface PowerSelectInputSignature<
   T = unknown,

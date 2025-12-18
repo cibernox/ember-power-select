@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import type { PowerSelectArgs } from '../power-select.ts';
+import type { PowerSelectArgs } from '../power-select.gts';
 import { get } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import { deprecate } from '@ember/debug';
