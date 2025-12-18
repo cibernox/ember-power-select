@@ -10,6 +10,8 @@ import type {
   Select,
   TSearchFieldPosition,
 } from '../../types.ts';
+import { on } from '@ember/modifier';
+import { and, eq, or } from 'ember-truth-helpers';
 
 export interface PowerSelectBeforeOptionsSignature<
   T = unknown,
@@ -136,4 +138,45 @@ export default class PowerSelectBeforeOptionsComponent<
       el.focus();
     }
   });
+
+  <template>
+    {{#if
+      (and
+        @searchEnabled
+        (or
+          (eq @searchFieldPosition "before-options")
+          (eq @searchFieldPosition undefined)
+        )
+      )
+    }}
+      <div class="ember-power-select-search">
+        {{! template-lint-disable require-input-label }}
+        <input
+          type="search"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck={{false}}
+          class="ember-power-select-search-input"
+          value={{@select.searchText}}
+          role={{or @role "combobox"}}
+          aria-activedescendant={{@ariaActiveDescendant}}
+          aria-controls={{@listboxId}}
+          aria-owns={{@listboxId}}
+          aria-autocomplete="list"
+          aria-haspopup="listbox"
+          aria-expanded={{if @select.isOpen "true" "false"}}
+          placeholder={{@searchPlaceholder}}
+          aria-label={{@ariaLabel}}
+          aria-labelledby={{@ariaLabelledBy}}
+          aria-describedby={{@ariaDescribedBy}}
+          {{on "input" this.handleInput}}
+          {{on "focus" @onFocus}}
+          {{on "blur" @onBlur}}
+          {{on "keydown" this.handleKeydown}}
+          {{this.setupInput}}
+        />
+      </div>
+    {{/if}}
+  </template>
 }

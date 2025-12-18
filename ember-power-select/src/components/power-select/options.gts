@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
-import type { PowerSelectPowerSelectGroupSignature } from './power-select-group.ts';
+import type { PowerSelectPowerSelectGroupSignature } from './power-select-group.gts';
 import type { GroupObject, Option, Select } from '../../types.ts';
 import emberPowerSelectIsGroup from '../../helpers/ember-power-select-is-group.ts';
 import emberPowerSelectIsEqual from '../../helpers/ember-power-select-is-equal.ts';

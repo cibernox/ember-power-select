@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectInputSignature } from './input.ts';
+import type { PowerSelectInputSignature } from './input.gts';
 import type { Select } from '../../types.ts';
 export interface PowerSelectPlaceholderSignatureArgs<
   T = unknown,

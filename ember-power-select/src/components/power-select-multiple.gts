@@ -1,5 +1,5 @@
-import type { PowerSelectArgs } from './power-select';
-import type { Option, Select } from '../types';
+import type { PowerSelectArgs } from './power-select.gts';
+import type { Option, Select } from '../types.ts';
 
 import PowerSelect from './power-select.gts';
 import Component from '@glimmer/component';
