@@ -3,7 +3,6 @@ import '@glint/environment-ember-loose';
 import type EmberTruthRegistry from 'ember-truth-helpers/template-registry';
 import type BasicDropdown from 'ember-basic-dropdown/template-registry';
 import type EmberPowerSelect from '../template-registry';
-import type { EmbroiderUtilRegistry } from '@embroider/util';
 import type EmberElementHelperRegistry from 'ember-element-helper/template-registry';
 
 // export interface ReadonlyRegistry {

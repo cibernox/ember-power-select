@@ -19,7 +19,6 @@ import {
 import { restartableTask, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
 import { isArray } from '@ember/array';
-import { ensureSafeComponent } from '@embroider/util';
 import PowerSelectLabelComponent from './power-select/label.gts';
 import PowerSelectTriggerComponent from './power-select/trigger.gts';
 import PowerSelectPlaceholderComponent from './power-select/placeholder.gts';
@@ -536,7 +535,7 @@ export default class PowerSelectComponent<
     PowerSelectLabelSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.labelComponent) {
-      return ensureSafeComponent(this.args.labelComponent, this);
+      return this.args.labelComponent;
     }
 
     return PowerSelectLabelComponent as ComponentLike<
@@ -548,7 +547,7 @@ export default class PowerSelectComponent<
     PowerSelectTriggerSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.triggerComponent) {
-      return ensureSafeComponent(this.args.triggerComponent, this);
+      return this.args.triggerComponent;
     }
 
     return PowerSelectTriggerComponent as ComponentLike<
@@ -560,7 +559,7 @@ export default class PowerSelectComponent<
     PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.placeholderComponent) {
-      return ensureSafeComponent(this.args.placeholderComponent, this);
+      return this.args.placeholderComponent;
     }
 
     return PowerSelectPlaceholderComponent as ComponentLike<
@@ -572,7 +571,7 @@ export default class PowerSelectComponent<
     PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.beforeOptionsComponent) {
-      return ensureSafeComponent(this.args.beforeOptionsComponent, this);
+      return this.args.beforeOptionsComponent;
     }
 
     return PowerSelectBeforeOptionsComponent as ComponentLike<
@@ -584,7 +583,7 @@ export default class PowerSelectComponent<
     PowerSelectSearchMessageSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.searchMessageComponent) {
-      return ensureSafeComponent(this.args.searchMessageComponent, this);
+      return this.args.searchMessageComponent;
     }
 
     return SearchMessageComponent as ComponentLike<
@@ -596,7 +595,7 @@ export default class PowerSelectComponent<
     PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.noMatchesMessageComponent) {
-      return ensureSafeComponent(this.args.noMatchesMessageComponent, this);
+      return this.args.noMatchesMessageComponent;
     }
 
     return NoMatchesMessageComponent as ComponentLike<
@@ -608,7 +607,7 @@ export default class PowerSelectComponent<
     PowerSelectOptionsSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.optionsComponent) {
-      return ensureSafeComponent(this.args.optionsComponent, this);
+      return this.args.optionsComponent;
     }
 
     return PowerSelectOptionsComponent as ComponentLike<
@@ -620,12 +619,9 @@ export default class PowerSelectComponent<
     PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.groupComponent) {
-      return ensureSafeComponent(
-        this.args.groupComponent as ComponentLike<
-          PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
-        >,
-        this,
-      );
+      return this.args.groupComponent as ComponentLike<
+        PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+      >;
     }
 
     return PowerSelectGroupComponent as ComponentLike<
