@@ -24,7 +24,15 @@ import { LinkTo } from '@ember/routing';
 
   <ul>
     <li>
-      <p>The minimum required Ember version is now 4.12.</p>
+      The minimum required versions are:
+      <ul>
+        <li>Ember 4.12 and above</li>
+        <li><code>ember-basic-dropdown</code> 9.x and above</li>
+        <li><code>ember-truth-helpers</code> 5.x and above</li>
+        <li><code>@ember/test-helpers</code> 5.x and above</li>
+        <li><code>@glimmer/component</code> 2.x and above</li>
+        <li><code>ember-concurrency</code> 5.x and above</li>
+      </ul>
     </li>
     <li>
       <p>
@@ -49,11 +57,11 @@ import { LinkTo } from '@ember/routing';
         <code>components</code>
         as strings is no longer supported. You must now pass all components as
         <code>contextual components</code>.<br />
-        <small>Ember deprecated passing components as strings in version 3.25.
-          In line with this change, we have removed the dependency on the
-          deprecated
-          <code>@embroider/util</code>
-          package.</small>
+        <small><i>(Ember deprecated passing components as strings in version
+            3.25. In line with this change, we have removed the dependency on
+            the deprecated
+            <code>@embroider/util</code>
+            package.)</i></small>
       </p>
     </li>
     <li>

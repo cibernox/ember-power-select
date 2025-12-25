@@ -75,7 +75,7 @@
     "ember-assign-helper": "^0.5.1",
     "ember-element-helper": "^0.8.8",
     "ember-modifier": "^4.2.2",
-    "ember-truth-helpers": "^4.0.3 || ^5.0.0"
+    "ember-truth-helpers": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
@@ -118,10 +118,10 @@
     "webpack": "^5.103.0"
   },
   "peerDependencies": {
-    "@ember/test-helpers": "^2.9.4 || ^3.2.1 || ^4.0.2 || ^5.0.0",
-    "@glimmer/component": "^1.1.2 || ^2.0.0",
+    "@ember/test-helpers": "^5.0.0",
+    "@glimmer/component": "^2.0.0",
     "ember-basic-dropdown": "^8.9.0",
-    "ember-concurrency": "^4.0.4 || ^5.1.0"
+    "ember-concurrency": "^5.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
