@@ -6,9 +6,11 @@ import { isBlank } from '@ember/utils';
 import { get } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectPlaceholderSignature } from './placeholder';
-import type { Select, TSearchFieldPosition } from '../../types';
-import type { PowerSelectArgs } from '../power-select';
+import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
+import type { Select, TSearchFieldPosition } from '../../types.ts';
+import type { PowerSelectArgs } from '../power-select.gts';
+import { on } from '@ember/modifier';
+import { or } from 'ember-truth-helpers';
 
 export interface PowerSelectInputSignature<
   T = unknown,
@@ -196,4 +198,46 @@ export default class PowerSelectInput<
       el.focus();
     }
   });
+  <template>
+    <div class="ember-power-select-input">
+      {{! template-lint-disable require-input-label }}
+      {{! template-lint-disable no-positive-tabindex }}
+      {{! template-lint-disable require-aria-activedescendant-tabindex }}
+      <input
+        type="search"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck={{false}}
+        class={{if
+          @select.multiple
+          "ember-power-select-trigger-multiple-input"
+          "ember-power-select-search-input-field"
+        }}
+        value={{@select.searchText}}
+        role={{or @role "combobox"}}
+        aria-activedescendant={{if @select.isOpen @ariaActiveDescendant}}
+        aria-controls={{if @select.isOpen @listboxId}}
+        aria-owns={{if @select.isOpen @listboxId}}
+        aria-autocomplete="list"
+        aria-haspopup="listbox"
+        aria-expanded={{if @select.isOpen "true" "false"}}
+        placeholder={{this.placeholder}}
+        aria-label={{@ariaLabel}}
+        aria-labelledby={{@ariaLabelledBy}}
+        aria-describedby={{@ariaDescribedBy}}
+        disabled={{@select.disabled}}
+        tabindex={{@tabindex}}
+        form="power-select-fake-form"
+        id="ember-power-select-trigger-input-{{@select.uniqueId}}"
+        {{on "input" this.handleInput}}
+        {{on "focus" this.handleFocus}}
+        {{on "blur" this.handleBlur}}
+        {{on "keydown" this.handleKeydown}}
+        {{this.setupInput}}
+        {{this.openChange @select.isOpen}}
+        ...attributes
+      />
+    </div>
+  </template>
 }

@@ -1,8 +1,7 @@
-﻿import Component from '@glimmer/component';
+import Component from '@glimmer/component';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectInputSignature } from './input';
-import type { Select } from '../../types';
-
+import type { PowerSelectInputSignature } from './input.gts';
+import type { Select } from '../../types.ts';
 export interface PowerSelectPlaceholderSignatureArgs<
   T = unknown,
   TExtra = unknown,
@@ -31,4 +30,17 @@ export default class PowerSelectPlaceholder<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Component<PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>> {}
+> extends Component<PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>> {
+  <template>
+    {{#if @isMultipleWithSearch}}
+      {{#let @inputComponent as |InputComponent|}}
+        <InputComponent @isDefaultPlaceholder={{true}} @select={{@select}} />
+      {{/let}}
+    {{else if @placeholder}}
+      <span
+        class="ember-power-select-placeholder"
+        ...attributes
+      >{{@placeholder}}</span>
+    {{/if}}
+  </template>
+}

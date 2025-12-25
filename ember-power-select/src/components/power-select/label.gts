@@ -1,6 +1,9 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import type { Select } from '../../types';
+import type { Select } from '../../types.ts';
+import { eq, or } from 'ember-truth-helpers';
+import element from 'ember-element-helper/helpers/element';
+import { on } from '@ember/modifier';
 
 export interface PowerSelectLabelArgs<
   T = unknown,
@@ -37,4 +40,20 @@ export default class PowerSelectLabelComponent<
 
     this.args.select.actions.labelClick(e);
   }
+  <template>
+    {{#let
+      (or @labelTag "label") (element (or @labelTag "label"))
+      as |tagName LabelTag|
+    }}
+      <LabelTag
+        id={{@labelId}}
+        class="ember-power-select-label"
+        ...attributes
+        for={{if (eq tagName "label") @triggerId}}
+        {{on "click" this.onLabelClick}}
+      >
+        {{@labelText}}
+      </LabelTag>
+    {{/let}}
+  </template>
 }
