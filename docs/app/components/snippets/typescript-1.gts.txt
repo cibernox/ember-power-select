@@ -1,0 +1,7 @@
+export interface PowerSelectSignature<
+  Option,
+  IsMultiple extends boolean = false,
+  TExtra = unknown,
+> {
+  ...
+}

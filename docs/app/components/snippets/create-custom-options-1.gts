@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import PowerSelect, {
-  type Select,
-} from 'ember-power-select/components/power-select';
+import PowerSelect from 'ember-power-select/components/power-select';
 import { fn } from '@ember/helper';
+import type { Select } from 'ember-power-select/types';
 
 export default class extends Component {
   @tracked options: string[] = ['Barcelona', 'London', 'New York', 'Porto'];
@@ -12,7 +11,7 @@ export default class extends Component {
   selected: string[] = [];
 
   @action
-  createOnEnter(select: Select, e: KeyboardEvent) {
+  createOnEnter(select: Select<string, true>, e: KeyboardEvent) {
     if (
       e.keyCode === 13 &&
       select.isOpen &&

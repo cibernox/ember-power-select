@@ -432,6 +432,9 @@ importers:
       '@ember-data/legacy-compat':
         specifier: 5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@glint/template@1.5.2)
+      '@ember-data/model':
+        specifier: 5.8.0
+        version: 5.8.0(@babel/core@7.28.5)(@glint/template@1.5.2)
       '@ember-data/request':
         specifier: 5.8.0
         version: 5.8.0(@babel/core@7.28.5)(@glint/template@1.5.2)

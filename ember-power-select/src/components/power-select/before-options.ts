@@ -1,15 +1,25 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { Select, TSearchFieldPosition } from '../power-select';
 import { deprecate } from '@ember/debug';
 import { task, timeout } from 'ember-concurrency';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './placeholder';
+import type {
+  PowerSelectSelectedItemSignature,
+  Select,
+  TSearchFieldPosition,
+} from '../../types';
 
-interface PowerSelectBeforeOptionsSignature {
+export interface PowerSelectBeforeOptionsSignature<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
   Args: {
-    select: Select;
-    searchEnabled: boolean;
+    select: Select<T, IsMultiple>;
+    searchEnabled?: boolean;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
@@ -18,15 +28,27 @@ interface PowerSelectBeforeOptionsSignature {
     searchFieldPosition?: TSearchFieldPosition;
     ariaActiveDescendant?: string;
     listboxId?: string;
-    onKeydown: (e: KeyboardEvent) => false | void;
+    placeholder?: string;
+    autofocus?: boolean;
+    extra?: TExtra;
+    triggerRole?: string;
+    onKeydown: (e: KeyboardEvent) => boolean | void;
     onBlur: (e: FocusEvent) => void;
     onFocus: (e: FocusEvent) => void;
-    onInput: (e: InputEvent) => boolean;
-    autofocus?: boolean;
+    onInput: (e: InputEvent) => boolean | void;
+    placeholderComponent?: ComponentLike<
+      PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
+    >;
+    selectedItemComponent?: ComponentLike<
+      PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>
+    >;
   };
 }
 
-export default class PowerSelectBeforeOptionsComponent extends Component<PowerSelectBeforeOptionsSignature> {
+export default class PowerSelectBeforeOptionsComponent<
+  T = unknown,
+  TExtra = unknown,
+> extends Component<PowerSelectBeforeOptionsSignature<T, TExtra>> {
   didSetup: boolean = false;
 
   @action

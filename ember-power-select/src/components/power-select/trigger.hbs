@@ -15,36 +15,38 @@
     {{on "mousedown" this.chooseOption}}
     ...attributes
   >
-    {{#each @select.selected as |opt idx|}}
-      <li
-        class="ember-power-select-multiple-option
-          {{if opt.disabled 'ember-power-select-multiple-option--disabled'}}"
-      >
-        {{#unless @select.disabled}}
-          <span
-            role="button"
-            aria-label="remove element"
-            class="ember-power-select-multiple-remove-btn"
-            data-selected-index={{idx}}
-          >
-            &times;
-          </span>
-        {{/unless}}
-        {{#if @selectedItemComponent}}
-          {{#let
-            (component (ensure-safe-component @selectedItemComponent))
-            as |SelectedItemComponent|
-          }}
-            <SelectedItemComponent
-              @extra={{@extra}}
-              @option={{opt}}
-              @select={{@select}}
-            />
-          {{/let}}
-        {{else}}
-          {{yield opt @select}}
-        {{/if}}
-      </li>
+    {{#if (ember-power-select-is-selected-present this.selectedMultiple)}}
+      {{#each this.selectedMultiple as |opt idx|}}
+        <li
+          class="ember-power-select-multiple-option
+            {{if
+              (this.isOptionDisabled opt)
+              'ember-power-select-multiple-option--disabled'
+            }}"
+        >
+          {{#unless @select.disabled}}
+            <span
+              role="button"
+              aria-label="remove element"
+              class="ember-power-select-multiple-remove-btn"
+              data-selected-index={{idx}}
+            >
+              &times;
+            </span>
+          {{/unless}}
+          {{#if @selectedItemComponent}}
+            {{#let @selectedItemComponent as |SelectedItemComponent|}}
+              <SelectedItemComponent
+                @extra={{@extra}}
+                @selected={{opt}}
+                @select={{@select}}
+              />
+            {{/let}}
+          {{else}}
+            {{yield opt @select}}
+          {{/if}}
+        </li>
+      {{/each}}
     {{else}}
       {{#if
         (and
@@ -53,21 +55,22 @@
         )
       }}
         <li>
-          {{#let
-            (component (ensure-safe-component @placeholderComponent))
-            as |PlaceholderComponent|
-          }}
-            <PlaceholderComponent @placeholder={{@placeholder}} />
+          {{#let @placeholderComponent as |PlaceholderComponent|}}
+            <PlaceholderComponent
+              @placeholder={{@placeholder}}
+              @select={{@select}}
+            />
           {{/let}}
         </li>
       {{/if}}
-    {{/each}}
+    {{/if}}
     {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
       <li class="ember-power-select-trigger-multiple-input-container">
         {{#let
           (component
-            "power-select/input"
+            (ensure-safe-component this.inputComponent)
             select=@select
+            extra=@extra
             ariaActiveDescendant=@ariaActiveDescendant
             ariaLabelledBy=@ariaLabelledBy
             ariaDescribedBy=@ariaDescribedBy
@@ -79,26 +82,24 @@
             searchPlaceholder=(or @placeholder @searchPlaceholder)
             placeholderComponent=@placeholderComponent
             searchField=@searchField
+            searchFieldPosition=@searchFieldPosition
             onFocus=@onFocus
             onBlur=@onBlur
             onKeydown=@onKeydown
             onInput=@onInput
-            searchFieldPosition=@searchFieldPosition
           )
           as |InputComponent|
         }}
-          {{#let
-            (component (ensure-safe-component @placeholderComponent))
-            as |PlaceholderComponent|
-          }}
+          {{#let @placeholderComponent as |PlaceholderComponent|}}
             <PlaceholderComponent
               @select={{@select}}
+              @extra={{@extra}}
               @placeholder={{@placeholder}}
               @isMultipleWithSearch={{true}}
               @inputComponent={{InputComponent}}
               @displayPlaceholder={{and
                 (not @select.searchText)
-                (not @select.selected)
+                (is-empty @select.selected)
               }}
             />
           {{/let}}
@@ -106,33 +107,29 @@
       </li>
     {{/if}}
   </ul>
-
 {{else}}
-  {{#if (ember-power-select-is-selected-present @select.selected)}}
+  {{#if (ember-power-select-is-selected-present this.selected)}}
     {{#if
       (or (not-eq @searchFieldPosition "trigger") (not @select.searchText))
     }}
       {{#if @selectedItemComponent}}
-        {{#let
-          (component (ensure-safe-component @selectedItemComponent))
-          as |SelectedItemComponent|
-        }}
+        {{#let @selectedItemComponent as |SelectedItemComponent|}}
           <SelectedItemComponent
-            @extra={{readonly @extra}}
-            @option={{readonly @select.selected}}
-            @select={{readonly @select}}
+            @extra={{@extra}}
+            @selected={{this.selected}}
+            @select={{@select}}
           />
         {{/let}}
       {{else}}
-        <span class="ember-power-select-selected-item">{{yield
-            @select.selected
-            @select
-          }}</span>
+        <span class="ember-power-select-selected-item">
+          {{yield this.selected @select}}
+        </span>
       {{/if}}
     {{/if}}
     {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
       <PowerSelect::Input
         @select={{@select}}
+        @extra={{@extra}}
         @ariaActiveDescendant={{@ariaActiveDescendant}}
         @ariaLabelledBy={{@ariaLabelledBy}}
         @ariaDescribedBy={{@ariaDescribedBy}}
@@ -165,19 +162,16 @@
     {{#if (and @searchEnabled (eq @searchFieldPosition "trigger"))}}
       {{#let
         (component
-          "power-select/input"
+          (ensure-safe-component this.inputComponent)
           select=@select
+          extra=@extra
           ariaActiveDescendant=@ariaActiveDescendant
           ariaLabelledBy=@ariaLabelledBy
           ariaDescribedBy=@ariaDescribedBy
           role=@role
           ariaLabel=@ariaLabel
           listboxId=@listboxId
-          tabindex=@tabindex
-          buildSelection=@buildSelection
           searchPlaceholder=(or @placeholder @searchPlaceholder)
-          placeholderComponent=@placeholderComponent
-          searchField=@searchField
           onFocus=@onFocus
           onBlur=@onBlur
           onKeydown=@onKeydown
@@ -187,28 +181,27 @@
         )
         as |InputComponent|
       }}
-        {{#let
-          (component (ensure-safe-component @placeholderComponent))
-          as |PlaceholderComponent|
-        }}
+        {{#let @placeholderComponent as |PlaceholderComponent|}}
           <PlaceholderComponent
             @select={{@select}}
             @placeholder={{@placeholder}}
             @isMultipleWithSearch={{true}}
             @inputComponent={{InputComponent}}
+            @extra={{@extra}}
             @displayPlaceholder={{and
               (not @select.searchText)
-              (not @select.selected)
+              (is-empty this.selected)
             }}
           />
         {{/let}}
       {{/let}}
     {{else}}
-      {{#let
-        (component (ensure-safe-component @placeholderComponent))
-        as |PlaceholderComponent|
-      }}
-        <PlaceholderComponent @placeholder={{@placeholder}} />
+      {{#let @placeholderComponent as |PlaceholderComponent|}}
+        <PlaceholderComponent
+          @placeholder={{@placeholder}}
+          @select={{@select}}
+          @extra={{@extra}}
+        />
       {{/let}}
     {{/if}}
   {{/if}}

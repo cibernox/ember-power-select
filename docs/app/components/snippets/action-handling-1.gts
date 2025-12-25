@@ -17,10 +17,10 @@ export default class extends Component {
     'Tokio',
   ];
 
-  @tracked destination: string = 'London';
+  @tracked destination: string | undefined = 'London';
 
   @action
-  chooseDestination(city: string) {
+  chooseDestination(city: string | undefined) {
     this.destination = city;
   }
 

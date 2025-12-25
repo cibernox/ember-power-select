@@ -1,61 +1,57 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import { assert, deprecate } from '@ember/debug';
+import { assert } from '@ember/debug';
 import { isBlank } from '@ember/utils';
 import { get } from '@ember/object';
-import type { Select, TSearchFieldPosition } from '../power-select';
 import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPlaceholderSignature } from './placeholder';
+import type { Select, TSearchFieldPosition } from '../../types';
+import type { PowerSelectArgs } from '../power-select';
 
-export interface PowerSelectInputSignature {
+export interface PowerSelectInputSignature<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
   Args: {
-    select: Select;
+    select: Select<T, IsMultiple>;
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaDescribedBy?: string;
     role?: string;
     searchField?: string;
     searchPlaceholder?: string;
-    placeholder?: string;
     searchFieldPosition?: TSearchFieldPosition;
     ariaActiveDescendant?: string;
     isDefaultPlaceholder?: boolean;
     listboxId?: string;
     autofocus?: boolean;
     tabindex?: number | string;
-    placeholderComponent?: string | ComponentLike<any>;
+    extra?: TExtra;
+    placeholderComponent?: ComponentLike<
+      PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
+    >;
     onKeydown?: (e: KeyboardEvent) => boolean | void;
     onBlur?: (e: FocusEvent) => void;
     onFocus?: (e: FocusEvent) => void;
     onInput?: (e: InputEvent) => void | boolean;
-    buildSelection: (lastSelection: any, select: Select) => any[];
+    buildSelection?: PowerSelectArgs<T, IsMultiple, TExtra>['buildSelection'];
   };
 }
 
-export default class PowerSelectInput extends Component<PowerSelectInputSignature> {
+export default class PowerSelectInput<
+  T = unknown,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> extends Component<PowerSelectInputSignature<T, TExtra, IsMultiple>> {
   didSetup: boolean = false;
 
   private _lastIsOpen: boolean = this.args.select.isOpen;
 
   get placeholder() {
-    if (this.args.placeholder !== undefined) {
-      deprecate(
-        'You are using `power-select/input-field` with parameter @placeholder. Replace @placeholder with @searchPlaceholder',
-        false,
-        {
-          for: 'ember-power-select',
-          id: 'ember-power-select.deprecate-input-field-placeholder-argument',
-          since: {
-            enabled: '8.11',
-            available: '8.11',
-          },
-          until: '9.0.0',
-        },
-      );
-    }
-
     if (!this.args.isDefaultPlaceholder) {
       return undefined;
     }
@@ -64,11 +60,11 @@ export default class PowerSelectInput extends Component<PowerSelectInputSignatur
       return !this.args.select.selected ||
         (Array.isArray(this.args.select.selected) &&
           this.args.select.selected.length === 0)
-        ? this.args.placeholder || this.args.searchPlaceholder || ''
+        ? this.args.searchPlaceholder || ''
         : '';
     }
 
-    return this.args.placeholder || this.args.searchPlaceholder;
+    return this.args.searchPlaceholder;
   }
 
   @action

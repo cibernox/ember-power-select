@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import PowerSelect, {
-  type Select,
-} from 'ember-power-select/components/power-select';
+import PowerSelect from 'ember-power-select/components/power-select';
 import { fn } from '@ember/helper';
+import type { Select } from 'ember-power-select/types';
 
 export default class extends Component {
   cities: string[] = [
@@ -22,7 +21,7 @@ export default class extends Component {
   @tracked selectedCities: string[] = [];
 
   @action
-  handleKeydown(_dropdown: Select, e: KeyboardEvent) {
+  handleKeydown(_dropdown: Select<string, true>, e: KeyboardEvent) {
     if (e.keyCode !== 13) {
       return;
     }

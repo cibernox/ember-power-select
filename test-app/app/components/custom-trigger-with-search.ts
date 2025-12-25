@@ -1,21 +1,11 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import type { Select } from 'ember-power-select/components/power-select';
+import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';
+import type { GroupedNumber } from 'test-app/utils/constants';
 
-export interface CustomTriggerWithSearchSignature {
-  Element: Element;
-  Args: {
-    selected: any;
-    select: Select;
-    listboxId: string;
-    lastSearchedText: string;
-  };
-  Blocks: {
-    default: [selected: any, lastSearchedText: string];
-  };
-}
-
-export default class CustomGroupComponent extends Component<CustomTriggerWithSearchSignature> {
+export default class CustomTriggerWithSearch extends Component<
+  PowerSelectTriggerSignature<GroupedNumber>
+> {
   @action
   onSearch(evt: Event) {
     this.args.select.actions.search(

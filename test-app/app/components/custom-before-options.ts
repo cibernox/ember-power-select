@@ -1,12 +1,6 @@
-import templateOnly from '@ember/component/template-only';
-import type { ComponentLike } from '@glint/template';
+import PowerSelectBeforeOptionsComponent from 'ember-power-select/components/power-select/before-options';
 
-export interface CustomBeforeOptionsSignature {
-  Element: Element;
-  Args: {
-    placeholder: string;
-    placeholderComponent: ComponentLike<any>;
-  };
-}
-
-export default templateOnly<CustomBeforeOptionsSignature>();
+export default class CustomBeforeOptions<
+  T,
+  TExtra = undefined,
+> extends PowerSelectBeforeOptionsComponent<T, TExtra> {}

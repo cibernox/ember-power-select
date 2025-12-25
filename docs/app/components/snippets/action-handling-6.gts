@@ -20,7 +20,7 @@ const numbers = [
 
 export default class extends Component {
   @tracked counter = 8;
-  @tracked number: number | undefined;
+  @tracked number: string | undefined;
   @tracked countdown: boolean = false;
 
   numbers = numbers;

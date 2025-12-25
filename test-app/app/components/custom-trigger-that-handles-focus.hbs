@@ -1,1 +1,3 @@
-<input type="text" id="focusable-input" onFocus={{@onFocus}}>
+{{#if @onFocus}}
+  <input type="text" id="focusable-input" {{on "focus" @onFocus}} />
+{{/if}}

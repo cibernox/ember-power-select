@@ -1,29 +1,42 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { Select } from '../power-select';
 import type { ComponentLike } from '@glint/template';
 import { deprecate } from '@ember/debug';
-declare const FastBoot: any;
+import type { PowerSelectPowerSelectGroupSignature } from './power-select-group';
+import type { GroupObject, Option, Select } from '../../types';
+declare const FastBoot: unknown;
 
-interface PowerSelectOptionsSignature {
+export interface PowerSelectOptionsSignature<
+  T,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
   Element: HTMLElement;
-  Args: PowerSelectOptionsArgs;
+  Args: PowerSelectOptionsArgs<T, TExtra, IsMultiple>;
   Blocks: {
-    default: [opt: PowerSelectOptionsArgs, select: Select];
+    default: [opt: Option<T>, select: Select<T, IsMultiple>];
   };
 }
 
-interface PowerSelectOptionsArgs {
-  select: Select;
+interface PowerSelectOptionsArgs<
+  T,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> {
+  select: Select<T, IsMultiple>;
   highlightOnHover?: boolean;
-  listboxId: string;
+  listboxId?: string;
   groupIndex: string;
-  loadingMessage: string;
-  options: any[];
-  extra: any;
-  groupComponent?: string | ComponentLike<any>;
-  optionsComponent?: string | ComponentLike<any>;
+  loadingMessage?: string;
+  options: readonly T[];
+  extra?: TExtra;
+  groupComponent?: ComponentLike<
+    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
+  >;
+  optionsComponent?: ComponentLike<
+    PowerSelectOptionsSignature<T, TExtra, IsMultiple>
+  >;
 }
 
 const isTouchDevice = !!window && 'ontouchstart' in window;
@@ -52,7 +65,13 @@ if (typeof FastBoot === 'undefined') {
   })(window.Element.prototype);
 }
 
-export default class PowerSelectOptionsComponent extends Component<PowerSelectOptionsSignature> {
+export default class PowerSelectOptionsComponent<
+  T,
+  TExtra = unknown,
+  IsMultiple extends boolean = false,
+> extends Component<PowerSelectOptionsSignature<T, TExtra, IsMultiple>> {
+  // extra._isTouchDevice is a workaround for test,!
+  // @ts-expect-error Property '_isTouchDevice' does not exist on type 'NonNullable<TExtra>'.
   private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice;
   private touchMoveEvent?: TouchEvent;
   private mouseOverHandler: EventListener = ((
@@ -133,13 +152,44 @@ export default class PowerSelectOptionsComponent extends Component<PowerSelectOp
     this._addHandlers(element);
   });
 
-  _optionFromIndex(index: string) {
+  isOptionDisabled(option: T): boolean {
+    if (option && typeof option === 'object' && 'disabled' in option) {
+      return option.disabled as boolean;
+    }
+
+    return false;
+  }
+
+  options(group: GroupObject<T>): readonly T[] {
+    if (group && typeof group === 'object' && 'options' in group) {
+      return group.options as T[];
+    }
+
+    return [];
+  }
+
+  groupTyping(opt: T) {
+    return opt as GroupObject<T>;
+  }
+
+  optionTyping(opt: T) {
+    return opt as Option<T>;
+  }
+
+  _optionFromIndex(index: string): Option<T> {
     const parts = index.split('.');
     let option = this.args.options[parseInt(parts[0] ?? '', 10)];
     for (let i = 1; i < parts.length; i++) {
-      option = option.options[parseInt(parts[i] ?? '', 10)];
+      if (
+        option &&
+        typeof option === 'object' &&
+        'options' in option &&
+        option.options
+      ) {
+        option = (option.options as T[])[parseInt(parts[i] ?? '', 10)];
+      }
     }
-    return option;
+    return option as Option<T>;
   }
 
   _hasMoved(endEvent: TouchEvent): boolean {
