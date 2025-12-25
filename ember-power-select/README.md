@@ -1,6 +1,6 @@
 [![NPM](https://badge.fury.io/js/ember-power-select.svg)](https://www.npmjs.com/package/ember-power-select)
 [![Ember Observer Score](https://emberobserver.com/badges/ember-power-select.svg)](https://emberobserver.com/addons/ember-power-select)
-![Ember Version](https://img.shields.io/badge/ember-%3E%3D3.28-brightgreen?logo=emberdotjs&logoColor=white)
+![Ember Version](https://img.shields.io/badge/ember-%3E%3D4.12-brightgreen?logo=emberdotjs&logoColor=white)
 [![Discord](https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord)](https://discord.com/channels/480462759797063690/486202731766349824)
 [![Build Status](https://github.com/cibernox/ember-power-select/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/cibernox/ember-power-select)
 
@@ -44,8 +44,8 @@ ember-data collections and follows idiomatic patterns.
 
 ## Compatibility
 
-* Ember.js v3.28 or above
-* Ember CLI v3.28 or above
+- Embroider or ember-auto-import v2
+- Ember.js v4.12 or above
 
 ## Installation
 
