@@ -11,18 +11,25 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <p>
-    You can apply styles to it just with CSS variables, plain CSS or even adding the classes your favorite CSS framework gives you.
+    You can apply styles to it just with CSS variables, plain CSS or even adding
+    the classes your favorite CSS framework gives you.
   </p>
 
   <p>
-    Ember Power Select exposes 53 variables, which you can override styles with css variables. Here the default variables:
+    Ember Power Select exposes 53 variables, which you can override styles with
+    css variables. Here the default variables:
   </p>
 
-  <CodeExample @css="styles-0.css" @showResult={{false}} @activeTab="css" @codeBlockClass="max-500-height" />
+  <CodeExample
+    @css="styles-0.css"
+    @showResult={{false}}
+    @activeTab="css"
+    @codeBlockClass="max-500-height"
+  />
 
   <p>
-    However if you are using SASS or LESS you
-    can use to customize the styles without overriding them.
+    However if you are using SASS or LESS you can use to customize the styles
+    without overriding them.
   </p>
 
   <CodeExample @scss="styles-1.scss" @showResult={{false}} @activeTab="scss" />

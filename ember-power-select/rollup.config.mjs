@@ -110,5 +110,5 @@ export default [
       // Remove leftover build artifacts when starting a new build.
       addon.clean(),
     ],
-  }
+  },
 ];

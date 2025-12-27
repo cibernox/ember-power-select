@@ -30,8 +30,8 @@ export default class BootstrapTheme extends Component {
     <p>
       In the
       <LinkTo @route="public-pages.docs.styles">chapter about styles</LinkTo>
-      of the docs you've seen how, you can customize the
-      styles of the dropdown by defining some variables.
+      of the docs you've seen how, you can customize the styles of the dropdown
+      by defining some variables.
     </p>
 
     <p>
@@ -90,7 +90,8 @@ export default class BootstrapTheme extends Component {
     />
 
     <p>
-      If your project is using sass, you can use this snippet to get bootstrap styles.
+      If your project is using sass, you can use this snippet to get bootstrap
+      styles.
     </p>
 
     <CodeExample

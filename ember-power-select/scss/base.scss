@@ -79,8 +79,8 @@
   margin: auto; // Vertical center trick!
   border-style: solid;
   border-width: 7px 4px 0 4px;
-  border-color: variables.$ember-power-select-trigger-icon-color transparent transparent
-    transparent;
+  border-color: variables.$ember-power-select-trigger-icon-color transparent
+    transparent transparent;
   .ember-basic-dropdown-trigger[aria-expanded="true"] & {
     transform: rotate(180deg);
   }
@@ -201,7 +201,9 @@
 }
 .ember-power-select-dropdown.ember-basic-dropdown-content--above {
   @if (variables.$ember-power-select-dropdown-margin != 0) {
-    transform: translateY(calc(-1 * #{variables.$ember-power-select-dropdown-margin}));
+    transform: translateY(
+      calc(-1 * #{variables.$ember-power-select-dropdown-margin})
+    );
   }
   border-top: variables.$ember-power-select-dropdown-top-border;
   border-bottom: variables.$ember-power-select-dropdown-contiguous-border;
