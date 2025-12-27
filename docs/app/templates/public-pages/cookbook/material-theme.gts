@@ -65,16 +65,8 @@ export default class MaterialTheme extends Component {
 
     <p>
       Like with bootstrap, it's not a lot of code to create a material-design
-      theme using the available SASS variables and a couple animations before
-      importing the styles of the addon.
+      theme using the available variables and a couple animations styles.
     </p>
-
-    <CodeExample
-      @scss="material-theme-1.scss"
-      @showResult={{false}}
-      @activeTab="scss"
-      @codeBlockClass="max-500-height"
-    />
 
     <h2 class="t3">Regular selects without search</h2>
     <div style="display: flex;">
@@ -170,29 +162,24 @@ export default class MaterialTheme extends Component {
     <br />
     <p>
       This theme doesn't attempt to provide totally accurate replica of the
-      angular directive, but it's a good start.
+      meterial directive, but it's a good start.
     </p>
+
+    <CodeExample
+      @css="material-theme-0.css"
+      @showResult={{false}}
+      @activeTab="css"
+      @codeBlockClass="max-500-height"
+    />
 
     <p>To use it in your app, SASS users should import the theme before
       importing the main stylesheet:</p>
 
     <CodeExample
-      @scss="material-theme-2.scss"
+      @scss="material-theme-1.scss"
       @showResult={{false}}
       @activeTab="scss"
-    />
-
-    <p>
-      As with the bootstrap one, this skin comes pre-compiled in the app, apps
-      that don't use SASS/LESS can include it by replacing the styles import in
-      <code>app.js</code>
-      to:
-    </p>
-
-    <CodeExample
-      @js="material-theme-3.js.txt"
-      @showResult={{false}}
-      @activeTab="js"
+      @codeBlockClass="max-500-height"
     />
 
     <p>In the next section we're going to explain how come this select can be

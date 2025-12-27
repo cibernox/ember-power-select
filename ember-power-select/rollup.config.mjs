@@ -19,6 +19,7 @@ export default [
     },
     plugins: [
       sass({
+        api: 'modern',
         options: {
           includePaths: [path.resolve('node_modules')],
         },
@@ -34,6 +35,7 @@ export default [
     },
     plugins: [
       sass({
+        api: 'modern',
         options: {
           includePaths: [path.resolve('node_modules')],
         },
@@ -108,75 +110,5 @@ export default [
       // Remove leftover build artifacts when starting a new build.
       addon.clean(),
     ],
-  },
-  {
-    input: './scss/bootstrap-complete.scss',
-    output: {
-      file: './dist/vendor/ember-power-select-bootstrap.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        output: './dist/vendor/ember-power-select-bootstrap.css',
-      }),
-    ],
-  },
-  {
-    input: './scss/bootstrap-complete.scss',
-    output: {
-      file: './dist/vendor/ember-power-select-bootstrap.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        processor: (css) =>
-          postcss()
-            .process(css, {
-              from: undefined,
-            })
-            .then((result) => result.css),
-      }),
-    ],
-  },
-  {
-    input: './scss/material-complete.scss',
-    output: {
-      file: './dist/vendor/ember-power-select-material.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        output: './dist/vendor/ember-power-select-material.css',
-      }),
-    ],
-  },
-  {
-    input: './scss/material-complete.scss',
-    output: {
-      file: './dist/vendor/ember-power-select-material.js',
-      assetFileNames: '[name][extname]',
-    },
-    plugins: [
-      sass({
-        options: {
-          includePaths: [path.resolve('node_modules')],
-        },
-        processor: (css) =>
-          postcss()
-            .process(css, {
-              from: undefined,
-            })
-            .then((result) => result.css),
-      }),
-    ],
-  },
+  }
 ];
