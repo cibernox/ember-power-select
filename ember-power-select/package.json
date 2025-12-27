@@ -31,7 +31,6 @@
     "./scss/base.scss": "./scss/base.scss",
     "./less/variables.less": "./less/variables.less",
     "./scss/variables.scss": "./scss/variables.scss",
-    "./themes/*": "./themes/*",
     "./vendor/*": "./dist/vendor/*"
   },
   "typesVersions": {
@@ -50,8 +49,7 @@
     "ember-power-select.less",
     "ember-power-select.scss",
     "less",
-    "scss",
-    "themes"
+    "scss"
   ],
   "scripts": {
     "build": "rollup --config",

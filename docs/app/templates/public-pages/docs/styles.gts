@@ -11,18 +11,25 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <p>
-    You can do it using just plain old CSS. There is no rocket science on it,
-    just override the default styles with your owns.
+    You can apply styles to it just with CSS variables, plain CSS or even adding
+    the classes your favorite CSS framework gives you.
   </p>
 
   <p>
-    However if you are using SASS or LESS there is a more advanced method you
-    can use to customize the styles without overriding them.
+    Ember Power Select exposes 53 variables, which you can override styles with
+    css variables. Here the default variables:
   </p>
 
+  <CodeExample
+    @css="styles-0.css"
+    @showResult={{false}}
+    @activeTab="css"
+    @codeBlockClass="max-500-height"
+  />
+
   <p>
-    Ember Power Select exposes 53 variables you can set before importing the
-    styles. By example (sass example):
+    However if you are using SASS or LESS you can use to customize the styles
+    without overriding them.
   </p>
 
   <CodeExample @scss="styles-1.scss" @showResult={{false}} @activeTab="scss" />
@@ -32,19 +39,18 @@ import { LinkTo } from '@ember/routing';
   </p>
 
   <p>
-    This approach is powerful enough to build entire themes on top of it and to
-    prove it Ember Power Select ships with a
-    <LinkTo @route="public-pages.cookbook.bootstrap-theme">Bootstrap theme</LinkTo>
-    and a
-    <LinkTo @route="public-pages.cookbook.material-theme">Material theme</LinkTo>
-    out of the box that can also be used in projects not using any preprocessor.
-  </p>
-
-  <p>
-    You can find the entire list of available variables in
+    You can find the entire list of available SCSS variables in
     <a
       href="https://github.com/cibernox/ember-power-select/blob/master/ember-power-select/scss/variables.scss"
     >the source code</a>.
+  </p>
+
+  <p>
+    This approach is powerful enough to build entire themes like
+    <LinkTo @route="public-pages.cookbook.bootstrap-theme">Bootstrap theme</LinkTo>
+    or
+    <LinkTo @route="public-pages.cookbook.material-theme">Material theme</LinkTo>
+    on top of Ember Power Select.
   </p>
 
   <div class="doc-page-nav">

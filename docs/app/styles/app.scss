@@ -1,3 +1,8 @@
+// Legacy demo
+@use "ember-power-select/scss/variables.scss";
+@use "ember-basic-dropdown";
+@use "ember-power-select";
+
 @import "variables";
 @import "base";
 @import "utilities";
@@ -16,9 +21,6 @@
 // Docs
 @import "docs/code-example";
 @include ember-code-example($brand-color);
-
-// Legacy demo
-@import "ember-power-select";
 
 // Utility classes
 .evenly-splitted {
@@ -394,7 +396,7 @@ $material-demo-line-height: 2.5;
     0 2px 5px 0 rgba(0, 0, 0, 0.16),
     0 2px 10px 0 rgba(0, 0, 0, 0.12);
   .ember-power-select-options[role="listbox"] {
-    max-height: #{$ember-power-select-number-of-visible-options *
+    max-height: #{variables.$ember-power-select-number-of-visible-options *
       $material-demo-line-height}em;
   }
   .ember-power-select-search-input {

@@ -77,6 +77,62 @@ import { LinkTo } from '@ember/routing';
     </li>
     <li>
       <p>
+        <code>node-sass</code>
+        has been deprecated for many years and is no longer supported. Please
+        migrate to
+        <code>sass</code>
+        or
+        <code>sass-embedded</code>.
+      </p>
+    </li>
+    <li>
+      <p>
+        Our SCSS files have been migrated to the modern API. Please update their
+        usage in your app. See the
+        <LinkTo @route="public-pages.docs.styles">Styles</LinkTo>
+        section for details.
+      </p>
+    </li>
+    <li>
+      <p>
+        The ember-basic-dropdown CSS/SCSS is no longer included by default. You
+        now need to import it manually. See the
+        <a
+          href="https://ember-basic-dropdown.com/docs/installation"
+          target="_blank"
+          rel="noopener noreferrer"
+        >ember-basic-dropdown installation instructions</a>
+        for guidance.
+      </p>
+    </li>
+    <li>
+      <p>
+        Previously, it was possible to pass the SCSS variable
+        <code>$ember-power-select-line-height</code>
+        without a unit. This is no longer supported—you must now provide a unit
+        (for example,
+        <code>1.5em</code>
+        or
+        <code>24px</code>).<br />
+        If you were previously passing a unitless value, you can append
+        <code>em</code>
+        to retain the same behavior.
+      </p>
+    </li>
+    <li>
+      <p>
+        The Bootstrap and Material themes have been removed from the addon, as
+        they have been outdated for many years. To achieve the same styling,
+        please copy the relevant snippets into your application:
+        <LinkTo
+          @route="public-pages.cookbook.bootstrap-theme"
+        >Bootstrap</LinkTo>
+        |
+        <LinkTo @route="public-pages.cookbook.material-theme">Material</LinkTo>
+      </p>
+    </li>
+    <li>
+      <p>
         <code>&lt;PowerSelectMultipleInputField /&gt;</code>
         has been removed.<br />
         If you were using this in your app, replace it with

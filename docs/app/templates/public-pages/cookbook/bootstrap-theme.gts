@@ -30,37 +30,14 @@ export default class BootstrapTheme extends Component {
     <p>
       In the
       <LinkTo @route="public-pages.docs.styles">chapter about styles</LinkTo>
-      of the docs you've seen how, if you are a Sass user, you can customize the
-      styles of the dropdown by defining some variables before importing the
-      styles of the addon.
+      of the docs you've seen how, you can customize the styles of the dropdown
+      by defining some variables.
     </p>
 
     <p>
       This approach can allow a great amount of customization with only a few
       lines of code. By example this is all that takes to create a Bootstrap 3
       theme:
-    </p>
-
-    <CodeExample
-      @scss="bootstrap-theme-1.scss"
-      @showResult={{false}}
-      @activeTab="scss"
-    />
-
-    <p>
-      Since bootstrap is so popular this theme comes already bundled in Ember
-      Power Select, so the only thing you have to do is to import the theme file
-      before the main one:
-    </p>
-
-    <CodeExample
-      @scss="bootstrap-theme-2.scss"
-      @showResult={{false}}
-      @activeTab="scss"
-    />
-
-    <p>
-      The result looks like this:
     </p>
 
     <div class="evenly-splitted">
@@ -105,18 +82,23 @@ export default class BootstrapTheme extends Component {
       </div>
     </div>
 
+    <CodeExample
+      @css="bootstrap-theme-0.css"
+      @showResult={{false}}
+      @activeTab="css"
+      @codeBlockClass="max-500-height"
+    />
+
     <p>
-      If your project is not using sass/less, you can still use the precompiled
-      bootstrap theme instead of the default one by replacing the styles import
-      in
-      <code>app.js</code>
-      to:
+      If your project is using sass, you can use this snippet to get bootstrap
+      styles.
     </p>
 
     <CodeExample
-      @js="bootstrap-theme-3.js.txt"
+      @scss="bootstrap-theme-1.scss"
       @showResult={{false}}
-      @activeTab="js"
+      @activeTab="scss"
+      @codeBlockClass="max-500-height"
     />
 
     <div class="doc-page-nav">
