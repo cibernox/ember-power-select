@@ -338,10 +338,14 @@
   .ember-power-select-group {
     .ember-power-select-group {
       .ember-power-select-group-name {
-        padding-right: calc(3 * #{variables.$ember-power-select-option-padding});
+        padding-right: calc(
+          3 * #{variables.$ember-power-select-option-padding}
+        );
       }
       .ember-power-select-option {
-        padding-right: calc(5 * #{variables.$ember-power-select-option-padding});
+        padding-right: calc(
+          5 * #{variables.$ember-power-select-option-padding}
+        );
       }
     }
     .ember-power-select-option {
