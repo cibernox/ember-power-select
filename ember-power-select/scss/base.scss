@@ -198,6 +198,7 @@
   box-shadow: variables.$ember-power-select-dropdown-box-shadow;
   overflow: hidden;
   color: variables.$ember-power-select-text-color;
+  background-color: variables.$ember-power-select-background-color;
 }
 .ember-power-select-dropdown.ember-basic-dropdown-content--above {
   @if (variables.$ember-power-select-dropdown-margin != 0) {
