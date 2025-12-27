@@ -12,7 +12,7 @@ const addon = new Addon({
 export default [
   // Compile scss file for js import
   {
-    input: './_index.scss',
+    input: './ember-power-select-for-css-generate.scss',
     output: {
       file: './src/vendor/ember-power-select.js',
       assetFileNames: '[name][extname]',
@@ -27,7 +27,7 @@ export default [
     ],
   },
   {
-    input: './_index.scss',
+    input: './ember-power-select-for-css-generate.scss',
     output: {
       file: './src/vendor/ember-power-select.js',
       assetFileNames: '[name][extname]',

@@ -1,0 +1,68 @@
+/* Backgrounds */
+$ember-power-select-background-color: var(--ember-power-select-background-color, #fff);
+$ember-power-select-disabled-background-color: var(--ember-power-select-disabled-background-color, #eee);
+$ember-power-select-multiple-selection-background-color: var(--ember-power-select-multiple-selection-background-color, #e4e4e4);
+$ember-power-select-highlighted-background: var(--ember-power-select-highlighted-background, #5897fb);
+$ember-power-select-selected-background: var(--ember-power-select-selected-background, #ddd);
+
+/* Texts */
+$ember-power-select-text-color: var(--ember-power-select-text-color, inherit);
+$ember-power-select-placeholder-color: var(--ember-power-select-placeholder-color, #999);
+$ember-power-select-highlighted-color: var(--ember-power-select-highlighted-color, #fff);
+$ember-power-select-disabled-option-color: var(--ember-power-select-disabled-option-color, #999);
+$ember-power-select-multiple-selection-color: var(--ember-power-select-multiple-selection-color, #333);
+
+/* Borders */
+$ember-power-select-border-color: var(--ember-power-select-border-color, #aaa);
+$ember-power-select-focus-border-color: var(--ember-power-select-focus-border-color, var(--ember-power-select-border-color), #aaa);
+$ember-power-select-default-border: var(--ember-power-select-default-border, 1px solid var(--ember-power-select-border-color, #aaa));
+$ember-power-select-default-focus-border: var(--ember-power-select-default-focus-border, 1px solid var(--ember-power-select-focus-border-color, #aaa));
+$ember-power-select-trigger-border: var(--ember-power-select-trigger-border, var(--ember-power-select-default-border, 1px solid #aaa));
+$ember-power-select-trigger-border-top: var(--ember-power-select-trigger-border-top, var(--ember-power-select-trigger-border, 1px solid #aaa));
+$ember-power-select-trigger-border-bottom: var(--ember-power-select-trigger-border-bottom, var(--ember-power-select-trigger-border, 1px solid #aaa));
+$ember-power-select-trigger-border-right: var(--ember-power-select-trigger-border-right, var(--ember-power-select-trigger-border, 1px solid #aaa));
+$ember-power-select-trigger-border-left: var(--ember-power-select-trigger-border-left, var(--ember-power-select-trigger-border, 1px solid #aaa));
+$ember-power-select-active-trigger-border: var(--ember-power-select-active-trigger-border, var(--ember-power-select-default-focus-border, 1px solid #aaa));
+$ember-power-select-active-trigger-border-top: var(--ember-power-select-active-trigger-border-top, var(--ember-power-select-active-trigger-border, 1px solid #aaa));
+$ember-power-select-active-trigger-border-bottom: var(--ember-power-select-active-trigger-border-bottom, var(--ember-power-select-active-trigger-border, 1px solid #aaa));
+$ember-power-select-active-trigger-border-right: var(--ember-power-select-active-trigger-border-right, var(--ember-power-select-active-trigger-border, 1px solid #aaa));
+$ember-power-select-active-trigger-border-left: var(--ember-power-select-active-trigger-border-left, var(--ember-power-select-active-trigger-border, 1px solid #aaa));
+$ember-power-select-dropdown-border: var(--ember-power-select-dropdown-border, var(--ember-power-select-default-focus-border, 1px solid #aaa));
+$ember-power-select-search-field-border: var(--ember-power-select-search-field-border, var(--ember-power-select-default-border, 1px solid #aaa));
+$ember-power-select-search-field-focus-border: var(--ember-power-select-search-field-focus-border, var(--ember-power-select-default-focus-border, 1px solid #aaa));
+$ember-power-select-dropdown-top-border: var(--ember-power-select-dropdown-top-border, var(--ember-power-select-dropdown-border, 1px solid #aaa));
+$ember-power-select-dropdown-right-border: var(--ember-power-select-dropdown-right-border, var(--ember-power-select-dropdown-border, 1px solid #aaa));
+$ember-power-select-dropdown-bottom-border: var(--ember-power-select-dropdown-bottom-border, var(--ember-power-select-dropdown-border, 1px solid #aaa));
+$ember-power-select-dropdown-left-border: var(--ember-power-select-dropdown-left-border, var(--ember-power-select-dropdown-border, 1px solid #aaa));
+$ember-power-select-dropdown-contiguous-border: var(--ember-power-select-dropdown-contiguous-border, none);
+$ember-power-select-multiple-option-border-color: var(--ember-power-select-multiple-option-border-color, gray);
+$ember-power-select-multiple-option-border: var(--ember-power-select-multiple-option-border, 1px solid var(--ember-power-select-multiple-option-border-color, gray));
+
+/* Borders radius */
+$ember-power-select-default-border-radius: var(--ember-power-select-default-border-radius, 4px); /* General border radius */
+$ember-power-select-trigger-default-border-radius: var(--ember-power-select-trigger-default-border-radius, var(--ember-power-select-default-border-radius, 4px));
+$ember-power-select-dropdown-default-border-radius: var(--ember-power-select-dropdown-default-border-radius, var(--ember-power-select-default-border-radius, 4px));
+$ember-power-select-opened-border-radius: var(--ember-power-select-opened-border-radius, 0); /* Border radius of the side of the dropdown and the trigger where they touch */
+$ember-power-select-search-input-border-radius: var(--ember-power-select-search-input-border-radius, 0);
+$ember-power-select-multiple-option-border-radius: var(--ember-power-select-multiple-option-border-radius, var(--ember-power-select-default-border-radius, 4px));
+
+/* Other */
+$ember-power-select-focus-box-shadow: var(--ember-power-select-focus-box-shadow, none);
+$ember-power-select-dropdown-margin: var(--ember-power-select-dropdown-margin, 0); /* Margin between the dropdown and the trigger */
+$ember-power-select-dropdown-box-shadow: var(--ember-power-select-dropdown-box-shadow, none);
+$ember-power-select-line-height: var(--ember-power-select-line-height, 1.75em);
+$ember-power-select-trigger-icon-color: var(--ember-power-select-trigger-icon-color, var(--ember-power-select-border-color, #aaa));
+$ember-power-select-clear-btn-margin: var(--ember-power-select-clear-btn-margin, 25px);
+$ember-power-select-option-padding: var(--ember-power-select-option-padding, 8px);
+$ember-power-select-number-of-visible-options: var(--ember-power-select-number-of-visible-options, 7);
+$ember-power-select-focus-outline: var(--ember-power-select-focus-outline, none);
+$ember-power-select-trigger-ltr-padding: var(--ember-power-select-trigger-ltr-padding, 0 16px 0 0);
+$ember-power-select-trigger-rtl-padding: var(--ember-power-select-trigger-rtl-padding, 0 0 0 16px);
+$ember-power-select-multiple-option-padding: var(--ember-power-select-multiple-option-padding, 0 4px);
+$ember-power-select-multiple-option-line-height: var(--ember-power-select-multiple-option-line-height, 1.45);
+
+@import "./scss/variables.scss";
+
+@import "ember-basic-dropdown/_index.scss";
+
+@import "./scss/base.scss";

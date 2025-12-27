@@ -14,11 +14,7 @@
   line-height: $ember-power-select-line-height;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  @if unitless($ember-power-select-line-height) {
-    min-height: #{$ember-power-select-line-height}em;
-  } @else {
-    min-height: $ember-power-select-line-height;
-  }
+  min-height: $ember-power-select-line-height;
   user-select: none;
   -webkit-user-select: none;
   color: $ember-power-select-text-color;
@@ -229,13 +225,10 @@
   &[role="listbox"] {
     overflow-y: auto; /* in firefox in windows this can cause a word-break issue. Try `overflow-y: scroll` if that happens */
     -webkit-overflow-scrolling: touch;
-    @if unitless($ember-power-select-line-height) {
-      max-height: #{$ember-power-select-number-of-visible-options *
-        $ember-power-select-line-height}em;
-    } @else {
-      max-height: $ember-power-select-number-of-visible-options *
-        $ember-power-select-line-height;
-    }
+    max-height: calc(
+      #{$ember-power-select-number-of-visible-options}
+      * #{$ember-power-select-line-height}
+    );
   }
 }
 
@@ -290,14 +283,14 @@
 .ember-power-select-group {
   .ember-power-select-group {
     .ember-power-select-group-name {
-      padding-left: 3 * $ember-power-select-option-padding;
+      padding-left: calc(3 * #{$ember-power-select-option-padding});
     }
     .ember-power-select-option {
-      padding-left: 5 * $ember-power-select-option-padding;
+      padding-left: calc(5 * #{$ember-power-select-option-padding});
     }
   }
   .ember-power-select-option {
-    padding-left: 3 * $ember-power-select-option-padding;
+    padding-left: calc(3 * #{$ember-power-select-option-padding});
   }
   .ember-power-select-group-name {
     padding-left: $ember-power-select-option-padding;
@@ -339,14 +332,14 @@
   .ember-power-select-group {
     .ember-power-select-group {
       .ember-power-select-group-name {
-        padding-right: 3 * $ember-power-select-option-padding;
+        padding-right: calc(3 * #{$ember-power-select-option-padding});
       }
       .ember-power-select-option {
-        padding-right: 5 * $ember-power-select-option-padding;
+        padding-right: calc(5 * #{$ember-power-select-option-padding});
       }
     }
     .ember-power-select-option {
-      padding-right: 3 * $ember-power-select-option-padding;
+      padding-right: calc(3 * #{$ember-power-select-option-padding});
     }
     .ember-power-select-group-name {
       padding-right: $ember-power-select-option-padding;
