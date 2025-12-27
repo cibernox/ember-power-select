@@ -1,6 +1,6 @@
 :root,
 :host {
-  --ember-power-select-line-height: 2;
+  --ember-power-select-line-height: 2em;
   --ember-power-select-border-color: #ccc;
   --ember-power-select-trigger-icon-color: #999;
   --ember-power-select-focus-outline: 0;

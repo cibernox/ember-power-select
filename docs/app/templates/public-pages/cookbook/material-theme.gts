@@ -172,8 +172,7 @@ export default class MaterialTheme extends Component {
       @codeBlockClass="max-500-height"
     />
 
-    <p>To use it in your app, SASS users should import the theme before
-      importing the main stylesheet:</p>
+    <p>To use it in your app, you must add variables before the main stylesheet:</p>
 
     <CodeExample
       @scss="material-theme-1.scss"
