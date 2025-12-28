@@ -1392,9 +1392,7 @@ module(
 
       assert.dom('.ember-power-select-label').hasText('Label for select');
 
-      assert
-        .dom('.ember-power-select-label')
-        .hasTagName('div');
+      assert.dom('.ember-power-select-label').hasTagName('div');
     });
 
     test<NumbersContext>('Multiple selects: The label was rendered when it was passed with `@labelText="Label for select`, `@labelTag="label"` and is matching with trigger id', async function (assert) {
@@ -1412,9 +1410,7 @@ module(
 
       assert.dom('.ember-power-select-label').hasText('Label for select');
 
-      assert
-        .dom('.ember-power-select-label')
-        .hasTagName('label');
+      assert.dom('.ember-power-select-label').hasTagName('label');
 
       assert
         .dom('.ember-power-select-trigger')

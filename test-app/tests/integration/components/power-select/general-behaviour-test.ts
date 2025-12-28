@@ -211,9 +211,7 @@ module(
 
       assert.dom('.ember-power-select-label').hasText('Label for select');
 
-      assert
-        .dom('.ember-power-select-label')
-        .hasTagName('label');
+      assert.dom('.ember-power-select-label').hasTagName('label');
 
       assert
         .dom('.ember-power-select-trigger')
