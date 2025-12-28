@@ -1393,6 +1393,30 @@ module(
       assert.dom('.ember-power-select-label').hasText('Label for select');
 
       assert
+        .dom('.ember-power-select-label')
+        .hasTagName('div');
+    });
+
+    test<NumbersContext>('Multiple selects: The label was rendered when it was passed with `@labelText="Label for select`, `@labelTag="label"` and is matching with trigger id', async function (assert) {
+      assert.expect(4);
+
+      this.numbers = numbers;
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @labelTag="label" @onChange={{this.foo}} as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+      assert.dom('.ember-power-select-label').exists('Label is present');
+
+      assert.dom('.ember-power-select-label').hasText('Label for select');
+
+      assert
+        .dom('.ember-power-select-label')
+        .hasTagName('label');
+
+      assert
         .dom('.ember-power-select-trigger')
         .hasAttribute(
           'id',
@@ -1401,6 +1425,26 @@ module(
             ?.getAttribute('for') ?? '',
           'The for from label is matching with id of trigger',
         );
+    });
+
+    test<NumbersContext>('Multiple selects: The default label is rendered as a label element when @labelTag is not provided', async function (assert) {
+      assert.expect(1);
+
+      this.numbers = numbers;
+      this.foo = () => {};
+      await render<NumbersContext>(hbs`
+      <PowerSelectMultiple @options={{this.numbers}} @labelText="Label for select" @onChange={{this.foo}} as |option|>
+        {{option}}
+      </PowerSelectMultiple>
+    `);
+
+      const labelElement = document.querySelector('.ember-power-select-label');
+
+      assert.equal(
+        labelElement?.tagName,
+        'DIV',
+        'The label is rendered as a div element by default',
+      );
     });
 
     test<NumbersContext>('Multiple selects: Test `@placeholder` and `@searchPlaceholder` with `@searchEnabled={{true}}` and `@searchFieldPosition="before-options"`', async function (assert) {

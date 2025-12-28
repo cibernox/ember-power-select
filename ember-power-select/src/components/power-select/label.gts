@@ -42,7 +42,7 @@ export default class PowerSelectLabelComponent<
   }
   <template>
     {{#let
-      (or @labelTag "label") (element (or @labelTag "label"))
+      (or @labelTag "div") (element (or @labelTag "div"))
       as |tagName LabelTag|
     }}
       <LabelTag

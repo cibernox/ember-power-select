@@ -196,13 +196,13 @@ module(
         .doesNotExist('The search box is NOT rendered');
     });
 
-    test<NumbersContext>('The label was rendered when it was passed with `@labelText="Label for select` and is matching with trigger id', async function (assert) {
-      assert.expect(3);
+    test<NumbersContext>('The label was rendered when it was passed with `@labelText="Label for select`, `@labelTag="label"` and is matching with trigger id', async function (assert) {
+      assert.expect(4);
 
       this.numbers = numbers;
       this.foo = () => {};
       await render<NumbersContext>(hbs`
-      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @onChange={{this.foo}} as |option|>
+      <PowerSelect @options={{this.numbers}} @labelText="Label for select" @labelTag="label" @onChange={{this.foo}} as |option|>
         {{option}}
       </PowerSelect>
     `);
@@ -210,6 +210,10 @@ module(
       assert.dom('.ember-power-select-label').exists('Label is present');
 
       assert.dom('.ember-power-select-label').hasText('Label for select');
+
+      assert
+        .dom('.ember-power-select-label')
+        .hasTagName('label');
 
       assert
         .dom('.ember-power-select-trigger')
@@ -237,8 +241,8 @@ module(
 
       assert.equal(
         labelElement?.tagName,
-        'LABEL',
-        'The label is rendered as a label element by default',
+        'DIV',
+        'The label is rendered as a div element by default',
       );
     });
 
