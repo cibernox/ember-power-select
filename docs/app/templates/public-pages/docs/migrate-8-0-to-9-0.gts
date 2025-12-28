@@ -107,6 +107,15 @@ import { LinkTo } from '@ember/routing';
     </li>
     <li>
       <p>
+        The default tag for the label component has been changed from
+        <code>label</code>
+        to
+        <code>div</code>
+        for accessibility reasons.
+      </p>
+    </li>
+    <li>
+      <p>
         Previously, it was possible to pass the SCSS variable
         <code>$ember-power-select-line-height</code>
         without a unit. This is no longer supported—you must now provide a unit
