@@ -1,5 +1,4 @@
 import PowerSelectBeforeOptionsComponent from 'ember-power-select/components/power-select/before-options';
-import { ensureSafeComponent } from '@embroider/util';
 
 export default class CustomBeforeOptions<
   T,
@@ -10,12 +9,10 @@ export default class CustomBeforeOptions<
       {{@placeholder}}
     </p>
     {{#if @placeholderComponent}}
-      {{#let
-        (component (ensureSafeComponent @placeholderComponent this))
-        as |ComponentName|
-      }}
-        <ComponentName @placeholder={{@placeholder}} @select={{@select}} />
-      {{/let}}
+      <@placeholderComponent
+        @placeholder={{@placeholder}}
+        @select={{@select}}
+      />
     {{/if}}
   </template>
 }

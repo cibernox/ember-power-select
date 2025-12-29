@@ -55,9 +55,3 @@ export default class CodeInline extends Component<CodeInlineSignature> {
     </div>
   </template>
 }
-
-declare module '@glint/environment-ember-loose/registry' {
-  export default interface Registry {
-    CodeInline: typeof CodeInline;
-  }
-}

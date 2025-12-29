@@ -2,7 +2,6 @@ import type { PowerSelectBeforeOptionsSignature } from 'ember-power-select/compo
 import type { Country, SelectedCountryExtra } from 'test-app/utils/constants';
 import and from 'ember-truth-helpers/helpers/and';
 import eq from 'ember-truth-helpers/helpers/eq';
-import { ensureSafeComponent } from '@embroider/util';
 import type { TemplateOnlyComponent } from '@ember/component/template-only';
 
 export type CustomMultipleBeforeOptionsSignature =
@@ -20,11 +19,6 @@ export default <template>
   {{/if}}
 
   {{#if @placeholderComponent}}
-    {{#let
-      (component (ensureSafeComponent @placeholderComponent this))
-      as |ComponentName|
-    }}
-      <ComponentName @placeholder={{@placeholder}} @select={{@select}} />
-    {{/let}}
+    <@placeholderComponent @placeholder={{@placeholder}} @select={{@select}} />
   {{/if}}
 </template> satisfies TemplateOnlyComponent<CustomMultipleBeforeOptionsSignature>;

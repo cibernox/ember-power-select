@@ -3,6 +3,11 @@ import { Addon } from '@embroider/addon-dev/rollup';
 import sass from 'rollup-plugin-sass';
 import postcss from 'postcss';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
+import { resolve, dirname } from 'node:path';
+
+const rootDirectory = dirname(fileURLToPath(import.meta.url));
+const tsConfig = resolve(rootDirectory, './tsconfig.json');
 
 const addon = new Addon({
   srcDir: 'src',
@@ -101,7 +106,10 @@ export default [
       addon.gjs(),
 
       // Emit .d.ts declaration files
-      addon.declarations('declarations'),
+      addon.declarations(
+        'declarations',
+        `pnpm ember-tsc --declaration --project ${tsConfig}`,
+      ),
 
       // addons are allowed to contain imports of .css files, which we want rollup
       // to leave alone and keep in the published output.

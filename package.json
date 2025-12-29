@@ -22,7 +22,6 @@
   },
   "packageManager": "pnpm@10.22.0",
   "devDependencies": {
-    "@glint/core": "^1.5.2",
     "@release-it-plugins/lerna-changelog": "^8.0.1",
     "@release-it-plugins/workspaces": "^5.0.3",
     "concurrently": "^9.2.1",

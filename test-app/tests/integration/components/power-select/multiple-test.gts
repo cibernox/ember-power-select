@@ -2002,7 +2002,7 @@ module(
 
       this.state = new State();
 
-      this.sort = <T,>(arr: T[]): T[] => arr.sort();
+      this.sort = <T>(arr: T[]): T[] => arr.sort();
 
       await render<StateContext>(
         <template>
