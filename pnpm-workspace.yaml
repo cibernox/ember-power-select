@@ -4,4 +4,5 @@ packages:
   - docs
 
 patchedDependencies:
+  '@embroider/shared-internals@2.9.2': patches/@embroider__shared-internals@2.9.2.patch
   '@embroider/shared-internals@3.0.2': patches/@embroider__shared-internals@3.0.2.patch
