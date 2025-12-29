@@ -1,13 +1,14 @@
 diff --git a/src/ember-standard-modules.js b/src/ember-standard-modules.js
-index 0698baf14b420a5c98fd7fef28b889b8daab4f28..8a32322fc412f8950544d216b8408ca92ac8ede6 100644
+index 0698baf14b420a5c98fd7fef28b889b8daab4f28..60b0636abbc1a9eb5d8915ae8d38acb2ed7fc953 100644
 --- a/src/ember-standard-modules.js
 +++ b/src/ember-standard-modules.js
-@@ -46,6 +46,8 @@ exports.emberVirtualPeerDeps.add('ember-source');
+@@ -46,6 +46,9 @@ exports.emberVirtualPeerDeps.add('ember-source');
  exports.emberVirtualPackages.add('@ember/owner');
  // Added in ember-source 4.5.0-beta.1
  exports.emberVirtualPackages.add('@ember/renderer');
 +// Added in ember-source 6.8.0-beta.1
 +exports.emberVirtualPackages.add('@ember/reactive');
++exports.emberVirtualPackages.add('@ember/reactive/collections');
  // Not provided by rfc176-data, but is needed for special librarys
  // that know the dangers of importing private APIs
  exports.emberVirtualPackages.add('@ember/-internals');
