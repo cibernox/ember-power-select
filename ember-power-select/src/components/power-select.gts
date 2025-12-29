@@ -216,11 +216,11 @@ export interface PowerSelectSignature<
   };
 }
 
-const isSliceable = <T>(coll: unknown): coll is Sliceable<T> => {
+const isSliceable = <T,>(coll: unknown): coll is Sliceable<T> => {
   return isArray(coll);
 };
 
-const isPromiseLike = <T>(thing: unknown): thing is Promise<T> => {
+const isPromiseLike = <T,>(thing: unknown): thing is Promise<T> => {
   return (
     typeof thing === 'object' &&
     thing !== null &&
@@ -228,11 +228,11 @@ const isPromiseLike = <T>(thing: unknown): thing is Promise<T> => {
   );
 };
 
-const isPromiseProxyLike = <T>(thing: unknown): thing is PromiseProxy<T> => {
+const isPromiseProxyLike = <T,>(thing: unknown): thing is PromiseProxy<T> => {
   return isPromiseLike(thing) && Object.hasOwnProperty.call(thing, 'content');
 };
 
-const isCancellablePromise = <T>(
+const isCancellablePromise = <T,>(
   thing: unknown,
 ): thing is CancellablePromise<T> => {
   return (
@@ -246,7 +246,7 @@ function isNumpadKeyEvent(e: KeyboardEvent): boolean {
   return e.keyCode >= 96 && e.keyCode <= 105;
 }
 
-const toPlainArray = <T>(collection: T | T[] | Sliceable<T>): T[] | T => {
+const toPlainArray = <T,>(collection: T | T[] | Sliceable<T>): T[] | T => {
   if (isSliceable<T>(collection)) {
     return collection.slice();
   } else {
