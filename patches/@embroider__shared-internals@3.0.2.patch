@@ -1,0 +1,13 @@
+diff --git a/src/ember-standard-modules.js b/src/ember-standard-modules.js
+index 6f29f01973da452a472e957837547811ae676585..6a36e10e33090869052ad4ea5739bed34b19a0ef 100644
+--- a/src/ember-standard-modules.js
++++ b/src/ember-standard-modules.js
+@@ -49,6 +49,8 @@ exports.emberVirtualPackages.add('@ember/renderer');
+ exports.emberVirtualPackages.add('@ember/owner');
+ // Added in ember-source 6.1.0-beta.1
+ exports.emberVirtualPackages.add('@ember/template-compiler');
++// Added in ember-source 6.8.0-beta.1
++exports.emberVirtualPackages.add('@ember/reactive');
+ // Not provided by rfc176-data, but is needed for special librarys
+ // that know the dangers of importing private APIs
+ exports.emberVirtualPackages.add('@ember/-internals');

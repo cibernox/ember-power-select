@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: false
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@embroider/shared-internals@3.0.2':
+    hash: a2bc05f5c5c7db4db573264fec55fd38f242fec6f96a099b467040eba96d8e66
+    path: patches/@embroider__shared-internals@3.0.2.patch
+
 importers:
 
   .:
@@ -9481,7 +9486,7 @@ snapshots:
 
   '@embroider/addon-shim@1.10.2':
     dependencies:
-      '@embroider/shared-internals': 3.0.2
+      '@embroider/shared-internals': 3.0.2(patch_hash=a2bc05f5c5c7db4db573264fec55fd38f242fec6f96a099b467040eba96d8e66)
       broccoli-funnel: 3.0.8
       common-ancestor-path: 1.0.1
       semver: 7.7.3
@@ -9550,7 +9555,7 @@ snapshots:
       '@babel/traverse': 7.28.5
       '@embroider/macros': 1.19.6(@glint/template@1.7.3)
       '@embroider/reverse-exports': 0.2.0
-      '@embroider/shared-internals': 3.0.2
+      '@embroider/shared-internals': 3.0.2(patch_hash=a2bc05f5c5c7db4db573264fec55fd38f242fec6f96a099b467040eba96d8e66)
       assert-never: 1.4.0
       babel-plugin-ember-template-compilation: 3.0.1
       broccoli-node-api: 1.7.0
@@ -9581,7 +9586,7 @@ snapshots:
 
   '@embroider/macros@1.19.6(@glint/template@1.7.3)':
     dependencies:
-      '@embroider/shared-internals': 3.0.2
+      '@embroider/shared-internals': 3.0.2(patch_hash=a2bc05f5c5c7db4db573264fec55fd38f242fec6f96a099b467040eba96d8e66)
       assert-never: 1.4.0
       babel-import-util: 3.0.1
       ember-cli-babel: 7.26.11
@@ -9616,7 +9621,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/shared-internals@3.0.2':
+  '@embroider/shared-internals@3.0.2(patch_hash=a2bc05f5c5c7db4db573264fec55fd38f242fec6f96a099b467040eba96d8e66)':
     dependencies:
       babel-import-util: 3.0.1
       debug: 4.4.3

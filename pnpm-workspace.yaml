@@ -1,4 +1,7 @@
 packages:
-  - 'ember-power-select'
-  - 'test-app'
-  - 'docs'
+  - ember-power-select
+  - test-app
+  - docs
+
+patchedDependencies:
+  '@embroider/shared-internals@3.0.2': patches/@embroider__shared-internals@3.0.2.patch
