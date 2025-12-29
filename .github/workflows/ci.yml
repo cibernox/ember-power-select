@@ -93,6 +93,7 @@ jobs:
           - ember-lts-5.8
           - ember-lts-5.12
           - ember-lts-6.4
+          - ember-lts-6.8
           - glimmer-component-v1
           - ember-concurrency-v4
           - ember-release
