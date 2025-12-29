@@ -29,14 +29,17 @@ const numbers = [
 
 export default class HelpersTesting extends Controller {
   numbers = numbers;
-  @tracked selectedList = [];
-  @tracked asyncSelected;
-  @tracked asyncSelectedList = [];
-  @tracked optionz = [];
-  @tracked selected3;
+  @tracked selected: string | undefined = undefined;
+  @tracked selected2: string | undefined = undefined;
+  @tracked selected2Multi: string[] = [];
+  @tracked selectedList: string[] = [];
+  @tracked asyncSelected: string | undefined = undefined;
+  @tracked asyncSelectedList: string[] = [];
+  @tracked optionz: string[] = [];
+  @tracked selected3: string | undefined;
 
   @action
-  searchAsync(term) {
+  searchAsync(term: string): Promise<readonly string[]> {
     return new RSVP.Promise((resolve) => {
       runTask(
         this,
@@ -60,7 +63,18 @@ export default class HelpersTesting extends Controller {
   }
 
   @action
-  onChangeAsync(key, selected) {
+  onChangeAsync(key: 'asyncSelected', selected: string | undefined) {
+    runTask(
+      this,
+      () => {
+        this[key] = selected;
+      },
+      100,
+    );
+  }
+
+  @action
+  onChangeAsyncMultiple(key: 'asyncSelectedList', selected: string[]) {
     runTask(
       this,
       () => {

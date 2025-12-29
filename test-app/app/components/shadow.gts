@@ -5,16 +5,19 @@ import { modifier } from 'ember-modifier';
 export default class ShadowComponent extends Component<{
   Element: HTMLDivElement;
   Blocks: { default: [] };
-}> {<template><div data-shadow {{this.attachShadow this.setShadow}} ...attributes></div>
+}> {
+  <template>
+    <div data-shadow {{this.attachShadow this.setShadow}} ...attributes></div>
 
-{{#if this.shadow}}
-  {{#in-element this.shadow}}
-    {{#each this.getStyles as |styleHref|}}
-      <link rel="stylesheet" type="text/css" href={{styleHref}} />
-    {{/each}}
-    {{yield}}
-  {{/in-element}}
-{{/if}}</template>
+    {{#if this.shadow}}
+      {{#in-element this.shadow}}
+        {{#each this.getStyles as |styleHref|}}
+          <link rel="stylesheet" type="text/css" href={{styleHref}} />
+        {{/each}}
+        {{yield}}
+      {{/in-element}}
+    {{/if}}
+  </template>
   @tracked shadow: Element | undefined;
 
   setShadow = (shadowRoot: HTMLDivElement) => {

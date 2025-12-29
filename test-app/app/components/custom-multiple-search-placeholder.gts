@@ -1,21 +1,30 @@
 import PowerSelectPlaceholder from 'ember-power-select/components/power-select/placeholder';
-import ensureSafeComponent from "@embroider/util/_app_/helpers/ensure-safe-component.js";
+import { ensureSafeComponent } from '@embroider/util';
 
 export default class CustomMultipleSearchPlaceholder<
   T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends PowerSelectPlaceholder<T, TExtra, IsMultiple> {<template>{{#if @displayPlaceholder}}
-  <div class="ember-power-select-placeholder">
-    This is a very
-    <span style="font-weight:bold">
-      bold
-    </span>
-    placeholder
-  </div>
-{{/if}}
+> extends PowerSelectPlaceholder<T, TExtra, IsMultiple> {
+  <template>
+    {{#if @displayPlaceholder}}
+      <div class="ember-power-select-placeholder">
+        This is a very
+        <span style="font-weight:bold">
+          bold
+        </span>
+        placeholder
+      </div>
+    {{/if}}
 
-{{#let (component (ensureSafeComponent @inputComponent)) as |ComponentName|}}
-  {{!-- @glint-nocheck: Argument of type 'unknown' is not assignable to parameter of type 'Element'. --}}
-  <ComponentName style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}} />
-{{/let}}</template>}
+    {{#let
+      (component (ensureSafeComponent @inputComponent this))
+      as |ComponentName|
+    }}
+      {{! @glint-nocheck: Argument of type 'unknown' is not assignable to parameter of type 'Element'. }}
+      <ComponentName
+        style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}}
+      />
+    {{/let}}
+  </template>
+}

@@ -6,8 +6,8 @@ import { namesStartingWithA } from 'test-app/utils/constants';
 import { render, focus, triggerKeyEvent } from '@ember/test-helpers';
 import type { Selected } from 'ember-power-select/types';
 import type { TestContext } from '@ember/test-helpers';
-import PowerSelect from "ember-power-select/components/power-select";
-import { fn } from "@ember/helper";
+import PowerSelect from 'ember-power-select/components/power-select';
+import { fn } from '@ember/helper';
 
 interface Helpers {
   beforeInteraction: (trigger: Element, assert: Assert) => Promise<void>;
@@ -126,14 +126,22 @@ module(
     ];
 
     items.forEach(([state, helpers]) => {
-      test<NamesContext>(`(${state}) Repeating the first character cycles through the results`, async function (assert) {const self = this;
+      test<NamesContext>(`(${state}) Repeating the first character cycles through the results`, async function (assert) {
+        const self = this;
 
         this.names = namesStartingWithA;
-        await render<NamesContext>(<template>
-        <PowerSelect @options={{self.names}} @onChange={{fn (mut self.selected)}} @selected={{self.selected}} as |option|>
-          {{option}}
-        </PowerSelect>
-      </template>);
+        await render<NamesContext>(
+          <template>
+            <PowerSelect
+              @options={{self.names}}
+              @onChange={{fn (mut self.selected)}}
+              @selected={{self.selected}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </template>,
+        );
 
         const trigger = this.element.querySelector(
           '.ember-power-select-trigger',
@@ -151,14 +159,22 @@ module(
         }
       });
 
-      test<NamesContext>(`(${state}) When going over all the possible results, it goes back to the first`, async function (assert) {const self = this;
+      test<NamesContext>(`(${state}) When going over all the possible results, it goes back to the first`, async function (assert) {
+        const self = this;
 
         this.names = namesStartingWithA;
-        await render<NamesContext>(<template>
-        <PowerSelect @options={{self.names}} @onChange={{fn (mut self.selected)}} @selected={{self.selected}} as |option|>
-          {{option}}
-        </PowerSelect>
-      </template>);
+        await render<NamesContext>(
+          <template>
+            <PowerSelect
+              @options={{self.names}}
+              @onChange={{fn (mut self.selected)}}
+              @selected={{self.selected}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </template>,
+        );
 
         const trigger = this.element.querySelector(
           '.ember-power-select-trigger',
@@ -180,14 +196,22 @@ module(
         }
       });
 
-      test<NamesContext>(`(${state}) Though repeating the first char, the whole search term is remembered`, async function (assert) {const self = this;
+      test<NamesContext>(`(${state}) Though repeating the first char, the whole search term is remembered`, async function (assert) {
+        const self = this;
 
         this.names = namesStartingWithA;
-        await render<NamesContext>(<template>
-        <PowerSelect @options={{self.names}} @onChange={{fn (mut self.selected)}} @selected={{self.selected}} as |option|>
-          {{option}}
-        </PowerSelect>
-      </template>);
+        await render<NamesContext>(
+          <template>
+            <PowerSelect
+              @options={{self.names}}
+              @onChange={{fn (mut self.selected)}}
+              @selected={{self.selected}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </template>,
+        );
 
         const trigger = this.element.querySelector(
           '.ember-power-select-trigger',
@@ -208,14 +232,22 @@ module(
         }
       });
 
-      test<NamesContext>(`(${state}) Typing the first character after typing a different one does not set again the cycling behaviour`, async function (assert) {const self = this;
+      test<NamesContext>(`(${state}) Typing the first character after typing a different one does not set again the cycling behaviour`, async function (assert) {
+        const self = this;
 
         this.names = namesStartingWithA;
-        await render<NamesContext>(<template>
-        <PowerSelect @options={{self.names}} @onChange={{fn (mut self.selected)}} @selected={{self.selected}} as |option|>
-          {{option}}
-        </PowerSelect>
-      </template>);
+        await render<NamesContext>(
+          <template>
+            <PowerSelect
+              @options={{self.names}}
+              @onChange={{fn (mut self.selected)}}
+              @selected={{self.selected}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </template>,
+        );
 
         const trigger = this.element.querySelector(
           '.ember-power-select-trigger',
@@ -232,7 +264,8 @@ module(
         }
       });
 
-      test<GroupContext>(`(${state}) Cycling characters works with grouped items`, async function (assert) {const self = this;
+      test<GroupContext>(`(${state}) Cycling characters works with grouped items`, async function (assert) {
+        const self = this;
 
         this.names = [
           { groupName: 'First', options: ['Faa', 'Fab', 'Fac'] },
@@ -241,11 +274,18 @@ module(
             options: ['Fba', { groupName: '2.1', options: ['FFba'] }, 'Fbb'],
           },
         ];
-        await render<GroupContext>(<template>
-        <PowerSelect @options={{self.names}} @onChange={{fn (mut self.selected)}} @selected={{self.selected}} as |option|>
-          {{option}}
-        </PowerSelect>
-      </template>);
+        await render<GroupContext>(
+          <template>
+            <PowerSelect
+              @options={{self.names}}
+              @onChange={{fn (mut self.selected)}}
+              @selected={{self.selected}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </template>,
+        );
         const trigger = this.element.querySelector(
           '.ember-power-select-trigger',
         );

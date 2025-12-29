@@ -19,7 +19,10 @@ export default class CustomGroupComponent<
   T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends Component<CustomGroupSignature<T, TExtra, IsMultiple>> {<template><div class="custom-component" {{this.setup}}>{{yield}}</div></template>
+> extends Component<CustomGroupSignature<T, TExtra, IsMultiple>> {
+  <template>
+    <div class="custom-component" {{this.setup}}>{{yield}}</div>
+  </template>
   didSetup = false;
 
   setup = modifier(() => {

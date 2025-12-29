@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
 const numbers = [
   'one',
@@ -25,6 +26,5 @@ const numbers = [
 
 export default class extends Controller {
   numbers = numbers;
-  selectedList = [];
-  optionz = [];
+  @tracked selected: string | undefined = undefined;
 }

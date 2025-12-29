@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, type TestContext } from '@ember/test-helpers';
 import { numbers } from 'test-app/utils/constants';
 import type { Select, Selected } from 'ember-power-select/types';
-import PowerSelect from "ember-power-select/components/power-select";
+import PowerSelect from 'ember-power-select/components/power-select';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -21,32 +21,49 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test<NumbersContext>('the select can be rendered already opened by passing `@initiallyOpened={{true}}`', async function (assert) {const self = this;
+    test<NumbersContext>('the select can be rendered already opened by passing `@initiallyOpened={{true}}`', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @initiallyOpened={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @initiallyOpened={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
     });
 
-    test<NumbersContext>('[BUGFIX] the select can be rendered already opened by passing `@initiallyOpened={{true}}` AND `@selected`', async function (assert) {const self = this;
+    test<NumbersContext>('[BUGFIX] the select can be rendered already opened by passing `@initiallyOpened={{true}}` AND `@selected`', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @initiallyOpened={{true}} @selected="seven" as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @initiallyOpened={{true}}
+            @selected="seven"
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
     });

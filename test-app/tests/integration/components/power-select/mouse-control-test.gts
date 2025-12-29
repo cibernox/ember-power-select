@@ -5,8 +5,8 @@ import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import { numbers } from 'test-app/utils/constants';
 import { click, triggerEvent } from '@ember/test-helpers';
 import type { Select, Selected } from 'ember-power-select/types';
-import PowerSelect from "ember-power-select/components/power-select";
-import { fn } from "@ember/helper";
+import PowerSelect from 'ember-power-select/components/power-select';
+import { fn } from '@ember/helper';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -30,17 +30,24 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test<NumbersContext>('Mouseovering a list item highlights it', async function (assert) {const self = this;
+    test<NumbersContext>('Mouseovering a list item highlights it', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -60,17 +67,25 @@ module(
       assert.dom('.ember-power-select-option:nth-child(4)').hasText('four');
     });
 
-    test<NumbersContext>('Mouseovering a list item does not highlight it when highlightOnHover is false', async function (assert) {const self = this;
+    test<NumbersContext>('Mouseovering a list item does not highlight it when highlightOnHover is false', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @highlightOnHover={{false}} @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @highlightOnHover={{false}}
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -101,7 +116,8 @@ module(
         );
     });
 
-    test<NumbersContext>('Clicking an item selects it, closes the dropdown and focuses the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('Clicking an item selects it, closes the dropdown and focuses the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(5);
 
@@ -121,11 +137,17 @@ module(
           'The third argument is an event',
         );
       };
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await click('.ember-power-select-option:nth-child(4)');
@@ -135,17 +157,24 @@ module(
       assert.dom('.ember-power-select-trigger').isFocused();
     });
 
-    test<NumbersContext>('Clicking the trigger while the select is opened closes it and and focuses the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('Clicking the trigger while the select is opened closes it and and focuses the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>f
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>f
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -156,7 +185,8 @@ module(
       assert.dom('.ember-power-select-trigger').isFocused();
     });
 
-    test<NumbersContext>('Doing mousedown the clear button removes the selection but does not open the select', async function (assert) {const self = this;
+    test<NumbersContext>('Doing mousedown the clear button removes the selection but does not open the select', async function (assert) {
+      const self = this;
 
       assert.expect(6);
 
@@ -174,11 +204,19 @@ module(
         this.set('selected', selected);
       };
       this.selected = 'three';
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @allowClear={{true}} @onChange={{self.onChange}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @allowClear={{true}}
+            @onChange={{self.onChange}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-dropdown')
@@ -195,18 +233,25 @@ module(
         .doesNotIncludeText('three', 'That element is not selected now');
     });
 
-    test<NumbersContext>("Clicking anywhere outside the select while opened closes the component and doesn't focuses the trigger", async function (assert) {const self = this;
+    test<NumbersContext>("Clicking anywhere outside the select while opened closes the component and doesn't focuses the trigger", async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <input type="text" id="other-thing">
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <input type="text" id="other-thing" />
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -217,16 +262,24 @@ module(
       assert.dom('.ember-power-select-trigger').isNotFocused();
     });
 
-    test<NumbersContext>("Doing mouseup over an option less than 2px in the Y axis of where the mousedown that opened the component was triggered doesn't select the option", async function (assert) {const self = this;
+    test<NumbersContext>("Doing mouseup over an option less than 2px in the Y axis of where the mousedown that opened the component was triggered doesn't select the option", async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger('', { clientY: 123 });
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -250,7 +303,8 @@ module(
         .hasText('two', 'The element has been selected');
     });
 
-    test<NumbersContext>('Clicking on a wrapped option should select it', async function (assert) {const self = this;
+    test<NumbersContext>('Clicking on a wrapped option should select it', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
@@ -260,11 +314,17 @@ module(
         assert.strictEqual(val, 'four', 'The expected value was selected');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        <span class="special-class">{{option}}</span>
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            <span class="special-class">{{option}}</span>
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       const element = document.querySelectorAll('.special-class')[3];
@@ -277,17 +337,25 @@ module(
       assert.dom('.ember-power-select-trigger').isFocused();
     });
 
-    test<NumbersContext>('Mouse-overing on a wrapped option should select it', async function (assert) {const self = this;
+    test<NumbersContext>('Mouse-overing on a wrapped option should select it', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        <span class="special-class">{{option}}</span>
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            <span class="special-class">{{option}}</span>
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -303,17 +371,25 @@ module(
         .hasText('four', 'The fourth element is highlighted');
     });
 
-    test<NumbersContext>("Mouse-overing the list itself doesn't crashes the app", async function (assert) {const self = this;
+    test<NumbersContext>("Mouse-overing the list itself doesn't crashes the app", async function (assert) {
+      const self = this;
 
       assert.expect(0); // NOTE: The fact that this tests runs without errors is the prove that it works
 
       this.numbers = numbers;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        <span class="special-class">{{option}}</span>
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            <span class="special-class">{{option}}</span>
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerEvent('ul', 'mouseover');

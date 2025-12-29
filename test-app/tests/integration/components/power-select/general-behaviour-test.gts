@@ -1,24 +1,48 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, click, triggerKeyEvent, focus, settled, waitFor, type TestContext } from '@ember/test-helpers';
-import { typeInSearch, clickTrigger, findContains } from 'ember-power-select/test-support/helpers';
+import {
+  render,
+  click,
+  triggerKeyEvent,
+  focus,
+  settled,
+  waitFor,
+  type TestContext,
+} from '@ember/test-helpers';
+import {
+  typeInSearch,
+  clickTrigger,
+  findContains,
+} from 'ember-power-select/test-support/helpers';
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { runTask } from 'ember-lifeline';
-import { numbers, names, countries, digits, type Country } from 'test-app/utils/constants';
+import {
+  numbers,
+  names,
+  countries,
+  digits,
+  type Country,
+} from 'test-app/utils/constants';
 import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
 import ArrayProxy from '@ember/array/proxy';
 import ObjectProxy from '@ember/object/proxy';
 import { TrackedArray } from 'tracked-built-ins';
 import { modifier } from 'ember-modifier';
-import PowerSelectBeforeOptionsComponent, { type PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
+import PowerSelectBeforeOptionsComponent, {
+  type PowerSelectBeforeOptionsSignature,
+} from 'ember-power-select/components/power-select/before-options';
 import type { ComponentLike } from '@glint/template';
-import type { DefaultHighlightedParams, MatcherFn, Selected } from 'ember-power-select/types';
+import type {
+  DefaultHighlightedParams,
+  MatcherFn,
+  Selected,
+} from 'ember-power-select/types';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
-import PowerSelect from "ember-power-select/components/power-select";
-import { fn } from "@ember/helper";
-import PowerSelectMultiple from "ember-power-select/components/power-select-multiple";
-import { on } from "@ember/modifier";
+import PowerSelect from 'ember-power-select/components/power-select';
+import { fn } from '@ember/helper';
+import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import { on } from '@ember/modifier';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -120,16 +144,23 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test<NumbersContext>('Click in the trigger of a closed select opens the dropdown', async function (assert) {const self = this;
+    test<NumbersContext>('Click in the trigger of a closed select opens the dropdown', async function (assert) {
+      const self = this;
 
       assert.expect(2);
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-dropdown')
@@ -139,17 +170,24 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
     });
 
-    test<NumbersContext>('Click in the trigger of an opened select closes the dropdown', async function (assert) {const self = this;
+    test<NumbersContext>('Click in the trigger of an opened select closes the dropdown', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
@@ -160,17 +198,24 @@ module(
         .doesNotExist('Dropdown is not rendered');
     });
 
-    test<NumbersContext>('Search functionality is disabled by default', async function (assert) {const self = this;
+    test<NumbersContext>('Search functionality is disabled by default', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -178,17 +223,26 @@ module(
         .doesNotExist('The search box is NOT rendered');
     });
 
-    test<NumbersContext>('The label was rendered when it was passed with `@labelText="Label for select`, `@labelTag="label"` and is matching with trigger id', async function (assert) {const self = this;
+    test<NumbersContext>('The label was rendered when it was passed with `@labelText="Label for select`, `@labelTag="label"` and is matching with trigger id', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @labelText="Label for select" @labelTag="label" @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @labelText="Label for select"
+            @labelTag="label"
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert.dom('.ember-power-select-label').exists('Label is present');
 
@@ -207,17 +261,25 @@ module(
         );
     });
 
-    test<NumbersContext>('The default label is rendered as a label element when @labelTag is not provided', async function (assert) {const self = this;
+    test<NumbersContext>('The default label is rendered as a label element when @labelTag is not provided', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @labelText="Label for select" @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @labelText="Label for select"
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       const labelElement = document.querySelector('.ember-power-select-label');
 
@@ -228,17 +290,26 @@ module(
       );
     });
 
-    test<NumbersContext>('The labelTag="span" renders a span element instead of a label element for better accessibility', async function (assert) {const self = this;
+    test<NumbersContext>('The labelTag="span" renders a span element instead of a label element for better accessibility', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @labelText="Label for select" @labelTag="span" @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @labelText="Label for select"
+            @labelTag="span"
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       const labelElement = document.querySelector('.ember-power-select-label');
 
@@ -249,17 +320,25 @@ module(
       );
     });
 
-    test<NumbersContext>('The search functionality can be enabled by passing `@searchEnabled={{true}}`', async function (assert) {const self = this;
+    test<NumbersContext>('The search functionality can be enabled by passing `@searchEnabled={{true}}`', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
@@ -268,17 +347,26 @@ module(
         .exists('The search box is rendered');
     });
 
-    test<NumbersContext>('The search box position is inside the trigger by passing `@searchFieldPosition="trigger"`', async function (assert) {const self = this;
+    test<NumbersContext>('The search box position is inside the trigger by passing `@searchFieldPosition="trigger"`', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @searchEnabled={{true}} @searchFieldPosition="trigger" @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @searchEnabled={{true}}
+            @searchFieldPosition="trigger"
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger input[type="search"]')
@@ -291,7 +379,8 @@ module(
         .doesNotExist('The search box does not exists in dropdown');
     });
 
-    test<NumbersContext>("The search box shouldn't gain focus if autofocus is disabled", async function (assert) {const self = this;
+    test<NumbersContext>("The search box shouldn't gain focus if autofocus is disabled", async function (assert) {
+      const self = this;
 
       assert.expect(1);
       this.numbers = numbers;
@@ -299,13 +388,24 @@ module(
 
       this.beforeOptionsComponent = PowerSelectBeforeOptionsComponent;
 
-      await render<NumbersContext>(<template>
-      {{#let (component self.beforeOptionsComponent autofocus=false) as |BeforeOptionsComponent|}}
-        <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @searchEnabled={{true}} @beforeOptionsComponent={{BeforeOptionsComponent}} as |option|>
-          {{option}}
-        </PowerSelect>
-      {{/let}}
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          {{#let
+            (component self.beforeOptionsComponent autofocus=false)
+            as |BeforeOptionsComponent|
+          }}
+            <PowerSelect
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              @beforeOptionsComponent={{BeforeOptionsComponent}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          {{/let}}
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -313,17 +413,24 @@ module(
         .isNotFocused('The search box is not focused after opening select');
     });
 
-    test<NumbersContext>('Each option of the select is the result of yielding an item', async function (assert) {const self = this;
+    test<NumbersContext>('Each option of the select is the result of yielding an item', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -339,17 +446,24 @@ module(
         .hasText('fourteen');
     });
 
-    test<NumbersContext>("If the passed options is a promise and it's not resolved the component shows a Loading message", async function (assert) {const self = this;
+    test<NumbersContext>("If the passed options is a promise and it's not resolved the component shows a Loading message", async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = [];
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       this.set(
         'numbers',
@@ -428,16 +542,25 @@ module(
     //     );
     // });
 
-    test<NumbersContext>('If a placeholder is provided, it shows while no element is selected', async function (assert) {const self = this;
+    test<NumbersContext>('If a placeholder is provided, it shows while no element is selected', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @placeholder="abracadabra" @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @placeholder="abracadabra"
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger .ember-power-select-placeholder')
@@ -455,16 +578,26 @@ module(
         .hasText('four', 'The selected item replaced it');
     });
 
-    test<NumbersContext>('If a `@searchPlaceholder` is provided, it shows on the searchbox of single selects while nothing is there', async function (assert) {const self = this;
+    test<NumbersContext>('If a `@searchPlaceholder` is provided, it shows on the searchbox of single selects while nothing is there', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @searchEnabled={{true}} @searchPlaceholder="foobar yo!" @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @searchEnabled={{true}}
+            @searchPlaceholder="foobar yo!"
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -476,7 +609,8 @@ module(
         );
     });
 
-    test<NumbersContext>("If the `@selected` value changes the select gets updated, but the `@onChange` action doesn't fire", async function (assert) {const self = this;
+    test<NumbersContext>("If the `@selected` value changes the select gets updated, but the `@onChange` action doesn't fire", async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
@@ -486,11 +620,18 @@ module(
         assert.ok(false, 'The onchange action is never fired');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @selected={{self.selected}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @selected={{self.selected}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       this.set('selected', 'three');
       assert
@@ -505,17 +646,25 @@ module(
         .hasText('three', 'The proper option gets selected');
     });
 
-    test<NumbersContext>('If the user selects a value and later on the selected value changes from the outside, the components updates too', async function (assert) {const self = this;
+    test<NumbersContext>('If the user selects a value and later on the selected value changes from the outside, the components updates too', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.selected = undefined;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger')
@@ -534,17 +683,25 @@ module(
         );
     });
 
-    test<NumbersContext>('If the user passes `@renderInPlace={{true}}` the dropdown is added below the trigger instead of in the root', async function (assert) {const self = this;
+    test<NumbersContext>('If the user passes `@renderInPlace={{true}}` the dropdown is added below the trigger instead of in the root', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @renderInPlace={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @renderInPlace={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -552,16 +709,25 @@ module(
         .exists('The dropdown is inside the component');
     });
 
-    test<NumbersContext>('If the user passes `@closeOnSelect={{false}}` the dropdown remains visible after selecting an option with the mouse', async function (assert) {const self = this;
+    test<NumbersContext>('If the user passes `@closeOnSelect={{false}}` the dropdown remains visible after selecting an option with the mouse', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @closeOnSelect={{false}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @closeOnSelect={{false}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-dropdown')
@@ -575,16 +741,26 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
     });
 
-    test<NumbersContext>('If the user passes `@closeOnSelect={{false}}` the dropdown remains visible after selecting an option with the with the keyboard', async function (assert) {const self = this;
+    test<NumbersContext>('If the user passes `@closeOnSelect={{false}}` the dropdown remains visible after selecting an option with the with the keyboard', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @closeOnSelect={{false}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @closeOnSelect={{false}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-dropdown')
@@ -598,7 +774,8 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
     });
 
-    test<NumbersContext>('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', async function (assert) {const self = this;
+    test<NumbersContext>('If the content of the options is refreshed (starting with empty array proxy) the available options should also refresh', async function (assert) {
+      const self = this;
 
       const done = assert.async();
       assert.expect(2);
@@ -620,10 +797,19 @@ module(
 
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.proxy}} @search={{self.search}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect></template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.proxy}}
+            @search={{self.search}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('o');
@@ -640,7 +826,8 @@ module(
       }, 150);
     });
 
-    test<NumbersContext>('If the content of the options is updated (starting with populated array proxy) the available options should also refresh', async function (assert) {const self = this;
+    test<NumbersContext>('If the content of the options is updated (starting with populated array proxy) the available options should also refresh', async function (assert) {
+      const self = this;
 
       const done = assert.async();
       assert.expect(5);
@@ -663,7 +850,15 @@ module(
       this.foo = () => {};
 
       await render<NumbersContext>(
-        <template><PowerSelect @options={{self.proxy}} @searchEnabled={{true}} @search={{self.search}} @onChange={{self.foo}} as |option|> {{option}} </PowerSelect></template>,
+        <template>
+          <PowerSelect
+            @options={{self.proxy}}
+            @searchEnabled={{true}}
+            @search={{self.search}}
+            @onChange={{self.foo}}
+            as |option|
+          > {{option}} </PowerSelect>
+        </template>,
       );
 
       await clickTrigger();
@@ -690,16 +885,26 @@ module(
       }, 150);
     });
 
-    test<NumbersContext>('If the content of the options is refreshed while opened the first element of the list gets highlighted', async function (assert) {const self = this;
+    test<NumbersContext>('If the content of the options is refreshed while opened the first element of the list gets highlighted', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @searchEnabled={{true}} @closeOnSelect={{false}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @searchEnabled={{true}}
+            @closeOnSelect={{false}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
       assert
@@ -712,32 +917,50 @@ module(
         .hasText('foo', 'The first element is highlighted');
     });
 
-    test<NumbersContext>('If the user passes `dropdownClass` the dropdown content should have that class', async function (assert) {const self = this;
+    test<NumbersContext>('If the user passes `dropdownClass` the dropdown content should have that class', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = [];
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @dropdownClass="this-is-a-test-class" as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @dropdownClass="this-is-a-test-class"
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       assert
         .dom('.ember-power-select-dropdown')
         .hasClass('this-is-a-test-class', 'dropdownClass can be customized');
     });
 
-    test<NumbersContext>('The filtering is reverted after closing the select', async function (assert) {const self = this;
+    test<NumbersContext>('The filtering is reverted after closing the select', async function (assert) {
+      const self = this;
 
       assert.expect(2);
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <div id="outside-div"></div>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @searchEnabled={{true}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <div id="outside-div"></div>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @searchEnabled={{true}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('th');
@@ -754,15 +977,24 @@ module(
         );
     });
 
-    test<NumbersContext>('The publicAPI is yielded as second argument in single selects', async function (assert) {const self = this;
+    test<NumbersContext>('The publicAPI is yielded as second argument in single selects', async function (assert) {
+      const self = this;
 
       assert.expect(2);
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @searchEnabled={{true}} @onChange={{fn (mut self.selected)}} as |option select|>
-        {{select.lastSearchedText}}:{{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @searchEnabled={{true}}
+            @onChange={{fn (mut self.selected)}}
+            as |option select|
+          >
+            {{select.lastSearchedText}}:{{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       await typeInSearch('tw');
       assert
@@ -776,15 +1008,22 @@ module(
         .hasText('thr:two', 'The trigger also receives the public API');
     });
 
-    test<NumbersContext>('If there is no search action and the options is empty the select shows the default "No results found" message', async function (assert) {const self = this;
+    test<NumbersContext>('If there is no search action and the options is empty the select shows the default "No results found" message', async function (assert) {
+      const self = this;
 
       this.numbers = [];
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       assert.dom('.ember-power-select-option').exists({ count: 1 });
       assert.dom('.ember-power-select-option').hasText('No results found');
@@ -796,16 +1035,25 @@ module(
         );
     });
 
-    test<NumbersContext>('If there is a search action and the options is empty it shows the `searchMessage`, and if after searching there is no results, it shows the `noResults` message', async function (assert) {const self = this;
+    test<NumbersContext>('If there is a search action and the options is empty it shows the `searchMessage`, and if after searching there is no results, it shows the `noResults` message', async function (assert) {
+      const self = this;
 
       this.numbers = [];
       this.search = () => [];
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @search={{self.search}} @options={{self.numbers}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @search={{self.search}}
+            @options={{self.numbers}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       assert.dom('.ember-power-select-option').exists({ count: 1 });
       assert.dom('.ember-power-select-option').hasText('Type to search');
@@ -814,30 +1062,48 @@ module(
       assert.dom('.ember-power-select-option').hasText('No results found');
     });
 
-    test<NumbersContext>('The default "no options" message can be customized passing `noMatchesMessage="other message"`', async function (assert) {const self = this;
+    test<NumbersContext>('The default "no options" message can be customized passing `noMatchesMessage="other message"`', async function (assert) {
+      const self = this;
 
       this.numbers = [];
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @noMatchesMessage="Nope" @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @noMatchesMessage="Nope"
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       assert.dom('.ember-power-select-option').exists({ count: 1 });
       assert.dom('.ember-power-select-option').hasText('Nope');
     });
 
-    test<NumbersContext>("If there is a search action, the options are empty and the `searchMessage` in intentionally empty, it doesn't show anything, and if you search and there is no results it shows the `noResultsMessage`", async function (assert) {const self = this;
+    test<NumbersContext>("If there is a search action, the options are empty and the `searchMessage` in intentionally empty, it doesn't show anything, and if you search and there is no results it shows the `noResultsMessage`", async function (assert) {
+      const self = this;
 
       this.numbers = [];
       this.search = () => [];
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @search={{self.search}} @searchMessage="" @searchEnabled={{true}} @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @search={{self.search}}
+            @searchMessage=""
+            @searchEnabled={{true}}
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       assert.dom('.ember-power-select-option').exists({ count: 0 });
       await typeInSearch('foo');
@@ -859,17 +1125,24 @@ module(
     //   assert.dom('.empty-option-foo').exists();
     // });
 
-    test<NumbersContext>('When no `selected` is provided, the first item in the dropdown is highlighted', async function (assert) {const self = this;
+    test<NumbersContext>('When no `selected` is provided, the first item in the dropdown is highlighted', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
@@ -881,27 +1154,43 @@ module(
         .hasAttribute('aria-current', 'true', 'The first one to be precise');
     });
 
-    test<NumbersContext>('When `selected` option is provided, it appears in the trigger yielded with the same block as the options', async function (assert) {const self = this;
+    test<NumbersContext>('When `selected` option is provided, it appears in the trigger yielded with the same block as the options', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @selected="three" @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @selected="three"
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger')
         .hasText('three', 'The selected option show in the trigger');
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @selected="three" @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        Selected: {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @selected="three"
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            Selected:
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       assert
         .dom('.ember-power-select-trigger')
         .hasText(
@@ -910,17 +1199,25 @@ module(
         );
     });
 
-    test<NumbersContext>('When `selected` option is provided, it is highlighted when the dropdown opens (string options)', async function (assert) {const self = this;
+    test<NumbersContext>('When `selected` option is provided, it is highlighted when the dropdown opens (string options)', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @selected="three" @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @selected="three"
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -931,17 +1228,25 @@ module(
         .hasText('three', 'The third option is highlighted');
     });
 
-    test<NumbersContext>('When `selected` option is provided, that option is marked as `.selected`', async function (assert) {const self = this;
+    test<NumbersContext>('When `selected` option is provided, that option is marked as `.selected`', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @selected="three" @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @selected="three"
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -953,17 +1258,25 @@ module(
         );
     });
 
-    test<NamesContext>('The default search strategy matches disregarding diacritics differences and capitalization', async function (assert) {const self = this;
+    test<NamesContext>('The default search strategy matches disregarding diacritics differences and capitalization', async function (assert) {
+      const self = this;
 
       assert.expect(8);
 
       this.names = names;
       this.foo = () => {};
-      await render<NamesContext>(<template>
-      <PowerSelect @options={{self.names}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NamesContext>(
+        <template>
+          <PowerSelect
+            @options={{self.names}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('mar');
@@ -987,7 +1300,8 @@ module(
       assert.dom('.ember-power-select-option:nth-child(2)').hasText('João');
     });
 
-    test<NumbersContext>('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', async function (assert) {const self = this;
+    test<NumbersContext>('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -1000,11 +1314,19 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @matcher={{self.endsWithMatcher}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @matcher={{self.endsWithMatcher}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('on');
@@ -1017,17 +1339,25 @@ module(
         .exists({ count: 7 }, 'There is 7 number that end in "teen"');
     });
 
-    test<CountriesContext>('When no `selected` is provided, the first item in the dropdown is highlighted', async function (assert) {const self = this;
+    test<CountriesContext>('When no `selected` is provided, the first item in the dropdown is highlighted', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.countries = countries;
       this.foo = () => {};
-      await render<CountriesContext>(<template>
-      <PowerSelect @options={{self.countries}} @onChange={{self.foo}} as |option|>
-        {{option.code}}: {{option.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountriesContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option.code}}:
+            {{option.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
@@ -1039,18 +1369,27 @@ module(
         .hasAttribute('aria-current', 'true', 'The first one to be precise');
     });
 
-    test<CountriesContext>('When a option is provided that options is rendered in the trigger using the same block as the options', async function (assert) {const self = this;
+    test<CountriesContext>('When a option is provided that options is rendered in the trigger using the same block as the options', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
       this.foo = () => {};
-      await render<CountriesContext>(<template>
-      <PowerSelect @options={{self.countries}} @selected={{self.country}} @onChange={{self.foo}} as |option|>
-        {{option.code}}: {{option.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountriesContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @selected={{self.country}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option.code}}:
+            {{option.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger')
@@ -1060,17 +1399,26 @@ module(
         );
     });
 
-    test<CountriesContext>('When `selected` option is provided, it is highlighted when the dropdown opens (object options)', async function (assert) {const self = this;
+    test<CountriesContext>('When `selected` option is provided, it is highlighted when the dropdown opens (object options)', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
-      await render<CountriesContext>(<template>
-      <PowerSelect @options={{self.countries}} @selected={{self.country}} @onChange={{fn (mut self.country)}} as |option|>
-        {{option.code}}: {{option.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountriesContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @selected={{self.country}}
+            @onChange={{fn (mut self.country)}}
+            as |option|
+          >
+            {{option.code}}:
+            {{option.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -1081,22 +1429,33 @@ module(
         .hasText('ES: Spain', 'The second option is highlighted');
     });
 
-    test<CountriesContext>('When `selected` option (object) is provided, that option is marked as `.selected`', async function (assert) {const self = this;
+    test<CountriesContext>('When `selected` option (object) is provided, that option is marked as `.selected`', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.countries = countries;
       this.country = countries[1]; // Spain
-      await render<CountriesContext>(<template>
-      <PowerSelect @options={{self.countries}} @selected={{self.country}} @onChange={{fn (mut self.country)}} as |option|>
-        {{option.code}}: {{option.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountriesContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @selected={{self.country}}
+            @onChange={{fn (mut self.country)}}
+            as |option|
+          >
+            {{option.code}}:
+            {{~option.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
+      await settled();
+
       const selectedOption = findContains(
         '.ember-power-select-option',
-        'ES: Spain',
+        'ES:Spain',
       );
       assert
         .dom(selectedOption)
@@ -1107,7 +1466,8 @@ module(
         );
     });
 
-    test<PeopleContext>('The default search strategy matches disregarding diacritics differences and capitalization', async function (assert) {const self = this;
+    test<PeopleContext>('The default search strategy matches disregarding diacritics differences and capitalization', async function (assert) {
+      const self = this;
 
       assert.expect(8);
 
@@ -1122,11 +1482,20 @@ module(
 
       this.foo = () => {};
 
-      await render<PeopleContext>(<template>
-      <PowerSelect @options={{self.people}} @searchField="name" @searchEnabled={{true}} @onChange={{self.foo}} as |person|>
-        {{person.name}} {{person.surname}}
-      </PowerSelect>
-    </template>);
+      await render<PeopleContext>(
+        <template>
+          <PowerSelect
+            @options={{self.people}}
+            @searchField="name"
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |person|
+          >
+            {{person.name}}
+            {{person.surname}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('mar');
@@ -1156,7 +1525,8 @@ module(
       assert.dom('.ember-power-select-option:nth-child(2)').hasText('João Jin');
     });
 
-    test<PeopleContext>('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', async function (assert) {const self = this;
+    test<PeopleContext>('You can pass a custom marcher with `matcher=myFn` to customize the search strategy', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
@@ -1178,11 +1548,20 @@ module(
 
       this.foo = () => {};
 
-      await render<PeopleContext>(<template>
-      <PowerSelect @options={{self.people}} @searchEnabled={{true}} @matcher={{self.nameOrSurnameNoDiacriticsCaseSensitive}} @onChange={{self.foo}} as |person|>
-        {{person.name}} {{person.surname}}
-      </PowerSelect>
-    </template>);
+      await render<PeopleContext>(
+        <template>
+          <PowerSelect
+            @options={{self.people}}
+            @searchEnabled={{true}}
+            @matcher={{self.nameOrSurnameNoDiacriticsCaseSensitive}}
+            @onChange={{self.foo}}
+            as |person|
+          >
+            {{person.name}}
+            {{person.surname}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('s');
@@ -1200,17 +1579,26 @@ module(
         .hasText('Lisa Simpson');
     });
 
-    test<NumbersContext>('BUGFIX: The highlighted element is reset when single selects are closed', async function (assert) {const self = this;
+    test<NumbersContext>('BUGFIX: The highlighted element is reset when single selects are closed', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.selected = 'three';
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @searchEnabled={{true}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @searchEnabled={{true}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -1227,17 +1615,25 @@ module(
         .hasText('three', 'The third element is highlighted again');
     });
 
-    test<NumbersContext>('BUGFIX: The highlighted element is reset when multiple selects are closed', async function (assert) {const self = this;
+    test<NumbersContext>('BUGFIX: The highlighted element is reset when multiple selects are closed', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -1258,7 +1654,8 @@ module(
         .hasText('one', 'The first element is highlighted again');
     });
 
-    test<NumbersContext>('If the passed options is a promise that is resolved, searching should filter the results from a promise', async function (assert) {const self = this;
+    test<NumbersContext>('If the passed options is a promise that is resolved, searching should filter the results from a promise', async function (assert) {
+      const self = this;
 
       assert.expect(5);
 
@@ -1274,11 +1671,18 @@ module(
 
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await new RSVP.Promise((resolve) => setTimeout(resolve, 150));
 
@@ -1293,33 +1697,51 @@ module(
       assert.dom('.ember-power-select-option:nth-child(4)').hasText('fourteen');
     });
 
-    test<NumbersContext>("Disabled single selects don't have a clear button even if `allowClear` is true", async function (assert) {const self = this;
+    test<NumbersContext>("Disabled single selects don't have a clear button even if `allowClear` is true", async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.selected = numbers[2];
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @allowClear={{true}} disabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @allowClear={{true}}
+            disabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('ember-power-select-clear-btn')
         .doesNotExist('There is no clear button');
     });
 
-    test<NumbersContext>('If the passed selected element is a pending promise, the first element is highlighted and the trigger is empty', async function (assert) {const self = this;
+    test<NumbersContext>('If the passed selected element is a pending promise, the first element is highlighted and the trigger is empty', async function (assert) {
+      const self = this;
 
       assert.expect(3);
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       this.set(
         'selected',
@@ -1346,7 +1768,8 @@ module(
         .hasText('', 'Nothing is selected yet');
     });
 
-    test<NumbersContext>('If the passed selected element is a resolved promise, that element is selected and the trigger contains the proper text', async function (assert) {const self = this;
+    test<NumbersContext>('If the passed selected element is a resolved promise, that element is selected and the trigger contains the proper text', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
@@ -1354,11 +1777,18 @@ module(
       this.selected = RSVP.resolve(numbers[3]);
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -1372,17 +1802,25 @@ module(
         .hasText('four', 'The trigger has the proper content');
     });
 
-    test<NumbersContext>('If the passed selected element is a pending promise that resolves while the select is opened, the highlighted & selected elements get updated, along with the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('If the passed selected element is a pending promise that resolves while the select is opened, the highlighted & selected elements get updated, along with the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(6);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       this.set(
         'selected',
         new RSVP.Promise((resolve) => {
@@ -1421,17 +1859,25 @@ module(
         .hasText('four', 'The trigger has the proper content');
     });
 
-    test<NumbersContext>("When a promise resolves it doesn't overwrite a previous value if it isn't the same promise it resolved from", async function (assert) {const self = this;
+    test<NumbersContext>("When a promise resolves it doesn't overwrite a previous value if it isn't the same promise it resolved from", async function (assert) {
+      const self = this;
 
       assert.expect(5);
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       const promise1 = new RSVP.Promise((resolve) => {
         runTask(
@@ -1559,17 +2005,25 @@ module(
     //   }, 350);
     // });
 
-    test<NumbersContext>('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--active` class', async function (assert) {const self = this;
+    test<NumbersContext>('When the input inside the select gets focused the entire component gains the `ember-power-select-trigger--active` class', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @searchEnabled={{true}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @searchEnabled={{true}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger')
@@ -1587,16 +2041,24 @@ module(
         );
     });
 
-    test<NumbersContext>('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', async function (assert) {const self = this;
+    test<NumbersContext>('[BUGFIX] When the component opens, if the selected option is not visible the list is scrolled to make it visible', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected="nine" @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected="nine"
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -1609,18 +2071,26 @@ module(
       );
     });
 
-    test<NumbersContext>('The destination where the content is rendered can be customized by passing a `destination=id-of-the-destination`', async function (assert) {const self = this;
+    test<NumbersContext>('The destination where the content is rendered can be customized by passing a `destination=id-of-the-destination`', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @destination="alternative-destination" as |option|>
-        {{option}}
-      </PowerSelect>
-      <div id="alternative-destination"></div>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @destination="alternative-destination"
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+          <div id="alternative-destination"></div>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-dropdown')
@@ -1632,7 +2102,8 @@ module(
         .exists('Dropdown is rendered inside the destination element');
     });
 
-    test<NumbersContext>('The destination where the content is rendered can be customized by passing a `destinationElement=element`', async function (assert) {const self = this;
+    test<NumbersContext>('The destination where the content is rendered can be customized by passing a `destinationElement=element`', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -1641,12 +2112,19 @@ module(
         this.set('destinationElement', element);
       });
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @destinationElement={{self.destinationElement}} as |option|>
-        {{option}}
-      </PowerSelect>
-      <div class="alternative-destination" {{self.ref}}></div>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @destinationElement={{self.destinationElement}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+          <div class="alternative-destination" {{self.ref}}></div>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-dropdown')
@@ -1658,18 +2136,28 @@ module(
         .exists('Dropdown is rendered inside the destination element');
     });
 
-    test<NumbersContext>('[BUGFIX] When the component is open and it has a `search` action, if options get updated the highlighted items is reset', async function (assert) {const self = this;
+    test<NumbersContext>('[BUGFIX] When the component is open and it has a `search` action, if options get updated the highlighted items is reset', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.selected = undefined;
       this.search = () => [];
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @searchEnabled={{true}} @onChange={{fn (mut self.selected)}} @search={{self.search}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @searchEnabled={{true}}
+            @onChange={{fn (mut self.selected)}}
+            @search={{self.search}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
@@ -1683,18 +2171,26 @@ module(
         .hasText('one');
     });
 
-    test<NumbersContext>('the item that is highlighted by default can be customized passing a value to `@defaultHighlighted`', async function (assert) {const self = this;
+    test<NumbersContext>('the item that is highlighted by default can be customized passing a value to `@defaultHighlighted`', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.defaultHighlighted = numbers[4];
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @defaultHighlighted={{self.defaultHighlighted}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @defaultHighlighted={{self.defaultHighlighted}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
@@ -1706,7 +2202,8 @@ module(
         );
     });
 
-    test<NumbersContext>('the item that is highlighted by default can be customized passing a function to `@defaultHighlighted`', async function (assert) {const self = this;
+    test<NumbersContext>('the item that is highlighted by default can be customized passing a function to `@defaultHighlighted`', async function (assert) {
+      const self = this;
 
       assert.expect(6);
 
@@ -1722,11 +2219,19 @@ module(
         return 'five';
       };
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @selected={{self.selected}} @options={{self.numbers}} @onChange={{self.foo}} @defaultHighlighted={{self.defaultHighlighted}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @selected={{self.selected}}
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @defaultHighlighted={{self.defaultHighlighted}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is rendered');
@@ -1738,7 +2243,8 @@ module(
         );
     });
 
-    test<UserContext>('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function (assert) {const self = this;
+    test<UserContext>('If the options of a single select implement `isEqual`, that option is used to determine whether or not two items are the same', async function (assert) {
+      const self = this;
 
       this.search = (term: string) => {
         return names
@@ -1752,11 +2258,19 @@ module(
         this.set('selected', selected);
       };
 
-      await render<UserContext>(<template>
-      <PowerSelect @selected={{self.selected}} @onChange={{self.onChange}} @searchEnabled={{true}} @search={{self.search}} as |user|>
-        {{user.name}}
-      </PowerSelect>
-    </template>);
+      await render<UserContext>(
+        <template>
+          <PowerSelect
+            @selected={{self.selected}}
+            @onChange={{self.onChange}}
+            @searchEnabled={{true}}
+            @search={{self.search}}
+            as |user|
+          >
+            {{user.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('M');
@@ -1774,7 +2288,8 @@ module(
       assert.strictEqual(onChangeInvocationsCount, 1);
     });
 
-    test<NumbersContext>('If the select receives a `@calculatePosition` option, it uses it to calculate the position of the floating content', async function (assert) {const self = this;
+    test<NumbersContext>('If the select receives a `@calculatePosition` option, it uses it to calculate the position of the floating content', async function (assert) {
+      const self = this;
 
       this.numbers = numbers;
       this.renderInPlace = false;
@@ -1799,11 +2314,20 @@ module(
           };
         }
       };
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @renderInPlace={{self.renderInPlace}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @calculatePosition={{self.calculatePosition}} as |num|>
-       {{num}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @renderInPlace={{self.renderInPlace}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @calculatePosition={{self.calculatePosition}}
+            as |num|
+          >
+            {{num}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -1850,7 +2374,8 @@ module(
         );
     });
 
-    test<MainUserContext>('The `selected` option can be a thenable', async function (assert) {const self = this;
+    test<MainUserContext>('The `selected` option can be a thenable', async function (assert) {
+      const self = this;
 
       assert.expect(6);
       const pets = [
@@ -1862,11 +2387,19 @@ module(
       this.mainUser = { pets, selected: undefined };
       this.foo = () => {};
 
-      await render<MainUserContext>(<template>
-      <PowerSelect @options={{self.mainUser.pets}} @selected={{self.mainUser.selected}} @searchField="name" @onChange={{self.foo}} as |option|>
-        {{option.name}}
-      </PowerSelect>
-    </template>);
+      await render<MainUserContext>(
+        <template>
+          <PowerSelect
+            @options={{self.mainUser.pets}}
+            @selected={{self.mainUser.selected}}
+            @searchField="name"
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       this.set(
         'mainUser.selected',
@@ -1899,7 +2432,8 @@ module(
         .hasText('Lucius', 'The trigger has the proper content');
     });
 
-    test<OptionContext>('If the options change and the new value is PromiseArrayProxy, the content of that proxy is set immediately while the promise resolves', async function (assert) {const self = this;
+    test<OptionContext>('If the options change and the new value is PromiseArrayProxy, the content of that proxy is set immediately while the promise resolves', async function (assert) {
+      const self = this;
 
       this.options = ['initial', 'options'];
       this.refreshCollection = () => {
@@ -1910,13 +2444,24 @@ module(
         this.set('options', PromiseArrayProxy.create({ promise }));
       };
 
-      await render<OptionContext>(<template>
-      <button type="button" id="refresh-collection-btn" {{on "click" self.refreshCollection}}>Refresh collection</button>
-      <br>
-      <PowerSelect @options={{self.options}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |name|>
-        {{name}}
-      </PowerSelect>
-    </template>);
+      await render<OptionContext>(
+        <template>
+          <button
+            type="button"
+            id="refresh-collection-btn"
+            {{on "click" self.refreshCollection}}
+          >Refresh collection</button>
+          <br />
+          <PowerSelect
+            @options={{self.options}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |name|
+          >
+            {{name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await click('#refresh-collection-btn');
       await clickTrigger();
@@ -1926,24 +2471,33 @@ module(
         .hasClass('ember-power-select-option--loading-message');
     });
 
-    test<NumbersContext>('The title is rendered in the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('The title is rendered in the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @title="The title" as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @title="The title"
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute('title', 'The title');
     });
 
-    test<CountriesContext>('Constant PromiseProxy references are tracked when .content changes', async function (assert) {const self = this;
+    test<CountriesContext>('Constant PromiseProxy references are tracked when .content changes', async function (assert) {
+      const self = this;
 
       const initial: Country | null = null;
       // @ts-expect-error Expected 0 arguments, but got 1.
@@ -1962,13 +2516,24 @@ module(
 
       this.foo = () => {};
 
-      await render<CountriesContext>(<template>
-      <button type="button" id="update-proxy-btn" {{on "click" self.updateProxy}}>Update proxy content</button>
-      <br>
-      <PowerSelect @selected={{self.proxy}} @options={{self.countries}} @onChange={{self.foo}} as |option|>
-        {{option.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountriesContext>(
+        <template>
+          <button
+            type="button"
+            id="update-proxy-btn"
+            {{on "click" self.updateProxy}}
+          >Update proxy content</button>
+          <br />
+          <PowerSelect
+            @selected={{self.proxy}}
+            @options={{self.countries}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-option[aria-selected="true"]')
@@ -1991,17 +2556,25 @@ module(
       //TODO: also try starting from non-null value and maybe also going back to null?
     });
 
-    test<DigitsContext>('works with numbers', async function (assert) {const self = this;
+    test<DigitsContext>('works with numbers', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.selected = digits[0];
       this.digits = digits;
-      await render<DigitsContext>(<template>
-      <PowerSelect @options={{self.digits}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<DigitsContext>(
+        <template>
+          <PowerSelect
+            @options={{self.digits}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-trigger')

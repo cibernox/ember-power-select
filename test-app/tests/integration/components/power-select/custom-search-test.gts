@@ -1,14 +1,27 @@
 import { runTask } from 'ember-lifeline';
-import { timeout, restartableTask, type TaskForAsyncTaskFunction } from 'ember-concurrency';
+import {
+  timeout,
+  restartableTask,
+  type TaskForAsyncTaskFunction,
+} from 'ember-concurrency';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
-import { render, settled, click, waitFor, type TestContext } from '@ember/test-helpers';
-import { typeInSearch, clickTrigger } from 'ember-power-select/test-support/helpers';
+import {
+  render,
+  settled,
+  click,
+  waitFor,
+  type TestContext,
+} from '@ember/test-helpers';
+import {
+  typeInSearch,
+  clickTrigger,
+} from 'ember-power-select/test-support/helpers';
 import { numbers, countries, type Country } from 'test-app/utils/constants';
 import RSVP from 'rsvp';
 import type { MatcherFn } from 'ember-power-select/types';
-import PowerSelect from "ember-power-select/components/power-select";
-import PowerSelectMultiple from "ember-power-select/components/power-select-multiple";
+import PowerSelect from 'ember-power-select/components/power-select';
+import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
 
 interface SearchContext extends TestContext {
   searchFn: (term: string) => typeof numbers | Promise<typeof numbers>;
@@ -54,18 +67,25 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test<SearchContext>('When you pass a custom search action instead of options, opening the select show a "Type to search" message in a list element', async function (assert) {const self = this;
+    test<SearchContext>('When you pass a custom search action instead of options, opening the select show a "Type to search" message in a list element', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.searchFn = () => [];
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -76,7 +96,8 @@ module(
         );
     });
 
-    test<SearchContext>("The search text shouldn't appear if options are loading", async function (assert) {const self = this;
+    test<SearchContext>("The search text shouldn't appear if options are loading", async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -85,11 +106,19 @@ module(
       this.searchFn = () => {};
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @options={{self.options}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @options={{self.options}}
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       this.set(
         'options',
@@ -119,18 +148,25 @@ module(
         );
     });
 
-    test<SearchContext>('When no options are given but there is a search action, a "type to search" message is rendered', async function (assert) {const self = this;
+    test<SearchContext>('When no options are given but there is a search action, a "type to search" message is rendered', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.searchFn = () => [];
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-option').hasText('Type to search');
@@ -142,18 +178,26 @@ module(
         );
     });
 
-    test<SearchContext>('The "type to search" message can be customized passing `@searchMessage=something`', async function (assert) {const self = this;
+    test<SearchContext>('The "type to search" message can be customized passing `@searchMessage=something`', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.searchFn = () => [];
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @searchMessage="Type the name of the thing" @onChange={{self.foo}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @searchMessage="Type the name of the thing"
+            @onChange={{self.foo}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -161,7 +205,8 @@ module(
         .hasText('Type the name of the thing');
     });
 
-    test<SearchContext>('The search function can return an array and those options get rendered', async function (assert) {const self = this;
+    test<SearchContext>('The search function can return an array and those options get rendered', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -170,18 +215,26 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('teen');
       assert.dom('.ember-power-select-option').exists({ count: 7 });
     });
 
-    test<SearchContext>('The search function can return a promise that resolves to an array and those options get rendered', async function (assert) {const self = this;
+    test<SearchContext>('The search function can return a promise that resolves to an array and those options get rendered', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -198,11 +251,18 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -211,7 +271,8 @@ module(
       assert.dom('.ember-power-select-option').exists({ count: 7 });
     });
 
-    test<SearchContext>('While the async search is being performed the "Type to search" dissapears the "Loading..." message appears', async function (assert) {const self = this;
+    test<SearchContext>('While the async search is being performed the "Type to search" dissapears the "Loading..." message appears', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
@@ -228,11 +289,18 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -259,7 +327,8 @@ module(
         );
     });
 
-    test<SearchContext>('When the search resolves to an empty array then the "No results found" message or block appears.', async function (assert) {const self = this;
+    test<SearchContext>('When the search resolves to an empty array then the "No results found" message or block appears.', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -276,11 +345,18 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('teen');
@@ -292,7 +368,8 @@ module(
         );
     });
 
-    test<SearchContext>('When the search resolves to an empty array then the custom "No results" message appears', async function (assert) {const self = this;
+    test<SearchContext>('When the search resolves to an empty array then the custom "No results" message appears', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -309,11 +386,19 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @noMatchesMessage="Meec. Try again" @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @noMatchesMessage="Meec. Try again"
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -390,7 +475,8 @@ module(
     //   setTimeout(done, 180);
     // });
 
-    test<SearchContext>('On an empty select, when the search resolves, the first element is highlighted like with regular filtering', async function (assert) {const self = this;
+    test<SearchContext>('On an empty select, when the search resolves, the first element is highlighted like with regular filtering', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -407,11 +493,18 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -425,7 +518,8 @@ module(
           'The first result is highlighted',
         );
     });
-    test<SearchContext>('On an empty select, when a syncronous search result complete, the first element is highlighted like with regular filtering', async function (assert) {const self = this;
+    test<SearchContext>('On an empty select, when a syncronous search result complete, the first element is highlighted like with regular filtering', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -434,11 +528,18 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -453,7 +554,8 @@ module(
         );
     });
 
-    test<SearchContext>('On an select with a selected value, if after a search this value is not among the options the first element is highlighted', async function (assert) {const self = this;
+    test<SearchContext>('On an select with a selected value, if after a search this value is not among the options the first element is highlighted', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -472,11 +574,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -494,7 +605,8 @@ module(
         );
     });
 
-    test<SearchContext>('Closing a component with a custom search cleans the search box and the results list', async function (assert) {const self = this;
+    test<SearchContext>('Closing a component with a custom search cleans the search box and the results list', async function (assert) {
+      const self = this;
 
       assert.expect(5);
       this.searchFn = function (term) {
@@ -502,12 +614,19 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <div id="different-node"></div>
-      <PowerSelect @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <div id="different-node"></div>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('teen');
@@ -527,7 +646,8 @@ module(
         .hasNoValue('The searchbox was cleared');
     });
 
-    test<SearchContext>('When received both options and search, those options are shown when the dropdown opens before the first search is performed', async function (assert) {const self = this;
+    test<SearchContext>('When received both options and search, those options are shown when the dropdown opens before the first search is performed', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
@@ -545,12 +665,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <div id="different-node"></div>
-      <PowerSelect @options={{self.numbers}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <div id="different-node"></div>
+          <PowerSelect
+            @options={{self.numbers}}
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -574,7 +702,8 @@ module(
         );
     });
 
-    test<SearchContext>("Don't return from the search action and update the options instead also works as an strategy", async function (assert) {const self = this;
+    test<SearchContext>("Don't return from the search action and update the options instead also works as an strategy", async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -594,12 +723,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <div id="different-node"></div>
-      <PowerSelect @options={{self.options}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <div id="different-node"></div>
+          <PowerSelect
+            @options={{self.options}}
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -665,7 +802,8 @@ module(
     //   }, 300);
     // });
 
-    test<SearchContext>('If you delete the last char of the input before the previous promise resolves, that promise is discarded', async function (assert) {const self = this;
+    test<SearchContext>('If you delete the last char of the input before the previous promise resolves, that promise is discarded', async function (assert) {
+      const self = this;
 
       const done = assert.async();
       assert.expect(2);
@@ -679,11 +817,19 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @options={{self.numbers}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number select|>
-        {{number}}:{{select.lastSearchedText}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number select|
+          >
+            {{number}}:{{select.lastSearchedText}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -707,7 +853,8 @@ module(
       }, 300);
     });
 
-    test<SearchContext>('The lastSearchedText of the yielded publicAPI in single selects is updated only when the async search for it finishes', async function (assert) {const self = this;
+    test<SearchContext>('The lastSearchedText of the yielded publicAPI in single selects is updated only when the async search for it finishes', async function (assert) {
+      const self = this;
 
       assert.expect(3);
       this.numbers = numbers;
@@ -724,11 +871,19 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelect @options={{self.numbers}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number select|>
-        {{number}}:{{select.lastSearchedText}}
-      </PowerSelect>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number select|
+          >
+            {{number}}:{{select.lastSearchedText}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('teen');
@@ -751,7 +906,8 @@ module(
         );
     });
 
-    test<SearchContext>('The lastSearchedText of the yielded publicAPI in multiple selects is updated only when the async search for it finishes', async function (assert) {const self = this;
+    test<SearchContext>('The lastSearchedText of the yielded publicAPI in multiple selects is updated only when the async search for it finishes', async function (assert) {
+      const self = this;
 
       assert.expect(3);
       this.numbers = numbers;
@@ -768,11 +924,19 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number select|>
-        {{number}}:{{select.lastSearchedText}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<SearchContext>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number select|
+          >
+            {{number}}:{{select.lastSearchedText}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('teen');
@@ -795,7 +959,8 @@ module(
         );
     });
 
-    test<SearchContext>('BUGFIX: Destroy a component why an async search is pending does not cause an error', async function (assert) {const self = this;
+    test<SearchContext>('BUGFIX: Destroy a component why an async search is pending does not cause an error', async function (assert) {
+      const self = this;
 
       assert.expect(0); // This test has no assertions. The fact that nothing fails is the proof that it works
       this.numbers = numbers;
@@ -814,20 +979,29 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchContext>(<template>
-      {{#if self.visible}}
-        <PowerSelectMultiple @options={{self.numbers}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-          {{number}}
-        </PowerSelectMultiple>
-      {{/if}}
-    </template>);
+      await render<SearchContext>(
+        <template>
+          {{#if self.visible}}
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelectMultiple>
+          {{/if}}
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('teen');
       this.set('visible', false);
     });
 
-    test<SearchNumberPromiseContext>('BUGFIX: When the given options are a promise and a search function is provided, clearing the search must display the results of the original promise', async function (assert) {const self = this;
+    test<SearchNumberPromiseContext>('BUGFIX: When the given options are a promise and a search function is provided, clearing the search must display the results of the original promise', async function (assert) {
+      const self = this;
 
       assert.expect(3);
       this.numbersPromise = RSVP.Promise.resolve(numbers);
@@ -837,11 +1011,19 @@ module(
       };
       this.foo = () => {};
 
-      await render<SearchNumberPromiseContext>(<template>
-     <PowerSelect @options={{self.numbersPromise}} @search={{self.searchFn}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-       {{number}}
-     </PowerSelect>
-    </template>);
+      await render<SearchNumberPromiseContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbersPromise}}
+            @search={{self.searchFn}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -857,7 +1039,8 @@ module(
         .exists({ count: 20 }, 'There is 20 options again§');
     });
 
-    test<CountryContext>('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', async function (assert) {const self = this;
+    test<CountryContext>('BUGFIX: If the user provides a custom matcher, that matcher receives the entire option even if the user also provided a searchField', async function (assert) {
+      const self = this;
 
       this.countries = countries;
       this.matcherFn = function (option: Country | undefined) {
@@ -871,16 +1054,26 @@ module(
       };
       this.foo = () => {};
 
-      await render<CountryContext>(<template>
-      <PowerSelectMultiple @options={{self.countries}} @matcher={{self.matcherFn}} @searchField="name" @onChange={{self.foo}} @searchEnabled={{true}} as |country|>
-        {{country.name}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.countries}}
+            @matcher={{self.matcherFn}}
+            @searchField="name"
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await typeInSearch('po');
     });
 
-    test<ObjContext>('If the value returned from an async search is cancellable and before it completes a new search is fired, the first value gets cancelled', async function (assert) {const self = this;
+    test<ObjContext>('If the value returned from an async search is cancellable and before it completes a new search is fired, the first value gets cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(1);
       const done = assert.async();
@@ -897,11 +1090,18 @@ module(
 
       this.obj = new testObj();
 
-      await render<ObjContext>(<template>
-      <PowerSelect @search={{self.obj.searchTask.perform}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<ObjContext>(
+        <template>
+          <PowerSelect
+            @search={{self.obj.searchTask.perform}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -915,7 +1115,8 @@ module(
       }, 200);
     });
 
-    test<ObjContext>('If the value returned from an async search is cancellable and before it completes the searchbox gets cleared, it gets cancelled', async function (assert) {const self = this;
+    test<ObjContext>('If the value returned from an async search is cancellable and before it completes the searchbox gets cleared, it gets cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(0);
       const done = assert.async();
@@ -932,11 +1133,18 @@ module(
 
       this.obj = new testObj();
 
-      await render<ObjContext>(<template>
-      <PowerSelect @search={{self.obj.searchTask.perform}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<ObjContext>(
+        <template>
+          <PowerSelect
+            @search={{self.obj.searchTask.perform}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -987,7 +1195,8 @@ module(
     //   }, 150);
     // });
 
-    test<ObjContext>('If a select is closed while a search is still ongoing and the search is cancellable, it gets cancelled', async function (assert) {const self = this;
+    test<ObjContext>('If a select is closed while a search is still ongoing and the search is cancellable, it gets cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(0);
       const done = assert.async();
@@ -1004,11 +1213,18 @@ module(
 
       this.obj = new testObj();
 
-      await render<ObjContext>(<template>
-      <PowerSelect @search={{self.obj.searchTask.perform}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<ObjContext>(
+        <template>
+          <PowerSelect
+            @search={{self.obj.searchTask.perform}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -1022,7 +1238,8 @@ module(
       }, 150);
     });
 
-    test<ObjContext>('If the value returned from an async search of a multiple-select is cancellable and before it completes a new search is fired, the first value gets cancelled', async function (assert) {const self = this;
+    test<ObjContext>('If the value returned from an async search of a multiple-select is cancellable and before it completes a new search is fired, the first value gets cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(1);
       const done = assert.async();
@@ -1039,11 +1256,18 @@ module(
 
       this.obj = new testObj();
 
-      await render<ObjContext>(<template>
-      <PowerSelectMultiple @search={{self.obj.searchTask.perform}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<ObjContext>(
+        <template>
+          <PowerSelectMultiple
+            @search={{self.obj.searchTask.perform}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -1057,7 +1281,8 @@ module(
       }, 200);
     });
 
-    test<ObjContext>('If the value returned from an async search of a multiple-select is cancellable and before it completes the searchbox gets cleared, it gets cancelled', async function (assert) {const self = this;
+    test<ObjContext>('If the value returned from an async search of a multiple-select is cancellable and before it completes the searchbox gets cleared, it gets cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(0);
       const done = assert.async();
@@ -1074,11 +1299,18 @@ module(
 
       this.obj = new testObj();
 
-      await render<ObjContext>(<template>
-      <PowerSelectMultiple @search={{self.obj.searchTask.perform}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<ObjContext>(
+        <template>
+          <PowerSelectMultiple
+            @search={{self.obj.searchTask.perform}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');
@@ -1130,7 +1362,8 @@ module(
     //   }, 150);
     // });
 
-    test<ObjContext>('If a multiple select is closed while a search is still ongoing and the search is cancellable, it gets cancelled', async function (assert) {const self = this;
+    test<ObjContext>('If a multiple select is closed while a search is still ongoing and the search is cancellable, it gets cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(0);
       const done = assert.async();
@@ -1147,11 +1380,18 @@ module(
 
       this.obj = new testObj();
 
-      await render<ObjContext>(<template>
-      <PowerSelectMultiple @search={{self.obj.searchTask.perform}} @onChange={{self.foo}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<ObjContext>(
+        <template>
+          <PowerSelectMultiple
+            @search={{self.obj.searchTask.perform}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       void typeInSearch('teen');

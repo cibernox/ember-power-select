@@ -1,14 +1,26 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, type TestContext } from '@ember/test-helpers';
-import { triggerKeydown, clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
-import { numbers, numerals, countries, countriesWithDisabled, groupedNumbers, groupedNumbersWithDisabled, type GroupedNumberWithDisabled } from 'test-app/utils/constants';
+import {
+  triggerKeydown,
+  clickTrigger,
+  typeInSearch,
+} from 'ember-power-select/test-support/helpers';
+import {
+  numbers,
+  numerals,
+  countries,
+  countriesWithDisabled,
+  groupedNumbers,
+  groupedNumbersWithDisabled,
+  type GroupedNumberWithDisabled,
+} from 'test-app/utils/constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';
 import type { Select, Selected } from 'ember-power-select/types';
-import PowerSelect from "ember-power-select/components/power-select";
-import { fn } from "@ember/helper";
-import PowerSelectMultiple from "ember-power-select/components/power-select-multiple";
+import PowerSelect from 'ember-power-select/components/power-select';
+import { fn } from '@ember/helper';
+import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -63,18 +75,26 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test<NumbersContext>('Pressing keydown highlights the next option', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing keydown highlights the next option', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -86,17 +106,26 @@ module(
         .hasText('two', 'The next options is highlighted now');
     });
 
-    test<NumbersContext>('Pressing keyup highlights the previous option', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing keyup highlights the previous option', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected="three" @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected="three"
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -108,18 +137,27 @@ module(
         .hasText('two', 'The previous options is highlighted now');
     });
 
-    test<NumbersContext>("When the last option is highlighted, pressing keydown doesn't change the highlighted", async function (assert) {const self = this;
+    test<NumbersContext>("When the last option is highlighted, pressing keydown doesn't change the highlighted", async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.selected = numbers[numbers.length - 1];
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -131,18 +169,27 @@ module(
         .hasText('twenty', 'The last option is still the highlighted one');
     });
 
-    test<NumbersContext>("When the first option is highlighted, pressing keyup doesn't change the highlighted", async function (assert) {const self = this;
+    test<NumbersContext>("When the first option is highlighted, pressing keyup doesn't change the highlighted", async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.selected = numbers[0];
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -154,17 +201,26 @@ module(
         .hasText('one', 'The first option is still the highlighted one');
     });
 
-    test<NumbersContext>('The arrow keys also scroll the list if the new highlighted element if it is outside of the viewport of the list', async function (assert) {const self = this;
+    test<NumbersContext>('The arrow keys also scroll the list if the new highlighted element if it is outside of the viewport of the list', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = numbers;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected="seven" @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected="seven"
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -186,7 +242,8 @@ module(
       );
     });
 
-    test<NumbersContext>('Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing ENTER selects the highlighted element, closes the dropdown and focuses the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(5);
 
@@ -204,11 +261,19 @@ module(
         );
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.onChange}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.onChange}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
@@ -224,7 +289,8 @@ module(
         .isFocused('The trigger is focused');
     });
 
-    test<NumbersContext>('Pressing ENTER on a single select with search disabled selects the highlighted element, closes the dropdown and focuses the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing ENTER on a single select with search disabled selects the highlighted element, closes the dropdown and focuses the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(5);
 
@@ -242,11 +308,18 @@ module(
         );
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.onChange}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.onChange}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
@@ -262,7 +335,8 @@ module(
         .isFocused('The trigger is focused');
     });
 
-    test<NumbersContext>('Pressing ENTER when there is no highlighted element, closes the dropdown and focuses the trigger without calling the onchange function', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing ENTER when there is no highlighted element, closes the dropdown and focuses the trigger without calling the onchange function', async function (assert) {
+      const self = this;
 
       assert.expect(4);
       this.numbers = numbers;
@@ -270,11 +344,19 @@ module(
       this.onChange = () => {
         assert.ok(false, 'The handle change should not be called');
       };
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.onChange}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.onChange}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('asjdnah');
@@ -291,7 +373,8 @@ module(
         .isFocused('The trigger is focused');
     });
 
-    test<NumbersContext>('Pressing SPACE on a select without a searchbox selects the highlighted element, closes the dropdown and focuses the trigger without scrolling the page', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing SPACE on a select without a searchbox selects the highlighted element, closes the dropdown and focuses the trigger without scrolling the page', async function (assert) {
+      const self = this;
 
       assert.expect(6);
 
@@ -313,11 +396,18 @@ module(
         );
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.onChange}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.onChange}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
@@ -333,18 +423,26 @@ module(
         .isFocused('The trigger is focused');
     });
 
-    test<NumbersContext>('Pressing TAB closes the select WITHOUT selecting the highlighted element and focuses the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing TAB closes the select WITHOUT selecting the highlighted element and focuses the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
@@ -360,35 +458,49 @@ module(
         .isFocused('The trigges is focused');
     });
 
-    test<NumbersContext>('The component is focusable using the TAB key as any other kind of input', async function (assert) {const self = this;
+    test<NumbersContext>('The component is focusable using the TAB key as any other kind of input', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       assert
         .dom('.ember-power-select-trigger')
         .hasAttribute('tabindex', '0', 'The trigger is reachable with TAB');
     });
 
-    test<NumbersContext>('If the component is focused, pressing ENTER toggles it', async function (assert) {const self = this;
+    test<NumbersContext>('If the component is focused, pressing ENTER toggles it', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -402,18 +514,25 @@ module(
         .doesNotExist('The select is closed again');
     });
 
-    test<NumbersContext>('If the single component is focused and has no search, pressing SPACE toggles it', async function (assert) {const self = this;
+    test<NumbersContext>('If the single component is focused and has no search, pressing SPACE toggles it', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -427,18 +546,26 @@ module(
         .doesNotExist('The select is closed again');
     });
 
-    test<NumbersContext>('If the single component is focused, pressing KEYDOWN opens it', async function (assert) {const self = this;
+    test<NumbersContext>('If the single component is focused, pressing KEYDOWN opens it', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -448,18 +575,25 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
     });
 
-    test<NumbersContext>('If the single component is focused, pressing KEYUP opens it', async function (assert) {const self = this;
+    test<NumbersContext>('If the single component is focused, pressing KEYUP opens it', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -469,18 +603,25 @@ module(
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
     });
 
-    test<NumbersContext>('Pressing ESC while the component is opened closes it and focuses the trigger', async function (assert) {const self = this;
+    test<NumbersContext>('Pressing ESC while the component is opened closes it and focuses the trigger', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -493,7 +634,8 @@ module(
         .isFocused('The select is focused');
     });
 
-    test<NumbersContext>('In single-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function (assert) {const self = this;
+    test<NumbersContext>('In single-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function (assert) {
+      const self = this;
 
       assert.expect(9);
 
@@ -532,11 +674,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} @onKeydown={{self.onKeydown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            @onKeydown={{self.onKeydown}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -546,7 +697,8 @@ module(
         .doesNotExist('The select is closed');
     });
 
-    test<NumbersContext>('In single-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', async function (assert) {const self = this;
+    test<NumbersContext>('In single-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', async function (assert) {
+      const self = this;
 
       assert.expect(10);
 
@@ -585,11 +737,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} @onKeydown={{self.onKeydown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            @onKeydown={{self.onKeydown}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -604,7 +765,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('In multiple-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', async function (assert) {const self = this;
+    >('In multiple-mode, when the user presses SPACE on the searchbox, the highlighted option is not selected, and that space is part of the search', async function (assert) {
+      const self = this;
 
       assert.expect(10);
 
@@ -643,11 +805,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} @onKeydown={{self.onKeydown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            @onKeydown={{self.onKeydown}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -664,7 +835,8 @@ module(
         .hasText('', 'Nothing was selected');
     });
 
-    test<NumbersContext>('in single-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function (assert) {const self = this;
+    test<NumbersContext>('in single-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -675,11 +847,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} @onKeydown={{self.onKeydown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            @onKeydown={{self.onKeydown}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -691,7 +872,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('In multiple-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function (assert) {const self = this;
+    >('In multiple-mode, when the user presses a key being the search input focused the passes `@onKeydown` action is invoked with the public API and the event', async function (assert) {
+      const self = this;
 
       assert.expect(9);
 
@@ -730,11 +912,20 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} @onKeydown={{self.onKeydown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            @onKeydown={{self.onKeydown}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -750,7 +941,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('in multiple-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function (assert) {const self = this;
+    >('in multiple-mode if the users returns false in the `@onKeydown` action it prevents the component to do the usual thing', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -759,11 +951,20 @@ module(
       this.onKeydown = () => false;
       this.foo = () => {};
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.foo}} @onKeydown={{self.onKeydown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.foo}}
+            @onKeydown={{self.onKeydown}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The select is opened');
@@ -777,17 +978,25 @@ module(
         .exists('The select is still opened');
     });
 
-    test<NumbersContext>('Typing on a closed single select selects the value that matches the string typed so far', async function (assert) {const self = this;
+    test<NumbersContext>('Typing on a closed single select selects the value that matches the string typed so far', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -805,17 +1014,25 @@ module(
         .doesNotExist('The dropdown is still closed');
     });
 
-    test<NumbersContext>('Typing with modifier keys on a closed single select does not select the value that matches the string typed so far', async function (assert) {const self = this;
+    test<NumbersContext>('Typing with modifier keys on a closed single select does not select the value that matches the string typed so far', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -839,17 +1056,25 @@ module(
     // test('Typing on a closed multiple select with no searchbox does nothing', function(assert) {
     // });
 
-    test<NumbersContext>('Typing on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', async function (assert) {const self = this;
+    test<NumbersContext>('Typing on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', async function (assert) {
+      const self = this;
 
       assert.expect(6);
 
       this.numbers = numbers;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
@@ -877,17 +1102,25 @@ module(
         .exists('The dropdown is still open');
     });
 
-    test<NumbersContext>('Typing from the Numpad on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', async function (assert) {const self = this;
+    test<NumbersContext>('Typing from the Numpad on an opened single select highlights the first value that matches the string typed so far, scrolling if needed', async function (assert) {
+      const self = this;
 
       assert.expect(6);
 
       this.numbers = numerals;
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
@@ -915,16 +1148,24 @@ module(
 
     test<
       NumbersContext<true>
-    >('Typing on an opened multiple select highlights the value that matches the string typed so far, scrolling if needed', async function (assert) {const self = this;
+    >('Typing on an opened multiple select highlights the value that matches the string typed so far, scrolling if needed', async function (assert) {
+      const self = this;
 
       assert.expect(6);
 
       this.numbers = numbers;
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
@@ -952,16 +1193,24 @@ module(
         .exists('The dropdown is still closed');
     });
 
-    test<NumbersContext>('The typed string gets reset after 1s idle', async function (assert) {const self = this;
+    test<NumbersContext>('The typed string gets reset after 1s idle', async function (assert) {
+      const self = this;
 
       assert.expect(5);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -988,16 +1237,24 @@ module(
         .doesNotExist('The dropdown is still closed');
     });
 
-    test<NumbersContext>("Type something that doesn't give you any result leaves the current selection", async function (assert) {const self = this;
+    test<NumbersContext>("Type something that doesn't give you any result leaves the current selection", async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
       this.numbers = numbers;
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       assert
@@ -1019,16 +1276,25 @@ module(
         );
     });
 
-    test<CountryContext>('Typing on an opened single select highlights the value that matches the string, also when the options are complex, using the `searchField` for that', async function (assert) {const self = this;
+    test<CountryContext>('Typing on an opened single select highlights the value that matches the string, also when the options are complex, using the `searchField` for that', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.countries = countries;
-      await render<CountryContext>(<template>
-      <PowerSelect @options={{self.countries}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @searchField="name" as |country|>
-        {{country.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @searchField="name"
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
@@ -1048,16 +1314,24 @@ module(
         .exists('The dropdown is still closed');
     });
 
-    test<GroupedNumbersContext>('Typing on an opened single select containing groups highlights the value that matches the string', async function (assert) {const self = this;
+    test<GroupedNumbersContext>('Typing on an opened single select containing groups highlights the value that matches the string', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.groupedNumbers = groupedNumbers;
-      await render<GroupedNumbersContext>(<template>
-      <PowerSelect @options={{self.groupedNumbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<GroupedNumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.groupedNumbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
@@ -1077,7 +1351,8 @@ module(
         .exists('The dropdown is still closed');
     });
 
-    test<CountryContext>('Typing on an opened single select highlights skips disabled options', async function (assert) {const self = this;
+    test<CountryContext>('Typing on an opened single select highlights skips disabled options', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
@@ -1087,11 +1362,19 @@ module(
       if (this.countries[0]) {
         this.countries[0].disabled = true;
       }
-      await render<CountryContext>(<template>
-      <PowerSelect @options={{self.countries}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @searchField="name" as |country|>
-        {{country.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @searchField="name"
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
@@ -1110,16 +1393,24 @@ module(
         .exists('The dropdown is still closed');
     });
 
-    test<GroupedNumbersWithDisabledContext>('Typing on an opened single select highlights skips disabled groups', async function (assert) {const self = this;
+    test<GroupedNumbersWithDisabledContext>('Typing on an opened single select highlights skips disabled groups', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
       this.numbers = groupedNumbersWithDisabled;
-      await render<GroupedNumbersWithDisabledContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<GroupedNumbersWithDisabledContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
@@ -1139,7 +1430,8 @@ module(
         .exists('The dropdown is still closed');
     });
 
-    test<NumbersContext>('BUGFIX: If pressing up/down arrow on a single select open the dropdown, the event is defaultPrevented', async function (assert) {const self = this;
+    test<NumbersContext>('BUGFIX: If pressing up/down arrow on a single select open the dropdown, the event is defaultPrevented', async function (assert) {
+      const self = this;
 
       assert.expect(2);
       const done = assert.async();
@@ -1153,11 +1445,18 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
       await clickTrigger();
@@ -1176,86 +1475,8 @@ module(
       }, 50);
     });
 
-    test<NumbersContext>('BUGFIX: If pressing up/down arrow on a single select DOES NOT the dropdown, the event is defaultPrevented', async function (assert) {const self = this;
-
-      assert.expect(2);
-      const done = assert.async();
-
-      this.numbers = numbers;
-      const events: Event[] = [];
-      this.onOpen = function (_, e) {
-        if (e?.type === 'keydown') {
-          events.push(e);
-        }
-        return false; // prevent the dropdown from opening
-      };
-      this.foo = () => {};
-
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{self.foo}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
-
-      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
-      await clickTrigger();
-      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 38);
-
-      setTimeout(function () {
-        assert.notOk(
-          events[0]?.defaultPrevented,
-          'The first event was default prevented',
-        );
-        assert.notOk(
-          events[1]?.defaultPrevented,
-          'The second event was default prevented',
-        );
-        done();
-      }, 50);
-    });
-
-    test<
-      NumbersContext<true>
-    >('BUGFIX: If pressing up/down arrow on a multiple select opens the select, the event is defaultPrevented', async function (assert) {const self = this;
-
-      assert.expect(2);
-      const done = assert.async();
-
-      this.numbers = numbers;
-      const events: Event[] = [];
-      this.onOpen = function (_, e) {
-        if (e?.type === 'keydown') {
-          events.push(e);
-        }
-      };
-      this.foo = () => {};
-
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @onChange={{self.foo}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
-
-      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
-      await clickTrigger();
-      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 38);
-
-      setTimeout(function () {
-        assert.ok(
-          events[0]?.defaultPrevented,
-          'The first event was default prevented',
-        );
-        assert.ok(
-          events[1]?.defaultPrevented,
-          'The second event was default prevented',
-        );
-        done();
-      }, 50);
-    });
-
-    test<
-      NumbersContext<true>
-    >('BUGFIX: If pressing up/down arrow on a multiple select DOES NOT open the select, the event is defaultPrevented', async function (assert) {const self = this;
+    test<NumbersContext>('BUGFIX: If pressing up/down arrow on a single select DOES NOT the dropdown, the event is defaultPrevented', async function (assert) {
+      const self = this;
 
       assert.expect(2);
       const done = assert.async();
@@ -1270,11 +1491,18 @@ module(
       };
       this.foo = () => {};
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @onChange={{self.foo}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
       await clickTrigger();
@@ -1295,16 +1523,120 @@ module(
 
     test<
       NumbersContext<true>
-    >('BUGFIX: when using ENTER to select an option in multiple select, the next ARROWDOWN should select the option after it', async function (assert) {const self = this;
+    >('BUGFIX: If pressing up/down arrow on a multiple select opens the select, the event is defaultPrevented', async function (assert) {
+      const self = this;
+
+      assert.expect(2);
+      const done = assert.async();
+
+      this.numbers = numbers;
+      const events: Event[] = [];
+      this.onOpen = function (_, e) {
+        if (e?.type === 'keydown') {
+          events.push(e);
+        }
+      };
+      this.foo = () => {};
+
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
+
+      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+      await clickTrigger();
+      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 38);
+
+      setTimeout(function () {
+        assert.ok(
+          events[0]?.defaultPrevented,
+          'The first event was default prevented',
+        );
+        assert.ok(
+          events[1]?.defaultPrevented,
+          'The second event was default prevented',
+        );
+        done();
+      }, 50);
+    });
+
+    test<
+      NumbersContext<true>
+    >('BUGFIX: If pressing up/down arrow on a multiple select DOES NOT open the select, the event is defaultPrevented', async function (assert) {
+      const self = this;
+
+      assert.expect(2);
+      const done = assert.async();
+
+      this.numbers = numbers;
+      const events: Event[] = [];
+      this.onOpen = function (_, e) {
+        if (e?.type === 'keydown') {
+          events.push(e);
+        }
+        return false; // prevent the dropdown from opening
+      };
+      this.foo = () => {};
+
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
+
+      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
+      await clickTrigger();
+      await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 38);
+
+      setTimeout(function () {
+        assert.notOk(
+          events[0]?.defaultPrevented,
+          'The first event was default prevented',
+        );
+        assert.notOk(
+          events[1]?.defaultPrevented,
+          'The second event was default prevented',
+        );
+        done();
+      }, 50);
+    });
+
+    test<
+      NumbersContext<true>
+    >('BUGFIX: when using ENTER to select an option in multiple select, the next ARROWDOWN should select the option after it', async function (assert) {
+      const self = this;
 
       this.numbers = numbers;
       this.selected = [];
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @closeOnSelect={{false}} @onChange={{fn (mut self.selected)}} @selected={{self.selected}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @closeOnSelect={{false}}
+            @onChange={{fn (mut self.selected)}}
+            @selected={{self.selected}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await focus('.ember-power-select-multiple-trigger');
       await triggerKeyEvent(
@@ -1335,7 +1667,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('BUGFIX: when pressing enter multiple times on the same selected element in a multiple select', async function (assert) {const self = this;
+    >('BUGFIX: when pressing enter multiple times on the same selected element in a multiple select', async function (assert) {
+      const self = this;
 
       this.numbers = numbers;
       this.selected = [];
@@ -1343,11 +1676,19 @@ module(
         this.set('selected', selected);
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @closeOnSelect={{false}} @onChange={{self.onChange}} @selected={{self.selected}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @closeOnSelect={{false}}
+            @onChange={{self.onChange}}
+            @selected={{self.selected}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await focus('.ember-power-select-multiple-trigger');
       await triggerKeyEvent(

@@ -1,14 +1,17 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render, click, triggerKeyEvent, focus } from '@ember/test-helpers';
-import { clickTrigger, typeInSearch } from 'ember-power-select/test-support/helpers';
+import {
+  clickTrigger,
+  typeInSearch,
+} from 'ember-power-select/test-support/helpers';
 import { names, numbers } from 'test-app/utils/constants';
 import { tracked } from '@glimmer/tracking';
 import type { TestContext } from '@ember/test-helpers';
 import type { Select, Selected } from 'ember-power-select/types';
-import PowerSelect from "ember-power-select/components/power-select";
-import { fn } from "@ember/helper";
-import PowerSelectMultiple from "ember-power-select/components/power-select-multiple";
+import PowerSelect from 'ember-power-select/components/power-select';
+import { fn } from '@ember/helper';
+import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -173,7 +176,8 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test<NumbersContext>('The search action of single selects action receives the search term and the public API', async function (assert) {const self = this;
+    test<NumbersContext>('The search action of single selects action receives the search term and the public API', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -189,11 +193,20 @@ module(
         return numbers;
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @search={{self.handleSearch}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @search={{self.handleSearch}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('el');
@@ -201,7 +214,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('The search action of multiple selects action receives the search term and the public API', async function (assert) {const self = this;
+    >('The search action of multiple selects action receives the search term and the public API', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -217,17 +231,27 @@ module(
         return numbers;
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @search={{self.handleSearch}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @search={{self.handleSearch}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('el');
     });
 
-    test<NumbersContext>('The onchange of single selects action receives the selection and the public API', async function (assert) {const self = this;
+    test<NumbersContext>('The onchange of single selects action receives the selection and the public API', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -239,11 +263,18 @@ module(
         return numbers;
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.handleChange}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.handleChange}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await click('.ember-power-select-option');
@@ -251,7 +282,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('The onchange of multiple selects action receives the selection and the public API', async function (assert) {const self = this;
+    >('The onchange of multiple selects action receives the selection and the public API', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -265,17 +297,25 @@ module(
         assertPublicAPIShape(assert, select);
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{self.handleChange}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{self.handleChange}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       await click('.ember-power-select-option');
     });
 
-    test<NumbersContext>('The onKeydown of single selects action receives the public API and the keydown event when fired on the searchbox', async function (assert) {const self = this;
+    test<NumbersContext>('The onKeydown of single selects action receives the public API and the keydown event when fired on the searchbox', async function (assert) {
+      const self = this;
 
       assert.expect(44);
 
@@ -285,18 +325,28 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onKeydown={{self.onKeydown}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onKeydown={{self.onKeydown}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 65);
       await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 13);
     });
 
-    test<NumbersContext>('The `@onKeydown` can be used to easily allow to select on tab', async function (assert) {const self = this;
+    test<NumbersContext>('The `@onKeydown` can be used to easily allow to select on tab', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -308,11 +358,19 @@ module(
         }
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onKeydown={{self.onKeydown}} @onChange={{fn (mut self.selected)}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onKeydown={{self.onKeydown}}
+            @onChange={{fn (mut self.selected)}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 40);
@@ -328,7 +386,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('The onKeydown of multiple selects action receives the public API and the keydown event', async function (assert) {const self = this;
+    >('The onKeydown of multiple selects action receives the public API and the keydown event', async function (assert) {
+      const self = this;
 
       assert.expect(44);
 
@@ -338,11 +397,20 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onKeydown={{self.onKeydown}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onKeydown={{self.onKeydown}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       void triggerKeyEvent(
@@ -357,7 +425,8 @@ module(
       );
     });
 
-    test<NumbersContext>('returning false from the `@onKeydown` action prevents the default behaviour in single selects', async function (assert) {const self = this;
+    test<NumbersContext>('returning false from the `@onKeydown` action prevents the default behaviour in single selects', async function (assert) {
+      const self = this;
 
       assert.expect(48);
 
@@ -369,11 +438,19 @@ module(
         return false;
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @onKeydown={{self.onKeydown}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @onKeydown={{self.onKeydown}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await triggerKeyEvent('.ember-power-select-trigger', 'keydown', 13);
       assert
@@ -387,7 +464,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('returning false from the `@onKeydown` action prevents the default behaviour in multiple selects', async function (assert) {const self = this;
+    >('returning false from the `@onKeydown` action prevents the default behaviour in multiple selects', async function (assert) {
+      const self = this;
 
       assert.expect(24);
 
@@ -399,11 +477,20 @@ module(
         return false;
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @onKeydown={{self.onKeydown}} @searchEnabled={{true}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @onKeydown={{self.onKeydown}}
+            @searchEnabled={{true}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await triggerKeyEvent(
         '.ember-power-select-trigger-multiple-input',
@@ -415,7 +502,8 @@ module(
         .doesNotExist('Dropdown is still closed');
     });
 
-    test<NumbersContext>('The onFocus of single selects action receives the public API and the focus event', async function (assert) {const self = this;
+    test<NumbersContext>('The onFocus of single selects action receives the public API and the focus event', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -425,11 +513,19 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onFocus={{self.onFocus}} @onChange={{fn (mut self.selected)}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onFocus={{self.onFocus}}
+            @onChange={{fn (mut self.selected)}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
     });
@@ -437,7 +533,8 @@ module(
     // Weird failure in Ember 4
     skip<
       NumbersContext<true>
-    >('The onFocus of multiple selects action receives the public API and the focus event', async function (assert) {const self = this;
+    >('The onFocus of multiple selects action receives the public API and the focus event', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -447,11 +544,19 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onFocus={{self.onFocus}} @onChange={{fn (mut self.selected)}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onFocus={{self.onFocus}}
+            @onChange={{fn (mut self.selected)}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
     });
@@ -459,7 +564,8 @@ module(
     // Weird failure in Ember 4
     skip<
       NumbersContext<true>
-    >('The onFocus of multiple selects also gets called when the thing getting the focus is the searbox', async function (assert) {const self = this;
+    >('The onFocus of multiple selects also gets called when the thing getting the focus is the searbox', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -469,17 +575,27 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext<true>>(<template>
-      <input type="text" autofocus>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onFocus={{self.onFocus}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <input type="text" autofocus />
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onFocus={{self.onFocus}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger-multiple-input');
     });
 
-    test<NumbersContext>('The onBlur of single selects action receives the public API and the event', async function (assert) {const self = this;
+    test<NumbersContext>('The onBlur of single selects action receives the public API and the event', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -489,12 +605,20 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onBlur={{self.onBlur}} @onChange={{fn (mut self.selected)}} as |number|>
-        {{number}}
-      </PowerSelect>
-      <input type="text" id="other-element" />
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onBlur={{self.onBlur}}
+            @onChange={{fn (mut self.selected)}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+          <input type="text" id="other-element" />
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger');
       await focus('#other-element');
@@ -502,7 +626,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('The onBlur of multiple selects action receives the public API and the focus event', async function (assert) {const self = this;
+    >('The onBlur of multiple selects action receives the public API and the focus event', async function (assert) {
+      const self = this;
 
       assert.expect(22);
 
@@ -512,18 +637,28 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onBlur={{self.onBlur}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-      <input type="text" id="other-element" />
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onBlur={{self.onBlur}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+          <input type="text" id="other-element" />
+        </template>,
+      );
 
       await focus('.ember-power-select-trigger-multiple-input');
       await focus('#other-element');
     });
 
-    test<NumbersContext>('The onBlur of multiple selects also gets called when the thing getting the focus is the searbox', async function (assert) {const self = this;
+    test<NumbersContext>('The onBlur of multiple selects also gets called when the thing getting the focus is the searbox', async function (assert) {
+      const self = this;
 
       this.numbers = numbers;
       this.onBlur = (select, e) => {
@@ -531,18 +666,27 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onBlur={{self.onBlur}} @onChange={{fn (mut self.selected)}} as |number|>
-        {{number}}
-      </PowerSelect>
-      <input type="text" id="other-element" />
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onBlur={{self.onBlur}}
+            @onChange={{fn (mut self.selected)}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+          <input type="text" id="other-element" />
+        </template>,
+      );
 
       await clickTrigger();
       await focus('#other-element');
     });
 
-    test<NumbersContext>('the `@onOpen` action is invoked just before the dropdown opens', async function (assert) {const self = this;
+    test<NumbersContext>('the `@onOpen` action is invoked just before the dropdown opens', async function (assert) {
+      const self = this;
 
       assert.expect(24);
 
@@ -553,17 +697,25 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{fn (mut self.selected)}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{fn (mut self.selected)}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
     });
 
-    test<NumbersContext>('returning false from the `@onOpen` action prevents the single select from opening', async function (assert) {const self = this;
+    test<NumbersContext>('returning false from the `@onOpen` action prevents the single select from opening', async function (assert) {
+      const self = this;
 
       assert.expect(24);
 
@@ -575,11 +727,18 @@ module(
         return false;
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{fn (mut self.selected)}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{fn (mut self.selected)}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -589,7 +748,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('returning false from the `@onOpen` action prevents the multiple select from opening', async function (assert) {const self = this;
+    >('returning false from the `@onOpen` action prevents the multiple select from opening', async function (assert) {
+      const self = this;
 
       assert.expect(24);
 
@@ -601,11 +761,18 @@ module(
         return false;
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @onChange={{fn (mut self.selected)}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @onChange={{fn (mut self.selected)}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -613,7 +780,8 @@ module(
         .doesNotExist("Dropdown didn't open");
     });
 
-    test<NumbersContext>('the `@onClose` action is invoked just before the dropdown closes', async function (assert) {const self = this;
+    test<NumbersContext>('the `@onClose` action is invoked just before the dropdown closes', async function (assert) {
+      const self = this;
 
       assert.expect(24);
 
@@ -624,11 +792,18 @@ module(
         assert.ok(e instanceof window.Event, 'The second argument is an event');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{fn (mut self.selected)}} @onClose={{self.onClose}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{fn (mut self.selected)}}
+            @onClose={{self.onClose}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await clickTrigger();
@@ -637,7 +812,8 @@ module(
         .doesNotExist('Dropdown is closed');
     });
 
-    test<NumbersContext>('returning false from the `@onClose` action prevents the single select from closing', async function (assert) {const self = this;
+    test<NumbersContext>('returning false from the `@onClose` action prevents the single select from closing', async function (assert) {
+      const self = this;
 
       assert.expect(25);
 
@@ -649,11 +825,18 @@ module(
         return false;
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @onChange={{fn (mut self.selected)}} @onClose={{self.onClose}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{fn (mut self.selected)}}
+            @onClose={{self.onClose}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is open');
@@ -665,7 +848,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('returning false from the `@onClose` action prevents the multiple select from closing', async function (assert) {const self = this;
+    >('returning false from the `@onClose` action prevents the multiple select from closing', async function (assert) {
+      const self = this;
 
       assert.expect(25);
 
@@ -677,11 +861,18 @@ module(
         return false;
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @onChange={{fn (mut self.selected)}} @onClose={{self.onClose}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @onChange={{fn (mut self.selected)}}
+            @onClose={{self.onClose}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert.dom('.ember-power-select-dropdown').exists('Dropdown is open');
@@ -691,7 +882,8 @@ module(
         .exists("Dropdown didn't close");
     });
 
-    test<NumbersContext>('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', async function (assert) {const self = this;
+    test<NumbersContext>('the `oninput` action is invoked when the user modifies the text of the search input on single selects, and the search happens', async function (assert) {
+      const self = this;
 
       assert.expect(28);
 
@@ -711,11 +903,20 @@ module(
         assert.ok(e instanceof window.Event, 'The third argument is an event');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onInput={{self.onInput}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onInput={{self.onInput}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('tw');
@@ -729,7 +930,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', async function (assert) {const self = this;
+    >('the `oninput` action is invoked when the user modifies the text of the search input on multiple selects, and the search happens', async function (assert) {
+      const self = this;
 
       assert.expect(28);
 
@@ -749,11 +951,20 @@ module(
         assert.ok(e instanceof window.Event, 'The third argument is an event');
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onInput={{self.onInput}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onInput={{self.onInput}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('tw');
@@ -765,7 +976,8 @@ module(
       assert.dom('.ember-power-select-option:nth-child(3)').hasText('twenty');
     });
 
-    test<NumbersContext>('if the `oninput` action of single selects returns false the search is cancelled', async function (assert) {const self = this;
+    test<NumbersContext>('if the `oninput` action of single selects returns false the search is cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -774,11 +986,20 @@ module(
         return false;
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onInput={{self.onInput}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onInput={{self.onInput}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('tw');
@@ -789,7 +1010,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('if `oninput` action of multiple selects returns false the search is cancelled', async function (assert) {const self = this;
+    >('if `oninput` action of multiple selects returns false the search is cancelled', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -798,11 +1020,20 @@ module(
         return false;
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onInput={{self.onInput}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onInput={{self.onInput}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('tw');
@@ -811,18 +1042,26 @@ module(
         .exists({ count: 20 }, 'There is the same options than before');
     });
 
-    test<NumbersContext>('the `highlight` action of the public api passed to the public actions works as expected', async function (assert) {const self = this;
+    test<NumbersContext>('the `highlight` action of the public api passed to the public actions works as expected', async function (assert) {
+      const self = this;
 
       assert.expect(2);
       this.options = ['foo', 'bar', 'baz'];
       this.onOpen = (select) => {
         select.actions.highlight('baz');
       };
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.options}} @onChange={{fn (mut self.selected)}} @onOpen={{self.onOpen}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.options}}
+            @onChange={{fn (mut self.selected)}}
+            @onOpen={{self.onOpen}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </template>,
+      );
       await clickTrigger();
       assert
         .dom('.ember-power-select-option')
@@ -832,7 +1071,8 @@ module(
         .hasText('baz', 'The third option is highlighted');
     });
 
-    test<NumbersContext>('The programmer can use the received public API to perform searches in single selects', async function (assert) {const self = this;
+    test<NumbersContext>('The programmer can use the received public API to perform searches in single selects', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -842,11 +1082,20 @@ module(
         select.actions.search('hello');
       };
 
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onOpen={{self.onOpen}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onOpen={{self.onOpen}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -856,7 +1105,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('The programmer can use the received public API to perform searches in mutiple selects', async function (assert) {const self = this;
+    >('The programmer can use the received public API to perform searches in mutiple selects', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -866,11 +1116,20 @@ module(
         select.actions.search('hello');
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onOpen={{self.onOpen}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onOpen={{self.onOpen}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -880,7 +1139,8 @@ module(
 
     test<
       NumbersContext<true>
-    >('The search action of multiple selects has the searchText set to the up-to-date value', async function (assert) {const self = this;
+    >('The search action of multiple selects has the searchText set to the up-to-date value', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -900,17 +1160,27 @@ module(
         return numbers;
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @search={{self.handleSearch}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @search={{self.handleSearch}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
       await typeInSearch('el');
     });
 
-    test<NumbersContext>('The single component invokes the `registerAPI` action with the public API object', async function (assert) {const self = this;
+    test<NumbersContext>('The single component invokes the `registerAPI` action with the public API object', async function (assert) {
+      const self = this;
 
       this.numbers = numbers;
       this.registerAPI = function (select) {
@@ -918,16 +1188,25 @@ module(
           assertPublicAPIShape(assert, select);
         }
       };
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @registerAPI={{self.registerAPI}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @registerAPI={{self.registerAPI}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
     });
 
     test<
       NumbersContext<true>
-    >('The multiple component invokes the `registerAPI` action with the public API object', async function (assert) {const self = this;
+    >('The multiple component invokes the `registerAPI` action with the public API object', async function (assert) {
+      const self = this;
 
       this.numbers = numbers;
       this.registerAPI = function (select) {
@@ -935,14 +1214,23 @@ module(
           assertPublicAPIShape(assert, select);
         }
       };
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @registerAPI={{self.registerAPI}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @registerAPI={{self.registerAPI}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
     });
 
-    test<NumbersContext>('The given `scrollTo` function is invoked when a single select wants to scroll to an element', async function (assert) {const self = this;
+    test<NumbersContext>('The given `scrollTo` function is invoked when a single select wants to scroll to an element', async function (assert) {
+      const self = this;
 
       assert.expect(22);
       this.numbers = numbers;
@@ -957,18 +1245,28 @@ module(
         );
         assertPublicAPIShape(assert, select);
       };
-      await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @registerAPI={{self.registerAPI}} @scrollTo={{self.scrollTo}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<NumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @registerAPI={{self.registerAPI}}
+            @scrollTo={{self.scrollTo}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       this.selectAPI.actions.scrollTo('three');
     });
 
     test<
       NumbersContext<true>
-    >('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function (assert) {const self = this;
+    >('The given `scrollTo` function is invoked when a multiple select wants to scroll to an element', async function (assert) {
+      const self = this;
 
       assert.expect(22);
       this.numbers = numbers;
@@ -983,18 +1281,28 @@ module(
         );
         assertPublicAPIShape(assert, select);
       };
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} @registerAPI={{self.registerAPI}} @scrollTo={{self.scrollTo}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            @registerAPI={{self.registerAPI}}
+            @scrollTo={{self.scrollTo}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       this.selectAPI.actions.scrollTo('three');
     });
 
     test<
       NumbersContext<true>
-    >('The programmer can use the received public API to highlight an option', async function (assert) {const self = this;
+    >('The programmer can use the received public API to highlight an option', async function (assert) {
+      const self = this;
 
       this.numbers = numbers;
       const highlightedOption = numbers[1];
@@ -1002,11 +1310,20 @@ module(
         select.actions.highlight(highlightedOption);
       };
 
-      await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onOpen={{self.onOpen}} @onChange={{fn (mut self.selected)}} @searchEnabled={{true}} as |number|>
-        {{number}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<NumbersContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onOpen={{self.onOpen}}
+            @onChange={{fn (mut self.selected)}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
 
@@ -1018,7 +1335,8 @@ module(
         );
     });
 
-    test<UserContext>('if the options of a single select implement `isEqual`, it is possible to highlight it programmatically', async function (assert) {const self = this;
+    test<UserContext>('if the options of a single select implement `isEqual`, it is possible to highlight it programmatically', async function (assert) {
+      const self = this;
 
       const users = names.map((name) => new User(name));
       const highlightedOption = users[1];
@@ -1028,11 +1346,19 @@ module(
         select.actions.highlight(new User(highlightedOption?.name ?? ''));
       };
 
-      await render<UserContext>(<template>
-      <PowerSelect @options={{self.users}} @selected={{self.selected}} @onOpen={{self.onOpen}} @onChange={{fn (mut self.selected)}} as |user|>
-        {{user.name}}
-      </PowerSelect>
-    </template>);
+      await render<UserContext>(
+        <template>
+          <PowerSelect
+            @options={{self.users}}
+            @selected={{self.selected}}
+            @onOpen={{self.onOpen}}
+            @onChange={{fn (mut self.selected)}}
+            as |user|
+          >
+            {{user.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
 

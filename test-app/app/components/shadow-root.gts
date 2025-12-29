@@ -1,23 +1,26 @@
 import Component from '@glimmer/component';
 import { getOwner } from '@ember/application';
+import not from 'ember-truth-helpers/helpers/not';
 
 // @ts-expect-error Public property 'isFastBoot' of exported class
-import not from "ember-truth-helpers/helpers/not";
 const isFastBoot = typeof FastBoot !== 'undefined';
 
 export default class ShadowRootComponent extends Component<{
   Element: HTMLDivElement;
   Blocks: { default: [] };
-}> {<template>{{#if (not this.shadowDom)}}
-  {{yield}}
-{{else if this.shadowRootElement}}
-  {{#in-element this.shadowRootElement}}
-    {{#each this.getStyles as |styleHref|}}
-      <link rel="stylesheet" type="text/css" href={{styleHref}} />
-    {{/each}}
-    {{yield}}
-  {{/in-element}}
-{{/if}}</template>
+}> {
+  <template>
+    {{#if (not this.shadowDom)}}
+      {{yield}}
+    {{else if this.shadowRootElement}}
+      {{#in-element this.shadowRootElement}}
+        {{#each this.getStyles as |styleHref|}}
+          <link rel="stylesheet" type="text/css" href={{styleHref}} />
+        {{/each}}
+        {{yield}}
+      {{/in-element}}
+    {{/if}}
+  </template>
   get shadowDom() {
     if (this.isFastBoot) {
       return false;

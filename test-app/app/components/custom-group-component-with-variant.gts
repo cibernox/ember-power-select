@@ -11,9 +11,15 @@ export default class CustomGroupComponentWithVariant<
     TExtra,
     IsMultiple
   >
-> {<template><div>
-  <span data-test-id="group-component-variant">{{@group.variant}}</span>
-  -
-  <span data-test-id="group-component-group-name">{{@group.groupName}}</span>
-</div>
-<div class="custom-component">{{yield}}</div></template>}
+> {
+  <template>
+    <div>
+      <span data-test-id="group-component-variant">{{@group.variant}}</span>
+      -
+      <span
+        data-test-id="group-component-group-name"
+      >{{@group.groupName}}</span>
+    </div>
+    <div class="custom-component">{{yield}}</div>
+  </template>
+}

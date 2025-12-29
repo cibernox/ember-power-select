@@ -1,7 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { countries, groupedNumbers, type Country, type GroupedNumber, type SelectedCountryExtra } from 'test-app/utils/constants';
+import {
+  countries,
+  groupedNumbers,
+  type Country,
+  type GroupedNumber,
+  type SelectedCountryExtra,
+} from 'test-app/utils/constants';
 import { clickTrigger } from 'ember-power-select/test-support/helpers';
 import type { TestContext } from '@ember/test-helpers';
 import type { Selected } from 'ember-power-select/types';
@@ -21,9 +27,9 @@ import CustomNoMatchesMessage from 'test-app/components/custom-no-matches-messag
 import CustomPlaceholder from 'test-app/components/custom-placeholder';
 import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
 import CustomGroupComponent from 'test-app/components/custom-group-component';
-import PowerSelect from "ember-power-select/components/power-select";
-import { fn, hash } from "@ember/helper";
-import PowerSelectMultiple from "ember-power-select/components/power-select-multiple";
+import PowerSelect from 'ember-power-select/components/power-select';
+import { fn, hash } from '@ember/helper';
+import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
 
 interface CountryContext<
   IsMultiple extends boolean = false,
@@ -71,7 +77,8 @@ module(
   function (hooks) {
     setupRenderingTest(hooks);
 
-    test<CountryContext>('overwriting `power-select/trigger` works', async function (assert) {const self = this;
+    test<CountryContext>('overwriting `power-select/trigger` works', async function (assert) {
+      const self = this;
 
       assert.expect(3);
 
@@ -80,11 +87,19 @@ module(
 
       this.triggerComponent = SelectedCountry;
 
-      await render<CountryContext>(<template>
-      <PowerSelect @options={{self.countries}} @selected={{self.country}} @triggerComponent={{self.triggerComponent}} @onChange={{fn (mut self.country)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @selected={{self.country}}
+            @triggerComponent={{self.triggerComponent}}
+            @onChange={{fn (mut self.country)}}
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-status-icon')
@@ -97,7 +112,8 @@ module(
         .hasText('Spain', 'With the country name as the text.');
     });
 
-    test<CountryContext>('overwriting `power-select/options` works', async function (assert) {const self = this;
+    test<CountryContext>('overwriting `power-select/options` works', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -106,11 +122,19 @@ module(
 
       this.optionsComponent = ListOfCountries;
 
-      await render<CountryContext>(<template>
-      <PowerSelect @options={{self.countries}} @selected={{self.country}} @optionsComponent={{self.optionsComponent}} @onChange={{fn (mut self.country)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @selected={{self.country}}
+            @optionsComponent={{self.optionsComponent}}
+            @onChange={{fn (mut self.country)}}
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
 
@@ -122,7 +146,8 @@ module(
         .includesText('3. Russia', 'The component has access to the options');
     });
 
-    test<CountryContext>('overwriting `power-select/before-options` works', async function (assert) {const self = this;
+    test<CountryContext>('overwriting `power-select/before-options` works', async function (assert) {
+      const self = this;
 
       assert.expect(4);
 
@@ -132,11 +157,21 @@ module(
       this.beforeOptionsComponent = CustomBeforeOptions;
       this.placeholderComponent = PowerSelectPlaceholder;
 
-      await render<CountryContext>(<template>
-      <PowerSelect @options={{self.countries}} @beforeOptionsComponent={{self.beforeOptionsComponent}} @selected={{self.country}} @placeholder="inception" @placeholderComponent={{self.placeholderComponent}} @onChange={{fn (mut self.country)}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @beforeOptionsComponent={{self.beforeOptionsComponent}}
+            @selected={{self.country}}
+            @placeholder="inception"
+            @placeholderComponent={{self.placeholderComponent}}
+            @onChange={{fn (mut self.country)}}
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
 
@@ -156,7 +191,8 @@ module(
         .doesNotExist('The search input is not visible');
     });
 
-    test<CountryContext>('overwriting `power-select/search-message` works', async function (assert) {const self = this;
+    test<CountryContext>('overwriting `power-select/search-message` works', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -166,11 +202,18 @@ module(
 
       this.searchMessageComponent = CustomSearchMessage;
 
-      await render<CountryContext>(<template>
-      <PowerSelect @search={{self.searchFn}} @searchMessageComponent={{self.searchMessageComponent}} @onChange={{self.foo}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @search={{self.searchFn}}
+            @searchMessageComponent={{self.searchMessageComponent}}
+            @onChange={{self.foo}}
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -180,7 +223,8 @@ module(
         );
     });
 
-    test<CountryContext>('overwriting `power-select/no-matches-message` works', async function (assert) {const self = this;
+    test<CountryContext>('overwriting `power-select/no-matches-message` works', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -190,11 +234,19 @@ module(
 
       this.noMatchesMessageComponent = CustomNoMatchesMessage;
 
-      await render<CountryContext>(<template>
-      <PowerSelect @options={{self.countries}} @noMatchesMessageComponent={{self.noMatchesMessageComponent}} @noMatchesMessage="Nope" @onChange={{self.foo}} as |option|>
-        {{option.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @noMatchesMessageComponent={{self.noMatchesMessageComponent}}
+            @noMatchesMessage="Nope"
+            @onChange={{self.foo}}
+            as |option|
+          >
+            {{option.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
 
@@ -206,7 +258,8 @@ module(
       assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
     });
 
-    test<CountryContext>('overwriting `power-select/placeholder` works', async function (assert) {const self = this;
+    test<CountryContext>('overwriting `power-select/placeholder` works', async function (assert) {
+      const self = this;
 
       assert.expect(2);
 
@@ -214,11 +267,19 @@ module(
       this.foo = () => {};
       this.placeholderComponent = CustomPlaceholder;
 
-      await render<CountryContext>(<template>
-      <PowerSelect @options={{self.countries}} @placeholder="test" @placeholderComponent={{self.placeholderComponent}} @onChange={{self.foo}} as |country|>
-        {{country.name}}
-      </PowerSelect>
-    </template>);
+      await render<CountryContext>(
+        <template>
+          <PowerSelect
+            @options={{self.countries}}
+            @placeholder="test"
+            @placeholderComponent={{self.placeholderComponent}}
+            @onChange={{self.foo}}
+            as |country|
+          >
+            {{country.name}}
+          </PowerSelect>
+        </template>,
+      );
 
       assert
         .dom('.ember-power-select-placeholder')
@@ -231,7 +292,8 @@ module(
         );
     });
 
-    test<GroupedNumbersContext>('overwriting `power-select/power-select-group` works', async function (assert) {const self = this;
+    test<GroupedNumbersContext>('overwriting `power-select/power-select-group` works', async function (assert) {
+      const self = this;
 
       this.groupedNumbers = groupedNumbers;
       const numberOfGroups = 5; // number of groups in groupedNumber;
@@ -240,11 +302,18 @@ module(
 
       this.foo = () => {};
 
-      await render<GroupedNumbersContext>(<template>
-      <PowerSelect @options={{self.groupedNumbers}} @groupComponent={{self.groupComponent}} @onChange={{self.foo}} as |number|>
-        {{number}}
-      </PowerSelect>
-    </template>);
+      await render<GroupedNumbersContext>(
+        <template>
+          <PowerSelect
+            @options={{self.groupedNumbers}}
+            @groupComponent={{self.groupComponent}}
+            @onChange={{self.foo}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </template>,
+      );
 
       await clickTrigger();
       assert
@@ -254,7 +323,8 @@ module(
 
     test<
       CountryContext<true>
-    >('overwriting `power-select-multiple/trigger` works', async function (assert) {const self = this;
+    >('overwriting `power-select-multiple/trigger` works', async function (assert) {
+      const self = this;
 
       assert.expect(1);
 
@@ -265,11 +335,20 @@ module(
 
       this.triggerComponent = SelectedCountry;
 
-      await render<CountryContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.countries}} @selected={{self.country}} @triggerComponent={{self.triggerComponent}} @onChange={{fn (mut self.country)}} @extra={{hash coolFlagIcon=true}} as |country|>
-        {{country.code}}
-      </PowerSelectMultiple>
-    </template>);
+      await render<CountryContext<true>>(
+        <template>
+          <PowerSelectMultiple
+            @options={{self.countries}}
+            @selected={{self.country}}
+            @triggerComponent={{self.triggerComponent}}
+            @onChange={{fn (mut self.country)}}
+            @extra={{hash coolFlagIcon=true}}
+            as |country|
+          >
+            {{country.code}}
+          </PowerSelectMultiple>
+        </template>,
+      );
 
       await clickTrigger();
 

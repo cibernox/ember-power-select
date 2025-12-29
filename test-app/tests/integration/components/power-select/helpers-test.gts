@@ -1,13 +1,16 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'test-app/tests/helpers';
 import { render } from '@ember/test-helpers';
-import { selectChoose, getDropdownItems } from 'ember-power-select/test-support';
+import {
+  selectChoose,
+  getDropdownItems,
+} from 'ember-power-select/test-support';
 import { numbers } from 'test-app/utils/constants';
 import type { Selected } from 'ember-power-select/types';
 import type { TestContext } from '@ember/test-helpers';
-import PowerSelect from "ember-power-select/components/power-select";
-import { fn } from "@ember/helper";
-import PowerSelectMultiple from "ember-power-select/components/power-select-multiple";
+import PowerSelect from 'ember-power-select/components/power-select';
+import { fn } from '@ember/helper';
+import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -19,17 +22,25 @@ interface NumbersContext<
 module('Integration | Helpers | selectChoose', function (hooks) {
   setupRenderingTest(hooks);
 
-  test<NumbersContext>('selectChoose selects the given value on single selects', async function (assert) {const self = this;
+  test<NumbersContext>('selectChoose selects the given value on single selects', async function (assert) {
+    const self = this;
 
     assert.expect(2);
 
     this.numbers = numbers;
 
-    await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+    await render<NumbersContext>(
+      <template>
+        <PowerSelect
+          @options={{self.numbers}}
+          @selected={{self.selected}}
+          @onChange={{fn (mut self.selected)}}
+          as |option|
+        >
+          {{option}}
+        </PowerSelect>
+      </template>,
+    );
 
     assert
       .dom('.ember-power-select-trigger')
@@ -42,16 +53,24 @@ module('Integration | Helpers | selectChoose', function (hooks) {
 
   test<
     NumbersContext<true>
-  >('selectChoose selects the given value on multiple selects', async function (assert) {const self = this;
+  >('selectChoose selects the given value on multiple selects', async function (assert) {
+    const self = this;
 
     assert.expect(3);
 
     this.numbers = numbers;
-    await render<NumbersContext<true>>(<template>
-      <PowerSelectMultiple @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelectMultiple>
-    </template>);
+    await render<NumbersContext<true>>(
+      <template>
+        <PowerSelectMultiple
+          @options={{self.numbers}}
+          @selected={{self.selected}}
+          @onChange={{fn (mut self.selected)}}
+          as |option|
+        >
+          {{option}}
+        </PowerSelectMultiple>
+      </template>,
+    );
 
     assert
       .dom('.ember-power-select-multiple-option')
@@ -70,16 +89,24 @@ module('Integration | Helpers | selectChoose', function (hooks) {
 module('Integration | Helpers | getDropdownItems', function (hooks) {
   setupRenderingTest(hooks);
 
-  test<NumbersContext>('getDropdownItems should give the list of items in the select dropdown', async function (assert) {const self = this;
+  test<NumbersContext>('getDropdownItems should give the list of items in the select dropdown', async function (assert) {
+    const self = this;
 
     assert.expect(1);
 
     this.numbers = numbers;
-    await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+    await render<NumbersContext>(
+      <template>
+        <PowerSelect
+          @options={{self.numbers}}
+          @selected={{self.selected}}
+          @onChange={{fn (mut self.selected)}}
+          as |option|
+        >
+          {{option}}
+        </PowerSelect>
+      </template>,
+    );
 
     const options = await getDropdownItems('.ember-power-select-trigger');
     assert.deepEqual(
@@ -89,16 +116,24 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
     );
   });
 
-  test<NumbersContext>('getDropdownItems should throws an error when selector is not matched', async function (assert) {const self = this;
+  test<NumbersContext>('getDropdownItems should throws an error when selector is not matched', async function (assert) {
+    const self = this;
 
     assert.expect(1);
 
     this.numbers = numbers;
-    await render<NumbersContext>(<template>
-      <PowerSelect @options={{self.numbers}} @selected={{self.selected}} @onChange={{fn (mut self.selected)}} as |option|>
-        {{option}}
-      </PowerSelect>
-    </template>);
+    await render<NumbersContext>(
+      <template>
+        <PowerSelect
+          @options={{self.numbers}}
+          @selected={{self.selected}}
+          @onChange={{fn (mut self.selected)}}
+          as |option|
+        >
+          {{option}}
+        </PowerSelect>
+      </template>,
+    );
 
     try {
       await getDropdownItems('.fake-ember-power-select-trigger');

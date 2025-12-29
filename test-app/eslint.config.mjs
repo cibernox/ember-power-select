@@ -105,6 +105,7 @@ export default ts.config(
       'qunit/no-commented-tests': 'off',
       'qunit/no-identical-names': 'off',
       'qunit/require-expect': 'off',
+      '@typescript-eslint/no-this-alias': 'off',
     },
   },
   /**
