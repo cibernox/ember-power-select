@@ -1,5 +1,4 @@
 import PowerSelectPlaceholder from 'ember-power-select/components/power-select/placeholder';
-import { ensureSafeComponent } from '@embroider/util';
 
 export default class CustomMultipleSearchPlaceholder<
   T,
@@ -17,14 +16,9 @@ export default class CustomMultipleSearchPlaceholder<
       </div>
     {{/if}}
 
-    {{#let
-      (component (ensureSafeComponent @inputComponent this))
-      as |ComponentName|
-    }}
-      {{! @glint-nocheck: Argument of type 'unknown' is not assignable to parameter of type 'Element'. }}
-      <ComponentName
-        style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}}
-      />
-    {{/let}}
+    <@inputComponent
+      @select={{@select}}
+      style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}}
+    />
   </template>
 }
