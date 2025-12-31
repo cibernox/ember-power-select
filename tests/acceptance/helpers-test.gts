@@ -6,7 +6,7 @@ import {
   selectSearch,
   removeMultipleOption,
   clearSelected,
-} from 'ember-power-select/test-support';
+} from '#src/test-support.ts';
 import HelpersTesting from '../../demo-app/components/helpers-testing';
 import HelpersTestingSinglePowerSelect from '../../demo-app/components/helpers-testing-single-power-select';
 

@@ -8,44 +8,44 @@ import {
   type GroupedNumber,
   type SelectedCountryExtra,
 } from '../../../../demo-app/utils/constants';
-import { clickTrigger } from 'ember-power-select/test-support/helpers';
+import { clickTrigger } from '#src/test-support/helpers.ts';
 import { isPresent } from '@ember/utils';
 import type {
   PowerSelectAfterOptionsSignature,
   PowerSelectSelectedItemSignature,
   Select,
   Selected,
-} from 'ember-power-select/types';
+} from '#src/types.ts';
 import SelectedCountry from '../../../../demo-app/components/selected-country';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';
+import type { PowerSelectTriggerSignature } from '#src/components/power-select/trigger.gts';
 import CustomTrigger from '../../../../demo-app/components/custom-trigger-component';
 import SelectedItemCountry from '../../../../demo-app/components/selected-item-country';
 import ListOfCountries from '../../../../demo-app/components/list-of-countries';
-import type { PowerSelectOptionsSignature } from 'ember-power-select/components/power-select/options';
+import type { PowerSelectOptionsSignature } from '#src/components/power-select/options.gts';
 import CustomBeforeOptions from '../../../../demo-app/components/custom-before-options';
-import type { PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
+import type { PowerSelectBeforeOptionsSignature } from '#src/components/power-select/before-options.gts';
 import PowerSelectPlaceholder, {
   type PowerSelectPlaceholderSignature,
-} from 'ember-power-select/components/power-select/placeholder';
+} from '#src/components/power-select/placeholder.gts';
 import CustomAfterOptions from '../../../../demo-app/components/custom-after-options';
 import CustomAfterOptionsTwo from '../../../../demo-app/components/custom-after-options-two';
 import CustomBeforeOptionsTwo from '../../../../demo-app/components/custom-before-options-two';
 import CustomTriggerThatHandlesFocus from '../../../../demo-app/components/custom-trigger-that-handles-focus';
 import CustomSearchMessage from '../../../../demo-app/components/custom-search-message';
-import type { PowerSelectSearchMessageSignature } from 'ember-power-select/components/power-select/search-message';
+import type { PowerSelectSearchMessageSignature } from '#src/components/power-select/search-message.gts';
 import CustomNoMatchesMessage from '../../../../demo-app/components/custom-no-matches-message';
-import type { PowerSelectNoMatchesMessageSignature } from 'ember-power-select/components/power-select/no-matches-message';
+import type { PowerSelectNoMatchesMessageSignature } from '#src/components/power-select/no-matches-message.gts';
 import CustomPlaceholder from '../../../../demo-app/components/custom-placeholder';
 import CustomGroupComponent from '../../../../demo-app/components/custom-group-component';
-import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
+import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power-select/power-select-group.gts';
 import CustomLabelComponent from '../../../../demo-app/components/custom-label-component';
-import type { PowerSelectLabelSignature } from 'ember-power-select/components/power-select/label';
+import type { PowerSelectLabelSignature } from '#src/components/power-select/label.gts';
 import CustomMultipleSearchPlaceholder from '../../../../demo-app/components/custom-multiple-search-placeholder';
 import CustomMultipleBeforeOptions from '../../../../demo-app/components/custom-multiple-before-options';
-import PowerSelect from 'ember-power-select/components/power-select';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn, hash } from '@ember/helper';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface CountryContext<
   IsMultiple extends boolean = false,

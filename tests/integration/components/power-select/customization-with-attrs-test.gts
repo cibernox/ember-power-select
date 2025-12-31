@@ -2,10 +2,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
 import { render, type TestContext } from '@ember/test-helpers';
 import { countries, type Country } from '../../../../demo-app/utils/constants';
-import type { Selected, MultipleSelected } from 'ember-power-select/types';
-import PowerSelect from 'ember-power-select/components/power-select';
+import type { Selected, MultipleSelected } from '#src/types.ts';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface CountryContext extends TestContext {
   foo: () => void;

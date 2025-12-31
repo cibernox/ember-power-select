@@ -8,28 +8,28 @@ import {
   type GroupedNumber,
   type SelectedCountryExtra,
 } from '../../../../demo-app/utils/constants';
-import { clickTrigger } from 'ember-power-select/test-support/helpers';
+import { clickTrigger } from '#src/test-support/helpers.ts';
 import type { TestContext } from '@ember/test-helpers';
-import type { Selected } from 'ember-power-select/types';
+import type { Selected } from '#src/types.ts';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';
+import type { PowerSelectTriggerSignature } from '#src/components/power-select/trigger.gts';
 import SelectedCountry from '../../../../demo-app/components/selected-country';
 import ListOfCountries from '../../../../demo-app/components/list-of-countries';
-import type { PowerSelectOptionsSignature } from 'ember-power-select/components/power-select/options';
-import type { PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
-import type { PowerSelectPlaceholderSignature } from 'ember-power-select/components/power-select/placeholder';
+import type { PowerSelectOptionsSignature } from '#src/components/power-select/options.gts';
+import type { PowerSelectBeforeOptionsSignature } from '#src/components/power-select/before-options.gts';
+import type { PowerSelectPlaceholderSignature } from '#src/components/power-select/placeholder.gts';
 import CustomBeforeOptions from '../../../../demo-app/components/custom-before-options';
-import PowerSelectPlaceholder from 'ember-power-select/components/power-select/placeholder';
-import type { PowerSelectSearchMessageSignature } from 'ember-power-select/components/power-select/search-message';
+import PowerSelectPlaceholder from '#src/components/power-select/placeholder.gts';
+import type { PowerSelectSearchMessageSignature } from '#src/components/power-select/search-message.gts';
 import CustomSearchMessage from '../../../../demo-app/components/custom-search-message';
-import type { PowerSelectNoMatchesMessageSignature } from 'ember-power-select/components/power-select/no-matches-message';
+import type { PowerSelectNoMatchesMessageSignature } from '#src/components/power-select/no-matches-message.gts';
 import CustomNoMatchesMessage from '../../../../demo-app/components/custom-no-matches-message';
 import CustomPlaceholder from '../../../../demo-app/components/custom-placeholder';
-import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
+import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power-select/power-select-group.gts';
 import CustomGroupComponent from '../../../../demo-app/components/custom-group-component';
-import PowerSelect from 'ember-power-select/components/power-select';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn, hash } from '@ember/helper';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface CountryContext<
   IsMultiple extends boolean = false,

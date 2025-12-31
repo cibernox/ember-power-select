@@ -10,13 +10,13 @@
 // import {
 //   typeInSearch,
 //   clickTrigger,
-// } from 'ember-power-select/test-support/helpers';
+// } from '#src/test-support/helpers';
 // import { setupMirage } from 'ember-cli-mirage/test-support';
 // import type Store from '@ember-data/store';
 // import type UserModel from '../../../../demo-app/models/user';
-// import type { Selected } from 'ember-power-select/types';
-// import PowerSelect from 'ember-power-select/components/power-select';
-// import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+// import type { Selected } from '#src/types';
+// import PowerSelect from '#src/components/power-select';
+// import PowerSelectMultiple from '#src/components/power-select-multiple';
 // import { fn } from '@ember/helper';
 
 // interface UsersContext<IsMultiple extends boolean = false> extends TestContext {

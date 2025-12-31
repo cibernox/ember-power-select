@@ -1,17 +1,14 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
 import { render, click, triggerKeyEvent, focus } from '@ember/test-helpers';
-import {
-  clickTrigger,
-  typeInSearch,
-} from 'ember-power-select/test-support/helpers';
+import { clickTrigger, typeInSearch } from '#src/test-support/helpers.ts';
 import { names, numbers } from '../../../../demo-app/utils/constants';
 import { tracked } from '@glimmer/tracking';
 import type { TestContext } from '@ember/test-helpers';
-import type { Select, Selected } from 'ember-power-select/types';
-import PowerSelect from 'ember-power-select/components/power-select';
+import type { Select, Selected } from '#src/types.ts';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,

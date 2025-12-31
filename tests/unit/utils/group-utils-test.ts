@@ -7,7 +7,7 @@ import {
   stripDiacritics,
   countOptions,
   defaultTypeAheadMatcher,
-} from 'ember-power-select/utils/group-utils';
+} from '#src/utils/group-utils.ts';
 import { module, test } from 'qunit';
 
 const groupedOptions = [

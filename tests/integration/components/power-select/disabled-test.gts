@@ -8,19 +8,16 @@ import {
   focus,
   tap,
 } from '@ember/test-helpers';
-import {
-  clickTrigger,
-  typeInSearch,
-} from 'ember-power-select/test-support/helpers';
+import { clickTrigger, typeInSearch } from '#src/test-support/helpers.ts';
 import {
   numbers,
   countriesWithDisabled,
   type Country,
 } from '../../../../demo-app/utils/constants';
-import type { Selected, MultipleSelected } from 'ember-power-select/types';
+import type { Selected, MultipleSelected } from '#src/types.ts';
 import type { TestContext } from '@ember/test-helpers';
-import PowerSelect from 'ember-power-select/components/power-select';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelect from '#src/components/power-select.gts';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
 
 interface NumbersContext extends TestContext {

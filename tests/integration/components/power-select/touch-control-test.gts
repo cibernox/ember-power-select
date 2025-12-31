@@ -7,8 +7,8 @@ import {
   type TestContext,
 } from '@ember/test-helpers';
 import { numbers } from '../../../../demo-app/utils/constants';
-import type { Select, Selected } from 'ember-power-select/types';
-import PowerSelect from 'ember-power-select/components/power-select';
+import type { Select, Selected } from '#src/types.ts';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn, hash } from '@ember/helper';
 
 interface NumbersContext<

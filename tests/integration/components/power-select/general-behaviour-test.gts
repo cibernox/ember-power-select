@@ -13,7 +13,7 @@ import {
   typeInSearch,
   clickTrigger,
   findContains,
-} from 'ember-power-select/test-support/helpers';
+} from '#src/test-support/helpers.ts';
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { runTask } from 'ember-lifeline';
@@ -31,17 +31,17 @@ import { TrackedArray } from 'tracked-built-ins';
 import { modifier } from 'ember-modifier';
 import PowerSelectBeforeOptionsComponent, {
   type PowerSelectBeforeOptionsSignature,
-} from 'ember-power-select/components/power-select/before-options';
+} from '#src/components/power-select/before-options.gts';
 import type { ComponentLike } from '@glint/template';
 import type {
   DefaultHighlightedParams,
   MatcherFn,
   Selected,
-} from 'ember-power-select/types';
+} from '#src/types.ts';
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
-import PowerSelect from 'ember-power-select/components/power-select';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { on } from '@ember/modifier';
 
 interface NumbersContext<

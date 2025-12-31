@@ -1,9 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
-import {
-  typeInSearch,
-  clickTrigger,
-} from 'ember-power-select/test-support/helpers';
+import { typeInSearch, clickTrigger } from '#src/test-support/helpers.ts';
 import {
   numbers,
   names,
@@ -29,10 +26,10 @@ import type {
   MatcherFn,
   MultipleSelect,
   MultipleSelected,
-} from 'ember-power-select/types';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+} from '#src/types.ts';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn, array } from '@ember/helper';
-import PowerSelect from 'ember-power-select/components/power-select';
+import PowerSelect from '#src/components/power-select.gts';
 
 interface NumbersContext extends TestContext {
   element: HTMLElement;

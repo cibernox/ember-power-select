@@ -6,9 +6,9 @@ import {
   clickTrigger,
   typeInSearch,
   findContains,
-} from 'ember-power-select/test-support/helpers';
-import PowerSelect from 'ember-power-select/components/power-select';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+} from '#src/test-support/helpers.ts';
+import PowerSelect from '#src/components/power-select.gts';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface Context extends TestContext {
   numbers: string[];

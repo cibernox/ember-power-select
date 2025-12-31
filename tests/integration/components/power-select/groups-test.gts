@@ -1,22 +1,19 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
 import { render, click } from '@ember/test-helpers';
-import {
-  typeInSearch,
-  clickTrigger,
-} from 'ember-power-select/test-support/helpers';
+import { typeInSearch, clickTrigger } from '#src/test-support/helpers.ts';
 import {
   groupedNumbers,
   groupedNumbersWithCustomProperty,
   type GroupedNumbersWithCustomProperty,
 } from '../../../../demo-app/utils/constants';
 import type { TestContext } from '@ember/test-helpers';
-import type { Selected } from 'ember-power-select/types';
+import type { Selected } from '#src/types.ts';
 import CustomGroupComponentWithVariant from '../../../../demo-app/components/custom-group-component-with-variant';
 import type { ComponentLike } from '@glint/template';
-import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
-import PowerSelect from 'ember-power-select/components/power-select';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power-select/power-select-group.gts';
+import PowerSelect from '#src/components/power-select.gts';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
 
 interface GroupedNumbersContext extends TestContext {

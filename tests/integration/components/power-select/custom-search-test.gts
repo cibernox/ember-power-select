@@ -13,19 +13,16 @@ import {
   waitFor,
   type TestContext,
 } from '@ember/test-helpers';
-import {
-  typeInSearch,
-  clickTrigger,
-} from 'ember-power-select/test-support/helpers';
+import { typeInSearch, clickTrigger } from '#src/test-support/helpers.ts';
 import {
   numbers,
   countries,
   type Country,
 } from '../../../../demo-app/utils/constants';
 import RSVP from 'rsvp';
-import type { MatcherFn } from 'ember-power-select/types';
-import PowerSelect from 'ember-power-select/components/power-select';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import type { MatcherFn } from '#src/types.ts';
+import PowerSelect from '#src/components/power-select.gts';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface SearchContext extends TestContext {
   searchFn: (term: string) => typeof numbers | Promise<typeof numbers>;

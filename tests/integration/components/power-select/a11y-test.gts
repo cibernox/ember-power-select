@@ -13,13 +13,10 @@ import {
   countriesWithDisabled,
   type Country,
 } from '../../../../demo-app/utils/constants';
-import {
-  clickTrigger,
-  findContains,
-} from 'ember-power-select/test-support/helpers';
-import type { Selected, MultipleSelected } from 'ember-power-select/types';
-import PowerSelect from 'ember-power-select/components/power-select';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import { clickTrigger, findContains } from '#src/test-support/helpers.ts';
+import type { Selected, MultipleSelected } from '#src/types.ts';
+import PowerSelect from '#src/components/power-select.gts';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
 
 interface GroupedNumbersContext extends TestContext {

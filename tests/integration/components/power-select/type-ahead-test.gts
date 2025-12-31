@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
-import { optionAtIndex } from 'ember-power-select/utils/group-utils';
-import { clickTrigger } from 'ember-power-select/test-support/helpers';
+import { optionAtIndex } from '#src/utils/group-utils.ts';
+import { clickTrigger } from '#src/test-support/helpers.ts';
 import { namesStartingWithA } from '../../../../demo-app/utils/constants';
 import { render, focus, triggerKeyEvent } from '@ember/test-helpers';
-import type { Selected } from 'ember-power-select/types';
+import type { Selected } from '#src/types.ts';
 import type { TestContext } from '@ember/test-helpers';
-import PowerSelect from 'ember-power-select/components/power-select';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
 
 interface Helpers {

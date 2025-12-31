@@ -1,16 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
 import { render } from '@ember/test-helpers';
-import {
-  selectChoose,
-  getDropdownItems,
-} from 'ember-power-select/test-support';
+import { selectChoose, getDropdownItems } from '#src/test-support.ts';
 import { numbers } from '../../../../demo-app/utils/constants';
-import type { Selected } from 'ember-power-select/types';
+import type { Selected } from '#src/types.ts';
 import type { TestContext } from '@ember/test-helpers';
-import PowerSelect from 'ember-power-select/components/power-select';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,

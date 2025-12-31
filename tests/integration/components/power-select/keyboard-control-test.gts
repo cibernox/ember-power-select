@@ -5,7 +5,7 @@ import {
   triggerKeydown,
   clickTrigger,
   typeInSearch,
-} from 'ember-power-select/test-support/helpers';
+} from '#src/test-support/helpers.ts';
 import {
   numbers,
   numerals,
@@ -17,10 +17,10 @@ import {
 } from '../../../../demo-app/utils/constants';
 import { triggerKeyEvent, focus } from '@ember/test-helpers';
 import RSVP from 'rsvp';
-import type { Select, Selected } from 'ember-power-select/types';
-import PowerSelect from 'ember-power-select/components/power-select';
+import type { Select, Selected } from '#src/types.ts';
+import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from 'ember-power-select/components/power-select-multiple';
+import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
