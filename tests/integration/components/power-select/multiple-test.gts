@@ -30,6 +30,7 @@ import type {
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn, array } from '@ember/helper';
 import PowerSelect from '#src/components/power-select.gts';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface NumbersContext extends TestContext {
   element: HTMLElement;
@@ -110,14 +111,16 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -135,15 +138,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -159,16 +164,18 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            @searchFieldPosition="before-options"
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              @searchFieldPosition="before-options"
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -184,15 +191,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -211,15 +220,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -234,16 +245,18 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            @searchFieldPosition="before-options"
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              @searchFieldPosition="before-options"
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -258,15 +271,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -301,13 +316,15 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @onChange={{self.onChange}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @onChange={{self.onChange}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -333,14 +350,16 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -370,14 +389,16 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -408,14 +429,16 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -450,14 +473,16 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -480,14 +505,16 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -515,16 +542,18 @@ module(
 
       await render<PeopleContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.people}}
-            @searchField="name"
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |person|
-          >
-            {{person.name}}
-            {{person.surname}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.people}}
+              @searchField="name"
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |person|
+            >
+              {{person.name}}
+              {{person.surname}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -567,15 +596,17 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @matcher={{self.endsWithMatcher}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @matcher={{self.endsWithMatcher}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -611,14 +642,16 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -639,15 +672,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -677,15 +712,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -709,15 +746,17 @@ module(
       };
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -745,14 +784,16 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -777,14 +818,16 @@ module(
       };
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -815,15 +858,17 @@ module(
       };
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -860,15 +905,17 @@ module(
       };
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -901,15 +948,17 @@ module(
       };
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @onChange={{self.onChange}}
-            @selected={{self.selected}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @onChange={{self.onChange}}
+              @selected={{self.selected}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -963,16 +1012,18 @@ module(
       };
       await render<CountryContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.countries}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            @searchField="name"
-            @searchEnabled={{true}}
-            as |c|
-          >
-            {{c.name}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.countries}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              @searchField="name"
+              @searchEnabled={{true}}
+              as |c|
+            >
+              {{c.name}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -1006,15 +1057,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1051,15 +1104,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1087,14 +1142,16 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1124,14 +1181,16 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1160,16 +1219,18 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @placeholder="Select stuff here"
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @placeholder="Select stuff here"
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1195,15 +1256,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @placeholder="Select stuff here"
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @placeholder="Select stuff here"
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1225,15 +1288,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1266,15 +1331,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -1302,15 +1369,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -1339,15 +1408,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1376,15 +1447,17 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @search={{self.searchFn}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @search={{self.searchFn}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1406,15 +1479,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option select|
-          >
-            {{select.lastSearchedText}}:{{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option select|
+            >
+              {{select.lastSearchedText}}:{{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1436,16 +1511,18 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
-          <div id="other-thing">Other div</div>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+            <div id="other-thing">Other div</div>
+          </HostWrapper>
         </template>,
       );
 
@@ -1469,15 +1546,17 @@ module(
       };
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.onChange}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.onChange}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1502,15 +1581,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @triggerClass="foobar-trigger"
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @triggerClass="foobar-trigger"
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1534,14 +1615,16 @@ module(
       this.selected = new TrackedArray();
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -1563,13 +1646,15 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1602,15 +1687,17 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1627,14 +1714,16 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1651,16 +1740,18 @@ module(
       this.numbers = numbers;
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @tabindex="3"
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @tabindex="3"
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1681,15 +1772,17 @@ module(
       this.defaultHighlighted = numbers[3];
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @defaultHighlighted={{self.defaultHighlighted}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @defaultHighlighted={{self.defaultHighlighted}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1713,15 +1806,17 @@ module(
 
       await render<UserContext>(
         <template>
-          <PowerSelectMultiple
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            @search={{self.search}}
-            as |user|
-          >
-            {{user.name}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              @search={{self.search}}
+              as |user|
+            >
+              {{user.name}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1761,14 +1856,16 @@ module(
       this.selected = countriesWithDisabled;
       await render<CountryContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.countries}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option.name}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.countries}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option.name}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       assert
@@ -1790,14 +1887,16 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @onChange={{self.foo}}
-            @title="The title"
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              @title="The title"
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1814,15 +1913,17 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @triggerComponent={{undefined}}
-            @options={{self.numbers}}
-            @onChange={{fn (mut self.selected)}}
-            @selected={{self.selected}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @triggerComponent={{undefined}}
+              @options={{self.numbers}}
+              @onChange={{fn (mut self.selected)}}
+              @selected={{self.selected}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1838,15 +1939,17 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @buildSelection={{undefined}}
-            @options={{self.numbers}}
-            @onChange={{fn (mut self.selected)}}
-            @selected={{self.selected}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @buildSelection={{undefined}}
+              @options={{self.numbers}}
+              @onChange={{fn (mut self.selected)}}
+              @selected={{self.selected}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -1866,14 +1969,16 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @labelText="Label for select"
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @labelText="Label for select"
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1893,15 +1998,17 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @labelText="Label for select"
-            @labelTag="label"
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @labelText="Label for select"
+              @labelTag="label"
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1931,14 +2038,16 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @labelText="Label for select"
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @labelText="Label for select"
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1960,18 +2069,20 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @labelText="Label for select"
-            @placeholder="Placeholder"
-            @searchEnabled={{true}}
-            @searchPlaceholder="Search Placeholder"
-            @searchFieldPosition="before-options"
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @labelText="Label for select"
+              @placeholder="Placeholder"
+              @searchEnabled={{true}}
+              @searchPlaceholder="Search Placeholder"
+              @searchFieldPosition="before-options"
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -2003,18 +2114,20 @@ module(
 
       await render<StateContext>(
         <template>
-          {{#if self.state.selected}}
-            <PowerSelect
-              @multiple={{true}}
-              @options={{array "a" "b" "c"}}
-              @selected={{self.sort self.state.selected}}
-              @searchEnabled={{true}}
-              @onChange={{fn (mut self.state.selected)}}
-              as |option|
-            >
-              {{option}}
-            </PowerSelect>
-          {{/if}}
+          <HostWrapper>
+            {{#if self.state.selected}}
+              <PowerSelect
+                @multiple={{true}}
+                @options={{array "a" "b" "c"}}
+                @selected={{self.sort self.state.selected}}
+                @searchEnabled={{true}}
+                @onChange={{fn (mut self.state.selected)}}
+                as |option|
+              >
+                {{option}}
+              </PowerSelect>
+            {{/if}}
+          </HostWrapper>
         </template>,
       );
 

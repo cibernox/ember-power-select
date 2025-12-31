@@ -23,6 +23,7 @@ import RSVP from 'rsvp';
 import type { MatcherFn } from '#src/types.ts';
 import PowerSelect from '#src/components/power-select.gts';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface SearchContext extends TestContext {
   searchFn: (term: string) => typeof numbers | Promise<typeof numbers>;
@@ -78,13 +79,15 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -109,15 +112,17 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @options={{self.options}}
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.options}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -159,13 +164,15 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -189,14 +196,16 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @searchMessage="Type the name of the thing"
-            @onChange={{self.foo}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @searchMessage="Type the name of the thing"
+              @onChange={{self.foo}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -218,14 +227,16 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -254,14 +265,16 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -292,14 +305,16 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -348,14 +363,16 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -389,15 +406,17 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @noMatchesMessage="Meec. Try again"
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @noMatchesMessage="Meec. Try again"
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -496,14 +515,16 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -531,14 +552,16 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -577,16 +600,18 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -617,15 +642,17 @@ module(
 
       await render<SearchContext>(
         <template>
-          <div id="different-node"></div>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <div id="different-node"></div>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -668,16 +695,18 @@ module(
 
       await render<SearchContext>(
         <template>
-          <div id="different-node"></div>
-          <PowerSelect
-            @options={{self.numbers}}
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <div id="different-node"></div>
+            <PowerSelect
+              @options={{self.numbers}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -726,16 +755,18 @@ module(
 
       await render<SearchContext>(
         <template>
-          <div id="different-node"></div>
-          <PowerSelect
-            @options={{self.options}}
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <div id="different-node"></div>
+            <PowerSelect
+              @options={{self.options}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -820,15 +851,17 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number select|
-          >
-            {{number}}:{{select.lastSearchedText}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number select|
+            >
+              {{number}}:{{select.lastSearchedText}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -874,15 +907,17 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number select|
-          >
-            {{number}}:{{select.lastSearchedText}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number select|
+            >
+              {{number}}:{{select.lastSearchedText}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -927,15 +962,17 @@ module(
 
       await render<SearchContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number select|
-          >
-            {{number}}:{{select.lastSearchedText}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number select|
+            >
+              {{number}}:{{select.lastSearchedText}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -982,17 +1019,19 @@ module(
 
       await render<SearchContext>(
         <template>
-          {{#if self.visible}}
-            <PowerSelectMultiple
-              @options={{self.numbers}}
-              @search={{self.searchFn}}
-              @onChange={{self.foo}}
-              @searchEnabled={{true}}
-              as |number|
-            >
-              {{number}}
-            </PowerSelectMultiple>
-          {{/if}}
+          <HostWrapper>
+            {{#if self.visible}}
+              <PowerSelectMultiple
+                @options={{self.numbers}}
+                @search={{self.searchFn}}
+                @onChange={{self.foo}}
+                @searchEnabled={{true}}
+                as |number|
+              >
+                {{number}}
+              </PowerSelectMultiple>
+            {{/if}}
+          </HostWrapper>
         </template>,
       );
 
@@ -1014,15 +1053,17 @@ module(
 
       await render<SearchNumberPromiseContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbersPromise}}
-            @search={{self.searchFn}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbersPromise}}
+              @search={{self.searchFn}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -1057,16 +1098,18 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.countries}}
-            @matcher={{self.matcherFn}}
-            @searchField="name"
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.countries}}
+              @matcher={{self.matcherFn}}
+              @searchField="name"
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1093,14 +1136,16 @@ module(
 
       await render<ObjContext>(
         <template>
-          <PowerSelect
-            @search={{self.obj.searchTask.perform}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.obj.searchTask.perform}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -1136,14 +1181,16 @@ module(
 
       await render<ObjContext>(
         <template>
-          <PowerSelect
-            @search={{self.obj.searchTask.perform}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.obj.searchTask.perform}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -1216,14 +1263,16 @@ module(
 
       await render<ObjContext>(
         <template>
-          <PowerSelect
-            @search={{self.obj.searchTask.perform}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.obj.searchTask.perform}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -1259,14 +1308,16 @@ module(
 
       await render<ObjContext>(
         <template>
-          <PowerSelectMultiple
-            @search={{self.obj.searchTask.perform}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @search={{self.obj.searchTask.perform}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1302,14 +1353,16 @@ module(
 
       await render<ObjContext>(
         <template>
-          <PowerSelectMultiple
-            @search={{self.obj.searchTask.perform}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @search={{self.obj.searchTask.perform}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -1383,14 +1436,16 @@ module(
 
       await render<ObjContext>(
         <template>
-          <PowerSelectMultiple
-            @search={{self.obj.searchTask.perform}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @search={{self.obj.searchTask.perform}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 

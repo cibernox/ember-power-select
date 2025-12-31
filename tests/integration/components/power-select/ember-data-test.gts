@@ -7,10 +7,7 @@
 //   waitFor,
 //   type TestContext,
 // } from '@ember/test-helpers';
-// import {
-//   typeInSearch,
-//   clickTrigger,
-// } from '#src/test-support/helpers';
+// import { typeInSearch, clickTrigger } from '#src/test-support/helpers';
 // import { setupMirage } from 'ember-cli-mirage/test-support';
 // import type Store from '@ember-data/store';
 // import type UserModel from '../../../../demo-app/models/user';
@@ -18,6 +15,7 @@
 // import PowerSelect from '#src/components/power-select';
 // import PowerSelectMultiple from '#src/components/power-select-multiple';
 // import { fn } from '@ember/helper';
+// import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 // interface UsersContext<IsMultiple extends boolean = false> extends TestContext {
 //   store: Store;
@@ -52,15 +50,17 @@
 //       this.foo = () => {};
 //       await render<UsersContext>(
 //         <template>
-//           <PowerSelect
-//             @options={{self.users}}
-//             @searchField="name"
-//             @onChange={{self.foo}}
-//             @searchEnabled={{true}}
-//             as |option|
-//           >
-//             {{option.name}}
-//           </PowerSelect>
+//           <HostWrapper>
+//             <PowerSelect
+//               @options={{self.users}}
+//               @searchField="name"
+//               @onChange={{self.foo}}
+//               @searchEnabled={{true}}
+//               as |option|
+//             >
+//               {{option.name}}
+//             </PowerSelect>
+//           </HostWrapper>
 //         </template>,
 //       );
 
@@ -98,15 +98,17 @@
 //       this.foo = () => {};
 //       await render<UsersContext>(
 //         <template>
-//           <PowerSelect
-//             @options={{self.users}}
-//             @searchField="name"
-//             @onChange={{self.foo}}
-//             @searchEnabled={{true}}
-//             as |option|
-//           >
-//             {{option.name}}
-//           </PowerSelect>
+//           <HostWrapper>
+//             <PowerSelect
+//               @options={{self.users}}
+//               @searchField="name"
+//               @onChange={{self.foo}}
+//               @searchEnabled={{true}}
+//               as |option|
+//             >
+//               {{option.name}}
+//             </PowerSelect>
+//           </HostWrapper>
 //         </template>,
 //       );
 
@@ -144,15 +146,17 @@
 //       await this.users;
 //       await render<UsersContext<true>>(
 //         <template>
-//           <PowerSelectMultiple
-//             @options={{self.users}}
-//             @searchField="name"
-//             @selected={{self.selected}}
-//             @onChange={{fn (mut self.selected)}}
-//             as |option|
-//           >
-//             {{option.name}}
-//           </PowerSelectMultiple>
+//           <HostWrapper>
+//             <PowerSelectMultiple
+//               @options={{self.users}}
+//               @searchField="name"
+//               @selected={{self.selected}}
+//               @onChange={{fn (mut self.selected)}}
+//               as |option|
+//             >
+//               {{option.name}}
+//             </PowerSelectMultiple>
+//           </HostWrapper>
 //         </template>,
 //       );
 
@@ -180,15 +184,17 @@
 //       };
 //       await render<UsersContext>(
 //         <template>
-//           <PowerSelect
-//             @selected={{self.selected}}
-//             @onChange={{fn (mut self.selected)}}
-//             @searchEnabled={{true}}
-//             @search={{self.search}}
-//             as |option|
-//           >
-//             {{option.name}}
-//           </PowerSelect>
+//           <HostWrapper>
+//             <PowerSelect
+//               @selected={{self.selected}}
+//               @onChange={{fn (mut self.selected)}}
+//               @searchEnabled={{true}}
+//               @search={{self.search}}
+//               as |option|
+//             >
+//               {{option.name}}
+//             </PowerSelect>
+//           </HostWrapper>
 //         </template>,
 //       );
 
@@ -216,14 +222,16 @@
 //       this.selected = await this.users;
 //       await render<UsersContext<true>>(
 //         <template>
-//           <PowerSelectMultiple
-//             @selected={{self.selected}}
-//             @options={{self.users}}
-//             @onChange={{fn (mut self.selected)}}
-//             as |option|
-//           >
-//             {{option.name}}
-//           </PowerSelectMultiple>
+//           <HostWrapper>
+//             <PowerSelectMultiple
+//               @selected={{self.selected}}
+//               @options={{self.users}}
+//               @onChange={{fn (mut self.selected)}}
+//               as |option|
+//             >
+//               {{option.name}}
+//             </PowerSelectMultiple>
+//           </HostWrapper>
 //         </template>,
 //       );
 //       assert.dom('.ember-power-select-multiple-option ').exists({ count: 10 });

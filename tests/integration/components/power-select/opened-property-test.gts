@@ -4,6 +4,7 @@ import { render, type TestContext } from '@ember/test-helpers';
 import { numbers } from '../../../../demo-app/utils/constants';
 import type { Select, Selected } from '#src/types.ts';
 import PowerSelect from '#src/components/power-select.gts';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -30,14 +31,16 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @onChange={{self.foo}}
-            @initiallyOpened={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              @initiallyOpened={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -53,15 +56,17 @@ module(
       this.foo = () => {};
       await render<NumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @onChange={{self.foo}}
-            @initiallyOpened={{true}}
-            @selected="seven"
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @onChange={{self.foo}}
+              @initiallyOpened={{true}}
+              @selected="seven"
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 

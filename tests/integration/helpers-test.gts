@@ -9,6 +9,7 @@ import {
 } from '#src/test-support/helpers.ts';
 import PowerSelect from '#src/components/power-select.gts';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
+import HostWrapper from '../../demo-app/components/host-wrapper.gts';
 
 interface Context extends TestContext {
   numbers: string[];
@@ -27,14 +28,16 @@ module('Integration | Helpers', function (hooks) {
 
     await render<Context>(
       <template>
-        <PowerSelect
-          @options={{self.numbers}}
-          @onChange={{self.foo}}
-          @searchEnabled={{true}}
-          as |number|
-        >
-          {{number}}
-        </PowerSelect>
+        <HostWrapper>
+          <PowerSelect
+            @options={{self.numbers}}
+            @onChange={{self.foo}}
+            @searchEnabled={{true}}
+            as |number|
+          >
+            {{number}}
+          </PowerSelect>
+        </HostWrapper>
       </template>,
     );
 
@@ -53,25 +56,27 @@ module('Integration | Helpers', function (hooks) {
 
     await render<Context>(
       <template>
-        <PowerSelectMultiple
-          @options={{self.numbers}}
-          @onChange={{self.fooMultiple}}
-          @searchEnabled={{true}}
-          as |number|
-        >
-          {{number}}
-        </PowerSelectMultiple>
-        <div id="single-select">
-          <PowerSelect
+        <HostWrapper>
+          <PowerSelectMultiple
             @options={{self.numbers}}
-            @renderInPlace={{true}}
-            @onChange={{self.foo}}
+            @onChange={{self.fooMultiple}}
             @searchEnabled={{true}}
             as |number|
           >
             {{number}}
-          </PowerSelect>
-        </div>
+          </PowerSelectMultiple>
+          <div id="single-select">
+            <PowerSelect
+              @options={{self.numbers}}
+              @renderInPlace={{true}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </div>
+        </HostWrapper>
       </template>,
     );
 

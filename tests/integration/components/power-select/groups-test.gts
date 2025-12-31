@@ -15,6 +15,7 @@ import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power
 import PowerSelect from '#src/components/power-select.gts';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface GroupedNumbersContext extends TestContext {
   foo: (selected: string | undefined) => void;
@@ -62,13 +63,15 @@ module(
       this.foo = () => {};
       await render<GroupedNumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.groupedNumbers}}
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.groupedNumbers}}
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -147,13 +150,15 @@ module(
 
       await render<NotQuiteGroupsContext>(
         <template>
-          <PowerSelect
-            @options={{self.notQuiteGroups}}
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option.groupName}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.notQuiteGroups}}
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option.groupName}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -175,14 +180,16 @@ module(
 
       await render<GroupedNumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.groupedNumbers}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.groupedNumbers}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -224,15 +231,17 @@ module(
 
       await render<GroupedNumbersWithCustomPropertyContext>(
         <template>
-          <PowerSelect
-            @options={{self.groupedNumbersWithCustomProperty}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            @groupComponent={{self.groupComponent}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.groupedNumbersWithCustomProperty}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              @groupComponent={{self.groupComponent}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -272,15 +281,17 @@ module(
 
       await render<GroupedNumbersWithCustomPropertyContext<true>>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.groupedNumbersWithCustomProperty}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            @groupComponent={{self.groupComponent}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.groupedNumbersWithCustomProperty}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              @groupComponent={{self.groupComponent}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -315,14 +326,16 @@ module(
       this.groupedNumbers = groupedNumbers;
       await render<GroupedNumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.groupedNumbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.groupedNumbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
       await clickTrigger();
@@ -349,13 +362,15 @@ module(
       this.foo = () => {};
       await render<GroupedNumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.groupedNumbers}}
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.groupedNumbers}}
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 

@@ -30,6 +30,7 @@ import CustomGroupComponent from '../../../../demo-app/components/custom-group-c
 import PowerSelect from '#src/components/power-select.gts';
 import { fn, hash } from '@ember/helper';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface CountryContext<
   IsMultiple extends boolean = false,
@@ -89,15 +90,17 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @triggerComponent={{self.triggerComponent}}
-            @onChange={{fn (mut self.country)}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @triggerComponent={{self.triggerComponent}}
+              @onChange={{fn (mut self.country)}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -124,15 +127,17 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @optionsComponent={{self.optionsComponent}}
-            @onChange={{fn (mut self.country)}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @optionsComponent={{self.optionsComponent}}
+              @onChange={{fn (mut self.country)}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -159,17 +164,19 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @options={{self.countries}}
-            @beforeOptionsComponent={{self.beforeOptionsComponent}}
-            @selected={{self.country}}
-            @placeholder="inception"
-            @placeholderComponent={{self.placeholderComponent}}
-            @onChange={{fn (mut self.country)}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countries}}
+              @beforeOptionsComponent={{self.beforeOptionsComponent}}
+              @selected={{self.country}}
+              @placeholder="inception"
+              @placeholderComponent={{self.placeholderComponent}}
+              @onChange={{fn (mut self.country)}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -204,14 +211,16 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @search={{self.searchFn}}
-            @searchMessageComponent={{self.searchMessageComponent}}
-            @onChange={{self.foo}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @search={{self.searchFn}}
+              @searchMessageComponent={{self.searchMessageComponent}}
+              @onChange={{self.foo}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -236,15 +245,17 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @options={{self.countries}}
-            @noMatchesMessageComponent={{self.noMatchesMessageComponent}}
-            @noMatchesMessage="Nope"
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countries}}
+              @noMatchesMessageComponent={{self.noMatchesMessageComponent}}
+              @noMatchesMessage="Nope"
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -269,15 +280,17 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @options={{self.countries}}
-            @placeholder="test"
-            @placeholderComponent={{self.placeholderComponent}}
-            @onChange={{self.foo}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countries}}
+              @placeholder="test"
+              @placeholderComponent={{self.placeholderComponent}}
+              @onChange={{self.foo}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -304,14 +317,16 @@ module(
 
       await render<GroupedNumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.groupedNumbers}}
-            @groupComponent={{self.groupComponent}}
-            @onChange={{self.foo}}
-            as |number|
-          >
-            {{number}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.groupedNumbers}}
+              @groupComponent={{self.groupComponent}}
+              @onChange={{self.foo}}
+              as |number|
+            >
+              {{number}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -337,16 +352,18 @@ module(
 
       await render<CountryContext<true>>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @triggerComponent={{self.triggerComponent}}
-            @onChange={{fn (mut self.country)}}
-            @extra={{hash coolFlagIcon=true}}
-            as |country|
-          >
-            {{country.code}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @triggerComponent={{self.triggerComponent}}
+              @onChange={{fn (mut self.country)}}
+              @extra={{hash coolFlagIcon=true}}
+              as |country|
+            >
+              {{country.code}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 

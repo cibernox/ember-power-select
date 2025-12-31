@@ -19,6 +19,7 @@ import type { TestContext } from '@ember/test-helpers';
 import PowerSelect from '#src/components/power-select.gts';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface NumbersContext extends TestContext {
   numbers: typeof numbers;
@@ -76,14 +77,16 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @disabled={{true}}
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @disabled={{true}}
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -110,15 +113,17 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @disabled={{true}}
-            @onChange={{self.foo}}
-            @tabindex="123"
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @disabled={{true}}
+              @onChange={{self.foo}}
+              @tabindex="123"
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
       assert
@@ -139,14 +144,16 @@ module(
 
       await render<CountriesWithDisabledContext>(
         <template>
-          <PowerSelect
-            @options={{self.countriesWithDisabled}}
-            @onChange={{self.foo}}
-            as |option|
-          >
-            {{option.code}}:
-            {{option.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countriesWithDisabled}}
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option.code}}:
+              {{option.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -174,15 +181,17 @@ module(
 
       await render<CountriesWithDisabledContext>(
         <template>
-          <PowerSelect
-            @options={{self.countriesWithDisabled}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option.code}}:
-            {{option.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countriesWithDisabled}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option.code}}:
+              {{option.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -205,16 +214,18 @@ module(
       this.numbers = numbers;
       await render<NumbersMultipleContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @disabled={{true}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @disabled={{true}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -235,15 +246,17 @@ module(
 
       await render<NumbersMultipleContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @disabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @disabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -265,16 +278,18 @@ module(
 
       await render<NumbersMultipleContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @disabled={{self.shouldBeDisabled}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @disabled={{self.shouldBeDisabled}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -302,16 +317,18 @@ module(
 
       await render<CountriesWithDisabledContext>(
         <template>
-          <PowerSelect
-            @options={{self.countriesWithDisabled}}
-            @searchField="name"
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countriesWithDisabled}}
+              @searchField="name"
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -337,16 +354,18 @@ module(
 
       await render<CountriesWithDisabledContext>(
         <template>
-          <PowerSelect
-            @options={{self.countriesWithDisabled}}
-            @searchField="name"
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @searchEnabled={{true}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countriesWithDisabled}}
+              @searchField="name"
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @searchEnabled={{true}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -382,15 +401,17 @@ module(
 
       await render<CountriesWithDisabledContext>(
         <template>
-          <PowerSelect
-            @options={{self.countriesWithDisabled}}
-            @searchField="name"
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countriesWithDisabled}}
+              @searchField="name"
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -435,14 +456,16 @@ module(
       this.foo = () => {};
       await render<LocaleGroupedNumberContext>(
         <template>
-          <PowerSelect
-            @options={{self.options}}
-            @onChange={{self.foo}}
-            @searchEnabled={{true}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.options}}
+              @onChange={{self.foo}}
+              @searchEnabled={{true}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -480,14 +503,16 @@ module(
       this.options = options;
       await render<LocaleGroupedNumberContext>(
         <template>
-          <PowerSelect
-            @options={{self.options}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.options}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -523,15 +548,17 @@ module(
       this.selected = numbers[0];
       await render<NumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @disabled={{self.isDisabled}}
-            @onChange={{fn (mut self.selected)}}
-            as |option select|
-          >
-            {{if select.disabled "disabled!" "enabled!"}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @disabled={{self.isDisabled}}
+              @onChange={{fn (mut self.selected)}}
+              as |option select|
+            >
+              {{if select.disabled "disabled!" "enabled!"}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -559,14 +586,16 @@ module(
       this.isDisabled = false;
       await render<NumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @disabled={{self.isDisabled}}
-            @onChange={{fn (mut self.selected)}}
-            as |option|
-          >
-            {{option}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @disabled={{self.isDisabled}}
+              @onChange={{fn (mut self.selected)}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -586,15 +615,17 @@ module(
 
       await render<NumbersContext>(
         <template>
-          <PowerSelect
-            @options={{self.numbers}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            @disabled={{if self.selected true}}
-            as |opt|
-          >
-            {{opt}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              @disabled={{if self.selected true}}
+              as |opt|
+            >
+              {{opt}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -616,14 +647,16 @@ module(
 
       await render<CountriesWithDisabledContext>(
         <template>
-          <PowerSelect
-            @options={{self.countriesWithDisabled}}
-            @selected={{self.selected}}
-            @onChange={{fn (mut self.selected)}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countriesWithDisabled}}
+              @selected={{self.selected}}
+              @onChange={{fn (mut self.selected)}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 

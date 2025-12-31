@@ -9,6 +9,7 @@ import {
 } from '#src/test-support.ts';
 import HelpersTesting from '../../demo-app/components/helpers-testing';
 import HelpersTestingSinglePowerSelect from '../../demo-app/components/helpers-testing-single-power-select';
+import HostWrapper from '../../demo-app/components/host-wrapper.gts';
 
 function findElement(selector: string): HTMLElement {
   const element = find(selector);
@@ -22,7 +23,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   setupRenderingTest(hooks);
 
   test('selectChoose helper opens the select and selects the option with the given text', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose('.select-choose', 'three');
 
@@ -36,7 +41,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('selectChoose selects the option with the given text on an already opened select', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await click('.select-choose .ember-power-select-trigger');
 
@@ -51,7 +60,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('the selectChoose helper works with an onopen function that fetches data async on single selects', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose('.select-choose-onopen', 'three');
     assert
@@ -64,7 +77,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('the selectChoose helper works with an onopen function that fetches data async on multiple selects', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose('.select-choose-onopen-multiple', 'three');
     assert
@@ -79,7 +96,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('the selectChoose helper works when it receives the class of the trigger', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose('.select-with-class-in-trigger', 'three');
     assert
@@ -92,7 +113,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('the selectChoose helper works when it receives the css selector of the chosen option as second arguments', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose(
       '.select-with-class-in-trigger',
@@ -108,7 +133,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('the selectChoose helper works when it receives a wildcard css class', async function (assert) {
-    await render(<template><HelpersTestingSinglePowerSelect /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTestingSinglePowerSelect /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose('*', 'three');
     assert
@@ -121,7 +150,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('the selectChoose helper works when it receives a HTMLElement as first argument', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose(findElement('.select-with-class-in-trigger'), 'three');
     assert
@@ -134,7 +167,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('the selectChoose helper can receive a number as third argument to select the :nth option', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose(
       findElement('.select-with-class-in-trigger'),
@@ -151,7 +188,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('selectChoose helper throws an explicative error when no select is found in the given scope', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     try {
       await selectChoose('.there-is-no-select', 'three');
@@ -164,7 +205,11 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
   });
 
   test('selectChoose helper throws an explicative error when no option matches the given value', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     try {
       await selectChoose('.select-choose', 'non-existent-option');
@@ -181,7 +226,11 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
   setupRenderingTest(hooks);
 
   test('selectSearch helper searches in the given single select if it is already opened', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await click('.select-async .ember-power-select-trigger');
     await selectSearch('.select-async', 'three');
@@ -189,7 +238,11 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
   });
 
   test('selectSearch helper searches an opened select if using a wildcard css selector', async function (assert) {
-    await render(<template><HelpersTestingSinglePowerSelect /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTestingSinglePowerSelect /></HostWrapper>
+      </template>,
+    );
 
     await click('.ember-power-select-trigger');
     await selectSearch('*', 'three');
@@ -197,7 +250,11 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
   });
 
   test('selectSearch helper opens and searches select if using a wildcard css selector', async function (assert) {
-    await render(<template><HelpersTestingSinglePowerSelect /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTestingSinglePowerSelect /></HostWrapper>
+      </template>,
+    );
 
     await click('.ember-power-select-trigger');
     await selectSearch('*', 'three');
@@ -205,14 +262,22 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
   });
 
   test('selectSearch helper searches in the given single select, opening it if needed', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectSearch('.select-async', 'three');
     assert.dom('.ember-power-select-options').hasText('three');
   });
 
   test('selectSearch helper searches in the given multiple select opened', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await click('.select-multiple .ember-power-select-trigger');
     await selectSearch('.select-multiple', 'three');
@@ -220,14 +285,22 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
   });
 
   test('selectSearch helper searches in the given multiple select closed', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectSearch('.select-multiple', 'three');
     assert.dom('.ember-power-select-options').hasText('three');
   });
 
   test('selectSearch helper works even with custom components as long as the input has [type=search]', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await click('.select-custom-search .ember-power-select-trigger');
     await selectSearch('.select-custom-search', 'three');
@@ -235,7 +308,11 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
   });
 
   test('selectSearch helper can receive the HTMLElement of the trigger as first arguments', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectSearch(
       findElement('.select-multiple .ember-power-select-trigger'),
@@ -245,14 +322,22 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
   });
 
   test('the selectSearch helper works when it receives the class of the trigger', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectSearch('.select-with-class-in-trigger', 'three');
     assert.dom('.ember-power-select-options').hasText('three');
   });
 
   test('the selectSearch helper throws an explicative error when no select is found in the given scope', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     try {
       await selectSearch('.there-is-no-select', 'three');
@@ -269,7 +354,11 @@ module('Acceptance | helpers | removeMultipleOption', function (hooks) {
   setupRenderingTest(hooks);
 
   test('removeMultipleOption removes selected option', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose('.select-choose-onopen-multiple', 'three');
     await selectChoose('.select-choose-onopen-multiple', 'four');
@@ -295,7 +384,11 @@ module('Acceptance | helpers | removeMultipleOption', function (hooks) {
   });
 
   test('removeMultipleOption works with async onchange action', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     await selectChoose('#select-multiple-async', 'three');
     await selectChoose('#select-multiple-async', 'four');
@@ -314,7 +407,11 @@ module('Acceptance | helpers | clearSelected', function (hooks) {
   setupRenderingTest(hooks);
 
   test('clearSelected removes selected option', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     assert
       .dom('.select-choose-onopen .ember-power-select-clear-btn')
@@ -333,7 +430,11 @@ module('Acceptance | helpers | clearSelected', function (hooks) {
   });
 
   test('clearSelected works with async onchange action', async function (assert) {
-    await render(<template><HelpersTesting /></template>);
+    await render(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
 
     assert
       .dom('.select-deselect-async .ember-power-select-clear-btn')

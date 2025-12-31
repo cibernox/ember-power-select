@@ -6,6 +6,7 @@ import type { Selected, MultipleSelected } from '#src/types.ts';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface CountryContext extends TestContext {
   foo: () => void;
@@ -34,16 +35,18 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @renderInPlace={{true}}
-            class="foo"
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @onChange={{fn (mut self.country)}}
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @renderInPlace={{true}}
+              class="foo"
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @onChange={{fn (mut self.country)}}
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -62,15 +65,17 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @onChange={{fn (mut self.country)}}
-            @triggerClass="country-single-trigger"
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @onChange={{fn (mut self.country)}}
+              @triggerClass="country-single-trigger"
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -91,15 +96,17 @@ module(
 
       await render<CountryMultipleContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @onChange={{fn (mut self.country)}}
-            @triggerClass="country-multiple-trigger"
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @onChange={{fn (mut self.country)}}
+              @triggerClass="country-multiple-trigger"
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 
@@ -121,15 +128,17 @@ module(
 
       await render<CountryContext>(
         <template>
-          <PowerSelect
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @onChange={{self.foo}}
-            @triggerId="this-is-my-id"
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelect>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @onChange={{self.foo}}
+              @triggerId="this-is-my-id"
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelect>
+          </HostWrapper>
         </template>,
       );
 
@@ -150,15 +159,17 @@ module(
 
       await render<CountryMultipleContext>(
         <template>
-          <PowerSelectMultiple
-            @options={{self.countries}}
-            @selected={{self.country}}
-            @onChange={{fn (mut self.country)}}
-            @triggerId="this-is-my-id"
-            as |country|
-          >
-            {{country.name}}
-          </PowerSelectMultiple>
+          <HostWrapper>
+            <PowerSelectMultiple
+              @options={{self.countries}}
+              @selected={{self.country}}
+              @onChange={{fn (mut self.country)}}
+              @triggerId="this-is-my-id"
+              as |country|
+            >
+              {{country.name}}
+            </PowerSelectMultiple>
+          </HostWrapper>
         </template>,
       );
 

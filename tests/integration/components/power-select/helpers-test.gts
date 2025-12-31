@@ -8,6 +8,7 @@ import type { TestContext } from '@ember/test-helpers';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -28,14 +29,16 @@ module('Integration | Helpers | selectChoose', function (hooks) {
 
     await render<NumbersContext>(
       <template>
-        <PowerSelect
-          @options={{self.numbers}}
-          @selected={{self.selected}}
-          @onChange={{fn (mut self.selected)}}
-          as |option|
-        >
-          {{option}}
-        </PowerSelect>
+        <HostWrapper>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </HostWrapper>
       </template>,
     );
 
@@ -58,14 +61,16 @@ module('Integration | Helpers | selectChoose', function (hooks) {
     this.numbers = numbers;
     await render<NumbersContext<true>>(
       <template>
-        <PowerSelectMultiple
-          @options={{self.numbers}}
-          @selected={{self.selected}}
-          @onChange={{fn (mut self.selected)}}
-          as |option|
-        >
-          {{option}}
-        </PowerSelectMultiple>
+        <HostWrapper>
+          <PowerSelectMultiple
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelectMultiple>
+        </HostWrapper>
       </template>,
     );
 
@@ -94,14 +99,16 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
     this.numbers = numbers;
     await render<NumbersContext>(
       <template>
-        <PowerSelect
-          @options={{self.numbers}}
-          @selected={{self.selected}}
-          @onChange={{fn (mut self.selected)}}
-          as |option|
-        >
-          {{option}}
-        </PowerSelect>
+        <HostWrapper>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </HostWrapper>
       </template>,
     );
 
@@ -121,14 +128,16 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
     this.numbers = numbers;
     await render<NumbersContext>(
       <template>
-        <PowerSelect
-          @options={{self.numbers}}
-          @selected={{self.selected}}
-          @onChange={{fn (mut self.selected)}}
-          as |option|
-        >
-          {{option}}
-        </PowerSelect>
+        <HostWrapper>
+          <PowerSelect
+            @options={{self.numbers}}
+            @selected={{self.selected}}
+            @onChange={{fn (mut self.selected)}}
+            as |option|
+          >
+            {{option}}
+          </PowerSelect>
+        </HostWrapper>
       </template>,
     );
 

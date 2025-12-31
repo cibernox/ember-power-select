@@ -8,6 +8,7 @@ import type { Selected } from '#src/types.ts';
 import type { TestContext } from '@ember/test-helpers';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface Helpers {
   beforeInteraction: (trigger: Element, assert: Assert) => Promise<void>;
@@ -132,14 +133,16 @@ module(
         this.names = namesStartingWithA;
         await render<NamesContext>(
           <template>
-            <PowerSelect
-              @options={{self.names}}
-              @onChange={{fn (mut self.selected)}}
-              @selected={{self.selected}}
-              as |option|
-            >
-              {{option}}
-            </PowerSelect>
+            <HostWrapper>
+              <PowerSelect
+                @options={{self.names}}
+                @onChange={{fn (mut self.selected)}}
+                @selected={{self.selected}}
+                as |option|
+              >
+                {{option}}
+              </PowerSelect>
+            </HostWrapper>
           </template>,
         );
 
@@ -165,14 +168,16 @@ module(
         this.names = namesStartingWithA;
         await render<NamesContext>(
           <template>
-            <PowerSelect
-              @options={{self.names}}
-              @onChange={{fn (mut self.selected)}}
-              @selected={{self.selected}}
-              as |option|
-            >
-              {{option}}
-            </PowerSelect>
+            <HostWrapper>
+              <PowerSelect
+                @options={{self.names}}
+                @onChange={{fn (mut self.selected)}}
+                @selected={{self.selected}}
+                as |option|
+              >
+                {{option}}
+              </PowerSelect>
+            </HostWrapper>
           </template>,
         );
 
@@ -202,14 +207,16 @@ module(
         this.names = namesStartingWithA;
         await render<NamesContext>(
           <template>
-            <PowerSelect
-              @options={{self.names}}
-              @onChange={{fn (mut self.selected)}}
-              @selected={{self.selected}}
-              as |option|
-            >
-              {{option}}
-            </PowerSelect>
+            <HostWrapper>
+              <PowerSelect
+                @options={{self.names}}
+                @onChange={{fn (mut self.selected)}}
+                @selected={{self.selected}}
+                as |option|
+              >
+                {{option}}
+              </PowerSelect>
+            </HostWrapper>
           </template>,
         );
 
@@ -238,14 +245,16 @@ module(
         this.names = namesStartingWithA;
         await render<NamesContext>(
           <template>
-            <PowerSelect
-              @options={{self.names}}
-              @onChange={{fn (mut self.selected)}}
-              @selected={{self.selected}}
-              as |option|
-            >
-              {{option}}
-            </PowerSelect>
+            <HostWrapper>
+              <PowerSelect
+                @options={{self.names}}
+                @onChange={{fn (mut self.selected)}}
+                @selected={{self.selected}}
+                as |option|
+              >
+                {{option}}
+              </PowerSelect>
+            </HostWrapper>
           </template>,
         );
 
@@ -276,14 +285,16 @@ module(
         ];
         await render<GroupContext>(
           <template>
-            <PowerSelect
-              @options={{self.names}}
-              @onChange={{fn (mut self.selected)}}
-              @selected={{self.selected}}
-              as |option|
-            >
-              {{option}}
-            </PowerSelect>
+            <HostWrapper>
+              <PowerSelect
+                @options={{self.names}}
+                @onChange={{fn (mut self.selected)}}
+                @selected={{self.selected}}
+                as |option|
+              >
+                {{option}}
+              </PowerSelect>
+            </HostWrapper>
           </template>,
         );
         const trigger = this.element.querySelector(
