@@ -1,4 +1,4 @@
-import PowerSelectTriggerComponent from 'ember-power-select/components/power-select/trigger';
+import PowerSelectTriggerComponent from '#src/components/power-select/trigger.gts';
 
 export default class CustomTrigger<
   T,

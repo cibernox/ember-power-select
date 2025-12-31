@@ -1,4 +1,4 @@
-import PowerSelectOptionsComponent from 'ember-power-select/components/power-select/options';
+import PowerSelectOptionsComponent from '#src/components/power-select/options.gts';
 import type { Country, SelectedCountryExtra } from '../utils/constants';
 import { get } from '@ember/helper';
 

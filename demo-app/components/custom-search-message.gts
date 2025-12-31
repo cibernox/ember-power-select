@@ -1,4 +1,4 @@
-import PowerSelectSearchMessage from 'ember-power-select/components/power-select/search-message';
+import PowerSelectSearchMessage from '#src/components/power-select/search-message.gts';
 
 export default class CustomSearchMessage<
   T,

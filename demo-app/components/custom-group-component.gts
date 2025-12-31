@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { modifier } from 'ember-modifier';
-import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
+import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power-select/power-select-group.gts';
 
 export interface CustomGroupSignature<
   T,

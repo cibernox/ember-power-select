@@ -1,4 +1,4 @@
-import PowerSelectLabelComponent from 'ember-power-select/components/power-select/label';
+import PowerSelectLabelComponent from '#src/components/power-select/label.gts';
 
 export default class CustomLabelComponent<
   T,

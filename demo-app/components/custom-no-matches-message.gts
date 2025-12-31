@@ -1,4 +1,4 @@
-import PowerSelectNoMatchesMessage from 'ember-power-select/components/power-select/no-matches-message';
+import PowerSelectNoMatchesMessage from '#src/components/power-select/no-matches-message.gts';
 
 export default class CustomNoMatchesMessage<
   T,

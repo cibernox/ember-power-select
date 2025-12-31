@@ -1,7 +1,7 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { on } from '@ember/modifier';
-import type { PowerSelectTriggerSignature } from 'ember-power-select/components/power-select/trigger';
+import type { PowerSelectTriggerSignature } from '#src/components/power-select/trigger.gts';
 
 export default class CustomTriggerWithSearch extends Component<
   PowerSelectTriggerSignature<string>

@@ -1,4 +1,4 @@
-import PowerSelectPlaceholder from 'ember-power-select/components/power-select/placeholder';
+import PowerSelectPlaceholder from '#src/components/power-select/placeholder.gts';
 
 export default class CustomMultipleSearchPlaceholder<
   T,

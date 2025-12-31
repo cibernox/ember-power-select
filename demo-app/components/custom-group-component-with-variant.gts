@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import type { PowerSelectPowerSelectGroupSignature } from 'ember-power-select/components/power-select/power-select-group';
+import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power-select/power-select-group.gts';
 import type { GroupedNumbersWithCustomProperty } from '../utils/constants';
 
 export default class CustomGroupComponentWithVariant<

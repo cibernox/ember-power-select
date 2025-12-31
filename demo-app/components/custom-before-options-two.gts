@@ -1,4 +1,4 @@
-import PowerSelectBeforeOptionsComponent from 'ember-power-select/components/power-select/before-options';
+import PowerSelectBeforeOptionsComponent from '#src/components/power-select/before-options.gts';
 import type { SelectedCountryExtra } from '../utils/constants';
 import { on } from '@ember/modifier';
 

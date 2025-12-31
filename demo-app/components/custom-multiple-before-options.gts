@@ -1,4 +1,4 @@
-import type { PowerSelectBeforeOptionsSignature } from 'ember-power-select/components/power-select/before-options';
+import type { PowerSelectBeforeOptionsSignature } from '#src/components/power-select/before-options.gts';
 import type { Country, SelectedCountryExtra } from '../utils/constants';
 import and from 'ember-truth-helpers/helpers/and';
 import eq from 'ember-truth-helpers/helpers/eq';

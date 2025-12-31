@@ -1,4 +1,4 @@
-import type { PowerSelectAfterOptionsSignature } from 'ember-power-select/types';
+import type { PowerSelectAfterOptionsSignature } from '#src/types.ts';
 import type { Country, SelectedCountryExtra } from '../utils/constants';
 import type { TemplateOnlyComponent } from '@ember/component/template-only';
 

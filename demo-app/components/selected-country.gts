@@ -1,6 +1,6 @@
-import PowerSelectTriggerComponent from 'ember-power-select/components/power-select/trigger';
+import PowerSelectTriggerComponent from '#src/components/power-select/trigger.gts';
 import type { Country, SelectedCountryExtra } from '../utils/constants';
-import emberPowerSelectIsArray from 'ember-power-select/helpers/ember-power-select-is-array';
+import emberPowerSelectIsArray from '#src/helpers/ember-power-select-is-array.ts';
 
 export default class SelectedCountry<
   T extends boolean = false,

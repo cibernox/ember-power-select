@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import type { PowerSelectSelectedItemSignature } from 'ember-power-select/types';
+import type { PowerSelectSelectedItemSignature } from '#src/types.ts';
 import type { Country, SelectedCountryExtra } from '../utils/constants';
-import emberPowerSelectIsArray from 'ember-power-select/helpers/ember-power-select-is-array';
+import emberPowerSelectIsArray from '#src/helpers/ember-power-select-is-array.ts';
 
 type SelectedItemCountrySignature<IsMultiple extends boolean = false> =
   PowerSelectSelectedItemSignature<Country, SelectedCountryExtra, IsMultiple>;
