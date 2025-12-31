@@ -1,3 +1,3 @@
-import { JSONAPISerializer } from 'miragejs';
+// import { JSONAPISerializer } from 'miragejs';
 
-export default class extends JSONAPISerializer {}
+// export default class extends JSONAPISerializer {}

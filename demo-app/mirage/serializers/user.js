@@ -1,5 +1,5 @@
-import BaseSerializer from './application';
+// import BaseSerializer from './application';
 
-export default class extends BaseSerializer {
-  include = ['pets'];
-}
+// export default class extends BaseSerializer {
+//   include = ['pets'];
+// }

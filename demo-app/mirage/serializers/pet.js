@@ -1,3 +1,3 @@
-import BaseSerializer from './application';
+// import BaseSerializer from './application';
 
-export default class extends BaseSerializer {}
+// export default class extends BaseSerializer {}
