@@ -1,5 +1,10 @@
 {
-  "private": true,
+  "name": "ember-power-select",
+  "version": "8.12.1",
+  "description": "The extensible select component built for ember",
+  "keywords": [
+    "ember-addon"
+  ],
   "repository": {
     "type": "git",
     "url": "http://github.com/cibernox/ember-power-select.git"
@@ -9,42 +14,140 @@
     "name": "Miguel Camba",
     "email": "miguel.camba@gmail.com"
   },
-  "scripts": {
-    "build": "pnpm run --filter ember-power-select build",
-    "build:docs": "pnpm run --filter docs build",
-    "lint": "pnpm run --filter '*' lint",
-    "lint:fix": "pnpm run --filter '*' lint:fix",
-    "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefixColors auto",
-    "start:addon": "pnpm run --filter ember-power-select start --no-watch.clearScreen",
-    "start:docs": "pnpm run --filter docs start --preserveWatchOutput",
-    "start:test-app": "pnpm run --filter test-app start",
-    "test:ember": "pnpm --filter '*' test:ember"
+  "imports": {
+    "#src/*": "./src/*"
   },
-  "packageManager": "pnpm@10.22.0",
-  "devDependencies": {
-    "@release-it-plugins/lerna-changelog": "^8.0.1",
-    "@release-it-plugins/workspaces": "^5.0.3",
-    "concurrently": "^9.2.1",
-    "prettier": "^3.7.4",
-    "prettier-plugin-ember-template-tag": "^2.1.2",
-    "release-it": "^19.0.6",
-    "typescript": "^5.9.3"
+  "exports": {
+    ".": {
+      "types": "./declarations/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./addon-main.js": "./addon-main.cjs",
+    "./*.css": "./dist/*.css",
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*.js"
+    },
+    "./ember-power-select.less": "./ember-power-select.less",
+    "./ember-power-select.scss": "./ember-power-select.scss",
+    "./_index.scss": "./_index.scss",
+    "./less/base.less": "./less/base.less",
+    "./scss/base.scss": "./scss/base.scss",
+    "./less/variables.less": "./less/variables.less",
+    "./scss/variables.scss": "./scss/variables.scss",
+    "./vendor/*": "./dist/vendor/*"
   },
-  "workspaces": [
-    "ember-power-select",
-    "test-app",
-    "docs"
+  "files": [
+    "_index.scss",
+    "addon-main.cjs",
+    "declarations",
+    "dist",
+    "ember-power-select.less",
+    "ember-power-select.scss",
+    "less",
+    "scss",
+    "src"
   ],
-  "engines": {
-    "node": ">= 18"
+  "scripts": {
+    "build": "rollup --config",
+    "format": "prettier . --cache --write",
+    "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
+    "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm run format",
+    "lint:format": "prettier . --cache --check",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "lint:types": "ember-tsc --noEmit",
+    "prepack": "rollup --config",
+    "start": "vite dev",
+    "test": "vite build --mode=development --out-dir dist-tests && testem --file testem.cjs ci --port 0"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.10.2",
+    "decorator-transforms": "^2.3.0",
+    "ember-element-helper": "^0.8.8",
+    "ember-modifier": "^4.2.2",
+    "ember-truth-helpers": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/plugin-transform-typescript": "^7.25.2",
+    "@babel/runtime": "^7.25.6",
+    "@ember-data/legacy-compat": "5.8.0",
+    "@ember-data/model": "5.8.0",
+    "@ember-data/request": "5.8.0",
+    "@ember-data/request-utils": "5.8.0",
+    "@ember-data/store": "5.8.0",
+    "@ember/app-tsconfig": "^1.0.0",
+    "@ember/library-tsconfig": "^1.0.0",
+    "@ember/string": "^4.0.1",
+    "@ember/test-helpers": "^5.2.1",
+    "@ember/test-waiters": "^4.1.1",
+    "@embroider/addon-dev": "^8.1.0",
+    "@embroider/compat": "^4.1.0",
+    "@embroider/core": "^4.1.0",
+    "@embroider/macros": "^1.18.0",
+    "@embroider/vite": "^1.1.5",
+    "@eslint/js": "^9.17.0",
+    "@glimmer/component": "^2.0.0",
+    "@glint/ember-tsc": "^1.0.3",
+    "@glint/template": "^1.6.1",
+    "@glint/tsserver-plugin": "^2.0.0",
+    "@release-it-plugins/lerna-changelog": "^8.0.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@types/qunit": "^2.19.12",
+    "@types/rsvp": "^4.0.9",
+    "babel-plugin-ember-template-compilation": "^2.2.5",
+    "concurrently": "^9.0.1",
+    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#4cd4d48350315337188361c25e29c440eaca698b",
+    "ember-cli-mirage": "^3.0.4",
+    "ember-concurrency": "^5.1.0",
+    "ember-data": "5.8.0",
+    "ember-lifeline": "^7.0.0",
+    "ember-modifier": "^4.2.2",
+    "ember-page-title": "^9.0.3",
+    "ember-route-template": "^1.0.3",
+    "ember-qunit": "^9.0.2",
+    "ember-source": "^6.7.0",
+    "ember-strict-application-resolver": "^0.1.0",
+    "ember-template-lint": "^7.9.0",
+    "ember-truth-helpers": "^5.0.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-ember": "^12.3.3",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.15.1",
+    "globals": "^16.1.0",
+    "postcss": "^8.5.6",
+    "prettier": "^3.4.2",
+    "prettier-plugin-ember-template-tag": "^2.0.4",
+    "qunit": "^2.24.1",
+    "qunit-dom": "^3.4.0",
+    "release-it": "^19.1.0",
+    "rollup": "^4.22.5",
+    "rollup-plugin-sass": "^1.15.3",
+    "rsvp": "^4.8.5",
+    "sass-embedded": "^1.97.1",
+    "sass": "^1.94.2",
+    "testem": "^3.15.1",
+    "tracked-built-ins": "^4.1.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.19.1",
+    "vite": "^7.1.9"
+  },
+  "peerDependencies": {
+    "@ember/test-helpers": "^5.0.0",
+    "@glimmer/component": "^2.0.0",
+    "ember-basic-dropdown": "^8.11.0",
+    "ember-concurrency": "^5.1.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   },
   "release-it": {
     "plugins": {
-      "@release-it-plugins/workspaces": {
-        "workspaces": [
-          "ember-power-select"
-        ]
-      },
       "@release-it-plugins/lerna-changelog": {
         "infile": "CHANGELOG.md"
       }
@@ -58,5 +161,30 @@
     },
     "npm": false
   },
-  "version": "8.12.1"
+  "packageManager": "pnpm@10.26.1",
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/power-select-multiple.js": "./dist/_app_/components/power-select-multiple.js",
+      "./components/power-select.js": "./dist/_app_/components/power-select.js",
+      "./components/power-select/before-options.js": "./dist/_app_/components/power-select/before-options.js",
+      "./components/power-select/input.js": "./dist/_app_/components/power-select/input.js",
+      "./components/power-select/label.js": "./dist/_app_/components/power-select/label.js",
+      "./components/power-select/no-matches-message.js": "./dist/_app_/components/power-select/no-matches-message.js",
+      "./components/power-select/options.js": "./dist/_app_/components/power-select/options.js",
+      "./components/power-select/placeholder.js": "./dist/_app_/components/power-select/placeholder.js",
+      "./components/power-select/power-select-group.js": "./dist/_app_/components/power-select/power-select-group.js",
+      "./components/power-select/search-message.js": "./dist/_app_/components/power-select/search-message.js",
+      "./components/power-select/trigger.js": "./dist/_app_/components/power-select/trigger.js",
+      "./helpers/ember-power-select-is-array.js": "./dist/_app_/helpers/ember-power-select-is-array.js",
+      "./helpers/ember-power-select-is-equal.js": "./dist/_app_/helpers/ember-power-select-is-equal.js",
+      "./helpers/ember-power-select-is-group.js": "./dist/_app_/helpers/ember-power-select-is-group.js",
+      "./helpers/ember-power-select-is-selected-present.js": "./dist/_app_/helpers/ember-power-select-is-selected-present.js"
+    }
+  }
 }

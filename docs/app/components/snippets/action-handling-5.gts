@@ -33,6 +33,7 @@ export default class extends Component {
   }
 
   <template>
+    {{! template-lint-disable no-inline-styles require-input-label }}
     <input
       type="text"
       placeholder="Focus me and press TAB to focus the select"

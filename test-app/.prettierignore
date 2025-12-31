@@ -1,9 +1,0 @@
-# Prettier is also run from each package, so the ignores here
-# protect against files that may not be within a package
-
-# misc
-!.*
-.*/
-/pnpm-lock.yaml
-ember-cli-update.json
-*.html

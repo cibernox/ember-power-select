@@ -7,6 +7,7 @@ export default class extends Component {
   name = this.names[3];
 
   <template>
+    {{! template-lint-disable no-inline-styles }}
     <PowerSelect
       @options={{this.names}}
       @selected={{this.name}}
