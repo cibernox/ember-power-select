@@ -12,9 +12,19 @@ import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../demo-app/components/host-wrapper.gts';
 
 interface Context extends TestContext {
+  element: HTMLElement;
   numbers: string[];
   fooMultiple: () => void;
   foo: () => void;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module('Integration | Helpers', function (hooks) {
@@ -41,10 +51,20 @@ module('Integration | Helpers', function (hooks) {
       </template>,
     );
 
-    await clickTrigger();
-    await typeInSearch('one');
+    await clickTrigger(
+      getRootNode(this.element).querySelector(
+        '.ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+    await typeInSearch('', 'one', getRootNode(this.element));
 
-    assert.ok(findContains('.ember-power-select-option', 'one'));
+    assert.ok(
+      findContains(
+        '.ember-power-select-option',
+        'one',
+        getRootNode(this.element),
+      ),
+    );
   });
 
   test<Context>('typeInSearch scopes the input to the provided one if the passed arguments are two', async function (assert) {
@@ -80,9 +100,19 @@ module('Integration | Helpers', function (hooks) {
       </template>,
     );
 
-    await clickTrigger('#single-select');
-    await typeInSearch('#single-select', 'one');
+    await clickTrigger(
+      getRootNode(this.element).querySelector(
+        '#single-select .ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+    await typeInSearch('#single-select', 'one', getRootNode(this.element));
 
-    assert.ok(findContains('#single-select .ember-power-select-option', 'one'));
+    assert.ok(
+      findContains(
+        '#single-select .ember-power-select-option',
+        'one',
+        getRootNode(this.element),
+      ),
+    );
   });
 });

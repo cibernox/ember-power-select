@@ -48,5 +48,8 @@ export const defaultBasicDropdownConfig: Config = {
     import.meta.env.VITE_SHADOW_DOM_BUILD === 'true'
       ? '#ember-basic-dropdown-wormhole'
       : '#ember-testing',
-  destination: 'ember-testing', // Workaround, because embroider.isTesting isn't working
+  destination:
+    import.meta.env.VITE_SHADOW_DOM_BUILD === 'true'
+      ? 'ember-basic-dropdown-wormhole'
+      : 'ember-testing', // Workaround, because embroider.isTesting isn't working
 };

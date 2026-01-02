@@ -29,7 +29,7 @@ const WITH_EPS_CLOSED: Helpers = {
     await focus(trigger);
     assert.dom(trigger).hasText('', 'no value selected');
     assert
-      .dom('.ember-power-select-dropdown')
+      .dom('.ember-power-select-dropdown', getRootNode(trigger))
       .doesNotExist('The dropdown is closed');
   },
 
@@ -41,7 +41,7 @@ const WITH_EPS_CLOSED: Helpers = {
     // -1 adjust the position for the implicit placeholder
     assert.dom(trigger).hasText(value ?? '');
     assert
-      .dom('.ember-power-select-dropdown')
+      .dom('.ember-power-select-dropdown', getRootNode(trigger))
       .doesNotExist('The dropdown is still closed');
   },
 
@@ -56,9 +56,15 @@ const WITH_EPS_CLOSED: Helpers = {
 };
 
 const WITH_EPS_OPEN: Helpers = {
-  async beforeInteraction(_trigger: Element, assert: Assert) {
-    await clickTrigger();
-    assert.dom('.ember-power-select-dropdown').exists('The dropdown is open');
+  async beforeInteraction(trigger: Element, assert: Assert) {
+    await clickTrigger(
+      getRootNode(trigger).querySelector(
+        '.ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+    assert
+      .dom('.ember-power-select-dropdown', getRootNode(trigger))
+      .exists('The dropdown is open');
   },
 
   checkSelectedValue(
@@ -68,10 +74,13 @@ const WITH_EPS_OPEN: Helpers = {
   ) {
     assert.dom(trigger).hasText('', 'nothing is selected');
     assert
-      .dom('.ember-power-select-option[aria-current=true]')
+      .dom(
+        '.ember-power-select-option[aria-current=true]',
+        getRootNode(trigger),
+      )
       .hasText(value ?? '');
     assert
-      .dom('.ember-power-select-dropdown')
+      .dom('.ember-power-select-dropdown', getRootNode(trigger))
       .exists('The dropdown is still open');
   },
 
@@ -116,6 +125,15 @@ interface GroupContext extends TestContext {
   selected: Selected<Group>;
 }
 
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
+}
+
 module(
   'Integration | Component | Ember Power Select (Type Ahead Native Behaviour)',
   function (hooks) {
@@ -146,7 +164,7 @@ module(
           </template>,
         );
 
-        const trigger = this.element.querySelector(
+        const trigger = getRootNode(this.element).querySelector(
           '.ember-power-select-trigger',
         );
         if (trigger) {
@@ -181,7 +199,7 @@ module(
           </template>,
         );
 
-        const trigger = this.element.querySelector(
+        const trigger = getRootNode(this.element).querySelector(
           '.ember-power-select-trigger',
         );
         if (trigger) {
@@ -220,7 +238,7 @@ module(
           </template>,
         );
 
-        const trigger = this.element.querySelector(
+        const trigger = getRootNode(this.element).querySelector(
           '.ember-power-select-trigger',
         );
         if (trigger) {
@@ -258,7 +276,7 @@ module(
           </template>,
         );
 
-        const trigger = this.element.querySelector(
+        const trigger = getRootNode(this.element).querySelector(
           '.ember-power-select-trigger',
         );
         if (trigger) {
@@ -297,7 +315,7 @@ module(
             </HostWrapper>
           </template>,
         );
-        const trigger = this.element.querySelector(
+        const trigger = getRootNode(this.element).querySelector(
           '.ember-power-select-trigger',
         );
         if (trigger) {

@@ -9,15 +9,26 @@ import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface CountryContext extends TestContext {
+  element: HTMLElement;
   foo: () => void;
   countries: typeof countries;
   country: Selected<Country>;
 }
 
 interface CountryMultipleContext extends TestContext {
+  element: HTMLElement;
   foo: () => void;
   countries: typeof countries;
   country: MultipleSelected<Country>;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module(
@@ -51,7 +62,7 @@ module(
       );
 
       assert
-        .dom('.ember-basic-dropdown-trigger')
+        .dom('.ember-basic-dropdown-trigger', getRootNode(this.element))
         .hasClass('foo', 'Class was added.');
     });
 
@@ -80,7 +91,7 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasClass('country-single-trigger', 'Class was added.');
     });
 
@@ -111,7 +122,7 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasClass('country-multiple-trigger', 'Class was added.');
     });
 
@@ -143,7 +154,7 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('id', 'this-is-my-id', 'The `id` was added.');
     });
 
@@ -174,7 +185,7 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('id', 'this-is-my-id', 'The `id` was added.');
     });
   },

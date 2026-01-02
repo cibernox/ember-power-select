@@ -35,6 +35,7 @@ import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 interface CountryContext<
   IsMultiple extends boolean = false,
 > extends TestContext {
+  element: HTMLElement;
   foo: () => void;
   countries: typeof countries;
   country: Selected<Country, IsMultiple>;
@@ -66,11 +67,21 @@ interface CountryContext<
 interface GroupedNumbersContext<
   IsMultiple extends boolean = false,
 > extends TestContext {
+  element: HTMLElement;
   foo: (selected: string | undefined) => void;
   groupedNumbers: GroupedNumber[];
   groupComponent: ComponentLike<
     PowerSelectPowerSelectGroupSignature<GroupedNumber, unknown, IsMultiple>
   >;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module(
@@ -105,13 +116,16 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-status-icon')
+        .dom('.ember-power-select-status-icon', getRootNode(this.element))
         .doesNotExist('The provided trigger component is not rendered');
       assert
-        .dom('.ember-power-select-trigger .icon-flag')
+        .dom(
+          '.ember-power-select-trigger .icon-flag',
+          getRootNode(this.element),
+        )
         .exists('The custom flag appears.');
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasText('Spain', 'With the country name as the text.');
     });
 
@@ -141,13 +155,17 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       assert
-        .dom('.ember-power-select-options')
+        .dom('.ember-power-select-options', getRootNode(this.element))
         .includesText('Countries:', 'The given component is rendered');
       assert
-        .dom('.ember-power-select-options')
+        .dom('.ember-power-select-options', getRootNode(this.element))
         .includesText('3. Russia', 'The component has access to the options');
     });
 
@@ -180,21 +198,34 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       assert
-        .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
+        .dom(
+          '.ember-power-select-dropdown #custom-before-options-p-tag',
+          getRootNode(this.element),
+        )
         .exists(
           'The custom component is rendered instead of the usual search bar',
         );
       assert
-        .dom('.ember-power-select-dropdown #custom-before-options-p-tag')
+        .dom(
+          '.ember-power-select-dropdown #custom-before-options-p-tag',
+          getRootNode(this.element),
+        )
         .hasText('inception', 'The placeholder attribute is passed through.');
       assert
-        .dom('.ember-power-select-dropdown .ember-power-select-placeholder')
+        .dom(
+          '.ember-power-select-dropdown .ember-power-select-placeholder',
+          getRootNode(this.element),
+        )
         .exists('The placeholder component is passed through.');
       assert
-        .dom('.ember-power-select-search-input')
+        .dom('.ember-power-select-search-input', getRootNode(this.element))
         .doesNotExist('The search input is not visible');
     });
 
@@ -224,9 +255,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-dropdown #custom-search-message-p-tag')
+        .dom(
+          '.ember-power-select-dropdown #custom-search-message-p-tag',
+          getRootNode(this.element),
+        )
         .exists(
           'The custom component is rendered instead of the usual message',
         );
@@ -259,14 +297,23 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       assert
-        .dom('.ember-power-select-dropdown #custom-no-matches-message-p-tag')
+        .dom(
+          '.ember-power-select-dropdown #custom-no-matches-message-p-tag',
+          getRootNode(this.element),
+        )
         .exists(
           'The custom component is rendered instead of the usual message',
         );
-      assert.dom('#custom-no-matches-message-p-tag').hasText('Nope');
+      assert
+        .dom('#custom-no-matches-message-p-tag', getRootNode(this.element))
+        .hasText('Nope');
     });
 
     test<CountryContext>('overwriting `power-select/placeholder` works', async function (assert) {
@@ -295,10 +342,10 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-placeholder')
+        .dom('.ember-power-select-placeholder', getRootNode(this.element))
         .exists('The placeholder appears.');
       assert
-        .dom('.ember-power-select-placeholder')
+        .dom('.ember-power-select-placeholder', getRootNode(this.element))
         .hasText(
           'This is a very bold placeholder',
           'The placeholder content is equal.',
@@ -330,9 +377,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-options .custom-component')
+        .dom(
+          '.ember-power-select-options .custom-component',
+          getRootNode(this.element),
+        )
         .exists({ count: numberOfGroups });
     });
 
@@ -367,10 +421,17 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       assert
-        .dom('.ember-power-select-trigger .cool-flag-icon')
+        .dom(
+          '.ember-power-select-trigger .cool-flag-icon',
+          getRootNode(this.element),
+        )
         .exists(
           { count: 1 },
           'The custom triggerComponent renders with the extra.coolFlagIcon customization option triggering some state change.',

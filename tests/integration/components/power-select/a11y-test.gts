@@ -21,16 +21,19 @@ import { fn } from '@ember/helper';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface GroupedNumbersContext extends TestContext {
+  element: HTMLElement;
   foo: (selected: string | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
 }
 
 interface GroupedNumbersMultipleContext extends TestContext {
+  element: HTMLElement;
   foo: (selected: string[]) => void;
   groupedNumbers: typeof groupedNumbers;
 }
 
 interface NumbersContext extends TestContext {
+  element: HTMLElement;
   numbers: typeof numbers;
   selected: Selected<string>;
   role?: string;
@@ -38,12 +41,14 @@ interface NumbersContext extends TestContext {
 }
 
 interface NumbersMultipleContext extends TestContext {
+  element: HTMLElement;
   numbers: typeof numbers;
   selected: MultipleSelected<string>;
   onChange: (selection: MultipleSelected<string>) => void;
 }
 
 interface CountriesContext extends TestContext {
+  element: HTMLElement;
   countries: typeof countries;
   role: string;
   country: Selected<Country>;
@@ -51,13 +56,24 @@ interface CountriesContext extends TestContext {
 }
 
 interface CountriesWithDisabledContext extends TestContext {
+  element: HTMLElement;
   countriesWithDisabled: typeof countriesWithDisabled;
   foo: (selected: Selected<Country>) => void;
 }
 
 interface CountriesWithDisabledMultipleContext extends TestContext {
+  element: HTMLElement;
   countriesWithDisabled: typeof countriesWithDisabled;
   foo: (selected: MultipleSelected<Country>) => void;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module(
@@ -86,15 +102,22 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-dropdown > .ember-power-select-options')
+        .dom(
+          '.ember-power-select-dropdown > .ember-power-select-options',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'role',
           'listbox',
           'The top-level list has `role=listbox`',
         );
-      const nestedOptionList = document.querySelectorAll(
+      const nestedOptionList = getRootNode(this.element).querySelectorAll(
         '.ember-power-select-options .ember-power-select-options',
       );
       [].slice
@@ -123,15 +146,22 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-dropdown > .ember-power-select-options')
+        .dom(
+          '.ember-power-select-dropdown > .ember-power-select-options',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'role',
           'listbox',
           'The top-level list has `role=listbox`',
         );
-      const nestedOptionList = document.querySelectorAll(
+      const nestedOptionList = getRootNode(this.element).querySelectorAll(
         '.ember-power-select-options .ember-power-select-options',
       );
       [].slice
@@ -160,10 +190,18 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       [].slice
-        .call(document.querySelectorAll('.ember-power-select-option'))
+        .call(
+          getRootNode(this.element).querySelectorAll(
+            '.ember-power-select-option',
+          ),
+        )
         .forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
     });
 
@@ -188,10 +226,18 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       [].slice
-        .call(document.querySelectorAll('.ember-power-select-option'))
+        .call(
+          getRootNode(this.element).querySelectorAll(
+            '.ember-power-select-option',
+          ),
+        )
         .forEach((e) => assert.dom(e).hasAttribute('role', 'option'));
     });
 
@@ -219,16 +265,29 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom(findContains('.ember-power-select-option', 'two'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'two',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-selected',
           'true',
           'the selected option has aria-selected=true',
         );
       assert
-        .dom('.ember-power-select-option[aria-selected="false"]')
+        .dom(
+          '.ember-power-select-option[aria-selected="false"]',
+          getRootNode(this.element),
+        )
         .exists(
           { count: numbers.length - 1 },
           'All other options have aria-selected=false',
@@ -259,23 +318,42 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom(findContains('.ember-power-select-option', 'two'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'two',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-selected',
           'true',
           'the first selected option has aria-selected=true',
         );
       assert
-        .dom(findContains('.ember-power-select-option', 'four'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'four',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-selected',
           'true',
           'the second selected option has aria-selected=true',
         );
       assert
-        .dom('.ember-power-select-option[aria-selected="false"]')
+        .dom(
+          '.ember-power-select-option[aria-selected="false"]',
+          getRootNode(this.element),
+        )
         .exists(
           { count: numbers.length - 2 },
           'All other options have aria-selected=false',
@@ -304,30 +382,61 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom(findContains('.ember-power-select-option', 'one'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'one',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-current',
           'true',
           'the highlighted option has aria-current=true',
         );
       assert
-        .dom('.ember-power-select-option[aria-current="false"]')
+        .dom(
+          '.ember-power-select-option[aria-current="false"]',
+          getRootNode(this.element),
+        )
         .exists(
           { count: numbers.length - 1 },
           'All other options have aria-current=false',
         );
-      await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+      await triggerKeyEvent(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-search-input',
+        ) as HTMLElement,
+        'keydown',
+        40,
+      );
       assert
-        .dom(findContains('.ember-power-select-option', 'one'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'one',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-current',
           'false',
           'the first option has now aria-current=false',
         );
       assert
-        .dom(findContains('.ember-power-select-option', 'two'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'two',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-current',
           'true',
@@ -357,30 +466,61 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom(findContains('.ember-power-select-option', 'one'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'one',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-current',
           'true',
           'the highlighted option has aria-current=true',
         );
       assert
-        .dom('.ember-power-select-option[aria-current="false"]')
+        .dom(
+          '.ember-power-select-option[aria-current="false"]',
+          getRootNode(this.element),
+        )
         .exists(
           { count: numbers.length - 1 },
           'All other options have aria-current=false',
         );
-      await triggerKeyEvent('.ember-power-select-search-input', 'keydown', 40);
+      await triggerKeyEvent(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-search-input',
+        ) as HTMLElement,
+        'keydown',
+        40,
+      );
       assert
-        .dom(findContains('.ember-power-select-option', 'one'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'one',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-current',
           'false',
           'the first option has now aria-current=false',
         );
       assert
-        .dom(findContains('.ember-power-select-option', 'two'))
+        .dom(
+          findContains(
+            '.ember-power-select-option',
+            'two',
+            getRootNode(this.element),
+          ),
+        )
         .hasAttribute(
           'aria-current',
           'true',
@@ -410,9 +550,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option[aria-disabled=true]')
+        .dom(
+          '.ember-power-select-option[aria-disabled=true]',
+          getRootNode(this.element),
+        )
         .exists({ count: 3 }, 'Three of them are disabled');
     });
 
@@ -438,9 +585,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option[aria-disabled=true]')
+        .dom(
+          '.ember-power-select-option[aria-disabled=true]',
+          getRootNode(this.element),
+        )
         .exists({ count: 3 }, 'Three of them are disabled');
     });
 
@@ -465,9 +619,13 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('role', 'combobox', 'The trigger has role combobox');
     });
 
@@ -492,9 +650,13 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('role', 'combobox', 'The trigger has role combobox');
     });
 
@@ -520,11 +682,15 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-expanded', 'false', 'Not expanded');
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-expanded', 'true', 'Expanded');
     });
 
@@ -550,11 +716,15 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-expanded', 'false', 'Not expanded');
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-expanded', 'true', 'Expanded');
     });
 
@@ -579,9 +749,13 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-options')
+        .dom('.ember-power-select-options', getRootNode(this.element))
         .hasAttribute(
           'id',
           /^ember-power-select-options-ember\d+$/,
@@ -610,9 +784,13 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-options')
+        .dom('.ember-power-select-options', getRootNode(this.element))
         .hasAttribute(
           'id',
           /^ember-power-select-options-ember\d+$/,
@@ -642,12 +820,17 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+
       assert
-        .dom('.ember-power-select-search-input')
+        .dom('.ember-power-select-search-input', getRootNode(this.element))
         .hasAttribute('type', 'search', 'The type of the input is `search`');
       assert
-        .dom('.ember-power-select-search-input')
+        .dom('.ember-power-select-search-input', getRootNode(this.element))
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
@@ -677,12 +860,22 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom(
+          '.ember-power-select-trigger-multiple-input',
+          getRootNode(this.element),
+        )
         .hasAttribute('type', 'search', 'The type of the input is `search`');
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom(
+          '.ember-power-select-trigger-multiple-input',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
@@ -713,7 +906,11 @@ module(
       );
 
       [].slice
-        .call(document.querySelectorAll('.ember-power-select-multiple-option'))
+        .call(
+          getRootNode(this.element).querySelectorAll(
+            '.ember-power-select-multiple-option',
+          ),
+        )
         .forEach((e: HTMLElement) => {
           assert.strictEqual(e.tagName, 'LI', 'The element is a list item');
           assert.strictEqual(
@@ -765,17 +962,17 @@ module(
         </template>,
       );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-label',
           'ariaLabelString',
           'aria-label set correctly',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-invalid', 'true', 'aria-invalid set correctly');
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-required', 'true', 'aria-required set correctly');
     });
 
@@ -803,17 +1000,17 @@ module(
         </template>,
       );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-label',
           'ariaLabelString',
           'aria-label set correctly',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-invalid', 'true', 'aria-invalid set correctly');
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-required', 'true', 'aria-required set correctly');
     });
 
@@ -840,14 +1037,14 @@ module(
         </template>,
       );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-describedby',
           'ariaDescribedByString',
           'aria-describedby set correctly',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-labelledby',
           'ariaLabelledByString',
@@ -878,14 +1075,14 @@ module(
         </template>,
       );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-describedby',
           'ariaDescribedByString',
           'aria-describedby set correctly',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-labelledby',
           'ariaLabelledByString',
@@ -920,11 +1117,11 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('role', role, 'The `role` was added.');
       this.set('role', undefined);
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'role',
           'combobox',
@@ -954,24 +1151,28 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('aria-haspopup', 'listbox');
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-owns',
-          document.querySelector(
+          getRootNode(this.element).querySelector(
             '.ember-power-select-dropdown .ember-power-select-options',
           )?.id ?? '',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-controls',
-          document.querySelector(
+          getRootNode(this.element).querySelector(
             '.ember-power-select-dropdown .ember-power-select-options',
           )?.id ?? '',
         );
@@ -999,24 +1200,33 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
-      assert.dom('.ember-power-select-trigger').hasNoAttribute('aria-haspopup');
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
+        .hasNoAttribute('aria-haspopup');
+      assert
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-dropdown')?.id ?? '',
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-dropdown',
+          )?.id ?? '',
         );
 
       assert
-        .dom('.ember-power-select-search-input')
+        .dom('.ember-power-select-search-input', getRootNode(this.element))
         .hasAttribute('aria-haspopup', 'listbox');
       assert
-        .dom('.ember-power-select-search-input')
+        .dom('.ember-power-select-search-input', getRootNode(this.element))
         .hasAttribute(
           'aria-controls',
-          document.querySelector('.ember-power-select-options')?.id ?? '',
+          getRootNode(this.element).querySelector('.ember-power-select-options')
+            ?.id ?? '',
         );
     });
 
@@ -1042,45 +1252,56 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasNoAttribute(
           'aria-activedescendant',
           'aria-activedescendant is not present when the dropdown is closed',
         );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       // by default, the first option is highlighted and marked as aria-activedescendant
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasAttribute(
           'aria-current',
           'true',
           'The first element is highlighted',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)')
-            ?.id ?? '',
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-option:nth-child(1)',
+          )?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
       await triggerEvent(
-        '.ember-power-select-option:nth-child(4)',
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-option:nth-child(4)',
+        ) as HTMLElement,
         'mouseover',
       );
 
       assert
-        .dom('.ember-power-select-option:nth-child(4)')
+        .dom(
+          '.ember-power-select-option:nth-child(4)',
+          getRootNode(this.element),
+        )
         .hasAttribute('aria-current', 'true', 'The 4th element is highlighted');
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)')
-            ?.id ?? '',
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-option:nth-child(4)',
+          )?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });
@@ -1108,23 +1329,27 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasNoAttribute(
           'aria-activedescendant',
           'aria-activedescendant is not present when the dropdown is closed',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-haspopup',
           'listbox',
           'aria-haspopup is present on the trigger',
         );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
@@ -1133,35 +1358,42 @@ module(
 
       // by default, the first option is highlighted and marked as aria-activedescendant
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasAttribute(
           'aria-current',
           'true',
           'The first element is highlighted',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)')
-            ?.id ?? '',
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-option:nth-child(1)',
+          )?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
       await triggerEvent(
-        '.ember-power-select-option:nth-child(4)',
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-option:nth-child(4)',
+        ) as HTMLElement,
         'mouseover',
       );
 
       assert
-        .dom('.ember-power-select-option:nth-child(4)')
+        .dom(
+          '.ember-power-select-option:nth-child(4)',
+          getRootNode(this.element),
+        )
         .hasAttribute('aria-current', 'true', 'The 4th element is highlighted');
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)')
-            ?.id ?? '',
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-option:nth-child(4)',
+          )?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });
@@ -1189,43 +1421,56 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute(
           'aria-controls',
           /^ember-basic-dropdown-content-ember\d+$/,
           'The trigger has aria-controls value',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasNoAttribute(
           'aria-activedescendant',
           'aria-activedescendant is not present on the trigger',
         );
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasNoAttribute(
           'aria-haspopup',
           'aria-haspopup is not present on the trigger',
         );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom(
+          '.ember-power-select-trigger-multiple-input',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'aria-controls',
           /^ember-power-select-options-ember\d+$/,
           'Multi select search box has aria-controls value',
         );
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom(
+          '.ember-power-select-trigger-multiple-input',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'aria-haspopup',
           'listbox',
           'Multi select search box has aria-haspopup value',
         );
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom(
+          '.ember-power-select-trigger-multiple-input',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'aria-expanded',
           'true',
@@ -1234,35 +1479,48 @@ module(
 
       // by default, the first option is highlighted and marked as aria-activedescendant
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasAttribute(
           'aria-current',
           'true',
           'The first element is highlighted',
         );
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom(
+          '.ember-power-select-trigger-multiple-input',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(1)')
-            ?.id ?? '',
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-option:nth-child(1)',
+          )?.id ?? '',
           'The first element is the aria-activedescendant',
         );
 
       await triggerEvent(
-        '.ember-power-select-option:nth-child(4)',
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-option:nth-child(4)',
+        ) as HTMLElement,
         'mouseover',
       );
 
       assert
-        .dom('.ember-power-select-option:nth-child(4)')
+        .dom(
+          '.ember-power-select-option:nth-child(4)',
+          getRootNode(this.element),
+        )
         .hasAttribute('aria-current', 'true', 'The 4th element is highlighted');
       assert
-        .dom('.ember-power-select-trigger-multiple-input')
+        .dom(
+          '.ember-power-select-trigger-multiple-input',
+          getRootNode(this.element),
+        )
         .hasAttribute(
           'aria-activedescendant',
-          document.querySelector('.ember-power-select-option:nth-child(4)')
-            ?.id ?? '',
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-option:nth-child(4)',
+          )?.id ?? '',
           'The 4th element is the aria-activedescendant',
         );
     });

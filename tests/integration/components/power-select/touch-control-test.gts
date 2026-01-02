@@ -15,6 +15,7 @@ import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 interface NumbersContext<
   IsMultiple extends boolean = false,
 > extends TestContext {
+  element: HTMLElement;
   numbers: typeof numbers;
   selected: Selected<string, IsMultiple>;
   foo: (
@@ -22,6 +23,15 @@ interface NumbersContext<
     select: Select<string, IsMultiple>,
     event?: Event,
   ) => void;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module(
@@ -50,8 +60,14 @@ module(
         </template>,
       );
 
-      await tap('.ember-power-select-trigger');
-      assert.dom('.ember-power-select-options').exists('The dropdown is shown');
+      await tap(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      assert
+        .dom('.ember-power-select-options', getRootNode(this.element))
+        .exists('The dropdown is shown');
     });
 
     test<NumbersContext>('Touch on option should select it', async function (assert) {
@@ -75,14 +91,20 @@ module(
         </template>,
       );
 
-      await tap('.ember-power-select-trigger');
-      const element = document.querySelectorAll(
+      await tap(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      const element = getRootNode(this.element).querySelectorAll(
         '.ember-power-select-option',
       )[3];
       if (element) {
         await tap(element);
       }
-      assert.dom('.ember-power-select-selected-item').hasText('four');
+      assert
+        .dom('.ember-power-select-selected-item', getRootNode(this.element))
+        .hasText('four');
     });
 
     test<NumbersContext>('Touch on custom option should select it', async function (assert) {
@@ -106,12 +128,20 @@ module(
         </template>,
       );
 
-      await tap('.ember-power-select-trigger');
-      const element = document.querySelectorAll('.super-fancy')[3];
+      await tap(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      const element = getRootNode(this.element).querySelectorAll(
+        '.super-fancy',
+      )[3];
       if (element) {
         await tap(element);
       }
-      assert.dom('.ember-power-select-selected-item').hasText('four');
+      assert
+        .dom('.ember-power-select-selected-item', getRootNode(this.element))
+        .hasText('four');
     });
 
     test<NumbersContext>('Touch on clear button should deselect it', async function (assert) {
@@ -137,8 +167,14 @@ module(
         </template>,
       );
 
-      await tap('.ember-power-select-clear-btn');
-      assert.dom('.ember-power-select-selected-item').doesNotExist();
+      await tap(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-clear-btn',
+        ) as HTMLElement,
+      );
+      assert
+        .dom('.ember-power-select-selected-item', getRootNode(this.element))
+        .doesNotExist();
     });
 
     test<NumbersContext>('Scrolling (touchstart + touchmove + touchend) should not select the option', async function (assert) {
@@ -163,8 +199,14 @@ module(
         </template>,
       );
 
-      await tap('.ember-power-select-trigger');
-      const option = document.querySelectorAll('.ember-power-select-option')[3];
+      await tap(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      const option = getRootNode(this.element).querySelectorAll(
+        '.ember-power-select-option',
+      )[3];
       if (option) {
         await triggerEvent(option, 'touchstart');
         await triggerEvent(option, 'touchmove', {
@@ -174,7 +216,9 @@ module(
           changedTouches: [{ touchType: 'direct', pageX: 0, pageY: 10 }],
         });
       }
-      assert.dom('.ember-power-select-selected-item').doesNotExist();
+      assert
+        .dom('.ember-power-select-selected-item', getRootNode(this.element))
+        .doesNotExist();
     });
 
     test<NumbersContext>('Using stylus on touch device should select the option', async function (assert) {
@@ -199,8 +243,14 @@ module(
         </template>,
       );
 
-      await tap('.ember-power-select-trigger');
-      const option = document.querySelectorAll('.ember-power-select-option')[3];
+      await tap(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      const option = getRootNode(this.element).querySelectorAll(
+        '.ember-power-select-option',
+      )[3];
 
       if (option) {
         // scroll
@@ -212,7 +262,9 @@ module(
           changedTouches: [{ touchType: 'stylus', pageX: 0, pageY: 10 }],
         });
       }
-      assert.dom('.ember-power-select-selected-item').doesNotExist();
+      assert
+        .dom('.ember-power-select-selected-item', getRootNode(this.element))
+        .doesNotExist();
 
       if (option) {
         // tap
@@ -224,7 +276,9 @@ module(
           changedTouches: [{ touchType: 'stylus', pageX: 4, pageY: 0 }],
         });
       }
-      assert.dom('.ember-power-select-selected-item').hasText('four');
+      assert
+        .dom('.ember-power-select-selected-item', getRootNode(this.element))
+        .hasText('four');
     });
   },
 );

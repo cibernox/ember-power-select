@@ -3,6 +3,7 @@ import {
   fillIn,
   triggerKeyEvent,
   triggerEvent,
+  type Target,
 } from '@ember/test-helpers';
 /**
  * @private
@@ -11,8 +12,16 @@ import {
  * @returns HTMLElement The first element that maches the given selector and contains the
  *                      given text
  */
-export function findContains(selector: string, text: string) {
-  return Array.from(document.querySelectorAll(selector)).filter((e) => {
+export function findContains(
+  selector: string,
+  text: string,
+  rootElement?: HTMLElement | Element,
+) {
+  let element = document.querySelectorAll(selector);
+  if (rootElement) {
+    element = rootElement.querySelectorAll(selector);
+  }
+  return Array.from(element).filter((e) => {
     return (e.textContent ?? '').indexOf(text) > -1;
   })[0];
 }
@@ -38,7 +47,11 @@ export async function triggerKeydown(
   return triggerKeyEvent(domElement, 'keydown', k);
 }
 
-export function typeInSearch(scopeOrText: string, text?: string) {
+export function typeInSearch(
+  scopeOrText: string,
+  text?: string,
+  rootElement?: HTMLElement | Element,
+) {
   let scope = '';
 
   if (typeof text === 'undefined') {
@@ -56,17 +69,30 @@ export function typeInSearch(scopeOrText: string, text?: string) {
     .map((selector) => `${scope} ${selector}`)
     .join(', ');
 
+  if (rootElement) {
+    const selector = rootElement.querySelector(selectors);
+    if (selector) {
+      return fillIn(selector, text);
+    }
+
+    return;
+  }
+
   return fillIn(selectors, text);
 }
 
 export async function clickTrigger(
-  scope?: string,
+  scope?: Target | string,
   options?: Parameters<typeof click>[1],
 ) {
-  let selector = '.ember-power-select-trigger';
-  if (scope) {
-    selector = `${scope} ${selector}`;
+  let selector = scope;
+  if (!selector || typeof scope !== 'object') {
+    selector = '.ember-power-select-trigger';
+    if (scope) {
+      selector = `${scope} ${selector}`;
+    }
   }
+
   return click(selector, options);
 }
 

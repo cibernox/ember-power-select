@@ -24,8 +24,10 @@ import type { MatcherFn } from '#src/types.ts';
 import PowerSelect from '#src/components/power-select.gts';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
+import { createDescriptor } from 'dom-element-descriptors';
 
 interface SearchContext extends TestContext {
+  element: HTMLElement;
   searchFn: (term: string) => typeof numbers | Promise<typeof numbers>;
   foo: () => void;
   options: typeof numbers;
@@ -35,18 +37,21 @@ interface SearchContext extends TestContext {
 }
 
 interface SearchNumberPromiseContext extends TestContext {
+  element: HTMLElement;
   searchFn: (term: string) => typeof numbers | Promise<typeof numbers>;
   foo: () => void;
   numbersPromise: Promise<typeof numbers>;
 }
 
 interface CountryContext extends TestContext {
+  element: HTMLElement;
   matcherFn: MatcherFn<Country>;
   foo: () => void;
   countries: typeof countries;
 }
 
 interface ObjContext extends TestContext {
+  element: HTMLElement;
   obj: {
     searchTask: TaskForAsyncTaskFunction<
       {
@@ -62,6 +67,15 @@ interface ObjContext extends TestContext {
   };
   foo: () => void;
   hideSelect: boolean;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module(
@@ -91,9 +105,13 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasText(
           'Type to search',
           'The dropdown shows the "type to search" message',
@@ -138,16 +156,25 @@ module(
           );
         }),
       );
-      void clickTrigger();
-      await waitFor('.ember-power-select-dropdown');
+      void clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await waitFor(
+        createDescriptor({
+          element: getRootNode(this.element),
+          description: '.ember-power-select-dropdown',
+        }),
+      );
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .doesNotIncludeText(
           'Type to search',
           "The type to search message doesn't show",
         );
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .includesText(
           'Loading options...',
           '"Loading options..." message appears',
@@ -176,10 +203,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      assert.dom('.ember-power-select-option').hasText('Type to search');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
+        .hasText('Type to search');
+      assert
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasClass(
           'ember-power-select-option--search-message',
           'The option with the search message has a special class',
@@ -209,9 +242,13 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasText('Type the name of the thing');
     });
 
@@ -240,9 +277,15 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      await typeInSearch('teen');
-      assert.dom('.ember-power-select-option').exists({ count: 7 });
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await typeInSearch('', 'teen', getRootNode(this.element));
+      assert
+        .dom('.ember-power-select-option', getRootNode(this.element))
+        .exists({ count: 7 });
     });
 
     test<SearchContext>('The search function can return a promise that resolves to an array and those options get rendered', async function (assert) {
@@ -278,11 +321,17 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       await settled();
-      assert.dom('.ember-power-select-option').exists({ count: 7 });
+      assert
+        .dom('.ember-power-select-option', getRootNode(this.element))
+        .exists({ count: 7 });
     });
 
     test<SearchContext>('While the async search is being performed the "Type to search" dissapears the "Loading..." message appears', async function (assert) {
@@ -318,25 +367,33 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .includesText(
           'Type to search',
           'The type to search message is displayed',
         );
-      void typeInSearch('teen');
+      void typeInSearch('', 'teen', getRootNode(this.element));
       await waitFor(
-        '.ember-power-select-option:not(.ember-power-select-option--search-message)',
+        createDescriptor({
+          element: getRootNode(this.element),
+          description:
+            '.ember-power-select-option:not(.ember-power-select-option--search-message)',
+        }),
       );
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .doesNotIncludeText(
           'Type to search',
           'The type to search message dissapeared',
         );
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .includesText(
           'Loading options...',
           '"Loading options..." message appears',
@@ -376,10 +433,14 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      await typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await typeInSearch('', 'teen', getRootNode(this.element));
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .includesText(
           'No results found',
           'The default "No results" message renders',
@@ -420,11 +481,15 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
       await settled();
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .includesText(
           'Meec. Try again',
           'The customized "No results" message renders',
@@ -454,8 +519,10 @@ module(
       //   </PowerSelect>
       // `);
 
-      // await clickTrigger();
-      void typeInSearch('teen');
+      // await clickTrigger(getRootNode(this.element).querySelector(
+      //   '.ember-power-select-trigger',
+      // ) as HTMLElement);
+      void typeInSearch('', 'teen', getRootNode(this.element));
       await settled();
       assert
         .dom('.ember-power-select-dropdown .foo-bar')
@@ -484,7 +551,7 @@ module(
     //   typeInSearch("tee");
 
     //   setTimeout(function() {
-    //     typeInSearch('teen');
+    //     typeInSearch('', 'teen', getRootNode(this.element));
     //   }, 50);
 
     //   setTimeout(function() {
@@ -528,12 +595,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       await settled();
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasAttribute(
           'aria-current',
           'true',
@@ -565,12 +636,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       await settled();
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasAttribute(
           'aria-current',
           'true',
@@ -615,15 +690,22 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option:nth-child(3)')
+        .dom(
+          '.ember-power-select-option:nth-child(3)',
+          getRootNode(this.element),
+        )
         .hasAttribute('aria-current', 'true', 'The 3rd result is highlighted');
-      void typeInSearch('teen');
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       await settled();
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasAttribute(
           'aria-current',
           'true',
@@ -656,21 +738,37 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      await typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await typeInSearch('', 'teen', getRootNode(this.element));
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists({ count: 7 }, 'Results are filtered');
-      assert.dom('.ember-power-select-search-input').hasValue('teen');
-      await click('#different-node');
+      assert
+        .dom('.ember-power-select-search-input', getRootNode(this.element))
+        .hasValue('teen');
+      await click(
+        getRootNode(this.element).querySelector(
+          '#different-node',
+        ) as HTMLElement,
+      );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists({ count: 1 }, 'Results have been cleared');
-      assert.dom('.ember-power-select-option').hasText('Type to search');
       assert
-        .dom('.ember-power-select-search-input')
+        .dom('.ember-power-select-option', getRootNode(this.element))
+        .hasText('Type to search');
+      assert
+        .dom('.ember-power-select-search-input', getRootNode(this.element))
         .hasNoValue('The searchbox was cleared');
     });
 
@@ -710,22 +808,33 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists({ count: 20 }, 'All the options are shown');
-      void typeInSearch('teen');
-      await waitFor('.ember-power-select-option--loading-message');
+      void typeInSearch('', 'teen', getRootNode(this.element));
+      await waitFor(
+        createDescriptor({
+          element: getRootNode(this.element),
+          description: '.ember-power-select-option--loading-message',
+        }),
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists(
           { count: 21 },
           'All the options are shown and also the loading message',
         );
-      assert.dom('.ember-power-select-option').hasText('Loading options...');
+      assert
+        .dom('.ember-power-select-option', getRootNode(this.element))
+        .hasText('Loading options...');
       await settled();
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists(
           { count: 7 },
           'All the options are shown but no the loading message',
@@ -770,14 +879,20 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists({ count: 20 }, 'All the options are shown');
-      void typeInSearch('teen');
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       await settled();
-      assert.dom('.ember-power-select-option').exists({ count: 7 });
+      assert
+        .dom('.ember-power-select-option', getRootNode(this.element))
+        .exists({ count: 7 });
     });
 
     // This test fails randomly
@@ -806,14 +921,14 @@ module(
 
     //   clickTrigger();
     //   assert.strictEqual(findAll('.ember-power-select-option').length, 20, 'All the options are shown');
-    //   typeInSearch('teen');
+    //   typeInSearch('', 'teen', getRootNode(this.element));
     //   assert.strictEqual(findAll('.ember-power-select-option').length, 21, 'All the options are shown plus the loading message');
     //   assert.strictEqual(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'The loading message is shown');
 
     //   setTimeout(function() {
     //     assert.strictEqual(searchCalls, 1, 'The search was called only once');
     //     assert.strictEqual(findAll('.ember-power-select-option').length, 7);
-    //     typeInSearch('seven');
+    //     typeInSearch('', 'seven', getRootNode(this.element));
     //     assert.strictEqual(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'The loading message is shown');
     //     assert.strictEqual(findAll('.ember-power-select-option').length, 8);
     //   }, 40);
@@ -822,7 +937,7 @@ module(
     //     assert.strictEqual(searchCalls, 2, 'The search was called only twice');
     //     assert.strictEqual(findAll('.ember-power-select-option').length, 8);
     //     assert.strictEqual(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'It is still searching the previous result');
-    //     typeInSearch('four');
+    //     typeInSearch('', 'four', getRootNode(this.element));
     //     assert.strictEqual(findAll('.ember-power-select-option')[0].textContent.trim(), 'Loading options...', 'The loading message is shown');
     //     assert.strictEqual(findAll('.ember-power-select-option').length, 8);
     //   }, 60);
@@ -865,23 +980,30 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
       setTimeout(function () {
-        void typeInSearch('t');
+        void typeInSearch('', 't', getRootNode(self.element));
       }, 150);
       setTimeout(function () {
-        void typeInSearch('');
+        void typeInSearch('', '', getRootNode(self.element));
       }, 200);
       setTimeout(function () {
         assert
-          .dom('.ember-power-select-option')
+          .dom('.ember-power-select-option', getRootNode(self.element))
           .exists(
             { count: numbers.length },
             'All the options are displayed after clearing the search',
           );
         assert
-          .dom('.ember-power-select-option:nth-child(2)')
+          .dom(
+            '.ember-power-select-option:nth-child(2)',
+            getRootNode(self.element),
+          )
           .hasText('two:', 'The results are the original options');
         done();
       }, 300);
@@ -921,21 +1043,33 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      await typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await typeInSearch('', 'teen', getRootNode(this.element));
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasText(
           'thirteen:teen',
           'The results and the lastSearchedText have updated',
         );
-      void typeInSearch('four');
-      await waitFor('.ember-power-select-option--loading-message');
+      void typeInSearch('', 'four', getRootNode(this.element));
+      await waitFor(
+        createDescriptor({
+          element: getRootNode(this.element),
+          description: '.ember-power-select-option--loading-message',
+        }),
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasText('Loading options...', 'There is a search going on');
       assert
-        .dom('.ember-power-select-option:nth-child(2)')
+        .dom(
+          '.ember-power-select-option:nth-child(2)',
+          getRootNode(this.element),
+        )
         .hasText(
           'thirteen:teen',
           'The results and the lastSearchedText are still the same because the search has not finished yet',
@@ -976,21 +1110,33 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      await typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await typeInSearch('', 'teen', getRootNode(this.element));
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasText(
           'thirteen:teen',
           'The results and the searchTerm have updated',
         );
-      void typeInSearch('four');
-      await waitFor('.ember-power-select-option--loading-message');
+      void typeInSearch('', 'four', getRootNode(this.element));
+      await waitFor(
+        createDescriptor({
+          element: getRootNode(this.element),
+          description: '.ember-power-select-option--loading-message',
+        }),
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .hasText('Loading options...', 'There is a search going on');
       assert
-        .dom('.ember-power-select-option:nth-child(2)')
+        .dom(
+          '.ember-power-select-option:nth-child(2)',
+          getRootNode(this.element),
+        )
         .hasText(
           'thirteen:teen',
           'The results and the searchTerm are still the same because the search has not finished yet',
@@ -1035,8 +1181,12 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      await typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await typeInSearch('', 'teen', getRootNode(this.element));
       this.set('visible', false);
     });
 
@@ -1067,17 +1217,21 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists({ count: 20 }, 'There is 20 options');
-      await typeInSearch('teen');
+      await typeInSearch('', 'teen', getRootNode(this.element));
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists({ count: 7 }, 'There is 7 options');
-      await typeInSearch('');
+      await typeInSearch('', '', getRootNode(this.element));
       assert
-        .dom('.ember-power-select-option')
+        .dom('.ember-power-select-option', getRootNode(this.element))
         .exists({ count: 20 }, 'There is 20 options again§');
     });
 
@@ -1113,7 +1267,7 @@ module(
         </template>,
       );
 
-      await typeInSearch('po');
+      await typeInSearch('', 'po', getRootNode(this.element));
     });
 
     test<ObjContext>('If the value returned from an async search is cancellable and before it completes a new search is fired, the first value gets cancelled', async function (assert) {
@@ -1149,11 +1303,15 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       setTimeout(function () {
-        void typeInSearch('nin');
+        void typeInSearch('', 'nin', getRootNode(self.element));
       }, 50);
 
       setTimeout(function () {
@@ -1194,11 +1352,15 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       setTimeout(function () {
-        void typeInSearch('');
+        void typeInSearch('', '', getRootNode(self.element));
       }, 50);
 
       setTimeout(function () {
@@ -1231,8 +1393,10 @@ module(
     //   {{/unless}}
     // `);
 
-    //   await clickTrigger();
-    //   void typeInSearch('teen');
+    //   await clickTrigger(getRootNode(this.element).querySelector(
+    //     '.ember-power-select-trigger',
+    //   ) as HTMLElement);
+    //   void typeInSearch('', 'teen', getRootNode(this.element));
     //   // await new RSVP.Promise((resolve) => setTimeout(resolve, 50));
     //   setTimeout(() => {
     //     this.set('hideSelect', true);
@@ -1276,11 +1440,19 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       setTimeout(() => {
-        void clickTrigger();
+        void clickTrigger(
+          getRootNode(self.element).querySelector(
+            '.ember-power-select-trigger',
+          ) as HTMLElement,
+        );
       }, 50);
 
       setTimeout(function () {
@@ -1321,11 +1493,15 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       setTimeout(function () {
-        void typeInSearch('nin');
+        void typeInSearch('', 'nin', getRootNode(self.element));
       }, 50);
 
       setTimeout(function () {
@@ -1366,11 +1542,15 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       setTimeout(function () {
-        void typeInSearch('');
+        void typeInSearch('', '', getRootNode(self.element));
       }, 50);
 
       setTimeout(function () {
@@ -1404,8 +1584,10 @@ module(
     //   {{/unless}}
     // `);
 
-    //   await clickTrigger();
-    //   void typeInSearch('teen');
+    //   await clickTrigger(getRootNode(this.element).querySelector(
+    //       '.ember-power-select-trigger',
+    //     ) as HTMLElement);
+    //   void typeInSearch('', 'teen', getRootNode(this.element));
 
     //   setTimeout(() => {
     //     this.set('hideSelect', true);
@@ -1449,11 +1631,19 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      void typeInSearch('teen');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      void typeInSearch('', 'teen', getRootNode(this.element));
 
       setTimeout(() => {
-        void clickTrigger();
+        void clickTrigger(
+          getRootNode(this.element).querySelector(
+            '.ember-power-select-trigger',
+          ) as HTMLElement,
+        );
       }, 50);
 
       setTimeout(function () {

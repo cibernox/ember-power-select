@@ -1,6 +1,6 @@
 import { test, module } from 'qunit';
 import { setupRenderingTest } from '../helpers';
-import { render, click, find } from '@ember/test-helpers';
+import { render, click, type TestContext } from '@ember/test-helpers';
 import {
   selectChoose,
   selectSearch,
@@ -11,184 +11,257 @@ import HelpersTesting from '../../demo-app/components/helpers-testing';
 import HelpersTestingSinglePowerSelect from '../../demo-app/components/helpers-testing-single-power-select';
 import HostWrapper from '../../demo-app/components/host-wrapper.gts';
 
-function findElement(selector: string): HTMLElement {
-  const element = find(selector);
-  if (!element) {
-    throw new Error(`${selector} not found`);
+interface ExtendedTestContext extends TestContext {
+  element: HTMLElement;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
   }
-  return element as HTMLElement;
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module('Acceptance | helpers | selectChoose', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('selectChoose helper opens the select and selects the option with the given text', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
-    );
-
-    await selectChoose('.select-choose', 'three');
-
-    assert
-      .dom('.select-choose .ember-power-select-trigger')
-      .hasText('three', 'The proper value has been selected');
-    assert
-      .dom('.ember-power-select-options')
-      .doesNotExist('The selectis closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
-  });
-
-  test('selectChoose selects the option with the given text on an already opened select', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
-    );
-
-    await click('.select-choose .ember-power-select-trigger');
-
-    await selectChoose('.select-choose', 'three');
-    assert
-      .dom('.select-choose .ember-power-select-trigger')
-      .hasText('three', 'The proper value has been selected');
-    assert
-      .dom('.ember-power-select-options')
-      .doesNotExist('The selectis closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
-  });
-
-  test('the selectChoose helper works with an onopen function that fetches data async on single selects', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
-    );
-
-    await selectChoose('.select-choose-onopen', 'three');
-    assert
-      .dom('.select-choose-onopen .ember-power-select-trigger')
-      .containsText('three', 'The proper value has been selected');
-    assert
-      .dom('.ember-power-select-options')
-      .doesNotExist('The select is closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
-  });
-
-  test('the selectChoose helper works with an onopen function that fetches data async on multiple selects', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
-    );
-
-    await selectChoose('.select-choose-onopen-multiple', 'three');
-    assert
-      .dom('.select-choose-onopen-multiple .ember-power-select-multiple-option')
-      .exists({ count: 1 }, 'One options has been selected');
-    assert
-      .dom('.select-choose-onopen-multiple .ember-power-select-multiple-option')
-      .containsText('three', 'The proper value has been selected');
-    assert
-      .dom('.ember-power-select-options')
-      .doesNotExist('The selectis closed');
-  });
-
-  test('the selectChoose helper works when it receives the class of the trigger', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
-    );
-
-    await selectChoose('.select-with-class-in-trigger', 'three');
-    assert
-      .dom('.select-with-class-in-trigger')
-      .hasText('three', 'The proper value has been selected');
-    assert
-      .dom('.ember-power-select-options')
-      .doesNotExist('The selectis closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
-  });
-
-  test('the selectChoose helper works when it receives the css selector of the chosen option as second arguments', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectChoose helper opens the select and selects the option with the given text', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
     await selectChoose(
-      '.select-with-class-in-trigger',
+      getRootNode(this.element).querySelector('.select-choose') as HTMLElement,
+      'three',
+    );
+
+    assert
+      .dom(
+        '.select-choose .ember-power-select-trigger',
+        getRootNode(this.element),
+      )
+      .hasText('three', 'The proper value has been selected');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .doesNotExist('The selectis closed');
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
+  });
+
+  test<ExtendedTestContext>('selectChoose selects the option with the given text on an already opened select', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await click(
+      getRootNode(this.element).querySelector(
+        '.select-choose .ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+
+    await selectChoose(
+      getRootNode(this.element).querySelector('.select-choose') as HTMLElement,
+      'three',
+    );
+    assert
+      .dom(
+        '.select-choose .ember-power-select-trigger',
+        getRootNode(this.element),
+      )
+      .hasText('three', 'The proper value has been selected');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .doesNotExist('The selectis closed');
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
+  });
+
+  test<ExtendedTestContext>('the selectChoose helper works with an onopen function that fetches data async on single selects', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-choose-onopen',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom(
+        '.select-choose-onopen .ember-power-select-trigger',
+        getRootNode(this.element),
+      )
+      .containsText('three', 'The proper value has been selected');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .doesNotExist('The select is closed');
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
+  });
+
+  test<ExtendedTestContext>('the selectChoose helper works with an onopen function that fetches data async on multiple selects', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-choose-onopen-multiple',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom(
+        '.select-choose-onopen-multiple .ember-power-select-multiple-option',
+        getRootNode(this.element),
+      )
+      .exists({ count: 1 }, 'One options has been selected');
+    assert
+      .dom(
+        '.select-choose-onopen-multiple .ember-power-select-multiple-option',
+        getRootNode(this.element),
+      )
+      .containsText('three', 'The proper value has been selected');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .doesNotExist('The selectis closed');
+  });
+
+  test<ExtendedTestContext>('the selectChoose helper works when it receives the class of the trigger', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-with-class-in-trigger',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.select-with-class-in-trigger', getRootNode(this.element))
+      .hasText('three', 'The proper value has been selected');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .doesNotExist('The selectis closed');
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
+  });
+
+  test<ExtendedTestContext>('the selectChoose helper works when it receives the css selector of the chosen option as second arguments', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-with-class-in-trigger',
+      ) as HTMLElement,
       '.ember-power-select-option:nth-child(3)',
     );
     assert
-      .dom('.select-choose')
+      .dom('.select-choose', getRootNode(this.element))
       .hasText('three', 'The proper value has been selected');
     assert
-      .dom('.ember-power-select-options')
+      .dom('.ember-power-select-options', getRootNode(this.element))
       .doesNotExist('The selectis closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
   });
 
-  test('the selectChoose helper works when it receives a wildcard css class', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('the selectChoose helper works when it receives a wildcard css class', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTestingSinglePowerSelect /></HostWrapper>
       </template>,
     );
 
-    await selectChoose('*', 'three');
-    assert
-      .dom('.select-choose')
-      .hasText('three', 'The proper value has been selected');
-    assert
-      .dom('.ember-power-select-options')
-      .doesNotExist('The selectis closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
-  });
-
-  test('the selectChoose helper works when it receives a HTMLElement as first argument', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
+    await selectChoose(
+      getRootNode(this.element).querySelector('*') as HTMLElement,
+      'three',
     );
-
-    await selectChoose(findElement('.select-with-class-in-trigger'), 'three');
     assert
-      .dom('.select-choose')
+      .dom('.select-choose', getRootNode(this.element))
       .hasText('three', 'The proper value has been selected');
     assert
-      .dom('.ember-power-select-options')
+      .dom('.ember-power-select-options', getRootNode(this.element))
       .doesNotExist('The selectis closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
   });
 
-  test('the selectChoose helper can receive a number as third argument to select the :nth option', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('the selectChoose helper works when it receives a HTMLElement as first argument', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
     await selectChoose(
-      findElement('.select-with-class-in-trigger'),
+      getRootNode(this.element).querySelector(
+        '.select-with-class-in-trigger',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.select-choose', getRootNode(this.element))
+      .hasText('three', 'The proper value has been selected');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .doesNotExist('The selectis closed');
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
+  });
+
+  test<ExtendedTestContext>('the selectChoose helper can receive a number as third argument to select the :nth option', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-with-class-in-trigger',
+      ) as HTMLElement,
       '.ember-power-select-option',
       2,
     );
     assert
-      .dom('.select-choose')
+      .dom('.select-choose', getRootNode(this.element))
       .hasText('three', 'The proper value has been selected');
     assert
-      .dom('.ember-power-select-options')
+      .dom('.ember-power-select-options', getRootNode(this.element))
       .doesNotExist('The selectis closed');
-    assert.dom('.select-choose-target').hasText("You've selected: three");
+    assert
+      .dom('.select-choose-target', getRootNode(this.element))
+      .hasText("You've selected: three");
   });
 
-  test('selectChoose helper throws an explicative error when no select is found in the given scope', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectChoose helper throws an explicative error when no select is found in the given scope', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
@@ -204,19 +277,24 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     }
   });
 
-  test('selectChoose helper throws an explicative error when no option matches the given value', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectChoose helper throws an explicative error when no option matches the given value', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
     try {
-      await selectChoose('.select-choose', 'non-existent-option');
+      await selectChoose(
+        getRootNode(this.element).querySelector(
+          '.select-choose',
+        ) as HTMLElement,
+        'non-existent-option',
+      );
     } catch (error) {
       assert.strictEqual(
         (error as Error).message,
-        "You called \"selectChoose('.select-choose', 'non-existent-option')\" but \"non-existent-option\" didn't match any option",
+        "You called \"selectChoose('[object HTMLDivElement]', 'non-existent-option')\" but \"non-existent-option\" didn't match any option",
       );
     }
   });
@@ -225,115 +303,187 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
 module('Acceptance | helpers | selectSearch', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('selectSearch helper searches in the given single select if it is already opened', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectSearch helper searches in the given single select if it is already opened', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
-    await click('.select-async .ember-power-select-trigger');
-    await selectSearch('.select-async', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
+    await click(
+      getRootNode(this.element).querySelector(
+        '.select-async .ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+    await selectSearch(
+      getRootNode(this.element).querySelector('.select-async') as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
   });
 
-  test('selectSearch helper searches an opened select if using a wildcard css selector', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectSearch helper searches an opened select if using a wildcard css selector', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTestingSinglePowerSelect /></HostWrapper>
       </template>,
     );
 
-    await click('.ember-power-select-trigger');
-    await selectSearch('*', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
+    await click(
+      getRootNode(this.element).querySelector(
+        '.ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+    await selectSearch(
+      getRootNode(this.element).querySelector('*') as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
   });
 
-  test('selectSearch helper opens and searches select if using a wildcard css selector', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectSearch helper opens and searches select if using a wildcard css selector', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTestingSinglePowerSelect /></HostWrapper>
       </template>,
     );
 
-    await click('.ember-power-select-trigger');
-    await selectSearch('*', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
-  });
-
-  test('selectSearch helper searches in the given single select, opening it if needed', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
+    await click(
+      getRootNode(this.element).querySelector(
+        '.ember-power-select-trigger',
+      ) as HTMLElement,
     );
-
-    await selectSearch('.select-async', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
-  });
-
-  test('selectSearch helper searches in the given multiple select opened', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
+    await selectSearch(
+      getRootNode(this.element).querySelector('*') as HTMLElement,
+      'three',
     );
-
-    await click('.select-multiple .ember-power-select-trigger');
-    await selectSearch('.select-multiple', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
   });
 
-  test('selectSearch helper searches in the given multiple select closed', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
-    );
-
-    await selectSearch('.select-multiple', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
-  });
-
-  test('selectSearch helper works even with custom components as long as the input has [type=search]', async function (assert) {
-    await render(
-      <template>
-        <HostWrapper><HelpersTesting /></HostWrapper>
-      </template>,
-    );
-
-    await click('.select-custom-search .ember-power-select-trigger');
-    await selectSearch('.select-custom-search', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
-  });
-
-  test('selectSearch helper can receive the HTMLElement of the trigger as first arguments', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectSearch helper searches in the given single select, opening it if needed', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
     await selectSearch(
-      findElement('.select-multiple .ember-power-select-trigger'),
+      getRootNode(this.element).querySelector('.select-async') as HTMLElement,
       'three',
     );
-    assert.dom('.ember-power-select-options').hasText('three');
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
   });
 
-  test('the selectSearch helper works when it receives the class of the trigger', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectSearch helper searches in the given multiple select opened', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
-    await selectSearch('.select-with-class-in-trigger', 'three');
-    assert.dom('.ember-power-select-options').hasText('three');
+    await click(
+      getRootNode(this.element).querySelector(
+        '.select-multiple .ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+    await selectSearch(
+      getRootNode(this.element).querySelector(
+        '.select-multiple',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
   });
 
-  test('the selectSearch helper throws an explicative error when no select is found in the given scope', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('selectSearch helper searches in the given multiple select closed', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectSearch(
+      getRootNode(this.element).querySelector(
+        '.select-multiple',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
+  });
+
+  test<ExtendedTestContext>('selectSearch helper works even with custom components as long as the input has [type=search]', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await click(
+      getRootNode(this.element).querySelector(
+        '.select-custom-search .ember-power-select-trigger',
+      ) as HTMLElement,
+    );
+    await selectSearch(
+      getRootNode(this.element).querySelector(
+        '.select-custom-search',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
+  });
+
+  test<ExtendedTestContext>('selectSearch helper can receive the HTMLElement of the trigger as first arguments', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectSearch(
+      getRootNode(this.element).querySelector(
+        '.select-multiple .ember-power-select-trigger',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
+  });
+
+  test<ExtendedTestContext>('the selectSearch helper works when it receives the class of the trigger', async function (assert) {
+    await render<ExtendedTestContext>(
+      <template>
+        <HostWrapper><HelpersTesting /></HostWrapper>
+      </template>,
+    );
+
+    await selectSearch(
+      getRootNode(this.element).querySelector(
+        '.select-with-class-in-trigger',
+      ) as HTMLElement,
+      'three',
+    );
+    assert
+      .dom('.ember-power-select-options', getRootNode(this.element))
+      .hasText('three');
+  });
+
+  test<ExtendedTestContext>('the selectSearch helper throws an explicative error when no select is found in the given scope', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
@@ -353,29 +503,49 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
 module('Acceptance | helpers | removeMultipleOption', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('removeMultipleOption removes selected option', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('removeMultipleOption removes selected option', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
-    await selectChoose('.select-choose-onopen-multiple', 'three');
-    await selectChoose('.select-choose-onopen-multiple', 'four');
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-choose-onopen-multiple',
+      ) as HTMLElement,
+      'three',
+    );
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-choose-onopen-multiple',
+      ) as HTMLElement,
+      'four',
+    );
     assert
       .dom(
         '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li',
+        getRootNode(this.element),
       )
       .exists({ count: 2 }, 'Multiple options selected');
 
-    await removeMultipleOption('.select-choose-onopen-multiple', 'three');
+    await removeMultipleOption(
+      '.select-choose-onopen-multiple',
+      'three',
+      getRootNode(this.element),
+    );
     assert
       .dom(
         '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li',
+        getRootNode(this.element),
       )
       .exists({ count: 1 }, 'One option removed');
 
-    await removeMultipleOption('.select-choose-onopen-multiple', 'four');
+    await removeMultipleOption(
+      '.select-choose-onopen-multiple',
+      'four',
+      getRootNode(this.element),
+    );
     assert
       .dom(
         '.select-choose-onopen-multiple .ember-power-select-trigger > .ember-power-select-multiple-options > li',
@@ -383,22 +553,42 @@ module('Acceptance | helpers | removeMultipleOption', function (hooks) {
       .exists({ count: 0 }, 'Last option removed');
   });
 
-  test('removeMultipleOption works with async onchange action', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('removeMultipleOption works with async onchange action', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
-    await selectChoose('#select-multiple-async', 'three');
-    await selectChoose('#select-multiple-async', 'four');
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '#select-multiple-async',
+      ) as HTMLElement,
+      'three',
+    );
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '#select-multiple-async',
+      ) as HTMLElement,
+      'four',
+    );
     assert
-      .dom('#select-multiple-async .ember-power-select-multiple-option')
+      .dom(
+        '#select-multiple-async .ember-power-select-multiple-option',
+        getRootNode(this.element),
+      )
       .exists({ count: 2 }, 'Multiple options selected');
 
-    await removeMultipleOption('#select-multiple-async', 'three');
+    await removeMultipleOption(
+      '#select-multiple-async',
+      'three',
+      getRootNode(this.element),
+    );
     assert
-      .dom('#select-multiple-async .ember-power-select-multiple-option')
+      .dom(
+        '#select-multiple-async .ember-power-select-multiple-option',
+        getRootNode(this.element),
+      )
       .exists({ count: 1 }, 'One option removed');
   });
 });
@@ -406,49 +596,87 @@ module('Acceptance | helpers | removeMultipleOption', function (hooks) {
 module('Acceptance | helpers | clearSelected', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('clearSelected removes selected option', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('clearSelected removes selected option', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
     assert
-      .dom('.select-choose-onopen .ember-power-select-clear-btn')
+      .dom(
+        '.select-choose-onopen .ember-power-select-clear-btn',
+        getRootNode(this.element),
+      )
       .doesNotExist();
 
-    await selectChoose('.select-choose-onopen', 'three');
-    assert.dom('.select-choose-onopen .ember-power-select-clear-btn').exists();
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-choose-onopen',
+      ) as HTMLElement,
+      'three',
+    );
     assert
-      .dom('.select-choose-onopen .ember-power-select-selected-item')
+      .dom(
+        '.select-choose-onopen .ember-power-select-clear-btn',
+        getRootNode(this.element),
+      )
+      .exists();
+    assert
+      .dom(
+        '.select-choose-onopen .ember-power-select-selected-item',
+        getRootNode(this.element),
+      )
       .hasText('three', 'The proper value has been selected');
 
-    await clearSelected('.select-choose-onopen');
+    await clearSelected('.select-choose-onopen', getRootNode(this.element));
     assert
-      .dom('.select-choose-onopen .ember-power-select-clear-btn')
+      .dom(
+        '.select-choose-onopen .ember-power-select-clear-btn',
+        getRootNode(this.element),
+      )
       .doesNotExist();
   });
 
-  test('clearSelected works with async onchange action', async function (assert) {
-    await render(
+  test<ExtendedTestContext>('clearSelected works with async onchange action', async function (assert) {
+    await render<ExtendedTestContext>(
       <template>
         <HostWrapper><HelpersTesting /></HostWrapper>
       </template>,
     );
 
     assert
-      .dom('.select-deselect-async .ember-power-select-clear-btn')
+      .dom(
+        '.select-deselect-async .ember-power-select-clear-btn',
+        getRootNode(this.element),
+      )
       .doesNotExist();
 
-    await selectChoose('.select-deselect-async', 'three');
-    assert.dom('.select-deselect-async .ember-power-select-clear-btn').exists();
+    await selectChoose(
+      getRootNode(this.element).querySelector(
+        '.select-deselect-async',
+      ) as HTMLElement,
+      'three',
+    );
     assert
-      .dom('.select-deselect-async .ember-power-select-selected-item')
+      .dom(
+        '.select-deselect-async .ember-power-select-clear-btn',
+        getRootNode(this.element),
+      )
+      .exists();
+    assert
+      .dom(
+        '.select-deselect-async .ember-power-select-selected-item',
+        getRootNode(this.element),
+      )
       .hasText('three', 'The proper value has been selected');
 
-    await clearSelected('.select-deselect-async');
+    await clearSelected('.select-deselect-async', getRootNode(this.element));
     assert
-      .dom('.select-deselect-async .ember-power-select-clear-btn')
+      .dom(
+        '.select-deselect-async .ember-power-select-clear-btn',
+        getRootNode(this.element),
+      )
       .doesNotExist();
   });
 });

@@ -101,6 +101,7 @@
     "@types/rsvp": "^4.0.9",
     "babel-plugin-ember-template-compilation": "^2.2.5",
     "concurrently": "^9.0.1",
+    "dom-element-descriptors": "^0.5.1",
     "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#4cd4d48350315337188361c25e29c440eaca698b",
     "ember-concurrency": "^5.1.0",
     "ember-data": "5.8.0",

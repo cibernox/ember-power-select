@@ -18,6 +18,7 @@ import { fn } from '@ember/helper';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface GroupedNumbersContext extends TestContext {
+  element: HTMLElement;
   foo: (selected: string | undefined) => void;
   groupedNumbers: typeof groupedNumbers;
   selected: Selected<string>;
@@ -26,6 +27,7 @@ interface GroupedNumbersContext extends TestContext {
 interface GroupedNumbersWithCustomPropertyContext<
   IsMultiple extends boolean = false,
 > extends TestContext {
+  element: HTMLElement;
   foo: (selected: Selected<string, IsMultiple>) => void;
   groupedNumbersWithCustomProperty: GroupedNumbersWithCustomProperty[];
   // extra?: GroupedNumbersExtra;
@@ -45,8 +47,18 @@ interface NotQuiteGroups {
 }
 
 interface NotQuiteGroupsContext extends TestContext {
+  element: HTMLElement;
   foo: (selected: Selected<NotQuiteGroups>) => void;
   notQuiteGroups: NotQuiteGroups[];
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module(
@@ -76,25 +88,31 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .doesNotExist('Dropdown is not rendered');
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
-      const rootLevelGroups = document.querySelectorAll(
+      const rootLevelGroups = getRootNode(this.element).querySelectorAll(
         '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
       ) as unknown as HTMLElement[];
-      const rootLevelOptions = document.querySelectorAll(
+      const rootLevelOptions = getRootNode(this.element).querySelectorAll(
         '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option',
       ) as unknown as HTMLElement[];
       assert
         .dom(
           '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
+          getRootNode(this.element),
         )
         .exists({ count: 3 }, 'There is 3 groups in the root level');
       assert
         .dom(
           '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option',
+          getRootNode(this.element),
         )
         .exists({ count: 2 }, 'There is 2 options in the root level');
       assert
@@ -163,11 +181,22 @@ module(
       );
 
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .doesNotExist('Dropdown is not rendered');
-      await clickTrigger();
-      assert.dom('.ember-power-select-option').exists({ count: 4 });
-      assert.dom('.ember-power-select-option:nth-child(2)').hasText('Tigers');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      assert
+        .dom('.ember-power-select-option', getRootNode(this.element))
+        .exists({ count: 4 });
+      assert
+        .dom(
+          '.ember-power-select-option:nth-child(2)',
+          getRootNode(this.element),
+        )
+        .hasText('Tigers');
     });
 
     test<GroupedNumbersContext>("When filtering, a group title is visible as long as one of it's elements is", async function (assert) {
@@ -192,13 +221,21 @@ module(
           </HostWrapper>
         </template>,
       );
-      await clickTrigger();
-      await typeInSearch('ve');
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      await typeInSearch('', 've', getRootNode(this.element));
       let groupNames = Array.from(
-        document.querySelectorAll('.ember-power-select-group-name'),
+        getRootNode(this.element).querySelectorAll(
+          '.ember-power-select-group-name',
+        ),
       ).map((e) => e.textContent?.trim());
       const optionValues = Array.from(
-        document.querySelectorAll('.ember-power-select-option'),
+        getRootNode(this.element).querySelectorAll(
+          '.ember-power-select-option',
+        ),
       ).map((e) => e.textContent?.trim());
       assert.deepEqual(
         groupNames,
@@ -210,9 +247,11 @@ module(
         ['five', 'seven', 'eleven', 'twelve'],
         'Only the matching options are shown',
       );
-      await typeInSearch('lve');
+      await typeInSearch('', 'lve', getRootNode(this.element));
       groupNames = Array.from(
-        document.querySelectorAll('.ember-power-select-group-name'),
+        getRootNode(this.element).querySelectorAll(
+          '.ember-power-select-group-name',
+        ),
       ).map((e) => e.textContent?.trim());
       assert.deepEqual(
         groupNames,
@@ -245,10 +284,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       const variants = Array.from(
-        document.querySelectorAll('[data-test-id="group-component-variant"]'),
+        getRootNode(this.element).querySelectorAll(
+          '[data-test-id="group-component-variant"]',
+        ),
       ).map((e) => e.textContent?.trim());
 
       assert.deepEqual(variants, [
@@ -259,13 +304,21 @@ module(
         'Primary',
       ]);
 
-      await typeInSearch('one');
+      await typeInSearch('', 'one', getRootNode(this.element));
 
       assert
-        .dom('[data-test-id="group-component-variant"]')
+        .dom(
+          '[data-test-id="group-component-variant"]',
+          getRootNode(this.element),
+        )
         .exists({ count: 1 });
 
-      assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
+      assert
+        .dom(
+          '[data-test-id="group-component-variant"]',
+          getRootNode(this.element),
+        )
+        .hasText('Primary');
     });
 
     test<
@@ -295,10 +348,16 @@ module(
         </template>,
       );
 
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
 
       const variants = Array.from(
-        document.querySelectorAll('[data-test-id="group-component-variant"]'),
+        getRootNode(this.element).querySelectorAll(
+          '[data-test-id="group-component-variant"]',
+        ),
       ).map((e) => e.textContent?.trim());
 
       assert.deepEqual(variants, [
@@ -309,13 +368,21 @@ module(
         'Primary',
       ]);
 
-      await typeInSearch('one');
+      await typeInSearch('', 'one', getRootNode(this.element));
 
       assert
-        .dom('[data-test-id="group-component-variant"]')
+        .dom(
+          '[data-test-id="group-component-variant"]',
+          getRootNode(this.element),
+        )
         .exists({ count: 1 });
 
-      assert.dom('[data-test-id="group-component-variant"]').hasText('Primary');
+      assert
+        .dom(
+          '[data-test-id="group-component-variant"]',
+          getRootNode(this.element),
+        )
+        .hasText('Primary');
     });
 
     test<GroupedNumbersContext>('Click on an option of a group select selects the option and closes the dropdown', async function (assert) {
@@ -338,18 +405,24 @@ module(
           </HostWrapper>
         </template>,
       );
-      await clickTrigger();
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
       const option = Array.from(
-        document.querySelectorAll('.ember-power-select-option'),
+        getRootNode(this.element).querySelectorAll(
+          '.ember-power-select-option',
+        ),
       ).find((e) => (e.textContent?.indexOf('four') ?? -1) > -1);
       if (option) {
         await click(option);
       }
       assert
-        .dom('.ember-power-select-trigger')
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasText('four', 'The clicked option was selected');
       assert
-        .dom('.ember-power-select-options')
+        .dom('.ember-power-select-options', getRootNode(this.element))
         .doesNotExist('The dropdown has dissapeared');
     });
 
@@ -374,8 +447,12 @@ module(
         </template>,
       );
 
-      await clickTrigger();
-      const selectedGroup = document.querySelectorAll(
+      await clickTrigger(
+        getRootNode(this.element).querySelector(
+          '.ember-power-select-trigger',
+        ) as HTMLElement,
+      );
+      const selectedGroup = getRootNode(this.element).querySelectorAll(
         '.ember-power-select-group-name',
       )[1];
       if (selectedGroup) {
@@ -383,7 +460,7 @@ module(
       }
 
       assert
-        .dom('.ember-power-select-dropdown')
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
         .exists('The select is still opened');
     });
   },

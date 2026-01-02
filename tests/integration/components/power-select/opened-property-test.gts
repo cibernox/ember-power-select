@@ -9,12 +9,22 @@ import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 interface NumbersContext<
   IsMultiple extends boolean = false,
 > extends TestContext {
+  element: HTMLElement;
   numbers: typeof numbers;
   foo: (
     selection: Selected<string, IsMultiple>,
     select: Select<string, IsMultiple>,
     event?: Event,
   ) => void;
+}
+
+function getRootNode(element: Element): HTMLElement {
+  const shadowRoot = element.querySelector('[data-host-wrapper]')?.shadowRoot;
+  if (shadowRoot) {
+    return shadowRoot as unknown as HTMLElement;
+  }
+
+  return element.getRootNode() as HTMLElement;
 }
 
 module(
@@ -44,7 +54,9 @@ module(
         </template>,
       );
 
-      assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
+      assert
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
+        .exists('Dropdown is opened');
     });
 
     test<NumbersContext>('[BUGFIX] the select can be rendered already opened by passing `@initiallyOpened={{true}}` AND `@selected`', async function (assert) {
@@ -70,7 +82,9 @@ module(
         </template>,
       );
 
-      assert.dom('.ember-power-select-dropdown').exists('Dropdown is opened');
+      assert
+        .dom('.ember-power-select-dropdown', getRootNode(this.element))
+        .exists('Dropdown is opened');
     });
   },
 );

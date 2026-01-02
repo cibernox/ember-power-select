@@ -1,4 +1,5 @@
 import PowerSelectPlaceholder from '#src/components/power-select/placeholder.gts';
+import { htmlSafe } from '@ember/template';
 
 export default class CustomMultipleSearchPlaceholder<
   T,
@@ -19,7 +20,10 @@ export default class CustomMultipleSearchPlaceholder<
 
     <@inputComponent
       @select={{@select}}
-      style={{if @displayPlaceholder "position: absolute; top: 0; left: 0;"}}
+      style={{if
+        @displayPlaceholder
+        (htmlSafe "position: absolute; top: 0; left: 0;")
+      }}
     />
   </template>
 }

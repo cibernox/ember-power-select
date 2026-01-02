@@ -114,6 +114,9 @@ importers:
       concurrently:
         specifier: ^9.0.1
         version: 9.2.1
+      dom-element-descriptors:
+        specifier: ^0.5.1
+        version: 0.5.1
       ember-basic-dropdown:
         specifier: git+https://github.com/cibernox/ember-basic-dropdown#4cd4d48350315337188361c25e29c440eaca698b
         version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/4cd4d48350315337188361c25e29c440eaca698b(@babel/core@7.28.5)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.28.5)(@glint/template@1.7.3))(@glimmer/component@2.0.0)(@glint/template@1.7.3)
