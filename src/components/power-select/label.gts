@@ -40,6 +40,7 @@ export default class PowerSelectLabelComponent<
 
     this.args.select.actions.labelClick(e);
   }
+
   <template>
     {{#let
       (or @labelTag "div") (element (or @labelTag "div"))

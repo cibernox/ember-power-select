@@ -25,6 +25,12 @@ export default class PowerSelectPowerSelectGroupComponent<
 > extends Component<
   PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
 > {
+  uniqueId = guidFor(this);
+
+  get disabled() {
+    return this.args.group.disabled;
+  }
+
   <template>
     <li
       class="ember-power-select-group"
@@ -39,9 +45,4 @@ export default class PowerSelectPowerSelectGroupComponent<
       {{yield}}
     </li>
   </template>
-  uniqueId = guidFor(this);
-
-  get disabled() {
-    return this.args.group.disabled;
-  }
 }

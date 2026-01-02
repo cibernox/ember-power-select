@@ -161,6 +161,7 @@ export default class PowerSelectTriggerComponent<
       return get(list, index);
     }
   }
+
   <template>
     {{#if @select.multiple}}
       {{! template-lint-disable no-invalid-interactive }}

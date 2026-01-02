@@ -198,6 +198,7 @@ export default class PowerSelectInput<
       el.focus();
     }
   });
+
   <template>
     <div class="ember-power-select-input">
       {{! template-lint-disable require-input-label }}
