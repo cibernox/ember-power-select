@@ -69,6 +69,7 @@ export default class MaterialTheme extends Component {
     </p>
 
     <h2 class="t3">Regular selects without search</h2>
+    {{! template-lint-disable no-inline-styles }}
     <div style="display: flex;">
       <div style="flex: 1; padding: 5px;">
         <PowerSelect

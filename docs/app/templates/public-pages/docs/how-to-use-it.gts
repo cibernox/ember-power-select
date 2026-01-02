@@ -90,7 +90,7 @@ import HowToUseIt3 from '../../../components/snippets/how-to-use-it-3';
     <code>selected</code>
     option. Unsurprisingly it tells the component the
     <strong>initial</strong>
-    selection. But it's important to note a a few things about it:
+    selection. But it's important to note a few things about it:
   </p>
 
   <ul>

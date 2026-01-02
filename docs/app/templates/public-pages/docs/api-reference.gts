@@ -512,28 +512,25 @@ import { LinkTo } from '@ember/routing';
     interacting with the component through this public API object is using the
     actions.
   </p>
+
+  {{! template-lint-disable no-whitespace-for-layout }}
   <pre>
   {
-    disabled: &lt;boolean&gt;,            // Truthy if the component received <code
-    >disabled=true</code>
+    disabled: &lt;boolean&gt;,            // Truthy if the component received `disabled=true`
     highlighted: &lt;T&gt;,               // Contains the currently highlighted option (if any)
     isActive: &lt;boolean&gt;,            // Truthy if the trigger is focused. Other subcomponents can mark it as active depending on other logic.
     isOpen: &lt;boolean&gt;,              // Truthy if the dropdown is open.
-    lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match <code
-    >searchText</code>. In async searches, it will match it if the current search is fulfilled
+    lastSearchedText: &lt;string&gt;,     // Contains the text of the last finished search. In sync searches will match `searchText`. In async searches, it will match it if the current search is fulfilled
     loading: &lt;boolean&gt;,             // Truthy if there is a pending promise that will update the results
     options: &lt;array[T]&gt;,            // Contains the regular array with the resolved collection of options.
     results: &lt;array[T]&gt;,            // Contains the regular array with the active set of results.
     resultsCount: &lt;number&gt;,         // Contains the number of results incuding those nested/disabled
     searchText: &lt;string&gt;,           // Contains the text of the current search
     selected: &lt;T&gt; or &lt;array[T]&gt;,    // Contains the resolved selected option (or options in multiple selects)
-    multiple: &lt;boolean&gt;,            // Truthy if <code
-    >@multiple=true</code> was passed
-    uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form <code
-    >ember1234</code>.
+    multiple: &lt;boolean&gt;,            // Truthy if `@multiple=true` was passed
+    uniqueId: &lt;string&gt;,             // Contains the unique of this instance of EmberPowerSelect. It's of the form `ember1234`.
     actions: {
-      choose(option) { ... },       // Chooses the given options if it's not disabled (slight different than <code
-    >select</code>)
+      choose(option) { ... },       // Chooses the given options if it's not disabled (slight different than `select`)
       close() { ... },              // Closes the select
       highlight(option) { ... },    // Highlights the given option (if it's not disabled)
       open() { ... },               // Opens the select

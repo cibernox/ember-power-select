@@ -38,6 +38,7 @@ import { LinkTo } from '@ember/routing';
 
     <article class="selling-point">
       <div class="selling-point-code">
+        {{! template-lint-disable no-unbalanced-curlies }}
         \{{#ember as |ember|}}
       </div>
       <div class="selling-point-text">

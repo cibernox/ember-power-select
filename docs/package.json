@@ -27,11 +27,6 @@
     "test": "concurrently \"pnpm:lint\" \"pnpm:test:*\" --names \"lint,test:\" --prefixColors auto",
     "test:ember": "vite build --mode development && ember test --path dist"
   },
-  "dependenciesMeta": {
-    "ember-power-select": {
-      "injected": true
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@babel/eslint-parser": "^7.28.5",
@@ -71,7 +66,7 @@
     "concurrently": "^9.2.1",
     "decorator-transforms": "^2.3.0",
     "ember-auto-import": "^2.12.0",
-    "ember-basic-dropdown": "^8.9.0",
+    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#4cd4d48350315337188361c25e29c440eaca698b",
     "ember-cli": "~6.7.0",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-deprecation-workflow": "^3.4.0",

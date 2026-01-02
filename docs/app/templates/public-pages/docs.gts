@@ -93,6 +93,7 @@ export default class Docs extends Component {
 
   <template>
     <section class="docs">
+      {{! template-lint-disable no-duplicate-landmark-elements }}
       <nav class="side-nav">
         <header class="side-nav-header">Getting started</header>
         <LinkTo

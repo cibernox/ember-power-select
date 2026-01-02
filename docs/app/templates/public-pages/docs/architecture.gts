@@ -67,6 +67,7 @@ import { LinkTo } from '@ember/routing';
         fill="rgb(255, 68, 1)"
       ></polygon>
     </svg>
+    {{! template-lint-disable no-unbalanced-curlies }}
     <p class="text-center">\{{#in-element}}</p>
   </article>
 

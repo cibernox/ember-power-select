@@ -3,13 +3,14 @@
   "projectName": "ember-power-select",
   "packages": [
     {
-      "name": "@embroider/addon-blueprint",
-      "version": "4.1.2",
+      "name": "@ember/addon-blueprint",
+      "version": "0.16.1",
       "blueprints": [
         {
-          "name": "@embroider/addon-blueprint",
+          "name": "@ember/addon-blueprint",
           "isBaseBlueprint": true,
           "options": [
+            "--ci-provider=github",
             "--pnpm",
             "--typescript"
           ]
