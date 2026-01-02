@@ -31,7 +31,7 @@ import { LinkTo } from '@ember/routing';
     </li>
     <li>
       <p>Add following line to your
-        <code>application.hbs</code>
+        <code>application.gts/gjs</code>
         (necessary because
         <code>ember-basic-dropdown</code>
         is a V2 addon)</p>
