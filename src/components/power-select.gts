@@ -96,9 +96,7 @@ export interface PowerSelectArgs<
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
   options?: readonly T[] | Promise<readonly T[]>;
-  selected?:
-    | Selected<T, IsMultiple>
-    | Promise<Selected<T, IsMultiple>>;
+  selected?: Selected<T, IsMultiple> | Promise<Selected<T, IsMultiple>>;
   multiple?: IsMultiple;
   destination?: string;
   destinationElement?: HTMLElement;
@@ -835,12 +833,7 @@ export default class PowerSelectComponent<
 
   @action
   _highlight(opt: Option<T> | undefined): void {
-    if (
-      opt &&
-      typeof opt === 'object' &&
-      'disabled' in opt &&
-      opt.disabled
-    ) {
+    if (opt && typeof opt === 'object' && 'disabled' in opt && opt.disabled) {
       return;
     }
     this.highlighted = opt;
@@ -1310,7 +1303,11 @@ export default class PowerSelectComponent<
         this.storedAPI.options,
         this.storedAPI.highlighted,
       );
-    } else if (!this.storedAPI.isOpen && this.selected !== undefined && this.selected !== null) {
+    } else if (
+      !this.storedAPI.isOpen &&
+      this.selected !== undefined &&
+      this.selected !== null
+    ) {
       searchStartOffset += indexOfOption(this.storedAPI.options, this.selected);
     } else {
       searchStartOffset = 0;

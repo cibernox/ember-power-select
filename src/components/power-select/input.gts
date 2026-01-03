@@ -79,7 +79,7 @@ export default class PowerSelectInput<
       if (e.keyCode === 8) {
         e.stopPropagation();
         if (
-          !((e.target as HTMLInputElement).value.trim()) &&
+          !(e.target as HTMLInputElement).value.trim() &&
           this.args.buildSelection
         ) {
           const lastSelection =
