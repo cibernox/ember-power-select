@@ -1,5 +1,4 @@
-import { isEqual } from '@ember/utils';
-import type EmberArrayLike from '@ember/array';
+import isEqual from '../utils/equal.ts';
 import type {
   DefaultHighlightedParams,
   GroupBase,
@@ -26,12 +25,7 @@ export function countOptions<T = unknown>(collection: readonly T[]): number {
       return;
     }
     for (let i = 0; i < collection.length; i++) {
-      const entry =
-        collection &&
-        'objectAt' in collection &&
-        typeof collection.objectAt === 'function'
-          ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
-          : collection[i];
+      const entry = collection[i];
       if (isGroup(entry)) {
         walk((entry as unknown as GroupBase<T>).options);
       } else {
@@ -42,7 +36,7 @@ export function countOptions<T = unknown>(collection: readonly T[]): number {
   return counter;
 }
 
-export function indexOfOption<T, Option, IsMultiple extends boolean = false>(
+export function indexOfOption<T, Option>(
   collection: readonly T[],
   option: Option,
 ): number {
@@ -52,14 +46,7 @@ export function indexOfOption<T, Option, IsMultiple extends boolean = false>(
       return -1;
     }
     for (let i = 0; i < collection.length; i++) {
-      const entry =
-        collection &&
-        'objectAt' in collection &&
-        typeof collection.objectAt === 'function'
-          ? (
-              collection as unknown as EmberArrayLike<Selected<T, IsMultiple>>
-            ).objectAt(i)
-          : collection[i];
+      const entry = collection[i];
       if (isGroup(entry)) {
         const result = walk((entry as unknown as GroupBase<T>).options);
         if (result > -1) {
@@ -84,12 +71,7 @@ export function pathForOption<T = unknown>(
       return '';
     }
     for (let i = 0; i < collection.length; i++) {
-      const entry =
-        collection &&
-        'objectAt' in collection &&
-        typeof collection.objectAt === 'function'
-          ? (collection as unknown as EmberArrayLike<T>).objectAt(i)
-          : collection[i];
+      const entry = collection[i];
       if (isGroup(entry)) {
         const result = walk((entry as unknown as GroupBase<T>).options);
         if (result.length > 0) {
@@ -119,14 +101,7 @@ export function optionAtIndex<T>(
       let localCounter = 0;
       const length = collection.length;
       while (counter <= index && localCounter < length) {
-        const entry =
-          collection &&
-          'objectAt' in collection &&
-          typeof collection.objectAt === 'function'
-            ? (collection as unknown as EmberArrayLike<T>).objectAt(
-                localCounter,
-              )
-            : collection[localCounter];
+        const entry = collection[localCounter];
         if (isGroup(entry)) {
           const found = walk(
             (entry as unknown as GroupBase<T>).options,
@@ -181,12 +156,7 @@ export function findOptionWithOffset<T>(
     const length = options.length;
 
     for (let i = 0; i < length; i++) {
-      const entry =
-        options &&
-        'objectAt' in options &&
-        typeof options.objectAt === 'function'
-          ? (options as unknown as EmberArrayLike<T>).objectAt(i)
-          : options[i];
+      const entry = options[i];
       const entryIsDisabled =
         !!entry &&
         typeof entry === 'object' &&
@@ -237,10 +207,7 @@ export function filterOptions<
   const opts: T[] = [];
   const length = options.length;
   for (let i = 0; i < length; i++) {
-    const entry =
-      options && 'objectAt' in options && typeof options.objectAt === 'function'
-        ? (options as unknown as EmberArrayLike<T>).objectAt(i)
-        : options[i];
+    const entry = options[i];
     if (
       !skipDisabled ||
       !(

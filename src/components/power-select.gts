@@ -2,8 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { addObserver, removeObserver } from '@ember/object/observers';
-import { isEqual, isNone } from '@ember/utils';
+import isEqual from '../utils/equal.ts';
 import { assert, deprecate } from '@ember/debug';
 import {
   indexOfOption,
@@ -18,7 +17,6 @@ import {
 } from '../utils/group-utils.ts';
 import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
-import { isArray } from '@ember/array';
 import PowerSelectLabelComponent from './power-select/label.gts';
 import PowerSelectTriggerComponent from './power-select/trigger.gts';
 import PowerSelectPlaceholderComponent from './power-select/placeholder.gts';
@@ -100,7 +98,6 @@ export interface PowerSelectArgs<
   options?: readonly T[] | Promise<readonly T[]>;
   selected?:
     | Selected<T, IsMultiple>
-    | PromiseProxy<Selected<T, IsMultiple>>
     | Promise<Selected<T, IsMultiple>>;
   multiple?: IsMultiple;
   destination?: string;
@@ -217,7 +214,7 @@ export interface PowerSelectSignature<
 }
 
 const isSliceable = <T,>(coll: unknown): coll is Sliceable<T> => {
-  return isArray(coll);
+  return Array.isArray(coll);
 };
 
 const isPromiseLike = <T,>(thing: unknown): thing is Promise<T> => {
@@ -226,10 +223,6 @@ const isPromiseLike = <T,>(thing: unknown): thing is Promise<T> => {
     thing !== null &&
     typeof (thing as { then?: unknown }).then === 'function'
   );
-};
-
-const isPromiseProxyLike = <T,>(thing: unknown): thing is PromiseProxy<T> => {
-  return isPromiseLike(thing) && Object.hasOwnProperty.call(thing, 'content');
 };
 
 const isCancellablePromise = <T,>(
@@ -324,21 +317,6 @@ export default class PowerSelectComponent<
   }
 
   willDestroy() {
-    if (
-      this._lastSelectedPromise &&
-      isPromiseProxyLike(this._lastSelectedPromise)
-    ) {
-      try {
-        removeObserver(
-          this._lastSelectedPromise,
-          'content',
-          this,
-          this._selectedObserverCallback,
-        );
-        // eslint-disable-next-line no-empty
-      } catch {}
-      this._lastSelectedPromise = undefined;
-    }
     super.willDestroy();
   }
 
@@ -455,7 +433,8 @@ export default class PowerSelectComponent<
     if (this._resolvedSelected) {
       return toPlainArray(this._resolvedSelected) as Selected<T, IsMultiple>;
     } else if (
-      !isNone(this.args.selected) &&
+      this.args.selected !== undefined &&
+      this.args.selected !== null &&
       !isPromiseLike(this.args.selected)
     ) {
       return toPlainArray(this.args.selected) as Selected<T, IsMultiple>;
@@ -464,7 +443,7 @@ export default class PowerSelectComponent<
   }
 
   get ariaMultiSelectable(): boolean {
-    return isArray(this.args.selected);
+    return Array.isArray(this.args.selected);
   }
 
   get triggerId(): string {
@@ -854,20 +833,9 @@ export default class PowerSelectComponent<
     this.__updateSelected();
   }
 
-  _selectedObserverCallback(): void {
-    this._resolvedSelected = this._lastSelectedPromise as Selected<
-      T,
-      IsMultiple
-    >;
-    if (!Array.isArray(this._resolvedSelected)) {
-      this._highlight(this._resolvedSelected as Option<T>);
-    }
-  }
-
   @action
   _highlight(opt: Option<T> | undefined): void {
     if (
-      !isNone(opt) &&
       opt &&
       typeof opt === 'object' &&
       'disabled' in opt &&
@@ -1050,37 +1018,10 @@ export default class PowerSelectComponent<
   }
 
   private __updateSelected(): void {
-    if (isNone(this.args.selected)) return;
+    if (this.args.selected === undefined || this.args.selected === null) return;
     if (isPromiseLike(this.args.selected)) {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
-      if (
-        this._lastSelectedPromise &&
-        isPromiseProxyLike(this._lastSelectedPromise)
-      ) {
-        removeObserver(
-          this._lastSelectedPromise,
-          'content',
-          this,
-          this._selectedObserverCallback,
-        );
-      }
-
-      const currentSelectedPromise:
-        | PromiseProxy<Selected<T, IsMultiple>>
-        | Promise<Selected<T, IsMultiple>> = this.args.selected;
-      currentSelectedPromise.then(() => {
-        if (this.isDestroyed || this.isDestroying) return;
-        if (isPromiseProxyLike(currentSelectedPromise)) {
-          // eslint-disable-next-line ember/no-observers
-          addObserver(
-            currentSelectedPromise,
-            'content',
-            this,
-            this._selectedObserverCallback,
-          );
-        }
-      });
-
+      const currentSelectedPromise = this.args.selected;
       this._lastSelectedPromise = currentSelectedPromise;
       this._lastSelectedPromise.then((resolvedSelected) => {
         if (this._lastSelectedPromise === currentSelectedPromise) {
@@ -1369,7 +1310,7 @@ export default class PowerSelectComponent<
         this.storedAPI.options,
         this.storedAPI.highlighted,
       );
-    } else if (!this.storedAPI.isOpen && !isNone(this.selected)) {
+    } else if (!this.storedAPI.isOpen && this.selected !== undefined && this.selected !== null) {
       searchStartOffset += indexOfOption(this.storedAPI.options, this.selected);
     } else {
       searchStartOffset = 0;

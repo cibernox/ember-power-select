@@ -9,7 +9,6 @@ import {
   type SelectedCountryExtra,
 } from '../../../../demo-app/utils/constants';
 import { clickTrigger } from '#src/test-support/helpers.ts';
-import { isPresent } from '@ember/utils';
 import type {
   PowerSelectAfterOptionsSignature,
   PowerSelectSelectedItemSignature,
@@ -724,9 +723,9 @@ module(
       this.onInit = function (
         this: CustomGroupComponent<typeof groupedNumbers>,
       ) {
-        assert.ok(isPresent(this.args.select));
-        assert.ok(isPresent(this.args.group.groupName));
-        assert.ok(isPresent(this.args.group.options));
+        assert.ok(this.args.select);
+        assert.ok(this.args.group.groupName);
+        assert.ok(this.args.group.options);
         assert.strictEqual(this.args.extra, extra);
       };
 

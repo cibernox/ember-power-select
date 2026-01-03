@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 import { assert } from '@ember/debug';
-import { isBlank } from '@ember/utils';
 import { get } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import type { ComponentLike } from '@glint/template';
@@ -80,7 +79,7 @@ export default class PowerSelectInput<
       if (e.keyCode === 8) {
         e.stopPropagation();
         if (
-          isBlank((e.target as HTMLInputElement).value) &&
+          !((e.target as HTMLInputElement).value.trim()) &&
           this.args.buildSelection
         ) {
           const lastSelection =
