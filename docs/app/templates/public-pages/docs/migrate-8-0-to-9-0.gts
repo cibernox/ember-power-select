@@ -22,8 +22,8 @@ import { LinkTo } from '@ember/routing';
         <LinkTo @route="public-pages.docs.styles">Styles</LinkTo>
       </li>
     </ul>
-    Before migrating to 9.x, you should first update to the latest 8.x release,
-    as some of the breaking changes were introduced in 8.x.
+    We recommend upgrading to the latest 8.x release before moving to 9.x, since
+    some breaking changes were introduced/can already be fixed in 8.x.
   </p>
 
   <h2>Breaking changes</h2>
