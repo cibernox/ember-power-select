@@ -19,7 +19,6 @@ import {
 } from '@ember/test-helpers';
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
-import { isEmpty } from '@ember/utils';
 import { runTask } from 'ember-lifeline';
 import { TrackedArray } from 'tracked-built-ins';
 import type {
@@ -587,7 +586,7 @@ module(
       this.numbers = numbers;
       this.selected = ['four'];
       this.onChange = (selected) => {
-        assert.ok(isEmpty(selected), 'No elements are selected');
+        assert.ok(selected.length === 0, 'No elements are selected');
         this.set('selected', selected);
       };
 

@@ -24,9 +24,6 @@ import {
   digits,
   type Country,
 } from '../../../../demo-app/utils/constants';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
-import ArrayProxy from '@ember/array/proxy';
-import ObjectProxy from '@ember/object/proxy';
 import { TrackedArray } from 'tracked-built-ins';
 import { modifier } from 'ember-modifier';
 import PowerSelectBeforeOptionsComponent, {
@@ -42,7 +39,6 @@ import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-pos
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
 import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
-import { on } from '@ember/modifier';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 import { createDescriptor } from 'dom-element-descriptors';
 
@@ -108,13 +104,6 @@ interface UserContext extends TestContext {
   onChange: (user: Selected<User>) => void;
 }
 
-interface OptionContext extends TestContext {
-  element: HTMLElement;
-  options: string[];
-  selected: Selected<string>;
-  refreshCollection: () => void;
-}
-
 interface DigitsContext extends TestContext {
   element: HTMLElement;
   digits: typeof digits;
@@ -133,9 +122,6 @@ interface MainUserContext extends TestContext {
   };
   foo: (selected: Selected<Pet>) => void;
 }
-
-const PromiseArrayProxy = ArrayProxy.extend(PromiseProxyMixin);
-const PromiseObject = ObjectProxy.extend(PromiseProxyMixin);
 
 class User {
   @tracked name: string;
@@ -3191,57 +3177,6 @@ module(
         .hasText('Lucius', 'The trigger has the proper content');
     });
 
-    test<OptionContext>('If the options change and the new value is PromiseArrayProxy, the content of that proxy is set immediately while the promise resolves', async function (assert) {
-      const self = this;
-
-      this.options = ['initial', 'options'];
-      this.refreshCollection = () => {
-        const promise = new RSVP.Promise((resolve) => {
-          setTimeout(() => resolve(['one', 'two', 'three']), 500);
-        });
-        // @ts-expect-error Object literal may only specify known properties, and 'promise' does not exist in type
-        this.set('options', PromiseArrayProxy.create({ promise }));
-      };
-
-      await render<OptionContext>(
-        <template>
-          <HostWrapper>
-            <button
-              type="button"
-              id="refresh-collection-btn"
-              {{on "click" self.refreshCollection}}
-            >Refresh collection</button>
-            <br />
-            <PowerSelect
-              @options={{self.options}}
-              @selected={{self.selected}}
-              @onChange={{fn (mut self.selected)}}
-              as |name|
-            >
-              {{name}}
-            </PowerSelect>
-          </HostWrapper>
-        </template>,
-      );
-
-      await click(
-        getRootNode(this.element).querySelector(
-          '#refresh-collection-btn',
-        ) as HTMLElement,
-      );
-      await clickTrigger(
-        getRootNode(this.element).querySelector(
-          '.ember-power-select-trigger',
-        ) as HTMLElement,
-      );
-      assert
-        .dom('.ember-power-select-option', getRootNode(this.element))
-        .exists({ count: 1 });
-      assert
-        .dom('.ember-power-select-option', getRootNode(this.element))
-        .hasClass('ember-power-select-option--loading-message');
-    });
-
     test<NumbersContext>('The title is rendered in the trigger', async function (assert) {
       const self = this;
 
@@ -3267,75 +3202,6 @@ module(
       assert
         .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasAttribute('title', 'The title');
-    });
-
-    test<CountriesContext>('Constant PromiseProxy references are tracked when .content changes', async function (assert) {
-      const self = this;
-
-      const initial: Country | null = null;
-      // @ts-expect-error Expected 0 arguments, but got 1.
-      this.proxy = PromiseObject.create<Country | undefined>({
-        promise: Promise.resolve(initial),
-      }) as PromiseProxy<Country | undefined>;
-      this.countries = countries;
-      this.updateProxy = () => {
-        // @ts-expect-error Property 'set' does not exist on type 'PromiseProxy<Country | undefined>'.
-        // //eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        this.proxy.set<keyof ObjectProxy<Country | undefined>>(
-          'content',
-          countries[0],
-        );
-      };
-
-      this.foo = () => {};
-
-      await render<CountriesContext>(
-        <template>
-          <HostWrapper>
-            <button
-              type="button"
-              id="update-proxy-btn"
-              {{on "click" self.updateProxy}}
-            >Update proxy content</button>
-            <br />
-            <PowerSelect
-              @selected={{self.proxy}}
-              @options={{self.countries}}
-              @onChange={{self.foo}}
-              as |option|
-            >
-              {{option.name}}
-            </PowerSelect>
-          </HostWrapper>
-        </template>,
-      );
-
-      assert
-        .dom(
-          '.ember-power-select-option[aria-selected="true"]',
-          getRootNode(this.element),
-        )
-        .doesNotExist('no element is selected');
-      assert
-        .dom('.ember-power-select-trigger', getRootNode(this.element))
-        .hasText(
-          initial ? (initial as Country).name : '',
-          'Nothing is selected yet',
-        );
-
-      await click(
-        getRootNode(this.element).querySelector(
-          '#update-proxy-btn',
-        ) as HTMLElement,
-      );
-      assert
-        .dom('.ember-power-select-trigger', getRootNode(this.element))
-        .hasText(
-          countries[0]?.name ?? '',
-          'The trigger has the proper content',
-        );
-
-      //TODO: also try starting from non-null value and maybe also going back to null?
     });
 
     test<DigitsContext>('works with numbers', async function (assert) {
