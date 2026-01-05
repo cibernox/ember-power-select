@@ -6,7 +6,7 @@ export interface PowerSelectNoMatchesMessageSignature<
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLUListElement;
   Args: {
     noMatchesMessage?: string;
     select?: Select<T, IsMultiple>;

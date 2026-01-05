@@ -18,7 +18,6 @@ import {
 import type { Selected, MultipleSelected } from '#src/types.ts';
 import type { TestContext } from '@ember/test-helpers';
 import PowerSelect from '#src/components/power-select.gts';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
@@ -267,7 +266,8 @@ module(
       await render<NumbersMultipleContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @selected={{self.selected}}
               @onChange={{fn (mut self.selected)}}
@@ -276,7 +276,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -302,7 +302,8 @@ module(
       await render<NumbersMultipleContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @selected={{self.selected}}
               @onChange={{fn (mut self.selected)}}
@@ -310,7 +311,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -337,7 +338,8 @@ module(
       await render<NumbersMultipleContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @selected={{self.selected}}
               @onChange={{fn (mut self.selected)}}
@@ -346,7 +348,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );

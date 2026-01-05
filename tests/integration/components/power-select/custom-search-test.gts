@@ -22,7 +22,6 @@ import {
 import RSVP from 'rsvp';
 import type { MatcherFn } from '#src/types.ts';
 import PowerSelect from '#src/components/power-select.gts';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 import { createDescriptor } from 'dom-element-descriptors';
 
@@ -1097,7 +1096,8 @@ module(
       await render<SearchContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @search={{self.searchFn}}
               @onChange={{self.foo}}
@@ -1105,7 +1105,7 @@ module(
               as |number select|
             >
               {{number}}:{{select.lastSearchedText}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1167,7 +1167,8 @@ module(
         <template>
           <HostWrapper>
             {{#if self.visible}}
-              <PowerSelectMultiple
+              <PowerSelect
+                @multiple={{true}}
                 @options={{self.numbers}}
                 @search={{self.searchFn}}
                 @onChange={{self.foo}}
@@ -1175,7 +1176,7 @@ module(
                 as |number|
               >
                 {{number}}
-              </PowerSelectMultiple>
+              </PowerSelect>
             {{/if}}
           </HostWrapper>
         </template>,
@@ -1253,7 +1254,8 @@ module(
       await render<CountryContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @matcher={{self.matcherFn}}
               @searchField="name"
@@ -1262,7 +1264,7 @@ module(
               as |country|
             >
               {{country.name}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1481,14 +1483,15 @@ module(
       await render<ObjContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @search={{self.obj.searchTask.perform}}
               @onChange={{self.foo}}
               @searchEnabled={{true}}
               as |number|
             >
               {{number}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1530,14 +1533,15 @@ module(
       await render<ObjContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @search={{self.obj.searchTask.perform}}
               @onChange={{self.foo}}
               @searchEnabled={{true}}
               as |number|
             >
               {{number}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1578,9 +1582,9 @@ module(
 
     //   await render<ObjContext>(hbs`
     //   {{#unless this.hideSelect}}
-    //     <PowerSelectMultiple search={{this.obj.searchTask.perform}} @onChange={{this.foo}} @searchEnabled={{true}} as |number|>
+    //     <PowerSelect @multiple={{true}} search={{this.obj.searchTask.perform}} @onChange={{this.foo}} @searchEnabled={{true}} as |number|>
     //       {{number}}
-    //     </PowerSelectMultiple>
+    //     </PowerSelect>
     //   {{/unless}}
     // `);
 
@@ -1619,14 +1623,15 @@ module(
       await render<ObjContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @search={{self.obj.searchTask.perform}}
               @onChange={{self.foo}}
               @searchEnabled={{true}}
               as |number|
             >
               {{number}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );

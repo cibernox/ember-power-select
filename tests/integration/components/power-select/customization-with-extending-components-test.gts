@@ -29,7 +29,6 @@ import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power
 import CustomGroupComponent from '../../../../demo-app/components/custom-group-component';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn, hash } from '@ember/helper';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface CountryContext<
@@ -407,7 +406,8 @@ module(
       await render<CountryContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @selected={{self.country}}
               @triggerComponent={{self.triggerComponent}}
@@ -416,7 +416,7 @@ module(
               as |country|
             >
               {{country.code}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );

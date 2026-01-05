@@ -5,7 +5,6 @@ import { countries, type Country } from '../../../../demo-app/utils/constants';
 import type { Selected, MultipleSelected } from '#src/types.ts';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface CountryContext extends TestContext {
@@ -108,7 +107,8 @@ module(
       await render<CountryMultipleContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @selected={{self.country}}
               @onChange={{fn (mut self.country)}}
@@ -116,7 +116,7 @@ module(
               as |country|
             >
               {{country.name}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -171,7 +171,8 @@ module(
       await render<CountryMultipleContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @selected={{self.country}}
               @onChange={{fn (mut self.country)}}
@@ -179,7 +180,7 @@ module(
               as |country|
             >
               {{country.name}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );

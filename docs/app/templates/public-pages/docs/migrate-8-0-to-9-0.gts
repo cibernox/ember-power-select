@@ -214,6 +214,13 @@ import { LinkTo } from '@ember/routing';
             <small><i>(Deprecation added in 8.11)</i></small>
           </p>
         </li>
+        <li>
+          <p>
+            Remove internal functions, which were used from
+            <code>ember/render-modifier</code>
+            <small><i>(Deprecation added in 8.1)</i></small>
+          </p>
+        </li>
       </ul>
     </li>
   </ul>

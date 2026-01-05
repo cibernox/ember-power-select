@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import type { Select } from '../../types.js';
 import { eq, or } from 'ember-truth-helpers';
 import element from 'ember-element-helper/helpers/element';
 import { on } from '@ember/modifier';
+import type { Select } from '../../types.js';
 
 export interface PowerSelectLabelArgs<
   T = unknown,

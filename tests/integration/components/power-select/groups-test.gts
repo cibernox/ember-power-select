@@ -13,7 +13,6 @@ import CustomGroupComponentWithVariant from '../../../../demo-app/components/cus
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPowerSelectGroupSignature } from '#src/components/power-select/power-select-group.gts';
 import PowerSelect from '#src/components/power-select.gts';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
@@ -335,7 +334,8 @@ module(
       await render<GroupedNumbersWithCustomPropertyContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.groupedNumbersWithCustomProperty}}
               @onChange={{self.foo}}
               @searchEnabled={{true}}
@@ -343,7 +343,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
