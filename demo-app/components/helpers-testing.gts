@@ -4,7 +4,6 @@ import { runTask } from 'ember-lifeline';
 import { tracked } from '@glimmer/tracking';
 import RSVP from 'rsvp';
 import PowerSelect from '#src/components/power-select.gts';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import { fn } from '@ember/helper';
 import CustomTriggerWithSearch from '../components/custom-trigger-with-search.gts';
 
@@ -115,7 +114,8 @@ export default class HelpersTesting extends Component {
     </div>
 
     <div class="select-choose-onopen-multiple">
-      <PowerSelectMultiple
+      <PowerSelect
+        @multiple={{true}}
         @onOpen={{this.onOpenHandle}}
         @options={{this.optionz}}
         @selected={{this.selected2Multi}}
@@ -123,7 +123,7 @@ export default class HelpersTesting extends Component {
         as |num|
       >
         {{num}}
-      </PowerSelectMultiple>
+      </PowerSelect>
     </div>
 
     <div>
@@ -157,7 +157,8 @@ export default class HelpersTesting extends Component {
     </div>
 
     <div class="select-multiple">
-      <PowerSelectMultiple
+      <PowerSelect
+        @multiple={{true}}
         @options={{this.numbers}}
         @selected={{this.selectedList}}
         @onChange={{fn (mut this.selectedList)}}
@@ -165,18 +166,19 @@ export default class HelpersTesting extends Component {
         as |num|
       >
         {{num}}
-      </PowerSelectMultiple>
+      </PowerSelect>
     </div>
 
     <div id="select-multiple-async">
-      <PowerSelectMultiple
+      <PowerSelect
+        @multiple={{true}}
         @options={{this.numbers}}
         @selected={{this.asyncSelectedList}}
         @onChange={{fn this.onChangeAsyncMultiple "asyncSelectedList"}}
         as |num|
       >
         {{num}}
-      </PowerSelectMultiple>
+      </PowerSelect>
     </div>
 
     <div class="select-deselect-async">

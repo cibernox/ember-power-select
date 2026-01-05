@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectInputSignature } from './input.gts';
 import type { Select } from '../../types.ts';
+
 export interface PowerSelectPlaceholderSignatureArgs<
   T = unknown,
   TExtra = unknown,
@@ -22,7 +23,7 @@ export interface PowerSelectPlaceholderSignature<
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLSpanElement;
   Args: PowerSelectPlaceholderSignatureArgs<T, TExtra, IsMultiple>;
 }
 

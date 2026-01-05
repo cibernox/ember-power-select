@@ -44,7 +44,6 @@ import CustomMultipleSearchPlaceholder from '../../../../demo-app/components/cus
 import CustomMultipleBeforeOptions from '../../../../demo-app/components/custom-multiple-before-options';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn, hash } from '@ember/helper';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface CountryContext<
@@ -828,7 +827,8 @@ module(
       await render<CountryContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @placeholder="test"
               @placeholderComponent={{self.placeholderComponent}}
@@ -836,7 +836,7 @@ module(
               as |country|
             >
               {{country.name}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -865,7 +865,8 @@ module(
       await render<CountryContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @searchEnabled={{true}}
               @searchField="name"
               @options={{self.countries}}
@@ -876,7 +877,7 @@ module(
               as |country|
             >
               {{country.name}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -908,7 +909,8 @@ module(
       await render<CountryContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @selected={{self.country}}
               @optionsComponent={{self.optionsComponent}}
@@ -917,7 +919,7 @@ module(
               as |country|
             >
               {{country.code}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -956,7 +958,8 @@ module(
       await render<CountryContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @selected={{self.country}}
               @triggerComponent={{self.triggerComponent}}
@@ -965,7 +968,7 @@ module(
               as |country|
             >
               {{country.code}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1005,7 +1008,8 @@ module(
         <template>
           <HostWrapper>
             <div class="select-box">
-              <PowerSelectMultiple
+              <PowerSelect
+                @multiple={{true}}
                 @options={{self.countries}}
                 @selected={{self.country}}
                 @selectedItemComponent={{self.selectedItemComponent}}
@@ -1014,7 +1018,7 @@ module(
                 as |country|
               >
                 {{country.code}}
-              </PowerSelectMultiple>
+              </PowerSelect>
             </div>
           </HostWrapper>
         </template>,
@@ -1046,7 +1050,8 @@ module(
         <template>
           <HostWrapper>
             <div class="select-box">
-              <PowerSelectMultiple
+              <PowerSelect
+                @multiple={{true}}
                 @options={{self.countries}}
                 @selected={{self.country}}
                 @searchEnabled={{true}}
@@ -1057,7 +1062,7 @@ module(
                 as |country|
               >
                 {{country.code}}
-              </PowerSelectMultiple>
+              </PowerSelect>
             </div>
           </HostWrapper>
         </template>,
@@ -1120,7 +1125,8 @@ module(
         <template>
           <HostWrapper>
             <div class="select-box">
-              <PowerSelectMultiple
+              <PowerSelect
+                @multiple={{true}}
                 @options={{self.countries}}
                 @selected={{self.country}}
                 @searchEnabled={{true}}
@@ -1132,7 +1138,7 @@ module(
                 as |country|
               >
                 {{country.code}}
-              </PowerSelectMultiple>
+              </PowerSelect>
             </div>
           </HostWrapper>
         </template>,
@@ -1193,7 +1199,8 @@ module(
       await render<CountryContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.countries}}
               @labelComponent={{self.labelComponent}}
               @labelText="Label for select"
@@ -1201,7 +1208,7 @@ module(
               as |country|
             >
               {{country.name}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );

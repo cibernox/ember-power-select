@@ -1,10 +1,12 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import type { PowerSelectArgs } from '../power-select.gts';
 import { get } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import { deprecate } from '@ember/debug';
 import PowerSelectInput, { type PowerSelectInputSignature } from './input.gts';
+import { and, eq, isEmpty, not, notEq, or } from 'ember-truth-helpers';
+import { on } from '@ember/modifier';
+import selectIsSelectedPresent from '../../helpers/ember-power-select-is-selected-present.ts';
+import type { PowerSelectArgs } from '../power-select.gts';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
 import type {
@@ -14,16 +16,13 @@ import type {
   Selected,
   TSearchFieldPosition,
 } from '../../types.ts';
-import { and, eq, isEmpty, not, notEq, or } from 'ember-truth-helpers';
-import { on } from '@ember/modifier';
-import selectIsSelectedPresent from '../../helpers/ember-power-select-is-selected-present.ts';
 
 export interface PowerSelectTriggerSignature<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLUListElement;
   Args: {
     select: Select<T, IsMultiple>;
     allowClear?: boolean;
@@ -97,26 +96,6 @@ export default class PowerSelectTriggerComponent<
     }
 
     return false;
-  }
-
-  // Actions
-  @action
-  openChanged(element: Element, [isOpen]: [boolean]) {
-    deprecate(
-      'You are using a power-select-multiple trigger with ember/render-modifier. Replace {{did-update this.openChanged @select.isOpen}} with {{this.openChange @select.isOpen}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this._openChanged(element, [isOpen]);
   }
 
   @action

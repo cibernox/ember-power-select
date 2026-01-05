@@ -4,19 +4,19 @@ import { modifier } from 'ember-modifier';
 import { assert } from '@ember/debug';
 import { get } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
+import { on } from '@ember/modifier';
+import { or } from 'ember-truth-helpers';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
 import type { Select, TSearchFieldPosition } from '../../types';
 import type { PowerSelectArgs } from '../power-select.gts';
-import { on } from '@ember/modifier';
-import { or } from 'ember-truth-helpers';
 
 export interface PowerSelectInputSignature<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLInputElement;
   Args: {
     select: Select<T, IsMultiple>;
     ariaLabel?: string;
@@ -76,7 +76,7 @@ export default class PowerSelectInput<
       return false;
     }
     if (this.args.select.multiple) {
-      if (e.keyCode === 8) {
+      if (e.key === 'Backspace') {
         e.stopPropagation();
         if (
           !(e.target as HTMLInputElement).value.trim() &&
@@ -104,11 +104,11 @@ export default class PowerSelectInput<
             this.args.select.actions.open(e);
           }
         }
-      } else if ((e.keyCode >= 48 && e.keyCode <= 90) || e.keyCode === 32) {
+      } else if (e.key.length === 1 && /[a-z0-9 ]/i.test(e.key)) {
         // Keys 0-9, a-z or SPACE
         e.stopPropagation();
       }
-    } else if (e.keyCode === 13) {
+    } else if (e.key === 'Enter') {
       this.args.select.actions.close(e);
     }
   }

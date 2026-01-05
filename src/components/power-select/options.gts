@@ -1,12 +1,11 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import type { ComponentLike } from '@glint/template';
-import { deprecate } from '@ember/debug';
-import type { PowerSelectPowerSelectGroupSignature } from './power-select-group.gts';
-import type { GroupObject, Option, Select } from '../../types';
 import emberPowerSelectIsGroup from '../../helpers/ember-power-select-is-group.ts';
 import emberPowerSelectIsEqual from '../../helpers/ember-power-select-is-equal.ts';
+import type { ComponentLike } from '@glint/template';
+import type { PowerSelectPowerSelectGroupSignature } from './power-select-group.gts';
+import type { GroupObject, Option, Select } from '../../types';
+
 declare const FastBoot: unknown;
 
 export interface PowerSelectOptionsSignature<
@@ -14,7 +13,7 @@ export interface PowerSelectOptionsSignature<
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLUListElement;
   Args: PowerSelectOptionsArgs<T, TExtra, IsMultiple>;
   Blocks: {
     default: [opt: Option<T>, select: Select<T, IsMultiple>];
@@ -155,44 +154,6 @@ export default class PowerSelectOptionsComponent<
     if (this._listElement) {
       this._removeHandlers(this._listElement);
     }
-  }
-
-  @action
-  addHandlers(element: Element) {
-    deprecate(
-      'You are using power-select options component with ember/render-modifier. Replace {{did-insert this.addHandlers}} with {{this.setupHandlers}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this._addHandlers(element);
-  }
-
-  @action
-  removeHandlers(element: Element) {
-    deprecate(
-      'You are using power-select options component with ember/render-modifier. Replace {{will-destroy this.removeHandlers}} with {{this.setupHandlers}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this._removeHandlers(element);
   }
 
   setupHandlers = modifier((element: Element) => {

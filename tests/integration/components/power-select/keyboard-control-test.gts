@@ -20,7 +20,6 @@ import RSVP from 'rsvp';
 import type { Select, Selected } from '#src/types.ts';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface NumbersContext<
@@ -1135,7 +1134,8 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @selected={{self.selected}}
               @onChange={{self.foo}}
@@ -1144,7 +1144,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1266,7 +1266,8 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @selected={{self.selected}}
               @onChange={{self.foo}}
@@ -1275,7 +1276,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1315,7 +1316,8 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @selected={{self.selected}}
               @onChange={{self.foo}}
@@ -1324,7 +1326,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -1577,8 +1579,8 @@ module(
         getRootNode(this.element).querySelector(
           '.ember-power-select-trigger',
         ) as HTMLElement,
-        104,
-      ); // Numpad 8
+        56,
+      ); // 8
       assert
         .dom('.ember-power-select-trigger', getRootNode(this.element))
         .hasText('', 'nothing has been selected');
@@ -1609,14 +1611,15 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @selected={{self.selected}}
               @onChange={{fn (mut self.selected)}}
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -2186,14 +2189,15 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @onChange={{self.foo}}
               @onOpen={{self.onOpen}}
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -2251,14 +2255,15 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @onChange={{self.foo}}
               @onOpen={{self.onOpen}}
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -2306,7 +2311,8 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @closeOnSelect={{false}}
               @onChange={{fn (mut self.selected)}}
@@ -2314,7 +2320,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
@@ -2382,7 +2388,8 @@ module(
       await render<NumbersContext<true>>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @closeOnSelect={{false}}
               @onChange={{self.onChange}}
@@ -2390,7 +2397,7 @@ module(
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );

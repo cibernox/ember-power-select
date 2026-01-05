@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
-import { deprecate } from '@ember/debug';
 import { task, timeout } from 'ember-concurrency';
+import { on } from '@ember/modifier';
+import { and, eq, or } from 'ember-truth-helpers';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
 import type {
@@ -10,15 +11,13 @@ import type {
   Select,
   TSearchFieldPosition,
 } from '../../types';
-import { on } from '@ember/modifier';
-import { and, eq, or } from 'ember-truth-helpers';
 
 export interface PowerSelectBeforeOptionsSignature<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLDivElement;
   Args: {
     select: Select<T, IsMultiple>;
     searchEnabled?: boolean;
@@ -54,30 +53,11 @@ export default class PowerSelectBeforeOptionsComponent<
   didSetup: boolean = false;
 
   @action
-  clearSearch(): void {
-    deprecate(
-      'You are using power-select before-option component with ember/render-modifier. Replace {{will-destroy this.clearSearch}} with {{this.setupInput}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this.args.select.actions?.search('');
-  }
-
-  @action
   handleKeydown(e: KeyboardEvent): false | void {
     if (this.args.onKeydown(e) === false) {
       return false;
     }
-    if (e.keyCode === 13) {
+    if (e.key === 'Enter') {
       this.args.select.actions.close(e);
     }
   }
@@ -88,25 +68,6 @@ export default class PowerSelectBeforeOptionsComponent<
     if (this.args.onInput(e) === false) {
       return false;
     }
-  }
-
-  @action
-  focusInput(el: HTMLElement) {
-    deprecate(
-      'You are using power-select before-option component with ember/render-modifier. Replace {{did-insert this.focusInput}} with {{this.setupInput}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this._focusInput(el);
   }
 
   setupInput = modifier(

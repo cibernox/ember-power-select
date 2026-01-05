@@ -6,7 +6,7 @@ export interface PowerSelectSearchMessageSignature<
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLUListElement;
   Args: {
     searchMessage: string;
     select?: Select<T, IsMultiple>;

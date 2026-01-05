@@ -8,7 +8,6 @@ import {
   findContains,
 } from '#src/test-support/helpers.ts';
 import PowerSelect from '#src/components/power-select.gts';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../demo-app/components/host-wrapper.gts';
 
 interface Context extends TestContext {
@@ -77,14 +76,15 @@ module('Integration | Helpers', function (hooks) {
     await render<Context>(
       <template>
         <HostWrapper>
-          <PowerSelectMultiple
+          <PowerSelect
+            @multiple={{true}}
             @options={{self.numbers}}
             @onChange={{self.fooMultiple}}
             @searchEnabled={{true}}
             as |number|
           >
             {{number}}
-          </PowerSelectMultiple>
+          </PowerSelect>
           <div id="single-select">
             <PowerSelect
               @options={{self.numbers}}

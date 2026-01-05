@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action, get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import isEqual from '../utils/equal.ts';
-import { assert, deprecate } from '@ember/debug';
+import { assert } from '@ember/debug';
 import {
   indexOfOption,
   filterOptions,
@@ -233,10 +233,6 @@ const isCancellablePromise = <T,>(
   );
 };
 
-function isNumpadKeyEvent(e: KeyboardEvent): boolean {
-  return e.keyCode >= 96 && e.keyCode <= 105;
-}
-
 const toPlainArray = <T,>(collection: T | T[] | Sliceable<T>): T[] | T => {
   if (isSliceable<T>(collection)) {
     return collection.slice();
@@ -263,6 +259,7 @@ function getOptionMatcher<T>(
     };
   }
 }
+
 export default class PowerSelectComponent<
   T,
   IsMultiple extends boolean = false,
@@ -619,7 +616,7 @@ export default class PowerSelectComponent<
       if (
         e instanceof KeyboardEvent &&
         e.type === 'keydown' &&
-        (e.keyCode === 38 || e.keyCode === 40)
+        (e.key === 'ArrowUp' || e.key === 'ArrowDown')
       ) {
         e.preventDefault();
       }
@@ -660,7 +657,7 @@ export default class PowerSelectComponent<
       return false;
     }
 
-    if (this.args.multiple && e.keyCode === 13 && this.storedAPI.isOpen) {
+    if (this.args.multiple && e.key === 'Enter' && this.storedAPI.isOpen) {
       e.stopPropagation();
       if (this.storedAPI.highlighted !== undefined) {
         if (
@@ -682,9 +679,9 @@ export default class PowerSelectComponent<
     if (
       this.searchFieldPosition === 'trigger' &&
       !this.storedAPI.isOpen &&
-      e.keyCode !== 9 && // TAB
-      e.keyCode !== 13 && // ENTER
-      e.keyCode !== 27 // ESC
+      e.key !== 'Tab' && // TAB
+      e.key !== 'Enter' && // ENTER
+      e.key !== 'Escape' // ESC
     ) {
       this.storedAPI.actions.open(e);
     }
@@ -704,10 +701,10 @@ export default class PowerSelectComponent<
       e.stopImmediatePropagation();
       return;
     }
-    if ((e.keyCode >= 48 && e.keyCode <= 90) || isNumpadKeyEvent(e)) {
+    if (e.key.length === 1 && /^[a-z0-9]$/i.test(e.key)) {
       // Keys 0-9, a-z or numpad keys
       this.triggerTypingTask.perform(e);
-    } else if (e.keyCode === 32) {
+    } else if (e.key === ' ') {
       // Space
       this._handleKeySpace(this.storedAPI, e);
     } else {
@@ -787,48 +784,10 @@ export default class PowerSelectComponent<
   }
 
   @action
-  _updateOptions(): void {
-    deprecate(
-      'You are using power-select with ember/render-modifier. Replace {{did-insert this._updateOptions @options}} and {{did-update this._updateOptions @options}} with {{this.updateOptions @options}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this.__updateOptions();
-  }
-
-  @action
   _updateHighlighted(): void {
     if (this.storedAPI.isOpen) {
       this._resetHighlighted();
     }
-  }
-
-  @action
-  _updateSelected(): void {
-    deprecate(
-      'You are using power-select with ember/render-modifier. Replace {{did-insert this._updateSelected @selected}} and {{did-update this._updateSelected @selected}} with {{this.updateSelected @selected}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this.__updateSelected();
   }
 
   @action
@@ -904,47 +863,6 @@ export default class PowerSelectComponent<
     } else if (optionTopScroll < optionsList.scrollTop) {
       optionsList.scrollTop = optionTopScroll;
     }
-  }
-
-  @action
-  _registerAPI(
-    triggerElement: Element,
-    [publicAPI]: [Select<T, IsMultiple>],
-  ): void {
-    deprecate(
-      'You are using power-select with ember/render-modifier. Replace {{did-insert this._registerAPI publicAPI}} and {{did-update this._registerAPI publicAPI}} with {{this.updateRegisterAPI publicAPI}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this.__registerAPI(triggerElement, [publicAPI]);
-  }
-
-  @action
-  _performSearch(triggerElement: Element, [term]: [string]): void {
-    deprecate(
-      'You are using power-select with ember/render-modifier. Replace {{did-update this._performSearch this.searchText}} with {{this.updatePerformSearch this.searchText}}.',
-      false,
-      {
-        for: 'ember-power-select',
-        id: 'ember-power-select.no-at-ember-render-modifiers',
-        since: {
-          enabled: '8.1',
-          available: '8.1',
-        },
-        until: '9.0.0',
-      },
-    );
-
-    this.__performSearch(triggerElement, [term]);
   }
 
   updateOptions = modifier(
@@ -1139,16 +1057,16 @@ export default class PowerSelectComponent<
     select: Select<T, IsMultiple>,
     e: KeyboardEvent,
   ): boolean | void {
-    if (e.keyCode === 38 || e.keyCode === 40) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       // Up & Down
       return this._handleKeyUpDown(select, e);
-    } else if (e.keyCode === 13) {
+    } else if (e.key === 'Enter') {
       // ENTER
       return this._handleKeyEnter(select, e);
-    } else if (e.keyCode === 9) {
+    } else if (e.key === 'Tab') {
       // Tab
       return this._handleKeyTab(select, e);
-    } else if (e.keyCode === 27) {
+    } else if (e.key === 'Escape') {
       // ESC
       return this._handleKeyESC(select, e);
     }
@@ -1190,7 +1108,7 @@ export default class PowerSelectComponent<
     if (select.isOpen) {
       e.preventDefault();
       e.stopPropagation();
-      const step: 1 | -1 = e.keyCode === 40 ? 1 : -1;
+      const step: 1 | -1 = e.key === 'ArrowDown' ? 1 : -1;
       const newHighlighted = advanceSelectableOption(
         select.results,
         select.highlighted,
@@ -1274,14 +1192,10 @@ export default class PowerSelectComponent<
     // In general, a user doing this interaction means to have a different result.
     let searchStartOffset = 1;
     let repeatingChar = this._repeatingChar;
-    let charCode = e.keyCode;
-    if (isNumpadKeyEvent(e)) {
-      charCode -= 48; // Adjust char code offset for Numpad key codes. Check here for numapd key code behavior: https://goo.gl/Qwc9u4
-    }
     let term;
 
     // Check if user intends to cycle through results. _repeatingChar can only be the first character.
-    const c = String.fromCharCode(charCode);
+    const c = e.key.length === 1 ? e.key : '';
     if (c === this._repeatingChar) {
       term = c;
     } else {

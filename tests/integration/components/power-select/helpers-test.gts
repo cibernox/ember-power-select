@@ -7,7 +7,6 @@ import type { Selected } from '#src/types.ts';
 import type { TestContext } from '@ember/test-helpers';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface NumbersContext<
@@ -77,14 +76,15 @@ module('Integration | Helpers | selectChoose', function (hooks) {
     await render<NumbersContext<true>>(
       <template>
         <HostWrapper>
-          <PowerSelectMultiple
+          <PowerSelect
+            @multiple={{true}}
             @options={{self.numbers}}
             @selected={{self.selected}}
             @onChange={{fn (mut self.selected)}}
             as |option|
           >
             {{option}}
-          </PowerSelectMultiple>
+          </PowerSelect>
         </HostWrapper>
       </template>,
     );

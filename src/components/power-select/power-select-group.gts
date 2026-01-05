@@ -7,7 +7,7 @@ export interface PowerSelectPowerSelectGroupSignature<
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > {
-  Element: HTMLElement;
+  Element: HTMLLIElement;
   Args: {
     group: GroupObject<T>;
     select: Select<T, IsMultiple>;
@@ -26,10 +26,6 @@ export default class PowerSelectPowerSelectGroupComponent<
   PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
 > {
   uniqueId = guidFor(this);
-
-  get disabled() {
-    return this.args.group.disabled;
-  }
 
   <template>
     <li

@@ -38,7 +38,6 @@ import type {
 import type { CalculatePosition } from 'ember-basic-dropdown/utils/calculate-position';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
-import PowerSelectMultiple from '#src/components/power-select-multiple.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 import { createDescriptor } from 'dom-element-descriptors';
 
@@ -2106,14 +2105,15 @@ module(
       await render<NumbersContext>(
         <template>
           <HostWrapper>
-            <PowerSelectMultiple
+            <PowerSelect
+              @multiple={{true}}
               @options={{self.numbers}}
               @searchEnabled={{true}}
               @onChange={{self.foo}}
               as |option|
             >
               {{option}}
-            </PowerSelectMultiple>
+            </PowerSelect>
           </HostWrapper>
         </template>,
       );
