@@ -30,8 +30,8 @@
     <script src="/testem.js" integrity="" data-embroider-ignore></script>
     <script src="/@embroider/virtual/vendor.js"></script>
     <script src="/@embroider/virtual/test-support.js"></script>
-    
     <script type="module">import "ember-testing";</script>
+
     <script type="module">
       import { start } from './test-helper';
       import.meta.glob("./**/*.{js,ts,gjs,gts}", { eager: true });
@@ -39,6 +39,5 @@
     </script>
 
     {{content-for "body-footer"}}
-    
   </body>
 </html>
