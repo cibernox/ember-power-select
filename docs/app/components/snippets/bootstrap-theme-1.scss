@@ -19,11 +19,11 @@ $ember-power-select-dropdown-border: 1px solid $ember-power-select-border-color 
 $ember-power-select-dropdown-contiguous-border: $ember-power-select-dropdown-border !default;
 
 // Then import the styles, which will use your variable
-@import "ember-power-select";
+@import 'ember-power-select';
 
 // ember-power-select v9.x+
 // Define your variables first
-@use "ember-power-select/scss/variables.scss" with (
+@use 'ember-power-select/scss/variables.scss' with (
   $ember-power-select-line-height: 2,
   $ember-power-select-border-color: #ccc,
   $ember-power-select-trigger-icon-color: #999,
@@ -45,4 +45,4 @@ $ember-power-select-dropdown-contiguous-border: $ember-power-select-dropdown-bor
   $ember-power-select-dropdown-contiguous-border: 1px solid #ccc
 );
 // Then use the styles, which will use your variable
-@use "ember-power-select";
+@use 'ember-power-select';

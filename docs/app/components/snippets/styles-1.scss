@@ -6,14 +6,14 @@ $ember-power-select-border-color: #64a5ed;
 $ember-power-select-border-radius: 0;
 
 // Then use the styles, which will use your variable
-@import "ember-power-select";
+@import 'ember-power-select';
 
 // ember-power-select v9.x+
 // Define your variables first
-@use "ember-power-select/scss/variables.scss" with (
+@use 'ember-power-select/scss/variables.scss' with (
   $ember-power-select-border-color: #64a5ed,
   $ember-power-select-border-radius: 0
 );
 
 // Then use the styles, which will use your variable
-@use "ember-power-select";
+@use 'ember-power-select';

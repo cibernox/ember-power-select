@@ -30,7 +30,7 @@ export default class extends Component {
     async (
       term: string,
       resolve: (items: ApiResultItem[]) => void,
-      reject: (reason?: unknown) => void,
+      reject: (reason?: unknown) => void
     ) => {
       await timeout(600);
       const url = `https://api.github.com/search/repositories?q=${term}`;
@@ -38,7 +38,7 @@ export default class extends Component {
       await fetch(url)
         .then((resp) => resp.json())
         .then((json: ApiResult) => resolve(json.items), reject);
-    },
+    }
   );
 
   <template>

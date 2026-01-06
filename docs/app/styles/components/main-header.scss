@@ -66,10 +66,10 @@ $almost-white: #fff2f2;
     border-bottom: 2px solid $almost-white;
   }
   border-bottom: 2px solid $almost-white;
-  .ember-power-select-option[aria-selected="true"] {
+  .ember-power-select-option[aria-selected='true'] {
     background-color: transparent;
   }
-  .ember-power-select-option[aria-current="true"] {
+  .ember-power-select-option[aria-current='true'] {
     background-color: $almost-white;
     color: $brand-color;
   }

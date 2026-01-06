@@ -71,13 +71,13 @@ $ember-power-select-multiple-option-line-height: 2;
 }
 
 // Then import the styles, which will use your variable
-@import "ember-power-select";
+@import 'ember-power-select';
 
 // ember-power-select v9.x+
 // Define your variables first
 $ember-power-select-material-active-color: rgb(16, 108, 200) !default;
 
-@use "ember-power-select/scss/variables.scss" with (
+@use 'ember-power-select/scss/variables.scss' with (
   $ember-power-select-default-border-radius: none,
   $ember-power-select-border-color: #9e9e9e,
   $ember-power-select-trigger-border: none,
@@ -149,4 +149,4 @@ $ember-power-select-material-active-color: rgb(16, 108, 200) !default;
 }
 
 // Then import the styles, which will use your variable
-@use "ember-power-select";
+@use 'ember-power-select';
