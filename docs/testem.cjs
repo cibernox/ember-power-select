@@ -1,4 +1,5 @@
 'use strict';
+
 if (typeof module !== 'undefined') {
   module.exports = {
     test_page: 'tests/index.html?hidepassed',

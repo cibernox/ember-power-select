@@ -12,7 +12,7 @@ html {
   font-size: 100%;
   line-height: 1.6;
   touch-action: manipulation;
-  font-family: "Open sans", sans-serif;
+  font-family: 'Open sans', sans-serif;
 }
 
 body {
@@ -105,7 +105,7 @@ abbr[title] {
 /* Code */
 code,
 pre {
-  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-family: Menlo, Monaco, 'Courier New', monospace;
 }
 code {
   color: $code-text-color;
@@ -118,7 +118,7 @@ code {
   &::before,
   &::after {
     letter-spacing: -0.2em;
-    content: "\00a0";
+    content: '\00a0';
   }
 }
 pre {
@@ -142,7 +142,7 @@ pre code {
 
   &::before,
   &::after {
-    content: "";
+    content: '';
   }
 }
 

@@ -1,25 +1,25 @@
 // Legacy demo
-@use "ember-power-select/scss/variables.scss";
-@use "ember-basic-dropdown";
-@use "ember-power-select";
+@use 'ember-power-select/scss/variables.scss';
+@use 'ember-basic-dropdown';
+@use 'ember-power-select';
 
-@import "variables";
-@import "base";
-@import "utilities";
-@import "layout";
+@import 'variables';
+@import 'base';
+@import 'utilities';
+@import 'layout';
 
 // Components
-@import "components/main-header";
-@import "components/link-to-other-version";
-@import "components/main-footer";
-@import "components/index";
-@import "components/side-nav";
-@import "components/docs";
-@import "components/cookbook";
-@import "components/code-block";
+@import 'components/main-header';
+@import 'components/link-to-other-version';
+@import 'components/main-footer';
+@import 'components/index';
+@import 'components/side-nav';
+@import 'components/docs';
+@import 'components/cookbook';
+@import 'components/code-block';
 
 // Docs
-@import "docs/code-example";
+@import 'docs/code-example';
 @include ember-code-example($brand-color);
 
 // Utility classes
@@ -56,25 +56,25 @@
   background-repeat: no-repeat;
   background-size: cover;
   &.US {
-    background-image: url("/flags/us.svg");
+    background-image: url('/flags/us.svg');
   }
   &.ES {
-    background-image: url("/flags/es.svg");
+    background-image: url('/flags/es.svg');
   }
   &.PT {
-    background-image: url("/flags/pt.svg");
+    background-image: url('/flags/pt.svg');
   }
   &.RU {
-    background-image: url("/flags/ru.svg");
+    background-image: url('/flags/ru.svg');
   }
   &.LV {
-    background-image: url("/flags/lv.svg");
+    background-image: url('/flags/lv.svg');
   }
   &.BR {
-    background-image: url("/flags/br.svg");
+    background-image: url('/flags/br.svg');
   }
   &.GB {
-    background-image: url("/flags/gb.svg");
+    background-image: url('/flags/gb.svg');
   }
 }
 .country-detailed-info {
@@ -153,7 +153,7 @@
   color: inherit;
   padding: 0 16px 0 8px;
 
-  &[aria-disabled="true"] {
+  &[aria-disabled='true'] {
     background-color: #eeeeee;
   }
 
@@ -166,13 +166,13 @@
     outline: 0;
   }
 
-  &.ember-basic-dropdown-trigger--below[aria-expanded="true"],
-  &.ember-basic-dropdown-trigger--in-place[aria-expanded="true"] {
+  &.ember-basic-dropdown-trigger--below[aria-expanded='true'],
+  &.ember-basic-dropdown-trigger--in-place[aria-expanded='true'] {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
   }
 
-  &.ember-basic-dropdown-trigger--above[aria-expanded="true"] {
+  &.ember-basic-dropdown-trigger--above[aria-expanded='true'] {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
@@ -197,7 +197,7 @@
     border-width: 7px 4px 0 4px;
     border-color: #999 transparent transparent transparent;
   }
-  &[aria-expanded="true"] .ember-power-select-status-icon {
+  &[aria-expanded='true'] .ember-power-select-status-icon {
     transform: rotate(180deg);
   }
 
@@ -295,7 +295,7 @@
     user-select: none;
     -webkit-user-select: none;
   }
-  .ember-power-select-options[role="listbox"] {
+  .ember-power-select-options[role='listbox'] {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     max-height: 14em;
@@ -306,16 +306,16 @@
     padding: 0 8px;
   }
 
-  .ember-power-select-option[aria-disabled="true"] {
+  .ember-power-select-option[aria-disabled='true'] {
     color: #999999;
     pointer-events: none;
   }
 
-  .ember-power-select-option[aria-selected="true"] {
+  .ember-power-select-option[aria-selected='true'] {
     background-color: #f5f5f5;
   }
 
-  .ember-power-select-option[aria-current="true"] {
+  .ember-power-select-option[aria-current='true'] {
     background-color: #f5f5f5;
     color: inherit;
   }
@@ -395,7 +395,7 @@ $material-demo-line-height: 2.5;
   box-shadow:
     0 2px 5px 0 rgba(0, 0, 0, 0.16),
     0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  .ember-power-select-options[role="listbox"] {
+  .ember-power-select-options[role='listbox'] {
     max-height: #{variables.$ember-power-select-number-of-visible-options *
       $material-demo-line-height}em;
   }
@@ -407,10 +407,10 @@ $material-demo-line-height: 2.5;
       outline: none;
     }
   }
-  .ember-power-select-option[aria-selected="true"] {
+  .ember-power-select-option[aria-selected='true'] {
     background-color: #e1e1e1;
   }
-  .ember-power-select-option[aria-current="true"] {
+  .ember-power-select-option[aria-current='true'] {
     background-color: #eee;
     color: inherit;
   }

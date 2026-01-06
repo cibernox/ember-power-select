@@ -63,7 +63,7 @@ export default class extends Component {
   onChange = (
     selection: Selected<Country>,
     select: Select<Country>,
-    event?: Event,
+    event?: Event
   ) => {
     this.country = selection;
 
