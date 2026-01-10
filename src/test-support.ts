@@ -42,7 +42,7 @@ export async function selectChoose(
 
   if (!trigger) {
     throw new Error(
-      `You called "selectChoose" with '${valueOrSelector}'" but no select was found`,
+      `You called "selectChoose" with '${valueOrSelector}' but no select was found`,
     );
   }
 
@@ -221,7 +221,7 @@ export async function getDropdownItems(cssPathOrTrigger: string | HTMLElement) {
   }
 
   if (!trigger) {
-    throw new Error(`You called "getDropdownItems but no select was found`);
+    throw new Error(`You called "getDropdownItems" but no select was found`);
   }
 
   trigger.scrollIntoView();
