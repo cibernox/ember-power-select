@@ -123,7 +123,7 @@ export default class PowerSelectTriggerComponent<
 
   private _openChanged(_el: Element, [isOpen]: [boolean]) {
     if (isOpen === false && this._lastIsOpen === true) {
-      Promise.resolve().then(() => {
+      void Promise.resolve().then(() => {
         this.args.select.actions?.search('');
       });
     }
@@ -135,7 +135,11 @@ export default class PowerSelectTriggerComponent<
     index: number,
   ): Option<T> | undefined {
     if (list && 'objectAt' in list && typeof list.objectAt === 'function') {
-      return list.objectAt(index);
+      return (
+        list as readonly Option<T>[] & {
+          objectAt(index: number): T | undefined;
+        }
+      ).objectAt(index) as Option<T> | undefined;
     } else if (list) {
       return get(list, index);
     }

@@ -272,7 +272,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         (error as Error).message,
-        'You called "selectChoose(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"',
+        'You called "selectChoose" with \'three\' but no select was found',
       );
     }
   });
@@ -294,7 +294,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         (error as Error).message,
-        "You called \"selectChoose('[object HTMLDivElement]', 'non-existent-option')\" but \"non-existent-option\" didn't match any option",
+        'You called "selectChoose" with \'non-existent-option\' but "non-existent-option" didn\'t match any option',
       );
     }
   });
@@ -494,7 +494,7 @@ module('Acceptance | helpers | selectSearch', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         (error as Error).message,
-        'You called "selectSearch(\'.there-is-no-select\', \'three\')" but no select was found using selector ".there-is-no-select"',
+        'You called "selectSearch" with \'three\' but no select was found',
       );
     }
   });

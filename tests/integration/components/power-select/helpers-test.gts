@@ -175,7 +175,7 @@ module('Integration | Helpers | getDropdownItems', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         (error as Error).message,
-        'You called "getDropdownItems(\'.fake-ember-power-select-trigger\'" but no select was found using selector ".fake-ember-power-select-trigger"',
+        'You called "getDropdownItems" but no select was found',
         'elements from the dropdown should be same as passed elements',
       );
     }

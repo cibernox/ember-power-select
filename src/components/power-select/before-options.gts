@@ -90,7 +90,7 @@ export default class PowerSelectBeforeOptionsComponent<
   );
 
   private _focusInput(el: HTMLElement) {
-    this.focusLaterTask.perform(el);
+    void this.focusLaterTask.perform(el);
   }
 
   private focusLaterTask = task(async (el: HTMLElement) => {
