@@ -294,7 +294,7 @@ module('Acceptance | helpers | selectChoose', function (hooks) {
     } catch (error) {
       assert.strictEqual(
         (error as Error).message,
-        "You called \"selectChoose\" with 'non-existent-option' but \"non-existent-option\" didn't match any option",
+        'You called "selectChoose" with \'non-existent-option\' but "non-existent-option" didn\'t match any option',
       );
     }
   });
