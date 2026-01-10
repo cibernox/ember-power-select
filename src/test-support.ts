@@ -76,7 +76,7 @@ export async function selectChoose(
   }
   if (!target) {
     throw new Error(
-      `You called "selectChoose" with '${valueOrSelector}') but "${valueOrSelector}" didn't match any option`,
+      `You called "selectChoose" with '${valueOrSelector}' but "${valueOrSelector}" didn't match any option`,
     );
   }
   await click(target);
