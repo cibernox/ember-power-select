@@ -267,12 +267,12 @@ export default class PowerSelectComponent<
 > extends Component<PowerSelectSignature<T, IsMultiple, TExtra>> {
   // Untracked properties
   _publicAPIActions = {
-    search: this._search,
-    highlight: this._highlight,
-    select: this._select,
-    choose: this._choose,
-    scrollTo: this._scrollTo,
-    labelClick: this._labelClick,
+    search: this._search.bind(this),
+    highlight: this._highlight.bind(this),
+    select: this._select.bind(this),
+    choose: this._choose.bind(this),
+    scrollTo: this._scrollTo.bind(this),
+    labelClick: this._labelClick.bind(this),
   };
 
   // Tracked properties
@@ -501,7 +501,7 @@ export default class PowerSelectComponent<
     }
 
     if (this.args.multiple) {
-      return this._defaultMultipleBuildSelection;
+      return this._defaultMultipleBuildSelection.bind(this);
     }
   }
 
@@ -593,9 +593,7 @@ export default class PowerSelectComponent<
     PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
   > {
     if (this.args.groupComponent) {
-      return this.args.groupComponent as ComponentLike<
-        PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
-      >;
+      return this.args.groupComponent;
     }
 
     return PowerSelectGroupComponent as ComponentLike<
@@ -703,7 +701,7 @@ export default class PowerSelectComponent<
     }
     if (e.key.length === 1 && /^[a-z0-9]$/i.test(e.key)) {
       // Keys 0-9, a-z or numpad keys
-      this.triggerTypingTask.perform(e);
+      void this.triggerTypingTask.perform(e);
     } else if (e.key === ' ') {
       // Space
       this._handleKeySpace(this.storedAPI, e);
@@ -742,16 +740,16 @@ export default class PowerSelectComponent<
   @action
   handleFocus(event: FocusEvent): void {
     if (!this.isDestroying) {
-      Promise.resolve().then(() => {
+      void Promise.resolve().then(() => {
         this._updateIsActive(true);
       });
     }
     if (this.searchFieldPosition === 'trigger') {
       if (event.target) {
         const target = event.target as HTMLElement;
-        const input = target.querySelector(
+        const input = target.querySelector<HTMLInputElement>(
           'input[type="search"]',
-        ) as HTMLInputElement | null;
+        );
         input?.focus();
       }
     }
@@ -763,7 +761,7 @@ export default class PowerSelectComponent<
   @action
   handleBlur(event: FocusEvent): void {
     if (!this.isDestroying) {
-      Promise.resolve().then(() => {
+      void Promise.resolve().then(() => {
         this._updateIsActive(false);
       });
     }
@@ -922,7 +920,7 @@ export default class PowerSelectComponent<
           }
         });
     } else {
-      Promise.resolve().then(() => {
+      void Promise.resolve().then(() => {
         this._resetHighlighted();
       });
     }
@@ -934,7 +932,7 @@ export default class PowerSelectComponent<
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
       const currentSelectedPromise = this.args.selected;
       this._lastSelectedPromise = currentSelectedPromise;
-      this._lastSelectedPromise.then((resolvedSelected) => {
+      void this._lastSelectedPromise.then((resolvedSelected) => {
         if (this._lastSelectedPromise === currentSelectedPromise) {
           this._resolvedSelected = resolvedSelected;
           if (!Array.isArray(resolvedSelected)) {
@@ -957,7 +955,7 @@ export default class PowerSelectComponent<
   ): void {
     this.storedAPI = publicAPI;
     if (this.args.registerAPI) {
-      Promise.resolve().then(() => {
+      void Promise.resolve().then(() => {
         if (this.args.registerAPI) {
           this.args.registerAPI(publicAPI);
         }
@@ -994,7 +992,7 @@ export default class PowerSelectComponent<
             this._searchResult = results;
             this.loading = false;
             this.lastSearchedText = term;
-            Promise.resolve().then(() => {
+            void Promise.resolve().then(() => {
               this._resetHighlighted();
             });
           }
@@ -1008,7 +1006,7 @@ export default class PowerSelectComponent<
     } else {
       this.lastSearchedText = term;
       this._searchResult = searchResult;
-      Promise.resolve().then(() => {
+      void Promise.resolve().then(() => {
         this._resetHighlighted();
       });
     }
@@ -1024,7 +1022,7 @@ export default class PowerSelectComponent<
     }
 
     const newSelection: Option<T>[] = Array.isArray(select.selected)
-      ? select.selected.slice(0)
+      ? (select.selected as Option<T>[]).slice(0)
       : [];
     let idx = -1;
     for (let i = 0; i < newSelection.length; i++) {

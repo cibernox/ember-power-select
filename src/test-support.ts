@@ -42,7 +42,7 @@ export async function selectChoose(
 
   if (!trigger) {
     throw new Error(
-      `You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but no select was found using selector "${cssPathOrTrigger}"`,
+      `You called "selectChoose" with '${valueOrSelector}'" but no select was found`,
     );
   }
 
@@ -76,7 +76,7 @@ export async function selectChoose(
   }
   if (!target) {
     throw new Error(
-      `You called "selectChoose('${cssPathOrTrigger}', '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`,
+      `You called "selectChoose" with '${valueOrSelector}')" but "${valueOrSelector}" didn't match any option`,
     );
   }
   await click(target);
@@ -105,7 +105,7 @@ export async function selectSearch(
 
   if (!trigger) {
     throw new Error(
-      `You called "selectSearch('${cssPathOrTrigger}', '${value}')" but no select was found using selector "${cssPathOrTrigger}"`,
+      `You called "selectSearch" with '${value}' but no select was found`,
     );
   }
 
@@ -221,9 +221,7 @@ export async function getDropdownItems(cssPathOrTrigger: string | HTMLElement) {
   }
 
   if (!trigger) {
-    throw new Error(
-      `You called "getDropdownItems('${cssPathOrTrigger}'" but no select was found using selector "${cssPathOrTrigger}"`,
-    );
+    throw new Error(`You called "getDropdownItems but no select was found`);
   }
 
   trigger.scrollIntoView();

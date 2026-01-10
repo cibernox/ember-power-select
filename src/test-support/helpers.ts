@@ -89,7 +89,7 @@ export async function clickTrigger(
   if (!selector || typeof scope !== 'object') {
     selector = '.ember-power-select-trigger';
     if (scope) {
-      selector = `${scope} ${selector}`;
+      selector = `${scope as string} ${selector}`;
     }
   }
 
@@ -99,7 +99,7 @@ export async function clickTrigger(
 export async function nativeTouch(
   selectorOrDomElement: Parameters<typeof triggerEvent>[1],
 ) {
-  triggerEvent(selectorOrDomElement, 'touchstart');
+  void triggerEvent(selectorOrDomElement, 'touchstart');
   return triggerEvent(selectorOrDomElement, 'touchend');
 }
 

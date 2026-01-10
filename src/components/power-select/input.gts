@@ -8,7 +8,7 @@ import { on } from '@ember/modifier';
 import { or } from 'ember-truth-helpers';
 import type { ComponentLike } from '@glint/template';
 import type { PowerSelectPlaceholderSignature } from './placeholder.gts';
-import type { Select, TSearchFieldPosition } from '../../types';
+import type { Select, Selected, TSearchFieldPosition } from '../../types';
 import type { PowerSelectArgs } from '../power-select.gts';
 
 export interface PowerSelectInputSignature<
@@ -80,11 +80,12 @@ export default class PowerSelectInput<
         e.stopPropagation();
         if (
           !(e.target as HTMLInputElement).value.trim() &&
-          this.args.buildSelection
+          this.args.buildSelection &&
+          Array.isArray(this.args.select.selected)
         ) {
-          const lastSelection =
-            Array.isArray(this.args.select.selected) &&
-            this.args.select.selected[this.args.select.selected.length - 1];
+          const selected = this.args.select.selected as Selected<T, true>;
+          const lastSelection = selected[selected.length - 1];
+
           if (lastSelection) {
             this.args.select.actions.select(
               this.args.buildSelection(lastSelection, this.args.select),
@@ -180,7 +181,7 @@ export default class PowerSelectInput<
       this._lastIsOpen === true &&
       document.activeElement !== element
     ) {
-      Promise.resolve().then(() => {
+      void Promise.resolve().then(() => {
         this.args.select.actions?.search('');
       });
     }
@@ -188,7 +189,7 @@ export default class PowerSelectInput<
   }
 
   private _focusInput(el: HTMLElement) {
-    this.focusLaterTask.perform(el);
+    void this.focusLaterTask.perform(el);
   }
 
   private focusLaterTask = task(async (el: HTMLElement) => {

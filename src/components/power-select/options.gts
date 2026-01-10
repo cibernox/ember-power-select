@@ -44,9 +44,13 @@ const isTouchDevice = !!window && 'ontouchstart' in window;
 if (typeof FastBoot === 'undefined') {
   (function (ElementProto) {
     if (typeof ElementProto.matches !== 'function') {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ElementProto.matches =
-        (ElementProto as any).msMatchesSelector ||
-        (ElementProto as any).mozMatchesSelector ||
+        // @ts-expect-error Property 'msMatchesSelector' does not exist on type 'Element'.
+        ElementProto.msMatchesSelector ||
+        // @ts-expect-error Property 'mozMatchesSelector' does not exist on type 'Element'.
+        ElementProto.mozMatchesSelector ||
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         ElementProto.webkitMatchesSelector;
     }
 
@@ -122,8 +126,9 @@ export default class PowerSelectOptionsComponent<
     </ul>
   </template>
   // extra._isTouchDevice is a workaround for test,!
-  // @ts-expect-error Property '_isTouchDevice' does not exist on type 'NonNullable<TExtra>'.
-  private isTouchDevice = this.args.extra?._isTouchDevice || isTouchDevice;
+  private isTouchDevice =
+    (this.args.extra as (TExtra & { _isTouchDevice?: boolean }) | undefined)
+      ?._isTouchDevice || isTouchDevice;
   private touchMoveEvent?: TouchEvent;
   private mouseOverHandler: EventListener = ((
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -215,14 +220,15 @@ export default class PowerSelectOptionsComponent<
       return false;
     }
 
+    const changedTouch = moveEvent.changedTouches[0];
+
     if (
       !endEvent.changedTouches?.[0] ||
-      (moveEvent.changedTouches[0] as any).touchType !== 'stylus'
+      // @ts-expect-error Property 'touchType' does not exist on type 'Touch'.
+      changedTouch?.touchType !== 'stylus'
     ) {
       return true;
     }
-
-    const changedTouch = moveEvent.changedTouches[0];
 
     // Distinguish stylus scroll and tap: if touch "distance" < 5px, we consider it a tap
     const horizontalDistance = Math.abs(
@@ -239,8 +245,10 @@ export default class PowerSelectOptionsComponent<
     if (isGroup) {
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-    const findOptionAndPerform = (action: Function, e: MouseEvent): void => {
+    const findOptionAndPerform = (
+      action: (selected: Option<T> | undefined, e?: Event) => void,
+      e: MouseEvent,
+    ): void => {
       if (e.target === null) return;
       const optionItem = (e.target as Element).closest('[data-option-index]');
       if (!optionItem) {

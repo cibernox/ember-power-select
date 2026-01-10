@@ -32,10 +32,10 @@ export function start() {
   );
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
-  // //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   const config = getGlobalConfig()['@embroider/macros'];
 
-  // //eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  //eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (config) config.isTesting = true;
 
   setConfig(defaultBasicDropdownConfig);
