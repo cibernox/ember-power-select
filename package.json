@@ -7,7 +7,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/cibernox/ember-power-select.git"
+    "url": "git+http://github.com/cibernox/ember-power-select.git"
   },
   "license": "MIT",
   "author": {
