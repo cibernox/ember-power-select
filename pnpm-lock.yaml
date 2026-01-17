@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   ember-basic-dropdown@8.11.0:
-    hash: 4e8f0446940cc10382a52772a08ddf7dfee1f80e007f7b6162188b6f8ebf9b1f
+    hash: b9c1d5e03b1a33c710ee3ee8983b1ddfea7815c7bb805e736be5585a97535de4
     path: patches/ember-basic-dropdown@8.11.0.patch
 
 importers:
@@ -109,7 +109,7 @@ importers:
         version: 0.5.1
       ember-basic-dropdown:
         specifier: git+https://github.com/cibernox/ember-basic-dropdown#fa40bd9104b4cdbc5758415d391b7f346310b336
-        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/fa40bd9104b4cdbc5758415d391b7f346310b336(patch_hash=4e8f0446940cc10382a52772a08ddf7dfee1f80e007f7b6162188b6f8ebf9b1f)(@babel/core@7.28.6)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.28.6)(@glint/template@1.7.3))(@embroider/macros@1.19.6(@glint/template@1.7.3))(@glimmer/component@2.0.0)
+        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/fa40bd9104b4cdbc5758415d391b7f346310b336(patch_hash=b9c1d5e03b1a33c710ee3ee8983b1ddfea7815c7bb805e736be5585a97535de4)(@babel/core@7.28.6)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.28.6)(@glint/template@1.7.3))(@embroider/macros@1.19.6(@glint/template@1.7.3))(@glimmer/component@2.0.0)
       ember-concurrency:
         specifier: ^5.1.0
         version: 5.1.0(@babel/core@7.28.6)(@glint/template@1.7.3)
@@ -289,7 +289,7 @@ importers:
         version: 2.12.0(@glint/template@1.7.3)
       ember-basic-dropdown:
         specifier: git+https://github.com/cibernox/ember-basic-dropdown#fa40bd9104b4cdbc5758415d391b7f346310b336
-        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/fa40bd9104b4cdbc5758415d391b7f346310b336(patch_hash=4e8f0446940cc10382a52772a08ddf7dfee1f80e007f7b6162188b6f8ebf9b1f)(@babel/core@7.28.6)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.28.6)(@glint/template@1.7.3))(@embroider/macros@1.19.6(@glint/template@1.7.3))(@glimmer/component@2.0.0)
+        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/fa40bd9104b4cdbc5758415d391b7f346310b336(patch_hash=b9c1d5e03b1a33c710ee3ee8983b1ddfea7815c7bb805e736be5585a97535de4)(@babel/core@7.28.6)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.28.6)(@glint/template@1.7.3))(@embroider/macros@1.19.6(@glint/template@1.7.3))(@glimmer/component@2.0.0)
       ember-cli:
         specifier: ~6.9.1
         version: 6.9.1(@types/node@25.0.9)(handlebars@4.7.8)(underscore@1.13.7)
@@ -11308,7 +11308,7 @@ snapshots:
       - supports-color
       - webpack
 
-  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/fa40bd9104b4cdbc5758415d391b7f346310b336(patch_hash=4e8f0446940cc10382a52772a08ddf7dfee1f80e007f7b6162188b6f8ebf9b1f)(@babel/core@7.28.6)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.28.6)(@glint/template@1.7.3))(@embroider/macros@1.19.6(@glint/template@1.7.3))(@glimmer/component@2.0.0):
+  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/fa40bd9104b4cdbc5758415d391b7f346310b336(patch_hash=b9c1d5e03b1a33c710ee3ee8983b1ddfea7815c7bb805e736be5585a97535de4)(@babel/core@7.28.6)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.28.6)(@glint/template@1.7.3))(@embroider/macros@1.19.6(@glint/template@1.7.3))(@glimmer/component@2.0.0):
     dependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.28.6)(@glint/template@1.7.3)
       '@embroider/addon-shim': 1.10.2
