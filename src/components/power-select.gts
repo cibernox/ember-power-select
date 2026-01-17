@@ -25,11 +25,8 @@ import SearchMessageComponent from './power-select/search-message.gts';
 import NoMatchesMessageComponent from './power-select/no-matches-message.gts';
 import PowerSelectOptionsComponent from './power-select/options.gts';
 import PowerSelectGroupComponent from './power-select/power-select-group.gts';
-import type {
-  BasicDropdownDefaultBlock,
-  Dropdown,
-  TRootEventType,
-} from 'ember-basic-dropdown/components/basic-dropdown';
+import type { BasicDropdownDefaultBlock } from 'ember-basic-dropdown/components/basic-dropdown';
+import type { Dropdown, TRootEventType } from 'ember-basic-dropdown/types';
 import type Owner from '@ember/owner';
 import type {
   CalculatePosition,

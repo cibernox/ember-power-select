@@ -1,7 +1,4 @@
-﻿import type {
-  Dropdown,
-  DropdownActions,
-} from 'ember-basic-dropdown/components/basic-dropdown';
+﻿import type { Dropdown, DropdownActions } from 'ember-basic-dropdown/types';
 
 export type TLabelClickAction = 'focus' | 'open';
 export type TSearchFieldPosition = 'before-options' | 'trigger';
