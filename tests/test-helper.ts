@@ -5,6 +5,7 @@ import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 import { setConfig, type Config } from 'ember-basic-dropdown/config';
+// @ts-expect-error Could not find a declaration file for module '@embroider/macros/src/addon/runtime'.
 import { getGlobalConfig } from '@embroider/macros/src/addon/runtime';
 
 class Router extends EmberRouter {
