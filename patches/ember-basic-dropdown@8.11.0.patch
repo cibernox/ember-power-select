@@ -1,0 +1,24 @@
+diff --git a/dist/components/basic-dropdown.js b/dist/components/basic-dropdown.js
+index 004f61d81d31b54e0cb30deb8342f953074072d0..189d0f94f6fad11b2cdd3ff8f7d7481c724b46a1 100644
+--- a/dist/components/basic-dropdown.js
++++ b/dist/components/basic-dropdown.js
+@@ -326,6 +326,7 @@ class BasicDropdown extends Component {
+   }
+   _getDestinationId() {
+     const config = getConfig();
++    console.log(isTesting());
+     if (isTesting()) {
+       // document doesn't exist in fastboot apps, for this reason we need this check
+       if (typeof document === 'undefined') {
+diff --git a/package.json b/package.json
+index 06a87ea955885e332faf1777c2ac3753ce2c08d5..7a1c8c9925bec903109c79cd0e75c7334a37086a 100644
+--- a/package.json
++++ b/package.json
+@@ -121,7 +121,6 @@
+     "vite": "^7.3.0"
+   },
+   "peerDependencies": {
+-    "@embroider/macros": "^1.19.5",
+     "@ember/test-helpers": "^5.0.0",
+     "@glimmer/component": "^2.0.0"
+   },
