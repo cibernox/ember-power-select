@@ -28,6 +28,7 @@ module.exports = {
         },
       },
     ],
+    require.resolve('ember-concurrency/async-arrow-task-transform'),
   ],
 
   generatorOpts: {
