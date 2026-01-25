@@ -1,33 +1,33 @@
 // Legacy demo
-@use 'ember-power-select/scss/variables.scss';
+@use 'ember-power-select/scss/variables.scss' as epsVariables;
 @use 'ember-basic-dropdown';
 @use 'ember-power-select';
 
-@import 'variables';
-@import 'base';
-@import 'utilities';
-@import 'layout';
+@use 'variables';
+@use 'base';
+@use 'utilities';
+@use 'layout';
 
 // Components
-@import 'components/main-header';
-@import 'components/link-to-other-version';
-@import 'components/main-footer';
-@import 'components/index';
-@import 'components/side-nav';
-@import 'components/docs';
-@import 'components/cookbook';
-@import 'components/code-block';
+@use 'components/main-header';
+@use 'components/link-to-other-version';
+@use 'components/main-footer';
+@use 'components/index';
+@use 'components/side-nav';
+@use 'components/docs';
+@use 'components/cookbook';
+@use 'components/code-block';
 
 // Docs
-@import 'docs/code-example';
-@include ember-code-example($brand-color);
+@use 'docs/code-example';
+@include code-example.ember-code-example(variables.$brand-color);
 
 // Utility classes
 .evenly-splitted {
   > * {
     margin-bottom: 1rem;
   }
-  @media only screen and (min-width: $small-breakpoint) {
+  @media only screen and (min-width: variables.$small-breakpoint) {
     display: flex;
     > * {
       padding: 0 5px;
@@ -396,7 +396,7 @@ $material-demo-line-height: 2.5;
     0 2px 5px 0 rgba(0, 0, 0, 0.16),
     0 2px 10px 0 rgba(0, 0, 0, 0.12);
   .ember-power-select-options[role='listbox'] {
-    max-height: #{variables.$ember-power-select-number-of-visible-options *
+    max-height: #{epsVariables.$ember-power-select-number-of-visible-options *
       $material-demo-line-height}em;
   }
   .ember-power-select-search-input {
