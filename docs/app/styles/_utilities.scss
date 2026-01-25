@@ -1,3 +1,5 @@
+@use 'variables';
+
 // Utility classes
 .text-center {
   text-align: center;
@@ -16,8 +18,8 @@
 }
 %wrapper {
   max-width: 1024px; // not 960px because it's 2015
-  padding-left: $wrapper-padding;
-  padding-right: $wrapper-padding;
+  padding-left: variables.$wrapper-padding;
+  padding-right: variables.$wrapper-padding;
   margin-left: auto;
   margin-right: auto;
 }

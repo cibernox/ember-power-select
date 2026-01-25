@@ -1,6 +1,9 @@
+@use '../utilities';
+@use '../variables';
+
 // main header
 .main-header {
-  background-color: $brand-color;
+  background-color: variables.$brand-color;
   color: white;
 }
 .main-header-nav {
@@ -58,7 +61,7 @@ $almost-white: #fff2f2;
   font-size: 24px;
   border: 2px solid $almost-white;
   border-top: none;
-  background: $brand-color linear-gradient(#e61a1a, #eb3e3e);
+  background: variables.$brand-color linear-gradient(#e61a1a, #eb3e3e);
   .ember-power-select-option {
     font-weight: 600;
   }
@@ -71,10 +74,10 @@ $almost-white: #fff2f2;
   }
   .ember-power-select-option[aria-current='true'] {
     background-color: $almost-white;
-    color: $brand-color;
+    color: variables.$brand-color;
   }
 }
-@media only screen and (max-width: $small-breakpoint) {
+@media only screen and (max-width: variables.$small-breakpoint) {
   .main-header {
     line-height: 44px;
   }
@@ -87,7 +90,7 @@ $almost-white: #fff2f2;
     background-color: rgba(black, 0.2);
   }
 }
-@media only screen and (min-width: $small-breakpoint) {
+@media only screen and (min-width: variables.$small-breakpoint) {
   .main-header {
     line-height: 66px;
   }
@@ -98,6 +101,6 @@ $almost-white: #fff2f2;
   }
   .main-header-nav-link.active {
     background-color: white;
-    color: $brand-color;
+    color: variables.$brand-color;
   }
 }

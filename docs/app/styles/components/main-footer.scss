@@ -1,20 +1,24 @@
+@use 'sass:color';
+@use '../utilities';
+@use '../variables';
+
 // Main footer
 .main-footer {
-  color: $gray;
-  background-color: $light-gray;
+  color: variables.$gray;
+  background-color: variables.$light-gray;
   border-top: 1px solid #bbb;
   padding-left: 1rem;
   padding-right: 1rem;
 
   a {
-    color: $link-gray;
+    color: variables.$link-gray;
   }
 }
 .main-footer-content {
   @extend %wrapper;
   padding: 1rem 0;
 }
-@media only screen and (min-width: $medium-breakpoint) {
+@media only screen and (min-width: variables.$medium-breakpoint) {
   .icons-attributions {
     float: right;
   }
@@ -24,15 +28,15 @@
   border-radius: 4px;
   padding: 5px 10px;
   text-align: center;
-  background-color: $brand-color;
+  background-color: variables.$brand-color;
   color: white;
-  border: 1px solid darken($brand-color, 12%);
-  box-shadow: 0 2px darken($brand-color, 18%);
+  border: 1px solid color.adjust(variables.$brand-color, $lightness: -12%);
+  box-shadow: 0 2px color.adjust(variables.$brand-color, $lightness: -18%);
   &:hover {
-    background-color: darken($brand-color, 5%);
+    background-color: color.adjust(variables.$brand-color, $lightness: -5%);
   }
 }
-@media only screen and (min-width: $small-breakpoint) {
+@media only screen and (min-width: variables.$small-breakpoint) {
   .contribute-call-to-action {
     float: right;
   }
