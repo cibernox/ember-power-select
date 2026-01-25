@@ -69,7 +69,7 @@
     "babel-plugin-ember-template-compilation": "^3.1.0",
     "concurrently": "^9.2.1",
     "decorator-transforms": "^2.3.1",
-    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#fa40bd9104b4cdbc5758415d391b7f346310b336",
+    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#76551f773b4a35193e402c0f3fd68762e6ab88e3",
     "ember-cli": "~6.10.0",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-deprecation-workflow": "^4.0.0",
