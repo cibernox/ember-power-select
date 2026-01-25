@@ -1,3 +1,4 @@
+
 import Application from '@ember/application';
 import compatModules from '@embroider/virtual/compat-modules';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
