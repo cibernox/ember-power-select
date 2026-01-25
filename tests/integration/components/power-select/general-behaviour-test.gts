@@ -24,7 +24,6 @@ import {
   digits,
   type Country,
 } from '../../../../demo-app/utils/constants';
-import { TrackedArray } from 'tracked-built-ins';
 import { modifier } from 'ember-modifier';
 import PowerSelectBeforeOptionsComponent, {
   type PowerSelectBeforeOptionsSignature,
@@ -963,15 +962,20 @@ module(
       const done = assert.async();
       assert.expect(2);
 
-      const data: string[] = new TrackedArray();
-      this.proxy = data;
+      class NumberClass {
+        @tracked data: string[] = [];
+      }
+
+      const numberClass = new NumberClass();
+
+      this.proxy = numberClass.data;
       this.search = () => {
         return new RSVP.Promise((resolve) => {
-          resolve(data);
+          resolve(numberClass.data);
           runTask(
             this,
             function () {
-              data.push('one');
+              numberClass.data = [...numberClass.data, 'one'];
             },
             100,
           );
@@ -1023,15 +1027,20 @@ module(
       const done = assert.async();
       assert.expect(5);
 
-      const data = new TrackedArray(['one']);
-      this.proxy = data;
+      class NumberClass {
+        @tracked data: string[] = ['one'];
+      }
+
+      const numberClass = new NumberClass();
+
+      this.proxy = numberClass.data;
       this.search = () => {
         return new RSVP.Promise((resolve) => {
-          resolve(data);
+          resolve(numberClass.data);
           runTask(
             this,
             function () {
-              data.push('owner');
+              numberClass.data = [...numberClass.data, 'owner'];
             },
             100,
           );
