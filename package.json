@@ -135,7 +135,6 @@
     "sass": "^1.97.3",
     "sass-embedded": "^1.97.3",
     "testem": "^3.17.0",
-    "tracked-built-ins": "^4.1.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.53.1",
     "vite": "^7.3.1"

@@ -20,7 +20,6 @@ import {
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { runTask } from 'ember-lifeline';
-import { TrackedArray } from 'tracked-built-ins';
 import type {
   DefaultHighlightedParams,
   MatcherFn,
@@ -2068,20 +2067,28 @@ module(
     });
 
     test<NumbersContext>('The component works when the array of selected elements is mutated in place instead of replaced', async function (assert) {
-      const self = this;
-
       assert.expect(1);
 
-      this.numbers = numbers;
-      this.selected = new TrackedArray();
-      await render<NumbersContext>(
+      class NumberClass {
+        @tracked selected: string[] = [];
+
+        numbers = numbers;
+
+        onChange = (values: MultipleSelected<string>) => {
+          numberClass.selected = values;
+        };
+      }
+
+      const numberClass = new NumberClass();
+
+      await render(
         <template>
           <HostWrapper>
             <PowerSelect
               @multiple={{true}}
-              @options={{self.numbers}}
-              @selected={{self.selected}}
-              @onChange={{fn (mut self.selected)}}
+              @options={{numberClass.numbers}}
+              @selected={{numberClass.selected}}
+              @onChange={{numberClass.onChange}}
               as |option|
             >
               {{option}}
@@ -2095,7 +2102,7 @@ module(
         ) as HTMLElement,
       );
       if (numbers[3]) {
-        this.selected.push(numbers[3]);
+        numberClass.selected = [...numberClass.selected, numbers[3]];
       }
       await click(
         getRootNode(this.element).querySelector(
