@@ -49,7 +49,8 @@ export interface PowerSelectBeforeOptionsSignature<
 export default class PowerSelectBeforeOptionsComponent<
   T = unknown,
   TExtra = unknown,
-> extends Component<PowerSelectBeforeOptionsSignature<T, TExtra>> {
+  IsMultiple extends boolean = false,
+> extends Component<PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>> {
   didSetup: boolean = false;
 
   @action
