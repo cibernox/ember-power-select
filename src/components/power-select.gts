@@ -147,9 +147,9 @@ export interface PowerSelectArgs<
   beforeOptionsComponent?: ComponentLike<
     PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
   >;
-  optionsComponent?: ComponentLike<
-    PowerSelectOptionsSignature<T, TExtra, IsMultiple>
-  >;
+  optionsComponent?:
+    | ComponentLike<PowerSelectOptionsSignature<NoInfer<T>, TExtra, IsMultiple>>
+    | ComponentLike<PowerSelectOptionsSignature<unknown>>;
   groupComponent?: ComponentLike<
     PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
   >;
@@ -578,11 +578,8 @@ export default class PowerSelectComponent<
   get optionsComponent(): ComponentLike<
     PowerSelectOptionsSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.optionsComponent) {
-      return this.args.optionsComponent;
-    }
-
-    return PowerSelectOptionsComponent as ComponentLike<
+    return (this.args.optionsComponent ??
+      PowerSelectOptionsComponent) as ComponentLike<
       PowerSelectOptionsSignature<T, TExtra, IsMultiple>
     >;
   }
