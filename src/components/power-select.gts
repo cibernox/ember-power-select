@@ -185,7 +185,7 @@ export interface PowerSelectArgs<
     term: string,
     select: Select<T, IsMultiple>,
     e: Event,
-  ) => string | boolean | void;
+  ) => string | false | void | PromiseLike<void>;
   onKeydown?: (
     select: Select<T, IsMultiple>,
     e: KeyboardEvent,
