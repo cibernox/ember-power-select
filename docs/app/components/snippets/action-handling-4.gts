@@ -10,8 +10,9 @@ export default class extends Component {
   checkLength(text: string, select: Select<string, true> /*, e: Event */) {
     if (select.searchText.length >= 3 && text.length < 3) {
       return '';
-    } else {
-      return text.length >= 3;
+    }
+    if (text.length < 3) {
+      return false;
     }
   }
 
