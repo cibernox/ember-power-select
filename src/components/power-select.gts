@@ -172,7 +172,7 @@ export interface PowerSelectArgs<
   search?: (
     term: string,
     select: Select<T, IsMultiple>,
-  ) => readonly T[] | Promise<readonly T[]>;
+  ) => readonly T[] | Promise<readonly T[]> | Promise<void> | void;
   onOpen?: (
     select: Select<T, IsMultiple>,
     e: Event | undefined,
@@ -292,7 +292,8 @@ export default class PowerSelectComponent<
     | Promise<Selected<T, IsMultiple>>;
   private _lastSearchPromise?:
     | Promise<readonly T[]>
-    | CancellablePromise<readonly T[]>;
+    | CancellablePromise<readonly T[]>
+    | Promise<void>;
   private _filterResultsCache: {
     results: T[];
     options: T[];
@@ -986,7 +987,7 @@ export default class PowerSelectComponent<
       searchResult
         .then((results) => {
           if (this._lastSearchPromise === searchResult) {
-            this._searchResult = results;
+            this._searchResult = results || undefined;
             this.loading = false;
             this.lastSearchedText = term;
             void Promise.resolve().then(() => {
@@ -1002,7 +1003,7 @@ export default class PowerSelectComponent<
         });
     } else {
       this.lastSearchedText = term;
-      this._searchResult = searchResult;
+      this._searchResult = searchResult || undefined;
       void Promise.resolve().then(() => {
         this._resetHighlighted();
       });
