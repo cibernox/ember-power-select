@@ -79,17 +79,31 @@ export interface PowerSelectArgs<
   TExtra = unknown,
 > {
   highlightOnHover?: boolean;
-  placeholderComponent?: ComponentLike<
-    PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
-  >;
+  placeholderComponent?:
+    | ComponentLike<
+        PowerSelectPlaceholderSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
+      >
+    | ComponentLike<PowerSelectPlaceholderSignature<unknown>>;
   searchMessage?: string;
-  searchMessageComponent?: ComponentLike<
-    PowerSelectSearchMessageSignature<T, TExtra, IsMultiple>
-  >;
+  searchMessageComponent?:
+    | ComponentLike<
+        PowerSelectSearchMessageSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
+      >
+    | ComponentLike<PowerSelectSearchMessageSignature<unknown>>;
   noMatchesMessage?: string;
-  noMatchesMessageComponent?: ComponentLike<
-    PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
-  >;
+  noMatchesMessageComponent?:
+    | ComponentLike<
+        PowerSelectNoMatchesMessageSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
+      >
+    | ComponentLike<PowerSelectNoMatchesMessageSignature<unknown>>;
   matchTriggerWidth?: boolean;
   resultCountMessage?: (resultCount: number) => string;
   options?: readonly T[] | Promise<readonly T[]>;
@@ -135,27 +149,57 @@ export interface PowerSelectArgs<
   calculatePosition?: CalculatePosition;
   ebdTriggerComponent?: ComponentLike<BasicDropdownTriggerSignature>;
   ebdContentComponent?: ComponentLike<BasicDropdownContentSignature>;
-  labelComponent?: ComponentLike<
-    PowerSelectLabelSignature<T, TExtra, IsMultiple>
-  >;
-  triggerComponent?: ComponentLike<
-    PowerSelectTriggerSignature<T, TExtra, IsMultiple>
-  >;
-  selectedItemComponent?: ComponentLike<
-    PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>
-  >;
-  beforeOptionsComponent?: ComponentLike<
-    PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
-  >;
-  optionsComponent?: ComponentLike<
-    PowerSelectOptionsSignature<T, TExtra, IsMultiple>
-  >;
-  groupComponent?: ComponentLike<
-    PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
-  >;
-  afterOptionsComponent?: ComponentLike<
-    PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>
-  >;
+  labelComponent?:
+    | ComponentLike<
+        PowerSelectLabelSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
+      >
+    | ComponentLike<PowerSelectLabelSignature<unknown>>;
+  triggerComponent?:
+    | ComponentLike<
+        PowerSelectTriggerSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
+      >
+    | ComponentLike<PowerSelectTriggerSignature<unknown>>;
+  selectedItemComponent?:
+    | ComponentLike<
+        PowerSelectSelectedItemSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
+      >
+    | ComponentLike<PowerSelectSelectedItemSignature<unknown>>;
+  beforeOptionsComponent?:
+    | ComponentLike<
+        PowerSelectBeforeOptionsSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
+      >
+    | ComponentLike<PowerSelectBeforeOptionsSignature<unknown>>;
+  optionsComponent?:
+    | ComponentLike<
+        PowerSelectOptionsSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
+      >
+    | ComponentLike<PowerSelectOptionsSignature<unknown>>;
+  groupComponent?:
+    | ComponentLike<
+        PowerSelectPowerSelectGroupSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
+      >
+    | ComponentLike<PowerSelectPowerSelectGroupSignature<unknown>>;
+  afterOptionsComponent?:
+    | ComponentLike<
+        PowerSelectAfterOptionsSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
+      >
+    | ComponentLike<PowerSelectAfterOptionsSignature<unknown>>;
   extra?: TExtra;
   matcher?: MatcherFn<T>;
   initiallyOpened?: boolean;
@@ -506,11 +550,8 @@ export default class PowerSelectComponent<
   get labelComponent(): ComponentLike<
     PowerSelectLabelSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.labelComponent) {
-      return this.args.labelComponent;
-    }
-
-    return PowerSelectLabelComponent as ComponentLike<
+    return (this.args.labelComponent ??
+      PowerSelectLabelComponent) as ComponentLike<
       PowerSelectLabelSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -518,11 +559,8 @@ export default class PowerSelectComponent<
   get triggerComponent(): ComponentLike<
     PowerSelectTriggerSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.triggerComponent) {
-      return this.args.triggerComponent;
-    }
-
-    return PowerSelectTriggerComponent as ComponentLike<
+    return (this.args.triggerComponent ??
+      PowerSelectTriggerComponent) as ComponentLike<
       PowerSelectTriggerSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -530,11 +568,8 @@ export default class PowerSelectComponent<
   get placeholderComponent(): ComponentLike<
     PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.placeholderComponent) {
-      return this.args.placeholderComponent;
-    }
-
-    return PowerSelectPlaceholderComponent as ComponentLike<
+    return (this.args.placeholderComponent ??
+      PowerSelectPlaceholderComponent) as ComponentLike<
       PowerSelectPlaceholderSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -542,11 +577,8 @@ export default class PowerSelectComponent<
   get beforeOptionsComponent(): ComponentLike<
     PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.beforeOptionsComponent) {
-      return this.args.beforeOptionsComponent;
-    }
-
-    return PowerSelectBeforeOptionsComponent as ComponentLike<
+    return (this.args.beforeOptionsComponent ??
+      PowerSelectBeforeOptionsComponent) as ComponentLike<
       PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -554,11 +586,8 @@ export default class PowerSelectComponent<
   get searchMessageComponent(): ComponentLike<
     PowerSelectSearchMessageSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.searchMessageComponent) {
-      return this.args.searchMessageComponent;
-    }
-
-    return SearchMessageComponent as ComponentLike<
+    return (this.args.searchMessageComponent ??
+      SearchMessageComponent) as ComponentLike<
       PowerSelectSearchMessageSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -566,11 +595,8 @@ export default class PowerSelectComponent<
   get noMatchesMessageComponent(): ComponentLike<
     PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.noMatchesMessageComponent) {
-      return this.args.noMatchesMessageComponent;
-    }
-
-    return NoMatchesMessageComponent as ComponentLike<
+    return (this.args.noMatchesMessageComponent ??
+      NoMatchesMessageComponent) as ComponentLike<
       PowerSelectNoMatchesMessageSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -578,11 +604,8 @@ export default class PowerSelectComponent<
   get optionsComponent(): ComponentLike<
     PowerSelectOptionsSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.optionsComponent) {
-      return this.args.optionsComponent;
-    }
-
-    return PowerSelectOptionsComponent as ComponentLike<
+    return (this.args.optionsComponent ??
+      PowerSelectOptionsComponent) as ComponentLike<
       PowerSelectOptionsSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -590,13 +613,26 @@ export default class PowerSelectComponent<
   get groupComponent(): ComponentLike<
     PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
   > {
-    if (this.args.groupComponent) {
-      return this.args.groupComponent;
-    }
-
-    return PowerSelectGroupComponent as ComponentLike<
+    return (this.args.groupComponent ??
+      PowerSelectGroupComponent) as ComponentLike<
       PowerSelectPowerSelectGroupSignature<T, TExtra, IsMultiple>
     >;
+  }
+
+  get selectedItemComponent():
+    | ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>>
+    | undefined {
+    return this.args.selectedItemComponent as
+      | ComponentLike<PowerSelectSelectedItemSignature<T, TExtra, IsMultiple>>
+      | undefined;
+  }
+
+  get afterOptionsComponent():
+    | ComponentLike<PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>>
+    | undefined {
+    return this.args.afterOptionsComponent as
+      | ComponentLike<PowerSelectAfterOptionsSignature<T, TExtra, IsMultiple>>
+      | undefined;
   }
 
   // Actions
@@ -1331,7 +1367,7 @@ export default class PowerSelectComponent<
             @allowClear={{@allowClear}}
             @buildSelection={{this.buildSelection}}
             @loadingMessage={{or @loadingMessage "Loading options..."}}
-            @selectedItemComponent={{@selectedItemComponent}}
+            @selectedItemComponent={{this.selectedItemComponent}}
             @select={{publicAPI}}
             @searchEnabled={{@searchEnabled}}
             @searchField={{@searchField}}
@@ -1384,7 +1420,7 @@ export default class PowerSelectComponent<
                 this.highlightedIndex
                 (concat publicAPI.uniqueId "-" this.highlightedIndex)
               }}
-              @selectedItemComponent={{@selectedItemComponent}}
+              @selectedItemComponent={{this.selectedItemComponent}}
               @searchPlaceholder={{@searchPlaceholder}}
               @searchFieldPosition={{this.searchFieldPosition}}
               @ariaLabel={{@ariaLabel}}
@@ -1431,8 +1467,8 @@ export default class PowerSelectComponent<
             </this.optionsComponent>
           {{/if}}
 
-          {{#if @afterOptionsComponent}}
-            {{#let @afterOptionsComponent as |AfterOptions|}}
+          {{#if this.afterOptionsComponent}}
+            {{#let this.afterOptionsComponent as |AfterOptions|}}
               <AfterOptions @extra={{@extra}} @select={{publicAPI}} />
             {{/let}}
           {{/if}}
