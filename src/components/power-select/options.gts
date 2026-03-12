@@ -71,7 +71,7 @@ if (typeof FastBoot === 'undefined') {
 }
 
 export default class PowerSelectOptionsComponent<
-  T,
+  T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,
 > extends Component<PowerSelectOptionsSignature<T, TExtra, IsMultiple>> {
