@@ -8,6 +8,7 @@ import PowerSelect from '#src/components/power-select.gts';
 import Component from '@glimmer/component';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { fn } from '@ember/helper';
+import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 
 interface Context extends TestContext {
   element: HTMLElement;
@@ -53,7 +54,11 @@ module(
     setupRenderingTest(hooks);
 
     test<Context>('@onInput accepts ember-concurrency task.perform', async function (assert) {
-      await render<Context>(<template><MyComponent /></template>);
+      await render<Context>(
+        <template>
+          <HostWrapper><MyComponent /></HostWrapper>
+        </template>,
+      );
 
       await clickTrigger(
         getRootNode(this.element).querySelector(
