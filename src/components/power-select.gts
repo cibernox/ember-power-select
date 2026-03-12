@@ -81,19 +81,27 @@ export interface PowerSelectArgs<
   highlightOnHover?: boolean;
   placeholderComponent?:
     | ComponentLike<
-        PowerSelectPlaceholderSignature<NoInfer<T>, TExtra, IsMultiple>
+        PowerSelectPlaceholderSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
       >
     | ComponentLike<PowerSelectPlaceholderSignature<unknown>>;
   searchMessage?: string;
   searchMessageComponent?:
     | ComponentLike<
-        PowerSelectSearchMessageSignature<NoInfer<T>, TExtra, IsMultiple>
+        PowerSelectSearchMessageSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
       >
     | ComponentLike<PowerSelectSearchMessageSignature<unknown>>;
   noMatchesMessage?: string;
   noMatchesMessageComponent?:
     | ComponentLike<
-        PowerSelectNoMatchesMessageSignature<NoInfer<T>, TExtra, IsMultiple>
+        PowerSelectNoMatchesMessageSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
       >
     | ComponentLike<PowerSelectNoMatchesMessageSignature<unknown>>;
   matchTriggerWidth?: boolean;
@@ -142,32 +150,54 @@ export interface PowerSelectArgs<
   ebdTriggerComponent?: ComponentLike<BasicDropdownTriggerSignature>;
   ebdContentComponent?: ComponentLike<BasicDropdownContentSignature>;
   labelComponent?:
-    | ComponentLike<PowerSelectLabelSignature<NoInfer<T>, TExtra, IsMultiple>>
+    | ComponentLike<
+        PowerSelectLabelSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
+      >
     | ComponentLike<PowerSelectLabelSignature<unknown>>;
   triggerComponent?:
-    | ComponentLike<PowerSelectTriggerSignature<NoInfer<T>, TExtra, IsMultiple>>
+    | ComponentLike<
+        PowerSelectTriggerSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
+      >
     | ComponentLike<PowerSelectTriggerSignature<unknown>>;
   selectedItemComponent?:
     | ComponentLike<
-        PowerSelectSelectedItemSignature<NoInfer<T>, TExtra, IsMultiple>
+        PowerSelectSelectedItemSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
       >
     | ComponentLike<PowerSelectSelectedItemSignature<unknown>>;
   beforeOptionsComponent?:
     | ComponentLike<
-        PowerSelectBeforeOptionsSignature<NoInfer<T>, TExtra, IsMultiple>
+        PowerSelectBeforeOptionsSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
       >
     | ComponentLike<PowerSelectBeforeOptionsSignature<unknown>>;
   optionsComponent?:
-    | ComponentLike<PowerSelectOptionsSignature<NoInfer<T>, TExtra, IsMultiple>>
+    | ComponentLike<
+        PowerSelectOptionsSignature<NoInfer<T>, TExtra, NoInfer<IsMultiple>>
+      >
     | ComponentLike<PowerSelectOptionsSignature<unknown>>;
   groupComponent?:
     | ComponentLike<
-        PowerSelectPowerSelectGroupSignature<NoInfer<T>, TExtra, IsMultiple>
+        PowerSelectPowerSelectGroupSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
       >
     | ComponentLike<PowerSelectPowerSelectGroupSignature<unknown>>;
   afterOptionsComponent?:
     | ComponentLike<
-        PowerSelectAfterOptionsSignature<NoInfer<T>, TExtra, IsMultiple>
+        PowerSelectAfterOptionsSignature<
+          NoInfer<T>,
+          TExtra,
+          NoInfer<IsMultiple>
+        >
       >
     | ComponentLike<PowerSelectAfterOptionsSignature<unknown>>;
   extra?: TExtra;
