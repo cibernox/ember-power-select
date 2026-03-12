@@ -53,9 +53,7 @@ module(
     setupRenderingTest(hooks);
 
     test<Context>('@onInput accepts ember-concurrency task.perform', async function (assert) {
-      await render<Context>(
-        <template><MyComponent /></template>,
-      );
+      await render<Context>(<template><MyComponent /></template>);
 
       await clickTrigger(
         getRootNode(this.element).querySelector(
