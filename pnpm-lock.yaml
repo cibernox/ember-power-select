@@ -65,7 +65,7 @@ importers:
         version: 1.19.6(@glint/template@1.7.3)
       '@embroider/vite':
         specifier: ^1.5.0
-        version: 1.5.0(@embroider/core@4.4.2(@glint/template@1.7.3))(@glint/template@1.7.3)(rollup@4.56.0)(vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0))
+        version: 1.5.0(@embroider/core@4.4.2(@glint/template@1.7.3))(@glint/template@1.7.3)(rollup@4.56.0)(vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.98.0)(terser@5.46.0))
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.2
@@ -179,7 +179,7 @@ importers:
         version: 4.8.5
       sass:
         specifier: ^1.97.3
-        version: 1.97.3
+        version: 1.98.0
       sass-embedded:
         specifier: ^1.97.3
         version: 1.97.3
@@ -194,7 +194,7 @@ importers:
         version: 8.53.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vite:
         specifier: ^7.3.1
-        version: 7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)
+        version: 7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.98.0)(terser@5.46.0)
 
   docs:
     devDependencies:
@@ -248,7 +248,7 @@ importers:
         version: 3.0.6(@embroider/core@4.4.2(@glint/template@1.7.3))(@glint/template@1.7.3)
       '@embroider/vite':
         specifier: ^1.5.0
-        version: 1.5.0(@embroider/core@4.4.2(@glint/template@1.7.3))(@glint/template@1.7.3)(rollup@4.56.0)(vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0))
+        version: 1.5.0(@embroider/core@4.4.2(@glint/template@1.7.3))(@glint/template@1.7.3)(rollup@4.56.0)(vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.98.0)(terser@5.46.0))
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.2
@@ -389,7 +389,7 @@ importers:
         version: 8.53.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       vite:
         specifier: ^7.3.1
-        version: 7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)
+        version: 7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.98.0)(terser@5.46.0)
 
 packages:
 
@@ -4750,6 +4750,9 @@ packages:
   immutable@5.1.4:
     resolution: {integrity: sha512-p6u1bG3YSnINT5RQmx/yRZBpenIl30kVxkTLDyHLIMk0gict704Q9n+thfDI7lTRm9vXdDYutVzXhzcThxTnXA==}
 
+  immutable@5.1.5:
+    resolution: {integrity: sha512-t7xcm2siw+hlUM68I+UEOK+z84RzmN59as9DZ7P1l0994DKUWV7UXBMQZVxaoMSRQ+PBZbHCOoBt7a2wxOMt+A==}
+
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
     engines: {node: '>=6'}
@@ -6734,6 +6737,11 @@ packages:
 
   sass@1.97.3:
     resolution: {integrity: sha512-fDz1zJpd5GycprAbu4Q2PV/RprsRtKC/0z82z0JLgdytmcq0+ujJbJ/09bPGDxCLkKY3Np5cRAOcWiVkLXJURg==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+
+  sass@1.98.0:
+    resolution: {integrity: sha512-+4N/u9dZ4PrgzGgPlKnaaRQx64RO0JBKs9sDhQ2pLgN6JQZ25uPQZKQYaBJU48Kd5BxgXoJ4e09Dq7nMcOUW3A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -8922,7 +8930,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/vite@1.5.0(@embroider/core@4.4.2(@glint/template@1.7.3))(@glint/template@1.7.3)(rollup@4.56.0)(vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0))':
+  '@embroider/vite@1.5.0(@embroider/core@4.4.2(@glint/template@1.7.3))(@glint/template@1.7.3)(rollup@4.56.0)(vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.98.0)(terser@5.46.0))':
     dependencies:
       '@babel/core': 7.28.6
       '@embroider/core': 4.4.2(@glint/template@1.7.3)
@@ -8941,7 +8949,7 @@ snapshots:
       send: 0.18.0
       source-map-url: 0.4.1
       terser: 5.46.0
-      vite: 7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)
+      vite: 7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.98.0)(terser@5.46.0)
     transitivePeerDependencies:
       - '@glint/template'
       - bufferutil
@@ -13360,6 +13368,8 @@ snapshots:
 
   immutable@5.1.4: {}
 
+  immutable@5.1.5: {}
+
   import-fresh@3.3.1:
     dependencies:
       parent-module: 1.0.1
@@ -15266,7 +15276,7 @@ snapshots:
     dependencies:
       '@rollup/pluginutils': 5.3.0(rollup@4.56.0)
       resolve: 1.22.11
-      sass: 1.97.3
+      sass: 1.98.0
     transitivePeerDependencies:
       - rollup
 
@@ -15501,6 +15511,15 @@ snapshots:
     dependencies:
       chokidar: 4.0.3
       immutable: 5.1.4
+      source-map-js: 1.2.1
+    optionalDependencies:
+      '@parcel/watcher': 2.5.6
+    optional: true
+
+  sass@1.98.0:
+    dependencies:
+      chokidar: 4.0.3
+      immutable: 5.1.5
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.5.6
@@ -16542,7 +16561,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0):
+  vite@7.3.1(@types/node@25.0.10)(jiti@2.6.1)(sass-embedded@1.97.3)(sass@1.98.0)(terser@5.46.0):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -16554,7 +16573,7 @@ snapshots:
       '@types/node': 25.0.10
       fsevents: 2.3.3
       jiti: 2.6.1
-      sass: 1.97.3
+      sass: 1.98.0
       sass-embedded: 1.97.3
       terser: 5.46.0
 
