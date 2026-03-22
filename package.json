@@ -105,7 +105,7 @@
     "babel-plugin-ember-template-compilation": "^4.0.0",
     "concurrently": "^9.2.1",
     "dom-element-descriptors": "^0.5.1",
-    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#f3cb963ca0a2728c2580e71e9c822e9c6bee08c5",
+    "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee",
     "ember-concurrency": "^5.2.0",
     "ember-lifeline": "^7.0.0",
     "ember-modifier": "^4.3.0",
