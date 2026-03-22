@@ -2379,7 +2379,7 @@ module(
         (async () => {
           await timeout(100);
           return numbers[3];
-        })()
+        })(),
       );
 
       void clickTrigger(
