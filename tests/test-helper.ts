@@ -5,8 +5,7 @@ import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 import { setConfig, type Config } from 'ember-basic-dropdown/config';
-// @ts-expect-error Could not find a declaration file for module '@embroider/macros/src/addon/runtime'.
-import { getGlobalConfig } from '@embroider/macros/src/addon/runtime';
+import { setTesting } from '@embroider/macros';
 
 class Router extends EmberRouter {
   location = 'none';
@@ -24,6 +23,7 @@ class TestApp extends EmberApp {
 Router.map(function () {});
 
 export function start() {
+  setTesting(true);
   setApplication(
     TestApp.create({
       autoboot: false,
@@ -32,14 +32,7 @@ export function start() {
   );
   setup(QUnit.assert);
   setupEmberOnerrorValidation();
-  //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-  const config = getGlobalConfig()['@embroider/macros'];
-
-  //eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  if (config) config.isTesting = true;
-
   setConfig(defaultBasicDropdownConfig);
-
   qunitStart();
 }
 
