@@ -30,7 +30,9 @@ export default {
       'module:decorator-transforms',
       {
         runtime: {
-          import: import.meta.resolve('decorator-transforms/runtime-esm'),
+          import: fileURLToPath(
+            import.meta.resolve('decorator-transforms/runtime-esm'),
+          ),
         },
       },
     ],

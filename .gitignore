@@ -16,3 +16,6 @@ ember-cli-build.cjs
 node_modules/
 .eslintcache
 .prettiercache
+
+# potentially containing secrets
+*.local
