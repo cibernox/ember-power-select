@@ -17,9 +17,7 @@ import {
   type TestContext,
   settled,
 } from '@ember/test-helpers';
-import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
-import { runTask } from 'ember-lifeline';
 import type {
   DefaultHighlightedParams,
   MatcherFn,
@@ -29,6 +27,7 @@ import type {
 import { fn, array } from '@ember/helper';
 import PowerSelect from '#src/components/power-select.gts';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
+import { timeout } from 'ember-concurrency';
 
 interface NumbersContext extends TestContext {
   element: HTMLElement;
@@ -795,16 +794,9 @@ module(
       const done = assert.async();
       assert.expect(1);
 
-      this.searchFn = function (term: string) {
-        return new RSVP.Promise((resolve) => {
-          runTask(
-            this,
-            function () {
-              resolve(numbers.filter((str) => str.indexOf(term) > -1));
-            },
-            100,
-          );
-        });
+      this.searchFn = async (term: string) => {
+        await timeout(100);
+        return numbers.filter((str) => str.includes(term));
       };
       this.foo = () => {};
 
@@ -1845,16 +1837,9 @@ module(
 
       assert.expect(1);
 
-      this.searchFn = (term) => {
-        return new RSVP.Promise((resolve) => {
-          runTask(
-            this,
-            function () {
-              resolve(numbers.filter((str) => str.indexOf(term) > -1));
-            },
-            100,
-          );
-        });
+      this.searchFn = async (term) => {
+        await timeout(100);
+        return numbers.filter((str) => str.includes(term));
       };
 
       await render<NumbersContext>(

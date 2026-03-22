@@ -16,7 +16,6 @@ import {
 } from '#src/test-support/helpers.ts';
 import RSVP from 'rsvp';
 import { tracked } from '@glimmer/tracking';
-import { runTask } from 'ember-lifeline';
 import {
   numbers,
   names,
@@ -39,6 +38,7 @@ import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
 import HostWrapper from '../../../../demo-app/components/host-wrapper.gts';
 import { createDescriptor } from 'dom-element-descriptors';
+import { timeout } from 'ember-concurrency';
 
 interface NumbersContext<
   IsMultiple extends boolean = false,
@@ -558,15 +558,10 @@ module(
 
       this.set(
         'numbers',
-        new RSVP.Promise((resolve) => {
-          runTask(
-            this,
-            function () {
-              resolve(numbers);
-            },
-            150,
-          );
-        }),
+        (async () => {
+          await timeout(150);
+          return numbers;
+        })(),
       );
 
       void clickTrigger(
@@ -972,13 +967,10 @@ module(
       this.search = () => {
         return new RSVP.Promise((resolve) => {
           resolve(numberClass.data);
-          runTask(
-            this,
-            function () {
-              numberClass.data = [...numberClass.data, 'one'];
-            },
-            100,
-          );
+          (async () => {
+            await timeout(100);
+            numberClass.data = [...numberClass.data, 'one'];
+          })();
         });
       };
 
@@ -1037,13 +1029,10 @@ module(
       this.search = () => {
         return new RSVP.Promise((resolve) => {
           resolve(numberClass.data);
-          runTask(
-            this,
-            function () {
-              numberClass.data = [...numberClass.data, 'owner'];
-            },
-            100,
-          );
+          (async () => {
+            await timeout(100);
+            numberClass.data = [...numberClass.data, 'owner'];
+          })();
         });
       };
 
@@ -2174,15 +2163,10 @@ module(
 
       assert.expect(5);
 
-      this.numbers = new RSVP.Promise((resolve) => {
-        runTask(
-          this,
-          function () {
-            resolve(numbers);
-          },
-          100,
-        );
-      });
+      this.numbers = (async () => {
+        await timeout(100);
+        return numbers;
+      })();
 
       this.foo = () => {};
 
@@ -2290,15 +2274,10 @@ module(
 
       this.set(
         'selected',
-        new RSVP.Promise((resolve) => {
-          runTask(
-            this,
-            function () {
-              resolve(numbers[3]);
-            },
-            100,
-          );
-        }),
+        (async () => {
+          await timeout(100);
+          return numbers[3];
+        })(),
       );
       void clickTrigger(
         getRootNode(this.element).querySelector(
@@ -2397,15 +2376,10 @@ module(
       );
       this.set(
         'selected',
-        new RSVP.Promise((resolve) => {
-          runTask(
-            this,
-            function () {
-              resolve(numbers[3]);
-            },
-            100,
-          );
-        }),
+        (async () => {
+          await timeout(100);
+          return numbers[3];
+        })()
       );
 
       void clickTrigger(
@@ -2481,36 +2455,18 @@ module(
         </template>,
       );
 
-      const promise1 = new RSVP.Promise((resolve) => {
-        runTask(
-          this,
-          function () {
-            resolve(numbers[3]);
-          },
-          400,
-        );
-      });
+      const promise1 = (async () => {
+        await timeout(400);
+        return numbers[3];
+      })();
 
-      const promise2 = new RSVP.Promise((resolve) => {
-        runTask(
-          this,
-          function () {
-            resolve(numbers[4]);
-          },
-          300,
-        );
-      });
+      const promise2 = (async () => {
+        await timeout(300);
+        return numbers[4];
+      })();
 
       this.set('selected', promise1);
-      await new RSVP.Promise((resolve) => {
-        runTask(
-          this,
-          () => {
-            resolve();
-          },
-          20,
-        );
-      });
+      await timeout(20);
       this.set('selected', promise2);
 
       void clickTrigger(

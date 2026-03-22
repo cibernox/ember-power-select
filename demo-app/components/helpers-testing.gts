@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { runTask } from 'ember-lifeline';
 import { tracked } from '@glimmer/tracking';
-import RSVP from 'rsvp';
 import PowerSelect from '#src/components/power-select.gts';
 import { fn } from '@ember/helper';
 import CustomTriggerWithSearch from '../components/custom-trigger-with-search.gts';
+import { timeout } from 'ember-concurrency';
 
 const numbers = [
   'one',
@@ -42,49 +41,29 @@ export default class HelpersTesting extends Component {
   @tracked selected3: string | undefined;
 
   @action
-  searchAsync(term: string): Promise<readonly string[]> {
-    return new RSVP.Promise((resolve) => {
-      runTask(
-        this,
-        () => {
-          resolve(numbers.filter((n) => n.indexOf(term) > -1));
-        },
-        100,
-      );
-    });
+  async searchAsync(term: string): Promise<readonly string[]> {
+    await timeout(100);
+    return numbers.filter((str) => str.includes(term));
   }
 
   @action
   onOpenHandle() {
-    runTask(
-      this,
-      () => {
-        this.optionz = numbers;
-      },
-      100,
-    );
+    void (async () => {
+      await timeout(100);
+      this.optionz = numbers;
+    })();
   }
 
   @action
-  onChangeAsync(key: 'asyncSelected', selected: string | undefined) {
-    runTask(
-      this,
-      () => {
-        this[key] = selected;
-      },
-      100,
-    );
+  async onChangeAsync(key: 'asyncSelected', selected: string | undefined) {
+    await timeout(100);
+    this[key] = selected;
   }
 
   @action
-  onChangeAsyncMultiple(key: 'asyncSelectedList', selected: string[]) {
-    runTask(
-      this,
-      () => {
-        this[key] = selected;
-      },
-      100,
-    );
+  async onChangeAsyncMultiple(key: 'asyncSelectedList', selected: string[]) {
+    await timeout(100);
+    this[key] = selected;
   }
 
   <template>

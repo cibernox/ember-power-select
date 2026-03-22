@@ -107,7 +107,6 @@
     "dom-element-descriptors": "^0.5.1",
     "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee",
     "ember-concurrency": "^5.2.0",
-    "ember-lifeline": "^7.0.0",
     "ember-modifier": "^4.3.0",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.4",
