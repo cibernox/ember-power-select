@@ -55,17 +55,17 @@ importers:
         specifier: ^8.3.0
         version: 8.3.0(@glint/template@1.7.7)(rollup@4.60.0)
       '@embroider/compat':
-        specifier: ^4.1.15
-        version: 4.1.15(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)
+        specifier: ^4.1.16
+        version: 4.1.16(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@embroider/core':
-        specifier: ^4.4.6
-        version: 4.4.6(@glint/template@1.7.7)
+        specifier: ^4.4.7
+        version: 4.4.7(@glint/template@1.7.7)
       '@embroider/macros':
-        specifier: ^1.20.1
-        version: 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+        specifier: ^1.20.2
+        version: 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/vite':
-        specifier: ^1.7.0
-        version: 1.7.0(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
+        specifier: ^1.7.1
+        version: 1.7.1(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
@@ -103,8 +103,8 @@ importers:
         specifier: ^0.5.1
         version: 0.5.1
       ember-basic-dropdown:
-        specifier: git+https://github.com/cibernox/ember-basic-dropdown#6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee
-        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
+        specifier: git+https://github.com/cibernox/ember-basic-dropdown#de25fa1adf698d90218845e29b068a82080e5a7f
+        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
       ember-concurrency:
         specifier: ^5.2.0
         version: 5.2.0(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -226,26 +226,26 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/compat':
-        specifier: ^4.1.15
-        version: 4.1.15(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)
+        specifier: ^4.1.16
+        version: 4.1.16(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@embroider/config-meta-loader':
         specifier: ^1.0.0
         version: 1.0.0
       '@embroider/core':
-        specifier: ^4.4.6
-        version: 4.4.6(@glint/template@1.7.7)
+        specifier: ^4.4.7
+        version: 4.4.7(@glint/template@1.7.7)
       '@embroider/legacy-inspector-support':
         specifier: ^0.1.3
         version: 0.1.3
       '@embroider/macros':
-        specifier: ^1.20.1
-        version: 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+        specifier: ^1.20.2
+        version: 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/router':
         specifier: ^3.0.6
-        version: 3.0.6(@babel/core@7.29.0)(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)
+        version: 3.0.6(@babel/core@7.29.0)(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@embroider/vite':
-        specifier: ^1.7.0
-        version: 1.7.0(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
+        specifier: ^1.7.1
+        version: 1.7.1(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
@@ -280,8 +280,8 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(@babel/core@7.29.0)
       ember-basic-dropdown:
-        specifier: git+https://github.com/cibernox/ember-basic-dropdown#6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee
-        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
+        specifier: git+https://github.com/cibernox/ember-basic-dropdown#de25fa1adf698d90218845e29b068a82080e5a7f
+        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
       ember-cli:
         specifier: ~6.11.0
         version: 6.11.0(@types/node@25.5.0)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.8)
@@ -1073,25 +1073,25 @@ packages:
     resolution: {integrity: sha512-EfI9cJ5/3QSUJtwm7x1MXrx3TEa2p7RNgSHefy7fvGm8/DP1xUFL25nST1NaHbHcqR1UhMlrTtv5iUIDoVzeQQ==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  '@embroider/compat@4.1.15':
-    resolution: {integrity: sha512-Z0tDSliXSsMZtvCHUYHIF2oJnjhgf9EE7D75519DBh8UG/xb4jNZrq6ykDEIC2sGByjt8e+ZAczWqAapMBAJZg==}
+  '@embroider/compat@4.1.16':
+    resolution: {integrity: sha512-zVOMF/MeB2/nGP2Lp/JPibyG3+9S6hp8EAbP5z9raqbQ2yyk/c7bCjWPhzmWl78xQQuLeemWFTaohchGETHnmw==}
     engines: {node: '>= 20.19.*'}
     peerDependencies:
-      '@embroider/core': ^4.4.5
+      '@embroider/core': ^4.4.7
 
   '@embroider/config-meta-loader@1.0.0':
     resolution: {integrity: sha512-qznkdjgEGPe6NM94hZNXvOm/WhrJwBh8FtSQZ+nGjh9TOjY42tOiTEevFuM0onNXUn6bpdGzmjwKo2xY2jxQxQ==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  '@embroider/core@4.4.6':
-    resolution: {integrity: sha512-jWMPa2qrWktnUutj3HC8/b9F28fn9Lm/5USSmSKEXYYIT2lVbxG+A2OA5OlHTwA452lMucsKk2nT90AmsgY8wQ==}
+  '@embroider/core@4.4.7':
+    resolution: {integrity: sha512-8byUO0RKTI/Y25dTxQt/S9L6Ph57L4obGGJfqquP5cQzlEos5w2CRSWV85RhAYowFAuTxgqMbVfAnJTWatgvpg==}
     engines: {node: 12.* || 14.* || >= 16}
 
   '@embroider/legacy-inspector-support@0.1.3':
     resolution: {integrity: sha512-0VzD1xExkT78a1CUiW8wZ5VZDL4bVyMSc3t8E/RiAW1X6TlyKIA/m6zoQgsQtQIiiTPPxH0/1Tdd0F7b5//etw==}
 
-  '@embroider/macros@1.20.1':
-    resolution: {integrity: sha512-Ia3uPg4kgunvI3XySzHqKpC/niyxKSjjI8b6OIDf1KL9gtfztbC8x1dthHvX2823KnHcOhdHMudGWAhVuj2BKg==}
+  '@embroider/macros@1.20.2':
+    resolution: {integrity: sha512-WJWSkG9vIL0s93vKwtNFqqAOCOflNkWNpqsC7VAqXeeTKNpCc7wtdOhPkNGJpb52CEt7vlQ5R/zMyCfGAB7MEA==}
     engines: {node: 12.* || 14.* || >= 16}
     peerDependencies:
       '@glint/template': ^1.0.0
@@ -1115,10 +1115,10 @@ packages:
     resolution: {integrity: sha512-/SusdG+zgosc3t+9sPFVKSFOYyiSgLfXOT6lYNWoG1YtnhWDxlK4S8leZ0jhcVjemdaHln5rTyxCnq8oFLxqpQ==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  '@embroider/vite@1.7.0':
-    resolution: {integrity: sha512-efHuNrzUQblSqtVf9aMhB+B8zinuA7jI//uYXIxX1t5Cv8OIgTkMO4pMRci4TuYALL85iJkKvuQ9erf+9iOOMw==}
+  '@embroider/vite@1.7.1':
+    resolution: {integrity: sha512-WeGdY/zrI4kM/sxBAVomVHs9gJFxVjKKAwWtONHV4XvH89ejCGMpriXZSo23xwodLYnaEfnf5UnmtCrfoGqvzA==}
     peerDependencies:
-      '@embroider/core': ^4.4.6
+      '@embroider/core': ^4.4.7
       vite: '>= 5.2.0'
 
   '@esbuild/aix-ppc64@0.27.4':
@@ -3450,8 +3450,8 @@ packages:
   electron-to-chromium@1.5.321:
     resolution: {integrity: sha512-L2C7Q279W2D/J4PLZLk7sebOILDSWos7bMsMNN06rK482umHUrh/3lM8G7IlHFOYip2oAg5nha1rCMxr/rs6ZQ==}
 
-  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee:
-    resolution: {tarball: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee}
+  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f:
+    resolution: {tarball: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f}
     version: 8.11.0
     peerDependencies:
       '@ember/test-helpers': ^5.0.0
@@ -8221,7 +8221,7 @@ snapshots:
     dependencies:
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+      '@embroider/macros': 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@simple-dom/interface': 1.4.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       dom-element-descriptors: 0.5.1
@@ -8233,7 +8233,7 @@ snapshots:
   '@ember/test-waiters@4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)':
     dependencies:
       '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+      '@embroider/macros': 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
     transitivePeerDependencies:
       - '@babel/core'
       - '@glint/template'
@@ -8241,7 +8241,7 @@ snapshots:
 
   '@embroider/addon-dev@8.3.0(@glint/template@1.7.7)(rollup@4.60.0)':
     dependencies:
-      '@embroider/core': 4.4.6(@glint/template@1.7.7)
+      '@embroider/core': 4.4.7(@glint/template@1.7.7)
       '@rollup/pluginutils': 5.3.0(rollup@4.60.0)
       content-tag: 4.1.1
       execa: 5.1.1
@@ -8269,7 +8269,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/compat@4.1.15(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)':
+  '@embroider/compat@4.1.16(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)':
     dependencies:
       '@babel/code-frame': 7.29.0
       '@babel/core': 7.29.0
@@ -8280,8 +8280,8 @@ snapshots:
       '@babel/preset-env': 7.29.2(@babel/core@7.29.0)
       '@babel/runtime': 7.29.2
       '@babel/traverse': 7.29.0
-      '@embroider/core': 4.4.6(@glint/template@1.7.7)
-      '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+      '@embroider/core': 4.4.7(@glint/template@1.7.7)
+      '@embroider/macros': 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@types/babel__code-frame': 7.27.0
       assert-never: 1.4.0
       babel-import-util: 3.0.1
@@ -8324,12 +8324,12 @@ snapshots:
 
   '@embroider/config-meta-loader@1.0.0': {}
 
-  '@embroider/core@4.4.6(@glint/template@1.7.7)':
+  '@embroider/core@4.4.7(@glint/template@1.7.7)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/parser': 7.29.2
       '@babel/traverse': 7.29.0
-      '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+      '@embroider/macros': 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/reverse-exports': 0.2.0
       '@embroider/shared-internals': 3.0.2
       assert-never: 1.4.0
@@ -8366,7 +8366,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/macros@1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)':
+  '@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)':
     dependencies:
       '@embroider/shared-internals': 3.0.2
       assert-never: 1.4.0
@@ -8387,12 +8387,12 @@ snapshots:
       mem: 8.1.1
       resolve.exports: 2.0.3
 
-  '@embroider/router@3.0.6(@babel/core@7.29.0)(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)':
+  '@embroider/router@3.0.6(@babel/core@7.29.0)(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)':
     dependencies:
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
     optionalDependencies:
-      '@embroider/core': 4.4.6(@glint/template@1.7.7)
+      '@embroider/core': 4.4.7(@glint/template@1.7.7)
     transitivePeerDependencies:
       - '@babel/core'
       - '@glint/template'
@@ -8416,11 +8416,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/vite@1.7.0(@embroider/core@4.4.6(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))':
+  '@embroider/vite@1.7.1(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))':
     dependencies:
       '@babel/core': 7.29.0
-      '@embroider/core': 4.4.6(@glint/template@1.7.7)
-      '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+      '@embroider/core': 4.4.7(@glint/template@1.7.7)
+      '@embroider/macros': 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/reverse-exports': 0.2.0
       assert-never: 1.4.0
       browserslist: 4.28.1
@@ -10773,11 +10773,11 @@ snapshots:
 
   electron-to-chromium@1.5.321: {}
 
-  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/6979d290cbb25ddff53cbdcb1c7f1a7f15df8eee(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0):
+  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0):
     dependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+      '@embroider/macros': 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@glimmer/component': 2.0.0
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
@@ -11080,7 +11080,7 @@ snapshots:
     dependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
-      '@embroider/macros': 1.20.1(@babel/core@7.29.0)(@glint/template@1.7.7)
+      '@embroider/macros': 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       qunit: 2.25.0
       qunit-theme-ember: 1.0.0
     transitivePeerDependencies:
