@@ -65,7 +65,7 @@ importers:
         version: 1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/vite':
         specifier: ^1.7.1
-        version: 1.7.1(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
+        version: 1.7.2(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
@@ -245,7 +245,7 @@ importers:
         version: 3.0.6(@babel/core@7.29.0)(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)
       '@embroider/vite':
         specifier: ^1.7.1
-        version: 1.7.1(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
+        version: 1.7.2(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.4
@@ -1115,8 +1115,8 @@ packages:
     resolution: {integrity: sha512-/SusdG+zgosc3t+9sPFVKSFOYyiSgLfXOT6lYNWoG1YtnhWDxlK4S8leZ0jhcVjemdaHln5rTyxCnq8oFLxqpQ==}
     engines: {node: 12.* || 14.* || >= 16}
 
-  '@embroider/vite@1.7.1':
-    resolution: {integrity: sha512-WeGdY/zrI4kM/sxBAVomVHs9gJFxVjKKAwWtONHV4XvH89ejCGMpriXZSo23xwodLYnaEfnf5UnmtCrfoGqvzA==}
+  '@embroider/vite@1.7.2':
+    resolution: {integrity: sha512-sRzIZzqYP8NYKnD3ycrfhPFxRJ8z2dcaeA2gcK9IM7x4GPjNDhAAqB5KFTnxgPFCuEKsC3O1CqkW91d+CuiAhg==}
     peerDependencies:
       '@embroider/core': ^4.4.7
       vite: '>= 5.2.0'
@@ -2572,8 +2572,8 @@ packages:
     resolution: {integrity: sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==}
     engines: {node: ^4.5.0 || >= 5.9}
 
-  baseline-browser-mapping@2.10.10:
-    resolution: {integrity: sha512-sUoJ3IMxx4AyRqO4MLeHlnGDkyXRoUG0/AI9fjK+vS72ekpV0yWVY7O0BVjmBcRtkNcsAO2QDZ4tdKKGoI6YaQ==}
+  baseline-browser-mapping@2.10.12:
+    resolution: {integrity: sha512-qyq26DxfY4awP2gIRXhhLWfwzwI+N5Nxk6iQi8EFizIaWIjqicQTE4sLnZZVdeKPRcVNoJOkkpfzoIYuvCKaIQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -2792,8 +2792,8 @@ packages:
     resolution: {integrity: sha512-RbsNrFyhwkx+6psk/0fK/Q9orOUr9VMxohGd8vTa4djf4TGLfblBgUfqZChrZuW0Q+mz2eBPFLusw9Jfukzmhg==}
     hasBin: true
 
-  caniuse-lite@1.0.30001780:
-    resolution: {integrity: sha512-llngX0E7nQci5BPJDqoZSbuZ5Bcs9F5db7EtgfwBerX9XGtkkiO4NwfDDIRzHTTwcYC8vC7bmeUEPGrKlR/TkQ==}
+  caniuse-lite@1.0.30001782:
+    resolution: {integrity: sha512-dZcaJLJeDMh4rELYFw1tvSn1bhZWYFOt468FcbHHxx/Z/dFidd1I6ciyFdi3iwfQCyOjqo9upF6lGQYtMiJWxw==}
 
   capture-exit@2.0.0:
     resolution: {integrity: sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g==}
@@ -3447,8 +3447,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.5.321:
-    resolution: {integrity: sha512-L2C7Q279W2D/J4PLZLk7sebOILDSWos7bMsMNN06rK482umHUrh/3lM8G7IlHFOYip2oAg5nha1rCMxr/rs6ZQ==}
+  electron-to-chromium@1.5.328:
+    resolution: {integrity: sha512-QNQ5l45DzYytThO21403XN3FvK0hOkWDG8viNf6jqS42msJ8I4tGDSpBCgvDRRPnkffafiwAym2X2eHeGD2V0w==}
 
   ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f:
     resolution: {tarball: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f}
@@ -5742,12 +5742,16 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
-  picomatch@2.3.1:
-    resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
+  picomatch@2.3.2:
+    resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
 
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
+    engines: {node: '>=12'}
+
+  picomatch@4.0.4:
+    resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
 
   pkg-entry-points@1.1.1:
@@ -8416,7 +8420,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/vite@1.7.1(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))':
+  '@embroider/vite@1.7.2(@embroider/core@4.4.7(@glint/template@1.7.7))(@glint/template@1.7.7)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1))':
     dependencies:
       '@babel/core': 7.29.0
       '@embroider/core': 4.4.7(@glint/template@1.7.7)
@@ -9168,7 +9172,7 @@ snapshots:
       detect-libc: 2.1.2
       is-glob: 4.0.3
       node-addon-api: 7.1.1
-      picomatch: 4.0.3
+      picomatch: 4.0.4
     optionalDependencies:
       '@parcel/watcher-android-arm64': 2.5.6
       '@parcel/watcher-darwin-arm64': 2.5.6
@@ -9654,7 +9658,7 @@ snapshots:
   anymatch@3.1.3:
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.3.1
+      picomatch: 2.3.2
 
   aproba@2.1.0: {}
 
@@ -9896,7 +9900,7 @@ snapshots:
 
   base64id@2.0.0: {}
 
-  baseline-browser-mapping@2.10.10: {}
+  baseline-browser-mapping@2.10.12: {}
 
   basic-auth@2.0.1:
     dependencies:
@@ -10223,9 +10227,9 @@ snapshots:
 
   browserslist@4.28.1:
     dependencies:
-      baseline-browser-mapping: 2.10.10
-      caniuse-lite: 1.0.30001780
-      electron-to-chromium: 1.5.321
+      baseline-browser-mapping: 2.10.12
+      caniuse-lite: 1.0.30001782
+      electron-to-chromium: 1.5.328
       node-releases: 2.0.36
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
 
@@ -10316,7 +10320,7 @@ snapshots:
     dependencies:
       tmp: 0.0.28
 
-  caniuse-lite@1.0.30001780: {}
+  caniuse-lite@1.0.30001782: {}
 
   capture-exit@2.0.0:
     dependencies:
@@ -10771,7 +10775,7 @@ snapshots:
     dependencies:
       jake: 10.9.4
 
-  electron-to-chromium@1.5.321: {}
+  electron-to-chromium@1.5.328: {}
 
   ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0):
     dependencies:
@@ -13269,7 +13273,7 @@ snapshots:
   micromatch@4.0.8:
     dependencies:
       braces: 3.0.3
-      picomatch: 2.3.1
+      picomatch: 2.3.2
 
   mime-db@1.52.0: {}
 
@@ -13776,9 +13780,11 @@ snapshots:
 
   picocolors@1.1.1: {}
 
-  picomatch@2.3.1: {}
+  picomatch@2.3.2: {}
 
   picomatch@4.0.3: {}
+
+  picomatch@4.0.4: {}
 
   pkg-entry-points@1.1.1: {}
 
@@ -15140,7 +15146,7 @@ snapshots:
 
   ts-declaration-location@1.0.7(typescript@5.9.3):
     dependencies:
-      picomatch: 4.0.3
+      picomatch: 4.0.4
       typescript: 5.9.3
 
   tsconfig-paths@3.15.0:
