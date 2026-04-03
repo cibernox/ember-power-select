@@ -2658,15 +2658,12 @@ module(
         ) as HTMLElement,
       );
 
-      await settled();
-
       assert
         .dom(
           '.ember-power-select-option[aria-current="true"]',
           getRootNode(this.element),
         )
         .hasText('nine');
-        console.log(getRootNode(this.element).querySelector('.ember-power-select-options'), getRootNode(this.element).querySelector('.ember-power-select-options')?.scrollTop);
       assert.ok(
         (getRootNode(this.element).querySelector('.ember-power-select-options')
           ?.scrollTop ?? 0) > 0,
