@@ -868,29 +868,24 @@ export default class PowerSelectComponent<
     const triggerElement = select.actions.getTriggerElement();
     if (triggerElement && triggerElement.getRootNode() instanceof ShadowRoot) {
       root = triggerElement.getRootNode() as HTMLElement;
-      console.log('root is shadow root');
     } else {
       root = document;
-      console.log('root is document');
     }
 
     const optionsList = root.querySelector(
       `#ember-power-select-options-${select.uniqueId}`,
     ) as HTMLElement;
     if (!optionsList) {
-      console.log('options list not found');
       return;
     }
     const index = indexOfOption(select.results, option);
     if (index === -1) {
-      console.log('option not found in results');
       return;
     }
     const optionElement = optionsList.querySelector(
       `[data-option-index='${index}']`,
     ) as HTMLElement;
     if (!optionElement) {
-      console.log('option element not found');
       return;
     }
     const optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;

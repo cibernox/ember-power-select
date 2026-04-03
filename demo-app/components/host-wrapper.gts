@@ -15,17 +15,29 @@ export default class HostWrapper extends Component<{
     this.shadow = shadowRoot;
   };
 
-  get getStyles() {
-    return [...document.head.querySelectorAll('link')].map((link) => link.href);
-  }
-
   attachShadow = modifier(
     (element: Element, [set]: [(shadowRoot: HTMLDivElement) => void]) => {
-      let shadowRoot = element;
+      let shadowRoot: Element | ShadowRoot = element;
       if (shadowRootBuild) {
-        shadowRoot = element.attachShadow({
-          mode: 'open',
-        }) as unknown as Element;
+        const sr = element.attachShadow({ mode: 'open' });
+        // Apply document stylesheets synchronously via Constructable Stylesheets
+        // so that layout (offsetHeight, offsetTop) is correct immediately when
+        // modifiers fire — avoiding the async <link> race condition.
+        sr.adoptedStyleSheets = [...document.styleSheets].reduce<
+          CSSStyleSheet[]
+        >((acc, sheet) => {
+          try {
+            const cs = new CSSStyleSheet();
+            cs.replaceSync(
+              [...sheet.cssRules].map((r) => r.cssText).join('\n'),
+            );
+            acc.push(cs);
+          } catch {
+            // Skip cross-origin stylesheets whose rules are inaccessible
+          }
+          return acc;
+        }, []);
+        shadowRoot = sr;
       }
       const div = document.createElement('div');
       shadowRoot.appendChild(div);
@@ -42,9 +54,6 @@ export default class HostWrapper extends Component<{
     {{#if this.shadow}}
       {{#in-element this.shadow}}
         {{#if shadowRootBuild}}
-          {{#each this.getStyles as |styleHref|}}
-            <link rel="stylesheet" type="text/css" href={{styleHref}} />
-          {{/each}}
           <BasicDropdownWormhole />
         {{/if}}
         {{yield}}

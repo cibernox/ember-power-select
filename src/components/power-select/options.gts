@@ -309,13 +309,7 @@ export default class PowerSelectOptionsComponent<
       element.addEventListener('touchend', this.touchEndHandler);
     }
 
-    queueMicrotask(() => {
-      if (!this.args.select) {
-        return;
-      }
-
-      this.args.select.actions.scrollTo(this.args.select.highlighted);
-    });
+    this.args.select.actions.scrollTo(this.args.select.highlighted);
   }
 
   private _removeHandlers(element: Element) {
