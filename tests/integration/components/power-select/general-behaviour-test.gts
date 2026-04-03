@@ -2657,7 +2657,6 @@ module(
           '.ember-power-select-trigger',
         ) as HTMLElement,
       );
-
       assert
         .dom(
           '.ember-power-select-option[aria-current="true"]',
