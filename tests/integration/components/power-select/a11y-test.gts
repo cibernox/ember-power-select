@@ -108,7 +108,7 @@ module(
       );
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options',
+          '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options',
           getRootNode(this.element),
         )
         .hasAttribute(
@@ -153,7 +153,7 @@ module(
       );
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options',
+          '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options',
           getRootNode(this.element),
         )
         .hasAttribute(
