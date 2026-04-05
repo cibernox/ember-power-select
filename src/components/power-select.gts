@@ -658,6 +658,16 @@ export default class PowerSelectComponent<
 
   @action
   handleClose(_select: Dropdown, e: Event | undefined): boolean | void {
+    // Prevent closing, when somebody was in input field and has clicked into an other position of input field
+    if (
+      this.searchFieldPosition === 'trigger' &&
+      this.storedAPI.isOpen &&
+      document.activeElement === e?.target &&
+      (e?.target as HTMLElement).tagName === 'INPUT'
+    ) {
+      return false;
+    }
+
     if (this.args.onClose && this.args.onClose(this.storedAPI, e) === false) {
       return false;
     }
