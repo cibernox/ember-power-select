@@ -662,6 +662,7 @@ export default class PowerSelectComponent<
     if (
       this.searchFieldPosition === 'trigger' &&
       this.storedAPI.isOpen &&
+      e?.type === 'mousedown' &&
       document.activeElement === e?.target &&
       (e?.target as HTMLElement).tagName === 'INPUT'
     ) {
