@@ -664,7 +664,8 @@ export default class PowerSelectComponent<
       this.storedAPI.isOpen &&
       e?.type === 'mousedown' &&
       document.activeElement === e?.target &&
-      (e?.target as HTMLElement).tagName === 'INPUT'
+      (e?.target as HTMLElement).tagName === 'INPUT' &&
+      (e?.target as HTMLElement)?.closest('.ember-power-select-trigger')
     ) {
       return false;
     }
