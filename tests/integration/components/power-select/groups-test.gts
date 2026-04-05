@@ -97,20 +97,20 @@ module(
       );
 
       const rootLevelGroups = getRootNode(this.element).querySelectorAll(
-        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
+        '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-group',
       ) as unknown as HTMLElement[];
       const rootLevelOptions = getRootNode(this.element).querySelectorAll(
-        '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option',
+        '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-option',
       ) as unknown as HTMLElement[];
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-group',
+          '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-group',
           getRootNode(this.element),
         )
         .exists({ count: 3 }, 'There is 3 groups in the root level');
       assert
         .dom(
-          '.ember-power-select-dropdown > .ember-power-select-options > .ember-power-select-option',
+          '.ember-power-select-dropdown > .ember-power-select-options-wrapper > .ember-power-select-options > .ember-power-select-option',
           getRootNode(this.element),
         )
         .exists({ count: 2 }, 'There is 2 options in the root level');

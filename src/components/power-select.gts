@@ -1440,56 +1440,58 @@ export default class PowerSelectComponent<
               @triggerRole={{@triggerRole}}
             />
           {{/if}}
-          {{#if this.mustShowSearchMessage}}
-            <this.searchMessageComponent
-              @searchMessage={{this.searchMessage}}
-              @select={{publicAPI}}
-              @extra={{@extra}}
-              id={{listboxId}}
-              aria-label={{@ariaLabel}}
-              aria-labelledby={{this.ariaLabelledBy}}
-            />
-          {{else if this.mustShowNoMessages}}
-            <this.noMatchesMessageComponent
-              @noMatchesMessage={{this.noMatchesMessage}}
-              @select={{publicAPI}}
-              @extra={{@extra}}
-              id={{listboxId}}
-              aria-label={{@ariaLabel}}
-              aria-labelledby={{this.ariaLabelledBy}}
-            />
-          {{else}}
-            <this.optionsComponent
-              @loadingMessage={{or @loadingMessage "Loading options..."}}
-              @select={{publicAPI}}
-              @options={{publicAPI.results}}
-              @groupIndex=""
-              @optionsComponent={{this.optionsComponent}}
-              @extra={{@extra}}
-              @highlightOnHover={{this.highlightOnHover}}
-              @groupComponent={{this.groupComponent}}
-              role="listbox"
-              aria-multiselectable={{if this.ariaMultiSelectable "true"}}
-              id={{listboxId}}
-              class="ember-power-select-options"
-              as |option select|
-            >
-              {{yield option select}}
-            </this.optionsComponent>
-          {{/if}}
+          <div class="ember-power-select-options-wrapper">
+            {{#if this.mustShowSearchMessage}}
+              <this.searchMessageComponent
+                @searchMessage={{this.searchMessage}}
+                @select={{publicAPI}}
+                @extra={{@extra}}
+                id={{listboxId}}
+                aria-label={{@ariaLabel}}
+                aria-labelledby={{this.ariaLabelledBy}}
+              />
+            {{else if this.mustShowNoMessages}}
+              <this.noMatchesMessageComponent
+                @noMatchesMessage={{this.noMatchesMessage}}
+                @select={{publicAPI}}
+                @extra={{@extra}}
+                id={{listboxId}}
+                aria-label={{@ariaLabel}}
+                aria-labelledby={{this.ariaLabelledBy}}
+              />
+            {{else}}
+              <this.optionsComponent
+                @loadingMessage={{or @loadingMessage "Loading options..."}}
+                @select={{publicAPI}}
+                @options={{publicAPI.results}}
+                @groupIndex=""
+                @optionsComponent={{this.optionsComponent}}
+                @extra={{@extra}}
+                @highlightOnHover={{this.highlightOnHover}}
+                @groupComponent={{this.groupComponent}}
+                role="listbox"
+                aria-multiselectable={{if this.ariaMultiSelectable "true"}}
+                id={{listboxId}}
+                class="ember-power-select-options"
+                as |option select|
+              >
+                {{yield option select}}
+              </this.optionsComponent>
+            {{/if}}
 
-          {{#if this.afterOptionsComponent}}
-            {{#let this.afterOptionsComponent as |AfterOptions|}}
-              <AfterOptions @extra={{@extra}} @select={{publicAPI}} />
-            {{/let}}
-          {{/if}}
-          <div
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-            class="ember-power-select-visually-hidden"
-          >
-            {{this.resultCountMessage}}
+            {{#if this.afterOptionsComponent}}
+              {{#let this.afterOptionsComponent as |AfterOptions|}}
+                <AfterOptions @extra={{@extra}} @select={{publicAPI}} />
+              {{/let}}
+            {{/if}}
+            <div
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              class="ember-power-select-visually-hidden"
+            >
+              {{this.resultCountMessage}}
+            </div>
           </div>
         </dropdown.Content>
       {{/let}}
