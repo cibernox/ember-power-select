@@ -74,7 +74,7 @@ importers:
         version: 2.0.0
       '@glint/ember-tsc':
         specifier: ^1.4.0
-        version: 1.4.0(typescript@5.9.3)
+        version: 1.5.0(typescript@5.9.3)
       '@glint/template':
         specifier: ^1.7.7
         version: 1.7.7
@@ -254,7 +254,7 @@ importers:
         version: 2.0.0
       '@glint/ember-tsc':
         specifier: ^1.4.0
-        version: 1.4.0(typescript@5.9.3)
+        version: 1.5.0(typescript@5.9.3)
       '@glint/template':
         specifier: ^1.7.7
         version: 1.7.7
@@ -1383,6 +1383,12 @@ packages:
 
   '@glint/ember-tsc@1.4.0':
     resolution: {integrity: sha512-r9Yu1R7bcsIa/Y3W3riYU8cWHDTVflACmJyy4bxEpT4aSgKowcaGhy1FOneA3j/5R5VNdO9opCs7KfQ+KmwzAA==}
+    hasBin: true
+    peerDependencies:
+      typescript: '>=5.6.0'
+
+  '@glint/ember-tsc@1.5.0':
+    resolution: {integrity: sha512-mMAG91QyzKQvklnoQFy5orNA4gYU2LPQlPHUbJnuAHJ0c5pwyUO/rjseudFXAWRA5F8cQmNLqtximnLTvHSMzw==}
     hasBin: true
     peerDependencies:
       typescript: '>=5.6.0'
@@ -8690,6 +8696,28 @@ snapshots:
       '@glimmer/interfaces': 0.94.6
 
   '@glint/ember-tsc@1.4.0(typescript@5.9.3)':
+    dependencies:
+      '@glimmer/syntax': 0.95.0
+      '@glint/template': 1.7.7
+      '@volar/kit': 2.4.28(typescript@5.9.3)
+      '@volar/language-core': 2.4.28
+      '@volar/language-server': 2.4.28
+      '@volar/language-service': 2.4.28
+      '@volar/source-map': 2.4.28
+      '@volar/test-utils': 2.4.28
+      '@volar/typescript': 2.4.28
+      content-tag: 4.1.1
+      silent-error: 1.1.1
+      typescript: 5.9.3
+      volar-service-html: 0.0.70(@volar/language-service@2.4.28)
+      volar-service-typescript: 0.0.70(@volar/language-service@2.4.28)
+      vscode-languageserver-protocol: 3.17.5
+      vscode-languageserver-textdocument: 1.0.12
+      vscode-uri: 3.1.0
+    transitivePeerDependencies:
+      - supports-color
+
+  '@glint/ember-tsc@1.5.0(typescript@5.9.3)':
     dependencies:
       '@glimmer/syntax': 0.95.0
       '@glint/template': 1.7.7
