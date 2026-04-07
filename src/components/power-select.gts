@@ -665,7 +665,9 @@ export default class PowerSelectComponent<
       e?.type === 'mousedown' &&
       document.activeElement === e?.target &&
       (e?.target as HTMLElement).tagName === 'INPUT' &&
-      (e?.target as HTMLElement)?.closest('[data-ebd-id="' + this.storedAPI.uniqueId + '-trigger"]')
+      (e?.target as HTMLElement)?.closest(
+        '[data-ebd-id="' + this.storedAPI.uniqueId + '-trigger"]',
+      )
     ) {
       return false;
     }
