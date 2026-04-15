@@ -42,9 +42,6 @@ importers:
       '@ember/library-tsconfig':
         specifier: ^2.0.0
         version: 2.0.0
-      '@ember/string':
-        specifier: ^4.0.1
-        version: 4.0.1
       '@ember/test-helpers':
         specifier: ^5.4.1
         version: 5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -103,8 +100,8 @@ importers:
         specifier: ^0.5.1
         version: 0.5.1
       ember-basic-dropdown:
-        specifier: git+https://github.com/cibernox/ember-basic-dropdown#de25fa1adf698d90218845e29b068a82080e5a7f
-        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
+        specifier: git+https://github.com/cibernox/ember-basic-dropdown#b90e03d0b8ab6d5c61093fabc3024c806d2585d9
+        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/b90e03d0b8ab6d5c61093fabc3024c806d2585d9(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
       ember-concurrency:
         specifier: ^5.2.0
         version: 5.2.0(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -216,9 +213,6 @@ importers:
       '@ember/optional-features':
         specifier: ^3.0.0
         version: 3.0.0(@types/node@25.5.0)
-      '@ember/string':
-        specifier: ^4.0.1
-        version: 4.0.1
       '@ember/test-helpers':
         specifier: ^5.4.1
         version: 5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -280,8 +274,8 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(@babel/core@7.29.0)
       ember-basic-dropdown:
-        specifier: git+https://github.com/cibernox/ember-basic-dropdown#de25fa1adf698d90218845e29b068a82080e5a7f
-        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
+        specifier: git+https://github.com/cibernox/ember-basic-dropdown#b90e03d0b8ab6d5c61093fabc3024c806d2585d9
+        version: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/b90e03d0b8ab6d5c61093fabc3024c806d2585d9(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0)
       ember-cli:
         specifier: ~6.11.0
         version: 6.11.0(@types/node@25.5.0)(ejs@3.1.10)(handlebars@4.7.8)(underscore@1.13.8)
@@ -1049,9 +1043,6 @@ packages:
   '@ember/optional-features@3.0.0':
     resolution: {integrity: sha512-HMQqZoBb16I4NyHfQglIYjopSG6folcEJah2WPa0FuolWRA/8cS5ozQmFK5BQx7cijTQJxj6viLpQK9KrXuYdw==}
     engines: {node: '>= 20.19'}
-
-  '@ember/string@4.0.1':
-    resolution: {integrity: sha512-VWeng8BSWrIsdPfffOQt/bKwNKJL7+37gPFh/6iZZ9bke+S83kKqkS30poo4bTGfRcMnvAE0ie7txom+iDu81Q==}
 
   '@ember/test-helpers@5.4.1':
     resolution: {integrity: sha512-BUdT91ra+QibEWAUwtZmvTGFoDHJCxDU+fkQENA8Zs0FR3pZiICxxP/fgdlNExCjjdm1letut7ENoueBuDdixQ==}
@@ -3450,8 +3441,8 @@ packages:
   electron-to-chromium@1.5.321:
     resolution: {integrity: sha512-L2C7Q279W2D/J4PLZLk7sebOILDSWos7bMsMNN06rK482umHUrh/3lM8G7IlHFOYip2oAg5nha1rCMxr/rs6ZQ==}
 
-  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f:
-    resolution: {tarball: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f}
+  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/b90e03d0b8ab6d5c61093fabc3024c806d2585d9:
+    resolution: {tarball: https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/b90e03d0b8ab6d5c61093fabc3024c806d2585d9}
     version: 8.11.0
     peerDependencies:
       '@ember/test-helpers': ^5.0.0
@@ -3574,11 +3565,9 @@ packages:
   ember-strict-application-resolver@0.1.1:
     resolution: {integrity: sha512-/49JZ2Yk2ggicAGIoFNWcz05llhe2i+/2dpH5Pv1KlwZOBKkqMMJpTKEB4IMg+FjKBiE0r2yxuZzo9Oly9vc1A==}
 
-  ember-style-modifier@4.5.1:
-    resolution: {integrity: sha512-ReVGW9fZmDIsCWsuJGH4joiiHOv9aF9Yv4lUZUjXjQyR9SEAae7RWjZcjPgmEJwpN7yDSyy4PIwdJa0smT2A3g==}
+  ember-style-modifier@4.6.0:
+    resolution: {integrity: sha512-ZM1pztpyEdZDfQEgOkWREiiUrsfnYGJGJzEw5QO60Sd2GAZIXLhCHxOTaT3ox5pUGb+ldG4I9Fk3srQreMJlQw==}
     engines: {node: 18.* || >= 20, pnpm: '>= 10.*'}
-    peerDependencies:
-      '@ember/string': ^3.1.1 || ^4.0.0
 
   ember-template-lint@7.9.3:
     resolution: {integrity: sha512-iqC4rv/oVlXViGuf7hlOA/bC550ZqacZKAc8WvQV0ueeCtIYPkYYK+Tc7FwpM8qGx3jiwu/ZsTuNfPInI5pL7Q==}
@@ -8215,8 +8204,6 @@ snapshots:
       - '@types/node'
       - supports-color
 
-  '@ember/string@4.0.1': {}
-
   '@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)':
     dependencies:
       '@ember/test-waiters': 4.1.1(@babel/core@7.29.0)(@glint/template@1.7.7)
@@ -10773,7 +10760,7 @@ snapshots:
 
   electron-to-chromium@1.5.321: {}
 
-  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/de25fa1adf698d90218845e29b068a82080e5a7f(@babel/core@7.29.0)(@ember/string@4.0.1)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0):
+  ember-basic-dropdown@https://codeload.github.com/cibernox/ember-basic-dropdown/tar.gz/b90e03d0b8ab6d5c61093fabc3024c806d2585d9(@babel/core@7.29.0)(@ember/test-helpers@5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7))(@embroider/macros@1.20.2(@babel/core@7.29.0)(@glint/template@1.7.7))(@glimmer/component@2.0.0):
     dependencies:
       '@ember/test-helpers': 5.4.1(@babel/core@7.29.0)(@glint/template@1.7.7)
       '@embroider/addon-shim': 1.10.2
@@ -10782,11 +10769,10 @@ snapshots:
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
       ember-element-helper: 0.8.8
       ember-modifier: 4.3.0(@babel/core@7.29.0)
-      ember-style-modifier: 4.5.1(@babel/core@7.29.0)(@ember/string@4.0.1)
+      ember-style-modifier: 4.6.0(@babel/core@7.29.0)
       ember-truth-helpers: 5.0.0
     transitivePeerDependencies:
       - '@babel/core'
-      - '@ember/string'
       - supports-color
 
   ember-cli-babel-plugin-helpers@1.1.1: {}
@@ -11167,9 +11153,8 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-style-modifier@4.5.1(@babel/core@7.29.0)(@ember/string@4.0.1):
+  ember-style-modifier@4.6.0(@babel/core@7.29.0):
     dependencies:
-      '@ember/string': 4.0.1
       '@embroider/addon-shim': 1.10.2
       csstype: 3.2.3
       decorator-transforms: 2.3.1(@babel/core@7.29.0)
