@@ -550,8 +550,7 @@ export default class PowerSelect<
   get labelComponent(): ComponentLike<
     PowerSelectLabelSignature<T, TExtra, IsMultiple>
   > {
-    return (this.args.labelComponent ??
-      PowerSelectLabel) as ComponentLike<
+    return (this.args.labelComponent ?? PowerSelectLabel) as ComponentLike<
       PowerSelectLabelSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -559,8 +558,7 @@ export default class PowerSelect<
   get triggerComponent(): ComponentLike<
     PowerSelectTriggerSignature<T, TExtra, IsMultiple>
   > {
-    return (this.args.triggerComponent ??
-      PowerSelectTrigger) as ComponentLike<
+    return (this.args.triggerComponent ?? PowerSelectTrigger) as ComponentLike<
       PowerSelectTriggerSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -604,8 +602,7 @@ export default class PowerSelect<
   get optionsComponent(): ComponentLike<
     PowerSelectOptionsSignature<T, TExtra, IsMultiple>
   > {
-    return (this.args.optionsComponent ??
-      PowerSelectOptions) as ComponentLike<
+    return (this.args.optionsComponent ?? PowerSelectOptions) as ComponentLike<
       PowerSelectOptionsSignature<T, TExtra, IsMultiple>
     >;
   }

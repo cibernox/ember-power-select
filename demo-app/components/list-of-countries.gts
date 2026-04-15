@@ -4,11 +4,7 @@ import { get } from '@ember/helper';
 
 export default class ListOfCountries<
   IsMultiple extends boolean = false,
-> extends PowerSelectOptions<
-  Country,
-  SelectedCountryExtra,
-  IsMultiple
-> {
+> extends PowerSelectOptions<Country, SelectedCountryExtra, IsMultiple> {
   <template>
     <div class="ember-power-select-options">
       <p>
