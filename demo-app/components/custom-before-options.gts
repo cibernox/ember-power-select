@@ -1,9 +1,9 @@
-import PowerSelectBeforeOptionsComponent from '#src/components/power-select/before-options.gts';
+import PowerSelectBeforeOptions from '#src/components/power-select/before-options.gts';
 
 export default class CustomBeforeOptions<
   T,
   TExtra = undefined,
-> extends PowerSelectBeforeOptionsComponent<T, TExtra> {
+> extends PowerSelectBeforeOptions<T, TExtra> {
   <template>
     <p id="custom-before-options-p-tag">
       {{@placeholder}}

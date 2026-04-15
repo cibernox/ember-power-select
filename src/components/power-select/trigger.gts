@@ -57,7 +57,7 @@ export interface PowerSelectTriggerSignature<
   };
 }
 
-export default class PowerSelectTriggerComponent<
+export default class PowerSelectTrigger<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,

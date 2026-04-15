@@ -46,7 +46,7 @@ export interface PowerSelectBeforeOptionsSignature<
   };
 }
 
-export default class PowerSelectBeforeOptionsComponent<
+export default class PowerSelectBeforeOptions<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,

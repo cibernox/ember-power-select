@@ -18,7 +18,7 @@ export interface PowerSelectPowerSelectGroupSignature<
   };
 }
 
-export default class PowerSelectPowerSelectGroupComponent<
+export default class PowerSelectPowerSelectGroup<
   T extends GroupBase,
   TExtra = unknown,
   IsMultiple extends boolean = false,

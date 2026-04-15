@@ -70,7 +70,7 @@ if (typeof FastBoot === 'undefined') {
   })(window.Element.prototype);
 }
 
-export default class PowerSelectOptionsComponent<
+export default class PowerSelectOptions<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,

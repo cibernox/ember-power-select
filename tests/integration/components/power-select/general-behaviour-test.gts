@@ -24,7 +24,7 @@ import {
   type Country,
 } from '../../../../demo-app/utils/constants';
 import { modifier } from 'ember-modifier';
-import PowerSelectBeforeOptionsComponent, {
+import PowerSelectBeforeOptions, {
   type PowerSelectBeforeOptionsSignature,
 } from '#src/components/power-select/before-options.gts';
 import type { ComponentLike } from '@glint/template';
@@ -450,7 +450,7 @@ module(
       this.numbers = numbers;
       this.foo = () => {};
 
-      this.beforeOptionsComponent = PowerSelectBeforeOptionsComponent;
+      this.beforeOptionsComponent = PowerSelectBeforeOptions;
 
       await render<NumbersContext>(
         <template>

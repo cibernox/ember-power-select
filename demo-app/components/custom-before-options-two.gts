@@ -1,10 +1,10 @@
-import PowerSelectBeforeOptionsComponent from '#src/components/power-select/before-options.gts';
+import PowerSelectBeforeOptions from '#src/components/power-select/before-options.gts';
 import type { SelectedCountryExtra } from '../utils/constants';
 import { on } from '@ember/modifier';
 
 export default class CustomBeforeOptionsTwo<
   T,
-> extends PowerSelectBeforeOptionsComponent<T, SelectedCountryExtra> {
+> extends PowerSelectBeforeOptions<T, SelectedCountryExtra> {
   <template>
     {{#if @extra.passedAction}}
       <button

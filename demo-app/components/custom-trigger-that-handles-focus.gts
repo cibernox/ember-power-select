@@ -1,8 +1,8 @@
-import PowerSelectTriggerComponent from '#src/components/power-select/trigger.gts';
+import PowerSelectTrigger from '#src/components/power-select/trigger.gts';
 import type { Country, SelectedCountryExtra } from '../utils/constants';
 import { on } from '@ember/modifier';
 
-export default class CustomTriggerThatHandlesFocus extends PowerSelectTriggerComponent<
+export default class CustomTriggerThatHandlesFocus extends PowerSelectTrigger<
   Country,
   SelectedCountryExtra
 > {

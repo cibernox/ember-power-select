@@ -27,7 +27,7 @@ export interface PowerSelectLabelSignature<
   Args: PowerSelectLabelArgs<T, TExtra, IsMultiple>;
 }
 
-export default class PowerSelectLabelComponent<
+export default class PowerSelectLabel<
   T = unknown,
   TExtra = unknown,
   IsMultiple extends boolean = false,

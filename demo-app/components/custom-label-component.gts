@@ -1,10 +1,10 @@
-import PowerSelectLabelComponent from '#src/components/power-select/label.gts';
+import PowerSelectLabel from '#src/components/power-select/label.gts';
 
 export default class CustomLabelComponent<
   T,
   TExtra = unknown,
   IsMultiple extends boolean = false,
-> extends PowerSelectLabelComponent<T, TExtra, IsMultiple> {
+> extends PowerSelectLabel<T, TExtra, IsMultiple> {
   <template>
     <label
       id={{@labelId}}

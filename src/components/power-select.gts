@@ -17,13 +17,13 @@ import {
 } from '../utils/group-utils.ts';
 import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
-import PowerSelectLabelComponent from './power-select/label.gts';
-import PowerSelectTriggerComponent from './power-select/trigger.gts';
+import PowerSelectLabel from './power-select/label.gts';
+import PowerSelectTrigger from './power-select/trigger.gts';
 import PowerSelectPlaceholderComponent from './power-select/placeholder.gts';
-import PowerSelectBeforeOptionsComponent from './power-select/before-options.gts';
+import PowerSelectBeforeOptions from './power-select/before-options.gts';
 import SearchMessageComponent from './power-select/search-message.gts';
 import NoMatchesMessageComponent from './power-select/no-matches-message.gts';
-import PowerSelectOptionsComponent from './power-select/options.gts';
+import PowerSelectOptions from './power-select/options.gts';
 import PowerSelectGroupComponent from './power-select/power-select-group.gts';
 import type { BasicDropdownDefaultBlock } from 'ember-basic-dropdown/components/basic-dropdown';
 import type { Dropdown, TRootEventType } from 'ember-basic-dropdown/types';
@@ -301,7 +301,7 @@ function getOptionMatcher<T>(
   }
 }
 
-export default class PowerSelectComponent<
+export default class PowerSelect<
   T,
   IsMultiple extends boolean = false,
   TExtra = undefined,
@@ -551,7 +551,7 @@ export default class PowerSelectComponent<
     PowerSelectLabelSignature<T, TExtra, IsMultiple>
   > {
     return (this.args.labelComponent ??
-      PowerSelectLabelComponent) as ComponentLike<
+      PowerSelectLabel) as ComponentLike<
       PowerSelectLabelSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -560,7 +560,7 @@ export default class PowerSelectComponent<
     PowerSelectTriggerSignature<T, TExtra, IsMultiple>
   > {
     return (this.args.triggerComponent ??
-      PowerSelectTriggerComponent) as ComponentLike<
+      PowerSelectTrigger) as ComponentLike<
       PowerSelectTriggerSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -578,7 +578,7 @@ export default class PowerSelectComponent<
     PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
   > {
     return (this.args.beforeOptionsComponent ??
-      PowerSelectBeforeOptionsComponent) as ComponentLike<
+      PowerSelectBeforeOptions) as ComponentLike<
       PowerSelectBeforeOptionsSignature<T, TExtra, IsMultiple>
     >;
   }
@@ -605,7 +605,7 @@ export default class PowerSelectComponent<
     PowerSelectOptionsSignature<T, TExtra, IsMultiple>
   > {
     return (this.args.optionsComponent ??
-      PowerSelectOptionsComponent) as ComponentLike<
+      PowerSelectOptions) as ComponentLike<
       PowerSelectOptionsSignature<T, TExtra, IsMultiple>
     >;
   }
