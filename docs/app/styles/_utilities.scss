@@ -1,4 +1,4 @@
-@use 'variables';
+@use "variables";
 
 // Utility classes
 .text-center {
@@ -10,7 +10,7 @@
     visibility: hidden;
     display: block;
     font-size: 0;
-    content: ' ';
+    content: " ";
     clear: both;
     height: 0;
   }
