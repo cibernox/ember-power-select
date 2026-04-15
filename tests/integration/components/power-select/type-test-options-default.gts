@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
-import PowerSelectOptionsComponent from '#src/components/power-select/options.gts';
+import PowerSelectOptions from '#src/components/power-select/options.gts';
 
 // Extending PowerSelectOptionsComponent without providing type params should
 // work (T should default to unknown). Without the fix, this produces TS2707.
-class CustomOptions extends PowerSelectOptionsComponent {}
+class CustomOptions extends PowerSelectOptions {}
 
 module(
   'Integration | Component | Ember Power Select (Type tests - options default type param)',

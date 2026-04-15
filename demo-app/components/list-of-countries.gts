@@ -1,14 +1,10 @@
-import PowerSelectOptionsComponent from '#src/components/power-select/options.gts';
+import PowerSelectOptions from '#src/components/power-select/options.gts';
 import type { Country, SelectedCountryExtra } from '../utils/constants';
 import { get } from '@ember/helper';
 
 export default class ListOfCountries<
   IsMultiple extends boolean = false,
-> extends PowerSelectOptionsComponent<
-  Country,
-  SelectedCountryExtra,
-  IsMultiple
-> {
+> extends PowerSelectOptions<Country, SelectedCountryExtra, IsMultiple> {
   <template>
     <div class="ember-power-select-options">
       <p>

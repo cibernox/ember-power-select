@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from '../../../helpers';
 import { render } from '@ember/test-helpers';
-import PowerSelectOptionsComponent from '#src/components/power-select/options.gts';
-import PowerSelectBeforeOptionsComponent from '#src/components/power-select/before-options.gts';
+import PowerSelectOptions from '#src/components/power-select/options.gts';
+import PowerSelectBeforeOptions from '#src/components/power-select/before-options.gts';
 import PowerSelect from '#src/components/power-select.gts';
 import Component from '@glimmer/component';
 import { fn } from '@ember/helper';
@@ -15,11 +15,11 @@ interface Dog {
 // Real-world pattern: a custom options component (e.g. virtual scrolling)
 // that is reused across PowerSelects with different option types.
 // T must be unknown because the component doesn't know what it will render.
-class VirtualOptions extends PowerSelectOptionsComponent<unknown> {}
+class VirtualOptions extends PowerSelectOptions<unknown> {}
 
 // Same pattern for before-options: a custom search UI that doesn't care about T.
 // No explicit type arg needed — the default is already `unknown`.
-class CustomBeforeOptions extends PowerSelectBeforeOptionsComponent {}
+class CustomBeforeOptions extends PowerSelectBeforeOptions {}
 
 class MyComponent extends Component {
   dogs: Dog[] = [
