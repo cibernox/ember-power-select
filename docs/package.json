@@ -31,7 +31,7 @@
     "test": "vite build --mode development && ember test --path dist"
   },
   "engines": {
-    "node": ">= 20"
+    "node": ">= 20.19.0"
   },
   "ember": {
     "edition": "octane"
@@ -57,7 +57,7 @@
     "@embroider/macros": "^1.20.2",
     "@embroider/router": "^3.0.6",
     "@embroider/vite": "^1.7.2",
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^9.39.4",
     "@glimmer/component": "^2.1.1",
     "@glint/ember-tsc": "^1.5.0",
     "@glint/template": "^1.7.7",
@@ -69,7 +69,7 @@
     "concurrently": "^9.2.1",
     "decorator-transforms": "^2.3.1",
     "ember-basic-dropdown": "git+https://github.com/cibernox/ember-basic-dropdown#b90e03d0b8ab6d5c61093fabc3024c806d2585d9",
-    "ember-cli": "~6.11.0",
+    "ember-cli": "~6.12.0",
     "ember-cli-babel": "^8.3.1",
     "ember-cli-deprecation-workflow": "^4.0.1",
     "ember-concurrency": "^5.2.0",
@@ -80,11 +80,11 @@
     "ember-power-select": "workspace:*",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.2.0",
-    "ember-source": "~6.11.0",
+    "ember-source": "~6.12.0",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^7.9.3",
     "ember-truth-helpers": "^5.0.0",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-ember": "^12.7.5",
     "eslint-plugin-n": "^17.24.0",
@@ -103,6 +103,6 @@
     "testem": "^3.20.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.8"
+    "vite": "^7.3.1"
   }
 }
