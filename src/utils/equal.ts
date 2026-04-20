@@ -1,5 +1,10 @@
 export default function isEqual(a: unknown, b: unknown): boolean {
-  if (a && typeof (a as IsEqual).isEqual === 'function') {
+  if (
+    a &&
+    typeof a === 'object' &&
+    'isEqual' in a &&
+    typeof (a as IsEqual).isEqual === 'function'
+  ) {
     return (a as IsEqual).isEqual(b);
   }
 

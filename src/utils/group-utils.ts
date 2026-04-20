@@ -105,7 +105,10 @@ export function optionAtIndex<T>(
         if (isGroup(entry)) {
           const found = walk(
             (entry as unknown as GroupBase<T>).options,
-            ancestorIsDisabled || !!(entry as unknown as GroupBase<T>).disabled,
+            ancestorIsDisabled ||
+              (typeof entry === 'object' &&
+                'disabled' in entry &&
+                !!(entry as unknown as GroupBase<T>).disabled),
           );
           if (found) {
             return found;
@@ -114,7 +117,9 @@ export function optionAtIndex<T>(
           return {
             disabled:
               ancestorIsDisabled ||
-              !!(entry as unknown as GroupBase<T>).disabled,
+              (typeof entry === 'object' &&
+                'disabled' in (entry as GroupBase<T>) &&
+                !!(entry as unknown as GroupBase<T>).disabled),
             option: entry as Option<T>,
           };
         } else {
