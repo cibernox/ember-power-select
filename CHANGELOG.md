@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2026-07-28)
+
+* ember-power-select 9.0.2 (patch)
+
+#### :bug: Bug Fix
+* `ember-power-select`
+  * [#2084](https://github.com/ember-power-addons/ember-power-select/pull/2084) Treat empty strings as an `undefined` selection ([@Windvis](https://github.com/Windvis))
+
+#### Committers: 1
+- Sam Van Campenhout ([@Windvis](https://github.com/Windvis))
+
 ## Release (2026-06-29)
 
 * ember-power-select 9.0.1 (patch)
