@@ -15,6 +15,7 @@ import {
   defaultTypeAheadMatcher,
   pathForOption,
 } from '../utils/group-utils.ts';
+import isSelectedPresent from '../helpers/ember-power-select-is-selected-present.ts';
 import { task, timeout } from 'ember-concurrency';
 import { modifier } from 'ember-modifier';
 import PowerSelectLabel from './power-select/label.gts';
@@ -467,11 +468,10 @@ export default class PowerSelect<
   }
 
   get selected(): Selected<T, IsMultiple> | undefined {
-    if (this._resolvedSelected) {
+    if (isSelectedPresent(this._resolvedSelected)) {
       return toPlainArray(this._resolvedSelected) as Selected<T, IsMultiple>;
     } else if (
-      this.args.selected !== undefined &&
-      this.args.selected !== null &&
+      isSelectedPresent(this.args.selected) &&
       !isPromiseLike(this.args.selected)
     ) {
       return toPlainArray(this.args.selected) as Selected<T, IsMultiple>;
@@ -972,7 +972,7 @@ export default class PowerSelect<
   }
 
   private __updateSelected(): void {
-    if (this.args.selected === undefined || this.args.selected === null) return;
+    if (!isSelectedPresent(this.args.selected)) return;
     if (isPromiseLike(this.args.selected)) {
       if (this._lastSelectedPromise === this.args.selected) return; // promise is still the same
       const currentSelectedPromise = this.args.selected;
