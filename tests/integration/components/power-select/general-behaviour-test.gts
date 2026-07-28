@@ -2222,6 +2222,39 @@ module(
         .hasText('fourteen');
     });
 
+    test<NumbersContext>('An empty-string selection is treated as an empty select', async function (assert) {
+      const self = this;
+
+      assert.expect(2);
+
+      this.numbers = numbers;
+      this.selected = '';
+      this.foo = () => {};
+
+      await render<NumbersContext>(
+        <template>
+          <HostWrapper>
+            <PowerSelect
+              @options={{self.numbers}}
+              @selected={{self.selected}}
+              @allowClear={{true}}
+              @onChange={{self.foo}}
+              as |option|
+            >
+              {{option}}
+            </PowerSelect>
+          </HostWrapper>
+        </template>,
+      );
+
+      assert
+        .dom('.ember-power-select-trigger', getRootNode(this.element))
+        .hasText('', 'The trigger stays empty');
+      assert
+        .dom('.ember-power-select-clear-btn', getRootNode(this.element))
+        .doesNotExist('Empty strings do not render a clear button');
+    });
+
     test<NumbersContext>("Disabled single selects don't have a clear button even if `allowClear` is true", async function (assert) {
       const self = this;
 
