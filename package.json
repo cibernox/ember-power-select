@@ -121,7 +121,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^17.24.0",
     "globals": "^17.6.0",
-    "postcss": "^8.5.14",
+    "postcss": "^8.5.18",
     "prettier": "^3.8.3",
     "prettier-plugin-ember-template-tag": "^2.1.6",
     "publint": "^0.3.21",
